@@ -1,0 +1,184 @@
+[
+  {
+    "intervalIndex": 0,
+    "from": "渋谷",
+    "to": "表参道",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/00-pair.json",
+    "mainOriginalPair": "main-original/00-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "独立半藏门/田园都市平台轴线；银座线在南侧，不能合并。涩谷直通端额外复核。"
+  },
+  {
+    "intervalIndex": 1,
+    "from": "表参道",
+    "to": "青山一丁目",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/01-pair.json",
+    "mainOriginalPair": "main-original/01-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "表参道至青山一丁目并行银座线；Native Transit 确认紫色在橙色北侧，不能将此相对位置直接判错。"
+  },
+  {
+    "intervalIndex": 2,
+    "from": "青山一丁目",
+    "to": "永田町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/02-pair.json",
+    "mainOriginalPair": "main-original/02-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "青山至永田町自身走廊连续；穿过南北线/有乐町线时不建立额外连接。"
+  },
+  {
+    "intervalIndex": 3,
+    "from": "永田町",
+    "to": "半蔵門",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/03-pair.json",
+    "mainOriginalPair": "main-original/03-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "永田町北转至半藏门完整，仍未逐站验收完整乘客站台框中心。"
+  },
+  {
+    "intervalIndex": 4,
+    "from": "半蔵門",
+    "to": "九段下",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/04-pair.json",
+    "mainOriginalPair": "main-original/04-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "半藏门北行弯向九段下；九段下附近红色预览小台阶保留为显示候选，不视为真实道岔。"
+  },
+  {
+    "intervalIndex": 5,
+    "from": "九段下",
+    "to": "神保町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/05-pair.json",
+    "mainOriginalPair": "main-original/05-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "九段下至神保町东西段连续；新宿线并行、东西线纵向穿越，均保持身份。"
+  },
+  {
+    "intervalIndex": 6,
+    "from": "神保町",
+    "to": "大手町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/06-pair.json",
+    "mainOriginalPair": "main-original/06-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "神保町东南转、大手町西侧南转再东转均完整；不吸附三田线或东西线。"
+  },
+  {
+    "intervalIndex": 7,
+    "from": "大手町",
+    "to": "三越前",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/07-pair.json",
+    "mainOriginalPair": "main-original/07-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "大手町至三越前越过 JR 走廊；不同层交叉不是分岔。"
+  },
+  {
+    "intervalIndex": 8,
+    "from": "三越前",
+    "to": "水天宮前",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/08-pair.json",
+    "mainOriginalPair": "main-original/08-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "三越前至水天宫前自身弯道完整；在人形町交叉日比谷线不补连接。"
+  },
+  {
+    "intervalIndex": 9,
+    "from": "水天宮前",
+    "to": "清澄白河",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/09-pair.json",
+    "mainOriginalPair": "main-original/09-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "水天宫前至清澄白河河底段全部可见。红色预览弯道与 Apple 岸边示意弧不同；水下大部未绘可识别轨道，地理精度不判定。"
+  },
+  {
+    "intervalIndex": 10,
+    "from": "清澄白河",
+    "to": "住吉",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/10-pair.json",
+    "mainOriginalPair": "main-original/10-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "清澄白河东西段再北转住吉完整；跨大横川与小名木川，不把街道/河岸当轨道。"
+  },
+  {
+    "intervalIndex": 11,
+    "from": "住吉",
+    "to": "錦糸町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/11-pair.json",
+    "mainOriginalPair": "main-original/11-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "住吉至锦糸町南北段完整；新宿线及总武线交叉不连接。"
+  },
+  {
+    "intervalIndex": 12,
+    "from": "錦糸町",
+    "to": "押上",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainCandidatePair": "main-baseline/12-pair.json",
+    "mainOriginalPair": "main-original/12-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "锦糸町至押上包含现有 display alias 全段；押上直通北侧未见反向大折返。其他平台组独立，完整框中心仍待验收。"
+  }
+]

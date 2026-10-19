@@ -1,0 +1,443 @@
+{
+  "scope": "six-line-candidate-only",
+  "lineIDs": [
+    "jp-伊予鉄道-城南線",
+    "jp-伊予鉄道-城北線",
+    "jp-伊予鉄道-大手町線",
+    "jp-伊予鉄道-本町線",
+    "jp-伊予鉄道-花園線",
+    "jp-伊予鉄道-連絡線"
+  ],
+  "intervalCount": 29,
+  "viewpointCount": 71,
+  "panels": 213,
+  "views": [
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "path": "captures/001601/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "path": "captures/001601/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "path": "captures/001600/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "path": "captures/001600/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001576/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001576/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "pointOrdinal": 2,
+      "path": "captures/001582/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "pointOrdinal": 1,
+      "path": "captures/001582/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "pointOrdinal": 0,
+      "path": "captures/001582/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "path": "captures/001585/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "path": "captures/001585/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "path": "captures/001578/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "path": "captures/001578/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "path": "captures/001578/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "path": "captures/001579/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "path": "captures/001579/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "path": "captures/001579/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001584/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001584/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "pointOrdinal": 2,
+      "path": "captures/001583/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "pointOrdinal": 1,
+      "path": "captures/001583/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "pointOrdinal": 0,
+      "path": "captures/001583/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "path": "captures/001577/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "path": "captures/001577/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001599/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001599/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "pointOrdinal": 2,
+      "path": "captures/001590/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "path": "captures/001590/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "path": "captures/001590/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "path": "captures/001597/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "path": "captures/001597/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "path": "captures/001596/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "path": "captures/001596/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "path": "captures/001596/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 6,
+      "pointOrdinal": 1,
+      "path": "captures/001591/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 6,
+      "pointOrdinal": 0,
+      "path": "captures/001591/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "path": "captures/001598/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "path": "captures/001598/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "path": "captures/001598/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "path": "captures/001602/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "path": "captures/001602/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "path": "captures/001602/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 10,
+      "pointOrdinal": 1,
+      "path": "captures/001586/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 10,
+      "pointOrdinal": 0,
+      "path": "captures/001586/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "path": "captures/001581/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "path": "captures/001581/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "path": "captures/001588/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "path": "captures/001588/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "pointOrdinal": 2,
+      "path": "captures/001589/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "pointOrdinal": 1,
+      "path": "captures/001589/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "pointOrdinal": 0,
+      "path": "captures/001589/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 4,
+      "pointOrdinal": 1,
+      "path": "captures/001580/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 4,
+      "pointOrdinal": 0,
+      "path": "captures/001580/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "path": "captures/001587/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "path": "captures/001587/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "path": "captures/001587/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "pointOrdinal": 2,
+      "path": "captures/001594/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "pointOrdinal": 1,
+      "path": "captures/001594/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "pointOrdinal": 0,
+      "path": "captures/001594/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "pointOrdinal": 2,
+      "path": "captures/001593/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "pointOrdinal": 1,
+      "path": "captures/001593/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "pointOrdinal": 0,
+      "path": "captures/001593/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 7,
+      "pointOrdinal": 1,
+      "path": "captures/001592/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 7,
+      "pointOrdinal": 0,
+      "path": "captures/001592/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001595/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001595/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "path": "captures/001617/000002"
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001617/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001617/000000"
+    },
+    {
+      "lineID": "jp-伊予鉄道-連絡線",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "path": "captures/001618/000001"
+    },
+    {
+      "lineID": "jp-伊予鉄道-連絡線",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "path": "captures/001618/000000"
+    }
+  ],
+  "pixelReview": "pending"
+}

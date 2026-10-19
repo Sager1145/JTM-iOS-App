@@ -1,0 +1,37 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    0,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    17,
+    18,
+    21,
+    25,
+    26,
+    27,
+    28,
+    32
+  ],
+  "lineID": "jp-とさでん交通-伊野線",
+  "requestID": "tosaden-ino-missing-own-intervals",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-tosaden-ino-missing-20261018",
+  "workspace": "alignment"
+}

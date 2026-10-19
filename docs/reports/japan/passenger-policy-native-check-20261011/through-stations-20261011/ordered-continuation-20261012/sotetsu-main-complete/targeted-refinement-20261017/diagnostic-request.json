@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-32-sotetsu-targeted-z19-20261017",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session",
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "intervalIndices": [
+    0,
+    1,
+    16
+  ],
+  "captureSettings": {
+    "zoom": 19,
+    "width": 1600,
+    "height": 1200,
+    "appearance": "light",
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ]
+  },
+  "evidencePaths": [
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/retained-station-seam-review/observations.md"
+  ]
+}

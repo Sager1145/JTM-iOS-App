@@ -1,0 +1,46 @@
+{
+  "schema": "cn-harbin-real-train-fix/1",
+  "sourceTrain": "G101",
+  "officialSection": [
+    "CN-12306-VAB",
+    "CN-12306-MDB"
+  ],
+  "beforeResolved": 0,
+  "afterResolved": 1,
+  "sourceNodeCount": 23,
+  "consecutiveReviewedPathMatches": [
+    [
+      0,
+      80
+    ]
+  ],
+  "coordinateToleranceDegrees": 6e-06,
+  "comparisonPurpose": "allow existing graph quantization only, not add/merge an edge",
+  "wholeTrainBeforeResolved": 2,
+  "wholeTrainAfterResolved": 3,
+  "wholeTrainExpected": 4,
+  "beijingGapStillUnresolved": true,
+  "nativeReport": "railway-sources/local/china/comparisons/real-trains-20261018/harbin-fix-session/route-report.json",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "fallbackGraphCacheMaximumNodes": "1000000",
+    "journeyInputSHA256": "c402e881f96635b637f3f082d6ca4ccb0132b2bdf108f0c4197978e14c1c0eeb",
+    "rail/cn": "cn:b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e"
+  },
+  "controls": {
+    "G1": {
+      "resolved": 6,
+      "expected": 6,
+      "sourceCoordinatesIdenticalToDefaultBudget": true
+    },
+    "G6045FirstFiveOfficialStops": {
+      "inputRegion": "cn",
+      "resolved": 4,
+      "expected": 4,
+      "selectedLineIDs": [
+        "cn-guangshengan-hsr"
+      ],
+      "onlyRailScopeDependency": "rail/cn"
+    }
+  }
+}

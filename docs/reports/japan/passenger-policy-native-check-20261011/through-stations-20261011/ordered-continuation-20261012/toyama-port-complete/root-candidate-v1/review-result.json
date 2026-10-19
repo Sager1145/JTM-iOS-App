@@ -1,0 +1,14 @@
+{
+  "status": "rejected-before-native-install",
+  "reason": "New control reversals around southern bends; local box-median normal offsets jump at closely spaced source/grid controls. Highest159.6deg vs original forward alignment.",
+  "affectedIntervals": [
+    1,
+    3
+  ],
+  "manuallyOpenedProposalSheets": [
+    "00",
+    "01",
+    "02"
+  ],
+  "formalDataChanged": false
+}

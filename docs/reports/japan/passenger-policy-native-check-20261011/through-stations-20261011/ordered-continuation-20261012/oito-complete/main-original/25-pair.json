@@ -1,0 +1,82 @@
+{
+  "caseIndex": 25,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 25,
+  "source": {
+    "caseIndex": 25,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 25,
+    "fromStationID": "002442",
+    "toStationID": "002456",
+    "camera": [
+      36.2824375,
+      137.903395,
+      0.03951255000000188
+    ],
+    "effectiveCoordinates": [
+      [
+        137.90349,
+        36.29099
+      ],
+      [
+        137.90348,
+        36.29039
+      ],
+      [
+        137.90345,
+        36.28758
+      ],
+      [
+        137.90345,
+        36.28635
+      ],
+      [
+        137.90345,
+        36.2857
+      ],
+      [
+        137.90345,
+        36.28536
+      ],
+      [
+        137.90342,
+        36.28372
+      ],
+      [
+        137.90338,
+        36.28159
+      ],
+      [
+        137.90335,
+        36.27923
+      ],
+      [
+        137.90332,
+        36.27673
+      ],
+      [
+        137.90332,
+        36.27634
+      ],
+      [
+        137.90331,
+        36.27446
+      ],
+      [
+        137.9033,
+        36.273885
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t39 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:903;camera:14.51;lod:13.37;backbones:0;networkStations:8;distance:8673.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.282437;centerLon:137.903395;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:6535.0;rebuilds:3;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:6;annotationReuses:16;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.282437;centerLon:137.903395;distance:8673.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-25.jpg",
+  "observation": "Minami-Toyoshina to Nakagaya continuous straight/canal crossing; own station frame midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

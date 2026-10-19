@@ -1,0 +1,43 @@
+{
+  "bounds": {
+    "maxLat": 35.644993,
+    "maxLon": 136.10069,
+    "minLat": 35.59421,
+    "minLon": 136.07012
+  },
+  "chainCount": 1,
+  "chunk": {
+    "length": 4294,
+    "offset": 9491739,
+    "sha256": "ad918ed8b9e7ba4cd63b7cf34b17344efa134d3a60b91d98f9bceb827103d2eb"
+  },
+  "color": "#0072bc",
+  "colorDark": "#0072bc",
+  "dependsOn": [
+    "jp-西日本旅客鉄道-北陸線"
+  ],
+  "displayLabel": "JR西日本北陸線（敦賀–新疋田）",
+  "id": "jp-西日本旅客鉄道-北陸線-p1",
+  "kind": "jr_conventional",
+  "lodMinZoomMapLibre": 5,
+  "logo": "/rail/logos/jp-西日本旅客鉄道-北陸線-p1.png",
+  "minZoomMapLibre": 5,
+  "name": "北陸線",
+  "nameKey": "北陸線",
+  "nameRoma": "Hokuriku Main Line",
+  "operator": "西日本旅客鉄道",
+  "operatorLogo": null,
+  "operatorShort": "JR西日本",
+  "overview": {
+    "length": 1757,
+    "offset": 13223799,
+    "sha256": "d20a02bc849c484953202b9be9faa98a9ce90798417ee834cd2076f124803e95",
+    "vertexCount": 22
+  },
+  "rank": 1,
+  "region": "jp",
+  "renderGroup": "西日本旅客鉄道:北陸線",
+  "stationCount": 2,
+  "vertexCount": 138,
+  "visibilityLengthKm": 55.774
+}

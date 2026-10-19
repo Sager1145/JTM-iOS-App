@@ -1,0 +1,1198 @@
+{
+  "status": "candidate-only-boundary-pending",
+  "candidateAccepted": false,
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 84,
+  "fromStationID": "009352",
+  "toStationID": "009408",
+  "coordinates": [
+    [
+      132.531085,
+      33.34978
+    ],
+    [
+      132.53121999999996,
+      33.34947
+    ],
+    [
+      132.53166999999996,
+      33.34837000000001
+    ],
+    [
+      132.53224,
+      33.34702999999999
+    ],
+    [
+      132.53238,
+      33.34667000000001
+    ],
+    [
+      132.53241000000003,
+      33.34646000000001
+    ],
+    [
+      132.5324,
+      33.34612
+    ],
+    [
+      132.53235343415525,
+      33.34586308977803
+    ],
+    [
+      132.53232535537188,
+      33.34576557433741
+    ],
+    [
+      132.53224205166055,
+      33.3456498236355
+    ],
+    [
+      132.53193999999996,
+      33.34524999999999
+    ],
+    [
+      132.53119000000004,
+      33.3441
+    ],
+    [
+      132.52992,
+      33.34228
+    ],
+    [
+      132.52857,
+      33.34029999999999
+    ],
+    [
+      132.52751999999998,
+      33.33878
+    ],
+    [
+      132.5269,
+      33.33788999999998
+    ],
+    [
+      132.52682536506933,
+      33.3377822563823
+    ],
+    [
+      132.52606533333204,
+      33.33670221027973
+    ],
+    [
+      132.5258564945272,
+      33.33639079382901
+    ],
+    [
+      132.52557000000002,
+      33.33594000000001
+    ],
+    [
+      132.52476000000001,
+      33.334770000000006
+    ],
+    [
+      132.52363512239992,
+      33.33296531421279
+    ],
+    [
+      132.52355079451513,
+      33.33283231768983
+    ],
+    [
+      132.52343960885503,
+      33.332371212824874
+    ],
+    [
+      132.52341409552702,
+      33.33219167154566
+    ],
+    [
+      132.52340994796543,
+      33.331852557875855
+    ],
+    [
+      132.52346647884497,
+      33.33160760265166
+    ],
+    [
+      132.5239616784603,
+      33.33041532594285
+    ],
+    [
+      132.52423586587133,
+      33.32974892192588
+    ],
+    [
+      132.52484500647307,
+      33.3284373338666
+    ],
+    [
+      132.52514954660097,
+      33.32774693562643
+    ],
+    [
+      132.5255943367872,
+      33.32674922726646
+    ],
+    [
+      132.52588536709533,
+      33.32629431588834
+    ],
+    [
+      132.52605957681146,
+      33.32608925974584
+    ],
+    [
+      132.5265980811912,
+      33.325607214312036
+    ],
+    [
+      132.52731949173847,
+      33.324986049950965
+    ],
+    [
+      132.52821872819726,
+      33.32424604389237
+    ],
+    [
+      132.5293159057972,
+      33.323352714380505
+    ],
+    [
+      132.52981999999997,
+      33.322939999999996
+    ],
+    [
+      132.5316899843889,
+      33.32141063528771
+    ],
+    [
+      132.53236002972744,
+      33.32086126123609
+    ],
+    [
+      132.5334952334158,
+      33.31992827290978
+    ],
+    [
+      132.53441040262118,
+      33.31915027400429
+    ],
+    [
+      132.5346079250641,
+      33.31894876790509
+    ],
+    [
+      132.53485,
+      33.31854
+    ],
+    [
+      132.53524,
+      33.31774000000001
+    ],
+    [
+      132.5357557138547,
+      33.31634637630501
+    ],
+    [
+      132.53613038862466,
+      33.31529558929502
+    ],
+    [
+      132.53668,
+      33.31392000000001
+    ],
+    [
+      132.53678000000002,
+      33.31362
+    ],
+    [
+      132.53694513335,
+      33.31315130154461
+    ],
+    [
+      132.53735,
+      33.31204999999999
+    ],
+    [
+      132.53746,
+      33.311690000000006
+    ],
+    [
+      132.53749,
+      33.31143000000001
+    ],
+    [
+      132.53746999999998,
+      33.31083000000001
+    ],
+    [
+      132.53737,
+      33.310399999999994
+    ],
+    [
+      132.53722,
+      33.30996
+    ],
+    [
+      132.53684087528796,
+      33.30897924142208
+    ],
+    [
+      132.53676373677848,
+      33.308712454922166
+    ],
+    [
+      132.53671825665077,
+      33.30840875168595
+    ],
+    [
+      132.53665,
+      33.307369999999985
+    ],
+    [
+      132.53657999999996,
+      33.306840000000015
+    ],
+    [
+      132.53652,
+      33.306540000000005
+    ],
+    [
+      132.53643,
+      33.306050000000006
+    ],
+    [
+      132.53622784865553,
+      33.30519298648286
+    ],
+    [
+      132.53603010294512,
+      33.304400081594096
+    ],
+    [
+      132.53590195362182,
+      33.303809526651555
+    ],
+    [
+      132.5358611908003,
+      33.30330074068175
+    ],
+    [
+      132.53590063934132,
+      33.30297348205076
+    ],
+    [
+      132.53600217305296,
+      33.30259404774892
+    ],
+    [
+      132.53619200977863,
+      33.30216333672271
+    ],
+    [
+      132.53700156537172,
+      33.30082737820601
+    ],
+    [
+      132.53867361611486,
+      33.29815062858179
+    ],
+    [
+      132.53896414921826,
+      33.29768640882641
+    ],
+    [
+      132.53925811777634,
+      33.297230000000894
+    ],
+    [
+      132.53935714763202,
+      33.29704000000107
+    ],
+    [
+      132.53944609643924,
+      33.29686934128572
+    ]
+  ],
+  "sourcePhysicalCoordinatesUnchanged": true,
+  "fromBoundaryStatus": "pending owner Shimouwa alias; first tuple retained solely as placeholder and cannot be accepted/installed",
+  "toAlias": [
+    132.53944609643924,
+    33.29686934128572
+  ],
+  "warnings": [
+    "Tunnel/label points without unique glyph support retained original; no underground survey claim",
+    "Shimouwa head unresolved; owner must splice approved own-frame alias and inspect complete boundary",
+    "Apple rail cartographic alignment only; no physical precision or Main/native candidate acceptance"
+  ],
+  "controlWitnesses": [
+    {
+      "sourceOrdinal": 0,
+      "status": "pending-Shimouwa-adjudication-placeholder-do-not-accept-old-anchor"
+    },
+    {
+      "sourceOrdinal": 1,
+      "frame": 0,
+      "pixelControl": [
+        524.5829119943082,
+        418.5899720489979
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 2,
+      "frame": 0,
+      "pixelControl": [
+        566.5259519964457,
+        541.3275886457413
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 3,
+      "frame": 0,
+      "pixelControl": [
+        619.6538026668131,
+        690.842226492241
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 4,
+      "frame": 1,
+      "pixelControl": [
+        517.0093695409596,
+        399.4200375713408
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 5,
+      "frame": 1,
+      "pixelControl": [
+        519.8055722080171,
+        422.85113059543073
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 6,
+      "frame": 1,
+      "pixelControl": [
+        518.8735046498477,
+        460.7870661523193
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 7,
+      "frame": 1,
+      "pixelControl": [
+        514.5332533470759,
+        489.45205502740566
+      ],
+      "normalShiftPixels": 2.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 8,
+      "frame": 1,
+      "pixelControl": [
+        511.9161210484412,
+        500.33240579906163
+      ],
+      "normalShiftPixels": 1.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 9,
+      "frame": 2,
+      "pixelControl": [
+        619.328364556432,
+        195.1772134534954
+      ],
+      "normalShiftPixels": 2.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 10,
+      "frame": 1,
+      "pixelControl": [
+        475.99839709326625,
+        557.857756190002
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 11,
+      "frame": 1,
+      "pixelControl": [
+        406.09333043172956,
+        686.1680995412171
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 12,
+      "frame": 2,
+      "pixelControl": [
+        402.897463042289,
+        571.1595629174262
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 13,
+      "frame": 3,
+      "pixelControl": [
+        452.7638514637947,
+        487.9971050415188
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 14,
+      "frame": 3,
+      "pixelControl": [
+        354.8967581279576,
+        657.5799068771303
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 15,
+      "frame": 4,
+      "pixelControl": [
+        472.16573644056916,
+        452.4448618888855
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 16,
+      "frame": 4,
+      "pixelControl": [
+        465.20925670146175,
+        464.46532710191656
+      ],
+      "normalShiftPixels": 0.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 17,
+      "frame": 4,
+      "pixelControl": [
+        394.36916434600994,
+        584.9603351673303
+      ],
+      "normalShiftPixels": 0.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 18,
+      "frame": 5,
+      "pixelControl": [
+        549.4627378591628,
+        315.10593020896886
+      ],
+      "normalShiftPixels": 2.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 19,
+      "frame": 4,
+      "pixelControl": [
+        348.2007515504956,
+        669.9951890818775
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 20,
+      "frame": 5,
+      "pixelControl": [
+        447.2620404958725,
+        495.9258406125009
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 21,
+      "frame": 5,
+      "pixelControl": [
+        342.41584899786005,
+        697.25725021507
+      ],
+      "normalShiftPixels": -8.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 22,
+      "frame": 6,
+      "pixelControl": [
+        508.63513538277607,
+        407.1322665364677
+      ],
+      "normalShiftPixels": -6.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 23,
+      "frame": 6,
+      "pixelControl": [
+        498.27188074353353,
+        458.572547208616
+      ],
+      "normalShiftPixels": -12.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 24,
+      "frame": 6,
+      "pixelControl": [
+        495.8938662154357,
+        478.60187358900555
+      ],
+      "normalShiftPixels": -12.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 25,
+      "frame": 6,
+      "pixelControl": [
+        495.5072854576022,
+        516.4327177492993
+      ],
+      "normalShiftPixels": -8.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 26,
+      "frame": 6,
+      "pixelControl": [
+        500.7763453275035,
+        543.7593420481963
+      ],
+      "normalShiftPixels": -6.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 27,
+      "frame": 6,
+      "pixelControl": [
+        546.9322948222878,
+        676.7658090273146
+      ],
+      "normalShiftPixels": -9.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 28,
+      "frame": 7,
+      "pixelControl": [
+        532.5000261575155,
+        415.1206414125496
+      ],
+      "normalShiftPixels": -9.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 29,
+      "frame": 7,
+      "pixelControl": [
+        589.2760453263098,
+        561.4338685140345
+      ],
+      "normalShiftPixels": -11.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 30,
+      "frame": 7,
+      "pixelControl": [
+        617.6612425829709,
+        638.4498441374128
+      ],
+      "normalShiftPixels": -8.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 31,
+      "frame": 9,
+      "pixelControl": [
+        318.66146252737246,
+        150.52998661040778
+      ],
+      "normalShiftPixels": -5.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 32,
+      "frame": 8,
+      "pixelControl": [
+        560.1619480481033,
+        472.8644846225397
+      ],
+      "normalShiftPixels": -8.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 33,
+      "frame": 8,
+      "pixelControl": [
+        576.3994704746027,
+        495.7386078901078
+      ],
+      "normalShiftPixels": -8.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 34,
+      "frame": 8,
+      "pixelControl": [
+        626.5917165600788,
+        549.5108239613547
+      ],
+      "normalShiftPixels": -9.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 35,
+      "frame": 10,
+      "pixelControl": [
+        227.59046637355908,
+        102.76154922544988
+      ],
+      "normalShiftPixels": -4.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 36,
+      "frame": 10,
+      "pixelControl": [
+        311.4053791741971,
+        185.30813140512265
+      ],
+      "normalShiftPixels": -2.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 37,
+      "frame": 9,
+      "pixelControl": [
+        665.5368355256533,
+        529.4078703910674
+      ],
+      "normalShiftPixels": -3.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 38,
+      "frame": 9,
+      "pixelControl": [
+        712.5218206606805,
+        575.4447731748223
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 39,
+      "frame": 10,
+      "pixelControl": [
+        634.9499064951207,
+        501.58728265096363
+      ],
+      "normalShiftPixels": -6.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 40,
+      "frame": 10,
+      "pixelControl": [
+        697.4026585781457,
+        562.8666990739937
+      ],
+      "normalShiftPixels": -8.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 41,
+      "frame": 10,
+      "pixelControl": [
+        803.2113112613524,
+        666.9351271243127
+      ],
+      "normalShiftPixels": -6.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 42,
+      "frame": 11,
+      "pixelControl": [
+        641.2298803897855,
+        504.5321146754543
+      ],
+      "normalShiftPixels": -6.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 43,
+      "frame": 11,
+      "pixelControl": [
+        659.6403064433603,
+        527.0083865986328
+      ],
+      "normalShiftPixels": -5.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 44,
+      "frame": 12,
+      "pixelControl": [
+        475.74123038351536,
+        294.99332116544247
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 45,
+      "frame": 11,
+      "pixelControl": [
+        718.5539604872465,
+        661.8349573295563
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 46,
+      "frame": 12,
+      "pixelControl": [
+        560.1598802416206,
+        539.6686647357866
+      ],
+      "normalShiftPixels": -2.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 47,
+      "frame": 13,
+      "pixelControl": [
+        492.29584201007447,
+        321.23898246184297
+      ],
+      "normalShiftPixels": -2.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 48,
+      "frame": 13,
+      "pixelControl": [
+        543.523335121572,
+        474.6663167402148
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 49,
+      "frame": 13,
+      "pixelControl": [
+        552.8440106809139,
+        508.1267093960196
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 50,
+      "frame": 13,
+      "pixelControl": [
+        568.2355544680468,
+        560.4025934397725
+      ],
+      "normalShiftPixels": -0.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 51,
+      "frame": 13,
+      "pixelControl": [
+        605.9718613438308,
+        683.2342196125537
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 52,
+      "frame": 14,
+      "pixelControl": [
+        513.0141722969711,
+        387.97169000282884
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 53,
+      "frame": 14,
+      "pixelControl": [
+        515.8103749603033,
+        416.9699618797749
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 54,
+      "frame": 14,
+      "pixelControl": [
+        513.9462398476899,
+        483.8887207880616
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 55,
+      "frame": 14,
+      "pixelControl": [
+        504.62556429579854,
+        531.8468813952059
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 56,
+      "frame": 14,
+      "pixelControl": [
+        490.64455096051097,
+        580.9201032295823
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 57,
+      "frame": 15,
+      "pixelControl": [
+        525.4613449425211,
+        350.9968561736487
+      ],
+      "normalShiftPixels": -7.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 58,
+      "frame": 14,
+      "pixelControl": [
+        448.11773640221827,
+        720.0575212109871
+      ],
+      "normalShiftPixels": -6.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 59,
+      "frame": 15,
+      "pixelControl": [
+        514.032459596521,
+        414.62252039482587
+      ],
+      "normalShiftPixels": -4.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 60,
+      "frame": 15,
+      "pixelControl": [
+        507.67047863453627,
+        530.4715040549636
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 61,
+      "frame": 15,
+      "pixelControl": [
+        501.1460057422519,
+        589.5803458169103
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 62,
+      "frame": 15,
+      "pixelControl": [
+        495.55360041186213,
+        623.0380215495825
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 63,
+      "frame": 15,
+      "pixelControl": [
+        487.1649924144149,
+        677.6853110454977
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 64,
+      "frame": 16,
+      "pixelControl": [
+        508.1272884958688,
+        425.84495362595476
+      ],
+      "normalShiftPixels": -7.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 65,
+      "frame": 16,
+      "pixelControl": [
+        489.69605240778355,
+        514.2722157939064
+      ],
+      "normalShiftPixels": -10.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 66,
+      "frame": 16,
+      "pixelControl": [
+        477.75166975482506,
+        580.1322492772676
+      ],
+      "normalShiftPixels": -10.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 67,
+      "frame": 17,
+      "pixelControl": [
+        503.8428353790431,
+        293.0105475040258
+      ],
+      "normalShiftPixels": -8.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 68,
+      "frame": 16,
+      "pixelControl": [
+        477.62916992898164,
+        673.3690865131649
+      ],
+      "normalShiftPixels": -9.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 69,
+      "frame": 16,
+      "pixelControl": [
+        487.0927977751968,
+        715.6838238942905
+      ],
+      "normalShiftPixels": -9.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 70,
+      "frame": 17,
+      "pixelControl": [
+        534.6773990236751,
+        419.8544333795624
+      ],
+      "normalShiftPixels": -8.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 71,
+      "frame": 17,
+      "pixelControl": [
+        610.1334492980222,
+        568.8391151237164
+      ],
+      "normalShiftPixels": -6.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 72,
+      "frame": 18,
+      "pixelControl": [
+        606.6564699985977,
+        554.8874827193501
+      ],
+      "normalShiftPixels": -2.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 73,
+      "frame": 18,
+      "pixelControl": [
+        633.7361179431444,
+        606.6546563296987
+      ],
+      "normalShiftPixels": -1.5,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 74,
+      "frame": 18,
+      "pixelControl": [
+        659.4472743310034,
+        657.5505305454135
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 75,
+      "frame": 19,
+      "pixelControl": [
+        507.1230677254498,
+        368.01777437888086
+      ],
+      "normalShiftPixels": 0.0,
+      "supportSamples": 7,
+      "basis": "manually identified unique Apple Yosan rail glyph; narrow normal sampling excluding grey roads and cyan water"
+    },
+    {
+      "sourceOrdinal": 74,
+      "basis": "actual Tachima own twin-rail representative spine",
+      "pixelControl": [
+        460.9343587503229,
+        214.37170116603374
+      ],
+      "warning": "individual directional rail assignment not claimed"
+    },
+    {
+      "sourceOrdinal": 75,
+      "basis": "actual Tachima own twin-rail representative spine",
+      "pixelControl": [
+        479.3948618660415,
+        256.74678119271994
+      ],
+      "warning": "individual directional rail assignment not claimed"
+    }
+  ],
+  "manualReview": {
+    "baselineActualViewed": {
+      "views": 21,
+      "panels": 63,
+      "range": "Primary 002795 / 000000..000020",
+      "stages": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    "reprojectionsActualViewed": 21,
+    "stationOriginalsActualViewed": [
+      "guard-shimouwa-009352",
+      "guard-tachima-009408"
+    ],
+    "finding": "Temporary orange polyline follows unique labelled Apple Yosan rail glyph and remains distinct from Route56/271/Hijigawa. No false road join or reversed hairpin. Existing coarse source arc segmentation remains visible; no native-smoothed candidate acceptance claimed.",
+    "tunnelWarning": "Basemap blue rail continuation supports cartographic route only; no underground surveyed curvature claim. Label-covered local portions use adjacent continuous own rail, not text or nearest road.",
+    "fromBoundaryPending": true
+  }
+}

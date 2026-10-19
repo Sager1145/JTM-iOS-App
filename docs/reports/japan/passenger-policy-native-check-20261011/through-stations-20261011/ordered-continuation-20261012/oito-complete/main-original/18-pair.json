@@ -1,0 +1,70 @@
+{
+  "caseIndex": 18,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 18,
+  "source": {
+    "caseIndex": 18,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 18,
+    "fromStationID": "002264",
+    "toStationID": "002272",
+    "camera": [
+      36.401755,
+      137.8642575,
+      0.021644700000009464
+    ],
+    "effectiveCoordinates": [
+      [
+        137.86273,
+        36.40644
+      ],
+      [
+        137.86287,
+        36.40619
+      ],
+      [
+        137.86328,
+        36.40547
+      ],
+      [
+        137.86543,
+        36.40148
+      ],
+      [
+        137.8655,
+        36.40112
+      ],
+      [
+        137.86562,
+        36.40025
+      ],
+      [
+        137.86571,
+        36.39845
+      ],
+      [
+        137.86576,
+        36.39763
+      ],
+      [
+        137.86577,
+        36.39738
+      ],
+      [
+        137.865785,
+        36.39707
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:15.38;lod:14.23;backbones:0;networkStations:2;distance:4751.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.401755;centerLon:137.864258;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2281.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.401755;centerLon:137.864258;distance:4751.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-18.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Kita-Hosono to Hosono short corridor continuous. Initial Main ON blank grid rejected and valid same-camera replacement reviewed. Own frames unresolved."
+}

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "requestID": "hokuriku-eastern-arc-candidate",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/private/tmp/jtm-corner-repair-20261018/hokuriku-native-candidate",
+  "lineID": "jp-西日本旅客鉄道-北陸線-p1",
+  "intervalIndices": [
+    0
+  ],
+  "inputPath": "/private/tmp/jtm-corner-repair-20261018/hokuriku-candidate/jp-2025.json",
+  "captureSettings": {
+    "zoom": 17,
+    "width": 1024,
+    "height": 768,
+    "appearance": "light",
+    "outputModes": [
+      "basemap",
+      "display",
+      "smooth"
+    ]
+  }
+}

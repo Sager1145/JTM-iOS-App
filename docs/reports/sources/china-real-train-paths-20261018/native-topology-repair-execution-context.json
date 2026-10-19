@@ -1,0 +1,44 @@
+{
+  "schema": "cn-topology-repair-native/1",
+  "sourceApp": "/private/tmp/jtm-rail-diagnostics/Build/Products/Release-maccatalyst/RailDiagnostics.app",
+  "isolatedApp": "/private/tmp/cn-evidence-repair-20261019/ChinaRailComparison.app",
+  "bundleIdentifier": "com.JRM.RailDiagnostics.ChinaComparison.TopologyRepair20261019",
+  "resourceInputHashes": {
+    "cn-2025.json": "7101bb0e5e3f5076e0ab31d49e9e9abd63235cce2471df5c212723e54c8a24ba",
+    "rail-sections-cn.json": "a24992bf9bd1dc4e9fc9eca0f2764bd7e352ad6c23808db0376f6bebfbf5106c",
+    "stations-cn.json": "f3af115a0a6fa35f8b9b0c626eff6e3bd53debc2c7e4d30aebc0db4c4cfb898e",
+    "station-readings-cn.json": "03083c114739497ffa7f00feba6cb01b3156af13104c9f1ebe7b8884a17f1607",
+    "station-names-cn.json": "dedfb53e8496b74d206ef9d6f701355fd7331e8cf13a03b89a46bec4bf9496e2",
+    "physical-rail-junctions.json": "cf732262a535980568e6de1ca88b0bc890d94e732eabaff5b0939456f3f7d8f2"
+  },
+  "currentCNRevision": "264ab67d551fa1748c2141194407edb6d11e02a78ef911b7e6e7a1f8138172b3",
+  "graphCacheMode": "standard",
+  "shippingDefaultUnchanged": "bounded100000",
+  "frozenInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+  "builtExecutableSHA256": "0fe59d17c5d47a40779dc00959cac8fb7b17b211ed9c6af05f9f538761f7c55d",
+  "executableBytesIdenticalBeforeResign": true,
+  "isolationEdits": [
+    "CFBundleIdentifier/CFBundleDisplayName/CFBundleName",
+    "ad-hoc outer signature preserving existing entitlements and flags"
+  ],
+  "buildLog": "/private/tmp/cn-evidence-repair-20261019/release-build.log",
+  "sourceValidation": "topology-repair-source-review.json",
+  "samePhysicalStandard": true,
+  "focusedBuilderTests": 40,
+  "baselineUnchangedCommit": "d75307df9c812abf1259b86b75202ba7b0048679",
+  "baselineReuse": "Same original graph/service/source files verified unchanged; same frozen cases. Existing original engine outputs reused.",
+  "compiledUUIDs": [
+    "3CDE2723-D411-394E-AF0A-310BB03005F5 (arm64)"
+  ],
+  "compiledUUIDsMatchBuiltApp": true,
+  "compiledUUIDsMatchPreviousSourceAnchorRun": true,
+  "resignedExecutableSHA256": "82b2614647d1deb67848bfb4056f492a5dd78efb7da565a04d921f85f25b6066",
+  "completedAt": "2026-10-19T06:04:24Z",
+  "nativeRows": 176,
+  "processID": 91341,
+  "invocationID": "0E8C07C0-DE3F-40E0-851C-7B8EBCEDFD0C",
+  "completedProcessStoppedAfterExactPathAndInactiveCheck": true,
+  "finalSession": "railway-sources/local/china/comparisons/real-trains-20261018/native-topology-repair-final-session",
+  "structuralFailures": 0,
+  "remainingReviews": 701
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "complete20 intervals21aliases",
+  "exactStationJoins": true,
+  "maximumInternalTurn": [
+    32.21980104310715,
+    [
+      18,
+      29,
+      [
+        134.00785080599996,
+        33.43034823699998
+      ]
+    ]
+  ],
+  "manuallyOpenedBodyProposalViews": 48,
+  "nativeAccepted": false,
+  "productionApplied": false,
+  "physicalIdentity": "distinct labelled schematic and physical rails independently resolved; Yoshikawa restored"
+}

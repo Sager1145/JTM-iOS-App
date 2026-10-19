@@ -1,0 +1,100 @@
+{
+  "schema": "cn-source-display-cache-review/1",
+  "observedStaleCacheEntries": [
+    {
+      "cacheFile": "canup4xcuj.json",
+      "modifiedAt": "2026-10-19T07:03:50.367057+00:00",
+      "resourceRevision": "cn:cdd58c633a33a8f246de14ae638895f1b7b4bc5c865ce5fdb6529351c7a6af23",
+      "sectionIndex": 10,
+      "selection": {
+        "fromStationCode": "CN-12306-KMM",
+        "lines": [
+          {
+            "km": 33.040076956055195,
+            "lineID": "cn-osm-relation-7909742",
+            "operatorName": "昆明地铁运营有限公司",
+            "name": "昆明地铁1号线（昆明南火车站 → 环城南路）"
+          }
+        ],
+        "intervals": [],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-KOM"
+      },
+      "sourceVertexCount": 309
+    },
+    {
+      "cacheFile": "1agxqfugaeg.json",
+      "modifiedAt": "2026-10-18T22:06:07.662789+00:00",
+      "resourceRevision": "cn:b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e",
+      "sectionIndex": 0,
+      "selection": {
+        "lines": [
+          {
+            "lineID": "cn-osm-relation-7909742",
+            "operatorName": "昆明地铁运营有限公司",
+            "km": 24.870441541091715,
+            "name": "昆明地铁1号线（昆明南火车站 → 环城南路）"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "fromStationCode": "CN-12306-KMM",
+        "intervals": [],
+        "toStationCode": "CN-12306-KOM"
+      },
+      "sourceVertexCount": 294
+    },
+    {
+      "cacheFile": "34vzz5tg0o.json",
+      "modifiedAt": "2026-10-18T22:04:46.225657+00:00",
+      "resourceRevision": "cn:b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e",
+      "sectionIndex": 10,
+      "selection": {
+        "lines": [
+          {
+            "km": 24.870441541091715,
+            "lineID": "cn-osm-relation-7909742",
+            "operatorName": "昆明地铁运营有限公司",
+            "name": "昆明地铁1号线（昆明南火车站 → 环城南路）"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "fromStationCode": "CN-12306-KMM",
+        "toStationCode": "CN-12306-KOM",
+        "intervals": []
+      },
+      "sourceVertexCount": 294
+    },
+    {
+      "cacheFile": "14yzmlc5vnf.json",
+      "modifiedAt": "2026-10-19T06:56:42.922709+00:00",
+      "resourceRevision": "cn:cdd58c633a33a8f246de14ae638895f1b7b4bc5c865ce5fdb6529351c7a6af23",
+      "sectionIndex": 0,
+      "selection": {
+        "toStationCode": "CN-12306-KOM",
+        "intervals": [],
+        "provenance": "matchedGeometry",
+        "lines": [
+          {
+            "operatorName": "昆明地铁运营有限公司",
+            "name": "昆明地铁1号线（昆明南火车站 → 环城南路）",
+            "lineID": "cn-osm-relation-7909742",
+            "km": 33.040076956055195
+          }
+        ],
+        "fromStationCode": "CN-12306-KMM"
+      },
+      "sourceVertexCount": 309
+    }
+  ],
+  "failure": "New native guard build reused previously persisted physicalRoute/drawn geometry because source data and old solveContext digest were unchanged.",
+  "fix": "CN-only source-display-identity:1 solve-context epoch in Swift and JavaScript; global version and other countries unchanged.",
+  "userCacheDeleted": false,
+  "focusedOldCacheSession": "railway-sources/local/china/comparisons/real-trains-20261018/focused-source-display-before-cache-epoch",
+  "CNCacheEpoch": "source-display-identity:1",
+  "sourceAnchorEpochUnchanged": "source-anchor:1",
+  "globalSolverVersionUnchanged": "27",
+  "focusedTests": {
+    "Swift RecordedStationSourceAnchorTests/sourceAnchorCacheRevisionIsLimitedToCN": 1,
+    "Node web-physical-junctions.test.mjs": 19
+  }
+}

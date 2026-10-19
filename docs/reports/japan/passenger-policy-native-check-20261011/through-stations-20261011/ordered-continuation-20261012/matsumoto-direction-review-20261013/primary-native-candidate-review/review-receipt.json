@@ -1,0 +1,253 @@
+{
+  "format": "jtm-matsumoto-primary-complete-native-review-v1",
+  "status": "accepted-primary-actual-runtime",
+  "scope": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate",
+  "reviewDate": "2026-10-13",
+  "sourceReceipts": {
+    "reportSha256": "10d1ee75ad290afe4ff58b9bb009f53bcbe2b22fd8739902b27c3c8080f727bc",
+    "checkpointSha256": "f7bea97c7f7f5336b390c2913f794a8570ab0be56c7ccca3d11f744e37f32d42",
+    "planSha256": "01abad4a02e0fb6777995851fa37e42c69a5ea3f14926a80febcde4953af189c"
+  },
+  "counts": {
+    "intervals": 5,
+    "viewpointTriples": 47,
+    "panels": 141,
+    "basemapPanels": 47,
+    "displayPanels": 47,
+    "smoothPanels": 47,
+    "failedCaptures": 0,
+    "targetPendingCaptures": 0,
+    "contactSheetsReviewed": 11,
+    "focusedOriginalPanelsReviewed": 16,
+    "decodedPanelDimensions": {
+      "(1024, 768)": 141
+    }
+  },
+  "items": [
+    {
+      "captureID": "000333",
+      "itemID": "jp-アルピコ交通-上高地線#0",
+      "viewpoints": 3,
+      "triples": 3,
+      "panels": 9,
+      "viewpointIDs": [
+        "000000",
+        "000001",
+        "000002"
+      ],
+      "reportMetrics": {
+        "capturedCount": 3,
+        "failedCount": 0,
+        "pendingCount": 0,
+        "candidateViewpointCountOver10m": 0,
+        "displayToDecodedDisplayMaximumMetres": 4.182207951813045e-09,
+        "smoothToDisplayMaximumMetres": 0.9680929839524095
+      }
+    },
+    {
+      "captureID": "004875",
+      "itemID": "jp-東日本旅客鉄道-大糸線#30",
+      "viewpoints": 7,
+      "triples": 7,
+      "panels": 21,
+      "viewpointIDs": [
+        "000000",
+        "000001",
+        "000002",
+        "000003",
+        "000004",
+        "000005",
+        "000006"
+      ],
+      "reportMetrics": {
+        "capturedCount": 7,
+        "failedCount": 0,
+        "pendingCount": 0,
+        "candidateViewpointCountOver10m": 0,
+        "displayToDecodedDisplayMaximumMetres": 0.010498485704244699,
+        "smoothToDisplayMaximumMetres": 2.6061234314072648
+      }
+    },
+    {
+      "captureID": "004876",
+      "itemID": "jp-東日本旅客鉄道-大糸線#31",
+      "viewpoints": 3,
+      "triples": 3,
+      "panels": 9,
+      "viewpointIDs": [
+        "000000",
+        "000001",
+        "000002"
+      ],
+      "reportMetrics": {
+        "capturedCount": 3,
+        "failedCount": 0,
+        "pendingCount": 0,
+        "candidateViewpointCountOver10m": 0,
+        "displayToDecodedDisplayMaximumMetres": 3.646540659776554e-09,
+        "smoothToDisplayMaximumMetres": 3.1877261325384945
+      }
+    },
+    {
+      "captureID": "005681",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#4",
+      "viewpoints": 8,
+      "triples": 8,
+      "panels": 24,
+      "viewpointIDs": [
+        "000000",
+        "000001",
+        "000002",
+        "000003",
+        "000004",
+        "000005",
+        "000006",
+        "000007"
+      ],
+      "reportMetrics": {
+        "capturedCount": 8,
+        "failedCount": 0,
+        "pendingCount": 0,
+        "candidateViewpointCountOver10m": 0,
+        "displayToDecodedDisplayMaximumMetres": 0.02133944195971249,
+        "smoothToDisplayMaximumMetres": 0.48481197325885317
+      }
+    },
+    {
+      "captureID": "005682",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#5",
+      "viewpoints": 26,
+      "triples": 26,
+      "panels": 78,
+      "viewpointIDs": [
+        "000000",
+        "000001",
+        "000002",
+        "000003",
+        "000004",
+        "000005",
+        "000006",
+        "000007",
+        "000008",
+        "000009",
+        "000010",
+        "000011",
+        "000012",
+        "000013",
+        "000014",
+        "000015",
+        "000016",
+        "000017",
+        "000018",
+        "000019",
+        "000020",
+        "000021",
+        "000022",
+        "000023",
+        "000024",
+        "000025"
+      ],
+      "reportMetrics": {
+        "capturedCount": 26,
+        "failedCount": 0,
+        "pendingCount": 0,
+        "candidateViewpointCountOver10m": 0,
+        "displayToDecodedDisplayMaximumMetres": 8.300168215386478e-09,
+        "smoothToDisplayMaximumMetres": 2.069242010532482
+      }
+    }
+  ],
+  "reviewMethod": {
+    "allPanels": "Every actual basemap/display/smooth panel was viewed in ordered contact sheets. Cyan display and red smooth were reviewed as actual Inspector output, not as an external reference overlay.",
+    "focusedOriginals": [
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004876/000002/basemap.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004876/000002/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004876/000002/smooth.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004875/000006/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004875/000006/smooth.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004876/000000/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/004876/000000/smooth.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005681/000007/basemap.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005681/000007/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005681/000007/smooth.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005682/000000/basemap.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005682/000000/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/005682/000000/smooth.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/000333/000000/basemap.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/000333/000000/display.png",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/primary-complete-native-candidate/captures/000333/000000/smooth.png"
+    ],
+    "contactSheets": [
+      "/private/tmp/jtm-matsumoto-primary-after-review/000333-page1.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/004875-page1.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/004875-page2.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/004876-page1.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005681-page1.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005681-page2.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005682-page1.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005682-page2.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005682-page3.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005682-page4.jpg",
+      "/private/tmp/jtm-matsumoto-primary-after-review/005682-page5.jpg"
+    ],
+    "focusedCrop": "/private/tmp/jtm-matsumoto-primary-after-review/oito31-station-tail-actual-crop.png"
+  },
+  "coordinateChecks": {
+    "oito31RenderedEndpoint": [
+      137.96367165960635,
+      36.23167271499838
+    ],
+    "oito31PhysicalJunctionAbsentFromDisplay": true,
+    "physicalJunction": [
+      137.96405,
+      36.2314
+    ],
+    "shinonoi4RenderedEndpoint": [
+      137.964625,
+      36.23027
+    ],
+    "shinonoi5RenderedStart": [
+      137.964625,
+      36.23027
+    ],
+    "alpico0RenderedStart": [
+      137.96378,
+      36.231055
+    ]
+  },
+  "findings": [
+    {
+      "check": "Oito #31 own-frame tail",
+      "result": "pass",
+      "evidence": "Actual cyan and red terminate together along the western Oito platform-6 axis; the former diagonal cross-platform hook to the physical J/old endpoint is absent."
+    },
+    {
+      "check": "Oito #30/#31 north seam and full intervals",
+      "result": "pass",
+      "evidence": "The last #30 and first #31 actual display/smooth panels meet continuously at Kita-Matsumoto; no gap, retrace, or direction reversal appears in any of the ten Oito viewpoints."
+    },
+    {
+      "check": "Shinonoi #4/#5 through Matsumoto and north fork direction",
+      "result": "pass",
+      "evidence": "The complete 34 Shinonoi viewpoints retain the same south-to-north through alignment across Matsumoto. No reverse-U bypass or artificial northern connection is drawn."
+    },
+    {
+      "check": "Alpico #0 independence",
+      "result": "pass",
+      "evidence": "All three actual Alpico viewpoints remain on the independent western Kamikochi terminal path; there is no rendered merge into Oito or Shinonoi."
+    },
+    {
+      "check": "Complete Primary visual continuity",
+      "result": "pass",
+      "evidence": "All 47 triples / 141 actual panels were reviewed; no new hook, loop, break, jump, or wrong-branch transition was found."
+    }
+  ],
+  "numericContext": {
+    "maximumSmoothToDisplayMetresAcrossScope": 3.1877261325384945,
+    "viewpointsOver10Metres": 0
+  },
+  "verdict": "accept-primary-runtime",
+  "limitations": [
+    "This receipt accepts the Primary Inspector only. Other Inspectors and Main ON/OFF remain separate acceptance surfaces owned by the root task."
+  ]
+}

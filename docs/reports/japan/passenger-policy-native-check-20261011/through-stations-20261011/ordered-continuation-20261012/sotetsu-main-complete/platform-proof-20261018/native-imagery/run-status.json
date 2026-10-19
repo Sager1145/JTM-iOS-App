@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "4DBD5615-7919-4CE9-8755-FFB1B4780569",
+  "message" : "7\/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "yokohama-own-platform-imagery",
+  "resultPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-imagery\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T04:51:55Z"
+}

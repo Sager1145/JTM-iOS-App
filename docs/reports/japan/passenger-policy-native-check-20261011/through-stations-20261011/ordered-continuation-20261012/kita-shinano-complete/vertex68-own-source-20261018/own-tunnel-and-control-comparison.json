@@ -1,0 +1,933 @@
+{
+  "status": "Own conventional main tunnel pair identified. Apple own-labelled corridor independently supports a tiny display-only step-removal proposal; physical tunnel centre unproved.",
+  "lineID": "jp-しなの鉄道-北しなの線",
+  "stationDirection": {
+    "from": [
+      "001746",
+      "妙高高原",
+      138.212185,
+      36.872305,
+      "Myōkō-Kōgen",
+      1
+    ],
+    "to": [
+      "001788",
+      "黒姫",
+      138.19711,
+      36.80732,
+      "Kurohime",
+      1
+    ]
+  },
+  "ways": [
+    {
+      "type": "way",
+      "id": 462174017,
+      "timestamp": "2016-12-27T18:32:14Z",
+      "version": 1,
+      "changeset": 44712813,
+      "user": "mfuji",
+      "uid": 659706,
+      "nodes": [
+        4575781783,
+        4575781782
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.1887958,
+          36.8386271
+        ],
+        [
+          138.188651,
+          36.8390194
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 4575781783,
+          "tags": null
+        },
+        {
+          "id": 4575781782,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "type": "way",
+      "id": 462174018,
+      "timestamp": "2016-12-27T18:32:14Z",
+      "version": 1,
+      "changeset": 44712813,
+      "user": "mfuji",
+      "uid": 659706,
+      "nodes": [
+        4575781860,
+        264809245
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.1886909,
+          36.8390291
+        ],
+        [
+          138.1888329,
+          36.8386498
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 4575781860,
+          "tags": null
+        },
+        {
+          "id": 264809245,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "type": "way",
+      "id": 462174020,
+      "timestamp": "2016-12-27T18:32:14Z",
+      "version": 1,
+      "changeset": 44712813,
+      "user": "mfuji",
+      "uid": 659706,
+      "nodes": [
+        4575781780,
+        4575781784
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.188591,
+          36.8339529
+        ],
+        [
+          138.1886202,
+          36.8340138
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 4575781780,
+          "tags": null
+        },
+        {
+          "id": 4575781784,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "type": "way",
+      "id": 462174023,
+      "timestamp": "2016-12-27T18:32:15Z",
+      "version": 1,
+      "changeset": 44712813,
+      "user": "mfuji",
+      "uid": 659706,
+      "nodes": [
+        264809263,
+        4575781862
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.1886551,
+          36.8339912
+        ],
+        [
+          138.1886239,
+          36.8339366
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 264809263,
+          "tags": null
+        },
+        {
+          "id": 4575781862,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "type": "way",
+      "id": 462174024,
+      "timestamp": "2024-02-25T03:21:55Z",
+      "version": 3,
+      "changeset": 147876778,
+      "user": "芋けんぴ",
+      "uid": 5544581,
+      "nodes": [
+        4575781784,
+        11661860719,
+        11661860722,
+        11661860727,
+        11661860731,
+        11661860723,
+        11661860724,
+        11661860720,
+        4575781783
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-1",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "tunnel": "yes",
+        "tunnel:name": "野尻トンネル",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.1886202,
+          36.8340138
+        ],
+        [
+          138.1888717,
+          36.834555
+        ],
+        [
+          138.1891685,
+          36.835196
+        ],
+        [
+          138.1893258,
+          36.8357852
+        ],
+        [
+          138.189373,
+          36.8361287
+        ],
+        [
+          138.1893793,
+          36.8366866
+        ],
+        [
+          138.1893175,
+          36.8370523
+        ],
+        [
+          138.1891361,
+          36.8376454
+        ],
+        [
+          138.1887958,
+          36.8386271
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 4575781784,
+          "tags": null
+        },
+        {
+          "id": 11661860719,
+          "tags": null
+        },
+        {
+          "id": 11661860722,
+          "tags": null
+        },
+        {
+          "id": 11661860727,
+          "tags": null
+        },
+        {
+          "id": 11661860731,
+          "tags": null
+        },
+        {
+          "id": 11661860723,
+          "tags": null
+        },
+        {
+          "id": 11661860724,
+          "tags": null
+        },
+        {
+          "id": 11661860720,
+          "tags": null
+        },
+        {
+          "id": 4575781783,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "type": "way",
+      "id": 462174025,
+      "timestamp": "2024-02-25T03:21:55Z",
+      "version": 3,
+      "changeset": 147876778,
+      "user": "芋けんぴ",
+      "uid": 5544581,
+      "nodes": [
+        264809245,
+        11661860721,
+        11661860729,
+        11661860726,
+        11661860725,
+        11661860728,
+        11661860718,
+        11661860730,
+        264809263
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-1",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "tunnel": "yes",
+        "tunnel:name": "野尻トンネル",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          138.1888329,
+          36.8386498
+        ],
+        [
+          138.1891995,
+          36.8376619
+        ],
+        [
+          138.1893743,
+          36.837062
+        ],
+        [
+          138.1894532,
+          36.836693
+        ],
+        [
+          138.1894452,
+          36.8361243
+        ],
+        [
+          138.189389,
+          36.8357759
+        ],
+        [
+          138.1892238,
+          36.8351803
+        ],
+        [
+          138.188921,
+          36.8345432
+        ],
+        [
+          138.1886551,
+          36.8339912
+        ]
+      ],
+      "nodeTags": [
+        {
+          "id": 264809245,
+          "tags": null
+        },
+        {
+          "id": 11661860721,
+          "tags": null
+        },
+        {
+          "id": 11661860729,
+          "tags": null
+        },
+        {
+          "id": 11661860726,
+          "tags": null
+        },
+        {
+          "id": 11661860725,
+          "tags": null
+        },
+        {
+          "id": 11661860728,
+          "tags": null
+        },
+        {
+          "id": 11661860718,
+          "tags": null
+        },
+        {
+          "id": 11661860730,
+          "tags": null
+        },
+        {
+          "id": 264809263,
+          "tags": null
+        }
+      ],
+      "cacheGeometryExact": true
+    }
+  ],
+  "chainsNorthToSouth": [
+    {
+      "northToSouthWayIDs": [
+        462174017,
+        462174024,
+        462174020
+      ],
+      "nodeIDs": [
+        4575781782,
+        4575781783,
+        11661860720,
+        11661860724,
+        11661860723,
+        11661860731,
+        11661860727,
+        11661860722,
+        11661860719,
+        4575781784,
+        4575781780
+      ],
+      "coordinates": [
+        [
+          138.188651,
+          36.8390194
+        ],
+        [
+          138.1887958,
+          36.8386271
+        ],
+        [
+          138.1891361,
+          36.8376454
+        ],
+        [
+          138.1893175,
+          36.8370523
+        ],
+        [
+          138.1893793,
+          36.8366866
+        ],
+        [
+          138.189373,
+          36.8361287
+        ],
+        [
+          138.1893258,
+          36.8357852
+        ],
+        [
+          138.1891685,
+          36.835196
+        ],
+        [
+          138.1888717,
+          36.834555
+        ],
+        [
+          138.1886202,
+          36.8340138
+        ],
+        [
+          138.188591,
+          36.8339529
+        ]
+      ]
+    },
+    {
+      "northToSouthWayIDs": [
+        462174018,
+        462174025,
+        462174023
+      ],
+      "nodeIDs": [
+        4575781860,
+        264809245,
+        11661860721,
+        11661860729,
+        11661860726,
+        11661860725,
+        11661860728,
+        11661860718,
+        11661860730,
+        264809263,
+        4575781862
+      ],
+      "coordinates": [
+        [
+          138.1886909,
+          36.8390291
+        ],
+        [
+          138.1888329,
+          36.8386498
+        ],
+        [
+          138.1891995,
+          36.8376619
+        ],
+        [
+          138.1893743,
+          36.837062
+        ],
+        [
+          138.1894532,
+          36.836693
+        ],
+        [
+          138.1894452,
+          36.8361243
+        ],
+        [
+          138.189389,
+          36.8357759
+        ],
+        [
+          138.1892238,
+          36.8351803
+        ],
+        [
+          138.188921,
+          36.8345432
+        ],
+        [
+          138.1886551,
+          36.8339912
+        ],
+        [
+          138.1886239,
+          36.8339366
+        ]
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": 4669040,
+      "version": 29,
+      "timestamp": "2026-10-04T10:51:02Z",
+      "tags": {
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "route": "railway",
+        "type": "route",
+        "wikidata": "Q19569921",
+        "wikipedia": "ja:しなの鉄道北しなの線"
+      },
+      "ownMembers": [
+        {
+          "index": 41,
+          "type": "way",
+          "ref": 462174020,
+          "role": ""
+        },
+        {
+          "index": 42,
+          "type": "way",
+          "ref": 462174024,
+          "role": ""
+        },
+        {
+          "index": 43,
+          "type": "way",
+          "ref": 462174017,
+          "role": ""
+        },
+        {
+          "index": 65,
+          "type": "way",
+          "ref": 462174023,
+          "role": ""
+        },
+        {
+          "index": 66,
+          "type": "way",
+          "ref": 462174025,
+          "role": ""
+        },
+        {
+          "index": 67,
+          "type": "way",
+          "ref": 462174018,
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": 14097999,
+      "version": 22,
+      "timestamp": "2026-10-04T10:51:02Z",
+      "tags": {
+        "from": "軽井沢",
+        "name": "かもめビーチ",
+        "route": "train",
+        "to": "能生",
+        "type": "route",
+        "wikidata": "Q111810575"
+      },
+      "ownMembers": [
+        {
+          "index": 166,
+          "type": "way",
+          "ref": 462174020,
+          "role": ""
+        },
+        {
+          "index": 167,
+          "type": "way",
+          "ref": 462174024,
+          "role": ""
+        },
+        {
+          "index": 168,
+          "type": "way",
+          "ref": 462174017,
+          "role": ""
+        }
+      ]
+    }
+  ],
+  "oldWindowProjections": [
+    {
+      "index": 64,
+      "coordinate": [
+        138.18831,
+        36.83967
+      ],
+      "westMain": {
+        "distanceM": 123.76172121899917,
+        "insertIndex": 7,
+        "point": [
+          138.1887958,
+          36.8386271
+        ]
+      },
+      "eastMain": {
+        "distanceM": 122.61435273030712,
+        "insertIndex": 0,
+        "point": [
+          138.1888329,
+          36.8386498
+        ]
+      }
+    },
+    {
+      "index": 65,
+      "coordinate": [
+        138.18857,
+        36.83857
+      ],
+      "westMain": {
+        "distanceM": 21.060517396069496,
+        "insertIndex": 7,
+        "point": [
+          138.18879804175108,
+          36.83862063297966
+        ]
+      },
+      "eastMain": {
+        "distanceM": 24.95417939762579,
+        "insertIndex": 0,
+        "point": [
+          138.1888388031245,
+          36.83863389248035
+        ]
+      }
+    },
+    {
+      "index": 66,
+      "coordinate": [
+        138.18861,
+        36.838
+      ],
+      "westMain": {
+        "distanceM": 34.574397761236234,
+        "insertIndex": 7,
+        "point": [
+          138.18898436607566,
+          36.838083123166456
+        ]
+      },
+      "eastMain": {
+        "distanceM": 39.58688070076136,
+        "insertIndex": 0,
+        "point": [
+          138.18903642121467,
+          36.838101358625316
+        ]
+      }
+    },
+    {
+      "index": 67,
+      "coordinate": [
+        138.18863,
+        36.83697
+      ],
+      "westMain": {
+        "distanceM": 61.60492878711241,
+        "insertIndex": 6,
+        "point": [
+          138.1893023822636,
+          36.837101728497515
+        ]
+      },
+      "eastMain": {
+        "distanceM": 66.83096721092137,
+        "insertIndex": 1,
+        "point": [
+          138.18936133354757,
+          36.83710649985589
+        ]
+      }
+    },
+    {
+      "index": 68,
+      "coordinate": [
+        138.18858,
+        36.8364
+      ],
+      "westMain": {
+        "distanceM": 70.84283159611827,
+        "insertIndex": 4,
+        "point": [
+          138.18937599859441,
+          36.836394242193116
+        ]
+      },
+      "eastMain": {
+        "distanceM": 77.33877106614635,
+        "insertIndex": 3,
+        "point": [
+          138.1894489681706,
+          36.83639216982926
+        ]
+      }
+    },
+    {
+      "index": 69,
+      "coordinate": [
+        138.18864,
+        36.83637
+      ],
+      "westMain": {
+        "distanceM": 65.47322440035988,
+        "insertIndex": 4,
+        "point": [
+          138.1893756647522,
+          36.83636467861009
+        ]
+      },
+      "eastMain": {
+        "distanceM": 71.9618795183718,
+        "insertIndex": 3,
+        "point": [
+          138.1894485538134,
+          36.83636271421027
+        ]
+      }
+    },
+    {
+      "index": 70,
+      "coordinate": [
+        138.18854,
+        36.83439
+      ],
+      "westMain": {
+        "distanceM": 21.272629142500918,
+        "insertIndex": 0,
+        "point": [
+          138.18876403100296,
+          36.83432330830536
+        ]
+      },
+      "eastMain": {
+        "distanceM": 25.510004234820116,
+        "insertIndex": 7,
+        "point": [
+          138.18880744893417,
+          36.83430747157452
+        ]
+      }
+    },
+    {
+      "index": 71,
+      "coordinate": [
+        138.18852,
+        36.83422
+      ],
+      "westMain": {
+        "distanceM": 16.351175000289672,
+        "insertIndex": 0,
+        "point": [
+          138.18869220067063,
+          36.83416873742725
+        ]
+      },
+      "eastMain": {
+        "distanceM": 20.370768879826652,
+        "insertIndex": 7,
+        "point": [
+          138.18873356824173,
+          36.83415409759094
+        ]
+      }
+    },
+    {
+      "index": 72,
+      "coordinate": [
+        138.18848,
+        36.83401
+      ],
+      "westMain": {
+        "distanceM": 12.484649008610374,
+        "insertIndex": 0,
+        "point": [
+          138.1886202,
+          36.8340138
+        ]
+      },
+      "eastMain": {
+        "distanceM": 15.723109770528062,
+        "insertIndex": 7,
+        "point": [
+          138.1886551,
+          36.8339912
+        ]
+      }
+    }
+  ],
+  "transverseOldEdgeHaversineM": 6.296058576856448,
+  "excludedAbandonedID": 1254501772,
+  "rawFeatureControlsMatch": true,
+  "viewedOriginalPaths": [
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000186/000014/basemap.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000186/000014/smooth.png"
+  ],
+  "sourceFiles": [
+    {
+      "file": "way-462174017-full.json",
+      "sha256": "288f9ad3fc211bbfd053ed0a4bf3f917767ad24991c3b0c17fb245c6c31e122d",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174017/full.json"
+    },
+    {
+      "file": "way-462174018-full.json",
+      "sha256": "1ad0ae8e92dc08098b33d4a78e01006f6de95a3c30d8dc61619fa3867333be60",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174018/full.json"
+    },
+    {
+      "file": "way-462174020-full.json",
+      "sha256": "082307cdea381a930660b80366aa192b81a0a87b7e2d7af757f31c064b45a53a",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174020/full.json"
+    },
+    {
+      "file": "way-462174023-full.json",
+      "sha256": "0c857933642e7530c965f4d17af87c517082e7cc9a8cc1b112a8431656ced25a",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174023/full.json"
+    },
+    {
+      "file": "way-462174024-full.json",
+      "sha256": "11474795193eec2500e51bf0b8a5ae7f2602c5bb4435f07192b25969a06214e9",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174024/full.json"
+    },
+    {
+      "file": "way-462174024-relations.json",
+      "sha256": "eeda5b48a9d4c80d35c0161b68c9284827269fd83110b22ff19ebf8d5345eacf",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174024/relations.json"
+    },
+    {
+      "file": "way-462174025-full.json",
+      "sha256": "377b605c88d8e390d5d7bdcbca6a4034b4866d6cc1b58fb7847c3921f2f7646f",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174025/full.json"
+    },
+    {
+      "file": "way-462174025-relations.json",
+      "sha256": "17039a17b004fc1214fa1f4b59e9786c6e8c8e085b67fccbe7f9856bbff6ce7f",
+      "url": "https://api.openstreetmap.org/api/0.6/way/462174025/relations.json"
+    }
+  ],
+  "projectionScopeNote": "Control64 is north of acquired tunnel geometry; its endpoint-clamped distance is not a lateral residual and is not used. Controls65..72 are within the acquired tunnel span."
+}

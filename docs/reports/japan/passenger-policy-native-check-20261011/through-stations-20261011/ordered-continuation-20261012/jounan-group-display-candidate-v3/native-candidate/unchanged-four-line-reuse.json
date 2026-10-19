@@ -1,0 +1,38 @@
+{
+  "status": "current-relevant-input-equivalence",
+  "reusedFrom": "jounan-group-display-candidate-v1/native-candidate",
+  "intervalCount": 17,
+  "viewpointCount": 41,
+  "panelCount": 123,
+  "lines": [
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "sourceAndDisplayInputsEqual": true,
+      "nativeRowsEqual": true,
+      "intervalCount": 8,
+      "ignoredProvenanceOnly": "displayOverrides; not decoded by CompactPackage renderer"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "sourceAndDisplayInputsEqual": true,
+      "nativeRowsEqual": true,
+      "intervalCount": 4,
+      "ignoredProvenanceOnly": "displayOverrides; not decoded by CompactPackage renderer"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "sourceAndDisplayInputsEqual": true,
+      "nativeRowsEqual": true,
+      "intervalCount": 4,
+      "ignoredProvenanceOnly": "displayOverrides; not decoded by CompactPackage renderer"
+    },
+    {
+      "lineID": "jp-伊予鉄道-連絡線",
+      "sourceAndDisplayInputsEqual": true,
+      "nativeRowsEqual": true,
+      "intervalCount": 1,
+      "ignoredProvenanceOnly": "displayOverrides; not decoded by CompactPackage renderer"
+    }
+  ],
+  "limitations": "Inspector isolated-line evidence only. Main is being fully replayed with V3."
+}

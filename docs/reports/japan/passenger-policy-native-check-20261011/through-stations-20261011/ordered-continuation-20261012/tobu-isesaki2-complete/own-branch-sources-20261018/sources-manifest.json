@@ -1,0 +1,41 @@
+{
+  "retrievedDate": "2026-10-18",
+  "sources": [
+    {
+      "file": "osm-api-hikifune-own-branch.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=139.8155,35.7162,139.8176,35.7195",
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+      "role": "Own operator/route memberships and track/platform topology; KSJ2 ancestry, not an independent survey",
+      "retainedBytes": 690794
+    },
+    {
+      "file": "osm-way-155874957-full.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/way/155874957/full",
+      "attribution": "© OpenStreetMap contributors, ODbL 1.0",
+      "role": "Explicit own branch continuation south of initial way",
+      "retainedBytes": 3120
+    },
+    {
+      "file": "tobu-hikifune-map-page.html",
+      "url": "https://www.tobu.co.jp/railway/guide/station/insidemap/1104/",
+      "attribution": "Tobu Railway",
+      "role": "Official station plan container",
+      "retainedBytes": 2974
+    },
+    {
+      "file": "tobu-hikifune-official-layout.gif",
+      "url": "https://www.tobu.co.jp/cms-img/stations/insidemap/1104_image01.gif",
+      "attribution": "Tobu Railway",
+      "role": "Official current four main passenger tracks plus separate Kameido track5; schematic only",
+      "retainedBytes": 79855
+    },
+    {
+      "file": "n02-own-hikifune-fragments.json",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/mlit-N02-25_GML.zip",
+      "attribution": "国土交通省 国土数値情報（鉄道データ N02）2025年度（令和7年度）版を加工して作成",
+      "role": "Relevant exact own source fragments retained; original reused outside repo, no new large download",
+      "retainedBytes": 3896
+    }
+  ]
+}

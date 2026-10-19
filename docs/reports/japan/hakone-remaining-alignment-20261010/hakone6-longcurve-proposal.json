@@ -1,0 +1,408 @@
+{
+  "format": "jtm-hakone6-cartographic-display-v1",
+  "date": "2026-10-11",
+  "status": "reviewed-display-cartographic-supplement; native rebuilt follow-up pending",
+  "lineID": "jp-小田急箱根-鉄道線",
+  "interval": 6,
+  "kind": "Apple native original-rail cartographic display override; no underground survey claim",
+  "sourceWindow": {
+    "wayID": 242460442,
+    "indicesInclusive": [
+      47,
+      54
+    ],
+    "coordinates": [
+      [
+        139.072621,
+        35.2364299
+      ],
+      [
+        139.0701379,
+        35.2363486
+      ],
+      [
+        139.0700268,
+        35.2363591
+      ],
+      [
+        139.0699144,
+        35.2363792
+      ],
+      [
+        139.0697975,
+        35.2364118
+      ],
+      [
+        139.0696805,
+        35.2364632
+      ],
+      [
+        139.0695778,
+        35.236524
+      ],
+      [
+        139.0694651,
+        35.2365981
+      ]
+    ],
+    "nodeIDsEastWest": [
+      264204119,
+      264204132
+    ],
+    "unchangedNeighbourIndices": [
+      46,
+      55
+    ]
+  },
+  "coordinates": [
+    [
+      139.072621,
+      35.2364299
+    ],
+    [
+      139.0726085845,
+      35.2364294935
+    ],
+    [
+      139.0725671183355,
+      35.23642983396226
+    ],
+    [
+      139.07242774252276,
+      35.23642413018868
+    ],
+    [
+      139.07228836671,
+      35.23641272264151
+    ],
+    [
+      139.07214899089726,
+      35.23640131509434
+    ],
+    [
+      139.07200961508454,
+      35.23638990754717
+    ],
+    [
+      139.0718702392718,
+      35.2363785
+    ],
+    [
+      139.07173086345904,
+      35.23636138867925
+    ],
+    [
+      139.0715914876463,
+      35.23634998113208
+    ],
+    [
+      139.07145211183357,
+      35.23634427735849
+    ],
+    [
+      139.07131273602081,
+      35.23634427735849
+    ],
+    [
+      139.07117336020806,
+      35.23634427735849
+    ],
+    [
+      139.0710339843953,
+      35.23634427735849
+    ],
+    [
+      139.0708946085826,
+      35.23634998113208
+    ],
+    [
+      139.07075523276984,
+      35.23636138867925
+    ],
+    [
+      139.0706158569571,
+      35.23637279622642
+    ],
+    [
+      139.07047648114434,
+      35.23638990754717
+    ],
+    [
+      139.07033710533162,
+      35.23640701886792
+    ],
+    [
+      139.07019772951887,
+      35.23642983396226
+    ],
+    [
+      139.07005835370612,
+      35.23645835283019
+    ],
+    [
+      139.06991897789337,
+      35.23648116792453
+    ],
+    [
+      139.06977960208064,
+      35.23651539056604
+    ],
+    [
+      139.0696402262679,
+      35.23656102075472
+    ],
+    [
+      139.06957053836152,
+      35.23657813207547
+    ],
+    [
+      139.0695287256177,
+      35.23658155433962
+    ],
+    [
+      139.0694938816645,
+      35.23658497660377
+    ],
+    [
+      139.0694722085056,
+      35.23659124536962
+    ],
+    [
+      139.0694651,
+      35.2365981
+    ]
+  ],
+  "nativeReference": {
+    "directory": "../passenger-policy-native-check-20261011/parallel-instance-hakone",
+    "original": "current-hakone6-tunnel-context-z18-basemap.png",
+    "overlay": "current-hakone6-tunnel-context-z18-overlay.png",
+    "ax": "current-hakone6-tunnel-context-z18-basemap.ax.txt",
+    "cameraCenter": [
+      139.071031,
+      35.236379
+    ],
+    "uiZoom": 18,
+    "axZoom": 19,
+    "mapScreenshotRect": [
+      255,
+      149,
+      769,
+      530
+    ],
+    "wgs84Bounds": [
+      139.068351,
+      35.234867,
+      139.07371,
+      35.23789
+    ],
+    "transform": "longitude=west+(pixelX-255)/769*(east-west); latitude=north-(pixelY-149)/530*(north-south). AX rounded six-decimal corners; no subpixel accuracy claimed.",
+    "rawReferencePixels": [
+      [
+        860,
+        405
+      ],
+      [
+        840,
+        406
+      ],
+      [
+        820,
+        408
+      ],
+      [
+        800,
+        410
+      ],
+      [
+        780,
+        412
+      ],
+      [
+        760,
+        414
+      ],
+      [
+        740,
+        417
+      ],
+      [
+        720,
+        419
+      ],
+      [
+        700,
+        420
+      ],
+      [
+        680,
+        420
+      ],
+      [
+        660,
+        420
+      ],
+      [
+        640,
+        420
+      ],
+      [
+        620,
+        419
+      ],
+      [
+        600,
+        417
+      ],
+      [
+        580,
+        415
+      ],
+      [
+        560,
+        412
+      ],
+      [
+        540,
+        409
+      ],
+      [
+        520,
+        405
+      ],
+      [
+        500,
+        400
+      ],
+      [
+        480,
+        396
+      ],
+      [
+        460,
+        390
+      ],
+      [
+        440,
+        382
+      ],
+      [
+        430,
+        379
+      ]
+    ],
+    "crossCheckOriginal": "current-hakone6-long-approach-view4-z19-basemap.png",
+    "crossCheckOverlay": "current-hakone6-long-approach-view4-z19-overlay.png",
+    "screenshotPixelObservationUncertainty": 1,
+    "nativeMetresPerScreenshotPixelApprox": 0.635,
+    "eastBoundaryPixel": [
+      867.7318529565309,
+      404.9884220978289
+    ],
+    "westBoundaryPixel": [
+      414.86991976050837,
+      375.49917300672087
+    ],
+    "observedBoundaryRailPixels": [
+      [
+        868,
+        405
+      ],
+      [
+        415,
+        374
+      ]
+    ]
+  },
+  "join": {
+    "east": "Preserve source47 exactly; short source47→48 tangent guard follows frozen source chord before meeting original Apple rail.",
+    "west": "Preserve source54 exactly; one-metre guard along reverse source54→55 tangent. Two local transition supports approximate the observed sharp western transition rather than rounding it into a generic arc.",
+    "westGuardCoordinate": [
+      139.0694722085056,
+      35.23659124536962
+    ],
+    "westTransitionPixels": [
+      [
+        424,
+        378.4
+      ],
+      [
+        419,
+        377.8
+      ]
+    ],
+    "westDisplayAliasBoundMetres": 2.0,
+    "limit": "Frozen west boundary lies about1m from raster black rail. Guard/transition is a bounded display alias; not cartographic point-perfect acceptance."
+  },
+  "sameLegEvidence": {
+    "OSMWay": 242460442,
+    "OSMUsage": "main",
+    "OSMTunnel": true,
+    "OSMOperator": "小田急箱根",
+    "GSIReference": "gsi-railway-reference.geojson",
+    "GSITunnelFeatures": [
+      57,
+      74
+    ],
+    "GSIDuplicateTunnelFeatures": [
+      59,
+      86
+    ],
+    "GSIOrdinaryRailContext": [
+      48,
+      49,
+      50,
+      56,
+      75,
+      87
+    ],
+    "GSIRouteCode": "40202000261",
+    "GSIWestPortal": [
+      139.06943947076797,
+      35.236623217905894
+    ],
+    "GSIEastPortal": [
+      139.07263934612274,
+      35.23642385807347
+    ],
+    "GSIAttribution": "国土地理院ベクトルタイルを加工; WGS84 converted saved experimental_bvmap railway layer",
+    "GSIReleaseAsOf": "2026-07-01",
+    "GSIIndividualSurveyDates": "unknown",
+    "GSIContrast": "Tunnel25000 features curve north of source through central/east window, while original Apple cartography bends south. Ordinary2500 adjoining rail and tunnel boundaries establish same-leg context; GSI does not justify shifting to Apple or claim underground geometry.",
+    "reversalStemCount": 2
+  },
+  "ownership": {
+    "existingHelper": "app/scripts/railway/repair-hakone-passenger-corridor.mjs",
+    "supplementAfter": "Existing full OSM ordered node/survey chain validation",
+    "unchanged": [
+      "all display supports outside indices47..54",
+      "all physical stations/segments/mileage",
+      "two displayReversalBranches and all three passenger reversal tips",
+      "interval endpoints",
+      "unrelated lines"
+    ],
+    "rootGeneratedOwners": [
+      "app/public/rail/jp-2025.json",
+      "app/public/rail/display-lanes.json"
+    ]
+  },
+  "regression": "PassengerStationApproachTests.hakoneTunnelCartographicArcKeepsFrozenSourceBounds",
+  "regressionReferenceCoordinates": [
+    [
+      139.06977960208064,
+      35.23651539056604
+    ],
+    [
+      139.07131273602081,
+      35.23634427735849
+    ],
+    [
+      139.07214899089726,
+      35.23640131509434
+    ]
+  ],
+  "regressionDisplayResidualBoundMetres": 1.5,
+  "pending": [
+    "Root runs focused RED before helper changes",
+    "Native rebuilt display follow-up before visual pass claim"
+  ]
+}

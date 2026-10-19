@@ -1,0 +1,362 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.707217999999997,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95953,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.704438341288459,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95771338627046,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.701549034243214,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95623782646999,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.698452069754403,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95556861026782,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.695346074444728,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95598711098873,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.692241450442118,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95587359506749,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.689692469497629,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95368264167919,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.687621799964418,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.95076420546422,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.685780933071435,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.94762511380029,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.684125058708098,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.9443303547626,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.682357461934245,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.94112397832467,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.680478134160644,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.93801930871402,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.67838056284517,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.93513694404578,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.676097006004483,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.93247012140134,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.673801578070062,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.9298188591047,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.671502048807795,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.92717306166494,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.668972811023842,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.92491137863232,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-3#0",
+      "latitude" : 35.666504553648352,
+      "lineDependency" : "1f46c68e04fe0f203d0f8005609c8fe2ce48581a287ffde7ccbcd5ea3e5d00de",
+      "longitude" : 139.92356898421679,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-3#0#point-17"
+    }
+  ]
+}

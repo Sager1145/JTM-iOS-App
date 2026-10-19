@@ -1,0 +1,384 @@
+{
+  "cachePath": "/Users/sager/Documents/GitHub/Japan-Train-Map/outputs/osm-basemap-cache/E135N35.json",
+  "fetchedAt": "2026-08-18T10:31:02.971Z",
+  "ways": [
+    {
+      "id": 32055918,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "tunnel": "yes",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3700073,
+          "lon": 135.1232346
+        },
+        {
+          "lat": 35.3700476,
+          "lon": 135.1228265
+        },
+        {
+          "lat": 35.3700804,
+          "lon": 135.1224453
+        },
+        {
+          "lat": 35.3701044,
+          "lon": 135.1220273
+        }
+      ]
+    },
+    {
+      "id": 32055924,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-1",
+        "maxspeed": "115",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "tunnel": "yes",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3698988,
+          "lon": 135.1205131
+        },
+        {
+          "lat": 35.3697582,
+          "lon": 135.120175
+        },
+        {
+          "lat": 35.3695865,
+          "lon": 135.119833
+        },
+        {
+          "lat": 35.3692978,
+          "lon": 135.1193476
+        },
+        {
+          "lat": 35.3688746,
+          "lon": 135.1187253
+        },
+        {
+          "lat": 35.3676057,
+          "lon": 135.117063
+        }
+      ]
+    },
+    {
+      "id": 44001348,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "embankment": "yes",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3709321,
+          "lon": 135.1273748
+        },
+        {
+          "lat": 35.3704616,
+          "lon": 135.1264085
+        },
+        {
+          "lat": 35.3702846,
+          "lon": 135.1260081
+        },
+        {
+          "lat": 35.3701376,
+          "lon": 135.1255658
+        },
+        {
+          "lat": 35.3700298,
+          "lon": 135.1250956
+        },
+        {
+          "lat": 35.3699753,
+          "lon": 135.1246384
+        }
+      ]
+    },
+    {
+      "id": 44001349,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3699753,
+          "lon": 135.1246384
+        },
+        {
+          "lat": 35.3699586,
+          "lon": 135.1244096
+        },
+        {
+          "lat": 35.3699529,
+          "lon": 135.1241574
+        },
+        {
+          "lat": 35.3699606,
+          "lon": 135.1239037
+        }
+      ]
+    },
+    {
+      "id": 490130188,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "embankment": "yes",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3701038,
+          "lon": 135.1218072
+        },
+        {
+          "lat": 35.3700926,
+          "lon": 135.1215837
+        },
+        {
+          "lat": 35.3700721,
+          "lon": 135.1213914
+        }
+      ]
+    },
+    {
+      "id": 1137778621,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3701044,
+          "lon": 135.1220273
+        },
+        {
+          "lat": 35.3701038,
+          "lon": 135.1218072
+        }
+      ]
+    },
+    {
+      "id": 1137778622,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "embankment": "yes",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3700415,
+          "lon": 135.1211534
+        },
+        {
+          "lat": 35.3699886,
+          "lon": 135.1208632
+        },
+        {
+          "lat": 35.3698988,
+          "lon": 135.1205131
+        }
+      ]
+    },
+    {
+      "id": 1137778623,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3700721,
+          "lon": 135.1213914
+        },
+        {
+          "lat": 35.3700415,
+          "lon": 135.1211534
+        }
+      ]
+    },
+    {
+      "id": 1137778624,
+      "tags": {
+        "KSJ2:LIN": "宮福線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.3699606,
+          "lon": 135.1239037
+        },
+        {
+          "lat": 35.3699802,
+          "lon": 135.1235627
+        },
+        {
+          "lat": 35.3700073,
+          "lon": 135.1232346
+        }
+      ]
+    }
+  ]
+}

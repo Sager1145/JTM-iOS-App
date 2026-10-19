@@ -1,0 +1,150 @@
+{
+  "caseIndex": 16,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 16,
+  "source": {
+    "caseIndex": 16,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 16,
+    "fromStationID": "002221",
+    "toStationID": "002234",
+    "camera": [
+      36.43614,
+      137.85667,
+      0.053892300000003245
+    ],
+    "effectiveCoordinates": [
+      [
+        137.854765,
+        36.447805
+      ],
+      [
+        137.85498,
+        36.44751
+      ],
+      [
+        137.85608,
+        36.44612
+      ],
+      [
+        137.85609,
+        36.4461
+      ],
+      [
+        137.85679,
+        36.44516
+      ],
+      [
+        137.857,
+        36.44487
+      ],
+      [
+        137.85721,
+        36.44453
+      ],
+      [
+        137.85737,
+        36.44414
+      ],
+      [
+        137.85756,
+        36.44362
+      ],
+      [
+        137.85765,
+        36.44315
+      ],
+      [
+        137.8577,
+        36.44262
+      ],
+      [
+        137.85772,
+        36.44227
+      ],
+      [
+        137.85768,
+        36.44186
+      ],
+      [
+        137.85761,
+        36.44143
+      ],
+      [
+        137.85753,
+        36.44081
+      ],
+      [
+        137.85744,
+        36.44026
+      ],
+      [
+        137.85739,
+        36.43991
+      ],
+      [
+        137.85737,
+        36.43944
+      ],
+      [
+        137.85749,
+        36.43768
+      ],
+      [
+        137.85751,
+        36.4374
+      ],
+      [
+        137.85769,
+        36.43508
+      ],
+      [
+        137.85775,
+        36.43437
+      ],
+      [
+        137.85789,
+        36.43285
+      ],
+      [
+        137.85798,
+        36.43176
+      ],
+      [
+        137.85804,
+        36.43103
+      ],
+      [
+        137.85813,
+        36.42989
+      ],
+      [
+        137.85825,
+        36.42859
+      ],
+      [
+        137.85843,
+        36.42676
+      ],
+      [
+        137.85852,
+        36.42538
+      ],
+      [
+        137.858575,
+        36.424475
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t33 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:14.06;lod:12.91;backbones:0;networkStations:5;distance:11830.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.436140;centerLon:137.856670;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1539.0;rebuilds:3;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:10;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.436140;centerLon:137.856670;distance:11830.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-16.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Azumi-Kutsukake to Shinano-Matsukawa continuous long corridor with changing local offsets; own midpoint unresolved."
+}

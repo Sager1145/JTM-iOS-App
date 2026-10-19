@@ -1,0 +1,82 @@
+{
+  "caseIndex": 6,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 6,
+  "source": {
+    "caseIndex": 6,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 6,
+    "fromStationID": "002401",
+    "toStationID": "002405",
+    "camera": [
+      36.315692999999996,
+      139.523623,
+      0.009813713140288513
+    ],
+    "effectiveCoordinates": [
+      [
+        139.52879,
+        36.31618
+      ],
+      [
+        139.52788,
+        36.31619
+      ],
+      [
+        139.5267,
+        36.31622
+      ],
+      [
+        139.52576,
+        36.31617
+      ],
+      [
+        139.52506,
+        36.31609
+      ],
+      [
+        139.5244,
+        36.316
+      ],
+      [
+        139.52314,
+        36.31582
+      ],
+      [
+        139.52179,
+        36.31561
+      ],
+      [
+        139.52024,
+        36.3154
+      ],
+      [
+        139.51945,
+        36.3153
+      ],
+      [
+        139.51889,
+        36.31522
+      ],
+      [
+        139.51861138608336,
+        36.31518517326042
+      ],
+      [
+        139.518456,
+        36.315166
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:129;camera:16.04;lod:14.89;backbones:0;networkStations:2;distance:3015.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.315693;centerLon:139.523623;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1391.0;rebuilds:2;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.315693;centerLon:139.523623;distance:3015.8;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-06.jpg",
+  "observation": "Tomita–Flower Park short corridor continuous, but Apple curved glyph and current stroke differ locally. Own platform caps/midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

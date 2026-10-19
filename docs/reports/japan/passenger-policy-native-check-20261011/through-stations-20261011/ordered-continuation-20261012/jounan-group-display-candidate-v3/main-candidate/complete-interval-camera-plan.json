@@ -1,0 +1,501 @@
+{
+  "status": "V3 planned, not captured",
+  "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+  "sourceLaunchContract": "ios/RailMap/Workspace/RailWorkspaceView.swift:387",
+  "cases": [
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.840179959614204,
+        132.7585418430758,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.75832908,
+        33.839930180417824,
+        132.75875460615157,
+        33.84042973881059
+      ],
+      "vertexCount": 20,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.83972742,
+        132.75976789999999,
+        0.004316459999969879
+      ],
+      "fullPathBounds": [
+        132.75832908,
+        33.83934643,
+        132.76120672,
+        33.84010841
+      ],
+      "vertexCount": 58,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.839543134483606,
+        132.76303342,
+        0.005480100000028187
+      ],
+      "fullPathBounds": [
+        132.76120672,
+        33.83925215896721,
+        132.76486012,
+        33.83983411
+      ],
+      "vertexCount": 56,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.84045749895062,
+        132.76560926552258,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.76486012,
+        33.83983411,
+        132.76635841104513,
+        33.84108088790124
+      ],
+      "vertexCount": 41,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "plannedCamera": [
+        33.84114316553921,
+        132.76827054052256,
+        0.005736388432296735
+      ],
+      "fullPathBounds": [
+        132.76635841104513,
+        33.841067521078415,
+        132.77018267,
+        33.84121881
+      ],
+      "vertexCount": 49,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "plannedCamera": [
+        33.8414665827,
+        132.7725241338,
+        0.007024391400022978
+      ],
+      "fullPathBounds": [
+        132.77018267,
+        33.84121881,
+        132.7748655976,
+        33.8417143554
+      ],
+      "vertexCount": 62,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 6,
+      "plannedCamera": [
+        33.8430491077,
+        132.7751166388,
+        0.004004256900000058
+      ],
+      "fullPathBounds": [
+        132.7748655976,
+        33.8417143554,
+        132.77536768,
+        33.84438386
+      ],
+      "vertexCount": 46,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 7,
+      "plannedCamera": [
+        33.845512279054184,
+        132.7754026811045,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.77536768,
+        33.84438386,
+        132.77543768220903,
+        33.84664069810837
+      ],
+      "vertexCount": 37,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "plannedCamera": [
+        33.84704407040418,
+        132.7777411911,
+        0.006910526699996922
+      ],
+      "fullPathBounds": [
+        132.7754376822,
+        33.84664069810837,
+        132.7800447,
+        33.8474474427
+      ],
+      "vertexCount": 73,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "plannedCamera": [
+        33.8478927276,
+        132.78247991565001,
+        0.007305646950030109
+      ],
+      "fullPathBounds": [
+        132.7800447,
+        33.847446,
+        132.7849151313,
+        33.8483394552
+      ],
+      "vertexCount": 68,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 10,
+      "plannedCamera": [
+        33.8493405449,
+        132.7850779662791,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.7849151313,
+        33.8483394552,
+        132.78524080125817,
+        33.8503416346
+      ],
+      "vertexCount": 40,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.847827006812075,
+        132.7736127809334,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.7727199751854,
+        33.84760486967797,
+        132.7745055866814,
+        33.84804914394618
+      ],
+      "vertexCount": 71,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.84809356058838,
+        132.7709931722832,
+        0.005180408706593198
+      ],
+      "fullPathBounds": [
+        132.769266369381,
+        33.84804914394618,
+        132.7727199751854,
+        33.84813797723059
+      ],
+      "vertexCount": 113,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.84865654299739,
+        132.76713476221292,
+        0.006394821504244419
+      ],
+      "fullPathBounds": [
+        132.76500315504484,
+        33.84813797723055,
+        132.769266369381,
+        33.849175108764236
+      ],
+      "vertexCount": 150,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.85028550713899,
+        132.76371978693157,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.7624364188183,
+        33.849175108764236,
+        132.76500315504484,
+        33.851395905513755
+      ],
+      "vertexCount": 150,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 4,
+      "plannedCamera": [
+        33.852481732113965,
+        132.76154400181778,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.76062594841028,
+        33.851395905513755,
+        132.76246205522528,
+        33.853567558714175
+      ],
+      "vertexCount": 123,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 5,
+      "plannedCamera": [
+        33.85355800907863,
+        132.7596170699407,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.75860819147113,
+        33.85349563968625,
+        132.76062594841028,
+        33.853620378471014
+      ],
+      "vertexCount": 71,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "plannedCamera": [
+        33.852360459154255,
+        132.75741275463105,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.75621731779097,
+        33.85122527862225,
+        132.75860819147113,
+        33.85349563968625
+      ],
+      "vertexCount": 151,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "plannedCamera": [
+        33.849220144311126,
+        132.7557926928381,
+        0.006015402933378766
+      ],
+      "fullPathBounds": [
+        132.75516422,
+        33.84721501,
+        132.75642116567622,
+        33.85122527862225
+      ],
+      "vertexCount": 171,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.840138185,
+        132.75686601,
+        0.004389209999999366
+      ],
+      "fullPathBounds": [
+        132.75540294,
+        33.84010841,
+        132.75832908,
+        33.84016796
+      ],
+      "vertexCount": 38,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.840633615,
+        132.753878175,
+        0.004574294999997619
+      ],
+      "fullPathBounds": [
+        132.75235341,
+        33.84016796,
+        132.75540294,
+        33.84109927
+      ],
+      "vertexCount": 54,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.84250184,
+        132.75240347,
+        0.0042077099999993095
+      ],
+      "fullPathBounds": [
+        132.75233373,
+        33.84109927,
+        132.75247321,
+        33.84390441
+      ],
+      "vertexCount": 47,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.84555971,
+        132.75381871500002,
+        0.004965899999998413
+      ],
+      "fullPathBounds": [
+        132.75247321,
+        33.84390441,
+        132.75516422,
+        33.84721501
+      ],
+      "vertexCount": 68,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.851918492627405,
+        132.75884059755327,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.75882778406145,
+        33.85062234069726,
+        132.7588534110451,
+        33.85321464455756
+      ],
+      "vertexCount": 40,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.84932307699318,
+        132.75884192394264,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.75882778406145,
+        33.8480238132891,
+        132.75885606382383,
+        33.85062234069726
+      ],
+      "vertexCount": 40,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.846598911317656,
+        132.75881978836068,
+        0.004274705914330212
+      ],
+      "fullPathBounds": [
+        132.75878351289754,
+        33.845174009346216,
+        132.75885606382383,
+        33.8480238132891
+      ],
+      "vertexCount": 44,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.842801874078404,
+        132.7587773030758,
+        0.007116405803436976
+      ],
+      "fullPathBounds": [
+        132.75875460615157,
+        33.84042973881059,
+        132.7588,
+        33.845174009346216
+      ],
+      "vertexCount": 73,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.83760920335,
+        132.76204495705,
+        0.004409419950000881
+      ],
+      "fullPathBounds": [
+        132.7617311386,
+        33.8361393967,
+        132.7623587755,
+        33.83907901
+      ],
+      "vertexCount": 58,
+      "status": "planned-not-captured"
+    },
+    {
+      "lineID": "jp-伊予鉄道-連絡線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.84712278389317,
+        132.77497163444522,
+        0.004
+      ],
+      "fullPathBounds": [
+        132.7745055866814,
+        33.84664069810837,
+        132.77543768220903,
+        33.84760486967797
+      ],
+      "vertexCount": 53,
+      "status": "planned-not-captured"
+    }
+  ],
+  "acceptance": "Actual camera/visible complete path, paired network ON/OFF, station-frame and direction review required; planned bounds alone are not runtime evidence."
+}

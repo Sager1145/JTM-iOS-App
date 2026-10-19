@@ -1,0 +1,9 @@
+{
+  "ordinal": 32,
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "stationCount": 18,
+  "intervalCount": 17,
+  "status": "baseline-analysis-in-progress",
+  "productionChanges": false,
+  "rootOnly": true
+}

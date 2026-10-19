@@ -1,0 +1,47 @@
+[
+  {
+    "intervalIndex": 7,
+    "sourceViews": 13,
+    "sampleCount": 398,
+    "maximumProposedShiftMetres": 9.0,
+    "weakDirectionalSupportSamples": 2,
+    "coordinates": 36,
+    "status": "proposal-only-manual-and-native-review-required"
+  },
+  {
+    "intervalIndex": 8,
+    "sourceViews": 7,
+    "sampleCount": 177,
+    "maximumProposedShiftMetres": 11.0,
+    "weakDirectionalSupportSamples": 0,
+    "coordinates": 19,
+    "status": "proposal-only-manual-and-native-review-required"
+  },
+  {
+    "intervalIndex": 9,
+    "sourceViews": 6,
+    "sampleCount": 149,
+    "maximumProposedShiftMetres": 2.0,
+    "weakDirectionalSupportSamples": 0,
+    "coordinates": 14,
+    "status": "proposal-only-manual-and-native-review-required"
+  },
+  {
+    "intervalIndex": 10,
+    "sourceViews": 13,
+    "sampleCount": 399,
+    "maximumProposedShiftMetres": 2.0,
+    "weakDirectionalSupportSamples": 0,
+    "coordinates": 59,
+    "status": "proposal-only-manual-and-native-review-required"
+  },
+  {
+    "intervalIndex": 11,
+    "sourceViews": 9,
+    "sampleCount": 258,
+    "maximumProposedShiftMetres": 4.0,
+    "weakDirectionalSupportSamples": 1,
+    "coordinates": 46,
+    "status": "proposal-only-manual-and-native-review-required"
+  }
+]

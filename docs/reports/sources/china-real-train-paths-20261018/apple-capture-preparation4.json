@@ -1,0 +1,181 @@
+{
+  "schema": "cn-apple-capture-preparation4-v1",
+  "preparedAt": "2026-10-19T09:14:30.731487+00:00",
+  "status": "PREPARATION_ONLY_SCREENSHOT_COMPARISON未完成",
+  "completed": [
+    "Read current unified request contract and retained exact-viewpoint Japan request",
+    "Confirmed current alignment rejects country CN",
+    "Prepared four original WGS84 external reference paths with provenance",
+    "Prepared seven bounded manual camera entries"
+  ],
+  "notCompleted": [
+    "No native CN package alignment request is executable under existing Japan-only loader",
+    "No app launched by this preparation agent",
+    "No native export or reviewed screenshot produced",
+    "No Apple track identity, datum verdict or alignment acceptance established"
+  ],
+  "parentNativeObservation": {
+    "source": "root chat report, not independently observed by preparation agent",
+    "app": "isolatedB8 RailDiagnostics",
+    "workspace": "Alignment",
+    "cameraEntry": "123.422,41.815,17",
+    "mode": "basemap only",
+    "exportedScreenshot": false,
+    "reviewedScreenshot": false,
+    "CNOverlayLoaded": false,
+    "comparisonStatus": "未完成"
+  },
+  "artifacts": {
+    "externalReferenceGeoJSON": "/private/tmp/cn-fourth-20261019/apple/original-targets.geojson",
+    "manualCameraPlan": "/private/tmp/cn-fourth-20261019/apple/camera-plan.json"
+  },
+  "existingBuild": {
+    "documentedDefaultApp": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app",
+    "exists": true,
+    "observedDirectoryMtime": "2026-10-17 19:10 local ls output; freshness not established",
+    "currentNativeWindowOwner": "root; isolatedB8 app identified by root",
+    "buildExecuted": false
+  },
+  "requestContract": {
+    "source": "ios/auxiliary/RailDiagnostics/README.md",
+    "decoder": "ios/auxiliary/RailAlignmentInspector/InspectionKit/Sources/RailInspection/DiagnosticRequest.swift",
+    "countryConstraint": "InspectorModel.swift:159–160 requires country.lowercased() == jp",
+    "arbitraryCameraRootFieldSupported": false,
+    "exactViewpointSelection": "viewpointIDs from actual scoped plan only; arbitrary coordinate IDs cannot be invented",
+    "supportedExampleOnly": {
+      "action": "capture",
+      "captureLimit": 1,
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "standard",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "inputPath": "/private/tmp/jtm-ir-kanazawa-candidate-20261018/jp-2025.json",
+      "intervalIndices": [
+        3
+      ],
+      "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+      "requestID": "ir-exact-viewpoints-native",
+      "schemaVersion": 1,
+      "sessionDirectory": "/private/tmp/jtm-ir-selected-views-20261018",
+      "viewpointIDs": [
+        "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-2",
+        "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-8"
+      ],
+      "workspace": "alignment"
+    },
+    "exampleLimitation": "Retained Japan schema example only; candidate input may no longer exist; not a CN capture request and not launched"
+  },
+  "manualUIPath": [
+    "Root owns native window and idle state",
+    "Switch Alignment with Control-Command-2",
+    "Import original-targets.geojson using 导入轨道 GeoJSON",
+    "Shift-Command-G focuses longitude,latitude,zoom field; enter one cameraEntry and Return",
+    "Comparison/display modes show orange external reference; Command-B toggles basemap peek without moving camera",
+    "Option-Command-S invokes Export same-view evidence; choose a fresh folder; retain native basemap.png/reference.png/view.json only after successful save",
+    "Review actual drawn railway track; missing tunnel/track visibility remains insufficient evidence"
+  ],
+  "manualLimitations": [
+    "Reference importer supports at most one lineID and intervalIndex; combined features intentionally omit those keys and preserve source/sourceReport/sourceField instead",
+    "Unscoped reference attaches to current selected Japan interval for the session; it is not a CN catalog or production overlay",
+    "viewRecord hardcodes region jp and selected Japan line/station metadata; do not present exported metadata as a genuine CN task receipt",
+    "Interactive same-view export always uses light standard basemap at live map dimensions; batch imagery/settings cannot target arbitrary camera",
+    "Reference geometry does not prove passenger ownership, service eligibility, connectivity, dispatch or legal ownership",
+    "Panzhihua tunnel may be invisible in standard basemap"
+  ],
+  "datum": {
+    "sourceCoordinates": "canonicalWGS84 unchanged",
+    "inspectorCamera": "Direct MKMapPoint(Coordinate.native); no AppleMapDatum presentation transform in InspectorMap",
+    "inspectorReferenceProjection": "snapshot.point(for: coordinate.native)",
+    "productionBoundary": "ios/RailMap/Map/AppleMapDatum.swift uses per-device persisted GCJ02 country verdict including cn; packages remain WGS84",
+    "policy": "A CN visual disagreement in this Japan-only inspector is datum-ambiguous until actual service projection is reviewed. Never shift stored canonical coordinates to match a basemap."
+  },
+  "currentCNReferences": [
+    {
+      "location": "广州南 G6045",
+      "lineIDs": [
+        "cn-guangshengan-hsr",
+        "cn-osm-relation-5456788"
+      ],
+      "adjacentIntervals": [
+        0,
+        0
+      ],
+      "stationID": "cn-official-12306-izq",
+      "candidate": "55-node original 12-way platform reversal path; unresolved"
+    },
+    {
+      "location": "沈阳北 G101",
+      "lineIDs": [
+        "cn-osm-relation-3066901"
+      ],
+      "adjacentIntervals": [
+        10
+      ],
+      "stationID": "cn-official-12306-sbt",
+      "candidate": "16-node exact continuation via crossover1364948209; existing admission gaps remain"
+    },
+    {
+      "location": "楚雄–丽江 D239 Dali East connector",
+      "lineIDs": [
+        "cn-osm-relation-13345565-branch-2",
+        "cn-osm-relation-3431754"
+      ],
+      "stationIDs": [
+        "cn-official-12306-cum",
+        "cn-official-12306-lhm",
+        "cn-osm-node-553661156"
+      ],
+      "candidate": "1004183415v2 original two-node crossover; inadmissible per source report",
+      "intervalCaution": "cross-line missing connector has no standalone compact interval ID; source report topology differs from any invented auto-capture interval"
+    },
+    {
+      "location": "攀枝花南 D271",
+      "lineIDs": [
+        "cn-osm-relation-10259709-branch-7",
+        "cn-osm-relation-10259709-branch-8"
+      ],
+      "adjacentIntervals": [
+        0,
+        0
+      ],
+      "stationID": "cn-official-12306-pne",
+      "candidate": "16-node 15-edge fixed-anchor path via742037844v20/1101437978v9; overlay is source candidate, not assertion current production repair"
+    }
+  ],
+  "evidenceSources": [
+    "ios/VERIFICATION.md",
+    "ios/auxiliary/RailAlignmentInspector/README.md",
+    "ios/auxiliary/RailDiagnostics/README.md",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectorModel.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectorMap.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectionEvidence.swift",
+    "app/public/rail/cn-2025.json",
+    "docs/reports/sources/china-real-train-paths-20261018/guangzhou-south-boundary-continuation3.json",
+    "docs/reports/sources/china-real-train-paths-20261018/shenyang-north-boundary-continuation3.json",
+    "docs/reports/sources/china-real-train-paths-20261018/chuxiong-lijiang-continuation4.json",
+    "docs/reports/sources/china-real-train-paths-20261018/panzhihua-south-continuation4.json"
+  ],
+  "verification": {
+    "scope": "Read-only code/data review plus JSON artifact construction",
+    "geoJSONFeatureCount": 4,
+    "featureCoordinateCounts": [
+      55,
+      16,
+      2,
+      16
+    ],
+    "coordinatesCopiedExactlyFromReports": true,
+    "sourceChanges": false,
+    "build": false,
+    "tests": false,
+    "appLaunch": false,
+    "captures": 0
+  }
+}

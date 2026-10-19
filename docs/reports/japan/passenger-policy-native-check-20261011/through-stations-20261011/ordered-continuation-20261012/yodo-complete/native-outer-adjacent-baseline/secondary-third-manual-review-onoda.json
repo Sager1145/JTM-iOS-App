@@ -1,0 +1,858 @@
+{
+  "status": "baseline-diagnostic-only",
+  "candidateAccepted": false,
+  "reviewer": "onoda_curve_review",
+  "actualViewsViewed": 48,
+  "actualPanelsViewed": 144,
+  "method": "Each view opened as a vertically stacked basemap/display/smooth contact image through view_image. Seven original full panels additionally opened for endpoint and offset witnesses. Metadata inventory did not determine verdict.",
+  "scope": [
+    {
+      "path": "secondary/captures/002970/000000",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-0",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000001",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-1",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000002",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-2",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000003",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-3",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000004",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-4",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000005",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-5",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000006",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-6",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000007",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-7",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002970/000008",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-8",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000000",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-0",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000001",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-1",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000002",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-2",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000003",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-3",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000004",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-4",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000005",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-5",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000006",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-6",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000007",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-7",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000008",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-8",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000009",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-9",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000010",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-10",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000011",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-11",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000012",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-12",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000013",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-13",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "secondary/captures/002797/000014",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-14",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000000",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-0",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000001",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-1",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000002",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-2",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000003",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-3",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000004",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-4",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000005",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-5",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000006",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-6",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000007",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-7",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002970/000008",
+      "itemID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStationID": "009579",
+      "toStationID": "009586",
+      "viewpointID": "jp-土佐くろしお鉄道-中村線#3#point-8",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000000",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-0",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000001",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-1",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000002",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-2",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000003",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-3",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000004",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-4",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000005",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-5",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000006",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-6",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000007",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-7",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000008",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-8",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000009",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-9",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000010",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-10",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000011",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-11",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000012",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-12",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000013",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-13",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    },
+    {
+      "path": "third/captures/002797/000014",
+      "itemID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStationID": "009434",
+      "toStationID": "009452",
+      "viewpointID": "jp-四国旅客鉄道-予讃線#86#point-14",
+      "actualPanelsViewed": [
+        "basemap.png",
+        "display.png",
+        "smooth.png"
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "referenceDependency": "Apple-only",
+      "resultInOriginalMetadata": "pending",
+      "reviewFreshInOriginalMetadata": false
+    }
+  ],
+  "findings": [
+    {
+      "item": "中村線#3",
+      "frames": "000000..000008 both apps",
+      "observation": "Railway corridor distinguished from Route 56, Iyoki River and winding local roads. No reversed hairpin, false road branch or sharp isolated cap visible. Native baseline shows continuous centreline through Iyoki and Tosa-Saga, not station dots. Most corridor evidence is labelled blue rail guide, not an independently identifiable black rail glyph.",
+      "limit": "Do not infer metre-level alignment or candidate acceptance. Iyoki shift established by Root Main remains unresolved here."
+    },
+    {
+      "item": "予讃線#86",
+      "frames": "000000..000014 both apps",
+      "observation": "Own Yosan corridor stays distinct from Route 56 and Takagushi-gawa; Yodo corridor appears separately east of Takamitsu in final frames. No borrowed road/river join or reverse turn visible. Smooth red and cyan display separate visibly from blue Yosan guide on multiple arcs/straight stretches.",
+      "witnesses": [
+        {
+          "frame": "002797/000004/smooth.png",
+          "pixelsApproximateOriginal1024x768": {
+            "guide": [
+              750,
+              389
+            ],
+            "smooth": [
+              750,
+              399
+            ]
+          },
+          "observation": "red south of guide by about 10 px; broader sea-side elbow also cuts inside guide near (330,386)"
+        },
+        {
+          "frame": "002797/000009/smooth.png",
+          "pixelsApproximateOriginal1024x768": {
+            "guide": [
+              400,
+              365
+            ],
+            "smooth": [
+              400,
+              378
+            ]
+          },
+          "observation": "red south of labelled Yosan guide about 13 px along west straight before Takagushi curve; no visible black rail at this scale to resolve true track centre"
+        }
+      ],
+      "limit": "This is cartographic mismatch, not proof that blue guide equals surveyed track. Needs bounded own-glyph evidence before fitting."
+    },
+    {
+      "endpoint": "土佐佐賀009586",
+      "frame": "002970/000008",
+      "sourcePixel": [
+        512,
+        384
+      ],
+      "observation": "Source projection sits in its own visible blue station framework beside the rail guide, east of Route56 and Iyoki River. No evident short-tail hook in isolated native centreline.",
+      "limit": "Does not prove exact platform longitudinal midpoint; station dots absent in this mode."
+    },
+    {
+      "endpoint": "伊予吉田009434",
+      "frame": "002797/000000",
+      "sourcePixel": [
+        512,
+        384
+      ],
+      "observation": "Source projection lies within the own blue station framework on Yosan corridor; west town roads and sea/river not used as railway. North approach red is visibly west of blue rail guide before entering station.",
+      "limit": "Exact frame centre/physical track precision not established at z17; retain warning."
+    },
+    {
+      "endpoint": "高光009452",
+      "frame": "002797/000014",
+      "sourcePixel": [
+        512,
+        384
+      ],
+      "observation": "Source projection falls within station-highlight vicinity, but Root Main shift diagnosis is not contradicted by this isolated-centreline picture.",
+      "limit": "No dot rendered; do not use this frame to dismiss Root station shift."
+    }
+  ],
+  "nativeLimits": [
+    "Apple-only reference; all actual pixels show loaded basemap content.",
+    "Original metadata result=pending and reviewFresh=false. No metadata altered or claimed as prior acceptance.",
+    "GeometryScope explicitly isolated centreline; no lanes, follows, joins or family collapse. This review cannot prove actual Main multi-line behavior.",
+    "V1 rejection and production unchanged are Root supplied context, not acceptance by this receipt."
+  ]
+}

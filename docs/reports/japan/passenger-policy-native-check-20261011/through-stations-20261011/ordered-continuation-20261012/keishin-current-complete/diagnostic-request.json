@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-35-keishin-current-4-5-20261017",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keishin-current-complete/unified-session",
+  "lineID": "jp-京阪電気鉄道-京津線",
+  "intervalIndices": [
+    4,
+    5
+  ],
+  "captureSettings": {
+    "zoom": 17,
+    "width": 1024,
+    "height": 768,
+    "appearance": "light",
+    "outputModes": [
+      "basemap",
+      "display",
+      "smooth"
+    ]
+  },
+  "evidencePaths": [
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/native-review-notes.md"
+  ]
+}

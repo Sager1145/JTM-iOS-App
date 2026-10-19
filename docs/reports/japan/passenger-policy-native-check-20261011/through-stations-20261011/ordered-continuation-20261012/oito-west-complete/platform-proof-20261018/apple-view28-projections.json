@@ -1,0 +1,83 @@
+{
+  "source": "/private/tmp/jtm-platform-proof-20261018/itoigawa-imagery/alignment/captures/000000/000028",
+  "mapRect": {
+    "height": 2400,
+    "width": 3200,
+    "x": 237012825.9713707,
+    "y": 104441686.12915435
+  },
+  "snapshotProjection": {
+    "centerXPoints": 799.9999999985237,
+    "centerYPoints": 600.0000000001354,
+    "displayScale": 1,
+    "heightPoints": 1200,
+    "mapPointsPerPointX": 2,
+    "mapPointsPerPointY": 2,
+    "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+    "widthPoints": 1600,
+    "zoom256X": 19,
+    "zoom256Y": 19
+  },
+  "points": {
+    "capA": {
+      "coordinate": [
+        137.8606376,
+        37.0431901
+      ],
+      "pixel": [
+        622.0123795866966,
+        564.454052656889
+      ]
+    },
+    "capB": {
+      "coordinate": [
+        137.8617923,
+        37.0435123
+      ],
+      "pixel": [
+        1052.5157421380281,
+        413.9555732756853
+      ]
+    },
+    "candidate": {
+      "coordinate": [
+        137.86120633114302,
+        37.043370483849635
+      ],
+      "pixel": [
+        834.0507180690765,
+        480.19747376441956
+      ]
+    },
+    "old42": {
+      "coordinate": [
+        137.861115,
+        37.043114
+      ],
+      "pixel": [
+        800.0,
+        600.0
+      ]
+    },
+    "old41": {
+      "coordinate": [
+        137.86085,
+        37.04331
+      ],
+      "pixel": [
+        701.2008391022682,
+        508.44926173985004
+      ]
+    },
+    "old40": {
+      "coordinate": [
+        137.85954,
+        37.04296
+      ],
+      "pixel": [
+        212.79743999242783,
+        671.9325571060181
+      ]
+    }
+  }
+}

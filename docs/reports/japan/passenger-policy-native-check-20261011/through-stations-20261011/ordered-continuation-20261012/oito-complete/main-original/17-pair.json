@@ -1,0 +1,94 @@
+{
+  "caseIndex": 17,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 17,
+  "source": {
+    "caseIndex": 17,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 17,
+    "fromStationID": "002234",
+    "toStationID": "002264",
+    "camera": [
+      36.4154575,
+      137.86065250000001,
+      0.04166084999999441
+    ],
+    "effectiveCoordinates": [
+      [
+        137.858575,
+        36.424475
+      ],
+      [
+        137.85863,
+        36.42357
+      ],
+      [
+        137.85867,
+        36.42314
+      ],
+      [
+        137.8588,
+        36.42171
+      ],
+      [
+        137.85884,
+        36.42125
+      ],
+      [
+        137.85895,
+        36.42001
+      ],
+      [
+        137.85896,
+        36.41977
+      ],
+      [
+        137.85907,
+        36.41825
+      ],
+      [
+        137.85936,
+        36.41655
+      ],
+      [
+        137.8602,
+        36.4119
+      ],
+      [
+        137.86041,
+        36.41084
+      ],
+      [
+        137.86045,
+        36.41064
+      ],
+      [
+        137.86051,
+        36.41049
+      ],
+      [
+        137.86147,
+        36.40871
+      ],
+      [
+        137.86259,
+        36.40669
+      ],
+      [
+        137.86273,
+        36.40644
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:14.43;lod:13.29;backbones:0;networkStations:4;distance:9145.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.415458;centerLon:137.860652;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1666.0;rebuilds:4;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:8;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.415458;centerLon:137.860652;distance:9145.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-17.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Shinano-Matsukawa to Kita-Hosono straight / gentle turn retained; own longitudinal platform acceptance unresolved."
+}

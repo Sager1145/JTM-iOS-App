@@ -1,0 +1,8 @@
+The following is a diff from the previous accessibility tree for Window: "RailMap" with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 106-109
+~					98 tab (selected) Description: 今後, Value: 1, ID: calendar, Secondary Actions: Cancel
+~					99 tab Description: 統計, Value: 0, ID: chart.bar.xaxis, Secondary Actions: Cancel
+~					100 tab Description: すべて, Value: 0, ID: tram, Secondary Actions: Cancel
+~					101 tab Description: 検索, Value: 0, ID: magnifyingglass, Secondary Actions: Cancel
++	119 text RailMap
++	120 menu button Window sharing

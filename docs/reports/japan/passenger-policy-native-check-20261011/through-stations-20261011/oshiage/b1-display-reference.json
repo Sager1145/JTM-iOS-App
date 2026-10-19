@@ -1,0 +1,187 @@
+{
+  "scope": "Manual representative display correction; not an underground railway survey",
+  "reviewedAt": "2026-10-11",
+  "crs": "WGS84",
+  "stationGroup": "Oshiage B1 Keisei/Toei Asakusa only; B3 and surface Tobu excluded",
+  "method": "Native screenshot visually selected labelled black passenger rail supports, georeferenced with AX map corners and zero pitch/yaw; map rect [255,149,1024,679]. Pixel picking uncertainty approx 5–10px; hidden platform rails not measured.",
+  "visibleEntryCurve": [
+    {
+      "pixel": [
+        540,
+        434
+      ],
+      "coordinate": [
+        139.8096042,
+        35.7088578
+      ]
+    },
+    {
+      "pixel": [
+        580,
+        430
+      ],
+      "coordinate": [
+        139.8097436,
+        35.7088691
+      ]
+    },
+    {
+      "pixel": [
+        620,
+        424
+      ],
+      "coordinate": [
+        139.809883,
+        35.7088861
+      ]
+    },
+    {
+      "pixel": [
+        650,
+        414
+      ],
+      "coordinate": [
+        139.8099876,
+        35.7089145
+      ]
+    },
+    {
+      "pixel": [
+        680,
+        400
+      ],
+      "coordinate": [
+        139.8100921,
+        35.7089542
+      ]
+    },
+    {
+      "pixel": [
+        710,
+        382
+      ],
+      "coordinate": [
+        139.8101967,
+        35.7090052
+      ]
+    },
+    {
+      "pixel": [
+        745,
+        357
+      ],
+      "coordinate": [
+        139.8103187,
+        35.7090761
+      ]
+    },
+    {
+      "pixel": [
+        780,
+        329
+      ],
+      "coordinate": [
+        139.8104406,
+        35.7091555
+      ]
+    }
+  ],
+  "visibleCrossRiver": [
+    {
+      "pixel": [
+        460,
+        523
+      ],
+      "coordinate": [
+        139.8106022,
+        35.7092724
+      ]
+    },
+    {
+      "pixel": [
+        537,
+        454
+      ],
+      "coordinate": [
+        139.8108704,
+        35.7094681
+      ]
+    },
+    {
+      "pixel": [
+        607,
+        391
+      ],
+      "coordinate": [
+        139.8111143,
+        35.7096467
+      ]
+    },
+    {
+      "pixel": [
+        665,
+        335
+      ],
+      "coordinate": [
+        139.8113163,
+        35.7098055
+      ]
+    },
+    {
+      "pixel": [
+        716,
+        280
+      ],
+      "coordinate": [
+        139.811494,
+        35.7099615
+      ]
+    }
+  ],
+  "representativePlatformPoint": {
+    "pixel": [
+      675,
+      330
+    ],
+    "coordinate": [
+      139.8125322,
+      35.7104587
+    ],
+    "basis": "Complete separate B1 platform-body band midpoint: SW face C(368472)/(415548), midpoint(392510); NE face NE(587332)/(634408), midpoint(611370), registered back to C≈(957146). Midpoint C≈(675328), choose C(675330) within pixel uncertainty. Excludes concourse appendages and viewport clipping."
+  },
+  "platformTangentDegreesFromEast": "Derived from final representative point towards the independently visible NE platform-body end (approximately33°)",
+  "sources": [
+    "before-keisei-southwest-entry-z19-basemap.png",
+    "before-keisei-southwest-z19-basemap.png",
+    "before-keisei-central-inspector-z19-basemap.png",
+    "before-keisei-northeast-z19-basemap.png",
+    "sources/keisei-oshiage-station-layout.pdf",
+    "engineering-history-p441.jpg"
+  ],
+  "primaryURL": "https://www.keisei.co.jp/keisei/tetudou/accessj/assets/pdf/sta_oshiage.pdf",
+  "sourcePrintedDate": "2021-03-31",
+  "hiddenConnection": "Short local constrained display connection from exposed entry to platform ray; neither full rectangle-axis snapping nor generic 120m window. Original physical route/mileage untouched.",
+  "firstPassPoint": {
+    "pixel": [
+      647,
+      345
+    ],
+    "coordinate": [
+      139.8124346,
+      35.7104162
+    ],
+    "basis": "Point in middle of the separate oblique B1 platform-body band at the registered station longitudinal neighbourhood; avoids southeast edge and southern concourse appendage. Representative central display anchor, not a surveyed individual platform track."
+  },
+  "platformNortheastEnd": {
+    "pixel": [
+      611,
+      370
+    ],
+    "coordinate": [
+      139.8135142,
+      35.7109793
+    ],
+    "cameraSource": "before-keisei-northeast-z19-basemap.ax.txt",
+    "basis": "NE pair exposes complete B1 platform-body face, not top edge of clipped central image."
+  }
+}

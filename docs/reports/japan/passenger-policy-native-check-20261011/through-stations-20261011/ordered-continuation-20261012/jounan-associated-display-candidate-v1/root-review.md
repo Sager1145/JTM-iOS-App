@@ -1,0 +1,1 @@
+REJECTED 2026-10-13. Root inspected all13 raw reprojected panels and two full panels: Hanazono terminal curve retained old southern locus then rose to new dot, creating a false hook; Miyata interval2 replaced real rounded bend with angular tangent legs. No native installation or source apply. V1 frozen.

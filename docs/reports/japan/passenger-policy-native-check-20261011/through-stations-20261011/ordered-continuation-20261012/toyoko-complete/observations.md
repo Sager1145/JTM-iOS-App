@@ -1,0 +1,14 @@
+# #38 Toyoko retained portion review
+
+Reused96 views across intervals0–15 and17–19 after actual immutable-plan/raw/display/ID and whole-own dependency checks; see remaining-lines-reuse-20261017.json. Independent reviewer opened all12 contact sheets (all96 basemap/smooth pairs) and24 original images at12 contexts; parent cross-checked Yokohama original. Retained index/sheets in retained-review/. Interval16 was not covered by neighboring retained frames. It has now been captured by the unified app: 6/6 views, 18 PNGs, zero failures/pending. Parent reviewed all 6 new basemap/smooth pairs; this update records that parent review rather than claiming the archiving agent reopened them. See unified-session/capture-index.json, unified-session/result.json and review-sheets/.
+
+No concrete offset/cut/hook/gap/false-turn repair candidate observed in these isolated images: Nakameguro stays on Toyoko rather than Hibiya; Jiyugaoka excludes Oimachi; Tamagawa crosses own bridge, excludes Tamagawa-line arm; Musashi-Kosugi excludes JR; Motosumiyoshi excludes yard fan; Hiyoshi continues toward Tsunashima; Kikuna crosses JR then follows own south bend; Tammachi–Yokohama stays in own Toyoko corridor. This is not complete station/platform/Main acceptance.
+
+Exact original contexts under /Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/: Shibuya004246/000000; Nakameguro004247/000002; Jiyugaoka004261/000004; Denenchofu004262/000004; Tamagawa004264/000001; MusashiKosugi004265/000002; Motosumiyoshi004249/000001; Hiyoshi004250/000000; Kikuna004252/000004 and004253/000001; Tammachi004256/000004; Yokohama004257/000003.
+
+Own source has Shibuya stationLaneByCode003922=0 and stationCircleOwner003922→Fukutoshin. Zero-lane inspector pixels cannot prove Main multi-line/dot ownership. Full platform caps and longitudinal centers remain unresolved, especially underground Shibuya/Yokohama. No physical connections added or railway data changed.
+
+
+## Current completion update — 2026-10-18
+
+The current evidence combination is 96 retained views across 19 intervals plus 6 newly captured views for #16 妙蓮寺→白楽: 102 views across all 20 intervals. The historical immutable plan expected 5 missing views, while the current capture contract planned 6; these are separate camera plans and their counts must not be conflated. Parent reviewed all 6 new pairs; this archive does not add a separate pixel verdict for that parent-owned review. The existing 96-view review above remains an independent retained-evidence review. No station/platform/Main or all-658-line acceptance follows from this combined coverage. New original PNG/view/receipt paths are indexed in unified-session/capture-index.json; 18 PNGs include basemap/display/smooth, while the stated parent pixel review covers basemap/smooth pairs.

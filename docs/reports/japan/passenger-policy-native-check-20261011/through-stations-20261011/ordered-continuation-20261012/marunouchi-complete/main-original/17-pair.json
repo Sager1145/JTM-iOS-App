@@ -1,0 +1,83 @@
+{
+  "caseIndex": 17,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 17,
+  "source": {
+    "caseIndex": 17,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 17,
+    "fromStationID": "003700",
+    "toStationID": "003662",
+    "camera": [
+      35.6933925,
+      139.696554,
+      0.012326175379774885
+    ],
+    "effectiveCoordinates": [
+      [
+        139.700548,
+        35.692467
+      ],
+      [
+        139.69979,
+        35.69251
+      ],
+      [
+        139.69932,
+        35.69234
+      ],
+      [
+        139.69922,
+        35.6923
+      ],
+      [
+        139.69874,
+        35.69227
+      ],
+      [
+        139.69821,
+        35.6924
+      ],
+      [
+        139.69796,
+        35.69264
+      ],
+      [
+        139.6974,
+        35.69296
+      ],
+      [
+        139.69691,
+        35.69319
+      ],
+      [
+        139.69638,
+        35.69335
+      ],
+      [
+        139.69519,
+        35.69368
+      ],
+      [
+        139.69432,
+        35.69394
+      ],
+      [
+        139.69396,
+        35.69404
+      ],
+      [
+        139.6932,
+        35.69428
+      ],
+      [
+        139.69256,
+        35.694515
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "63 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:11;overlays:9;rides:0;budgetDrops:0;vertices:3641;camera:16.21;lod:15.06;backbones:0;networkStations:27;distance:2705.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.693392;centerLon:139.696554;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3505.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:21;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.693392;centerLon:139.696554;distance:2705.2;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

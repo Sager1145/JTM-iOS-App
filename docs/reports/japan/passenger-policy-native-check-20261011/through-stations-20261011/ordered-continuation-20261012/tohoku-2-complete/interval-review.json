@@ -1,0 +1,340 @@
+{
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "003155",
+        "赤羽"
+      ],
+      "toStation": [
+        "003210",
+        "東十条"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "00",
+          "01"
+        ]
+      },
+      "observation": "赤羽 88° 横向短钩在三套复现；Main 宽铁路走廊连续，但共享锚点不等于京浜東北自身纵向站台中心。東十条南部车场扇形独立。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/00-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "003210",
+        "東十条"
+      ],
+      "toStation": [
+        "003236",
+        "王子"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "01",
+          "02"
+        ]
+      },
+      "observation": "東十条至王子连续弧形及石神井川处走势保留；局部西/南侧偏移候选，王子本线站台与南北线/都电独立。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/01-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "003236",
+        "王子"
+      ],
+      "toStation": [
+        "003277",
+        "上中里"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "03"
+        ]
+      },
+      "observation": "王子至上中里沿飞鸟山南侧连续转弯，局部叠加线位于 Apple 京浜東北符号南侧；Main 可区分都电、南北线与各 JR 走廊。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/02-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "003277",
+        "上中里"
+      ],
+      "toStation": [
+        "003335",
+        "田端"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "04",
+          "05"
+        ]
+      },
+      "observation": "上中里至田端沿货场南侧客运走廊后转向田端，局部南侧偏移随位置变化。保留山手线汇合曲线，不采用货场或新干线中轴。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/03-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "003335",
+        "田端"
+      ],
+      "toStation": [
+        "003368",
+        "西日暮里"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "05",
+          "06"
+        ]
+      },
+      "observation": "田端至西日暮里宽走廊西侧客运轴连续；Main 保留山手线并行及日暮里舍人高架，站台身份与局部偏移仍待核。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/04-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "003368",
+        "西日暮里"
+      ],
+      "toStation": [
+        "003417",
+        "日暮里"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 3,
+        "sheets": [
+          "06",
+          "07"
+        ]
+      },
+      "observation": "西日暮里至日暮里在西侧有局部小弯；Main 可分辨常磐分岔及千代田线，日暮里京浜東北自身站台中心未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/05-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "003417",
+        "日暮里"
+      ],
+      "toStation": [
+        "003460",
+        "鶯谷"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "07",
+          "08"
+        ]
+      },
+      "observation": "日暮里至鶯谷连续斜向客运走廊，叠加线局部偏西南；Main 京成西分岔保持独立，不能依共享 ID 通过本线站台。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/06-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "003460",
+        "鶯谷"
+      ],
+      "toStation": [
+        "003505",
+        "上野"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "08",
+          "09"
+        ]
+      },
+      "observation": "鶯谷至上野绕公园东侧大弧连续；Main 进入上野宽站场时与终到股道及地下新干线区分，站点标记和本线客运轴仍未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/07-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "003505",
+        "上野"
+      ],
+      "toStation": [
+        "003555",
+        "御徒町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 3,
+        "sheets": [
+          "09",
+          "10"
+        ]
+      },
+      "observation": "上野至御徒町连续，局部线位在客运铁路带西侧；Main 的银座、日比谷、大江户线路分别可辨，自身站台中心未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/08-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "003555",
+        "御徒町"
+      ],
+      "toStation": [
+        "003624",
+        "秋葉原"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "10",
+          "11"
+        ]
+      },
+      "observation": "御徒町至秋葉原连续，Main 总武线东西横跨及中央线西分岔独立；宽站场自己的京浜東北纵向平台仍待核。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/09-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "003624",
+        "秋葉原"
+      ],
+      "toStation": [
+        "003677",
+        "神田"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "11",
+          "12"
+        ]
+      },
+      "observation": "秋葉原至神田跨神田川连续，中央线北端汇入独立；Main 并行轴线保留，局部西侧线位和神田京浜東北站台锚点仍待核。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/10-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "003677",
+        "神田"
+      ],
+      "toStation": [
+        "003766",
+        "東京"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "12",
+          "13"
+        ]
+      },
+      "observation": "神田至东京连续跨桥与站场北部展开；Main 能区分中央线、总武地下及新干线，但东京本线平台全长纵向中心与共享标记不能据宽图通过。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/11-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    }
+  ]
+}

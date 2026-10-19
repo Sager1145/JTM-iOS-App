@@ -1,0 +1,145 @@
+{
+  "format": "jtm-z18-reprojection-receipt-v1",
+  "legend": {
+    "red": "source",
+    "orange": "V2 candidate"
+  },
+  "views": [
+    {
+      "intervalIndex": 16,
+      "view": 0,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-shinkiyosu-z18-before",
+      "output": "z18-reprojections/interval-16-view-0.png",
+      "viewJSONSHA256": "4785b44873db9a6415c31726231dd020b33332c04f00de984063d4acc3c075d6",
+      "basemapSHA256": "26c43ac47f2b32f240cbd39e618a331e5edf23ac2a571e761ea974890b65dda6"
+    },
+    {
+      "intervalIndex": 16,
+      "view": 1,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-16-view1-z18-before",
+      "output": "z18-reprojections/interval-16-view-1.png",
+      "viewJSONSHA256": "3206a49cbbf7d92d7e0b20f4d525478b6802ca17ec46589a7426af7d34b56572",
+      "basemapSHA256": "8e9e84ff2be045dd913812c0946de82a417304a9a39c87489fe91c79c933e0da"
+    },
+    {
+      "intervalIndex": 16,
+      "view": 2,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-16-view2-z18-before",
+      "output": "z18-reprojections/interval-16-view-2.png",
+      "viewJSONSHA256": "2976277cd425587bbd54139a654cb533f9bfe083256334b1e6baf05c759f77bf",
+      "basemapSHA256": "0b3f6c1ad4f26529b20ddf778a6faa2418f9b1260007bd99ea4972a3168e0b7d"
+    },
+    {
+      "intervalIndex": 16,
+      "view": 3,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-16-view3-z18-before",
+      "output": "z18-reprojections/interval-16-view-3.png",
+      "viewJSONSHA256": "bc1331205c9a8996128f110b79f4bb35ed70fa1a8fe03881a6fb8a427858b6cc",
+      "basemapSHA256": "9f0be807f6f597cb73428903dabd0f083bfd797a82ecccdc0f32e3df9442960d"
+    },
+    {
+      "intervalIndex": 17,
+      "view": 0,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-marunouchi-z18-before",
+      "output": "z18-reprojections/interval-17-view-0.png",
+      "viewJSONSHA256": "8e11759f28eb9a728c477299cb4a390a16772463add85fb94bbccf338c320e1f",
+      "basemapSHA256": "cf56c0425312d90190e43c1e76b72bd6770c9f396bdec6993a5f7c9fa5d483bd"
+    },
+    {
+      "intervalIndex": 17,
+      "view": 1,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-17-view1-z18-before",
+      "output": "z18-reprojections/interval-17-view-1.png",
+      "viewJSONSHA256": "a97a303d1ada9d6a7d8ef3935bd3d71787e8100e665458c77d3e7761837e70ac",
+      "basemapSHA256": "387f96a393e681fa2438d0e1adc5f8763fb66ca5a5fc755904bb7633bd2e4a15"
+    },
+    {
+      "intervalIndex": 17,
+      "view": 2,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-17-view2-z18-before",
+      "output": "z18-reprojections/interval-17-view-2.png",
+      "viewJSONSHA256": "c3a6a0c3ed2c3a1d5ceb6103ee4892b9d89d10819aed662516ee90b612656300",
+      "basemapSHA256": "5c83b132f306638e4006ac633f937ebf7f72260c04f0223f40cb491033e9a499"
+    },
+    {
+      "intervalIndex": 18,
+      "view": 0,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-18-view0-z18-before",
+      "output": "z18-reprojections/interval-18-view-0.png",
+      "viewJSONSHA256": "494a59931d70c51550052047e975fc3a351f80cc7596d2652d24e187ba6722d1",
+      "basemapSHA256": "e6e1bd5eb46816b3dec33c670a5cd12baeb45eebec70ec95a8d89537263f5f99"
+    },
+    {
+      "intervalIndex": 18,
+      "view": 1,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-18-view1-z18-before",
+      "output": "z18-reprojections/interval-18-view-1.png",
+      "viewJSONSHA256": "719f7e9dae4d5945c0a1860a3ecdee9566734dedea0507c13bcccc83a07bc8d8",
+      "basemapSHA256": "dbd41b1840a883564fdaf116e976a58d05f91ae5f4d36ceca329917b7cf8e462"
+    },
+    {
+      "intervalIndex": 18,
+      "view": 2,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-18-view2-z18-before",
+      "output": "z18-reprojections/interval-18-view-2.png",
+      "viewJSONSHA256": "d67b0454cc01ebd931207e69cdb43d20a2d298fe5125a39549983472f6259eaf",
+      "basemapSHA256": "42fcbd21b11d6dade03e0bdaf51115ca8a0fb59a5221ab0e4c0da51a7eb51514"
+    },
+    {
+      "intervalIndex": 18,
+      "view": 3,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-18-view3-z18-before",
+      "output": "z18-reprojections/interval-18-view-3.png",
+      "viewJSONSHA256": "9e043c369cd5944f4ee7d25e593248aeddd9277b7a07da752cb3e29f9724e286",
+      "basemapSHA256": "378b862205bc3e644a8b69d1f73abaa0022683699b1f5753cd7477b33c6f00f1"
+    },
+    {
+      "intervalIndex": 19,
+      "view": 0,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-shinkawabashi-z18-before",
+      "output": "z18-reprojections/interval-19-view-0.png",
+      "viewJSONSHA256": "bd0f0b613fa50784cafe079d917e6c7074c6e48f6474440876282d24e793ef78",
+      "basemapSHA256": "37a0e351ce00b6549d77c9ab363316671d4ee8d52af6f01480417c256a4a5332"
+    },
+    {
+      "intervalIndex": 19,
+      "view": 1,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-19-view1-z18-before",
+      "output": "z18-reprojections/interval-19-view-1.png",
+      "viewJSONSHA256": "0affc8f0339225236ccf89a838820e34ac01b85236c9f2153a06811458d75608",
+      "basemapSHA256": "b40ac774f5f8cab317269a1c62a46c95e7cdf58cd2a81b6aea161d8db58d2fa7"
+    },
+    {
+      "intervalIndex": 19,
+      "view": 2,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-19-view2-z18-before",
+      "output": "z18-reprojections/interval-19-view-2.png",
+      "viewJSONSHA256": "2e2f92285ccbcba1827099f77cdac64db24d5a04e04ec26d4775939da765c45f",
+      "basemapSHA256": "33c6d291c7feaf1ed69b4b47178c0fd175a4183472f95452fece4c36cec2ce47"
+    },
+    {
+      "intervalIndex": 20,
+      "view": 0,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-futatsuiri-z18-before",
+      "output": "z18-reprojections/interval-20-view-0.png",
+      "viewJSONSHA256": "5a645e8f85a3d570cda2aa965182d0b5dd0956465fe598f2eb60a2139ca0433c",
+      "basemapSHA256": "02984cc0ac383aa44b9b2afb58f9a056042a3adbd9e0d57e9b775c64d17f6348"
+    },
+    {
+      "intervalIndex": 20,
+      "view": 1,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-20-view1-z18-before",
+      "output": "z18-reprojections/interval-20-view-1.png",
+      "viewJSONSHA256": "a503fa6764b4141cadb4b1a63cf26024296c51906f9bae85ad537d6ecba6ce35",
+      "basemapSHA256": "3102f820dcbf7b195e9d0afbd32d39946c56039de18f86926ff0c8a23a7f1cec"
+    },
+    {
+      "intervalIndex": 20,
+      "view": 2,
+      "sourceDirectory": "tsushima-complete-native/meitetsu-main-20-view2-z18-before",
+      "output": "z18-reprojections/interval-20-view-2.png",
+      "viewJSONSHA256": "68de561d8fc94170b0cf8a8d23689b6f27a5ddb49e94f799a0cb6b763572fbb9",
+      "basemapSHA256": "327a6dcf9c692d5c049342d00bd77c9dc14fbaf6c7f2b66fc4ade7551afef652"
+    }
+  ]
+}

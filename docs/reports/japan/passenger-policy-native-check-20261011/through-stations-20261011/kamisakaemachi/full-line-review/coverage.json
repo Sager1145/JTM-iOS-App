@@ -1,0 +1,440 @@
+[
+  {
+    "interval": 0,
+    "directory": "001470",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 34.99598,
+          "longitude": 135.801885
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 34.994262475722756,
+          "longitude": 135.80507571107051
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 34.9926863327381,
+          "longitude": 135.8081440649283
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 34.991979245794234,
+          "longitude": 135.81167770340727
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99207729608736,
+          "longitude": 135.81548102028916
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99202,
+          "longitude": 135.81696
+        },
+        "distanceMetres": 1534.8873546610357,
+        "itemID": "jp-京阪電気鉄道-京津線#0",
+        "pointOrdinal": 5
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "interval": 1,
+    "directory": "001471",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 34.99202,
+          "longitude": 135.81696
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#1",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99187067029102,
+          "longitude": 135.82079758640742
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#1",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 34.991875,
+          "longitude": 135.82397
+        },
+        "distanceMetres": 640.0986170477879,
+        "itemID": "jp-京阪電気鉄道-京津線#1",
+        "pointOrdinal": 2
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2
+    ]
+  },
+  {
+    "interval": 2,
+    "directory": "001472",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 34.991875,
+          "longitude": 135.82397
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#2",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 34.992240501627826,
+          "longitude": 135.82778551785137
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#2",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99221524753767,
+          "longitude": 135.83162502074745
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-京阪電気鉄道-京津線#2",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99182815334584,
+          "longitude": 135.83542809468466
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-京阪電気鉄道-京津線#2",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 34.991355,
+          "longitude": 135.8375
+        },
+        "distanceMetres": 1246.1129181588942,
+        "itemID": "jp-京阪電気鉄道-京津線#2",
+        "pointOrdinal": 4
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  {
+    "interval": 3,
+    "directory": "001473",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 34.991355,
+          "longitude": 135.8375
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99042487238516,
+          "longitude": 135.841170517455
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 34.991006911381696,
+          "longitude": 135.84484879818683
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99196919494525,
+          "longitude": 135.84850638298514
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99380710162064,
+          "longitude": 135.8516041478258
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99431,
+          "longitude": 135.853165
+        },
+        "distanceMetres": 1562.87310767892,
+        "itemID": "jp-京阪電気鉄道-京津線#3",
+        "pointOrdinal": 5
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "interval": 4,
+    "directory": "001474",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 34.99431,
+          "longitude": 135.853165
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 34.99488295696735,
+          "longitude": 135.85670833040385
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 34.9972578717091,
+          "longitude": 135.85775690335143
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 35.000223301687086,
+          "longitude": 135.8588112971861
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 35.00307966846541,
+          "longitude": 135.85966153771426
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 35.00518,
+          "longitude": 135.86019
+        },
+        "distanceMetres": 1642.2432599868782,
+        "itemID": "jp-京阪電気鉄道-京津線#4",
+        "pointOrdinal": 5
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  {
+    "interval": 5,
+    "directory": "001475",
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 35.00518,
+          "longitude": 135.86019
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-京阪電気鉄道-京津線#5",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 35.00779526948494,
+          "longitude": 135.8620381040006
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-京阪電気鉄道-京津線#5",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 35.01083762712397,
+          "longitude": 135.86301610688253
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-京阪電気鉄道-京津線#5",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 35.011295,
+          "longitude": 135.86401
+        },
+        "distanceMetres": 845.2943908335852,
+        "itemID": "jp-京阪電気鉄道-京津線#5",
+        "pointOrdinal": 3
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedBasemapOrdinals": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+]

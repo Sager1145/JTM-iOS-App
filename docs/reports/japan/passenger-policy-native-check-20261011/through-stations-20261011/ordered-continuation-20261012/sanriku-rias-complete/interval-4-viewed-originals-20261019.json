@@ -1,0 +1,610 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-三陸鉄道-リアス線",
+  "intervalIndex": 4,
+  "stations": [
+    [
+      "000839",
+      "払川",
+      141.932824,
+      39.564397,
+      "Haraigawa",
+      1
+    ],
+    [
+      "000846",
+      "豊間根",
+      141.924715,
+      39.53424,
+      "Toyomane",
+      1
+    ]
+  ],
+  "actualViewpointCount": 13,
+  "actualOriginalPNGCount": 26,
+  "otherMissingIntervalsActuallyViewedThisPass": [],
+  "legacyViewsActuallyViewedThisPass": 0,
+  "reviewMethod": "functions.view_image separately opened original basemap/smooth PNGs; no pixel alterations",
+  "currentDisplayInterface": "app/public/rail-network.js: decodeIntervals(current own compactLine), displayPartsForLine(current own compactLine)",
+  "sourceControlCount": 109,
+  "displayControlCount": 109,
+  "receiptFileCountActualBytesChecked": 78,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "C9EED273-8FB9-4012-9EB3-76B3AD242E48",
+    "message": "44/44 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 20655,
+    "requestID": "sanriku-rias-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-sanriku-rias-missing-20261019/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-19T08:59:12Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "limits": [
+    "Map labels Yamada Line do not independently attribute parallel mapped alternatives to current passenger service.",
+    "No exact usable platform caps, surveyed rail centre, bridge/tunnel engineering axis or new guard established.",
+    "Only interval4 13pairs reviewed; other new31 and old135 views not counted as reviewed."
+  ],
+  "views": [
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000000/basemap.png",
+          "recordedByteCount": 554466,
+          "actualByteCount": 554466,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000000/smooth.png",
+          "recordedByteCount": 622596,
+          "actualByteCount": 622596,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.564397,
+        "longitude": 141.932824,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9182658805395569,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240044112.2550215,
+        "rectY": 102041934.369643,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "払川站南出沿SE长段，北侧真大弯连续；红线略西/南偏，无孤立V，平台caps未证。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000001/basemap.png",
+          "recordedByteCount": 531502,
+          "actualByteCount": 531502,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000001/smooth.png",
+          "recordedByteCount": 600758,
+          "actualByteCount": 600758,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.561846217719115,
+        "longitude": 141.93521574020414,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9182992550459791,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240045895.66577804,
+        "rectY": 102044401.5424148,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "払川南SE长段连续，红线偏自身蓝带西南侧；不沿东侧国道/河道跳接。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000002/basemap.png",
+          "recordedByteCount": 420708,
+          "actualByteCount": 420708,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000002/smooth.png",
+          "recordedByteCount": 485438,
+          "actualByteCount": 485438,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.55930118021183,
+        "longitude": 141.93761631812734,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9183325525509933,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240047685.66641542,
+        "rectY": 102046863.06828082,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "SE长段向南反弯，底图同时有另一较西直蓝线，不能据最近glyph认定乘客线路。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000003/basemap.png",
+          "recordedByteCount": 301160,
+          "actualByteCount": 301160,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000003/smooth.png",
+          "recordedByteCount": 356964,
+          "actualByteCount": 356964,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.55673561803908,
+        "longitude": 141.93996365466754,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9183661167296573,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240049435.96740028,
+        "rectY": 102049344.35390937,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "山脚河西岸真实反弯，红线在弯间由东偏到西偏；无孤立V。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000004/basemap.png",
+          "recordedByteCount": 278528,
+          "actualByteCount": 278528,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000004/smooth.png",
+          "recordedByteCount": 330970,
+          "actualByteCount": 330970,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.553636726140816,
+        "longitude": 141.93985818159499,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9184066557523602,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240049357.3209772,
+        "rectY": 102052341.32746382,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "沿国道西侧山脚真反弯连续，红线局部西偏/鼓出；另一蓝直段归属未核。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000005/basemap.png",
+          "recordedByteCount": 265567,
+          "actualByteCount": 265567,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000005/smooth.png",
+          "recordedByteCount": 316930,
+          "actualByteCount": 316930,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.55055974446299,
+        "longitude": 141.9392929812256,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9184469054589519,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240048935.87703583,
+        "rectY": 102055316.97893961,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "南行后转SW的真实大弯连续，红线接近道路侧蓝带；山内另有较直蓝带，不能猜新旧或运营身份。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000006/basemap.png",
+          "recordedByteCount": 359219,
+          "actualByteCount": 359219,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000006/smooth.png",
+          "recordedByteCount": 416879,
+          "actualByteCount": 416879,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.54745990984956,
+        "longitude": 141.93894737855186,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9184874513907121,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240048678.17700437,
+        "rectY": 102058314.59732614,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "河西岸真SW长弯连续，红线沿较东弧带，另一山侧长直蓝线独立可见但归属未证。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 7,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000007",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000007/basemap.png",
+          "recordedByteCount": 433512,
+          "actualByteCount": 433512,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000007/smooth.png",
+          "recordedByteCount": 499377,
+          "actualByteCount": 499377,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.54532015602936,
+        "longitude": 141.9360847128418,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9185154378482633,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240046543.61873975,
+        "rectY": 102060383.71520647,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "同一河谷长SW弯/直段，红线连续，无回头；不以山侧蓝直线拉直真曲线。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 8,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000008",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000008/basemap.png",
+          "recordedByteCount": 472842,
+          "actualByteCount": 472842,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000008/smooth.png",
+          "recordedByteCount": 543475,
+          "actualByteCount": 543475,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.543480075112576,
+        "longitude": 141.93277339387663,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9185395037601409,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240044074.52036098,
+        "rectY": 102062163.0017358,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "SW长段至豊間根前南转连续；蓝色双走向仍可辨，红线无孤立V，确权须自身来源。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 9,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000009",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000009/basemap.png",
+          "recordedByteCount": 552209,
+          "actualByteCount": 552209,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000009/smooth.png",
+          "recordedByteCount": 627918,
+          "actualByteCount": 627918,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.541640078167745,
+        "longitude": 141.9294623095707,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9185635676146213,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240041605.59695673,
+        "rectY": 102063942.15989378,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "豊間根北口由SW转南、跨荒川真实弯连续；红线与自身近旁带接近，另侧蓝折线非删除依据。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 10,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000010",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000010/basemap.png",
+          "recordedByteCount": 659608,
+          "actualByteCount": 659608,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000010/smooth.png",
+          "recordedByteCount": 742817,
+          "actualByteCount": 742817,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.53966397366821,
+        "longitude": 141.92630723077042,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9185894104431964,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240039252.99968877,
+        "rectY": 102065852.87273186,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "跨荒川与県道290号前后连续，红线局部偏西再向站东偏；不借道路桥走向改线。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 11,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000011",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000011/basemap.png",
+          "recordedByteCount": 659774,
+          "actualByteCount": 659774,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000011/smooth.png",
+          "recordedByteCount": 744281,
+          "actualByteCount": 744281,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.536712957281125,
+        "longitude": 141.92514508308778,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9186280007811263,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240038386.43956897,
+        "rectY": 102068706.13518228,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "豊間根站北直入，红线在平台组东侧通过，具体face/caps未证。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-リアス線#4",
+      "pointOrdinal": 12,
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000012",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000012/basemap.png",
+          "recordedByteCount": 625168,
+          "actualByteCount": 625168,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000003/000012/smooth.png",
+          "recordedByteCount": 708506,
+          "actualByteCount": 708506,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.53424,
+        "longitude": 141.924715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9186603376567315,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 240038065.74637514,
+        "rectY": 102071097.08106554,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "豊間根站场及南延伸，红线偏蓝带东侧后随真实SW弯，完整站点中心未确权。"
+    }
+  ]
+}

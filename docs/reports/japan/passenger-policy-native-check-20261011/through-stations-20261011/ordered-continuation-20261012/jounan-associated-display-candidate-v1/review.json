@@ -1,0 +1,117 @@
+{
+  "format": "jtm-jounan-associated-display-candidate-review-v1",
+  "candidateSha256": "a22e92b84ba01f128efea1799a03103edf754a6c95cf1d8da666867a48ada84d",
+  "reviewedRawReprojections": 13,
+  "expectedRawReprojections": 13,
+  "allRawReprojectionsPresent": true,
+  "geojsonExactCoordinateMatch": true,
+  "allCoordinatesFinite": true,
+  "noZeroLengthEdges": true,
+  "physicalTopologyChanged": false,
+  "lines": [
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervals": [
+        {
+          "intervalIndex": 0,
+          "pointCount": 38,
+          "minimumEdgeMetres": 7.306311851503693,
+          "maximumEdgeMetres": 7.30631680220565,
+          "maximumInteriorTurnDegrees": 3.751404165086569e-08,
+          "start": [
+            132.75832908,
+            33.84010841
+          ],
+          "end": [
+            132.75540294,
+            33.84016796
+          ]
+        },
+        {
+          "intervalIndex": 1,
+          "pointCount": 54,
+          "minimumEdgeMetres": 5.5516686827211,
+          "maximumEdgeMetres": 7.439603721682913,
+          "maximumInteriorTurnDegrees": 29.507515131904427,
+          "start": [
+            132.75540294,
+            33.84016796
+          ],
+          "end": [
+            132.75235341,
+            33.84109927
+          ]
+        },
+        {
+          "intervalIndex": 2,
+          "pointCount": 46,
+          "minimumEdgeMetres": 6.358134687344952,
+          "maximumEdgeMetres": 7.315529291935985,
+          "maximumInteriorTurnDegrees": 42.374803535150875,
+          "start": [
+            132.75235341,
+            33.84109927
+          ],
+          "end": [
+            132.75247321,
+            33.84390441
+          ]
+        },
+        {
+          "intervalIndex": 3,
+          "pointCount": 68,
+          "minimumEdgeMetres": 5.964308454132012,
+          "maximumEdgeMetres": 7.315603024517668,
+          "maximumInteriorTurnDegrees": 22.328734406696128,
+          "start": [
+            132.75247321,
+            33.84390441
+          ],
+          "end": [
+            132.75516422,
+            33.84721501
+          ]
+        }
+      ],
+      "adjacentJoins": [
+        {
+          "leftInterval": 0,
+          "rightInterval": 1,
+          "exactCoordinateEquality": true
+        },
+        {
+          "leftInterval": 1,
+          "rightInterval": 2,
+          "exactCoordinateEquality": true
+        },
+        {
+          "leftInterval": 2,
+          "rightInterval": 3,
+          "exactCoordinateEquality": true
+        }
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervals": [
+        {
+          "intervalIndex": 0,
+          "pointCount": 59,
+          "minimumEdgeMetres": 3.9742727261849273,
+          "maximumEdgeMetres": 7.223008504586259,
+          "maximumInteriorTurnDegrees": 27.015748786353072,
+          "start": [
+            132.76235349,
+            33.83609101
+          ],
+          "end": [
+            132.76179275,
+            33.83907901
+          ]
+        }
+      ],
+      "adjacentJoins": []
+    }
+  ],
+  "visualFinding": "All 13 actual z18 reprojections reviewed. Otemachi follows the own tram glyph through the rail crossing, JR bend, Miyata southwest frame, and Komachi own Loop rail chainage. Hanazono follows the lower own tram terminal and the Minamihoribata south arm. No visible reverse U, V cusp, zero edge, or cross-line platform snap. Root native/runtime review remains required."
+}

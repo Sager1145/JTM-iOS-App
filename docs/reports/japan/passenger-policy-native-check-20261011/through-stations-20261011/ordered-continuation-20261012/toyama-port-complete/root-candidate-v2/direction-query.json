@@ -1,0 +1,36 @@
+{
+  "highestControlTurns": [
+    [
+      48.715430702021656,
+      3,
+      19
+    ],
+    [
+      39.67367900556033,
+      3,
+      21
+    ],
+    [
+      35.99119341384802,
+      0,
+      13
+    ],
+    [
+      35.13018926374153,
+      1,
+      4
+    ],
+    [
+      34.23516268175122,
+      1,
+      7
+    ],
+    [
+      30.241931379176624,
+      0,
+      6
+    ]
+  ],
+  "newReversalsOver120Degrees": [],
+  "scope": "Focused query for observed V1 control reversal; not native geometry or station acceptance"
+}

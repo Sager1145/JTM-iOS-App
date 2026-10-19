@@ -1,0 +1,74 @@
+{
+  "caseIndex": 11,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 11,
+  "source": {
+    "caseIndex": 11,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 11,
+    "fromStationID": "003677",
+    "toStationID": "003766",
+    "camera": [
+      35.6864487,
+      139.7691653,
+      0.02458440599999321
+    ],
+    "effectiveCoordinates": [
+      [
+        139.770875,
+        35.69177
+      ],
+      [
+        139.7711479,
+        35.6915941
+      ],
+      [
+        139.7705539,
+        35.6903754
+      ],
+      [
+        139.7701899,
+        35.6894323
+      ],
+      [
+        139.7694181,
+        35.6875889
+      ],
+      [
+        139.7686417,
+        35.685553
+      ],
+      [
+        139.7683598,
+        35.6849448
+      ],
+      [
+        139.7679836,
+        35.6840181
+      ],
+      [
+        139.7677266,
+        35.6833031
+      ],
+      [
+        139.7675242,
+        35.6822222
+      ],
+      [
+        139.7671827,
+        35.6811274
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t65 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:23;overlays:22;rides:0;budgetDrops:0;vertices:13755;camera:15.21;lod:14.06;backbones:2;networkStations:122;distance:5395.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.686449;centerLon:139.769165;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:9992.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:25;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:30;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:28;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:3;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:122;markerPhases:setup=2,endpointSpecsClaims=0,endpointLayout=0,selectedNames=0,ridesDigest=0,records=0,connections=0,hiddenRides=0,rideDotLoop=0,rideLabels=0,networkStations=14,annotationDiff=0,annotationApply=0,rideStationOverlayInstall=7,annotationRestyle=0,endpointsAdd=0,other=4,drawnCount=0,stationsCount=1638,culled=0,annAdded=122,annRemoved=0,annRetained=0,annCoordChanged=0,restyledViews=0",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.686449;centerLon:139.769165;distance:5395.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-11.jpg",
+  "observation": "神田至东京连续跨桥与站场北部展开；Main 能区分中央线、总武地下及新干线，但东京本线平台全长纵向中心与共享标记不能据宽图通过。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

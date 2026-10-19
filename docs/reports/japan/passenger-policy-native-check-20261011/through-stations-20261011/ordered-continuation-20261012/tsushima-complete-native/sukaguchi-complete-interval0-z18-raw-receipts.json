@@ -1,0 +1,190 @@
+{
+  "status": "actual native exported raw; Root viewed all7 basemaps; not candidate acceptance",
+  "lineID": "jp-名古屋鉄道-津島線",
+  "intervalIndex": 0,
+  "viewCount": 7,
+  "views": [
+    {
+      "pointOrdinal": 0,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19893000000002,
+        "longitude": 136.84575500000022,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.4863187446689965,
+        "pitch": 0,
+        "rectHeight": 2615.9999999701977,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 236255320.68080372,
+        "rectY": 106144092.02396742,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "files": {
+        "basemap.png": "83bffaa13d3f3f2c260a169b1d22474e64295d7de7e02cded8de6281dcd83fc0",
+        "display.png": "7f333ff868d55f2b1c06331325b509a91d216b34bbc9bba775f2d40916ce6099",
+        "smooth.png": "09b607de23c2fc32c71ba6baac1f8bad11a13c16e716cd8004d86f516de57842",
+        "view.json": "18af66614cf27fc70efc59a4d133369059e109a89ee6de55ce6a77a7554dcc56"
+      }
+    },
+    {
+      "pointOrdinal": 1,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view1-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19932089995324,
+        "longitude": 136.84222457249402,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.48631643595499696,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 236252688.20325515,
+        "rectY": 106143735.32714003,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "files": {
+        "basemap.png": "4b2cb7c9af08afb873718755b42899be8a400c6cb90ef24eaea7913603bd42e7",
+        "display.png": "b77ca4c5c97649a22f2fffa1ed5d2a30bc257ba73b53503983e17c2801ec59d5",
+        "smooth.png": "7683bf09b870edb8ca5b9689d5fde3a846150ad9b1348074343d3f6d564f072c",
+        "view.json": "e1961f0c817d09ea4aa6839d1f232270068a595f5eefaed465aa73f1ba7d4c14"
+      }
+    },
+    {
+      "pointOrdinal": 2,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view2-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.197600953567544,
+        "longitude": 136.83899908903373,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.48632659558689384,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 236250283.1084676,
+        "rectY": 106145304.76810524,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "files": {
+        "basemap.png": "6f623a1210713e418e76062f267e7b39ecd02084e9c26064e9c4f31e330edd7b",
+        "display.png": "09430c08fb84e814578ede5aa79fd1312355835d75703624d88c171c6465e757",
+        "smooth.png": "97fc876ba6cf26d53dd9c64cd5c0a92f345ad98d40965da732bc0b91d920a0ca",
+        "view.json": "77ba59a949edc92804bb1229a376aa0aabb4e070b55b04a1f056c50eb4a88419"
+      }
+    },
+    {
+      "pointOrdinal": 3,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view3-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19615841898154,
+        "longitude": 136.8355934980714,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48633511750764513,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 236247743.7157929,
+        "rectY": 106146621.0468106,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "files": {
+        "basemap.png": "34fc3a6ee12bd2c91e0ef9544fdc716d59c6691458f23c45e38abd4e618a3a4c",
+        "display.png": "bcda970a9fd730a0bb533046c46b77a1801a797728c1a0e7d4faf16e98619991",
+        "smooth.png": "10ee3c81bf9764a4d19919c0388860dff3452840ffa1815da6bda881948e8452",
+        "view.json": "3737c23e8ea5f914d2c5ab313a16e4c04f45991c0262c24f99fe513e3c74f1f1"
+      }
+    },
+    {
+      "pointOrdinal": 4,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view4-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19603386736854,
+        "longitude": 136.83174856211085,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.48633585366921894,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 236244876.7237433,
+        "rectY": 106146734.69611657,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "files": {
+        "basemap.png": "7dc2abf814a341ac651ec648767a8bc5cc709c461acbdd790dbe30f6a1c476fa",
+        "display.png": "154f081e40985516c8b1d923807be7fe4b8e5bafcf0f6f4aeaaeabb24f856490",
+        "smooth.png": "cefaa490f5035996220ea05acbcfb919e99c9437f3cc97a84dddcfc2ac320b21",
+        "view.json": "deb450a123f592ea3d2a28eae9a57c2427dbac3418ea632e2f0ec769e4c8d71d"
+      }
+    },
+    {
+      "pointOrdinal": 5,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view5-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19597547498145,
+        "longitude": 136.82789751845584,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4863361985839334,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 236242005.1774666,
+        "rectY": 106146787.97721535,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "files": {
+        "basemap.png": "0062d14082f69af9dc60b38d93bcc960a87f22f910062d3db8428a6441fe3f96",
+        "display.png": "9ded5cf62a792f4a98dd1f72057f928cd423ca0703cc2991df368fc0a41ea3f9",
+        "smooth.png": "ff4dc0722f459337b6743f5d3c3faf47c9ab68401853916ee790824266ffbe2b",
+        "view.json": "53e4d9f04c741c6487579235728d5a32f725a2a55b6d04465feb9659d21c7899"
+      }
+    },
+    {
+      "pointOrdinal": 6,
+      "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view6-z18-before",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.19595500000001,
+        "longitude": 136.82585500000022,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.486336318167529,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 236240482.16531926,
+        "rectY": 106146806.65994152,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "files": {
+        "basemap.png": "311ea5fc793bda680846701929d8c6081b87c34307464b758910ff6ebade7926",
+        "display.png": "8e2166c3894514c7b09c994c95c7bd0b2f27e8b77570787c40e7d46de3f81a35",
+        "smooth.png": "35683f75cf970adaac519f2ffc3e26f838b3fff5fca3d780f867204ccef4e744",
+        "view.json": "76b727ed8287596ed7c67694d9da76ab82d01376083ea1863475a95586a277ab"
+      }
+    }
+  ]
+}

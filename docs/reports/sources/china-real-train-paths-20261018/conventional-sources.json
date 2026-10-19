@@ -1,0 +1,5519 @@
+{
+  "schemaVersion": 1,
+  "description": "Official dated conventional train scheduled stop sequences; API date is not proof a train actually operated.",
+  "retrievalDate": "2026-10-18",
+  "stationIdentitySource": "railway-sources/local/china/evidence/official-20261018/12306-national-stations.json",
+  "records": [
+    {
+      "trainNumber": "Z21",
+      "trainNo": "2400000Z210W",
+      "direction": "北京西 → 拉萨",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z21&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=2400000Z210W&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:24.686665+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "北京西",
+          "telecode": "BXP",
+          "stationNo": "01",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "19:48"
+        },
+        {
+          "name": "石家庄北",
+          "telecode": "VVP",
+          "stationNo": "02",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 0,
+          "arrival": "22:24",
+          "departure": "22:30"
+        },
+        {
+          "name": "太原",
+          "telecode": "TYV",
+          "stationNo": "03",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "00:12",
+          "departure": "00:20"
+        },
+        {
+          "name": "中卫",
+          "telecode": "ZWJ",
+          "stationNo": "04",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "06:56",
+          "departure": "07:16"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "05",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "12:19",
+          "departure": "12:31"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "06",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "15:02",
+          "departure": "15:27"
+        },
+        {
+          "name": "德令哈",
+          "telecode": "DHO",
+          "stationNo": "07",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "19:12",
+          "departure": "19:18"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "08",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 1,
+          "arrival": "21:42",
+          "departure": "22:07"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "09",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 2,
+          "arrival": "08:13",
+          "departure": "08:19"
+        },
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "10",
+          "stationTrainCode": "Z21",
+          "arrivalDayOffset": 2,
+          "arrival": "11:46",
+          "departure": "11:46"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 10,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z21-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z21-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z22",
+      "trainNo": "8800000Z220A",
+      "direction": "拉萨 → 北京西",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z22&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=8800000Z220A&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:23.821989+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "01",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "15:50"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "02",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 0,
+          "arrival": "19:31",
+          "departure": "19:37"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "03",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 1,
+          "arrival": "06:08",
+          "departure": "06:33"
+        },
+        {
+          "name": "德令哈",
+          "telecode": "DHO",
+          "stationNo": "04",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 1,
+          "arrival": "08:44",
+          "departure": "08:48"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "05",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 1,
+          "arrival": "13:13",
+          "departure": "13:33"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "06",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 1,
+          "arrival": "16:11",
+          "departure": "16:29"
+        },
+        {
+          "name": "中卫",
+          "telecode": "ZWJ",
+          "stationNo": "07",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 1,
+          "arrival": "21:29",
+          "departure": "21:35"
+        },
+        {
+          "name": "太原",
+          "telecode": "TYV",
+          "stationNo": "08",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 2,
+          "arrival": "03:48",
+          "departure": "04:07"
+        },
+        {
+          "name": "石家庄北",
+          "telecode": "VVP",
+          "stationNo": "09",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 2,
+          "arrival": "05:51",
+          "departure": "05:58"
+        },
+        {
+          "name": "保定",
+          "telecode": "BDP",
+          "stationNo": "10",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 2,
+          "arrival": "07:11",
+          "departure": "07:19"
+        },
+        {
+          "name": "北京西",
+          "telecode": "BXP",
+          "stationNo": "11",
+          "stationTrainCode": "Z22",
+          "arrivalDayOffset": 2,
+          "arrival": "08:43",
+          "departure": "08:43"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 11,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z22-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z22-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z164",
+      "trainNo": "550000Z16407",
+      "direction": "上海 → 拉萨",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z164&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=550000Z16407&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:24.376216+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "上海",
+          "telecode": "SHH",
+          "stationNo": "01",
+          "stationTrainCode": "Z164",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "18:33"
+        },
+        {
+          "name": "苏州",
+          "telecode": "SZH",
+          "stationNo": "02",
+          "stationTrainCode": "Z164",
+          "arrivalDayOffset": 0,
+          "arrival": "19:21",
+          "departure": "19:24"
+        },
+        {
+          "name": "无锡",
+          "telecode": "WXH",
+          "stationNo": "03",
+          "stationTrainCode": "Z164",
+          "arrivalDayOffset": 0,
+          "arrival": "19:46",
+          "departure": "19:49"
+        },
+        {
+          "name": "南京",
+          "telecode": "NJH",
+          "stationNo": "04",
+          "stationTrainCode": "Z164",
+          "arrivalDayOffset": 0,
+          "arrival": "21:13",
+          "departure": "21:19"
+        },
+        {
+          "name": "蚌埠",
+          "telecode": "BBH",
+          "stationNo": "05",
+          "stationTrainCode": "Z164",
+          "arrivalDayOffset": 0,
+          "arrival": "22:52",
+          "departure": "22:56"
+        },
+        {
+          "name": "徐州",
+          "telecode": "XCH",
+          "stationNo": "06",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "00:18",
+          "departure": "00:25"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "07",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "03:14",
+          "departure": "03:20"
+        },
+        {
+          "name": "洛阳",
+          "telecode": "LYF",
+          "stationNo": "08",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "04:49",
+          "departure": "04:52"
+        },
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "09",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "09:19",
+          "departure": "09:27"
+        },
+        {
+          "name": "咸阳",
+          "telecode": "XYY",
+          "stationNo": "10",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "09:42",
+          "departure": "09:44"
+        },
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "11",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "10:59",
+          "departure": "11:07"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "12",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "16:05",
+          "departure": "16:36"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "13",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 1,
+          "arrival": "19:08",
+          "departure": "19:28"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "14",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 2,
+          "arrival": "01:31",
+          "departure": "01:56"
+        },
+        {
+          "name": "安多",
+          "telecode": "ADO",
+          "stationNo": "15",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 2,
+          "arrival": "10:46",
+          "departure": "10:48"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "16",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 2,
+          "arrival": "12:06",
+          "departure": "12:12"
+        },
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "17",
+          "stationTrainCode": "Z165",
+          "arrivalDayOffset": 2,
+          "arrival": "15:36",
+          "departure": "15:36"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 17,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z164-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z164-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z166",
+      "trainNo": "880000Z1660D",
+      "direction": "拉萨 → 上海",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z166&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000Z1660D&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:24.910896+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "01",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "11:50"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "02",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 0,
+          "arrival": "15:42",
+          "departure": "15:48"
+        },
+        {
+          "name": "安多",
+          "telecode": "ADO",
+          "stationNo": "03",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 0,
+          "arrival": "17:08",
+          "departure": "17:10"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "04",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 1,
+          "arrival": "01:46",
+          "departure": "02:11"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "05",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 1,
+          "arrival": "09:07",
+          "departure": "09:27"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "06",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 1,
+          "arrival": "12:06",
+          "departure": "12:31"
+        },
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "07",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 1,
+          "arrival": "20:37",
+          "departure": "20:49"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "08",
+          "stationTrainCode": "Z166",
+          "arrivalDayOffset": 2,
+          "arrival": "02:49",
+          "departure": "02:58"
+        },
+        {
+          "name": "徐州",
+          "telecode": "XCH",
+          "stationNo": "09",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "05:55",
+          "departure": "06:02"
+        },
+        {
+          "name": "蚌埠",
+          "telecode": "BBH",
+          "stationNo": "10",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "07:21",
+          "departure": "07:24"
+        },
+        {
+          "name": "南京",
+          "telecode": "NJH",
+          "stationNo": "11",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "08:57",
+          "departure": "09:06"
+        },
+        {
+          "name": "无锡",
+          "telecode": "WXH",
+          "stationNo": "12",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "10:34",
+          "departure": "10:38"
+        },
+        {
+          "name": "苏州",
+          "telecode": "SZH",
+          "stationNo": "13",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "11:01",
+          "departure": "11:04"
+        },
+        {
+          "name": "上海",
+          "telecode": "SHH",
+          "stationNo": "14",
+          "stationTrainCode": "Z163",
+          "arrivalDayOffset": 2,
+          "arrival": "12:03",
+          "departure": "12:03"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 14,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z166-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z166-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z265",
+      "trainNo": "650000Z26403",
+      "direction": "广州白云 → 拉萨",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z265&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=650000Z26403&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:26.000089+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "01",
+          "stationTrainCode": "Z264",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "09:26"
+        },
+        {
+          "name": "郴州",
+          "telecode": "CZQ",
+          "stationNo": "02",
+          "stationTrainCode": "Z264",
+          "arrivalDayOffset": 0,
+          "arrival": "13:18",
+          "departure": "13:21"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "03",
+          "stationTrainCode": "Z264",
+          "arrivalDayOffset": 0,
+          "arrival": "16:56",
+          "departure": "17:02"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "04",
+          "stationTrainCode": "Z264",
+          "arrivalDayOffset": 0,
+          "arrival": "20:23",
+          "departure": "20:44"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "05",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "01:34",
+          "departure": "01:40"
+        },
+        {
+          "name": "洛阳",
+          "telecode": "LYF",
+          "stationNo": "06",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "03:06",
+          "departure": "03:10"
+        },
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "07",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "07:42",
+          "departure": "07:53"
+        },
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "08",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "09:20",
+          "departure": "09:26"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "09",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "15:04",
+          "departure": "15:32"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "10",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "17:59",
+          "departure": "18:19"
+        },
+        {
+          "name": "德令哈",
+          "telecode": "DHO",
+          "stationNo": "11",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 1,
+          "arrival": "22:04",
+          "departure": "22:08"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "12",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 2,
+          "arrival": "00:29",
+          "departure": "00:54"
+        },
+        {
+          "name": "安多",
+          "telecode": "ADO",
+          "stationNo": "13",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 2,
+          "arrival": "09:36",
+          "departure": "09:38"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "14",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 2,
+          "arrival": "10:56",
+          "departure": "11:02"
+        },
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "15",
+          "stationTrainCode": "Z265",
+          "arrivalDayOffset": 2,
+          "arrival": "14:53",
+          "departure": "14:53"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 15,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z265-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z265-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z266",
+      "trainNo": "880000Z2660P",
+      "direction": "拉萨 → 广州白云",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z266&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000Z2660P&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:27.478222+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "拉萨",
+          "telecode": "LSO",
+          "stationNo": "01",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "12:35"
+        },
+        {
+          "name": "那曲",
+          "telecode": "NQO",
+          "stationNo": "02",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 0,
+          "arrival": "16:33",
+          "departure": "16:39"
+        },
+        {
+          "name": "格尔木",
+          "telecode": "GRO",
+          "stationNo": "03",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 1,
+          "arrival": "03:13",
+          "departure": "03:38"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "04",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 1,
+          "arrival": "10:11",
+          "departure": "10:31"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "05",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 1,
+          "arrival": "13:17",
+          "departure": "13:43"
+        },
+        {
+          "name": "咸阳",
+          "telecode": "XYY",
+          "stationNo": "06",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 1,
+          "arrival": "21:20",
+          "departure": "21:22"
+        },
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "07",
+          "stationTrainCode": "Z266",
+          "arrivalDayOffset": 1,
+          "arrival": "21:38",
+          "departure": "21:47"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "08",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "03:39",
+          "departure": "03:50"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "09",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "08:27",
+          "departure": "08:51"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "10",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "12:10",
+          "departure": "12:16"
+        },
+        {
+          "name": "株洲",
+          "telecode": "ZZQ",
+          "stationNo": "11",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "12:52",
+          "departure": "12:57"
+        },
+        {
+          "name": "衡阳",
+          "telecode": "HYQ",
+          "stationNo": "12",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "14:17",
+          "departure": "14:23"
+        },
+        {
+          "name": "郴州",
+          "telecode": "CZQ",
+          "stationNo": "13",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "16:01",
+          "departure": "16:04"
+        },
+        {
+          "name": "韶关东",
+          "telecode": "SGQ",
+          "stationNo": "14",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "17:44",
+          "departure": "17:47"
+        },
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "15",
+          "stationTrainCode": "Z263",
+          "arrivalDayOffset": 2,
+          "arrival": "20:13",
+          "departure": "20:13"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 15,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z266-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z266-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z385",
+      "trainNo": "110000Z3840I",
+      "direction": "长春 → 海口",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z385&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=110000Z3840I&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:28.312993+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "长春",
+          "telecode": "CCT",
+          "stationNo": "01",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "16:53"
+        },
+        {
+          "name": "四平",
+          "telecode": "SPT",
+          "stationNo": "02",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "17:53",
+          "departure": "17:56"
+        },
+        {
+          "name": "沈阳北",
+          "telecode": "SBT",
+          "stationNo": "03",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "19:28",
+          "departure": "19:36"
+        },
+        {
+          "name": "锦州南",
+          "telecode": "JOD",
+          "stationNo": "04",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "21:19",
+          "departure": "21:22"
+        },
+        {
+          "name": "山海关",
+          "telecode": "SHD",
+          "stationNo": "05",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "22:46",
+          "departure": "22:54"
+        },
+        {
+          "name": "秦皇岛",
+          "telecode": "QTP",
+          "stationNo": "06",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 0,
+          "arrival": "23:19",
+          "departure": "23:24"
+        },
+        {
+          "name": "唐山",
+          "telecode": "TSP",
+          "stationNo": "07",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 1,
+          "arrival": "01:18",
+          "departure": "01:22"
+        },
+        {
+          "name": "天津",
+          "telecode": "TJP",
+          "stationNo": "08",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 1,
+          "arrival": "02:48",
+          "departure": "02:56"
+        },
+        {
+          "name": "聊城",
+          "telecode": "UCK",
+          "stationNo": "09",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "06:58",
+          "departure": "07:04"
+        },
+        {
+          "name": "菏泽",
+          "telecode": "HIK",
+          "stationNo": "10",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "08:14",
+          "departure": "08:17"
+        },
+        {
+          "name": "亳州",
+          "telecode": "BZH",
+          "stationNo": "11",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "09:42",
+          "departure": "09:45"
+        },
+        {
+          "name": "阜阳",
+          "telecode": "FYH",
+          "stationNo": "12",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "10:38",
+          "departure": "11:03"
+        },
+        {
+          "name": "九江",
+          "telecode": "JJG",
+          "stationNo": "13",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "15:02",
+          "departure": "15:07"
+        },
+        {
+          "name": "南昌",
+          "telecode": "NCG",
+          "stationNo": "14",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "16:32",
+          "departure": "16:54"
+        },
+        {
+          "name": "吉安",
+          "telecode": "VAG",
+          "stationNo": "15",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "19:04",
+          "departure": "19:09"
+        },
+        {
+          "name": "井冈山",
+          "telecode": "JGG",
+          "stationNo": "16",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "20:22",
+          "departure": "20:28"
+        },
+        {
+          "name": "衡阳",
+          "telecode": "HYQ",
+          "stationNo": "17",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 1,
+          "arrival": "22:36",
+          "departure": "22:59"
+        },
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "18",
+          "stationTrainCode": "Z384",
+          "arrivalDayOffset": 2,
+          "arrival": "04:29",
+          "departure": "04:54"
+        },
+        {
+          "name": "茂名",
+          "telecode": "MDQ",
+          "stationNo": "19",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 2,
+          "arrival": "08:39",
+          "departure": "09:07"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "20",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 2,
+          "arrival": "09:55",
+          "departure": "10:25"
+        },
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "21",
+          "stationTrainCode": "Z385",
+          "arrivalDayOffset": 2,
+          "arrival": "16:30",
+          "departure": "16:30"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 21,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z385-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z385-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z386",
+      "trainNo": "6b0000Z3860H",
+      "direction": "海口 → 长春",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z386&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000Z3860H&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:29.080296+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "01",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "09:20"
+        },
+        {
+          "name": "徐闻",
+          "telecode": "XJQ",
+          "stationNo": "02",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 0,
+          "arrival": "13:17",
+          "departure": "13:48"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "03",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 0,
+          "arrival": "15:20",
+          "departure": "15:48"
+        },
+        {
+          "name": "茂名",
+          "telecode": "MDQ",
+          "stationNo": "04",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 0,
+          "arrival": "16:36",
+          "departure": "16:50"
+        },
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "05",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 0,
+          "arrival": "21:34",
+          "departure": "22:04"
+        },
+        {
+          "name": "衡阳",
+          "telecode": "HYQ",
+          "stationNo": "06",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "03:45",
+          "departure": "04:13"
+        },
+        {
+          "name": "井冈山",
+          "telecode": "JGG",
+          "stationNo": "07",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "07:16",
+          "departure": "07:23"
+        },
+        {
+          "name": "吉安",
+          "telecode": "VAG",
+          "stationNo": "08",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "08:26",
+          "departure": "08:29"
+        },
+        {
+          "name": "南昌",
+          "telecode": "NCG",
+          "stationNo": "09",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "10:40",
+          "departure": "11:06"
+        },
+        {
+          "name": "九江",
+          "telecode": "JJG",
+          "stationNo": "10",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "12:11",
+          "departure": "12:18"
+        },
+        {
+          "name": "阜阳",
+          "telecode": "FYH",
+          "stationNo": "11",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "16:29",
+          "departure": "16:59"
+        },
+        {
+          "name": "亳州",
+          "telecode": "BZH",
+          "stationNo": "12",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "17:52",
+          "departure": "17:55"
+        },
+        {
+          "name": "商丘南",
+          "telecode": "SPF",
+          "stationNo": "13",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "18:30",
+          "departure": "18:34"
+        },
+        {
+          "name": "菏泽",
+          "telecode": "HIK",
+          "stationNo": "14",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "19:30",
+          "departure": "19:32"
+        },
+        {
+          "name": "聊城",
+          "telecode": "UCK",
+          "stationNo": "15",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "20:41",
+          "departure": "20:47"
+        },
+        {
+          "name": "衡水",
+          "telecode": "HSP",
+          "stationNo": "16",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "22:21",
+          "departure": "22:27"
+        },
+        {
+          "name": "任丘",
+          "telecode": "RQP",
+          "stationNo": "17",
+          "stationTrainCode": "Z386",
+          "arrivalDayOffset": 1,
+          "arrival": "23:38",
+          "departure": "23:43"
+        },
+        {
+          "name": "天津",
+          "telecode": "TJP",
+          "stationNo": "18",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "01:43",
+          "departure": "01:51"
+        },
+        {
+          "name": "唐山",
+          "telecode": "TSP",
+          "stationNo": "19",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "03:42",
+          "departure": "03:49"
+        },
+        {
+          "name": "秦皇岛",
+          "telecode": "QTP",
+          "stationNo": "20",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "05:22",
+          "departure": "05:27"
+        },
+        {
+          "name": "山海关",
+          "telecode": "SHD",
+          "stationNo": "21",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "05:51",
+          "departure": "05:57"
+        },
+        {
+          "name": "锦州南",
+          "telecode": "JOD",
+          "stationNo": "22",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "07:06",
+          "departure": "07:09"
+        },
+        {
+          "name": "沈阳北",
+          "telecode": "SBT",
+          "stationNo": "23",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "09:05",
+          "departure": "09:13"
+        },
+        {
+          "name": "四平",
+          "telecode": "SPT",
+          "stationNo": "24",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "10:50",
+          "departure": "10:53"
+        },
+        {
+          "name": "长春",
+          "telecode": "CCT",
+          "stationNo": "25",
+          "stationTrainCode": "Z383",
+          "arrivalDayOffset": 2,
+          "arrival": "11:55",
+          "departure": "11:55"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 25,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z386-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z386-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z501",
+      "trainNo": "240000Z5010I",
+      "direction": "北京西 → 三亚",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z501&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000Z5010I&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:30.231853+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "北京西",
+          "telecode": "BXP",
+          "stationNo": "01",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "20:23"
+        },
+        {
+          "name": "石家庄",
+          "telecode": "SJP",
+          "stationNo": "02",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 0,
+          "arrival": "22:49",
+          "departure": "22:56"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "03",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "02:24",
+          "departure": "02:30"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "04",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "07:09",
+          "departure": "07:15"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "05",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "10:32",
+          "departure": "10:38"
+        },
+        {
+          "name": "郴州",
+          "telecode": "CZQ",
+          "stationNo": "06",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "14:03",
+          "departure": "14:06"
+        },
+        {
+          "name": "韶关东",
+          "telecode": "SGQ",
+          "stationNo": "07",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "15:47",
+          "departure": "15:50"
+        },
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "08",
+          "stationTrainCode": "Z504",
+          "arrivalDayOffset": 1,
+          "arrival": "18:05",
+          "departure": "18:30"
+        },
+        {
+          "name": "茂名",
+          "telecode": "MDQ",
+          "stationNo": "09",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "22:18",
+          "departure": "22:32"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "10",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 1,
+          "arrival": "23:26",
+          "departure": "00:02"
+        },
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "11",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 2,
+          "arrival": "06:55",
+          "departure": "07:35"
+        },
+        {
+          "name": "东方",
+          "telecode": "UFQ",
+          "stationNo": "12",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 2,
+          "arrival": "09:17",
+          "departure": "09:20"
+        },
+        {
+          "name": "乐东",
+          "telecode": "UQQ",
+          "stationNo": "13",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 2,
+          "arrival": "10:00",
+          "departure": "10:03"
+        },
+        {
+          "name": "三亚",
+          "telecode": "SEQ",
+          "stationNo": "14",
+          "stationTrainCode": "Z501",
+          "arrivalDayOffset": 2,
+          "arrival": "10:50",
+          "departure": "10:50"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 14,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z501-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z501-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "Z502",
+      "trainNo": "6b0000Z50208",
+      "direction": "三亚 → 北京西",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z502&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000Z50208&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:30.557447+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "三亚",
+          "telecode": "SEQ",
+          "stationNo": "01",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "16:26"
+        },
+        {
+          "name": "乐东",
+          "telecode": "UQQ",
+          "stationNo": "02",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 0,
+          "arrival": "17:04",
+          "departure": "17:12"
+        },
+        {
+          "name": "东方",
+          "telecode": "UFQ",
+          "stationNo": "03",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 0,
+          "arrival": "17:54",
+          "departure": "17:57"
+        },
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "04",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 0,
+          "arrival": "19:35",
+          "departure": "20:15"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "05",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "01:40",
+          "departure": "02:08"
+        },
+        {
+          "name": "广州白云",
+          "telecode": "GBA",
+          "stationNo": "06",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "08:05",
+          "departure": "08:30"
+        },
+        {
+          "name": "韶关东",
+          "telecode": "SGQ",
+          "stationNo": "07",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "10:49",
+          "departure": "10:55"
+        },
+        {
+          "name": "郴州",
+          "telecode": "CZQ",
+          "stationNo": "08",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "12:34",
+          "departure": "12:38"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "09",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "16:10",
+          "departure": "16:17"
+        },
+        {
+          "name": "岳阳",
+          "telecode": "YYQ",
+          "stationNo": "10",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "17:39",
+          "departure": "17:43"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "11",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 1,
+          "arrival": "19:51",
+          "departure": "19:59"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "12",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 2,
+          "arrival": "00:39",
+          "departure": "00:46"
+        },
+        {
+          "name": "石家庄",
+          "telecode": "SJP",
+          "stationNo": "13",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 2,
+          "arrival": "04:10",
+          "departure": "04:16"
+        },
+        {
+          "name": "北京西",
+          "telecode": "BXP",
+          "stationNo": "14",
+          "stationTrainCode": "Z502",
+          "arrivalDayOffset": 2,
+          "arrival": "06:49",
+          "departure": "06:49"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 14,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z502-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/Z502-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "K457",
+      "trainNo": "380000K457D0",
+      "direction": "新乡 → 三亚",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K457&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=380000K457D0&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:30.769933+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "新乡",
+          "telecode": "XXF",
+          "stationNo": "01",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "10:02"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "02",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "10:56",
+          "departure": "11:22"
+        },
+        {
+          "name": "许昌",
+          "telecode": "XCF",
+          "stationNo": "03",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "12:17",
+          "departure": "12:20"
+        },
+        {
+          "name": "漯河",
+          "telecode": "LON",
+          "stationNo": "04",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "12:57",
+          "departure": "13:00"
+        },
+        {
+          "name": "信阳",
+          "telecode": "XUN",
+          "stationNo": "05",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "14:36",
+          "departure": "14:45"
+        },
+        {
+          "name": "广水",
+          "telecode": "GSN",
+          "stationNo": "06",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "15:36",
+          "departure": "15:39"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "07",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "17:32",
+          "departure": "17:39"
+        },
+        {
+          "name": "岳阳",
+          "telecode": "YYQ",
+          "stationNo": "08",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "19:57",
+          "departure": "20:02"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "09",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "21:30",
+          "departure": "21:38"
+        },
+        {
+          "name": "株洲",
+          "telecode": "ZZQ",
+          "stationNo": "10",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "22:24",
+          "departure": "22:30"
+        },
+        {
+          "name": "衡阳",
+          "telecode": "HYQ",
+          "stationNo": "11",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 0,
+          "arrival": "23:55",
+          "departure": "00:21"
+        },
+        {
+          "name": "永州",
+          "telecode": "AOQ",
+          "stationNo": "12",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "01:51",
+          "departure": "01:59"
+        },
+        {
+          "name": "桂林北",
+          "telecode": "GBZ",
+          "stationNo": "13",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "04:08",
+          "departure": "04:21"
+        },
+        {
+          "name": "柳州",
+          "telecode": "LZZ",
+          "stationNo": "14",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "06:02",
+          "departure": "06:10"
+        },
+        {
+          "name": "贵港",
+          "telecode": "GGZ",
+          "stationNo": "15",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "08:28",
+          "departure": "08:32"
+        },
+        {
+          "name": "玉林",
+          "telecode": "YLZ",
+          "stationNo": "16",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "09:36",
+          "departure": "09:44"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "17",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "12:12",
+          "departure": "12:17"
+        },
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "18",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "17:45",
+          "departure": "18:25"
+        },
+        {
+          "name": "东方",
+          "telecode": "UFQ",
+          "stationNo": "19",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "20:36",
+          "departure": "20:39"
+        },
+        {
+          "name": "乐东",
+          "telecode": "UQQ",
+          "stationNo": "20",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "21:29",
+          "departure": "21:32"
+        },
+        {
+          "name": "三亚",
+          "telecode": "SEQ",
+          "stationNo": "21",
+          "stationTrainCode": "K457",
+          "arrivalDayOffset": 1,
+          "arrival": "22:17",
+          "departure": "22:17"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 21,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K457-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K457-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "K458",
+      "trainNo": "6b0000K4580M",
+      "direction": "三亚 → 新乡",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K458&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000K4580M&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:31.551335+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "三亚",
+          "telecode": "SEQ",
+          "stationNo": "01",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "09:06"
+        },
+        {
+          "name": "乐东",
+          "telecode": "UQQ",
+          "stationNo": "02",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "09:50",
+          "departure": "09:58"
+        },
+        {
+          "name": "东方",
+          "telecode": "UFQ",
+          "stationNo": "03",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "10:51",
+          "departure": "10:55"
+        },
+        {
+          "name": "海口",
+          "telecode": "VUQ",
+          "stationNo": "04",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "13:20",
+          "departure": "13:50"
+        },
+        {
+          "name": "徐闻",
+          "telecode": "XJQ",
+          "stationNo": "05",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "17:31",
+          "departure": "17:36"
+        },
+        {
+          "name": "雷州",
+          "telecode": "UAQ",
+          "stationNo": "06",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "18:32",
+          "departure": "18:37"
+        },
+        {
+          "name": "湛江西",
+          "telecode": "ZWQ",
+          "stationNo": "07",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "19:21",
+          "departure": "19:27"
+        },
+        {
+          "name": "廉江",
+          "telecode": "LJZ",
+          "stationNo": "08",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "20:35",
+          "departure": "20:39"
+        },
+        {
+          "name": "玉林",
+          "telecode": "YLZ",
+          "stationNo": "09",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "22:05",
+          "departure": "22:15"
+        },
+        {
+          "name": "贵港",
+          "telecode": "GGZ",
+          "stationNo": "10",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 0,
+          "arrival": "23:19",
+          "departure": "23:23"
+        },
+        {
+          "name": "柳州",
+          "telecode": "LZZ",
+          "stationNo": "11",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "01:34",
+          "departure": "01:41"
+        },
+        {
+          "name": "桂林北",
+          "telecode": "GBZ",
+          "stationNo": "12",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "03:23",
+          "departure": "04:10"
+        },
+        {
+          "name": "永州",
+          "telecode": "AOQ",
+          "stationNo": "13",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "06:25",
+          "departure": "06:31"
+        },
+        {
+          "name": "祁阳",
+          "telecode": "QWQ",
+          "stationNo": "14",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "06:54",
+          "departure": "06:57"
+        },
+        {
+          "name": "祁东",
+          "telecode": "QMQ",
+          "stationNo": "15",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "07:16",
+          "departure": "07:19"
+        },
+        {
+          "name": "衡阳",
+          "telecode": "HYQ",
+          "stationNo": "16",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "08:13",
+          "departure": "08:35"
+        },
+        {
+          "name": "衡山",
+          "telecode": "HSQ",
+          "stationNo": "17",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "09:09",
+          "departure": "09:12"
+        },
+        {
+          "name": "株洲",
+          "telecode": "ZZQ",
+          "stationNo": "18",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "10:10",
+          "departure": "10:20"
+        },
+        {
+          "name": "长沙",
+          "telecode": "CSQ",
+          "stationNo": "19",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "11:05",
+          "departure": "11:16"
+        },
+        {
+          "name": "岳阳",
+          "telecode": "YYQ",
+          "stationNo": "20",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "12:39",
+          "departure": "12:45"
+        },
+        {
+          "name": "赤壁",
+          "telecode": "CBN",
+          "stationNo": "21",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "13:52",
+          "departure": "13:55"
+        },
+        {
+          "name": "武昌",
+          "telecode": "WCN",
+          "stationNo": "22",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "15:15",
+          "departure": "15:26"
+        },
+        {
+          "name": "孝感",
+          "telecode": "XGN",
+          "stationNo": "23",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "16:28",
+          "departure": "16:31"
+        },
+        {
+          "name": "信阳",
+          "telecode": "XUN",
+          "stationNo": "24",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "18:06",
+          "departure": "18:09"
+        },
+        {
+          "name": "确山",
+          "telecode": "QSN",
+          "stationNo": "25",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "18:57",
+          "departure": "19:00"
+        },
+        {
+          "name": "驻马店",
+          "telecode": "ZDN",
+          "stationNo": "26",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "19:14",
+          "departure": "19:17"
+        },
+        {
+          "name": "漯河",
+          "telecode": "LON",
+          "stationNo": "27",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "20:05",
+          "departure": "20:11"
+        },
+        {
+          "name": "许昌",
+          "telecode": "XCF",
+          "stationNo": "29",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "21:02",
+          "departure": "21:07"
+        },
+        {
+          "name": "郑州",
+          "telecode": "ZZF",
+          "stationNo": "31",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "22:09",
+          "departure": "22:32"
+        },
+        {
+          "name": "新乡",
+          "telecode": "XXF",
+          "stationNo": "32",
+          "stationTrainCode": "K458",
+          "arrivalDayOffset": 1,
+          "arrival": "23:35",
+          "departure": "23:35"
+        }
+      ],
+      "completeness": "partial-observed",
+      "expectedStopCount": 31,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K458-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K458-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date.",
+        "Official search total_num=31, while train-info returned 30 rows with station_no gaps at 28 and 30. Preserve only observed rows; do not infer the missing calls."
+      ]
+    },
+    {
+      "trainNumber": "K9786",
+      "trainNo": "93000K978600",
+      "direction": "乌鲁木齐南 → 喀什",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K9786&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000K978600&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:32.841058+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "乌鲁木齐南",
+          "telecode": "WMR",
+          "stationNo": "01",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "15:58"
+        },
+        {
+          "name": "吐鲁番北",
+          "telecode": "TAR",
+          "stationNo": "02",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 0,
+          "arrival": "18:21",
+          "departure": "18:57"
+        },
+        {
+          "name": "马兰",
+          "telecode": "MLR",
+          "stationNo": "03",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 0,
+          "arrival": "21:28",
+          "departure": "21:30"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "04",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 0,
+          "arrival": "22:21",
+          "departure": "22:23"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "05",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 0,
+          "arrival": "23:02",
+          "departure": "23:22"
+        },
+        {
+          "name": "尉犁",
+          "telecode": "WRR",
+          "stationNo": "06",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "00:02",
+          "departure": "00:04"
+        },
+        {
+          "name": "若羌",
+          "telecode": "RQR",
+          "stationNo": "07",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "04:05",
+          "departure": "04:30"
+        },
+        {
+          "name": "瓦石峡",
+          "telecode": "WHR",
+          "stationNo": "08",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "05:30",
+          "departure": "05:32"
+        },
+        {
+          "name": "且末",
+          "telecode": "QMR",
+          "stationNo": "09",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "07:30",
+          "departure": "07:32"
+        },
+        {
+          "name": "金山",
+          "telecode": "JSR",
+          "stationNo": "10",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "07:47",
+          "departure": "07:49"
+        },
+        {
+          "name": "南屯",
+          "telecode": "NTR",
+          "stationNo": "11",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "09:10",
+          "departure": "09:12"
+        },
+        {
+          "name": "民丰",
+          "telecode": "MFR",
+          "stationNo": "12",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "10:51",
+          "departure": "10:53"
+        },
+        {
+          "name": "于田",
+          "telecode": "YWR",
+          "stationNo": "13",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "12:04",
+          "departure": "12:12"
+        },
+        {
+          "name": "玉泉镇",
+          "telecode": "YFR",
+          "stationNo": "14",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "12:40",
+          "departure": "12:42"
+        },
+        {
+          "name": "策勒",
+          "telecode": "CLR",
+          "stationNo": "15",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "13:15",
+          "departure": "13:17"
+        },
+        {
+          "name": "洛浦",
+          "telecode": "LVR",
+          "stationNo": "16",
+          "stationTrainCode": "K9787",
+          "arrivalDayOffset": 1,
+          "arrival": "14:18",
+          "departure": "14:20"
+        },
+        {
+          "name": "和田",
+          "telecode": "VTR",
+          "stationNo": "17",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "15:00",
+          "departure": "15:35"
+        },
+        {
+          "name": "墨玉",
+          "telecode": "MUR",
+          "stationNo": "18",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "15:51",
+          "departure": "15:54"
+        },
+        {
+          "name": "昆玉",
+          "telecode": "ESR",
+          "stationNo": "19",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "16:23",
+          "departure": "16:27"
+        },
+        {
+          "name": "皮山",
+          "telecode": "PSR",
+          "stationNo": "20",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "17:25",
+          "departure": "17:27"
+        },
+        {
+          "name": "叶城",
+          "telecode": "YER",
+          "stationNo": "21",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "18:18",
+          "departure": "18:20"
+        },
+        {
+          "name": "泽普",
+          "telecode": "ZPR",
+          "stationNo": "22",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "18:47",
+          "departure": "18:49"
+        },
+        {
+          "name": "莎车",
+          "telecode": "SCR",
+          "stationNo": "23",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "19:06",
+          "departure": "19:08"
+        },
+        {
+          "name": "英吉沙",
+          "telecode": "YIR",
+          "stationNo": "24",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "20:30",
+          "departure": "20:32"
+        },
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "25",
+          "stationTrainCode": "K9786",
+          "arrivalDayOffset": 1,
+          "arrival": "21:19",
+          "departure": "21:19"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 25,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K9786-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K9786-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "K9718",
+      "trainNo": "93000K97180H",
+      "direction": "乌鲁木齐 → 和田",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K9718&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000K97180H&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:32.717770+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "乌鲁木齐",
+          "telecode": "WAR",
+          "stationNo": "01",
+          "stationTrainCode": "K9718",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "10:52"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "02",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "17:19",
+          "departure": "17:21"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "03",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "18:02",
+          "departure": "18:30"
+        },
+        {
+          "name": "轮台",
+          "telecode": "LAR",
+          "stationNo": "04",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "20:17",
+          "departure": "20:19"
+        },
+        {
+          "name": "库车",
+          "telecode": "KCR",
+          "stationNo": "05",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "21:15",
+          "departure": "21:21"
+        },
+        {
+          "name": "新和",
+          "telecode": "XIR",
+          "stationNo": "06",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "21:50",
+          "departure": "21:52"
+        },
+        {
+          "name": "阿克苏",
+          "telecode": "ASR",
+          "stationNo": "07",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 0,
+          "arrival": "23:43",
+          "departure": "23:53"
+        },
+        {
+          "name": "巴楚",
+          "telecode": "BCR",
+          "stationNo": "08",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "02:38",
+          "departure": "02:47"
+        },
+        {
+          "name": "阿图什",
+          "telecode": "ATR",
+          "stationNo": "09",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "04:50",
+          "departure": "04:53"
+        },
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "10",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "05:24",
+          "departure": "05:45"
+        },
+        {
+          "name": "英吉沙",
+          "telecode": "YIR",
+          "stationNo": "11",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "06:28",
+          "departure": "06:31"
+        },
+        {
+          "name": "莎车",
+          "telecode": "SCR",
+          "stationNo": "12",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "07:45",
+          "departure": "07:48"
+        },
+        {
+          "name": "泽普",
+          "telecode": "ZPR",
+          "stationNo": "13",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "08:06",
+          "departure": "08:09"
+        },
+        {
+          "name": "叶城",
+          "telecode": "YER",
+          "stationNo": "14",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "08:36",
+          "departure": "08:39"
+        },
+        {
+          "name": "皮山",
+          "telecode": "PSR",
+          "stationNo": "15",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "09:29",
+          "departure": "09:32"
+        },
+        {
+          "name": "昆玉",
+          "telecode": "ESR",
+          "stationNo": "16",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "10:29",
+          "departure": "10:31"
+        },
+        {
+          "name": "墨玉",
+          "telecode": "MUR",
+          "stationNo": "17",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "10:59",
+          "departure": "11:01"
+        },
+        {
+          "name": "和田",
+          "telecode": "VTR",
+          "stationNo": "18",
+          "stationTrainCode": "K9719",
+          "arrivalDayOffset": 1,
+          "arrival": "11:18",
+          "departure": "11:18"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 18,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K9718-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/K9718-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "T269",
+      "trainNo": "410000T2690M",
+      "direction": "西安 → 喀什",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=T269&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=410000T2690M&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:33.965524+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "01",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "22:00"
+        },
+        {
+          "name": "咸阳",
+          "telecode": "XYY",
+          "stationNo": "02",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 0,
+          "arrival": "22:15",
+          "departure": "22:18"
+        },
+        {
+          "name": "杨陵",
+          "telecode": "YSY",
+          "stationNo": "03",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 0,
+          "arrival": "22:51",
+          "departure": "22:54"
+        },
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "04",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 0,
+          "arrival": "23:46",
+          "departure": "23:53"
+        },
+        {
+          "name": "天水",
+          "telecode": "TSJ",
+          "stationNo": "05",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "01:24",
+          "departure": "01:36"
+        },
+        {
+          "name": "甘谷",
+          "telecode": "GGJ",
+          "stationNo": "06",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "02:18",
+          "departure": "02:21"
+        },
+        {
+          "name": "陇西",
+          "telecode": "LXJ",
+          "stationNo": "07",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "03:04",
+          "departure": "03:09"
+        },
+        {
+          "name": "定西",
+          "telecode": "DSJ",
+          "stationNo": "08",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "04:03",
+          "departure": "04:07"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "09",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "05:35",
+          "departure": "06:03"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "10",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "08:34",
+          "departure": "08:40"
+        },
+        {
+          "name": "民乐",
+          "telecode": "MBJ",
+          "stationNo": "11",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "10:43",
+          "departure": "10:55"
+        },
+        {
+          "name": "张掖西",
+          "telecode": "ZEJ",
+          "stationNo": "12",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "11:31",
+          "departure": "11:34"
+        },
+        {
+          "name": "嘉峪关南",
+          "telecode": "JBJ",
+          "stationNo": "13",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "13:22",
+          "departure": "13:28"
+        },
+        {
+          "name": "玉门",
+          "telecode": "YXJ",
+          "stationNo": "14",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "14:52",
+          "departure": "14:55"
+        },
+        {
+          "name": "哈密",
+          "telecode": "HMR",
+          "stationNo": "15",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "19:43",
+          "departure": "20:03"
+        },
+        {
+          "name": "鄯善北",
+          "telecode": "SMR",
+          "stationNo": "16",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "22:46",
+          "departure": "22:48"
+        },
+        {
+          "name": "吐鲁番北",
+          "telecode": "TAR",
+          "stationNo": "17",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 1,
+          "arrival": "23:40",
+          "departure": "23:42"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "18",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "02:32",
+          "departure": "02:34"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "19",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "03:10",
+          "departure": "03:35"
+        },
+        {
+          "name": "库车",
+          "telecode": "KCR",
+          "stationNo": "20",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "05:59",
+          "departure": "06:01"
+        },
+        {
+          "name": "阿克苏",
+          "telecode": "ASR",
+          "stationNo": "21",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "08:09",
+          "departure": "08:20"
+        },
+        {
+          "name": "巴楚",
+          "telecode": "BCR",
+          "stationNo": "22",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "10:34",
+          "departure": "10:40"
+        },
+        {
+          "name": "阿图什",
+          "telecode": "ATR",
+          "stationNo": "23",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "12:49",
+          "departure": "12:51"
+        },
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "24",
+          "stationTrainCode": "T269",
+          "arrivalDayOffset": 2,
+          "arrival": "13:22",
+          "departure": "13:22"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 24,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/T269-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/T269-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "T270",
+      "trainNo": "940000T2700B",
+      "direction": "喀什 → 西安",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=T270&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=940000T2700B&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:33.986942+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "01",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "14:58"
+        },
+        {
+          "name": "巴楚",
+          "telecode": "BCR",
+          "stationNo": "02",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 0,
+          "arrival": "17:45",
+          "departure": "17:55"
+        },
+        {
+          "name": "阿克苏",
+          "telecode": "ASR",
+          "stationNo": "03",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 0,
+          "arrival": "20:56",
+          "departure": "21:16"
+        },
+        {
+          "name": "新和",
+          "telecode": "XIR",
+          "stationNo": "04",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 0,
+          "arrival": "23:06",
+          "departure": "23:08"
+        },
+        {
+          "name": "库车",
+          "telecode": "KCR",
+          "stationNo": "05",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 0,
+          "arrival": "23:37",
+          "departure": "23:47"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "06",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "02:26",
+          "departure": "02:51"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "07",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "03:26",
+          "departure": "03:28"
+        },
+        {
+          "name": "和硕",
+          "telecode": "VUR",
+          "stationNo": "08",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "03:52",
+          "departure": "03:54"
+        },
+        {
+          "name": "吐鲁番北",
+          "telecode": "TAR",
+          "stationNo": "09",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "06:20",
+          "departure": "06:22"
+        },
+        {
+          "name": "鄯善北",
+          "telecode": "SMR",
+          "stationNo": "10",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "07:16",
+          "departure": "07:18"
+        },
+        {
+          "name": "哈密",
+          "telecode": "HMR",
+          "stationNo": "11",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "09:58",
+          "departure": "10:23"
+        },
+        {
+          "name": "嘉峪关南",
+          "telecode": "JBJ",
+          "stationNo": "12",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "15:10",
+          "departure": "15:18"
+        },
+        {
+          "name": "酒泉南",
+          "telecode": "JNJ",
+          "stationNo": "13",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "15:34",
+          "departure": "15:37"
+        },
+        {
+          "name": "临泽南",
+          "telecode": "LDJ",
+          "stationNo": "14",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "16:54",
+          "departure": "17:07"
+        },
+        {
+          "name": "张掖西",
+          "telecode": "ZEJ",
+          "stationNo": "15",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "17:29",
+          "departure": "17:49"
+        },
+        {
+          "name": "西宁",
+          "telecode": "XNO",
+          "stationNo": "16",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "20:59",
+          "departure": "21:08"
+        },
+        {
+          "name": "兰州",
+          "telecode": "LZJ",
+          "stationNo": "17",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 1,
+          "arrival": "23:56",
+          "departure": "00:31"
+        },
+        {
+          "name": "定西",
+          "telecode": "DSJ",
+          "stationNo": "18",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "01:41",
+          "departure": "01:45"
+        },
+        {
+          "name": "陇西",
+          "telecode": "LXJ",
+          "stationNo": "19",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "02:36",
+          "departure": "02:40"
+        },
+        {
+          "name": "甘谷",
+          "telecode": "GGJ",
+          "stationNo": "20",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "03:29",
+          "departure": "03:33"
+        },
+        {
+          "name": "天水",
+          "telecode": "TSJ",
+          "stationNo": "21",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "04:48",
+          "departure": "04:56"
+        },
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "22",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "07:27",
+          "departure": "07:41"
+        },
+        {
+          "name": "蔡家坡",
+          "telecode": "CJY",
+          "stationNo": "23",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "08:08",
+          "departure": "08:12"
+        },
+        {
+          "name": "武功",
+          "telecode": "WGY",
+          "stationNo": "24",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "08:45",
+          "departure": "08:48"
+        },
+        {
+          "name": "咸阳",
+          "telecode": "XYY",
+          "stationNo": "25",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "09:19",
+          "departure": "09:22"
+        },
+        {
+          "name": "西安",
+          "telecode": "XAY",
+          "stationNo": "26",
+          "stationTrainCode": "T270",
+          "arrivalDayOffset": 2,
+          "arrival": "09:43",
+          "departure": "09:44"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 26,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/T270-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/T270-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "7556",
+      "trainNo": "93000075560S",
+      "direction": "乌鲁木齐 → 和田",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=7556&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000075560S&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:35.044693+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "乌鲁木齐",
+          "telecode": "WAR",
+          "stationNo": "01",
+          "stationTrainCode": "7556",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "14:57"
+        },
+        {
+          "name": "吐鲁番北",
+          "telecode": "TAR",
+          "stationNo": "02",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "16:43",
+          "departure": "17:08"
+        },
+        {
+          "name": "鱼儿沟",
+          "telecode": "YGR",
+          "stationNo": "03",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "18:43",
+          "departure": "18:45"
+        },
+        {
+          "name": "马兰",
+          "telecode": "MLR",
+          "stationNo": "04",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "20:32",
+          "departure": "20:35"
+        },
+        {
+          "name": "和硕",
+          "telecode": "VUR",
+          "stationNo": "05",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "21:03",
+          "departure": "21:06"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "06",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "21:35",
+          "departure": "21:40"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "07",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 0,
+          "arrival": "23:15",
+          "departure": "23:50"
+        },
+        {
+          "name": "铁门关",
+          "telecode": "XAR",
+          "stationNo": "08",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "00:30",
+          "departure": "00:33"
+        },
+        {
+          "name": "库车",
+          "telecode": "KCR",
+          "stationNo": "09",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "04:03",
+          "departure": "04:08"
+        },
+        {
+          "name": "新和",
+          "telecode": "XIR",
+          "stationNo": "10",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "04:52",
+          "departure": "04:54"
+        },
+        {
+          "name": "阿克苏",
+          "telecode": "ASR",
+          "stationNo": "11",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "07:36",
+          "departure": "07:56"
+        },
+        {
+          "name": "巴楚",
+          "telecode": "BCR",
+          "stationNo": "12",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "12:52",
+          "departure": "13:00"
+        },
+        {
+          "name": "阿图什",
+          "telecode": "ATR",
+          "stationNo": "13",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "16:11",
+          "departure": "16:13"
+        },
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "14",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "16:52",
+          "departure": "17:15"
+        },
+        {
+          "name": "阿克陶",
+          "telecode": "AER",
+          "stationNo": "15",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "18:01",
+          "departure": "18:03"
+        },
+        {
+          "name": "英吉沙",
+          "telecode": "YIR",
+          "stationNo": "16",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "18:23",
+          "departure": "18:25"
+        },
+        {
+          "name": "莎车",
+          "telecode": "SCR",
+          "stationNo": "17",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "20:04",
+          "departure": "20:11"
+        },
+        {
+          "name": "泽普",
+          "telecode": "ZPR",
+          "stationNo": "18",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "20:29",
+          "departure": "20:36"
+        },
+        {
+          "name": "叶城",
+          "telecode": "YER",
+          "stationNo": "19",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "21:03",
+          "departure": "21:05"
+        },
+        {
+          "name": "皮山",
+          "telecode": "PSR",
+          "stationNo": "20",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "22:02",
+          "departure": "22:04"
+        },
+        {
+          "name": "昆玉",
+          "telecode": "ESR",
+          "stationNo": "21",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "23:08",
+          "departure": "23:10"
+        },
+        {
+          "name": "墨玉",
+          "telecode": "MUR",
+          "stationNo": "22",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "23:39",
+          "departure": "23:41"
+        },
+        {
+          "name": "和田",
+          "telecode": "VTR",
+          "stationNo": "23",
+          "stationTrainCode": "7557",
+          "arrivalDayOffset": 1,
+          "arrival": "23:59",
+          "departure": "23:59"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 23,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/7556-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/7556-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "7558",
+      "trainNo": "94000075580L",
+      "direction": "和田 → 乌鲁木齐",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=7558&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=94000075580L&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:35.673189+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "和田",
+          "telecode": "VTR",
+          "stationNo": "01",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "08:35"
+        },
+        {
+          "name": "墨玉",
+          "telecode": "MUR",
+          "stationNo": "02",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "08:52",
+          "departure": "08:54"
+        },
+        {
+          "name": "昆玉",
+          "telecode": "ESR",
+          "stationNo": "03",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "09:23",
+          "departure": "09:25"
+        },
+        {
+          "name": "皮山",
+          "telecode": "PSR",
+          "stationNo": "04",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "10:33",
+          "departure": "10:39"
+        },
+        {
+          "name": "叶城",
+          "telecode": "YER",
+          "stationNo": "05",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "11:39",
+          "departure": "11:41"
+        },
+        {
+          "name": "泽普",
+          "telecode": "ZPR",
+          "stationNo": "06",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "12:08",
+          "departure": "12:14"
+        },
+        {
+          "name": "莎车",
+          "telecode": "SCR",
+          "stationNo": "07",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "12:32",
+          "departure": "12:36"
+        },
+        {
+          "name": "英吉沙",
+          "telecode": "YIR",
+          "stationNo": "08",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "14:27",
+          "departure": "14:30"
+        },
+        {
+          "name": "阿克陶",
+          "telecode": "AER",
+          "stationNo": "09",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "14:52",
+          "departure": "14:55"
+        },
+        {
+          "name": "喀什",
+          "telecode": "KSR",
+          "stationNo": "10",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "15:40",
+          "departure": "16:05"
+        },
+        {
+          "name": "阿图什",
+          "telecode": "ATR",
+          "stationNo": "11",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "16:51",
+          "departure": "16:57"
+        },
+        {
+          "name": "巴楚",
+          "telecode": "BCR",
+          "stationNo": "12",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 0,
+          "arrival": "20:56",
+          "departure": "21:01"
+        },
+        {
+          "name": "阿克苏",
+          "telecode": "ASR",
+          "stationNo": "13",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "02:42",
+          "departure": "03:05"
+        },
+        {
+          "name": "新和",
+          "telecode": "XIR",
+          "stationNo": "14",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "05:26",
+          "departure": "05:28"
+        },
+        {
+          "name": "库车",
+          "telecode": "KCR",
+          "stationNo": "15",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "06:10",
+          "departure": "06:12"
+        },
+        {
+          "name": "铁门关",
+          "telecode": "XAR",
+          "stationNo": "16",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "09:56",
+          "departure": "09:58"
+        },
+        {
+          "name": "库尔勒",
+          "telecode": "KLR",
+          "stationNo": "17",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "10:42",
+          "departure": "11:05"
+        },
+        {
+          "name": "焉耆",
+          "telecode": "YSR",
+          "stationNo": "18",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "11:50",
+          "departure": "11:52"
+        },
+        {
+          "name": "和硕",
+          "telecode": "VUR",
+          "stationNo": "19",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "12:20",
+          "departure": "12:23"
+        },
+        {
+          "name": "马兰",
+          "telecode": "MLR",
+          "stationNo": "20",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "12:51",
+          "departure": "12:54"
+        },
+        {
+          "name": "鱼儿沟",
+          "telecode": "YGR",
+          "stationNo": "21",
+          "stationTrainCode": "7558",
+          "arrivalDayOffset": 1,
+          "arrival": "14:13",
+          "departure": "14:15"
+        },
+        {
+          "name": "吐鲁番北",
+          "telecode": "TAR",
+          "stationNo": "22",
+          "stationTrainCode": "7555",
+          "arrivalDayOffset": 1,
+          "arrival": "15:56",
+          "departure": "16:47"
+        },
+        {
+          "name": "乌鲁木齐",
+          "telecode": "WAR",
+          "stationNo": "23",
+          "stationTrainCode": "7555",
+          "arrivalDayOffset": 1,
+          "arrival": "18:34",
+          "departure": "18:34"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 23,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/7558-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/7558-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "5633",
+      "trainNo": "76000056330W",
+      "direction": "普雄 → 攀枝花南",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5633&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000056330W&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:37.200321+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "普雄",
+          "telecode": "POW",
+          "stationNo": "01",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "07:15"
+        },
+        {
+          "name": "上普雄",
+          "telecode": null,
+          "stationNo": "02",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "07:26",
+          "departure": "07:28"
+        },
+        {
+          "name": "尔赛河",
+          "telecode": null,
+          "stationNo": "03",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "07:41",
+          "departure": "07:43"
+        },
+        {
+          "name": "尼波",
+          "telecode": null,
+          "stationNo": "04",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "07:56",
+          "departure": "07:58"
+        },
+        {
+          "name": "乐武",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "08:11",
+          "departure": "08:15"
+        },
+        {
+          "name": "红峰",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "08:25",
+          "departure": "08:27"
+        },
+        {
+          "name": "沙马拉达",
+          "telecode": null,
+          "stationNo": "07",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "08:42",
+          "departure": "08:46"
+        },
+        {
+          "name": "瓦祖",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "08:59",
+          "departure": "09:01"
+        },
+        {
+          "name": "新凉",
+          "telecode": null,
+          "stationNo": "09",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "09:24",
+          "departure": "09:26"
+        },
+        {
+          "name": "联合乡",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "09:36",
+          "departure": "09:38"
+        },
+        {
+          "name": "喜德",
+          "telecode": "EDW",
+          "stationNo": "11",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "09:48",
+          "departure": "09:53"
+        },
+        {
+          "name": "冕山",
+          "telecode": null,
+          "stationNo": "12",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "10:05",
+          "departure": "10:07"
+        },
+        {
+          "name": "冕宁",
+          "telecode": "UGW",
+          "stationNo": "13",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "10:22",
+          "departure": "10:25"
+        },
+        {
+          "name": "月华",
+          "telecode": "YQW",
+          "stationNo": "14",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "10:41",
+          "departure": "10:43"
+        },
+        {
+          "name": "西昌",
+          "telecode": "ECW",
+          "stationNo": "15",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "11:10",
+          "departure": "11:20"
+        },
+        {
+          "name": "西昌南",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "11:28",
+          "departure": "11:52"
+        },
+        {
+          "name": "德昌",
+          "telecode": "DVW",
+          "stationNo": "17",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "12:46",
+          "departure": "12:49"
+        },
+        {
+          "name": "乐跃",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "13:21",
+          "departure": "13:24"
+        },
+        {
+          "name": "蒲坝",
+          "telecode": null,
+          "stationNo": "19",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "13:37",
+          "departure": "13:40"
+        },
+        {
+          "name": "永郎",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "13:56",
+          "departure": "13:59"
+        },
+        {
+          "name": "弯坵",
+          "telecode": null,
+          "stationNo": "21",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "14:14",
+          "departure": "14:17"
+        },
+        {
+          "name": "米易",
+          "telecode": null,
+          "stationNo": "22",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "14:44",
+          "departure": "14:47"
+        },
+        {
+          "name": "枣子林",
+          "telecode": null,
+          "stationNo": "23",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "15:16",
+          "departure": "15:19"
+        },
+        {
+          "name": "桐子林",
+          "telecode": null,
+          "stationNo": "24",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "15:30",
+          "departure": "15:33"
+        },
+        {
+          "name": "攀枝花南",
+          "telecode": "PNE",
+          "stationNo": "25",
+          "stationTrainCode": "5633",
+          "arrivalDayOffset": 0,
+          "arrival": "16:33",
+          "departure": "16:33"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 25,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5633-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5633-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "5634",
+      "trainNo": "76000056340S",
+      "direction": "攀枝花南 → 普雄",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5634&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000056340S&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:37.280639+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "攀枝花南",
+          "telecode": "PNE",
+          "stationNo": "01",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "08:30"
+        },
+        {
+          "name": "桐子林",
+          "telecode": null,
+          "stationNo": "02",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "09:22",
+          "departure": "09:25"
+        },
+        {
+          "name": "枣子林",
+          "telecode": null,
+          "stationNo": "03",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "09:35",
+          "departure": "09:38"
+        },
+        {
+          "name": "米易",
+          "telecode": null,
+          "stationNo": "04",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "09:59",
+          "departure": "10:02"
+        },
+        {
+          "name": "弯坵",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "10:42",
+          "departure": "10:45"
+        },
+        {
+          "name": "永郎",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "11:00",
+          "departure": "11:03"
+        },
+        {
+          "name": "蒲坝",
+          "telecode": null,
+          "stationNo": "07",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "11:19",
+          "departure": "11:22"
+        },
+        {
+          "name": "乐跃",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "11:35",
+          "departure": "11:38"
+        },
+        {
+          "name": "德昌",
+          "telecode": "DVW",
+          "stationNo": "09",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "12:12",
+          "departure": "12:16"
+        },
+        {
+          "name": "西昌南",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "12:57",
+          "departure": "13:07"
+        },
+        {
+          "name": "西昌",
+          "telecode": "ECW",
+          "stationNo": "11",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "13:15",
+          "departure": "13:22"
+        },
+        {
+          "name": "月华",
+          "telecode": "YQW",
+          "stationNo": "12",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "13:55",
+          "departure": "13:59"
+        },
+        {
+          "name": "冕宁",
+          "telecode": "UGW",
+          "stationNo": "13",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "14:14",
+          "departure": "14:17"
+        },
+        {
+          "name": "冕山",
+          "telecode": null,
+          "stationNo": "14",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "14:32",
+          "departure": "14:35"
+        },
+        {
+          "name": "喜德",
+          "telecode": "EDW",
+          "stationNo": "15",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "14:47",
+          "departure": "14:53"
+        },
+        {
+          "name": "联合乡",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "15:03",
+          "departure": "15:06"
+        },
+        {
+          "name": "新凉",
+          "telecode": null,
+          "stationNo": "17",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "15:16",
+          "departure": "15:22"
+        },
+        {
+          "name": "瓦祖",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "15:45",
+          "departure": "15:48"
+        },
+        {
+          "name": "沙马拉达",
+          "telecode": null,
+          "stationNo": "19",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "16:01",
+          "departure": "16:03"
+        },
+        {
+          "name": "红峰",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "16:16",
+          "departure": "16:18"
+        },
+        {
+          "name": "乐武",
+          "telecode": null,
+          "stationNo": "21",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "16:28",
+          "departure": "16:31"
+        },
+        {
+          "name": "尼波",
+          "telecode": null,
+          "stationNo": "22",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "16:44",
+          "departure": "16:47"
+        },
+        {
+          "name": "尔赛河",
+          "telecode": null,
+          "stationNo": "23",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "17:00",
+          "departure": "17:03"
+        },
+        {
+          "name": "上普雄",
+          "telecode": null,
+          "stationNo": "24",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "17:16",
+          "departure": "17:22"
+        },
+        {
+          "name": "普雄",
+          "telecode": "POW",
+          "stationNo": "25",
+          "stationTrainCode": "5634",
+          "arrivalDayOffset": 0,
+          "arrival": "17:33",
+          "departure": "17:33"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 25,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5634-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5634-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "5619",
+      "trainNo": "760000561910",
+      "direction": "峨眉 → 普雄",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5619&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000561910&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:37.321594+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "峨眉",
+          "telecode": "EMW",
+          "stationNo": "01",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "09:08"
+        },
+        {
+          "name": "沙湾",
+          "telecode": null,
+          "stationNo": "02",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "09:43",
+          "departure": "09:46"
+        },
+        {
+          "name": "轸溪",
+          "telecode": null,
+          "stationNo": "03",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "10:04",
+          "departure": "10:06"
+        },
+        {
+          "name": "刘沟",
+          "telecode": null,
+          "stationNo": "04",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "10:18",
+          "departure": "10:21"
+        },
+        {
+          "name": "代湾",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "10:34",
+          "departure": "10:36"
+        },
+        {
+          "name": "杨漩",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "10:48",
+          "departure": "10:51"
+        },
+        {
+          "name": "共和",
+          "telecode": null,
+          "stationNo": "07",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "11:04",
+          "departure": "11:06"
+        },
+        {
+          "name": "峨边",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "11:17",
+          "departure": "11:20"
+        },
+        {
+          "name": "柏村",
+          "telecode": null,
+          "stationNo": "09",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "11:37",
+          "departure": "11:40"
+        },
+        {
+          "name": "金口河",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "11:56",
+          "departure": "11:59"
+        },
+        {
+          "name": "关村坝",
+          "telecode": null,
+          "stationNo": "11",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "12:12",
+          "departure": "12:14"
+        },
+        {
+          "name": "汉源",
+          "telecode": "WHW",
+          "stationNo": "12",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "12:37",
+          "departure": "12:42"
+        },
+        {
+          "name": "尼日",
+          "telecode": null,
+          "stationNo": "13",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "12:55",
+          "departure": "12:59"
+        },
+        {
+          "name": "苏雄",
+          "telecode": null,
+          "stationNo": "14",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "13:13",
+          "departure": "13:17"
+        },
+        {
+          "name": "凉红",
+          "telecode": null,
+          "stationNo": "15",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "13:31",
+          "departure": "13:34"
+        },
+        {
+          "name": "埃岱",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "13:45",
+          "departure": "13:48"
+        },
+        {
+          "name": "甘洛",
+          "telecode": null,
+          "stationNo": "17",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "14:00",
+          "departure": "14:04"
+        },
+        {
+          "name": "南尔岗",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "14:17",
+          "departure": "14:21"
+        },
+        {
+          "name": "阿寨",
+          "telecode": null,
+          "stationNo": "19",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "14:34",
+          "departure": "14:37"
+        },
+        {
+          "name": "白果",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "14:56",
+          "departure": "15:00"
+        },
+        {
+          "name": "白石岩",
+          "telecode": null,
+          "stationNo": "21",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "15:15",
+          "departure": "15:19"
+        },
+        {
+          "name": "乃托",
+          "telecode": null,
+          "stationNo": "22",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "15:34",
+          "departure": "15:38"
+        },
+        {
+          "name": "铁西",
+          "telecode": null,
+          "stationNo": "23",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "15:50",
+          "departure": "15:54"
+        },
+        {
+          "name": "下普雄",
+          "telecode": null,
+          "stationNo": "24",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "16:06",
+          "departure": "16:11"
+        },
+        {
+          "name": "拉白",
+          "telecode": null,
+          "stationNo": "25",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "16:22",
+          "departure": "16:28"
+        },
+        {
+          "name": "普雄",
+          "telecode": "POW",
+          "stationNo": "26",
+          "stationTrainCode": "5619",
+          "arrivalDayOffset": 0,
+          "arrival": "16:42",
+          "departure": "16:42"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 26,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5619-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5619-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "5620",
+      "trainNo": "760000562010",
+      "direction": "普雄 → 峨眉",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5620&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000562010&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:37.967656+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "普雄",
+          "telecode": "POW",
+          "stationNo": "01",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "08:00"
+        },
+        {
+          "name": "拉白",
+          "telecode": null,
+          "stationNo": "02",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "08:13",
+          "departure": "08:16"
+        },
+        {
+          "name": "下普雄",
+          "telecode": null,
+          "stationNo": "03",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "08:27",
+          "departure": "08:30"
+        },
+        {
+          "name": "铁西",
+          "telecode": null,
+          "stationNo": "04",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "08:42",
+          "departure": "08:45"
+        },
+        {
+          "name": "乃托",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "08:57",
+          "departure": "09:00"
+        },
+        {
+          "name": "白石岩",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "09:15",
+          "departure": "09:18"
+        },
+        {
+          "name": "白果",
+          "telecode": null,
+          "stationNo": "07",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "09:33",
+          "departure": "09:36"
+        },
+        {
+          "name": "阿寨",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "09:54",
+          "departure": "09:57"
+        },
+        {
+          "name": "南尔岗",
+          "telecode": null,
+          "stationNo": "09",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "10:10",
+          "departure": "10:15"
+        },
+        {
+          "name": "甘洛",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "10:28",
+          "departure": "10:33"
+        },
+        {
+          "name": "埃岱",
+          "telecode": null,
+          "stationNo": "11",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "10:45",
+          "departure": "10:49"
+        },
+        {
+          "name": "凉红",
+          "telecode": null,
+          "stationNo": "12",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "11:00",
+          "departure": "11:05"
+        },
+        {
+          "name": "苏雄",
+          "telecode": null,
+          "stationNo": "13",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "11:19",
+          "departure": "11:24"
+        },
+        {
+          "name": "尼日",
+          "telecode": null,
+          "stationNo": "14",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "11:37",
+          "departure": "11:43"
+        },
+        {
+          "name": "汉源",
+          "telecode": "WHW",
+          "stationNo": "15",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "11:56",
+          "departure": "12:02"
+        },
+        {
+          "name": "关村坝",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "12:42",
+          "departure": "12:45"
+        },
+        {
+          "name": "金口河",
+          "telecode": null,
+          "stationNo": "17",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "12:58",
+          "departure": "13:01"
+        },
+        {
+          "name": "柏村",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "13:16",
+          "departure": "13:19"
+        },
+        {
+          "name": "峨边",
+          "telecode": null,
+          "stationNo": "19",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "13:36",
+          "departure": "13:40"
+        },
+        {
+          "name": "共和",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "13:51",
+          "departure": "13:54"
+        },
+        {
+          "name": "杨漩",
+          "telecode": null,
+          "stationNo": "21",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "14:10",
+          "departure": "14:14"
+        },
+        {
+          "name": "代湾",
+          "telecode": null,
+          "stationNo": "22",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "14:26",
+          "departure": "14:29"
+        },
+        {
+          "name": "刘沟",
+          "telecode": null,
+          "stationNo": "23",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "14:42",
+          "departure": "14:46"
+        },
+        {
+          "name": "轸溪",
+          "telecode": null,
+          "stationNo": "24",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "14:58",
+          "departure": "15:01"
+        },
+        {
+          "name": "沙湾",
+          "telecode": null,
+          "stationNo": "25",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "15:19",
+          "departure": "15:22"
+        },
+        {
+          "name": "峨眉",
+          "telecode": "EMW",
+          "stationNo": "26",
+          "stationTrainCode": "5620",
+          "arrivalDayOffset": 0,
+          "arrival": "15:49",
+          "departure": "15:49"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 26,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5620-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/5620-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "6063",
+      "trainNo": "41000060631B",
+      "direction": "宝鸡 → 广元",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6063&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=41000060631B&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:39.384230+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "01",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "09:30"
+        },
+        {
+          "name": "秦岭",
+          "telecode": "QLY",
+          "stationNo": "02",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "10:43",
+          "departure": "10:51"
+        },
+        {
+          "name": "凤州",
+          "telecode": "FZY",
+          "stationNo": "03",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "11:56",
+          "departure": "11:58"
+        },
+        {
+          "name": "凤县",
+          "telecode": "FXY",
+          "stationNo": "04",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "12:24",
+          "departure": "12:26"
+        },
+        {
+          "name": "宏庆",
+          "telecode": "HEY",
+          "stationNo": "05",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "12:40",
+          "departure": "12:42"
+        },
+        {
+          "name": "两当",
+          "telecode": "LDY",
+          "stationNo": "06",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "13:19",
+          "departure": "13:22"
+        },
+        {
+          "name": "徽县",
+          "telecode": "HYY",
+          "stationNo": "07",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "13:49",
+          "departure": "13:51"
+        },
+        {
+          "name": "白水江",
+          "telecode": "BSY",
+          "stationNo": "08",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "14:22",
+          "departure": "14:23"
+        },
+        {
+          "name": "略阳",
+          "telecode": "LYY",
+          "stationNo": "09",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "15:23",
+          "departure": "15:27"
+        },
+        {
+          "name": "阳平关",
+          "telecode": "YAY",
+          "stationNo": "10",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "16:57",
+          "departure": "16:59"
+        },
+        {
+          "name": "燕子砭",
+          "telecode": "YZY",
+          "stationNo": "11",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "17:14",
+          "departure": "17:16"
+        },
+        {
+          "name": "朝天南",
+          "telecode": "CTY",
+          "stationNo": "12",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "18:06",
+          "departure": "18:08"
+        },
+        {
+          "name": "广元",
+          "telecode": "GYW",
+          "stationNo": "13",
+          "stationTrainCode": "6063",
+          "arrivalDayOffset": 0,
+          "arrival": "19:00",
+          "departure": "19:00"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 13,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6063-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6063-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "6064",
+      "trainNo": "76000060640A",
+      "direction": "广元 → 宝鸡",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6064&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000060640A&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:39.400789+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "广元",
+          "telecode": "GYW",
+          "stationNo": "01",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "08:30"
+        },
+        {
+          "name": "朝天南",
+          "telecode": "CTY",
+          "stationNo": "02",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "09:10",
+          "departure": "09:12"
+        },
+        {
+          "name": "燕子砭",
+          "telecode": "YZY",
+          "stationNo": "03",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "10:01",
+          "departure": "10:03"
+        },
+        {
+          "name": "阳平关",
+          "telecode": "YAY",
+          "stationNo": "04",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "10:19",
+          "departure": "10:32"
+        },
+        {
+          "name": "略阳",
+          "telecode": "LYY",
+          "stationNo": "05",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "12:05",
+          "departure": "12:12"
+        },
+        {
+          "name": "白水江",
+          "telecode": "BSY",
+          "stationNo": "06",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "13:15",
+          "departure": "13:17"
+        },
+        {
+          "name": "徽县",
+          "telecode": "HYY",
+          "stationNo": "07",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "14:23",
+          "departure": "14:28"
+        },
+        {
+          "name": "两当",
+          "telecode": "LDY",
+          "stationNo": "08",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "15:08",
+          "departure": "15:11"
+        },
+        {
+          "name": "宏庆",
+          "telecode": "HEY",
+          "stationNo": "09",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "15:35",
+          "departure": "15:36"
+        },
+        {
+          "name": "凤县",
+          "telecode": "FXY",
+          "stationNo": "10",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "15:50",
+          "departure": "15:52"
+        },
+        {
+          "name": "凤州",
+          "telecode": "FZY",
+          "stationNo": "11",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "16:18",
+          "departure": "16:21"
+        },
+        {
+          "name": "秦岭",
+          "telecode": "QLY",
+          "stationNo": "12",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "17:24",
+          "departure": "17:32"
+        },
+        {
+          "name": "宝鸡",
+          "telecode": "BJY",
+          "stationNo": "13",
+          "stationTrainCode": "6064",
+          "arrivalDayOffset": 0,
+          "arrival": "18:53",
+          "departure": "18:53"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 13,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6064-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6064-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "6245",
+      "trainNo": "040000624500",
+      "direction": "加格达奇 → 古莲",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6245&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=040000624500&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:40.697815+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "加格达奇",
+          "telecode": "JGX",
+          "stationNo": "01",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "06:35"
+        },
+        {
+          "name": "松树林",
+          "telecode": null,
+          "stationNo": "02",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "06:53",
+          "departure": "06:56"
+        },
+        {
+          "name": "翠峰",
+          "telecode": null,
+          "stationNo": "03",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "07:10",
+          "departure": "07:13"
+        },
+        {
+          "name": "小扬气",
+          "telecode": "XYX",
+          "stationNo": "04",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "07:33",
+          "departure": "07:41"
+        },
+        {
+          "name": "古源",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "07:56",
+          "departure": "07:59"
+        },
+        {
+          "name": "大扬气",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "08:12",
+          "departure": "08:18"
+        },
+        {
+          "name": "劲松",
+          "telecode": null,
+          "stationNo": "07",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "08:26",
+          "departure": "08:28"
+        },
+        {
+          "name": "新天",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "08:45",
+          "departure": "08:48"
+        },
+        {
+          "name": "太阳沟",
+          "telecode": null,
+          "stationNo": "09",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "09:06",
+          "departure": "09:08"
+        },
+        {
+          "name": "塔源",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "09:24",
+          "departure": "09:27"
+        },
+        {
+          "name": "林海",
+          "telecode": "LXX",
+          "stationNo": "11",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "09:43",
+          "departure": "09:50"
+        },
+        {
+          "name": "新林",
+          "telecode": "XPX",
+          "stationNo": "12",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "10:02",
+          "departure": "10:08"
+        },
+        {
+          "name": "大乌苏",
+          "telecode": null,
+          "stationNo": "13",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "10:22",
+          "departure": "10:28"
+        },
+        {
+          "name": "碧州",
+          "telecode": null,
+          "stationNo": "14",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "10:45",
+          "departure": "10:51"
+        },
+        {
+          "name": "翠岗",
+          "telecode": null,
+          "stationNo": "15",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "11:06",
+          "departure": "11:12"
+        },
+        {
+          "name": "塔尔根",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "11:32",
+          "departure": "11:50"
+        },
+        {
+          "name": "塔河",
+          "telecode": "TXX",
+          "stationNo": "17",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "12:02",
+          "departure": "12:15"
+        },
+        {
+          "name": "绣峰",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "12:42",
+          "departure": "12:48"
+        },
+        {
+          "name": "瓦拉干",
+          "telecode": "WVX",
+          "stationNo": "19",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "13:02",
+          "departure": "13:08"
+        },
+        {
+          "name": "盘古",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "14:36",
+          "departure": "14:46"
+        },
+        {
+          "name": "聂河",
+          "telecode": null,
+          "stationNo": "21",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "15:13",
+          "departure": "15:25"
+        },
+        {
+          "name": "阿木尔",
+          "telecode": "JTX",
+          "stationNo": "22",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "16:30",
+          "departure": "16:52"
+        },
+        {
+          "name": "图强",
+          "telecode": "TQX",
+          "stationNo": "23",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "17:22",
+          "departure": "17:33"
+        },
+        {
+          "name": "漠河",
+          "telecode": "MVX",
+          "stationNo": "24",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "18:10",
+          "departure": "18:19"
+        },
+        {
+          "name": "古莲",
+          "telecode": "GRX",
+          "stationNo": "25",
+          "stationTrainCode": "6245",
+          "arrivalDayOffset": 0,
+          "arrival": "18:40",
+          "departure": "18:40"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 25,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6245-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6245-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    },
+    {
+      "trainNumber": "6246",
+      "trainNo": "040000624600",
+      "direction": "古莲 → 加格达奇",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6246&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=040000624600&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "retrievedAt": "2026-10-18T20:23:41.248354+00:00",
+      "serviceDate": "2026-10-18",
+      "effectiveDate": null,
+      "dateConfidence": "official API query date; scheduled service only; not actual movement confirmation",
+      "sourceType": "primary-official-12306",
+      "stops": [
+        {
+          "name": "古莲",
+          "telecode": "GRX",
+          "stationNo": "01",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "----",
+          "departure": "05:15"
+        },
+        {
+          "name": "漠河",
+          "telecode": "MVX",
+          "stationNo": "02",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "05:42",
+          "departure": "05:53"
+        },
+        {
+          "name": "图强",
+          "telecode": "TQX",
+          "stationNo": "03",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "06:25",
+          "departure": "06:33"
+        },
+        {
+          "name": "阿木尔",
+          "telecode": "JTX",
+          "stationNo": "04",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "07:02",
+          "departure": "07:11"
+        },
+        {
+          "name": "聂河",
+          "telecode": null,
+          "stationNo": "05",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "08:06",
+          "departure": "08:15"
+        },
+        {
+          "name": "盘古",
+          "telecode": null,
+          "stationNo": "06",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "08:39",
+          "departure": "08:45"
+        },
+        {
+          "name": "瓦拉干",
+          "telecode": "WVX",
+          "stationNo": "07",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "10:13",
+          "departure": "10:33"
+        },
+        {
+          "name": "绣峰",
+          "telecode": null,
+          "stationNo": "08",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "10:47",
+          "departure": "10:50"
+        },
+        {
+          "name": "塔河",
+          "telecode": "TXX",
+          "stationNo": "09",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "11:19",
+          "departure": "11:29"
+        },
+        {
+          "name": "塔尔根",
+          "telecode": null,
+          "stationNo": "10",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "11:42",
+          "departure": "11:44"
+        },
+        {
+          "name": "翠岗",
+          "telecode": null,
+          "stationNo": "11",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "12:04",
+          "departure": "12:06"
+        },
+        {
+          "name": "碧州",
+          "telecode": null,
+          "stationNo": "12",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "12:21",
+          "departure": "12:24"
+        },
+        {
+          "name": "大乌苏",
+          "telecode": null,
+          "stationNo": "13",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "12:41",
+          "departure": "12:44"
+        },
+        {
+          "name": "新林",
+          "telecode": "XPX",
+          "stationNo": "14",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "12:58",
+          "departure": "13:03"
+        },
+        {
+          "name": "林海",
+          "telecode": "LXX",
+          "stationNo": "15",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "13:14",
+          "departure": "13:17"
+        },
+        {
+          "name": "塔源",
+          "telecode": null,
+          "stationNo": "16",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "13:34",
+          "departure": "13:37"
+        },
+        {
+          "name": "新天",
+          "telecode": null,
+          "stationNo": "17",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "14:13",
+          "departure": "14:16"
+        },
+        {
+          "name": "劲松",
+          "telecode": null,
+          "stationNo": "18",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "14:33",
+          "departure": "14:35"
+        },
+        {
+          "name": "大扬气",
+          "telecode": null,
+          "stationNo": "19",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "14:43",
+          "departure": "14:49"
+        },
+        {
+          "name": "古源",
+          "telecode": null,
+          "stationNo": "20",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "15:02",
+          "departure": "15:05"
+        },
+        {
+          "name": "小扬气",
+          "telecode": "XYX",
+          "stationNo": "21",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "15:19",
+          "departure": "15:25"
+        },
+        {
+          "name": "翠峰",
+          "telecode": null,
+          "stationNo": "22",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "15:47",
+          "departure": "15:49"
+        },
+        {
+          "name": "松树林",
+          "telecode": null,
+          "stationNo": "23",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "16:07",
+          "departure": "16:10"
+        },
+        {
+          "name": "加格达奇",
+          "telecode": "JGX",
+          "stationNo": "24",
+          "stationTrainCode": "6246",
+          "arrivalDayOffset": 0,
+          "arrival": "16:30",
+          "departure": "16:30"
+        }
+      ],
+      "completeness": "full",
+      "expectedStopCount": 24,
+      "rawEvidence": [
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6246-search.json",
+        "railway-sources/local/china/evidence/real-train-paths-20261018/raw-conventional/6246-stops.json"
+      ],
+      "notes": [
+        "Stops reproduced in API station order. Includes number changes when returned. No inferred non-stop intermediate stations.",
+        "The serviceDate is the official query date; the API does not expose a timetable effective-from date."
+      ]
+    }
+  ],
+  "unavailableRequests": [
+    {
+      "requestedTrain": "Z917",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z917&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "Z918",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z918&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "Z223",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z223&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "Z224",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z224&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "Z201",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z201&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "Z202",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z202&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "5809",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=5809&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "5810",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=5810&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "4045",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=4045&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "4046",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=4046&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "K3",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K3&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "K19",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K19&date=20261018",
+      "error": "No exact train number in official search response"
+    },
+    {
+      "requestedTrain": "T81",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=T81&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "T82",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=T82&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "Z41",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z41&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "Z42",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z42&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "Z69",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z69&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "Z70",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=Z70&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "T175",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=T175&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "T176",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=T176&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "K9661",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K9661&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "K9662",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K9662&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "K9789",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K9789&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "requestedTrain": "K9790",
+      "searchURL": "https://search.12306.cn/search/v1/train/search?keyword=K9790&date=20261018",
+      "error": "HTTP Error 403: Forbidden"
+    }
+  ],
+  "retrievalNotes": [
+    "26 successful train schedules (523 observed stops), 25 matching complete schedules and 1 explicitly partial schedule.",
+    "Search API started returning HTTP 403 after 38 search requests; no further requests were made. HTTP 403 requests are recorded as unavailable, distinct from valid empty exact-number results.",
+    "No independent 2026-10-18 operating-status claim is made."
+  ]
+}

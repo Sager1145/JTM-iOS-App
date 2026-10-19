@@ -1,0 +1,90 @@
+{
+  "caseIndex": 15,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 15,
+  "source": {
+    "caseIndex": 15,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 15,
+    "fromStationID": "002204",
+    "toStationID": "002221",
+    "camera": [
+      36.4575875,
+      137.85096249999998,
+      0.04519515000000013
+    ],
+    "effectiveCoordinates": [
+      [
+        137.84716,
+        36.46737
+      ],
+      [
+        137.84728,
+        36.46678
+      ],
+      [
+        137.84766,
+        36.4649
+      ],
+      [
+        137.84817,
+        36.46232
+      ],
+      [
+        137.84928,
+        36.45658
+      ],
+      [
+        137.84941,
+        36.456
+      ],
+      [
+        137.84954,
+        36.45536
+      ],
+      [
+        137.84964,
+        36.45489
+      ],
+      [
+        137.84972,
+        36.45462
+      ],
+      [
+        137.84991,
+        36.45424
+      ],
+      [
+        137.85022,
+        36.45377
+      ],
+      [
+        137.85063,
+        36.45325
+      ],
+      [
+        137.85267,
+        36.45055
+      ],
+      [
+        137.85455,
+        36.4481
+      ],
+      [
+        137.854765,
+        36.447805
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t33 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:14.32;lod:13.17;backbones:0;networkStations:5;distance:9920.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.457587;centerLon:137.850963;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2575.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.457587;centerLon:137.850963;distance:9920.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-15.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Shinano-Tokiwa to Azumi-Kutsukake long straight and southern bend continuous; own platform frames unresolved."
+}

@@ -1,0 +1,1433 @@
+{
+  "freshNativeInterval": "jp-西日本旅客鉄道-木次線#0",
+  "freshLineDependency": "978acffdebe9c80d8adb806d8750962900603f049c96ca6dbe6ad35136147608",
+  "identityPlansRetained": [
+    "1e616b862b86493543065ce15a1a7c0961f8dbc481124be66005108c9997587a",
+    "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+  ],
+  "reuseScope": "Kisuki only. Complete current native line/render dependency, interval identity and viewpoint match. Historical global identity-plan digests can differ across unrelated package changes; existing Inspector validates retained plan/receipts on configure. Fresh files never overwritten, original output retained.",
+  "reusedViewpoints": [
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#1",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008035/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008035/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#10",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008036/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008036/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000018",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000018"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#11",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008037/000019",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008037/000019"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000018",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000018"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000019",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000019"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000020",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000020"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#13",
+      "ordinal": 21,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008039/000021",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008039/000021"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000018",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000018"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008040/000019",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008040/000019"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008041/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008041/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000018",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000018"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000019",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000019"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#16",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008042/000020",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008042/000020"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#2",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008043/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008043/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#3",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008044/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008044/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#4",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008045/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008045/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#5",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008046/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008046/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#6",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008047/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008047/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000018",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000018"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000019",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000019"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#7",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008048/000020",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008048/000020"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000012"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000013",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000013"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000014",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000014"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000015",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000015"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000016",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000016"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#8",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008049/000017",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008049/000017"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000000",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000000"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000001",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000001"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000002",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000002"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000003",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000003"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000004",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000004"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000005",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000005"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000006",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000006"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000007",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000007"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000008",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000008"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000009",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000009"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000010",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000010"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000011",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000011"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#9",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/008050/000012",
+      "destination": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/captures/008050/000012"
+    }
+  ]
+}

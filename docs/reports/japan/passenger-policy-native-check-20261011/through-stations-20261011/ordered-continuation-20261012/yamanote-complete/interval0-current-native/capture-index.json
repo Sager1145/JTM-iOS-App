@@ -1,0 +1,172 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 298.21984493714945,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.628135,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73853500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.62548408811076,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73872090776808,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.622849739160841,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73812382553191,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.62023252138475,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73740338008085,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.61786184018284,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73599220897452,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.616859778381702,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.7330157894136,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.617763571760648,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.73002794079068,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.619945000000001,
+      "lineDependency" : "188b61aa5f82b1efbb568411a6d515ad16b2d6000d8a63d21dd3c7dac92fcb5e",
+      "longitude" : 139.72824499999999,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-7"
+    }
+  ]
+}

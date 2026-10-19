@@ -1,0 +1,22 @@
+{
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "partIndex": 0,
+  "plainIntervalRange": [
+    0,
+    17
+  ],
+  "embeddedGeometryIsNull": true,
+  "physicalInterval9Count": 137,
+  "displayInterval9Count": 141,
+  "nativeChainPoints": 1569,
+  "nativeRulerMetres": 83947.0,
+  "actualNativeDecoderEqualsConcatenatedDisplayIntervals": true,
+  "physicalSourcePreserved": true,
+  "method": "Targeted data query using existing decoded_intervals, _copy_display_interval, _retain_source_interval, chains_from_parts_rows; no build",
+  "sourcePath": "app/scripts/railway/build-display-network.py",
+  "reviewedPipelineLines": [
+    3071,
+    3083,
+    3159
+  ]
+}

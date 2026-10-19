@@ -1,0 +1,29 @@
+{
+  "format": "jtm-renraku-display-candidate-manifest-v1",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "bf23b23436d945bbbbdd5c28199c6515e0960037a6b96eee5614fa533ec216c8"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "26877864044105ba71f701a2051e66bdfb91a17d189eb36d5f1488940e239782"
+    },
+    {
+      "path": "renraku-interval-0.geojson",
+      "sha256": "998af5519251bee5cf2a5d8d8bd00aec11c3b1e681c45973f7f15ba724842827"
+    },
+    {
+      "path": "review.json",
+      "sha256": "0bc7c1cba2a04e493b4e10a8423c6ebeaf5cc808428cc17c82d2c6e741cfb39f"
+    },
+    {
+      "path": "raw-reprojections/renraku-interval-0-view-0.png",
+      "sha256": "839182245085f6c40b7099593d434e609fed4cbbbefc263c97e5e94391e9bb3b"
+    },
+    {
+      "path": "raw-reprojections/renraku-interval-0-view-1.png",
+      "sha256": "9dc38573681ca30a997b25de8ce9f6c87ca0256948b113499a2b654b3b87c480"
+    }
+  ]
+}

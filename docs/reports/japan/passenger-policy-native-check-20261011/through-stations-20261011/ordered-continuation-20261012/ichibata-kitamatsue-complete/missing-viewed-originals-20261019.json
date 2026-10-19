@@ -1,0 +1,2419 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-一畑電車-北松江線",
+  "actualViewpointCount": 55,
+  "actualOriginalPNGCount": 110,
+  "legacyViewsActuallyViewedThisPass": 0,
+  "scope": "All new missing-only views across own intervals1/2/4/5/6/7/8/9/11/20; excludes75legacyviews visual acceptance",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "FE5D8E93-FD4C-47E8-AAE0-BEC2E142866B",
+    "message": "55/55 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 92679,
+    "requestID": "ichibata-kitamatsue-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-19T06:11:24Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "pixelLeads": [
+    {
+      "intervalIndex": 6,
+      "points": [
+        1,
+        2
+      ],
+      "status": "short staircase in NE long diagonal; own source/window required"
+    },
+    {
+      "intervalIndex": 11,
+      "points": [
+        1,
+        2,
+        3
+      ],
+      "status": "northward S bulge before Nunozaki; own source/window required"
+    }
+  ],
+  "views": [
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 437346,
+          "actualByteCount": 437346,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 497177,
+          "actualByteCount": 497177,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47735,
+        "longitude": 133.003985,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693365337027845,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233386287.34247825,
+        "rectY": 105886104.51745872,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 478140,
+          "actualByteCount": 478140,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 542985,
+          "actualByteCount": 542985,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47768528840652,
+        "longitude": 133.00016267236413,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693325446026156,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233383437.20841736,
+        "rectY": 105885797.51038843,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 495457,
+          "actualByteCount": 495457,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 564631,
+          "actualByteCount": 564631,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47743503709601,
+        "longitude": 132.99637750991232,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693355219754869,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233380614.7867263,
+        "rectY": 105886026.65330186,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 469451,
+          "actualByteCount": 469451,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 534007,
+          "actualByteCount": 534007,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47762610508382,
+        "longitude": 132.9926284390323,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693332487397286,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233377819.27686167,
+        "rectY": 105885851.70173344,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 616872,
+          "actualByteCount": 616872,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 697236,
+          "actualByteCount": 697236,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4797578311259,
+        "longitude": 132.9898009400292,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693078857444324,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233375710.94079438,
+        "rectY": 105883899.75673822,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#1",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000005/basemap.png",
+          "recordedByteCount": 635710,
+          "actualByteCount": 635710,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000000/000005/smooth.png",
+          "recordedByteCount": 719003,
+          "actualByteCount": 719003,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.480907,
+        "longitude": 132.987882,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9692942125242376,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233374280.07540056,
+        "rectY": 105882847.48258868,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大池/小池岸边S弯及朝日ヶ丘前NW大弯连续；红线局部南/北偏，无孤立V或回头。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#2",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000000/basemap.png",
+          "recordedByteCount": 635704,
+          "actualByteCount": 635704,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000000/smooth.png",
+          "recordedByteCount": 718997,
+          "actualByteCount": 718997,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.480907,
+        "longitude": 132.987882,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9692942125242376,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233374280.07540056,
+        "rectY": 105882847.48258868,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝日ヶ丘西出左弯、长WSW直段及長江前S弯连续；长直段红线略偏北、局部细肩未确权。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#2",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000001/basemap.png",
+          "recordedByteCount": 606188,
+          "actualByteCount": 606188,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000001/smooth.png",
+          "recordedByteCount": 690704,
+          "actualByteCount": 690704,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.48151417984306,
+        "longitude": 132.984210094558,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9692869879238462,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233371542.10425687,
+        "rectY": 105882291.49238782,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝日ヶ丘西出左弯、长WSW直段及長江前S弯连续；长直段红线略偏北、局部细肩未确权。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#2",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000002/basemap.png",
+          "recordedByteCount": 521902,
+          "actualByteCount": 521902,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000002/smooth.png",
+          "recordedByteCount": 599136,
+          "actualByteCount": 599136,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.48058297657217,
+        "longitude": 132.98052973902253,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9692980679100468,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233368797.8322669,
+        "rectY": 105883144.18678474,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝日ヶ丘西出左弯、长WSW直段及長江前S弯连续；长直段红线略偏北、局部细肩未确权。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#2",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000003/basemap.png",
+          "recordedByteCount": 369506,
+          "actualByteCount": 369506,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000003/smooth.png",
+          "recordedByteCount": 432367,
+          "actualByteCount": 432367,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47923861970663,
+        "longitude": 132.97704873231967,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693140633778959,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233366202.20554015,
+        "rectY": 105884375.18476038,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝日ヶ丘西出左弯、长WSW直段及長江前S弯连续；长直段红线略偏北、局部细肩未确权。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#2",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000004/basemap.png",
+          "recordedByteCount": 357819,
+          "actualByteCount": 357819,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000002/000004/smooth.png",
+          "recordedByteCount": 416530,
+          "actualByteCount": 416530,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47984,
+        "longitude": 132.974315,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.969306908082965,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233364163.78697956,
+        "rectY": 105883824.5166145,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝日ヶ丘西出左弯、长WSW直段及長江前S弯连续；长直段红线略偏北、局部细肩未确权。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#4",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000000/basemap.png",
+          "recordedByteCount": 345411,
+          "actualByteCount": 345411,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000000/smooth.png",
+          "recordedByteCount": 405395,
+          "actualByteCount": 405395,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47723,
+        "longitude": 132.95673,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693379613969264,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233351051.46060804,
+        "rectY": 105886214.39523378,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宍道湖岸真实缓S/西南长弯保留；站东长段细小肩部未确权，无孤立V或邻线跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#4",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000001/basemap.png",
+          "recordedByteCount": 313616,
+          "actualByteCount": 313616,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000001/smooth.png",
+          "recordedByteCount": 369783,
+          "actualByteCount": 369783,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47577456957133,
+        "longitude": 132.9533270648919,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693552769686368,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233348514.0482817,
+        "rectY": 105887547.04432018,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宍道湖岸真实缓S/西南长弯保留；站东长段细小肩部未确权，无孤立V或邻线跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#4",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000002/basemap.png",
+          "recordedByteCount": 301929,
+          "actualByteCount": 301929,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000002/smooth.png",
+          "recordedByteCount": 353008,
+          "actualByteCount": 353008,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47501022477548,
+        "longitude": 132.94961955044914,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693643702923465,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233345749.5251426,
+        "rectY": 105888246.89868078,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宍道湖岸真实缓S/西南长弯保留；站东长段细小肩部未确权，无孤立V或邻线跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#4",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000003/basemap.png",
+          "recordedByteCount": 282123,
+          "actualByteCount": 282123,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000003/smooth.png",
+          "recordedByteCount": 331895,
+          "actualByteCount": 331895,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.474872486351245,
+        "longitude": 132.94588302422784,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693660089323303,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233342963.36925352,
+        "rectY": 105888373.01492642,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宍道湖岸真实缓S/西南长弯保留；站东长段细小肩部未确权，无孤立V或邻线跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#4",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000004/basemap.png",
+          "recordedByteCount": 287878,
+          "actualByteCount": 287878,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000004/000004/smooth.png",
+          "recordedByteCount": 337983,
+          "actualByteCount": 337983,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.474905,
+        "longitude": 132.9437,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693656221259923,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233341335.58840895,
+        "rectY": 105888343.24475406,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宍道湖岸真实缓S/西南长弯保留；站东长段细小肩部未确权，无孤立V或邻线跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#5",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000000/basemap.png",
+          "recordedByteCount": 287878,
+          "actualByteCount": 287878,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000000/smooth.png",
+          "recordedByteCount": 337977,
+          "actualByteCount": 337977,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.474905,
+        "longitude": 132.9437,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693656221259923,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233341335.58840895,
+        "rectY": 105888343.24475406,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松江フォーゲルパーク至高ノ宮湖岸WNW/SW真弯连续；站口有侧移/弦化，未证明平台端帽或错误孤立尖角。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#5",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000001/basemap.png",
+          "recordedByteCount": 258207,
+          "actualByteCount": 258207,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000001/smooth.png",
+          "recordedByteCount": 304025,
+          "actualByteCount": 304025,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47416705217551,
+        "longitude": 132.94010125400027,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693744012200184,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233338652.1688993,
+        "rectY": 105889018.92215085,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松江フォーゲルパーク至高ノ宮湖岸WNW/SW真弯连续；站口有侧移/弦化，未证明平台端帽或错误孤立尖角。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#5",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000002/basemap.png",
+          "recordedByteCount": 264232,
+          "actualByteCount": 264232,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000002/smooth.png",
+          "recordedByteCount": 311542,
+          "actualByteCount": 311542,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.472702474969694,
+        "longitude": 132.93669675053164,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9693918242770786,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233336113.58711854,
+        "rectY": 105890359.89522108,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松江フォーゲルパーク至高ノ宮湖岸WNW/SW真弯连续；站口有侧移/弦化，未证明平台端帽或错误孤立尖角。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#5",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000003/basemap.png",
+          "recordedByteCount": 292238,
+          "actualByteCount": 292238,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000003/smooth.png",
+          "recordedByteCount": 345530,
+          "actualByteCount": 345530,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47248709152648,
+        "longitude": 132.93287429414488,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.969394386490425,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233333263.35705405,
+        "rectY": 105890557.09915045,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松江フォーゲルパーク至高ノ宮湖岸WNW/SW真弯连续；站口有侧移/弦化，未证明平台端帽或错误孤立尖角。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#5",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000004/basemap.png",
+          "recordedByteCount": 280023,
+          "actualByteCount": 280023,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000005/000004/smooth.png",
+          "recordedByteCount": 333633,
+          "actualByteCount": 333633,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4718,
+        "longitude": 132.930435,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694025600769481,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233331444.48750934,
+        "rectY": 105891186.19294916,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松江フォーゲルパーク至高ノ宮湖岸WNW/SW真弯连续；站口有侧移/弦化，未证明平台端帽或错误孤立尖角。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000/basemap.png",
+          "recordedByteCount": 280023,
+          "actualByteCount": 280023,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000/smooth.png",
+          "recordedByteCount": 333633,
+          "actualByteCount": 333633,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4718,
+        "longitude": 132.930435,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694025600769481,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233331444.48750934,
+        "rectY": 105891186.19294916,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001/basemap.png",
+          "recordedByteCount": 310210,
+          "actualByteCount": 310210,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001/smooth.png",
+          "recordedByteCount": 366470,
+          "actualByteCount": 366470,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47027528160012,
+        "longitude": 132.927064633636,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694206975052057,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233328931.3601988,
+        "rectY": 105892582.18993245,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002/basemap.png",
+          "recordedByteCount": 303208,
+          "actualByteCount": 303208,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002/smooth.png",
+          "recordedByteCount": 357780,
+          "actualByteCount": 357780,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.468323930262045,
+        "longitude": 132.92423439460046,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694439089764714,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233326820.9810152,
+        "rectY": 105894368.7635747,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003/basemap.png",
+          "recordedByteCount": 261744,
+          "actualByteCount": 261744,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003/smooth.png",
+          "recordedByteCount": 312200,
+          "actualByteCount": 312200,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.466788020417084,
+        "longitude": 132.92116037005974,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694621779434581,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233324528.82218367,
+        "rectY": 105895774.94630453,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004/basemap.png",
+          "recordedByteCount": 251032,
+          "actualByteCount": 251032,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004/smooth.png",
+          "recordedByteCount": 300382,
+          "actualByteCount": 300382,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46635,
+        "longitude": 132.91905,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694673878736915,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233322955.21621332,
+        "rectY": 105896175.96540669,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000000/basemap.png",
+          "recordedByteCount": 251032,
+          "actualByteCount": 251032,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000000/smooth.png",
+          "recordedByteCount": 300382,
+          "actualByteCount": 300382,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46635,
+        "longitude": 132.91905,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694673878736915,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233322955.21621332,
+        "rectY": 105896175.96540669,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000001/basemap.png",
+          "recordedByteCount": 262154,
+          "actualByteCount": 262154,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000001/smooth.png",
+          "recordedByteCount": 311676,
+          "actualByteCount": 311676,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.465656598464285,
+        "longitude": 132.9152862912846,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694756352575297,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233320148.79158756,
+        "rectY": 105896810.7881102,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000002/basemap.png",
+          "recordedByteCount": 285185,
+          "actualByteCount": 285185,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000002/smooth.png",
+          "recordedByteCount": 337529,
+          "actualByteCount": 337529,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46481640409068,
+        "longitude": 132.91159388783325,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694856284177845,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233317395.53602037,
+        "rectY": 105897579.99520177,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000003/basemap.png",
+          "recordedByteCount": 287533,
+          "actualByteCount": 287533,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000003/smooth.png",
+          "recordedByteCount": 340274,
+          "actualByteCount": 340274,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.463097161508315,
+        "longitude": 132.9084687521756,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695060762063751,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233315065.2659778,
+        "rectY": 105899153.9554507,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000004/basemap.png",
+          "recordedByteCount": 276715,
+          "actualByteCount": 276715,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000004/smooth.png",
+          "recordedByteCount": 329455,
+          "actualByteCount": 329455,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4616238238876,
+        "longitude": 132.90513068753222,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695235986282379,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233312576.22457585,
+        "rectY": 105900502.76384503,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000005/basemap.png",
+          "recordedByteCount": 270365,
+          "actualByteCount": 270365,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000005/smooth.png",
+          "recordedByteCount": 320261,
+          "actualByteCount": 320261,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46111809200954,
+        "longitude": 132.90139969334334,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695296131546657,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233309794.1936691,
+        "rectY": 105900965.74463193,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#7",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000006/basemap.png",
+          "recordedByteCount": 269155,
+          "actualByteCount": 269155,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000007/000006/smooth.png",
+          "recordedByteCount": 317867,
+          "actualByteCount": 317867,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.461245,
+        "longitude": 132.900885,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695281038809009,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233309410.41049603,
+        "rectY": 105900849.56484284,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津ノ森至伊野灘沿湖长弯连续；中段道路从北侧接近处红线有小肩/钩，仍需自身来源。伊野灘东口真弯不删。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000000/basemap.png",
+          "recordedByteCount": 269155,
+          "actualByteCount": 269155,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000000/smooth.png",
+          "recordedByteCount": 317870,
+          "actualByteCount": 317870,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.461245,
+        "longitude": 132.900885,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695281038809009,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233309410.41049603,
+        "rectY": 105900849.56484284,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000001/basemap.png",
+          "recordedByteCount": 257581,
+          "actualByteCount": 257581,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000001/smooth.png",
+          "recordedByteCount": 305181,
+          "actualByteCount": 305181,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46195000020292,
+        "longitude": 132.89713470409734,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695197194650843,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233306613.98718828,
+        "rectY": 105900204.15868571,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000002/basemap.png",
+          "recordedByteCount": 248780,
+          "actualByteCount": 248780,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000002/smooth.png",
+          "recordedByteCount": 297474,
+          "actualByteCount": 297474,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46177527614479,
+        "longitude": 132.8932870147444,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695217974345111,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233303744.9420605,
+        "rectY": 105900364.11375259,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000003/basemap.png",
+          "recordedByteCount": 292164,
+          "actualByteCount": 292164,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000003/smooth.png",
+          "recordedByteCount": 347300,
+          "actualByteCount": 347300,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46166924444872,
+        "longitude": 132.8894305777982,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695230584506147,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233300869.37425447,
+        "rectY": 105900461.18268299,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000004/basemap.png",
+          "recordedByteCount": 341329,
+          "actualByteCount": 341329,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000004/smooth.png",
+          "recordedByteCount": 396862,
+          "actualByteCount": 396862,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46202362458002,
+        "longitude": 132.8855925375623,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695188438576787,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233298007.52402982,
+        "rectY": 105900136.75749055,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000005/basemap.png",
+          "recordedByteCount": 443334,
+          "actualByteCount": 443334,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000005/smooth.png",
+          "recordedByteCount": 507813,
+          "actualByteCount": 507813,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46385214063578,
+        "longitude": 132.88283392891552,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694970969805029,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233295950.5563353,
+        "rectY": 105898462.7789846,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#8",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000006/basemap.png",
+          "recordedByteCount": 464695,
+          "actualByteCount": 464695,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000008/000006/smooth.png",
+          "recordedByteCount": 530925,
+          "actualByteCount": 530925,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4646,
+        "longitude": 132.882845,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694882022653036,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233295958.8115342,
+        "rectY": 105897778.11420023,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野灘西行后真实北转进入一畑口；与#9组成实际两臂折返，不是可拉直的假V。站内精确平台/连接未证明。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000000/basemap.png",
+          "recordedByteCount": 464257,
+          "actualByteCount": 464257,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000000/smooth.png",
+          "recordedByteCount": 530551,
+          "actualByteCount": 530551,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4646,
+        "longitude": 132.882845,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694882022653036,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233295958.8115342,
+        "rectY": 105897778.11420023,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000001/basemap.png",
+          "recordedByteCount": 370945,
+          "actualByteCount": 370945,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000001/smooth.png",
+          "recordedByteCount": 429392,
+          "actualByteCount": 429392,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.461596787487146,
+        "longitude": 132.88202571664726,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695239201664506,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233295347.90958872,
+        "rectY": 105900527.51484798,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000002/basemap.png",
+          "recordedByteCount": 405575,
+          "actualByteCount": 405575,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000002/smooth.png",
+          "recordedByteCount": 467402,
+          "actualByteCount": 467402,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46061362402821,
+        "longitude": 132.8784413077441,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695356125741345,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233292675.18059313,
+        "rectY": 105901427.5654634,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000003/basemap.png",
+          "recordedByteCount": 422416,
+          "actualByteCount": 422416,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000003/smooth.png",
+          "recordedByteCount": 488452,
+          "actualByteCount": 488452,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.45937897703681,
+        "longitude": 132.87490892587803,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.969550295377456,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233290041.24576813,
+        "rectY": 105902557.8245835,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000004/basemap.png",
+          "recordedByteCount": 433337,
+          "actualByteCount": 433337,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000004/smooth.png",
+          "recordedByteCount": 494354,
+          "actualByteCount": 494354,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4581264114518,
+        "longitude": 132.87138735093853,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695651908109479,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233287415.36917177,
+        "rectY": 105903704.46957645,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000005/basemap.png",
+          "recordedByteCount": 463671,
+          "actualByteCount": 463671,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000005/smooth.png",
+          "recordedByteCount": 529481,
+          "actualByteCount": 529481,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.45623548561258,
+        "longitude": 132.86830005218556,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.969587676701794,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233285113.31237015,
+        "rectY": 105905435.45940399,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#9",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000006/basemap.png",
+          "recordedByteCount": 466698,
+          "actualByteCount": 466698,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000009/000006/smooth.png",
+          "recordedByteCount": 531710,
+          "actualByteCount": 531710,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.456135,
+        "longitude": 132.86813,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9695888715938245,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233284986.51227024,
+        "rectY": 105905527.4447251,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "一畑口自身西臂南出后转SW至園，折返方向须保留；海岸长段细肩及園口侧移未确权，无回头或邻线混接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#11",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000000/basemap.png",
+          "recordedByteCount": 555217,
+          "actualByteCount": 555217,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000000/smooth.png",
+          "recordedByteCount": 632772,
+          "actualByteCount": 632772,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.452685,
+        "longitude": 132.862145,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696298943275985,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233280523.7728142,
+        "rectY": 105908685.53221452,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "湖遊館新駅SW长段后、布崎前红线有可见北侧S鼓包；p1/p2/p3需自身来源核对，非已确权假V。平田船川桥前后真SW弯保留。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#11",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000001/basemap.png",
+          "recordedByteCount": 624071,
+          "actualByteCount": 624071,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000001/smooth.png",
+          "recordedByteCount": 707943,
+          "actualByteCount": 707943,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.45088435304937,
+        "longitude": 132.85898053786676,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696513037797929,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233278164.17882606,
+        "rectY": 105910333.7684676,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "湖遊館新駅SW长段后、布崎前红线有可见北侧S鼓包；p1/p2/p3需自身来源核对，非已确权假V。平田船川桥前后真SW弯保留。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#11",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000002/basemap.png",
+          "recordedByteCount": 641857,
+          "actualByteCount": 641857,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000002/smooth.png",
+          "recordedByteCount": 721736,
+          "actualByteCount": 721736,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.450278899797354,
+        "longitude": 132.855278528511,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696585023215774,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233275403.7605774,
+        "rectY": 105910887.96654624,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "湖遊館新駅SW长段后、布崎前红线有可见北侧S鼓包；p1/p2/p3需自身来源核对，非已确权假V。平田船川桥前后真SW弯保留。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#11",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000003/basemap.png",
+          "recordedByteCount": 645567,
+          "actualByteCount": 645567,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000001/000003/smooth.png",
+          "recordedByteCount": 725186,
+          "actualByteCount": 725186,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.450235,
+        "longitude": 132.855005,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696590242643913,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233275199.80293688,
+        "rectY": 105910928.14980583,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "湖遊館新駅SW长段后、布崎前红线有可见北侧S鼓包；p1/p2/p3需自身来源核对，非已确权假V。平田船川桥前后真SW弯保留。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#20",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000000/basemap.png",
+          "recordedByteCount": 989654,
+          "actualByteCount": 989654,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000000/smooth.png",
+          "recordedByteCount": 1096256,
+          "actualByteCount": 1096256,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.363065,
+        "longitude": 132.76651,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9706942934200236,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233209213.1482738,
+        "rectY": 105990675.2006895,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "出雲科学館パークタウン前向SW再西入電鉄出雲市，红线连续无孤立V；JR山陰線另在南侧继续，未把JR西端当本线终点。红线略北偏、站符宽填充不证明平台端帽。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#20",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000001/basemap.png",
+          "recordedByteCount": 1028354,
+          "actualByteCount": 1028354,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000001/smooth.png",
+          "recordedByteCount": 1136219,
+          "actualByteCount": 1136219,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.36199757234538,
+        "longitude": 132.76287955014863,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9707069566435853,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233206506.08865896,
+        "rectY": 105991651.19757335,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "出雲科学館パークタウン前向SW再西入電鉄出雲市，红线连续无孤立V；JR山陰線另在南侧继续，未把JR西端当本线终点。红线略北偏、站符宽填充不证明平台端帽。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#20",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000002/basemap.png",
+          "recordedByteCount": 1088899,
+          "actualByteCount": 1088899,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000002/smooth.png",
+          "recordedByteCount": 1199662,
+          "actualByteCount": 1199662,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.36130589625623,
+        "longitude": 132.75911716337288,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9707151620292845,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233203700.64974284,
+        "rectY": 105992283.62109205,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "出雲科学館パークタウン前向SW再西入電鉄出雲市，红线连续无孤立V；JR山陰線另在南侧继续，未把JR西端当本线终点。红线略北偏、站符宽填充不证明平台端帽。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#20",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000003/basemap.png",
+          "recordedByteCount": 1087475,
+          "actualByteCount": 1087475,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000003/000003/smooth.png",
+          "recordedByteCount": 1196471,
+          "actualByteCount": 1196471,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.361145,
+        "longitude": 132.757805,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9707170707286281,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233202722.22981688,
+        "rectY": 105992430.7333616,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "出雲科学館パークタウン前向SW再西入電鉄出雲市，红线连续无孤立V；JR山陰線另在南侧继续，未把JR西端当本线终点。红线略北偏、站符宽填充不证明平台端帽。"
+    }
+  ]
+}

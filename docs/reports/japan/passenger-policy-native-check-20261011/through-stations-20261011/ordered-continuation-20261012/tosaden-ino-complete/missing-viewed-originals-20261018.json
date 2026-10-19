@@ -1,0 +1,1668 @@
+{
+  "date": "2026-10-18",
+  "lineID": "jp-とさでん交通-伊野線",
+  "actualViewpointCount": 38,
+  "actualOriginalPNGCount": 76,
+  "scope": "All new missing-only views across15intervals; excludes41legacyviews visual acceptance",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "0CBB9516-820E-4E01-95D9-CF509B63F494",
+    "message": "38/38 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 61534,
+    "requestID": "tosaden-ino-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-tosaden-ino-missing-20261018/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-18T23:25:39Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "itemID": "jp-とさでん交通-伊野線#0",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 823816,
+          "actualByteCount": 823816,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 913414,
+          "actualByteCount": 913414,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.548512,
+        "longitude": 133.428527,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917278870965525,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233702848.8018148,
+        "rectY": 107631712.430753,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野终端/伊野駅前本线向东街道：红线北于蓝色电车符；JR土讃线南侧独立。无独立V，终端帽端和位置差未确权。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#0",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 830352,
+          "actualByteCount": 830352,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 920819,
+          "actualByteCount": 920819,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54859,
+        "longitude": 133.429855,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917270042898666,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233703839.03038576,
+        "rectY": 107631642.64461008,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "伊野终端/伊野駅前本线向东街道：红线北于蓝色电车符；JR土讃线南侧独立。无独立V，终端帽端和位置差未确权。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#6",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000000/basemap.png",
+          "recordedByteCount": 841270,
+          "actualByteCount": 841270,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000000/smooth.png",
+          "recordedByteCount": 939315,
+          "actualByteCount": 939315,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.551455,
+        "longitude": 133.449515,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916945768418868,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233718498.58889958,
+        "rectY": 107629079.30224329,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "枝川→中山本线沿194号街道真实缓弯；红线偏北，JR南侧独立。未见孤立V或跳入JR，偏移待own source。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#6",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000001/basemap.png",
+          "recordedByteCount": 871223,
+          "actualByteCount": 871223,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000013/000001/smooth.png",
+          "recordedByteCount": 969826,
+          "actualByteCount": 969826,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.551775,
+        "longitude": 133.452445,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916909547733435,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233720683.3552498,
+        "rectY": 107628792.9899652,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "枝川→中山本线沿194号街道真实缓弯；红线偏北，JR南侧独立。未见孤立V或跳入JR，偏移待own source。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#9",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000000/basemap.png",
+          "recordedByteCount": 788873,
+          "actualByteCount": 788873,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000000/smooth.png",
+          "recordedByteCount": 877649,
+          "actualByteCount": 877649,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552035,
+        "longitude": 133.46116,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916880118197801,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233727181.7302471,
+        "rectY": 107628560.3604584,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宇治団地前→咥内沿386号街道真实起伏/缓弯，红线较电车符偏北；土讃线独立弧线不可借用。未见独立V，偏移待来源。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#9",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000001/basemap.png",
+          "recordedByteCount": 729746,
+          "actualByteCount": 729746,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000001/smooth.png",
+          "recordedByteCount": 813053,
+          "actualByteCount": 813053,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552080315888276,
+        "longitude": 133.46489140946932,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916874988847852,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233729964.0708094,
+        "rectY": 107628519.81495315,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宇治団地前→咥内沿386号街道真实起伏/缓弯，红线较电车符偏北；土讃线独立弧线不可借用。未见独立V，偏移待来源。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#9",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000002/basemap.png",
+          "recordedByteCount": 671192,
+          "actualByteCount": 671192,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000002/smooth.png",
+          "recordedByteCount": 749634,
+          "actualByteCount": 749634,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552234503532446,
+        "longitude": 133.46864782977863,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916857536150021,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233732765.0608057,
+        "rectY": 107628381.8584131,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宇治団地前→咥内沿386号街道真实起伏/缓弯，红线较电车符偏北；土讃线独立弧线不可借用。未见独立V，偏移待来源。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#9",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000003/basemap.png",
+          "recordedByteCount": 632873,
+          "actualByteCount": 632873,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000014/000003/smooth.png",
+          "recordedByteCount": 709072,
+          "actualByteCount": 709072,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552525,
+        "longitude": 133.47111,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916824654284659,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233734600.98798934,
+        "rectY": 107628121.94140798,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宇治団地前→咥内沿386号街道真实起伏/缓弯，红线较电车符偏北；土讃线独立弧线不可借用。未见独立V，偏移待来源。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#10",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000000/basemap.png",
+          "recordedByteCount": 632838,
+          "actualByteCount": 632838,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000000/smooth.png",
+          "recordedByteCount": 709024,
+          "actualByteCount": 709024,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552525,
+        "longitude": 133.47111,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916824654284659,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233734600.98798934,
+        "rectY": 107628121.94140798,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "咥内→宮の奥本线沿386号街道，保留真实曲线；红线偏北，有概化肩部但未见孤立假V。土讃线在北侧，未混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#10",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000001/basemap.png",
+          "recordedByteCount": 691858,
+          "actualByteCount": 691858,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000001/smooth.png",
+          "recordedByteCount": 775105,
+          "actualByteCount": 775105,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55246025793191,
+        "longitude": 133.47487361052762,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916831982588669,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233737407.339401,
+        "rectY": 107628179.86839956,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "咥内→宮の奥本线沿386号街道，保留真实曲线；红线偏北，有概化肩部但未见孤立假V。土讃线在北侧，未混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#10",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000002/basemap.png",
+          "recordedByteCount": 746195,
+          "actualByteCount": 746195,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000001/000002/smooth.png",
+          "recordedByteCount": 834843,
+          "actualByteCount": 834843,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55248,
+        "longitude": 133.47578,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991682974793958,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233738083.19237688,
+        "rectY": 107628162.20448568,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "咥内→宮の奥本线沿386号街道，保留真实曲线；红线偏北，有概化肩部但未见孤立假V。土讃线在北侧，未混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#11",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000000/basemap.png",
+          "recordedByteCount": 746171,
+          "actualByteCount": 746171,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000000/smooth.png",
+          "recordedByteCount": 834799,
+          "actualByteCount": 834799,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55248,
+        "longitude": 133.47578,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991682974793958,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233738083.19237688,
+        "rectY": 107628162.20448568,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宮の奥→朝倉神社前真实街道曲线，红线偏北，东侧与朝倉街道连续；北侧JR独立，不按邻近轨符改线。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#11",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000001/basemap.png",
+          "recordedByteCount": 796533,
+          "actualByteCount": 796533,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000001/smooth.png",
+          "recordedByteCount": 890150,
+          "actualByteCount": 890150,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5520792278879,
+        "longitude": 133.47943938178946,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916875111999697,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233740811.82520837,
+        "rectY": 107628520.78842047,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宮の奥→朝倉神社前真实街道曲线，红线偏北，东侧与朝倉街道连续；北侧JR独立，不按邻近轨符改线。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#11",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000002/basemap.png",
+          "recordedByteCount": 842441,
+          "actualByteCount": 842441,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000002/000002/smooth.png",
+          "recordedByteCount": 939977,
+          "actualByteCount": 939977,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55203,
+        "longitude": 133.480825,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916880684152297,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233741845.0170311,
+        "rectY": 107628564.83410937,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "宮の奥→朝倉神社前真实街道曲线，红线偏北，东侧与朝倉街道连续；北侧JR独立，不按邻近轨符改线。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#12",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000000/basemap.png",
+          "recordedByteCount": 842466,
+          "actualByteCount": 842466,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000000/smooth.png",
+          "recordedByteCount": 940021,
+          "actualByteCount": 940021,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55203,
+        "longitude": 133.480825,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916880684152297,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233741845.0170311,
+        "rectY": 107628564.83410937,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝倉神社前→朝倉駅前本线向东南再向东的真实街道曲线；红线逐渐接近底图电车线，北侧JR弧线独立。未见接缝V/直角。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#12",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000001/basemap.png",
+          "recordedByteCount": 974060,
+          "actualByteCount": 974060,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000001/smooth.png",
+          "recordedByteCount": 1080247,
+          "actualByteCount": 1080247,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.551314464708774,
+        "longitude": 133.48442909716994,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991696167545998,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233744532.42666245,
+        "rectY": 107629205.04246873,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝倉神社前→朝倉駅前本线向东南再向东的真实街道曲线；红线逐渐接近底图电车线，北侧JR弧线独立。未见接缝V/直角。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#12",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000002/basemap.png",
+          "recordedByteCount": 1026552,
+          "actualByteCount": 1026552,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000003/000002/smooth.png",
+          "recordedByteCount": 1135456,
+          "actualByteCount": 1135456,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.550803,
+        "longitude": 133.48583,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917019567103846,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233745577.01552355,
+        "rectY": 107629662.66022833,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝倉神社前→朝倉駅前本线向东南再向东的真实街道曲线；红线逐渐接近底图电车线，北侧JR弧线独立。未见接缝V/直角。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#13",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000000/basemap.png",
+          "recordedByteCount": 1026551,
+          "actualByteCount": 1026551,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000000/smooth.png",
+          "recordedByteCount": 1135447,
+          "actualByteCount": 1135447,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.550803,
+        "longitude": 133.48583,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917019567103846,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233745577.01552355,
+        "rectY": 107629662.66022833,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝倉駅前→朝倉沿274号向东街道连续，西端真实反弯保留；不借北侧JR走向，站台face/caps未证实。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#13",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000001/basemap.png",
+          "recordedByteCount": 1132208,
+          "actualByteCount": 1132208,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000004/000001/smooth.png",
+          "recordedByteCount": 1247606,
+          "actualByteCount": 1247606,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5507,
+        "longitude": 133.488321,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991703122536698,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233747434.43974832,
+        "rectY": 107629754.81607178,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "朝倉駅前→朝倉沿274号向东街道连续，西端真实反弯保留；不借北侧JR走向，站台face/caps未证实。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#17",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000000/basemap.png",
+          "recordedByteCount": 1224578,
+          "actualByteCount": 1224578,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000000/smooth.png",
+          "recordedByteCount": 1352933,
+          "actualByteCount": 1352933,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.552085,
+        "longitude": 133.496575,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916874458648227,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233753589.06823114,
+        "rectY": 107628515.62393454,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鴨部→鏡川橋沿274号街道东行后向北过镜川，再向东，真实大转弯必须保留。红连续，无孤立V，JR桥在西侧独立。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#17",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000001/basemap.png",
+          "recordedByteCount": 1162422,
+          "actualByteCount": 1162422,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000001/smooth.png",
+          "recordedByteCount": 1289961,
+          "actualByteCount": 1289961,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55406693970015,
+        "longitude": 133.49815176031117,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916650114817969,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233754764.7859343,
+        "rectY": 107626742.30122587,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鴨部→鏡川橋沿274号街道东行后向北过镜川，再向东，真实大转弯必须保留。红连续，无孤立V，JR桥在西侧独立。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#17",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000002/basemap.png",
+          "recordedByteCount": 1112471,
+          "actualByteCount": 1112471,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000005/000002/smooth.png",
+          "recordedByteCount": 1235712,
+          "actualByteCount": 1235712,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5557,
+        "longitude": 133.49875,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916465253112199,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233755210.86577776,
+        "rectY": 107625281.10464811,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鴨部→鏡川橋沿274号街道东行后向北过镜川，再向东，真实大转弯必须保留。红连续，无孤立V，JR桥在西侧独立。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#18",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000000/basemap.png",
+          "recordedByteCount": 1112543,
+          "actualByteCount": 1112543,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000000/smooth.png",
+          "recordedByteCount": 1235787,
+          "actualByteCount": 1235787,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5557,
+        "longitude": 133.49875,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916465253112199,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233755210.86577776,
+        "rectY": 107625281.10464811,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鏡川橋→蛍橋本线桥北真实东转及国道33号缓弯；红线稍偏南但没有回头或跳入北侧JR。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#18",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000001/basemap.png",
+          "recordedByteCount": 1171389,
+          "actualByteCount": 1171389,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000001/smooth.png",
+          "recordedByteCount": 1298812,
+          "actualByteCount": 1298812,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.555282379404304,
+        "longitude": 133.5023624125014,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916512528349546,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233757904.47576964,
+        "rectY": 107625654.77736448,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鏡川橋→蛍橋本线桥北真实东转及国道33号缓弯；红线稍偏南但没有回头或跳入北侧JR。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#18",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000002/basemap.png",
+          "recordedByteCount": 1180000,
+          "actualByteCount": 1180000,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000006/000002/smooth.png",
+          "recordedByteCount": 1307501,
+          "actualByteCount": 1307501,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55537,
+        "longitude": 133.503435,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916502609619147,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233758704.25497597,
+        "rectY": 107625576.37758295,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "鏡川橋→蛍橋本线桥北真实东转及国道33号缓弯；红线稍偏南但没有回头或跳入北侧JR。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#21",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000000/basemap.png",
+          "recordedByteCount": 1178004,
+          "actualByteCount": 1178004,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000000/smooth.png",
+          "recordedByteCount": 1298209,
+          "actualByteCount": 1298209,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.555955,
+        "longitude": 133.509645,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916436386494225,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233763334.766592,
+        "rectY": 107625052.93842588,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "旭駅前通→旭町一丁目沿33号街道向东，真实轻微曲线保留；红线平行稍偏南，无孤立尖角或北侧JR混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#21",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000001/basemap.png",
+          "recordedByteCount": 1142057,
+          "actualByteCount": 1142057,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000001/smooth.png",
+          "recordedByteCount": 1259523,
+          "actualByteCount": 1259523,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.556651239223704,
+        "longitude": 133.51332681568613,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916357569522422,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233766080.12734926,
+        "rectY": 107624429.96137436,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "旭駅前通→旭町一丁目沿33号街道向东，真实轻微曲线保留；红线平行稍偏南，无孤立尖角或北侧JR混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#21",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000002/basemap.png",
+          "recordedByteCount": 1135097,
+          "actualByteCount": 1135097,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000007/000002/smooth.png",
+          "recordedByteCount": 1252103,
+          "actualByteCount": 1252103,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5567,
+        "longitude": 133.513595,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916352049558999,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233766280.1000676,
+        "rectY": 107624386.3312906,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "旭駅前通→旭町一丁目沿33号街道向东，真实轻微曲线保留；红线平行稍偏南，无孤立尖角或北侧JR混接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#25",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000000/basemap.png",
+          "recordedByteCount": 1005226,
+          "actualByteCount": 1005226,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000000/smooth.png",
+          "recordedByteCount": 1114247,
+          "actualByteCount": 1114247,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557285,
+        "longitude": 133.52305,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916285824073491,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233773330.25905782,
+        "rectY": 107623862.884074,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上町二丁目→上町一丁目沿东西街道，红线略偏南，方向连续，未见站间接缝钩；宽站符不证明帽端。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#25",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000001/basemap.png",
+          "recordedByteCount": 952765,
+          "actualByteCount": 952765,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000008/000001/smooth.png",
+          "recordedByteCount": 1058767,
+          "actualByteCount": 1058767,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557315,
+        "longitude": 133.525105,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916282427866608,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233774862.57811913,
+        "rectY": 107623836.04053143,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上町二丁目→上町一丁目沿东西街道，红线略偏南，方向连续，未见站间接缝钩；宽站符不证明帽端。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#26",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000000/basemap.png",
+          "recordedByteCount": 952319,
+          "actualByteCount": 952319,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000000/smooth.png",
+          "recordedByteCount": 1058383,
+          "actualByteCount": 1058383,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557315,
+        "longitude": 133.525105,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916282427866608,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233774862.57811913,
+        "rectY": 107623836.04053143,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上町一丁目→枡形本线东西街道，向东北缓转是真实街道变化；红连续，无直角/邻线跳接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#26",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000001/basemap.png",
+          "recordedByteCount": 936282,
+          "actualByteCount": 936282,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000009/000001/smooth.png",
+          "recordedByteCount": 1042515,
+          "actualByteCount": 1042515,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55733,
+        "longitude": 133.52717,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916280729762327,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233776402.3537209,
+        "rectY": 107623822.61875665,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上町一丁目→枡形本线东西街道，向东北缓转是真实街道变化；红连续，无直角/邻线跳接。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#27",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000000/basemap.png",
+          "recordedByteCount": 935898,
+          "actualByteCount": 935898,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000000/smooth.png",
+          "recordedByteCount": 1042089,
+          "actualByteCount": 1042089,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55733,
+        "longitude": 133.52717,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916280729762327,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233776402.3537209,
+        "rectY": 107623822.61875665,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "枡形→グランド通沿真实街道向东北，红线平行稍偏南；无假V，不能拉直街道缓弯。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#27",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000001/basemap.png",
+          "recordedByteCount": 952687,
+          "actualByteCount": 952687,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000010/000001/smooth.png",
+          "recordedByteCount": 1065380,
+          "actualByteCount": 1065380,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557555,
+        "longitude": 133.52939,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916255258114622,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233778057.70569956,
+        "rectY": 107623621.29185528,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "枡形→グランド通沿真实街道向东北，红线平行稍偏南；无假V，不能拉直街道缓弯。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#28",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000000/basemap.png",
+          "recordedByteCount": 952387,
+          "actualByteCount": 952387,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000000/smooth.png",
+          "recordedByteCount": 1065041,
+          "actualByteCount": 1065041,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557555,
+        "longitude": 133.52939,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916255258114622,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233778057.70569956,
+        "rectY": 107623621.29185528,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "グランド通→県庁前保持东西/东北街道方向，红线连续，未见尖角或错接；精确平台端未证实。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#28",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000001/basemap.png",
+          "recordedByteCount": 997162,
+          "actualByteCount": 997162,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000011/000001/smooth.png",
+          "recordedByteCount": 1115965,
+          "actualByteCount": 1115965,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55804,
+        "longitude": 133.532265,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916200352040413,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233780201.46107736,
+        "rectY": 107623187.3187509,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "グランド通→県庁前保持东西/东北街道方向，红线连续，未见尖角或错接；精确平台端未证实。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#32",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000000/basemap.png",
+          "recordedByteCount": 1127462,
+          "actualByteCount": 1127462,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000000/smooth.png",
+          "recordedByteCount": 1257577,
+          "actualByteCount": 1257577,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5595,
+        "longitude": 133.539395,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916035063467991,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233785517.97441423,
+        "rectY": 107621880.91077909,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "堀詰→はりまや橋从西沿东西向街道接近十字路口；红线止于本线东端，未转入北向駅前或南向桟橋臂。未见假V；十字道岔实际连接/站台face仍未验收。"
+    },
+    {
+      "itemID": "jp-とさでん交通-伊野線#32",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000001/basemap.png",
+          "recordedByteCount": 1179244,
+          "actualByteCount": 1179244,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/captures/000012/000001/smooth.png",
+          "recordedByteCount": 1309757,
+          "actualByteCount": 1309757,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.559509,
+        "longitude": 133.542851,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916034044545682,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788094.95479184,
+        "rectY": 107621872.85751078,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-tosaden-ino-missing-20261018/alignment/identity-plan-9d5eb6c8dbf19071b9901317ee2e648475cd8f3e2a02eaf65e747ee65aa75ab6.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "堀詰→はりまや橋从西沿东西向街道接近十字路口；红线止于本线东端，未转入北向駅前或南向桟橋臂。未见假V；十字道岔实际连接/站台face仍未验收。"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/candidate-tasks.json",
+  "capturedCount" : 34,
+  "captureIndexPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 1,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment",
+    "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-西日本旅客鉄道-北陸線-p1#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "34\/34 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-candidate\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "hokuriku-eastern-arc-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/request.json",
+  "reviewMessage" : "Saved reviewer observation; Main final check remains separate.",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T04:42:23Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

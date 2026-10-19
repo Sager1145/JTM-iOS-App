@@ -1,0 +1,138 @@
+{
+  "originalPNGs": [
+    "/private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment/captures/000000/000005/basemap.png",
+    "/private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment/captures/000000/000005/smooth.png"
+  ],
+  "actuallyViewed": true,
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 35.16730062060365,
+    "longitude": 136.48288188551496,
+    "mapPointsPerPoint": 2,
+    "metresPerPoint": 0.24325275729091098,
+    "pitch": 0,
+    "rectHeight": 2400,
+    "rectWidth": 3200,
+    "rectX": 235985140.87536767,
+    "rectY": 106173056.19686607,
+    "viewportHeightPoints": 1200,
+    "viewportWidthPoints": 1600,
+    "zoom256": 19
+  },
+  "guardWitnesses": [
+    {
+      "oldVertex": 9,
+      "rawPixel": [
+        996.8953508287668,
+        709.7401981502771
+      ],
+      "manualBluePixel": [
+        997,
+        731.5
+      ],
+      "blueReferenceCoordinate": [
+        136.48341028069092,
+        35.167012288532106
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 10,
+      "rawPixel": [
+        870.1341632753611,
+        636.768795311451
+      ],
+      "manualBluePixel": [
+        870,
+        661.5
+      ],
+      "blueReferenceCoordinate": [
+        136.48306964014603,
+        35.16716577341227
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 11,
+      "rawPixel": [
+        765.7425970584154,
+        582.0401489585638
+      ],
+      "manualBluePixel": [
+        766,
+        617
+      ],
+      "blueReferenceCoordinate": [
+        136.48279069040848,
+        35.16726334579263
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 12,
+      "rawPixel": [
+        665.0793010592461,
+        545.5543398633599
+      ],
+      "manualBluePixel": [
+        665,
+        573
+      ],
+      "blueReferenceCoordinate": [
+        136.48251978729797,
+        35.16735982173899
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 14,
+      "rawPixel": [
+        269.8826574832201,
+        408.7322360724211
+      ],
+      "manualBluePixel": [
+        270,
+        397.5
+      ],
+      "blueReferenceCoordinate": [
+        136.4814603147371,
+        35.16774462806814
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 15,
+      "rawPixel": [
+        176.67590194940567,
+        367.6855065077543
+      ],
+      "manualBluePixel": [
+        177,
+        353.5
+      ],
+      "blueReferenceCoordinate": [
+        136.4812108692987,
+        35.16784110344353
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    },
+    {
+      "oldVertex": 16,
+      "rawPixel": [
+        90.92568682134151,
+        322.077975936234
+      ],
+      "manualBluePixel": [
+        91,
+        299
+      ],
+      "blueReferenceCoordinate": [
+        136.48098019932343,
+        35.16796060119298
+      ],
+      "limit": "one manually inspected rail pixel cross-section, about1px uncertainty; not a full traced candidate"
+    }
+  ],
+  "v13Unresolved": "raw x400.37 y458.90 overlaps Sangi Line label; blue components454..463 are not a unique centreline guard"
+}

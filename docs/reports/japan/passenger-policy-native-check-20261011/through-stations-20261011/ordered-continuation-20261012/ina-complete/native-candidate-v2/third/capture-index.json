@@ -1,0 +1,233 @@
+[
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 0,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000000",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.907825675,
+      "longitude": 139.622355825,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9641874569764344,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238323606.3157726,
+      "rectY": 105492605.15679863,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 1,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000001",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.909653977090656,
+      "longitude": 139.62146222264747,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.964165470856799,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238322939.99756426,
+      "rectY": 105490921.99466738,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 2,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000002",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.91267272205469,
+      "longitude": 139.62036176993087,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9641291669842786,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238322119.44054544,
+      "rectY": 105488142.80797301,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 3,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000003",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.915688266710056,
+      "longitude": 139.61924780958532,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9640928989069099,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238321288.81150845,
+      "rectY": 105485366.46174236,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 4,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000004",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.918704479670055,
+      "longitude": 139.61813653215015,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9640566201001888,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238320460.18299443,
+      "rectY": 105482589.39434505,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 0,
+    "pointOrdinal": 5,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003004/000005",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.920243278551226,
+      "longitude": 139.61757019014368,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9640381104937299,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238320037.88778672,
+      "rectY": 105481172.56094944,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 11,
+    "pointOrdinal": 0,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003007/000000",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.007429064791964,
+      "longitude": 139.60846666627873,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9629882429381547,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238313249.80839816,
+      "rectY": 105400852.04638843,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 11,
+    "pointOrdinal": 1,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003007/000001",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.009688379200895,
+      "longitude": 139.60575802167287,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9629610070110325,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238311230.0965928,
+      "rectY": 105398769.457502,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 11,
+    "pointOrdinal": 2,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003007/000002",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.011862040077176,
+      "longitude": 139.6029438802049,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9629348022090498,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238309131.72062555,
+      "rectY": 105396765.76591945,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 11,
+    "pointOrdinal": 3,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003007/000003",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.01398670232234,
+      "longitude": 139.60007282725005,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9629091867656582,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238306990.908378,
+      "rectY": 105394807.18812397,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 11,
+    "pointOrdinal": 4,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native-candidate-v2/third/captures/003007/000004",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.01400400787114,
+      "longitude": 139.60004971318966,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9629089781202881,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 238306973.67328537,
+      "rectY": 105394791.23512992,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  }
+]

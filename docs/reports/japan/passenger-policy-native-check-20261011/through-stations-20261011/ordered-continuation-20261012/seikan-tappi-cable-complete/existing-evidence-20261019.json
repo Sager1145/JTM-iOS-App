@@ -1,0 +1,205 @@
+{
+  "queueOrdinal": 78,
+  "canonicalQueuePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json",
+  "lineID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線",
+  "packageVersion": "2025.5.2",
+  "stations": [
+    [
+      "000482",
+      "体験坑道",
+      140.347638,
+      41.2565,
+      "Experience Tunnel",
+      1
+    ],
+    [
+      "000483",
+      "青函トンネル記念館",
+      140.347081,
+      41.254315,
+      "Seikan Tunnel Museum",
+      1
+    ]
+  ],
+  "intervalCount": 1,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 1,
+  "plannedViewCount": 2,
+  "actualCompletedViewCount": 2,
+  "matchingCompleteViewCount": 2,
+  "missingViewCount": 0,
+  "ownCaptureStates": {
+    "captured": 2
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "000482",
+        "体験坑道"
+      ],
+      "toStation": [
+        "000483",
+        "青函トンネル記念館"
+      ],
+      "legacySortedSlot": 415,
+      "plannedViewCount": 2,
+      "completedViewCount": 2,
+      "matchingCompleteViewCount": 2,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 4,
+      "displayControlCount": 4
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 41.254315,
+          "longitude": 140.347081
+        },
+        "distanceMetres": 247.38339774748874,
+        "itemID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/basemap.png",
+          "recordedByteCount": 202703,
+          "actualByteCount": 202703
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 3737,
+          "actualByteCount": 3737
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/display.png",
+          "recordedByteCount": 231305,
+          "actualByteCount": 231305
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/distance-samples.json",
+          "recordedByteCount": 3708,
+          "actualByteCount": 3708
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/smooth.png",
+          "recordedByteCount": 231602,
+          "actualByteCount": 231602
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/view.json",
+          "recordedByteCount": 14845,
+          "actualByteCount": 14845
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "08491f5d0d3bf77fe39e93fe39c2e4340defaac83337dcc13a902029c3751709"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 41.2565,
+          "longitude": 140.347638
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/basemap.png",
+          "recordedByteCount": 194932,
+          "actualByteCount": 194932
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 3737,
+          "actualByteCount": 3737
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/display.png",
+          "recordedByteCount": 223552,
+          "actualByteCount": 223552
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/distance-samples.json",
+          "recordedByteCount": 3708,
+          "actualByteCount": 3708
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/smooth.png",
+          "recordedByteCount": 223752,
+          "actualByteCount": 223752
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/view.json",
+          "recordedByteCount": 14836,
+          "actualByteCount": 14836
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "08491f5d0d3bf77fe39e93fe39c2e4340defaac83337dcc13a902029c3751709"
+    }
+  ],
+  "requestPath": null,
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval.",
+    "Historical isolated zero-lane z17 receipts are input/availability evidence, not current Main/native/network acceptance. No PNGs viewed or new render dependency recomputed."
+  ],
+  "renderContractsRecorded": [
+    "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings"
+  ],
+  "newOriginalPNGsViewed": 0
+}

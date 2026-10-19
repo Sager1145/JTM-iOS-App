@@ -1,0 +1,668 @@
+{
+  "schema": "cn-jingshen-topology-review/1",
+  "scope": "G101 IFP to SBT; bounded original-source topology examination; no native solve or package generation",
+  "sourceDatabase": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+  "sourceURL": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "verdict": "genuine omitted separate-identity connection found; no safe patch under existing published-line/strict reviewed-lead-in contracts",
+  "findings": [
+    "Relation3066901 v81 comprises five disconnected original-node components. Beijing/Xinmin side and Shenyangbei/Harbin side do not share a source node.",
+    "A genuine earlier branch at node6110778384 connects via separate relation14265737 京沈联络线 to node6110779505 of relation198494 京哈线. Every edge is consecutive in the original source way; no spatial/name-created joins were used.",
+    "The source3066901 tail from published Xinminbei anchor12508585461 to branch6110778384 is 16 original edges on own member ways659998074,1421931595,651694340.",
+    "None of relation14265737 member ways occurs in a published compact line sourceInterval or any sourceWayInventory. The relation itself is absent from published byLine.",
+    "Relation14265737 has two explicit railway=junction marker members and no evidenced passenger station members; its ways and relation have no operator/network or railway:traffic_mode=passenger tags. Junction markers do carry their own station-operation operator tags.",
+    "Existing reviewed lead-in compiler requires a published from-line, own corridor way inventory and explicit passenger track tags. Relabeling relation14265737 as3066901 would violate that contract.",
+    "The full-source shortest path through Shenhuang relation13454158 includes an acute direction reversal at source crossover1364303225 and is not accepted as a G101 route repair.",
+    "SBT conventional branch198494-branch-3 current anchor12640376454 is original switch105, not a source station mileage node. The actual HSR station anchors12640351644/12640351645 both carry703.653 matching station marker676578837 railway:position:exact:京哈高速. Do not shift the station onto6110779505 or the western switch to claim a completed station path."
+  ],
+  "actualConnectorIdentity": {
+    "id": 14265737,
+    "version": 3,
+    "members": [
+      [
+        "n",
+        9160197895,
+        ""
+      ],
+      [
+        "n",
+        9160197900,
+        ""
+      ],
+      [
+        "w",
+        651694345,
+        ""
+      ],
+      [
+        "w",
+        651694346,
+        ""
+      ],
+      [
+        "w",
+        651694344,
+        ""
+      ],
+      [
+        "w",
+        651694342,
+        ""
+      ],
+      [
+        "w",
+        651694341,
+        ""
+      ],
+      [
+        "w",
+        651694336,
+        ""
+      ],
+      [
+        "w",
+        651694335,
+        ""
+      ],
+      [
+        "w",
+        652027293,
+        ""
+      ]
+    ],
+    "tags": {
+      "from": "前丁香东线路所",
+      "name": "京沈联络线",
+      "route": "railway",
+      "to": "后丁香西线路所",
+      "type": "route"
+    }
+  },
+  "junctionMarkers": [
+    {
+      "id": 9160197895,
+      "version": 3,
+      "coordinate": [
+        123.3322267,
+        41.8332366
+      ],
+      "tags": {
+        "alt_name": "后丁香西线路所",
+        "name": "大二环2号所",
+        "operator": "中国铁路沈阳局集团有限公司 沈阳车务段",
+        "railway": "junction",
+        "railway:ref": "203431"
+      }
+    },
+    {
+      "id": 9160197900,
+      "version": 4,
+      "coordinate": [
+        123.3192249,
+        41.8481096
+      ],
+      "tags": {
+        "alt_name": "前丁香东线路所",
+        "name": "丁香湖1号线路所",
+        "operator": "中国铁路沈阳局集团有限公司 沈阳车务段",
+        "railway": "junction",
+        "railway:ref": "203399"
+      }
+    }
+  ],
+  "ownSourceTail": {
+    "from": {
+      "lineId": "cn-osm-relation-3066901-branch-2",
+      "stationGroup": "cn-official-12306-oot",
+      "anchorNodeId": 12508585461,
+      "publishedVertices": [
+        {
+          "lineId": "cn-osm-relation-3066901-branch-2",
+          "segmentIndex": 17,
+          "vertexIndex": 45
+        }
+      ]
+    },
+    "to": {
+      "nodeId": 6110778384,
+      "publishedVertices": []
+    },
+    "nodeIds": [
+      12508585461,
+      12508585475,
+      4507873131,
+      5583612385,
+      4507873130,
+      6011910253,
+      4507873128,
+      5583612370,
+      6011910250,
+      4507873127,
+      6011910251,
+      5583612375,
+      4507873126,
+      6011910249,
+      4507873124,
+      12647521090,
+      6110778384
+    ],
+    "edgeWayIds": [
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      651694340,
+      651694340
+    ],
+    "coordinates": [
+      [
+        123.2336104,
+        41.9135187
+      ],
+      [
+        123.2348455,
+        41.9126561
+      ],
+      [
+        123.238602,
+        41.9100323
+      ],
+      [
+        123.2589722,
+        41.8958153
+      ],
+      [
+        123.2630384,
+        41.8931818
+      ],
+      [
+        123.2678808,
+        41.8903673
+      ],
+      [
+        123.3011182,
+        41.8718959
+      ],
+      [
+        123.3059901,
+        41.8691181
+      ],
+      [
+        123.3077379,
+        41.8679193
+      ],
+      [
+        123.3092485,
+        41.8667691
+      ],
+      [
+        123.3102973,
+        41.8657421
+      ],
+      [
+        123.3112676,
+        41.8646726
+      ],
+      [
+        123.3128536,
+        41.8624259
+      ],
+      [
+        123.3137305,
+        41.8606994
+      ],
+      [
+        123.3183423,
+        41.8499078
+      ],
+      [
+        123.3184701,
+        41.8496318
+      ],
+      [
+        123.3190467,
+        41.8483871
+      ]
+    ],
+    "nodeVersions": {
+      "12508585461": 1,
+      "12508585475": 1,
+      "4507873131": 1,
+      "5583612385": 2,
+      "4507873130": 2,
+      "6011910253": 1,
+      "4507873128": 2,
+      "5583612370": 1,
+      "6011910250": 1,
+      "4507873127": 2,
+      "6011910251": 1,
+      "5583612375": 1,
+      "4507873126": 1,
+      "6011910249": 1,
+      "4507873124": 3,
+      "12647521090": 1,
+      "6110778384": 4
+    },
+    "wayVersions": {
+      "659998074": 16,
+      "1421931595": 2,
+      "651694340": 10
+    }
+  },
+  "omittedConnector": {
+    "fromNodeId": 6110778384,
+    "toNodeId": 6110779505,
+    "fromPublishedVertices": [],
+    "toPublishedVertices": [
+      {
+        "lineId": "cn-osm-relation-198494-branch-3",
+        "segmentIndex": 0,
+        "vertexIndex": 148
+      }
+    ],
+    "nodeIds": [
+      6110778384,
+      6110779488,
+      6110779485,
+      12346140749,
+      12346140748,
+      6110779489,
+      6110779490,
+      6110779491,
+      6110779492,
+      12346140746,
+      6110779493,
+      12346140747,
+      6110779494,
+      6110779497,
+      6110779495,
+      12346140745,
+      6110779496,
+      12346140744,
+      6110779498,
+      6110779499,
+      12346140742,
+      6110779500,
+      12346140743,
+      6110779505
+    ],
+    "edgeWayIds": [
+      651694341,
+      651694341,
+      651694342,
+      651694342,
+      651694342,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694346,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345
+    ],
+    "coordinates": [
+      [
+        123.3190467,
+        41.8483871
+      ],
+      [
+        123.3194882,
+        41.8472396
+      ],
+      [
+        123.3196382,
+        41.846815
+      ],
+      [
+        123.3202807,
+        41.8450266
+      ],
+      [
+        123.320471,
+        41.8444311
+      ],
+      [
+        123.3206537,
+        41.8438265
+      ],
+      [
+        123.3210256,
+        41.8426088
+      ],
+      [
+        123.3212097,
+        41.8421138
+      ],
+      [
+        123.3214432,
+        41.8416114
+      ],
+      [
+        123.3216613,
+        41.8412207
+      ],
+      [
+        123.3219252,
+        41.8408179
+      ],
+      [
+        123.3221443,
+        41.8405312
+      ],
+      [
+        123.3223714,
+        41.8402586
+      ],
+      [
+        123.3225712,
+        41.8400356
+      ],
+      [
+        123.3227303,
+        41.8398876
+      ],
+      [
+        123.3231257,
+        41.8395411
+      ],
+      [
+        123.3236013,
+        41.8391319
+      ],
+      [
+        123.3243303,
+        41.83855
+      ],
+      [
+        123.3258897,
+        41.8373372
+      ],
+      [
+        123.3265075,
+        41.8368684
+      ],
+      [
+        123.3270618,
+        41.8364696
+      ],
+      [
+        123.3277378,
+        41.8360149
+      ],
+      [
+        123.3282959,
+        41.8356583
+      ],
+      [
+        123.3322622,
+        41.8331916
+      ]
+    ],
+    "nodeVersions": {
+      "6110778384": 4,
+      "6110779488": 3,
+      "6110779485": 3,
+      "12346140749": 1,
+      "12346140748": 1,
+      "6110779489": 2,
+      "6110779490": 2,
+      "6110779491": 1,
+      "6110779492": 2,
+      "12346140746": 1,
+      "6110779493": 2,
+      "12346140747": 1,
+      "6110779494": 2,
+      "6110779497": 2,
+      "6110779495": 2,
+      "12346140745": 1,
+      "6110779496": 2,
+      "12346140744": 1,
+      "6110779498": 2,
+      "6110779499": 2,
+      "12346140742": 1,
+      "6110779500": 2,
+      "12346140743": 1,
+      "6110779505": 6
+    },
+    "wayVersions": {
+      "651694341": 4,
+      "651694342": 4,
+      "651694344": 4,
+      "651694345": 4,
+      "651694346": 4
+    },
+    "ways": [
+      {
+        "id": 651694341,
+        "version": 4,
+        "nodes": [
+          6110778384,
+          6110779488,
+          6110779485
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        }
+      },
+      {
+        "id": 651694342,
+        "version": 4,
+        "nodes": [
+          6110779485,
+          12346140749,
+          12346140748,
+          6110779489
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        }
+      },
+      {
+        "id": 651694344,
+        "version": 4,
+        "nodes": [
+          6110779489,
+          6110779490,
+          6110779491,
+          6110779492,
+          12346140746,
+          6110779493,
+          12346140747,
+          6110779494,
+          6110779497
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        }
+      },
+      {
+        "id": 651694346,
+        "version": 4,
+        "nodes": [
+          6110779497,
+          6110779495
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        }
+      },
+      {
+        "id": 651694345,
+        "version": 4,
+        "nodes": [
+          6110779495,
+          12346140745,
+          6110779496,
+          12346140744,
+          6110779498,
+          6110779499,
+          12346140742,
+          6110779500,
+          12346140743,
+          6110779505
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        }
+      }
+    ]
+  },
+  "stationSourceAnchors": [
+    {
+      "node": {
+        "id": 12640376454,
+        "version": 1,
+        "coordinate": [
+          123.4133092,
+          41.8124676
+        ],
+        "tags": {
+          "railway": "switch",
+          "ref": "105"
+        }
+      },
+      "publishedVertices": [
+        {
+          "lineId": "cn-osm-relation-198494-branch-3",
+          "segmentIndex": 0,
+          "vertexIndex": 192
+        }
+      ]
+    },
+    {
+      "node": {
+        "id": 12640351644,
+        "version": 1,
+        "coordinate": [
+          123.4295703,
+          41.8171159
+        ],
+        "tags": {
+          "railway": "milestone",
+          "railway:position": "703.653"
+        }
+      },
+      "publishedVertices": [
+        {
+          "lineId": "cn-osm-relation-3066901",
+          "segmentIndex": 10,
+          "vertexIndex": 139
+        }
+      ]
+    },
+    {
+      "node": {
+        "id": 12640351645,
+        "version": 1,
+        "coordinate": [
+          123.4298107,
+          41.8167297
+        ],
+        "tags": {
+          "railway": "milestone",
+          "railway:position": "703.653"
+        }
+      },
+      "publishedVertices": []
+    }
+  ],
+  "possibleCorrectImplementation": "Publish the connector as its own source-owned physical section with exact node IDs, sourced operator/class identity and two explicit exact-node junctions; separately retain the3066901 own-member tail to6110778384. Do not create passenger station rows for the two junction markers. Existing compact-v1 station interval publication cannot encode this stationless corridor unchanged.",
+  "remainingEvidence": [
+    "Exact primary corridor operator/class identity remains unresolved. A later direct12306 announcement now provides line-specific historical passenger-use evidence from2018-12-29, recorded in primarySourceFollowup; it does not insert missing source tags or prove a unique G101 track assignment.",
+    "A reviewed stationless physical section integration preserving separate identity and exact-node ownership at both ends, or genuine passenger station memberships on this source corridor. Existing osmTrack lead-in cannot represent two foreign endpoints under a third identity.",
+    "Own3066901 source tail extends beyond its last published passenger station; an exact published physical branch vertex must exist before this distinct connector can attach."
+  ],
+  "productionEdits": false,
+  "verification": "Targeted read-only SQLite node/way/relation adjacency and published source-array queries only.",
+  "primarySourceFollowup": {
+    "reviewedAt": "2026-10-19",
+    "scope": "Bounded lightweight primary-web evidence search only; no source graph scan, build, native job or production edit.",
+    "passengerUse": {
+      "status": "direct official historical passenger operation evidence found",
+      "url": "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html",
+      "title": "About commencement of Jingha HSR Chengde-Shenyang section, Nanlong and other lines",
+      "publisher": "China Railway 12306 passenger service centre",
+      "effectiveDate": "2018-12-29",
+      "directlyNamedOriginalRelation": 14265737,
+      "directlyNamedLine": "京沈联络线",
+      "support": "Paragraph1 directly lists the JingShen connection line among the lines commencing initial passenger transport on2018-12-29. Paragraph2 discusses EMU passenger fares on those lines. This supplies line-specific passenger admission evidence independently of G101 stop-pair inference.",
+      "limitations": "Announcement does not identify original OSM way IDs, an operator company, unique G101 path, modern closure status or a runtime representation. It does not change original source tags or authorize impersonating the Jingha HSR corridor."
+    },
+    "operatorOrOwnership": {
+      "status": "not resolved by an exact primary source in bounded search",
+      "supportingOriginalEvidence": "The two explicit source junction-marker members carry their own China Railway Shenyang Group/Shenyang traffic depot operator tags; these do not alone prove ownership/operator for every connecting track.",
+      "secondaryLead": "A non-official railfan mileage database attributes this exact connector to JingShen Railway Passenger Dedicated Line Liaoning Co., Ltd.; this lead was not adopted as primary operator evidence.",
+      "confoundersRejected": "Official notices for JingShen-Panying/Chaoyang-Linghainan connection concern a different105km project. A training document naming JingShen connection in Panying2013 concerns a different0.403km segment. Neither establishes this2km Shenyang connector operator."
+    },
+    "remainingImplementationConstraint": "Publish a distinct original-source connector identity and exact junction endpoints under an applicable physical-section model. Existing same-identity osmTrack inventory and passenger-tag checks remain unchanged."
+  }
+}

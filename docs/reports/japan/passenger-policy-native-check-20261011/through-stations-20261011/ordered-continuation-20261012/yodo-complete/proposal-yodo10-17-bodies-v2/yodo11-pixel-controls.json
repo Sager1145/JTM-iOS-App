@@ -1,0 +1,1528 @@
+{
+  "status": "candidate-only-unreviewed-fit",
+  "controls": [
+    {
+      "chainageMetres": 40.0,
+      "view": 0,
+      "ownPixel": [
+        476.7735385261476,
+        364.94124930910766
+      ],
+      "regionAnchorPixel": [
+        476.7735385261476,
+        364.94124930910766
+      ],
+      "coordinates": [
+        132.70850706106995,
+        33.22842104467752
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 80.0,
+      "view": 0,
+      "ownPixel": [
+        443.1184218292602,
+        343.0254257629945
+      ],
+      "regionAnchorPixel": [
+        441.91645645722747,
+        345.21752047911286
+      ],
+      "coordinates": [
+        132.70814598084036,
+        33.228617730029626
+      ],
+      "normalPickPixels": 2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 160.0,
+      "view": 0,
+      "ownPixel": [
+        374.53912289527494,
+        301.53271470573975
+      ],
+      "regionAnchorPixel": [
+        371.6341297328472,
+        306.78257324919105
+      ],
+      "coordinates": [
+        132.707410204785,
+        33.228990108549574
+      ],
+      "normalPickPixels": 6.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 200.0,
+      "view": 1,
+      "ownPixel": [
+        646.1383157941533,
+        452.25520735240497
+      ],
+      "regionAnchorPixel": [
+        643.26942448318,
+        457.5248812176287
+      ],
+      "coordinates": [
+        132.70703440964883,
+        33.22916515939161
+      ],
+      "normalPickPixels": 6.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 240.0,
+      "view": 1,
+      "ownPixel": [
+        611.311811454397,
+        432.5523557158024
+      ],
+      "regionAnchorPixel": [
+        608.1656690724194,
+        438.2402189448476
+      ],
+      "coordinates": [
+        132.70666076179322,
+        33.22934198276187
+      ],
+      "normalPickPixels": 6.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 280.0,
+      "view": 1,
+      "ownPixel": [
+        575.0809166425336,
+        415.36896942527125
+      ],
+      "regionAnchorPixel": [
+        573.1173852533102,
+        418.85387178882957
+      ],
+      "coordinates": [
+        132.70627204646252,
+        33.22949619488214
+      ],
+      "normalPickPixels": 4.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 320.0,
+      "view": 1,
+      "ownPixel": [
+        539.1430684654276,
+        397.5903948308052
+      ],
+      "regionAnchorPixel": [
+        538.3947723470628,
+        398.8904151841998
+      ],
+      "coordinates": [
+        132.70587844683473,
+        33.22964408123915
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 360.0,
+      "view": 1,
+      "ownPixel": [
+        505.1154802266789,
+        376.26526530928425
+      ],
+      "regionAnchorPixel": [
+        503.44149536266923,
+        379.3389885686338
+      ],
+      "coordinates": [
+        132.70552139876537,
+        33.22984712965163
+      ],
+      "normalPickPixels": 3.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 400.0,
+      "view": 1,
+      "ownPixel": [
+        469.46271865204915,
+        357.98704749201744
+      ],
+      "regionAnchorPixel": [
+        468.26701517775655,
+        360.18256410583854
+      ],
+      "coordinates": [
+        132.70513888613135,
+        33.23001116636931
+      ],
+      "normalPickPixels": 2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 440.0,
+      "view": 1,
+      "ownPixel": [
+        433.4987643450651,
+        340.33677255073525
+      ],
+      "regionAnchorPixel": [
+        433.24330695346,
+        340.7665882334113
+      ],
+      "coordinates": [
+        132.7047502940011,
+        33.230165710017744
+      ],
+      "normalPickPixels": 0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 480.0,
+      "view": 1,
+      "ownPixel": [
+        400.226852517575,
+        318.23083358071744
+      ],
+      "regionAnchorPixel": [
+        400.226852517575,
+        318.23083358071744
+      ],
+      "coordinates": [
+        132.70439606587416,
+        33.230367954951404
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 520.0,
+      "view": 1,
+      "ownPixel": [
+        372.1153035141809,
+        289.75575767060354
+      ],
+      "regionAnchorPixel": [
+        372.8778693340719,
+        289.1088470350951
+      ],
+      "coordinates": [
+        132.7041026431172,
+        33.23062930668854
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 560.0,
+      "view": 2,
+      "ownPixel": [
+        549.6545263084395,
+        516.3577823310026
+      ],
+      "regionAnchorPixel": [
+        548.8327542059124,
+        516.9275986272842
+      ],
+      "coordinates": [
+        132.70383855811934,
+        33.230912493090074
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 599.9999999999999,
+      "view": 2,
+      "ownPixel": [
+        530.3507508958963,
+        481.59920525240886
+      ],
+      "regionAnchorPixel": [
+        528.9847896248102,
+        482.21900345012546
+      ],
+      "coordinates": [
+        132.70362561256127,
+        33.231223979140225
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 640.0,
+      "view": 2,
+      "ownPixel": [
+        516.6549371691976,
+        444.2445194220351
+      ],
+      "regionAnchorPixel": [
+        517.1419949159026,
+        444.1314939763397
+      ],
+      "coordinates": [
+        132.70349855315834,
+        33.23156578737283
+      ],
+      "normalPickPixels": -0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 680.0,
+      "view": 2,
+      "ownPixel": [
+        511.4024717156328,
+        404.5714587490268
+      ],
+      "regionAnchorPixel": [
+        511.9023664370179,
+        404.56119875237346
+      ],
+      "coordinates": [
+        132.70344233804337,
+        33.231920901135
+      ],
+      "normalPickPixels": -0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 720.0,
+      "view": 2,
+      "ownPixel": [
+        511.4081224442909,
+        364.48104805915875
+      ],
+      "regionAnchorPixel": [
+        512.4073450528085,
+        364.5204711314291
+      ],
+      "coordinates": [
+        132.70344775587614,
+        33.232280235207746
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 800.0,
+      "view": 2,
+      "ownPixel": [
+        521.8428016193211,
+        285.0272228606045
+      ],
+      "regionAnchorPixel": [
+        521.8428016193211,
+        285.0272228606045
+      ],
+      "coordinates": [
+        132.7035489873428,
+        33.23299362028232
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 840.0,
+      "view": 2,
+      "ownPixel": [
+        525.5475053292877,
+        245.09584356520742
+      ],
+      "regionAnchorPixel": [
+        527.527206685394,
+        245.38006626069546
+      ],
+      "coordinates": [
+        132.70360997439286,
+        33.23334941800701
+      ],
+      "normalPickPixels": -2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 880.0,
+      "view": 3,
+      "ownPixel": [
+        489.9083200469613,
+        553.609433259815
+      ],
+      "regionAnchorPixel": [
+        489.9083200469613,
+        553.609433259815
+      ],
+      "coordinates": [
+        132.7036710422015,
+        33.23370520495099
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 920.0,
+      "view": 3,
+      "ownPixel": [
+        495.6002523563802,
+        513.9633166640997
+      ],
+      "regionAnchorPixel": [
+        495.6002523563802,
+        513.9633166640997
+      ],
+      "coordinates": [
+        132.7037321100101,
+        33.23406099044738
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 960.0,
+      "view": 3,
+      "ownPixel": [
+        500.60369232302486,
+        474.22948902530845
+      ],
+      "regionAnchorPixel": [
+        501.0997969582677,
+        474.29178020358086
+      ],
+      "coordinates": [
+        132.70379111372256,
+        33.234417002613455
+      ],
+      "normalPickPixels": -0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1000.0,
+      "view": 3,
+      "ownPixel": [
+        505.9001783616841,
+        434.52786448970437
+      ],
+      "regionAnchorPixel": [
+        505.9001783616841,
+        434.52786448970437
+      ],
+      "coordinates": [
+        132.70384261622763,
+        33.234773842335954
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1040.0,
+      "view": 3,
+      "ownPixel": [
+        508.2185803057188,
+        394.46431912739
+      ],
+      "regionAnchorPixel": [
+        510.70055977255106,
+        394.7639487758279
+      ],
+      "coordinates": [
+        132.70386748998203,
+        33.235133369449706
+      ],
+      "normalPickPixels": -2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1080.0,
+      "view": 3,
+      "ownPixel": [
+        513.3878570876296,
+        354.70206673234514
+      ],
+      "regionAnchorPixel": [
+        515.8639137521386,
+        355.04723827540874
+      ],
+      "coordinates": [
+        132.70392295030518,
+        33.23549019132236
+      ],
+      "normalPickPixels": -2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1120.0,
+      "view": 3,
+      "ownPixel": [
+        520.8987127655522,
+        315.3091777596738
+      ],
+      "regionAnchorPixel": [
+        521.3939240984619,
+        315.3782120682299
+      ],
+      "coordinates": [
+        132.70400884608563,
+        33.235843077632175
+      ],
+      "normalPickPixels": -0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1160.0,
+      "view": 3,
+      "ownPixel": [
+        527.9048616767407,
+        275.9035612013504
+      ],
+      "regionAnchorPixel": [
+        526.9239344485104,
+        275.7091858610511
+      ],
+      "coordinates": [
+        132.7040681766601,
+        33.23619906001607
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1199.9999999999998,
+      "view": 3,
+      "ownPixel": [
+        540.7195247593027,
+        238.2919178039593
+      ],
+      "regionAnchorPixel": [
+        542.4821548573673,
+        239.23697607591748
+      ],
+      "coordinates": [
+        132.70423509825622,
+        33.23652635349154
+      ],
+      "normalPickPixels": -2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1240.0,
+      "view": 4,
+      "ownPixel": [
+        448.9606092832019,
+        530.9813756775704
+      ],
+      "regionAnchorPixel": [
+        453.8481135107577,
+        533.5037361644208
+      ],
+      "coordinates": [
+        132.70438282427483,
+        33.236867024589344
+      ],
+      "normalPickPixels": -5.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1280.0,
+      "view": 4,
+      "ownPixel": [
+        472.2006285302341,
+        497.9035799279809
+      ],
+      "regionAnchorPixel": [
+        472.2006285302341,
+        497.9035799279809
+      ],
+      "coordinates": [
+        132.70463216263136,
+        33.237163855134426
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1320.0,
+      "view": 4,
+      "ownPixel": [
+        490.58305823571624,
+        462.2564105895668
+      ],
+      "regionAnchorPixel": [
+        489.21381260827184,
+        461.64390229433775
+      ],
+      "coordinates": [
+        132.70481469429416,
+        33.23748923780686
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1400.0,
+      "view": 4,
+      "ownPixel": [
+        512.8018857082732,
+        385.20609899626623
+      ],
+      "regionAnchorPixel": [
+        511.8064295500517,
+        385.1108780056238
+      ],
+      "coordinates": [
+        132.70505708677751,
+        33.238176016549964
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1440.0,
+      "view": 4,
+      "ownPixel": [
+        512.8747737434295,
+        344.9059534337709
+      ],
+      "regionAnchorPixel": [
+        510.8871233947575,
+        345.12786803767085
+      ],
+      "coordinates": [
+        132.70504722369247,
+        33.23853480698578
+      ],
+      "normalPickPixels": 2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1479.9999999999998,
+      "view": 4,
+      "ownPixel": [
+        502.34120374679026,
+        305.9990722321241
+      ],
+      "regionAnchorPixel": [
+        500.91704361885786,
+        306.4699946567416
+      ],
+      "coordinates": [
+        132.70494025634105,
+        33.23888170481246
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1520.0,
+      "view": 4,
+      "ownPixel": [
+        486.7879758924246,
+        269.0680445600301
+      ],
+      "regionAnchorPixel": [
+        486.7879758924246,
+        269.0680445600301
+      ],
+      "coordinates": [
+        132.70478866788972,
+        33.23921733125597
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1560.0,
+      "view": 4,
+      "ownPixel": [
+        464.8119410389589,
+        235.58804663361497
+      ],
+      "regionAnchorPixel": [
+        467.3947043940425,
+        234.06183123216033
+      ],
+      "coordinates": [
+        132.70455289061454,
+        33.239517762964184
+      ],
+      "normalPickPixels": -3.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1600.0,
+      "view": 5,
+      "ownPixel": [
+        584.7647236287905,
+        517.0384214647386
+      ],
+      "regionAnchorPixel": [
+        585.6256447471678,
+        516.5296829976141
+      ],
+      "coordinates": [
+        132.70436198656625,
+        33.239840881741344
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1640.0,
+      "view": 5,
+      "ownPixel": [
+        564.3860907041604,
+        482.55232087699426
+      ],
+      "regionAnchorPixel": [
+        565.2493344284594,
+        482.04753352329135
+      ],
+      "coordinates": [
+        132.70414337247337,
+        33.240150304002086
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1680.0,
+      "view": 5,
+      "ownPixel": [
+        548.0755153887667,
+        445.8171641444241
+      ],
+      "regionAnchorPixel": [
+        545.8736097067595,
+        447.00106083229184
+      ],
+      "coordinates": [
+        132.7039591173844,
+        33.24047541256662
+      ],
+      "normalPickPixels": 2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1720.0,
+      "view": 5,
+      "ownPixel": [
+        528.227485766679,
+        411.0138830549268
+      ],
+      "regionAnchorPixel": [
+        526.9063423573971,
+        411.7242210675031
+      ],
+      "coordinates": [
+        132.7037319967974,
+        33.24078134010671
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1760.0,
+      "view": 5,
+      "ownPixel": [
+        508.37945614818733,
+        376.2106019614636
+      ],
+      "regionAnchorPixel": [
+        507.93907501176,
+        376.44738129898906
+      ],
+      "coordinates": [
+        132.70352850009556,
+        33.24109789002633
+      ],
+      "normalPickPixels": 0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1800.0,
+      "view": 5,
+      "ownPixel": [
+        488.7890521027148,
+        341.27241148613393
+      ],
+      "regionAnchorPixel": [
+        488.7890521027148,
+        341.27241148613393
+      ],
+      "coordinates": [
+        132.70332304263923,
+        33.241413524694266
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1840.0,
+      "view": 5,
+      "ownPixel": [
+        469.1920924024225,
+        306.3378752057131
+      ],
+      "regionAnchorPixel": [
+        468.7591058984399,
+        306.587920576334
+      ],
+      "coordinates": [
+        132.7031081446301,
+        33.241724757044366
+      ],
+      "normalPickPixels": 0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1880.0,
+      "view": 5,
+      "ownPixel": [
+        446.9972136780962,
+        272.9036111487779
+      ],
+      "regionAnchorPixel": [
+        448.729159694165,
+        271.90342966653407
+      ],
+      "coordinates": [
+        132.702893246621,
+        33.2420359882864
+      ],
+      "normalPickPixels": -2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 1920.0,
+      "view": 5,
+      "ownPixel": [
+        427.8500663393791,
+        237.6688868401846
+      ],
+      "regionAnchorPixel": [
+        429.1698426567018,
+        236.9560120459646
+      ],
+      "coordinates": [
+        132.70268339791505,
+        33.24234957770448
+      ],
+      "normalPickPixels": -1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2000.0,
+      "view": 6,
+      "ownPixel": [
+        546.8131589825177,
+        479.5685265256115
+      ],
+      "regionAnchorPixel": [
+        547.7007841840386,
+        479.1079600248486
+      ],
+      "coordinates": [
+        132.702267903676,
+        33.24297875115813
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2040.0,
+      "view": 6,
+      "ownPixel": [
+        533.3021584742027,
+        441.7416659470875
+      ],
+      "regionAnchorPixel": [
+        531.4624083526433,
+        442.5260889772326
+      ],
+      "coordinates": [
+        132.7020936848038,
+        33.24330700325092
+      ],
+      "normalPickPixels": 2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2080.0,
+      "view": 6,
+      "ownPixel": [
+        519.9584050665491,
+        404.4081181924039
+      ],
+      "regionAnchorPixel": [
+        517.5470125488937,
+        405.0678045768291
+      ],
+      "coordinates": [
+        132.7019702602385,
+        33.24364903757973
+      ],
+      "normalPickPixels": 2.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2119.9999999999995,
+      "view": 6,
+      "ownPixel": [
+        508.8055417796175,
+        365.97694282296777
+      ],
+      "regionAnchorPixel": [
+        507.3489599227905,
+        366.3352294322103
+      ],
+      "coordinates": [
+        132.70183497556877,
+        33.24399066604946
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2160.0,
+      "view": 6,
+      "ownPixel": [
+        500.6460196219171,
+        326.8787880418921
+      ],
+      "regionAnchorPixel": [
+        499.6611688584089,
+        327.05219211801887
+      ],
+      "coordinates": [
+        132.70175249451876,
+        33.2443431517966
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2200.0,
+      "view": 6,
+      "ownPixel": [
+        494.19315681491287,
+        287.3462291029271
+      ],
+      "regionAnchorPixel": [
+        492.7158806696534,
+        287.60633521713316
+      ],
+      "coordinates": [
+        132.70167797966042,
+        33.244697097089684
+      ],
+      "normalPickPixels": 1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2240.0,
+      "view": 6,
+      "ownPixel": [
+        487.8501586337839,
+        247.69561147454195
+      ],
+      "regionAnchorPixel": [
+        484.9171831533313,
+        248.32621026225388
+      ],
+      "coordinates": [
+        132.70162577612638,
+        33.24505521214621
+      ],
+      "normalPickPixels": 3.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2280.0,
+      "view": 7,
+      "ownPixel": [
+        627.8179883849898,
+        508.85161725131695
+      ],
+      "regionAnchorPixel": [
+        624.9761704392731,
+        509.812903245911
+      ],
+      "coordinates": [
+        132.7015242219622,
+        33.245407427816865
+      ],
+      "normalPickPixels": 3.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2320.0,
+      "view": 7,
+      "ownPixel": [
+        608.4203483924614,
+        473.3758850170413
+      ],
+      "regionAnchorPixel": [
+        607.5808855369687,
+        473.9193020891398
+      ],
+      "coordinates": [
+        132.70130710140342,
+        33.245720869628464
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2360.0,
+      "view": 7,
+      "ownPixel": [
+        582.8193476250066,
+        442.6248975486233
+      ],
+      "regionAnchorPixel": [
+        582.0836295410991,
+        443.30218544974923
+      ],
+      "coordinates": [
+        132.70103354552384,
+        33.245995590962345
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2399.9999999999995,
+      "view": 7,
+      "ownPixel": [
+        555.0429866593162,
+        413.65052032186253
+      ],
+      "regionAnchorPixel": [
+        553.6715634018183,
+        415.10626695118845
+      ],
+      "coordinates": [
+        132.70072871712415,
+        33.246248586600274
+      ],
+      "normalPickPixels": 2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2440.0,
+      "view": 7,
+      "ownPixel": [
+        522.6244080233938,
+        389.8882499749715
+      ],
+      "regionAnchorPixel": [
+        522.0692996457219,
+        390.7200280036777
+      ],
+      "coordinates": [
+        132.70038966161718,
+        33.24646739824947
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2480.0,
+      "view": 7,
+      "ownPixel": [
+        487.9160926192999,
+        369.9002343285829
+      ],
+      "regionAnchorPixel": [
+        487.9160926192999,
+        369.9002343285829
+      ],
+      "coordinates": [
+        132.70002323745808,
+        33.24665420863991
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2520.0,
+      "view": 7,
+      "ownPixel": [
+        449.96701102976033,
+        357.605101360635
+      ],
+      "regionAnchorPixel": [
+        451.49078576639295,
+        353.3709414023906
+      ],
+      "coordinates": [
+        132.6996160879831,
+        33.24676452936268
+      ],
+      "normalPickPixels": -4.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2560.0,
+      "view": 7,
+      "ownPixel": [
+        412.6004280357271,
+        344.07919523172865
+      ],
+      "regionAnchorPixel": [
+        412.85165445134044,
+        343.11126688309014
+      ],
+      "coordinates": [
+        132.69921788340707,
+        33.24689457822841
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2600.0,
+      "view": 7,
+      "ownPixel": [
+        373.87233160861314,
+        334.73571360543934
+      ],
+      "regionAnchorPixel": [
+        374.226939573884,
+        332.76740133576095
+      ],
+      "coordinates": [
+        132.6988034851733,
+        33.246987390538955
+      ],
+      "normalPickPixels": -2.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2640.0,
+      "view": 8,
+      "ownPixel": [
+        673.2823026366532,
+        404.7660707384348
+      ],
+      "regionAnchorPixel": [
+        673.2823026366532,
+        404.7660707384348
+      ],
+      "coordinates": [
+        132.69837751019185,
+        33.247034721094586
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2679.9999999999995,
+      "view": 8,
+      "ownPixel": [
+        633.5444716557763,
+        399.7201763157661
+      ],
+      "regionAnchorPixel": [
+        633.4920103438199,
+        400.2174165099859
+      ],
+      "coordinates": [
+        132.6979506066691,
+        33.24707553471068
+      ],
+      "normalPickPixels": 0.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2720.0,
+      "view": 8,
+      "ownPixel": [
+        593.8047376561922,
+        394.8935219147288
+      ],
+      "regionAnchorPixel": [
+        593.6766410805285,
+        395.8852836135775
+      ],
+      "coordinates": [
+        132.6975234340996,
+        33.24711440553258
+      ],
+      "normalPickPixels": 1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2760.0,
+      "view": 8,
+      "ownPixel": [
+        554.0332877375185,
+        390.174137506634
+      ],
+      "regionAnchorPixel": [
+        554.0332877375185,
+        390.174137506634
+      ],
+      "coordinates": [
+        132.69709810706075,
+        33.24716564976584
+      ],
+      "normalPickPixels": 0.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2800.0,
+      "view": 8,
+      "ownPixel": [
+        514.2493925281763,
+        385.37124636695364
+      ],
+      "regionAnchorPixel": [
+        514.4020764641464,
+        384.3829712960869
+      ],
+      "coordinates": [
+        132.69667291029214,
+        33.24721761196246
+      ],
+      "normalPickPixels": -1.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2840.0,
+      "view": 8,
+      "ownPixel": [
+        474.8763542970046,
+        377.4611203165688
+      ],
+      "regionAnchorPixel": [
+        475.30702678114176,
+        376.02427613176405
+      ],
+      "coordinates": [
+        132.69625346591334,
+        33.24729261168278
+      ],
+      "normalPickPixels": -1.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2880.0,
+      "view": 8,
+      "ownPixel": [
+        436.2928629894871,
+        365.541255222073
+      ],
+      "regionAnchorPixel": [
+        437.5234952867031,
+        362.80528297275305
+      ],
+      "coordinates": [
+        132.69583488934603,
+        33.24738667216237
+      ],
+      "normalPickPixels": -3.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2920.0,
+      "view": 8,
+      "ownPixel": [
+        398.25479508056264,
+        348.2290399174543
+      ],
+      "regionAnchorPixel": [
+        403.98239770904183,
+        341.286809142679
+      ],
+      "coordinates": [
+        132.69542678515143,
+        33.24754200839276
+      ],
+      "normalPickPixels": -9.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 2959.9999999999995,
+      "view": 8,
+      "ownPixel": [
+        368.0207264277302,
+        321.0002435261554
+      ],
+      "regionAnchorPixel": [
+        374.24195017293096,
+        314.49667718820274
+      ],
+      "coordinates": [
+        132.69510240878543,
+        33.247786321950805
+      ],
+      "normalPickPixels": -9.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3000.0,
+      "view": 9,
+      "ownPixel": [
+        587.1921850211651,
+        518.5667272333645
+      ],
+      "regionAnchorPixel": [
+        595.4319746308029,
+        512.0585886985064
+      ],
+      "coordinates": [
+        132.69479745254517,
+        33.248055405070815
+      ],
+      "normalPickPixels": -10.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3040.0,
+      "view": 9,
+      "ownPixel": [
+        561.7074448248453,
+        486.11208489518043
+      ],
+      "regionAnchorPixel": [
+        571.8747385814786,
+        479.73822125792503
+      ],
+      "coordinates": [
+        132.69452403094556,
+        33.2483466063537
+      ],
+      "normalPickPixels": -12.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3080.0,
+      "view": 9,
+      "ownPixel": [
+        542.7062287194998,
+        450.6923835743015
+      ],
+      "regionAnchorPixel": [
+        550.7821795269847,
+        445.6894825603813
+      ],
+      "coordinates": [
+        132.69432017001304,
+        33.248664410704144
+      ],
+      "normalPickPixels": -9.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3120.0,
+      "view": 9,
+      "ownPixel": [
+        518.991817216094,
+        418.3502189006981
+      ],
+      "regionAnchorPixel": [
+        529.5812083818018,
+        411.70832197740674
+      ],
+      "coordinates": [
+        132.69406574197978,
+        33.248954600753734
+      ],
+      "normalPickPixels": -12.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3160.0,
+      "view": 9,
+      "ownPixel": [
+        498.4133672139243,
+        384.15060121833756
+      ],
+      "regionAnchorPixel": [
+        508.0781476870179,
+        377.91826470568776
+      ],
+      "coordinates": [
+        132.69384495916336,
+        33.24926145575099
+      ],
+      "normalPickPixels": -11.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3200.0,
+      "view": 9,
+      "ownPixel": [
+        480.06881883418004,
+        348.32197859265153
+      ],
+      "regionAnchorPixel": [
+        486.3719365336001,
+        344.257411301136
+      ],
+      "coordinates": [
+        132.69364814351115,
+        33.24958292578835
+      ],
+      "normalPickPixels": -7.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3239.9999999999995,
+      "view": 9,
+      "ownPixel": [
+        459.1928524833365,
+        314.1033601876766
+      ],
+      "regionAnchorPixel": [
+        464.665725376457,
+        310.5965578984469
+      ],
+      "coordinates": [
+        132.69342416869063,
+        33.24988994906129
+      ],
+      "normalPickPixels": -6.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3280.0,
+      "view": 9,
+      "ownPixel": [
+        438.2534139481978,
+        279.8696408256964
+      ],
+      "regionAnchorPixel": [
+        443.34307869151235,
+        276.6923286281526
+      ],
+      "coordinates": [
+        132.69319951288742,
+        33.250197106746754
+      ],
+      "normalPickPixels": -6.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3320.0,
+      "view": 9,
+      "ownPixel": [
+        417.467604442758,
+        245.62912713727292
+      ],
+      "regionAnchorPixel": [
+        422.13313045725226,
+        242.71659095585346
+      ],
+      "coordinates": [
+        132.69297650534486,
+        33.25050432431352
+      ],
+      "normalPickPixels": -5.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3360.0,
+      "view": 10,
+      "ownPixel": [
+        588.0737643540202,
+        493.887805836553
+      ],
+      "regionAnchorPixel": [
+        592.2519100271165,
+        491.14133560471237
+      ],
+      "coordinates": [
+        132.6927511829462,
+        33.25080905986119
+      ],
+      "normalPickPixels": -5.0,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3400.0,
+      "view": 10,
+      "ownPixel": [
+        567.0479015025222,
+        459.8290616789608
+      ],
+      "regionAnchorPixel": [
+        569.9502004794776,
+        457.8728764504194
+      ],
+      "coordinates": [
+        132.69252559991065,
+        33.25111464439267
+      ],
+      "normalPickPixels": -3.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    },
+    {
+      "chainageMetres": 3440.0,
+      "view": 10,
+      "ownPixel": [
+        543.0036304894328,
+        427.73411369010023
+      ],
+      "regionAnchorPixel": [
+        547.5643860250711,
+        424.6601083315909
+      ],
+      "coordinates": [
+        132.69226763286878,
+        33.251402608220445
+      ],
+      "normalPickPixels": -5.5,
+      "basis": "Own labelled Yodo blue railway, persistent \u00b110px longitudinal flanks; not water or road. Pixel support requires visual reprojected adjudication."
+    }
+  ],
+  "gaps": [
+    {
+      "chainageMetres": 120.0,
+      "view": 0,
+      "anchorPixel": [
+        406.7752930931747,
+        326.0000468660146
+      ],
+      "reason": "No persistent own-blue flanks; preserve uncertainty, interpolate witnessed neighbours"
+    },
+    {
+      "chainageMetres": 760.0,
+      "view": 2,
+      "anchorPixel": [
+        516.5712696686387,
+        324.73142421990633
+      ],
+      "reason": "No persistent own-blue flanks; preserve uncertainty, interpolate witnessed neighbours"
+    },
+    {
+      "chainageMetres": 1360.0,
+      "view": 4,
+      "anchorPixel": [
+        503.01971884816885,
+        424.100268997252
+      ],
+      "reason": "No persistent own-blue flanks; preserve uncertainty, interpolate witnessed neighbours"
+    },
+    {
+      "chainageMetres": 1960.0,
+      "view": 6,
+      "anchorPixel": [
+        567.3926503062248,
+        513.9851239640266
+      ],
+      "reason": "No persistent own-blue flanks; preserve uncertainty, interpolate witnessed neighbours"
+    }
+  ],
+  "retainedStart": [
+    132.708885,
+    33.22825
+  ],
+  "retainedEnd": [
+    132.691935,
+    33.251795
+  ],
+  "retention": "Source interpolation retained where witnessed own-band normal distance is <=2px; concrete farther departures replaced by literal own-pixel supports."
+}

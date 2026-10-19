@@ -1,0 +1,21 @@
+{
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "applied": true,
+  "owningLineEqualsRenderedCandidate": true,
+  "nativeRow": [
+    "jp-WILLER　TRAINS-宮津線",
+    0,
+    0,
+    17,
+    1569,
+    83947,
+    null,
+    null,
+    []
+  ],
+  "physicalTopologyChanged": false,
+  "mainFinalCheck": {
+    "state": "bounded repair composition observed",
+    "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/four-repair-main-batch-20261018.md"
+  }
+}

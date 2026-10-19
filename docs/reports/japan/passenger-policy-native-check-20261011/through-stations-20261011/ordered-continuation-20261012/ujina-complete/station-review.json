@@ -1,0 +1,208 @@
+{
+  "status": "all20station-contexts-reviewed-not-alias-acceptance",
+  "guideline": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "lineID": "jp-広島電鉄-宇品線",
+  "stations": [
+    {
+      "stationIndex": 0,
+      "stationID": "008043",
+      "name": "紙屋町西",
+      "raw": "station-details/00-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "两组相向站台整体同轴；已拟定完整框代表点，纸屋町主干邻线同步仍待检。"
+    },
+    {
+      "stationIndex": 1,
+      "stationID": "008048",
+      "name": "紙屋町東",
+      "raw": "station-details/01-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "两组相向站台整体同轴；旧点在框西南侧，已有未接受候选。"
+    },
+    {
+      "stationIndex": 2,
+      "stationID": "008060",
+      "name": "本通",
+      "raw": "station-details/02-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "广电站台与 Astram 站区/线路重叠；必须辨别自身轨道及乘客站台，不能按蓝色最近点吸附。"
+    },
+    {
+      "stationIndex": 3,
+      "stationID": "008070",
+      "name": "袋町",
+      "raw": "station-details/03-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "路口两侧上下行站台明显错开；需确定代表站台，不取两个纵向中心的平均。"
+    },
+    {
+      "stationIndex": 4,
+      "stationID": "008081",
+      "name": "中電前",
+      "raw": "station-details/04-station-full-frame-z19/basemap.png",
+      "extraWideRaw": "station-details/04-station-wide-z18/basemap.png",
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "z19截到南侧站框；z18补齐。旧点在完整框北侧路段，纵向明显偏移。"
+    },
+    {
+      "stationIndex": 5,
+      "stationID": "008089",
+      "name": "市役所前",
+      "raw": "station-details/05-station-full-frame-z19/basemap.png",
+      "extraWideRaw": "station-details/05-station-wide-z18/basemap.png",
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "z19北侧框被裁切；z18补齐。上下行分居路口两侧，旧点接近南侧框；纵向代表仍待固定。"
+    },
+    {
+      "stationIndex": 6,
+      "stationID": "008093",
+      "name": "鷹野橋",
+      "raw": "station-details/06-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "旧点在站台前的弯道；完整站台在东南方，点位和两侧区间需一起重分。"
+    },
+    {
+      "stationIndex": 7,
+      "stationID": "008099",
+      "name": "日赤病院前",
+      "raw": "station-details/07-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "完整相向站台可见，同一对角走廊；旧点在完整框东南方。"
+    },
+    {
+      "stationIndex": 8,
+      "stationID": "008107",
+      "name": "広電本社前",
+      "raw": "station-details/08-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "路面乘客双站台可见；邻近广电建筑/车场不能用于扩大站框。旧点偏东。"
+    },
+    {
+      "stationIndex": 9,
+      "stationID": "008110",
+      "name": "御幸橋",
+      "raw": "station-details/09-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "完整双站台在旧点南侧；后续御幸桥弯道须用已校准俯瞰图识别。"
+    },
+    {
+      "stationIndex": 10,
+      "stationID": "008116",
+      "name": "皆実町六丁目",
+      "raw": "station-details/10-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "宇品线EW站台与皆实线NS站台分居路口。源码皆实线已有独立点，勿误报成共用点；需实际Main检查站台至fork连续性和各臂对。"
+    },
+    {
+      "stationIndex": 11,
+      "stationID": "008125",
+      "name": "広大附属学校前",
+      "raw": "station-details/11-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "路口两侧上下行站台明显错开；不能用路口空隙作为自动平均站点。"
+    },
+    {
+      "stationIndex": 12,
+      "stationID": "008129",
+      "name": "県病院前",
+      "raw": "station-details/12-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "可见自有西侧站台在旧点北侧，不能把医院入口POI当站台。"
+    },
+    {
+      "stationIndex": 13,
+      "stationID": "008133",
+      "name": "宇品二丁目",
+      "raw": "station-details/13-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "上下行站台前后错开，需固定代表方向/站台，原点还存在横向偏移。"
+    },
+    {
+      "stationIndex": 14,
+      "stationID": "008138",
+      "name": "宇品三丁目",
+      "raw": "station-details/14-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "上下行站台前后错开；487公路盾牌遮挡一部分填色，不能以盾牌或残片确定端帽。"
+    },
+    {
+      "stationIndex": 15,
+      "stationID": "008143",
+      "name": "宇品四丁目",
+      "raw": "station-details/15-station-full-frame-z19/basemap.png",
+      "extraWideRaw": "station-details/15-station-wide-z18/basemap.png",
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "z19北框被裁切；z18补齐两侧范围，需区分真实平台与沿路蓝色长带。"
+    },
+    {
+      "stationIndex": 16,
+      "stationID": "008146",
+      "name": "宇品五丁目",
+      "raw": "station-details/16-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "路口上下行框错开；旧点近南侧框纵向，但横向偏离自有轨道。"
+    },
+    {
+      "stationIndex": 17,
+      "stationID": "008154",
+      "name": "海岸通",
+      "raw": "station-details/17-station-full-frame-z19/basemap.png",
+      "extraWideRaw": null,
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "东侧乘客平台可见；旧点在平台南端附近，框中点与道路文字须分别处理。"
+    },
+    {
+      "stationIndex": 18,
+      "stationID": "008155",
+      "name": "元宇品口",
+      "raw": "station-details/18-station-full-frame-z19/basemap.png",
+      "extraWideRaw": "station-details/18-station-wide-z18/basemap.png",
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "z19东侧框被裁切；z18补齐。西/东两个方向框不同，不把长东框与西框强行平均。"
+    },
+    {
+      "stationIndex": 19,
+      "stationID": "008159",
+      "name": "広島港（宇品）",
+      "raw": "station-details/19-station-full-frame-z19/basemap.png",
+      "extraWideRaw": "station-details/19-station-wide-z18/basemap.png",
+      "pixelReview": "root-reviewed",
+      "acceptance": "pending-own-frame-and-full-adjacent-interval-candidate-check",
+      "finding": "z19/z18站区蓝色与渡轮建筑连通且轨道被遮挡；结合校准俯瞰图仅确认电车屋顶与码头不同，不能把整栋建筑平均或把最后可见轨道当终点。"
+    }
+  ],
+  "productionChanged": false
+}

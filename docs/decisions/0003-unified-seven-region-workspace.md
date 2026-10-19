@@ -1,9 +1,13 @@
 # 0003: Use one seven-region map workspace
 
-- Status: Accepted
+- Status: Partially superseded (region inventory), 2026-10-03
 - Date: 2026-09-01
 - Decision owners: Project maintainers
 - Supersedes: None
+
+The unified workspace decision remains applicable. Its original seven-region inventory
+is historical: the shipping app supports jp/tw/hk/mo/kr; North America is offline.
+See [current native scope](../../ios/README.md) and [features](../../ios/docs/features.md).
 
 ## Context
 

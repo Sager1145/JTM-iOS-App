@@ -1,0 +1,50 @@
+{
+  "intervalIndex": 1,
+  "source": {
+    "intervalIndex": 1,
+    "fromStationID": "008048",
+    "toStationID": "008060",
+    "camera": [
+      34.394185,
+      132.4576775,
+      0.0045
+    ],
+    "sourceCoordinates": [
+      [
+        132.458305,
+        34.394975
+      ],
+      [
+        132.45804,
+        34.39504
+      ],
+      [
+        132.45787,
+        34.39508
+      ],
+      [
+        132.45776,
+        34.39505
+      ],
+      [
+        132.45765,
+        34.39499
+      ],
+      [
+        132.45747,
+        34.39452
+      ],
+      [
+        132.45712,
+        34.39349
+      ],
+      [
+        132.45705,
+        34.39329
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "40 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:3;rides:0;budgetDrops:0;vertices:382;camera:17.50;lod:16.52;backbones:0;networkStations:10;distance:994.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:34.394185;centerLon:132.457677;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:45903.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:34.394185;centerLon:132.457677;distance:994.9;viewportWidth:1024.0;viewportHeight:768.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0"
+}

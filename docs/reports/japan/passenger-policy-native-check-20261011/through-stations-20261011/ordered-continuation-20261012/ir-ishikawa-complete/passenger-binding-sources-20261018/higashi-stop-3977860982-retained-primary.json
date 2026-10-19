@@ -1,0 +1,27 @@
+{
+  "source": "https://api.openstreetmap.org/api/0.6/way/834273931/full.json",
+  "retainedSourceFile": "../kanazawa-own-source/identified-osm-live.json",
+  "element": {
+    "type": "node",
+    "id": 3977860982,
+    "lat": 36.5935457,
+    "lon": 136.6697151,
+    "timestamp": "2024-03-14T15:49:27Z",
+    "version": 3,
+    "changeset": 148649129,
+    "user": "flierfy",
+    "uid": 445671,
+    "tags": {
+      "name": "東金沢",
+      "name:en": "Higashi-Kanazawa",
+      "name:ja": "東金沢",
+      "name:ko": "히가시카나자와",
+      "public_transport": "stop_position",
+      "railway": "stop",
+      "train": "yes"
+    }
+  },
+  "wayID": 834273931,
+  "wayVersion": 5,
+  "wayNodeIndex": 40
+}

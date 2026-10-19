@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "611040A2-BDD5-466D-940B-AF27CB80F983",
+  "message" : "34\/34 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "hokuriku-eastern-arc-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T04:42:23Z"
+}

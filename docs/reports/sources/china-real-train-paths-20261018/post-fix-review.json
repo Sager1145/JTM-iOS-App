@@ -1,0 +1,926 @@
+{
+  "schema": "china-real-train-source-anchor-review/1",
+  "nativePhase": "completed",
+  "rows": 176,
+  "nativeSession": "railway-sources/local/china/comparisons/real-trains-20261018/native-source-anchor-final-session",
+  "findingCounts": [
+    {
+      "severity": "review",
+      "code": "physical_intervals_unproven",
+      "count": 474
+    },
+    {
+      "severity": "review",
+      "code": "route_unavailable",
+      "count": 88
+    },
+    {
+      "severity": "review",
+      "code": "route_partial",
+      "count": 64
+    },
+    {
+      "severity": "review",
+      "code": "physical_intervals_unavailable",
+      "count": 60
+    }
+  ],
+  "selectedDistinctLineKinds": {
+    "conventional": 37,
+    "highspeed": 54
+  },
+  "knownMalformedBefore": 71,
+  "retainedFormerMalformedSites": 71,
+  "missingFormerMalformedSites": [],
+  "retainedFormerMalformedSitesWithIdenticalSourceGeometry": 21,
+  "retainedFormerMalformedSitesWithChangedSourceGeometry": 50,
+  "repairedEndpointIdentities": [
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      3,
+      "CN-OSM-N1588514426",
+      "CN-OSM-N1588514327"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      4,
+      "CN-OSM-N1588514327",
+      "CN-OSM-N1588514522"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      5,
+      "CN-OSM-N1588514522",
+      "CN-OSM-N1588514366"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      6,
+      "CN-OSM-N1588514366",
+      "CN-OSM-N3328325346"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      9,
+      "CN-OSM-N1588514399",
+      "CN-OSM-N1588514386"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      14,
+      "CN-OSM-N2092190000",
+      "CN-OSM-N10651628398"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      15,
+      "CN-OSM-N10651628398",
+      "CN-OSM-N2092189953"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      16,
+      "CN-OSM-N2092189953",
+      "CN-OSM-N2092190042"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      17,
+      "CN-OSM-N2092190042",
+      "CN-OSM-N2092189927"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      18,
+      "CN-OSM-N2092189927",
+      "CN-OSM-N2092189933"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      19,
+      "CN-OSM-N10914009270",
+      "CN-OSM-N2092189940"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      20,
+      "CN-OSM-N2092189940",
+      "CN-OSM-N2092190162"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      21,
+      "CN-OSM-N2092190162",
+      "CN-OSM-N2092190100"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      22,
+      "CN-OSM-N2092190100",
+      "CN-OSM-N2092190123"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      23,
+      "CN-OSM-N2092190123",
+      "CN-OSM-N2092189988"
+    ],
+    [
+      "CN-REAL-5619-20261018-forced-known-stops",
+      24,
+      "CN-OSM-N2092189988",
+      "CN-12306-POW"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      0,
+      "CN-12306-POW",
+      "CN-OSM-N2092189988"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      1,
+      "CN-OSM-N2092189988",
+      "CN-OSM-N2092190123"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      2,
+      "CN-OSM-N2092190123",
+      "CN-OSM-N2092190100"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      3,
+      "CN-OSM-N2092190100",
+      "CN-OSM-N2092190162"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      4,
+      "CN-OSM-N2092190162",
+      "CN-OSM-N2092189940"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      5,
+      "CN-OSM-N2092189940",
+      "CN-OSM-N2092189933"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      6,
+      "CN-OSM-N10914009270",
+      "CN-OSM-N2092189927"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      7,
+      "CN-OSM-N2092189927",
+      "CN-OSM-N2092190042"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      8,
+      "CN-OSM-N2092190042",
+      "CN-OSM-N2092189953"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      9,
+      "CN-OSM-N2092189953",
+      "CN-OSM-N10651628398"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      10,
+      "CN-OSM-N10651628398",
+      "CN-OSM-N2092190000"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      15,
+      "CN-OSM-N1588514386",
+      "CN-OSM-N1588514399"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      18,
+      "CN-OSM-N3328325346",
+      "CN-OSM-N1588514366"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      19,
+      "CN-OSM-N1588514366",
+      "CN-OSM-N1588514522"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      20,
+      "CN-OSM-N1588514522",
+      "CN-OSM-N1588514327"
+    ],
+    [
+      "CN-REAL-5620-20261018-forced-known-stops",
+      21,
+      "CN-OSM-N1588514327",
+      "CN-OSM-N1588514426"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      0,
+      "CN-12306-JGX",
+      "CN-OSM-N1252233945"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      1,
+      "CN-OSM-N1252233945",
+      "CN-OSM-N1252233939"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      2,
+      "CN-OSM-N1252233939",
+      "CN-12306-XYX"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      3,
+      "CN-12306-XYX",
+      "CN-OSM-N1252233958"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      4,
+      "CN-OSM-N1252233958",
+      "CN-OSM-N1252233951"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      5,
+      "CN-OSM-N1252233951",
+      "CN-OSM-N1252233943"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      6,
+      "CN-OSM-N1252233943",
+      "CN-OSM-N1252233969"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      7,
+      "CN-OSM-N1252233969",
+      "CN-OSM-N1252233977"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      8,
+      "CN-OSM-N1252233977",
+      "CN-OSM-N9129186261"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      9,
+      "CN-OSM-N9129186261",
+      "CN-12306-LXX"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      11,
+      "CN-12306-XPX",
+      "CN-OSM-N9129186260"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      12,
+      "CN-OSM-N9129186260",
+      "CN-OSM-N2662698150"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      13,
+      "CN-OSM-N2662698150",
+      "CN-OSM-N1252233949"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      14,
+      "CN-OSM-N1252233949",
+      "CN-OSM-N9129186259"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      15,
+      "CN-OSM-N9129186259",
+      "CN-12306-TXX"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      16,
+      "CN-12306-TXX",
+      "CN-OSM-N6316810853"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      17,
+      "CN-OSM-N6316810853",
+      "CN-12306-WVX"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      18,
+      "CN-12306-WVX",
+      "CN-OSM-N1252110339"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      19,
+      "CN-OSM-N1252110339",
+      "CN-OSM-N1252171808"
+    ],
+    [
+      "CN-REAL-6245-20261018-forced-known-stops",
+      20,
+      "CN-OSM-N1252171808",
+      "CN-12306-JTX"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      3,
+      "CN-12306-JTX",
+      "CN-OSM-N1252171808"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      4,
+      "CN-OSM-N1252171808",
+      "CN-OSM-N1252110339"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      5,
+      "CN-OSM-N1252110339",
+      "CN-12306-WVX"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      6,
+      "CN-12306-WVX",
+      "CN-OSM-N6316810853"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      7,
+      "CN-OSM-N6316810853",
+      "CN-12306-TXX"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      8,
+      "CN-12306-TXX",
+      "CN-OSM-N9129186259"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      9,
+      "CN-OSM-N9129186259",
+      "CN-OSM-N1252233949"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      10,
+      "CN-OSM-N1252233949",
+      "CN-OSM-N2662698150"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      11,
+      "CN-OSM-N2662698150",
+      "CN-OSM-N9129186260"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      12,
+      "CN-OSM-N9129186260",
+      "CN-12306-XPX"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      14,
+      "CN-12306-LXX",
+      "CN-OSM-N9129186261"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      15,
+      "CN-OSM-N9129186261",
+      "CN-OSM-N1252233969"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      16,
+      "CN-OSM-N1252233969",
+      "CN-OSM-N1252233943"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      17,
+      "CN-OSM-N1252233943",
+      "CN-OSM-N1252233951"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      18,
+      "CN-OSM-N1252233951",
+      "CN-OSM-N1252233958"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      19,
+      "CN-OSM-N1252233958",
+      "CN-12306-XYX"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      20,
+      "CN-12306-XYX",
+      "CN-OSM-N1252233939"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      21,
+      "CN-OSM-N1252233939",
+      "CN-OSM-N1252233945"
+    ],
+    [
+      "CN-REAL-6246-20261018-forced-known-stops",
+      22,
+      "CN-OSM-N1252233945",
+      "CN-12306-JGX"
+    ]
+  ],
+  "formerMetroSections": [
+    {
+      "train": "D271",
+      "sectionIndex": 10,
+      "parts": 0,
+      "lineIDs": []
+    },
+    {
+      "train": "C293",
+      "sectionIndex": 0,
+      "parts": 0,
+      "lineIDs": []
+    }
+  ],
+  "coverageChanges": [
+    {
+      "id": "CN-REAL-G2087-20261018-forced-known-stops",
+      "expected": 35,
+      "beforeGaps": 2,
+      "afterGaps": 0,
+      "beforeReportedResolved": 21,
+      "afterReportedResolved": 22,
+      "beforeReturnedGeometrySections": 23,
+      "afterReturnedGeometrySections": 22,
+      "removedGeometrySectionIndices": [
+        27
+      ],
+      "addedGeometrySectionIndices": []
+    },
+    {
+      "id": "CN-REAL-G8002-20261018-forced-known-stops",
+      "expected": 10,
+      "beforeGaps": 1,
+      "afterGaps": 2,
+      "beforeReportedResolved": 8,
+      "afterReportedResolved": 7,
+      "beforeReturnedGeometrySections": 9,
+      "afterReturnedGeometrySections": 9,
+      "removedGeometrySectionIndices": [],
+      "addedGeometrySectionIndices": []
+    },
+    {
+      "id": "CN-REAL-D271-20261018-forced-known-stops",
+      "expected": 14,
+      "beforeGaps": 2,
+      "afterGaps": 0,
+      "beforeReportedResolved": 4,
+      "afterReportedResolved": 5,
+      "beforeReturnedGeometrySections": 6,
+      "afterReturnedGeometrySections": 5,
+      "removedGeometrySectionIndices": [
+        10
+      ],
+      "addedGeometrySectionIndices": []
+    },
+    {
+      "id": "CN-REAL-C293-20261018-forced-known-stops",
+      "expected": 5,
+      "beforeGaps": 1,
+      "afterGaps": 0,
+      "beforeReportedResolved": 3,
+      "afterReportedResolved": 3,
+      "beforeReturnedGeometrySections": 4,
+      "afterReturnedGeometrySections": 3,
+      "removedGeometrySectionIndices": [
+        0
+      ],
+      "addedGeometrySectionIndices": []
+    }
+  ],
+  "G1SourceCoordinatesUnchanged": {
+    "endpoint-only": false,
+    "forced-known-stops": false
+  },
+  "aliasAgreement": {
+    "endpoint-only": true,
+    "forced-known-stops": true
+  },
+  "HKForcedReportedResolved": 41,
+  "HKForcedExpected": 97,
+  "formerMetroLineGeometryEdgeMatchesAtFiveDecimalGrid": [],
+  "harbinReviewed23NodePathMatches": [
+    {
+      "trainID": "CN-REAL-G101-20261018-forced-known-stops",
+      "sectionIndex": 3,
+      "partIndex": 0,
+      "vertexOffset": 80
+    }
+  ],
+  "G6045FirstFourSectionIndices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "G6045FirstFourSelectedLineIDs": [
+    "cn-guangshengan-hsr"
+  ],
+  "G1SourceGeometryChangeExplanation": "Endpoint-only keeps every3023 prior interior vertex and adds one recorded station anchor at each end (3025). Each forced leg changes only station-end vertices, preserving its common interior sequence. Available source length changes1309.151 to1309.608km; do not claim byte-identical geometry after anchor enforcement.",
+  "G1RecordedEndpointNodeChecks": [
+    {
+      "sectionIndex": 0,
+      "side": "from",
+      "code": "CN-12306-VNP",
+      "sourceNodeID": 9560692743,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        116.37276,
+        39.86355
+      ]
+    },
+    {
+      "sectionIndex": 0,
+      "side": "to",
+      "code": "CN-12306-CBP",
+      "sourceNodeID": 4558029171,
+      "version": 2,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        116.76282,
+        38.31031
+      ]
+    },
+    {
+      "sectionIndex": 1,
+      "side": "from",
+      "code": "CN-12306-CBP",
+      "sourceNodeID": 4558029171,
+      "version": 2,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        116.76282,
+        38.31031
+      ]
+    },
+    {
+      "sectionIndex": 1,
+      "side": "to",
+      "code": "CN-12306-DIP",
+      "sourceNodeID": 4558645213,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        116.45702,
+        37.40687
+      ]
+    },
+    {
+      "sectionIndex": 2,
+      "side": "from",
+      "code": "CN-12306-DIP",
+      "sourceNodeID": 4558645213,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        116.45702,
+        37.40687
+      ]
+    },
+    {
+      "sectionIndex": 2,
+      "side": "to",
+      "code": "CN-12306-QAK",
+      "sourceNodeID": 12700720890,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        117.06376,
+        35.55653
+      ]
+    },
+    {
+      "sectionIndex": 3,
+      "side": "from",
+      "code": "CN-12306-QAK",
+      "sourceNodeID": 12700720890,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        117.06376,
+        35.55653
+      ]
+    },
+    {
+      "sectionIndex": 3,
+      "side": "to",
+      "code": "CN-12306-NKH",
+      "sourceNodeID": 1693620929,
+      "version": 4,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        118.79465,
+        31.97243
+      ]
+    },
+    {
+      "sectionIndex": 4,
+      "side": "from",
+      "code": "CN-12306-NKH",
+      "sourceNodeID": 1693620929,
+      "version": 4,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        118.79465,
+        31.97243
+      ]
+    },
+    {
+      "sectionIndex": 4,
+      "side": "to",
+      "code": "CN-12306-OHH",
+      "sourceNodeID": 12421891271,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        120.63666,
+        31.42496
+      ]
+    },
+    {
+      "sectionIndex": 5,
+      "side": "from",
+      "code": "CN-12306-OHH",
+      "sourceNodeID": 12421891271,
+      "version": 1,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        120.63666,
+        31.42496
+      ]
+    },
+    {
+      "sectionIndex": 5,
+      "side": "to",
+      "code": "CN-12306-AOH",
+      "sourceNodeID": 2587514169,
+      "version": 7,
+      "publishedLineID": "cn-osm-relation-356778",
+      "coordinate": [
+        121.3169,
+        31.19608
+      ]
+    }
+  ],
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "fallbackGraphCacheMaximumNodes": "not-applicable",
+    "fallbackGraphCacheMode": "standard",
+    "journeyInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+    "rail/cn": "cn:5b2ec16da0c1236c70769dd804c4ec2fb92ba7aa8f3998dee7f3fe6c5c224135"
+  },
+  "completedAt": "2026-10-18T22:57:35Z",
+  "state": "evidenceReady",
+  "remainingReviews": 686,
+  "structuralFailures": 0,
+  "repairedMetadataStillGeometryMatchedAndIntervalsUnproven": true,
+  "geometryCoverageBeforeAfter": {
+    "endpoint-only": {
+      "before": {
+        "returnedGeometrySections": 12,
+        "physicalGapEntries": 0,
+        "physicalGapSections": 0,
+        "reportedResolvedSections": 12
+      },
+      "after": {
+        "returnedGeometrySections": 12,
+        "physicalGapEntries": 0,
+        "physicalGapSections": 0,
+        "reportedResolvedSections": 12
+      }
+    },
+    "forced-known-stops": {
+      "before": {
+        "returnedGeometrySections": 525,
+        "physicalGapEntries": 45,
+        "physicalGapSections": 45,
+        "reportedResolvedSections": 480
+      },
+      "after": {
+        "returnedGeometrySections": 522,
+        "physicalGapEntries": 41,
+        "physicalGapSections": 41,
+        "reportedResolvedSections": 481
+      }
+    }
+  },
+  "reportedResolvedMetric": "Native drawn unique section indices minus indices bearing physical gaps; not equivalent to original API ok leg count. In this batch gap entry indices are distinct and drawn, so525−45=480 before,522−41=481 after. Geometry returned actually decreases by3; no claim of one additional returned leg.",
+  "G6045ControlTrainID": "CN-REAL-G6045-20261018-forced-known-stops",
+  "actualOutputReview": {
+    "reviewer": "cn_station_anchor_repair",
+    "method": "Read-only recomputation against completed raw reports, bundled station identities, original source SQLite, and original metro edges; no solver/build/test run.",
+    "retainedFormerMalformedSitesVerified": 71,
+    "endpointNameAndCodeJoinsVerified": 142,
+    "G1SourceEndpointNodeVersionsVerified": 12,
+    "blockingFindings": []
+  },
+  "currentFullUniqueSummary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 73,
+        "cases": 86,
+        "resolvedSections": 73,
+        "resolvedSectionsKnownSubtotal": 73,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 73,
+        "returnedGeometrySectionsKnownSubtotal": 73,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 73,
+        "referencedStopObservations": 826,
+        "unreferencedStopObservations": 127,
+        "completeCasesWithStopOver2Km": 44
+      },
+      "railmap": {
+        "complete": 12,
+        "cases": 86,
+        "resolvedSections": 12,
+        "resolvedSectionsKnownSubtotal": 12,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 12,
+        "returnedGeometrySectionsKnownSubtotal": 12,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 12,
+        "referencedStopObservations": 100,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 47,
+        "cases": 86,
+        "resolvedSections": 717,
+        "resolvedSectionsKnownSubtotal": 717,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 717,
+        "returnedGeometrySectionsKnownSubtotal": 717,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 47,
+        "referencedStopObservations": 444,
+        "unreferencedStopObservations": 40,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 12,
+        "cases": 86,
+        "resolvedSections": 465,
+        "resolvedSectionsKnownSubtotal": 465,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 505,
+        "returnedGeometrySectionsKnownSubtotal": 505,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 40,
+        "physicalGapEntriesKnownSubtotal": 40,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 12,
+        "referencedStopObservations": 100,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "currentAll88Summary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 75,
+        "cases": 88,
+        "resolvedSections": 75,
+        "resolvedSectionsKnownSubtotal": 75,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 75,
+        "returnedGeometrySectionsKnownSubtotal": 75,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 75,
+        "referencedStopObservations": 863,
+        "unreferencedStopObservations": 131,
+        "completeCasesWithStopOver2Km": 46
+      },
+      "railmap": {
+        "complete": 12,
+        "cases": 88,
+        "resolvedSections": 12,
+        "resolvedSectionsKnownSubtotal": 12,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 12,
+        "returnedGeometrySectionsKnownSubtotal": 12,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 12,
+        "referencedStopObservations": 100,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 49,
+        "cases": 88,
+        "resolvedSections": 756,
+        "resolvedSectionsKnownSubtotal": 756,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 756,
+        "returnedGeometrySectionsKnownSubtotal": 756,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 49,
+        "referencedStopObservations": 481,
+        "unreferencedStopObservations": 44,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 12,
+        "cases": 88,
+        "resolvedSections": 481,
+        "resolvedSectionsKnownSubtotal": 481,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 522,
+        "returnedGeometrySectionsKnownSubtotal": 522,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 41,
+        "physicalGapEntriesKnownSubtotal": 41,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 12,
+        "referencedStopObservations": 100,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  }
+}

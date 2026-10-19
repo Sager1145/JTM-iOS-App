@@ -1,0 +1,1120 @@
+{
+  "status": "READ_ONLY_ADJUDICATION / WARNING station midpoint occluded and physical face numbering unresolved",
+  "scope": "Exact Apple raw pixels, source topology and camera arithmetic; no production edits, native candidate acceptance or operational track-number proof",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 35.19893000000002,
+    "longitude": 136.84575500000022,
+    "mapPointsPerPoint": 3.9999999925494194,
+    "metresPerPoint": 0.4863187446689965,
+    "pitch": 0,
+    "rectHeight": 2615.9999999701977,
+    "rectWidth": 3996.0000000298023,
+    "rectX": 236255320.68080372,
+    "rectY": 106144092.02396742,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.00000000268723
+  },
+  "pixelConvention": "Integer sample coordinates identify original999×654pixel; coordinate conversion uses viewport linear mapRect. Pixel-centre half-pixel uncertainty retained.",
+  "exactSameCameraCaptures": [
+    "tsushima-sukaguchi-z18-before",
+    "meitetsu-main-17-view2-z18-before",
+    "meitetsu-main-18-view0-z18-before"
+  ],
+  "visuallyReviewedCompleteAdjacentRawViews": [
+    "tsushima-sukaguchi-z18-before",
+    "tsushima-sukaguchi-interval0-view1-z18-before",
+    "tsushima-sukaguchi-interval0-view2-z18-before",
+    "tsushima-sukaguchi-interval0-view3-z18-before",
+    "tsushima-sukaguchi-interval0-view4-z18-before",
+    "tsushima-sukaguchi-interval0-view5-z18-before",
+    "tsushima-sukaguchi-interval0-view6-z18-before",
+    "meitetsu-marunouchi-z18-before",
+    "meitetsu-main-17-view1-z18-before",
+    "meitetsu-main-17-view2-z18-before",
+    "meitetsu-main-18-view0-z18-before",
+    "meitetsu-main-18-view1-z18-before",
+    "meitetsu-main-18-view2-z18-before",
+    "meitetsu-main-18-view3-z18-before"
+  ],
+  "source": {
+    "station": [
+      "005352",
+      "須ヶ口",
+      136.845755,
+      35.19893,
+      "Sukaguchi",
+      1
+    ],
+    "stationPixel": [
+      499.4999999590218,
+      327.0
+    ],
+    "reverseSharedThreeExact": true,
+    "sharedThree": [
+      [
+        136.845755,
+        35.19893
+      ],
+      [
+        136.84497,
+        35.19937
+      ],
+      [
+        136.84472,
+        35.19948
+      ]
+    ],
+    "sharedThreePixels": [
+      [
+        499.4999999590218,
+        327.0
+      ],
+      [
+        353.16539372985426,
+        226.62479517867058
+      ],
+      [
+        306.562015955844,
+        201.53090901529902
+      ]
+    ],
+    "intervalKm": [
+      0.695,
+      0.746,
+      1.935
+    ],
+    "realExistingSourceDirection": "reverse Main#18 (Nagoya/Shinkawabashi→Sukaguchi) then Tsushima#0 (Sukaguchi→Jimokuji); first outgoing Tsushima vector equals incoming reverseMain18 vector, so source station continuation is straight, not a reversal.",
+    "limit": "Equality proves existing represented connectivity, not exact Apple rail/switch coordinates or individual operational track usage."
+  },
+  "ownRailIdentity": {
+    "tsushimaWestBranch": [
+      {
+        "pixel": [
+          100,
+          140
+        ],
+        "rgb": [
+          35,
+          48,
+          64
+        ],
+        "coordinate": [
+          136.84361191499733,
+          35.199749722438604
+        ]
+      },
+      {
+        "pixel": [
+          200,
+          159
+        ],
+        "rgb": [
+          36,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.8441483568003,
+          35.199666435509585
+        ]
+      },
+      {
+        "pixel": [
+          275,
+          185
+        ],
+        "rgb": [
+          45,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.84455068815254,
+          35.19955246378411
+        ]
+      },
+      {
+        "pixel": [
+          300,
+          197
+        ],
+        "rgb": [
+          43,
+          59,
+          78
+        ],
+        "coordinate": [
+          136.84468479860328,
+          35.19949986139533
+        ]
+      },
+      {
+        "pixel": [
+          320,
+          206
+        ],
+        "rgb": [
+          40,
+          55,
+          73
+        ],
+        "coordinate": [
+          136.84479208696388,
+          35.19946040958139
+        ]
+      },
+      {
+        "pixel": [
+          340,
+          214
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.84489937532447,
+          35.19942534128625
+        ]
+      },
+      {
+        "pixel": [
+          350,
+          219
+        ],
+        "rgb": [
+          38,
+          52,
+          70
+        ],
+        "coordinate": [
+          136.84495301950477,
+          35.19940342359409
+        ]
+      },
+      {
+        "pixel": [
+          360,
+          223
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.84500666368507,
+          35.199385889436115
+        ]
+      },
+      {
+        "pixel": [
+          370,
+          228
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.84506030786537,
+          35.19936397173332
+        ]
+      },
+      {
+        "pixel": [
+          380,
+          232
+        ],
+        "rgb": [
+          46,
+          63,
+          83
+        ],
+        "coordinate": [
+          136.84511395204566,
+          35.19934643756682
+        ]
+      }
+    ],
+    "mainNorthwestBranch": [
+      {
+        "pixel": [
+          275,
+          147
+        ],
+        "rgb": [
+          26,
+          37,
+          50
+        ],
+        "coordinate": [
+          136.84455068815254,
+          35.19971903779049
+        ]
+      },
+      {
+        "pixel": [
+          300,
+          168
+        ],
+        "rgb": [
+          32,
+          45,
+          60
+        ],
+        "coordinate": [
+          136.84468479860328,
+          35.19962698377657
+        ]
+      },
+      {
+        "pixel": [
+          340,
+          198
+        ],
+        "rgb": [
+          37,
+          51,
+          69
+        ],
+        "coordinate": [
+          136.84489937532447,
+          35.1994954778614
+        ]
+      },
+      {
+        "pixel": [
+          360,
+          214
+        ],
+        "rgb": [
+          35,
+          48,
+          64
+        ],
+        "coordinate": [
+          136.84500666368507,
+          35.19942534128625
+        ]
+      },
+      {
+        "pixel": [
+          370,
+          221
+        ],
+        "rgb": [
+          37,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.84506030786537,
+          35.19939465651557
+        ]
+      },
+      {
+        "pixel": [
+          380,
+          229
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84511395204566,
+          35.199359588192046
+        ]
+      }
+    ],
+    "commonStationGlyph": [
+      {
+        "pixel": [
+          390,
+          237
+        ],
+        "rgb": [
+          43,
+          58,
+          77
+        ],
+        "coordinate": [
+          136.84516759622596,
+          35.19932451985337
+        ]
+      },
+      {
+        "pixel": [
+          400,
+          245
+        ],
+        "rgb": [
+          29,
+          40,
+          54
+        ],
+        "coordinate": [
+          136.84522124040626,
+          35.19928945149956
+        ]
+      },
+      {
+        "pixel": [
+          410,
+          251
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84527488458656,
+          35.199263150224255
+        ]
+      },
+      {
+        "pixel": [
+          555,
+          351
+        ],
+        "rgb": [
+          20,
+          28,
+          42
+        ],
+        "coordinate": [
+          136.84605272520093,
+          35.198824794382126
+        ]
+      },
+      {
+        "pixel": [
+          630,
+          404
+        ],
+        "rgb": [
+          26,
+          37,
+          57
+        ],
+        "coordinate": [
+          136.84645505655317,
+          35.19859246482662
+        ]
+      },
+      {
+        "pixel": [
+          640,
+          412
+        ],
+        "rgb": [
+          26,
+          37,
+          57
+        ],
+        "coordinate": [
+          136.84650870073347,
+          35.19855739615675
+        ]
+      }
+    ],
+    "convergenceBoundPixels": [
+      385,
+      232,
+      410,
+      252
+    ],
+    "convergenceNote": "Both distinct sleeper glyphs approach one glyph. Exact physical switch coordinates cannot be certified from cartographic merge; common display supports safely begin downstream near410,251.",
+    "oldSharedBoundaryNote": "Source (306.56,201.53) lies near Tsushima branch before visible Main/Tsushima convergence. Keep physical reverse-shared topology, but do not retain that point as start of Apple-aligned common display span.",
+    "railStylingNote": "These are single thin railway glyphs with transverse sleepers. Broad road/corridor casing edges are not a second railway and must not be averaged."
+  },
+  "station": {
+    "oldSourcePixelRGBAt500327": [
+      104,
+      128,
+      178
+    ],
+    "oldSourceNearbyBlack": {
+      "pixel": [
+        500,
+        315
+      ],
+      "rgb": [
+        38,
+        51,
+        76
+      ],
+      "warning": "Label region: do not use this isolated dark pixel alone as rail proof."
+    },
+    "railProjectionAxis": {
+      "originPixel": [
+        555,
+        351
+      ],
+      "direction": [
+        0.812439824754466,
+        0.5830450507061461
+      ],
+      "normal": [
+        -0.5830450507061461,
+        0.812439824754466
+      ],
+      "supports": [
+        [
+          555,
+          351
+        ],
+        [
+          630,
+          404
+        ],
+        [
+          640,
+          412
+        ]
+      ],
+      "warning": "Approximate local straight axis behind building, not a traced visible black midpoint."
+    },
+    "identifiedNarrowOpposingFaces": [
+      {
+        "side": "north",
+        "fillRGB": [
+          104,
+          128,
+          178
+        ],
+        "manualBoundPixelRect": [
+          435,
+          250,
+          745,
+          490
+        ],
+        "normalStripPixels": [
+          -34,
+          -13
+        ],
+        "northwestExtremeFillPixel": [
+          466,
+          271
+        ],
+        "southeastExtremeFillPixel": [
+          732,
+          462
+        ],
+        "longitudinalSpanPixels": [
+          -118.95074845963916,
+          208.5198496099227
+        ],
+        "projectedEndPixels": [
+          [
+            458.3596747670382,
+            281.64635483281563
+          ],
+          [
+            724.4098300749132,
+            472.57646628905536
+          ]
+        ],
+        "midpointNormalProjectionPixel": [
+          591.3847524209757,
+          377.1114105609355
+        ],
+        "midpointCoordinateCandidate": [
+          136.84624790822278,
+          35.19871033309896
+        ],
+        "status": "WARNING: approximate straight-axis interpolation behind occluding transverse building; no physical platform-number identity proven"
+      },
+      {
+        "side": "south",
+        "fillRGB": [
+          104,
+          128,
+          178
+        ],
+        "manualBoundPixelRect": [
+          435,
+          250,
+          745,
+          490
+        ],
+        "normalStripPixels": [
+          9,
+          29
+        ],
+        "northwestExtremeFillPixel": [
+          451,
+          294
+        ],
+        "southeastExtremeFillPixel": [
+          720,
+          483
+        ],
+        "longitudinalSpanPixels": [
+          -117.7273096647148,
+          211.0145177776982
+        ],
+        "projectedEndPixels": [
+          [
+            459.35364516718437,
+            282.3596747670382
+          ],
+          [
+            726.4365978439613,
+            474.030970217431
+          ]
+        ],
+        "midpointNormalProjectionPixel": [
+          592.8951215055728,
+          378.1953224922346
+        ],
+        "midpointCoordinateCandidate": [
+          136.84625601047395,
+          35.198705581688046
+        ],
+        "status": "WARNING: approximate straight-axis interpolation behind occluding transverse building; no physical platform-number identity proven"
+      }
+    ],
+    "faceNote": "Continuous narrow rounded blue fills northwest and southeast flank same railway glyph. Transverse blue station building joins/occludes their middle; broad building centroid is not used. Both face chainage midpoints agree within2px on interpolated glyph. Detailed physical directional platform group not readable from Apple map.",
+    "candidatePixelBound": [
+      588,
+      374,
+      596,
+      381
+    ],
+    "candidateCoordinateAt592378": [
+      136.84625120866804,
+      35.198706437899155
+    ],
+    "notAcceptance": "Root must inspect this bounded candidate against same-viewactualMain and own-frame requirement before apply. Theold500327 pixel is actual narrowfill, not literal black rail; theshort x440s→570s face interpretation truncates visible southeast continuation."
+  },
+  "relatedStationNormalChecks": [
+    {
+      "capture": "meitetsu-shinkawabashi-z18-before",
+      "candidatePixel": [
+        454,
+        269
+      ],
+      "candidateRGB": [
+        65,
+        89,
+        136
+      ],
+      "labelFreeOwnGlyphSamples": [
+        {
+          "pixel": [
+            380,
+            234
+          ],
+          "rgb": [
+            37,
+            52,
+            80
+          ]
+        },
+        {
+          "pixel": [
+            390,
+            241
+          ],
+          "rgb": [
+            18,
+            25,
+            38
+          ]
+        },
+        {
+          "pixel": [
+            400,
+            247
+          ],
+          "rgb": [
+            28,
+            40,
+            61
+          ]
+        },
+        {
+          "pixel": [
+            405,
+            251
+          ],
+          "rgb": [
+            28,
+            40,
+            63
+          ]
+        },
+        {
+          "pixel": [
+            540,
+            326
+          ],
+          "rgb": [
+            35,
+            49,
+            76
+          ]
+        },
+        {
+          "pixel": [
+            550,
+            330
+          ],
+          "rgb": [
+            38,
+            53,
+            82
+          ]
+        },
+        {
+          "pixel": [
+            555,
+            332
+          ],
+          "rgb": [
+            24,
+            34,
+            52
+          ]
+        },
+        {
+          "pixel": [
+            560,
+            335
+          ],
+          "rgb": [
+            19,
+            27,
+            41
+          ]
+        }
+      ],
+      "adjudication": "REJECT normal proof: pick is casing, locally inferred own glyph at x454 about y277–281; label masks the middle.",
+      "rootReviewCandidatePixel": [
+        454,
+        280
+      ],
+      "rootReviewCandidateCoordinate": [
+        136.85237591897993,
+        35.195456036607474
+      ],
+      "candidateLimit": "Flanksupported normal candidate under label; Root must review frame chainage and native candidate; coordinate is not an accepted physical anchor."
+    },
+    {
+      "capture": "meitetsu-marunouchi-z18-before",
+      "candidatePixel": [
+        474,
+        231
+      ],
+      "candidateRGB": [
+        118,
+        152,
+        208
+      ],
+      "labelFreeOwnGlyphSamples": [
+        {
+          "pixel": [
+            437,
+            140
+          ],
+          "rgb": [
+            22,
+            31,
+            47
+          ]
+        },
+        {
+          "pixel": [
+            439,
+            145
+          ],
+          "rgb": [
+            31,
+            44,
+            68
+          ]
+        },
+        {
+          "pixel": [
+            441,
+            150
+          ],
+          "rgb": [
+            38,
+            54,
+            83
+          ]
+        },
+        {
+          "pixel": [
+            493,
+            290
+          ],
+          "rgb": [
+            38,
+            53,
+            81
+          ]
+        },
+        {
+          "pixel": [
+            497,
+            300
+          ],
+          "rgb": [
+            20,
+            29,
+            43
+          ]
+        },
+        {
+          "pixel": [
+            500,
+            310
+          ],
+          "rgb": [
+            21,
+            29,
+            44
+          ]
+        },
+        {
+          "pixel": [
+            504,
+            320
+          ],
+          "rgb": [
+            34,
+            48,
+            74
+          ]
+        },
+        {
+          "pixel": [
+            508,
+            330
+          ],
+          "rgb": [
+            34,
+            47,
+            64
+          ]
+        }
+      ],
+      "adjudication": "WARNING: label masks pick. Clear upper/lower flanks imply own glyph at y231 about x471±1; pick has about3px transverse residual, so reproject normally.",
+      "rootReviewCandidatePixel": [
+        471,
+        231
+      ],
+      "rootReviewCandidateCoordinate": [
+        136.84198711408624,
+        35.204625793777495
+      ],
+      "candidateLimit": "Flanksupported normal candidate under label; Root must review frame chainage and native candidate; coordinate is not an accepted physical anchor."
+    },
+    {
+      "capture": "meitetsu-futatsuiri-z18-before",
+      "candidatePixel": [
+        482,
+        309
+      ],
+      "candidateRGB": [
+        42,
+        56,
+        82
+      ],
+      "labelFreeOwnGlyphSamples": [
+        {
+          "pixel": [
+            350,
+            309
+          ],
+          "rgb": [
+            29,
+            41,
+            63
+          ]
+        },
+        {
+          "pixel": [
+            380,
+            309
+          ],
+          "rgb": [
+            33,
+            46,
+            71
+          ]
+        },
+        {
+          "pixel": [
+            400,
+            309
+          ],
+          "rgb": [
+            36,
+            49,
+            76
+          ]
+        },
+        {
+          "pixel": [
+            410,
+            309
+          ],
+          "rgb": [
+            20,
+            29,
+            43
+          ]
+        },
+        {
+          "pixel": [
+            620,
+            306
+          ],
+          "rgb": [
+            19,
+            27,
+            41
+          ]
+        },
+        {
+          "pixel": [
+            630,
+            306
+          ],
+          "rgb": [
+            16,
+            23,
+            33
+          ]
+        },
+        {
+          "pixel": [
+            640,
+            306
+          ],
+          "rgb": [
+            37,
+            52,
+            81
+          ]
+        }
+      ],
+      "adjudication": "Plausible normal within about1px via flanks, but pick itself is label ink. Source/frame chainage acceptance not established.",
+      "rootReviewCandidatePixel": [
+        482,
+        309
+      ],
+      "rootReviewCandidateCoordinate": [
+        136.8596121226845,
+        35.19473890827177
+      ],
+      "candidateLimit": "Flanksupported normal candidate under label; Root must review frame chainage and native candidate; coordinate is not an accepted physical anchor."
+    }
+  ],
+  "cartographyVersionNote": {
+    "shinkawabashiAndMain18View3SameCamera": true,
+    "shinkawabashiAndMain18View3PixelIdentical": false,
+    "limit": "Do not assume same named/camera captures carry identical cartography pixels; use each capture own pixel coordinates."
+  },
+  "tsushimaCompleteIntervalLabelFreeControls": [
+    {
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        550,
+        280
+      ],
+      "rgb": [
+        27,
+        38,
+        52
+      ],
+      "coordinate": [
+        136.84249547560455,
+        35.19952692623531
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        800,
+        233
+      ],
+      "rgb": [
+        34,
+        47,
+        63
+      ],
+      "coordinate": [
+        136.843836580112,
+        35.19973295199479
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        500,
+        313
+      ],
+      "rgb": [
+        17,
+        25,
+        35
+      ],
+      "coordinate": [
+        136.8390017712427,
+        35.197662324452516
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        800,
+        115
+      ],
+      "rgb": [
+        19,
+        27,
+        38
+      ],
+      "coordinate": [
+        136.84061109665163,
+        35.19853027914633
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        400,
+        316
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83505973847747,
+        35.1962066398228
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        700,
+        254
+      ],
+      "rgb": [
+        19,
+        26,
+        37
+      ],
+      "coordinate": [
+        136.83666906388635,
+        35.196478429483705
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        200,
+        310
+      ],
+      "rgb": [
+        30,
+        42,
+        57
+      ],
+      "coordinate": [
+        136.83014191891095,
+        35.19610839058907
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        500,
+        303
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.8317512443199,
+        35.19613907660117
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        350,
+        316
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.82709553796042,
+        35.1960236959313
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        900,
+        297
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.8300459678768,
+        35.196106986595474
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    },
+    {
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        700,
+        312
+      ],
+      "rgb": [
+        38,
+        52,
+        69
+      ],
+      "coordinate": [
+        136.8269305658152,
+        35.196020755850206
+      ],
+      "status": "Manualowncorridor label-free glyph sample; single thin sleeper-axis pixel, not casing average. Use as provisional control, allow antialias/sleeper width and pixel-centre uncertainty."
+    }
+  ]
+}

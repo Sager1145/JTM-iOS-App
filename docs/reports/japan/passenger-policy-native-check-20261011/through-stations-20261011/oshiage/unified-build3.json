@@ -1,0 +1,23 @@
+[
+  {
+    "path": "/private/tmp/jtm-rail-alignment-inspector/Build/Products/Debug-maccatalyst/RailAlignmentInspector.app",
+    "version": "0.1",
+    "build": "3",
+    "revision": "20261011-oshiage-source-cut-v5",
+    "dataSHA256": "f2bfb4379eea6ff5bda3b4a6d8f479c41a56d1c75b673aa5730e58b658cc6ad1"
+  },
+  {
+    "path": "/private/tmp/jtm-parallel-inspectors/Hakone Inspector.app",
+    "version": "0.1",
+    "build": "3",
+    "revision": "20261011-oshiage-source-cut-v5",
+    "dataSHA256": "f2bfb4379eea6ff5bda3b4a6d8f479c41a56d1c75b673aa5730e58b658cc6ad1"
+  },
+  {
+    "path": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app",
+    "version": "0.1",
+    "build": "3",
+    "revision": "20261011-oshiage-source-cut-v5",
+    "dataSHA256": "f2bfb4379eea6ff5bda3b4a6d8f479c41a56d1c75b673aa5730e58b658cc6ad1"
+  }
+]

@@ -1,0 +1,74 @@
+{
+  "format": "jtm-honmachi-full-display-candidate-manifest-v1",
+  "rawAssociationCount": 9,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "e7a285c23bce058baebf8a09c5705de9dbceff530ab3c9b63d152e7936e18b63"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "0b23104e72983370c36cef640b69afa4b98c78350bf871bee6ae3628560f37da"
+    },
+    {
+      "path": "derivation-constraints.md",
+      "sha256": "20b8799e46f1ca16cbb2461e4b1bf1bde564012d195d34cd4257bda78320d39b"
+    },
+    {
+      "path": "honmachi-interval-0.geojson",
+      "sha256": "3d943f8b9ec23bee92501355c7b59fe18122f3adf9430a59d808977e3a174d81"
+    },
+    {
+      "path": "honmachi-interval-1.geojson",
+      "sha256": "b4b58eeb2fb2d7c03b262bcc6b09960d6498fc42652c4f8b2f0da6f4298a138d"
+    },
+    {
+      "path": "honmachi-interval-2.geojson",
+      "sha256": "8f8b90d72f6e715b0aa0caf2a0389e9eeb1786649952a27d53b0a39c05bd93b3"
+    },
+    {
+      "path": "honmachi-interval-3.geojson",
+      "sha256": "e07c7f28cc9bdb6f7657bc5a18d03a09a7f66e023c815a226c1c58c1f8748bdd"
+    },
+    {
+      "path": "review.json",
+      "sha256": "535444fda7b3e00cde655aceff05f04fb1a7645fd9db0c59b99fdb23088279bf"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-0-view-0-honmachi-interval0-view0-z18-before.png",
+      "sha256": "0415bd43f4843439ff86252c4ee210dee5ae99e8c69aee3408e565f778406489"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-0-view-1-honmachi-interval0-view1-z18-before.png",
+      "sha256": "ae29338a4be85500d008a4a69c2e2bf6846ba94f026b41736d86c80dad29e915"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-1-view-0-honmachi-interval1-view0-z18-before.png",
+      "sha256": "68b0f506b526b4adc8925206bb9115740534a8a1fb30f90c43abc8e85c456172"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-1-view-1-honmachi-interval1-view1-z18-before.png",
+      "sha256": "0fc1ddf2cb9dff6a231e555997363341adff4c5d8124e1dc8f2f75e0c4caf721"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-2-view-0-honmachi-interval2-view0-z18-before.png",
+      "sha256": "83adb77055c3475877958c58901b91703e9c850d875b9c792f44fbee1ced4230"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-2-view-1-honmachi-interval2-view1-z18-before.png",
+      "sha256": "f99ab8c17ef1d01c91b5ed44bb3705899486aaa24251a431a39577998c0a0231"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-3-view-0-honmachi-interval3-view0-z18-before.png",
+      "sha256": "bc910110b44bf4588a65bc365c25ec004031edc551ff7452f6d5192eb4b05717"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-3-view-1-honmachi-interval3-view1-z18-before.png",
+      "sha256": "0fb1ad1f6fe56d9e414928417697387865cf64e95e579a8fca004ddd6abc371e"
+    },
+    {
+      "path": "raw-reprojections/honmachi-interval-3-view-2-honmachi-interval3-view2-z18-before.png",
+      "sha256": "7a15d4bf8c3f780f641fed965a299cf5a267f8225717ca8791d4ff0d7782af51"
+    }
+  ]
+}

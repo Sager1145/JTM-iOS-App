@@ -1,0 +1,161 @@
+{
+  "caseIndex": 18,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 18,
+  "source": {
+    "caseIndex": 18,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 18,
+    "fromStationID": "003719",
+    "toStationID": "003802",
+    "camera": [
+      35.680292635227815,
+      139.76162120335795,
+      0.013427038887290622
+    ],
+    "effectiveCoordinates": [
+      [
+        139.76284969416466,
+        35.684022368252066
+      ],
+      [
+        139.76273165639827,
+        35.68363048347171
+      ],
+      [
+        139.7624811514963,
+        35.683355793686914
+      ],
+      [
+        139.76244937304486,
+        35.68331669707261
+      ],
+      [
+        139.76243163351668,
+        35.68327317577586
+      ],
+      [
+        139.76232058019906,
+        35.68288001437402
+      ],
+      [
+        139.76206753704176,
+        35.68214145170519
+      ],
+      [
+        139.76206061687415,
+        35.68209710983253
+      ],
+      [
+        139.7620833082596,
+        35.6819979979616
+      ],
+      [
+        139.76206612820187,
+        35.68190845198129
+      ],
+      [
+        139.76190667332563,
+        35.68160132666285
+      ],
+      [
+        139.7618791802557,
+        35.68153330319815
+      ],
+      [
+        139.76160064795823,
+        35.68066385799792
+      ],
+      [
+        139.76149207841183,
+        35.6803627673701
+      ],
+      [
+        139.76129585802846,
+        35.6797544846005
+      ],
+      [
+        139.76125744824827,
+        35.67966979599856
+      ],
+      [
+        139.7611733537589,
+        35.679409103398605
+      ],
+      [
+        139.7608694443074,
+        35.67854444185093
+      ],
+      [
+        139.76084796334823,
+        35.67850186312689
+      ],
+      [
+        139.76083949252794,
+        35.67845796824866
+      ],
+      [
+        139.7608529707166,
+        35.678407399696994
+      ],
+      [
+        139.7609458664638,
+        35.678153699663135
+      ],
+      [
+        139.76093664600268,
+        35.67810831883036
+      ],
+      [
+        139.7609159145509,
+        35.67806722604275
+      ],
+      [
+        139.76090899151373,
+        35.67802132012986
+      ],
+      [
+        139.76088596266408,
+        35.6779807524164
+      ],
+      [
+        139.7606298303491,
+        35.677852652969264
+      ],
+      [
+        139.76060032091624,
+        35.67781190915243
+      ],
+      [
+        139.7605998785446,
+        35.677766179372696
+      ],
+      [
+        139.76061335672827,
+        35.6777156107663
+      ],
+      [
+        139.76070625243318,
+        35.67746191040921
+      ],
+      [
+        139.7606970424666,
+        35.67741655780966
+      ],
+      [
+        139.7606763002914,
+        35.67737543678415
+      ],
+      [
+        139.76039271255124,
+        35.67656290220357
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t90 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:18;overlays:18;rides:0;budgetDrops:0;vertices:7553;camera:16.08;lod:14.93;backbones:2;networkStations:45;distance:2947.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.680293;centerLon:139.761621;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:4284.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:21;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.680293;centerLon:139.761621;distance:2947.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/case-18.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

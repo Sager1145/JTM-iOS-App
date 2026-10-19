@@ -1,0 +1,127 @@
+[
+  {
+    "itemID": "jp-京成電鉄-押上線#0",
+    "pointOrdinal": 0,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001194/000000"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#0",
+    "pointOrdinal": 1,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001194/000001"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#0",
+    "pointOrdinal": 2,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001194/000002"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#0",
+    "pointOrdinal": 3,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001194/000003"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#0",
+    "pointOrdinal": 4,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001194/000004"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 0,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000000"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 1,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000001"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 2,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000002"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 3,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000003"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 4,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000004"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#1",
+    "pointOrdinal": 5,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001195/000005"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#2",
+    "pointOrdinal": 0,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001196/000000"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#2",
+    "pointOrdinal": 1,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001196/000001"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#2",
+    "pointOrdinal": 2,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001196/000002"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#2",
+    "pointOrdinal": 3,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001196/000003"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#3",
+    "pointOrdinal": 0,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001197/000000"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#3",
+    "pointOrdinal": 1,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001197/000001"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#3",
+    "pointOrdinal": 2,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001197/000002"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#3",
+    "pointOrdinal": 3,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001197/000003"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#3",
+    "pointOrdinal": 4,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001197/000004"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#4",
+    "pointOrdinal": 0,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001198/000000"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#4",
+    "pointOrdinal": 1,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001198/000001"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#4",
+    "pointOrdinal": 2,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001198/000002"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#4",
+    "pointOrdinal": 3,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001198/000003"
+  },
+  {
+    "itemID": "jp-京成電鉄-押上線#4",
+    "pointOrdinal": 4,
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001198/000004"
+  }
+]

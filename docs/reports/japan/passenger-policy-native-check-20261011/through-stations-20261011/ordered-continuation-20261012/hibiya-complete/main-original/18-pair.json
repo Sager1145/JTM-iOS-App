@@ -1,0 +1,112 @@
+{
+  "caseIndex": 18,
+  "intervalIndex": 18,
+  "source": {
+    "intervalIndex": 18,
+    "fromStationID": "003469",
+    "toStationID": "003399",
+    "camera": [
+      35.724924,
+      139.7878195,
+      0.015699599999997815
+    ],
+    "effectiveCoordinates": [
+      [
+        139.784474,
+        35.720563
+      ],
+      [
+        139.78448,
+        35.72057
+      ],
+      [
+        139.7848,
+        35.72099
+      ],
+      [
+        139.78504,
+        35.72131
+      ],
+      [
+        139.7851,
+        35.72138
+      ],
+      [
+        139.78566,
+        35.72208
+      ],
+      [
+        139.78585,
+        35.72233
+      ],
+      [
+        139.78607,
+        35.72261
+      ],
+      [
+        139.78614,
+        35.7227
+      ],
+      [
+        139.78665,
+        35.72336
+      ],
+      [
+        139.78716,
+        35.72402
+      ],
+      [
+        139.78755,
+        35.72456
+      ],
+      [
+        139.7876,
+        35.72464
+      ],
+      [
+        139.78789,
+        35.72504
+      ],
+      [
+        139.78794,
+        35.72512
+      ],
+      [
+        139.78843,
+        35.7258
+      ],
+      [
+        139.78847,
+        35.72585
+      ],
+      [
+        139.789,
+        35.72663
+      ],
+      [
+        139.78938,
+        35.72719
+      ],
+      [
+        139.78968,
+        35.72762
+      ],
+      [
+        139.79024,
+        35.72841
+      ],
+      [
+        139.79051,
+        35.72867
+      ],
+      [
+        139.791165,
+        35.729285
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; geographic-and-platform-acceptance-pending",
+  "actualOnStatus": "66 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:13;overlays:12;rides:0;budgetDrops:0;vertices:4897;camera:15.86;lod:14.71;backbones:1;networkStations:27;distance:3445.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.724924;centerLon:139.787820;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3179.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.724924;centerLon:139.787820;distance:3445.6;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

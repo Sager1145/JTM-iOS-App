@@ -1,0 +1,6991 @@
+{
+  "schema": "china-real-train-cases/1",
+  "cases": [
+    {
+      "id": "CN-REAL-G1-20261018",
+      "trainNumber": "G1",
+      "trainNo": "24000000G10L",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=24000000G10L&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "VNP",
+      "to": "AOH",
+      "knownStops": [
+        "VNP",
+        "CBP",
+        "DIP",
+        "QAK",
+        "NKH",
+        "OHH",
+        "AOH"
+      ],
+      "observedStops": [
+        {
+          "name": "北京南",
+          "code": "VNP"
+        },
+        {
+          "name": "沧州西",
+          "code": "CBP"
+        },
+        {
+          "name": "德州东",
+          "code": "DIP"
+        },
+        {
+          "name": "曲阜东",
+          "code": "QAK"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "苏州北",
+          "code": "OHH"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G10-20261018",
+      "trainNumber": "G10",
+      "trainNo": "5l00000G1010",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5l00000G1010&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "AOH",
+      "to": "VNP",
+      "knownStops": [
+        "AOH",
+        "NKH",
+        "JGK",
+        "VNP"
+      ],
+      "observedStops": [
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "济南西",
+          "code": "JGK"
+        },
+        {
+          "name": "北京南",
+          "code": "VNP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G101-20261018",
+      "trainNumber": "G101",
+      "trainNo": "240000G10121",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G10121&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "IFP",
+      "to": "MDB",
+      "knownStops": [
+        "IFP",
+        "SBT",
+        "CRT",
+        "VAB",
+        "MDB"
+      ],
+      "observedStops": [
+        {
+          "name": "北京朝阳",
+          "code": "IFP"
+        },
+        {
+          "name": "沈阳北",
+          "code": "SBT"
+        },
+        {
+          "name": "长春西",
+          "code": "CRT"
+        },
+        {
+          "name": "哈尔滨西",
+          "code": "VAB"
+        },
+        {
+          "name": "牡丹江",
+          "code": "MDB"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G169-20261018",
+      "trainNumber": "G169",
+      "trainNo": "1g0000G16900",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=1g0000G16900&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "DFT",
+      "to": "IFP",
+      "knownStops": [
+        "DFT",
+        "YGT",
+        "PVD",
+        "IFP"
+      ],
+      "observedStops": [
+        {
+          "name": "大连北",
+          "code": "DFT"
+        },
+        {
+          "name": "营口东",
+          "code": "YGT"
+        },
+        {
+          "name": "盘锦",
+          "code": "PVD"
+        },
+        {
+          "name": "北京朝阳",
+          "code": "IFP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G201-20261018",
+      "trainNumber": "G201",
+      "trainNo": "5l0000G20100",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5l0000G20100&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "AOH",
+      "to": "KOM",
+      "knownStops": [
+        "AOH",
+        "HGH",
+        "NXG",
+        "CWQ",
+        "KAQ",
+        "KQW",
+        "KOM"
+      ],
+      "observedStops": [
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        },
+        {
+          "name": "杭州东",
+          "code": "HGH"
+        },
+        {
+          "name": "南昌西",
+          "code": "NXG"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "怀化南",
+          "code": "KAQ"
+        },
+        {
+          "name": "贵阳北",
+          "code": "KQW"
+        },
+        {
+          "name": "昆明南",
+          "code": "KOM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G203-20261018",
+      "trainNumber": "G203",
+      "trainNo": "5l0000G20302",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5l0000G20302&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "NKH",
+      "to": "KQW",
+      "knownStops": [
+        "NKH",
+        "WGH",
+        "OHH",
+        "AOH",
+        "HGH",
+        "YWH",
+        "SRG",
+        "NXG",
+        "CWQ",
+        "KAQ",
+        "KQW"
+      ],
+      "observedStops": [
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "无锡东",
+          "code": "WGH"
+        },
+        {
+          "name": "苏州北",
+          "code": "OHH"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        },
+        {
+          "name": "杭州东",
+          "code": "HGH"
+        },
+        {
+          "name": "义乌",
+          "code": "YWH"
+        },
+        {
+          "name": "上饶",
+          "code": "SRG"
+        },
+        {
+          "name": "南昌西",
+          "code": "NXG"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "怀化南",
+          "code": "KAQ"
+        },
+        {
+          "name": "贵阳北",
+          "code": "KQW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G237-20261018",
+      "trainNumber": "G237",
+      "trainNo": "5l0000G23700",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5l0000G23700&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "AOH",
+      "to": "ICW",
+      "knownStops": [
+        "AOH",
+        "HGH",
+        "JBH",
+        "NXG",
+        "XBG",
+        "CWQ",
+        "UOQ",
+        "KAQ",
+        "KEW",
+        "ICW"
+      ],
+      "observedStops": [
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        },
+        {
+          "name": "杭州东",
+          "code": "HGH"
+        },
+        {
+          "name": "金华",
+          "code": "JBH"
+        },
+        {
+          "name": "南昌西",
+          "code": "NXG"
+        },
+        {
+          "name": "新余北",
+          "code": "XBG"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "娄底南",
+          "code": "UOQ"
+        },
+        {
+          "name": "怀化南",
+          "code": "KAQ"
+        },
+        {
+          "name": "贵阳东",
+          "code": "KEW"
+        },
+        {
+          "name": "成都东",
+          "code": "ICW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G255-20261018",
+      "trainNumber": "G255",
+      "trainNo": "550000G25500",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=550000G25500&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "SNH",
+      "to": "XKS",
+      "knownStops": [
+        "SNH",
+        "HGH",
+        "JBH",
+        "NOS",
+        "FZS",
+        "PTS",
+        "QRS",
+        "XKS"
+      ],
+      "observedStops": [
+        {
+          "name": "上海南",
+          "code": "SNH"
+        },
+        {
+          "name": "杭州东",
+          "code": "HGH"
+        },
+        {
+          "name": "金华",
+          "code": "JBH"
+        },
+        {
+          "name": "南平市",
+          "code": "NOS"
+        },
+        {
+          "name": "福州",
+          "code": "FZS"
+        },
+        {
+          "name": "莆田",
+          "code": "PTS"
+        },
+        {
+          "name": "泉州东",
+          "code": "QRS"
+        },
+        {
+          "name": "厦门北",
+          "code": "XKS"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G353-20261018",
+      "trainNumber": "G353",
+      "trainNo": "240000G35301",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G35301&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "YIJ",
+      "knownStops": [
+        "BXP",
+        "SJP",
+        "ZAF",
+        "EAY",
+        "QOJ",
+        "WVJ",
+        "YIJ"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        },
+        {
+          "name": "庆阳",
+          "code": "QOJ"
+        },
+        {
+          "name": "吴忠",
+          "code": "WVJ"
+        },
+        {
+          "name": "银川",
+          "code": "YIJ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G369-20261018",
+      "trainNumber": "G369",
+      "trainNo": "240000G36910",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G36910&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "EAY",
+      "knownStops": [
+        "BXP",
+        "SJP",
+        "ZAF",
+        "EAY"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G381-20261018",
+      "trainNumber": "G381",
+      "trainNo": "240000G38120",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G38120&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "XJA",
+      "knownStops": [
+        "BXP",
+        "SJP",
+        "ZAF",
+        "WHN",
+        "CWQ",
+        "IZQ",
+        "IOQ",
+        "XJA"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G382-20261018",
+      "trainNumber": "G382",
+      "trainNo": "6x0000G38200",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G38200&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "BXP",
+      "knownStops": [
+        "XJA",
+        "IOQ",
+        "IZQ",
+        "CWQ",
+        "WHN",
+        "ZAF",
+        "SJP",
+        "BXP"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "北京西",
+          "code": "BXP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G383-20261018",
+      "trainNumber": "G383",
+      "trainNo": "6x0000G38603",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G38603&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "AOH",
+      "knownStops": [
+        "XJA",
+        "NZQ",
+        "IOQ",
+        "IZQ",
+        "HVQ",
+        "CWQ",
+        "WHN",
+        "ENH",
+        "NKH",
+        "WGH",
+        "AOH"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "福田",
+          "code": "NZQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "衡阳东",
+          "code": "HVQ"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "合肥南",
+          "code": "ENH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "无锡东",
+          "code": "WGH"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G386-20261018",
+      "trainNumber": "G386",
+      "trainNo": "6x0000G38603",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G38603&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "AOH",
+      "knownStops": [
+        "XJA",
+        "NZQ",
+        "IOQ",
+        "IZQ",
+        "HVQ",
+        "CWQ",
+        "WHN",
+        "ENH",
+        "NKH",
+        "WGH",
+        "AOH"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "福田",
+          "code": "NZQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "衡阳东",
+          "code": "HVQ"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "合肥南",
+          "code": "ENH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "无锡东",
+          "code": "WGH"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G671-20261018",
+      "trainNumber": "G671",
+      "trainNo": "240000G67100",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G67100&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "XNO",
+      "knownStops": [
+        "BXP",
+        "DOP",
+        "SJP",
+        "HPP",
+        "ADF",
+        "ZAF",
+        "LLF",
+        "EAY",
+        "YEY",
+        "BBY",
+        "TIJ",
+        "TWJ",
+        "LAJ",
+        "XNO"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "定州东",
+          "code": "DOP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "邯郸东",
+          "code": "HPP"
+        },
+        {
+          "name": "安阳东",
+          "code": "ADF"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "洛阳龙门",
+          "code": "LLF"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        },
+        {
+          "name": "杨陵南",
+          "code": "YEY"
+        },
+        {
+          "name": "宝鸡南",
+          "code": "BBY"
+        },
+        {
+          "name": "天水南",
+          "code": "TIJ"
+        },
+        {
+          "name": "通渭",
+          "code": "TWJ"
+        },
+        {
+          "name": "兰州西",
+          "code": "LAJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G729-20261018",
+      "trainNumber": "G729",
+      "trainNo": "1g0000G7290L",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G7&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=1g0000G7290L&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "DFT",
+      "to": "VAB",
+      "knownStops": [
+        "DFT",
+        "PWT",
+        "BYT",
+        "HXT",
+        "AXT",
+        "LYT",
+        "SYT",
+        "PXT",
+        "CPT",
+        "CRT",
+        "VAB"
+      ],
+      "observedStops": [
+        {
+          "name": "大连北",
+          "code": "DFT"
+        },
+        {
+          "name": "金普",
+          "code": "PWT"
+        },
+        {
+          "name": "鲅鱼圈",
+          "code": "BYT"
+        },
+        {
+          "name": "海城西",
+          "code": "HXT"
+        },
+        {
+          "name": "鞍山西",
+          "code": "AXT"
+        },
+        {
+          "name": "辽阳",
+          "code": "LYT"
+        },
+        {
+          "name": "沈阳",
+          "code": "SYT"
+        },
+        {
+          "name": "铁岭西",
+          "code": "PXT"
+        },
+        {
+          "name": "昌图西",
+          "code": "CPT"
+        },
+        {
+          "name": "长春西",
+          "code": "CRT"
+        },
+        {
+          "name": "哈尔滨西",
+          "code": "VAB"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G903-20261018",
+      "trainNumber": "G903",
+      "trainNo": "250000G90301",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=250000G90301&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "TXP",
+      "to": "XJA",
+      "knownStops": [
+        "TXP",
+        "SUP",
+        "FWP",
+        "SJP",
+        "HPP",
+        "ZAF",
+        "WHN",
+        "YIQ",
+        "MQQ",
+        "CWQ",
+        "ZAQ",
+        "HVQ",
+        "ICQ",
+        "GBQ",
+        "IZQ",
+        "IOQ",
+        "XJA"
+      ],
+      "observedStops": [
+        {
+          "name": "天津西",
+          "code": "TXP"
+        },
+        {
+          "name": "胜芳",
+          "code": "SUP"
+        },
+        {
+          "name": "白洋淀",
+          "code": "FWP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "邯郸东",
+          "code": "HPP"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "岳阳东",
+          "code": "YIQ"
+        },
+        {
+          "name": "汨罗东",
+          "code": "MQQ"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "株洲西",
+          "code": "ZAQ"
+        },
+        {
+          "name": "衡阳东",
+          "code": "HVQ"
+        },
+        {
+          "name": "郴州西",
+          "code": "ICQ"
+        },
+        {
+          "name": "广州北",
+          "code": "GBQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G906-20261018",
+      "trainNumber": "G906",
+      "trainNo": "6x0000G90600",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G90600&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "CXW",
+      "knownStops": [
+        "XJA",
+        "IOQ",
+        "IZQ",
+        "HXZ",
+        "GEZ",
+        "KEW",
+        "ZYE",
+        "CXW"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "贺州",
+          "code": "HXZ"
+        },
+        {
+          "name": "桂林西",
+          "code": "GEZ"
+        },
+        {
+          "name": "贵阳东",
+          "code": "KEW"
+        },
+        {
+          "name": "遵义",
+          "code": "ZYE"
+        },
+        {
+          "name": "重庆西",
+          "code": "CXW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G908-20261018",
+      "trainNumber": "G908",
+      "trainNo": "6x0000G90801",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G90801&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "KOM",
+      "knownStops": [
+        "XJA",
+        "IOQ",
+        "IZQ",
+        "GEZ",
+        "KQW",
+        "KOM"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "桂林西",
+          "code": "GEZ"
+        },
+        {
+          "name": "贵阳北",
+          "code": "KQW"
+        },
+        {
+          "name": "昆明南",
+          "code": "KOM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G902-20261018",
+      "trainNumber": "G902",
+      "trainNo": "6x0000G90200",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x0000G90200&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "AOH",
+      "knownStops": [
+        "XJA",
+        "IOQ",
+        "HUA",
+        "HEA",
+        "GOG",
+        "NUG",
+        "JDG",
+        "NYH",
+        "HVU",
+        "SMU",
+        "AOH"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "惠州北",
+          "code": "HUA"
+        },
+        {
+          "name": "河源东",
+          "code": "HEA"
+        },
+        {
+          "name": "赣州西",
+          "code": "GOG"
+        },
+        {
+          "name": "南昌东",
+          "code": "NUG"
+        },
+        {
+          "name": "景德镇北",
+          "code": "JDG"
+        },
+        {
+          "name": "黄山北",
+          "code": "NYH"
+        },
+        {
+          "name": "杭州西",
+          "code": "HVU"
+        },
+        {
+          "name": "苏州南",
+          "code": "SMU"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G1021-20261018",
+      "trainNumber": "G1021",
+      "trainNo": "5n000G102103",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5n000G102103&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "FYS",
+      "to": "ZHQ",
+      "knownStops": [
+        "FYS",
+        "PTS",
+        "QNS",
+        "XKS",
+        "ZUS",
+        "YBS",
+        "CBQ",
+        "IOQ",
+        "IUQ",
+        "IZQ",
+        "ZSQ",
+        "ZHQ"
+      ],
+      "observedStops": [
+        {
+          "name": "福州南",
+          "code": "FYS"
+        },
+        {
+          "name": "莆田",
+          "code": "PTS"
+        },
+        {
+          "name": "泉州南",
+          "code": "QNS"
+        },
+        {
+          "name": "厦门北",
+          "code": "XKS"
+        },
+        {
+          "name": "漳州",
+          "code": "ZUS"
+        },
+        {
+          "name": "云霄",
+          "code": "YBS"
+        },
+        {
+          "name": "潮汕",
+          "code": "CBQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "虎门",
+          "code": "IUQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "中山",
+          "code": "ZSQ"
+        },
+        {
+          "name": "珠海",
+          "code": "ZHQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G2003-20261018",
+      "trainNumber": "G2003",
+      "trainNo": "47000G200601",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=47000G200601&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "MDK",
+      "to": "LAJ",
+      "knownStops": [
+        "MDK",
+        "JGK",
+        "VXK",
+        "SNK",
+        "PUF",
+        "ZAF",
+        "LLF",
+        "EAY",
+        "BBY",
+        "TIJ",
+        "LAJ"
+      ],
+      "observedStops": [
+        {
+          "name": "济南东",
+          "code": "MDK"
+        },
+        {
+          "name": "济南西",
+          "code": "JGK"
+        },
+        {
+          "name": "聊城西",
+          "code": "VXK"
+        },
+        {
+          "name": "莘县",
+          "code": "SNK"
+        },
+        {
+          "name": "濮阳东",
+          "code": "PUF"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "洛阳龙门",
+          "code": "LLF"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        },
+        {
+          "name": "宝鸡南",
+          "code": "BBY"
+        },
+        {
+          "name": "天水南",
+          "code": "TIJ"
+        },
+        {
+          "name": "兰州西",
+          "code": "LAJ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G2087-20261018",
+      "trainNumber": "G2087",
+      "trainNo": "49000G20900N",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=49000G20900N&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "YAK",
+      "to": "ICW",
+      "knownStops": [
+        "YAK",
+        "FUK",
+        "DCK",
+        "POK",
+        "UKK",
+        "VDK",
+        "VPK",
+        "KBK",
+        "CRK",
+        "WJK",
+        "QOK",
+        "UEK",
+        "ZRK",
+        "ZLK",
+        "MDK",
+        "QIK",
+        "YSK",
+        "DIP",
+        "IHP",
+        "IJP",
+        "GUP",
+        "SJP",
+        "GNP",
+        "HPP",
+        "ADF",
+        "ZAF",
+        "LLF",
+        "HDY",
+        "EAY",
+        "KXY",
+        "YXY",
+        "HOY",
+        "GYW",
+        "MYW",
+        "DYW",
+        "ICW"
+      ],
+      "observedStops": [
+        {
+          "name": "烟台",
+          "code": "YAK"
+        },
+        {
+          "name": "福山",
+          "code": "FUK"
+        },
+        {
+          "name": "烟台西",
+          "code": "DCK"
+        },
+        {
+          "name": "蓬莱",
+          "code": "POK"
+        },
+        {
+          "name": "龙口市",
+          "code": "UKK"
+        },
+        {
+          "name": "招远",
+          "code": "VDK"
+        },
+        {
+          "name": "莱州",
+          "code": "VPK"
+        },
+        {
+          "name": "灰埠",
+          "code": "KBK"
+        },
+        {
+          "name": "昌邑",
+          "code": "CRK"
+        },
+        {
+          "name": "潍坊北",
+          "code": "WJK"
+        },
+        {
+          "name": "青州市北",
+          "code": "QOK"
+        },
+        {
+          "name": "临淄北",
+          "code": "UEK"
+        },
+        {
+          "name": "淄博北",
+          "code": "ZRK"
+        },
+        {
+          "name": "邹平",
+          "code": "ZLK"
+        },
+        {
+          "name": "济南东",
+          "code": "MDK"
+        },
+        {
+          "name": "齐河",
+          "code": "QIK"
+        },
+        {
+          "name": "禹城东",
+          "code": "YSK"
+        },
+        {
+          "name": "德州东",
+          "code": "DIP"
+        },
+        {
+          "name": "衡水北",
+          "code": "IHP"
+        },
+        {
+          "name": "辛集南",
+          "code": "IJP"
+        },
+        {
+          "name": "藁城南",
+          "code": "GUP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "高邑西",
+          "code": "GNP"
+        },
+        {
+          "name": "邯郸东",
+          "code": "HPP"
+        },
+        {
+          "name": "安阳东",
+          "code": "ADF"
+        },
+        {
+          "name": "郑州东",
+          "code": "ZAF"
+        },
+        {
+          "name": "洛阳龙门",
+          "code": "LLF"
+        },
+        {
+          "name": "华山北",
+          "code": "HDY"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        },
+        {
+          "name": "鄠邑",
+          "code": "KXY"
+        },
+        {
+          "name": "洋县西",
+          "code": "YXY"
+        },
+        {
+          "name": "汉中",
+          "code": "HOY"
+        },
+        {
+          "name": "广元",
+          "code": "GYW"
+        },
+        {
+          "name": "绵阳",
+          "code": "MYW"
+        },
+        {
+          "name": "德阳",
+          "code": "DYW"
+        },
+        {
+          "name": "成都东",
+          "code": "ICW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G3033-20261018",
+      "trainNumber": "G3033",
+      "trainNo": "56000G303304",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=56000G303304&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "HVU",
+      "to": "OTQ",
+      "knownStops": [
+        "HVU",
+        "QDU",
+        "NYH",
+        "JDG",
+        "POG",
+        "NUG",
+        "ZOG",
+        "JIG",
+        "GOG",
+        "WHA",
+        "MXA",
+        "JYA",
+        "CBQ",
+        "OTQ"
+      ],
+      "observedStops": [
+        {
+          "name": "杭州西",
+          "code": "HVU"
+        },
+        {
+          "name": "千岛湖",
+          "code": "QDU"
+        },
+        {
+          "name": "黄山北",
+          "code": "NYH"
+        },
+        {
+          "name": "景德镇北",
+          "code": "JDG"
+        },
+        {
+          "name": "鄱阳",
+          "code": "POG"
+        },
+        {
+          "name": "南昌东",
+          "code": "NUG"
+        },
+        {
+          "name": "樟树东",
+          "code": "ZOG"
+        },
+        {
+          "name": "吉安西",
+          "code": "JIG"
+        },
+        {
+          "name": "赣州西",
+          "code": "GOG"
+        },
+        {
+          "name": "五华",
+          "code": "WHA"
+        },
+        {
+          "name": "梅州西",
+          "code": "MXA"
+        },
+        {
+          "name": "揭阳",
+          "code": "JYA"
+        },
+        {
+          "name": "潮汕",
+          "code": "CBQ"
+        },
+        {
+          "name": "汕头",
+          "code": "OTQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G6045-20261018",
+      "trainNumber": "G6045",
+      "trainNo": "6x000G604806",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XJA",
+      "to": "ZWQ",
+      "knownStops": [
+        "XJA",
+        "NZQ",
+        "IOQ",
+        "IUQ",
+        "IZQ",
+        "JOQ",
+        "PUQ",
+        "PVQ",
+        "PXQ",
+        "WRQ",
+        "MDQ",
+        "ZWQ"
+      ],
+      "observedStops": [
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        },
+        {
+          "name": "福田",
+          "code": "NZQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "虎门",
+          "code": "IUQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "江门",
+          "code": "JOQ"
+        },
+        {
+          "name": "台山",
+          "code": "PUQ"
+        },
+        {
+          "name": "开平南",
+          "code": "PVQ"
+        },
+        {
+          "name": "恩平",
+          "code": "PXQ"
+        },
+        {
+          "name": "阳江",
+          "code": "WRQ"
+        },
+        {
+          "name": "茂名",
+          "code": "MDQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G6079-20261018",
+      "trainNumber": "G6079",
+      "trainNo": "64000G607905",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=64000G607905&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "JXA",
+      "to": "XJA",
+      "knownStops": [
+        "JXA",
+        "FRA",
+        "JDA",
+        "FCA",
+        "KAQ",
+        "DKA",
+        "SYQ",
+        "HVQ",
+        "LPQ",
+        "SNQ",
+        "GBQ",
+        "IZQ",
+        "IUQ",
+        "IOQ",
+        "XJA"
+      ],
+      "observedStops": [
+        {
+          "name": "张家界西",
+          "code": "JXA"
+        },
+        {
+          "name": "芙蓉镇",
+          "code": "FRA"
+        },
+        {
+          "name": "吉首东",
+          "code": "JDA"
+        },
+        {
+          "name": "凤凰古城",
+          "code": "FCA"
+        },
+        {
+          "name": "怀化南",
+          "code": "KAQ"
+        },
+        {
+          "name": "洞口",
+          "code": "DKA"
+        },
+        {
+          "name": "邵阳",
+          "code": "SYQ"
+        },
+        {
+          "name": "衡阳东",
+          "code": "HVQ"
+        },
+        {
+          "name": "耒阳西",
+          "code": "LPQ"
+        },
+        {
+          "name": "韶关",
+          "code": "SNQ"
+        },
+        {
+          "name": "广州北",
+          "code": "GBQ"
+        },
+        {
+          "name": "广州南",
+          "code": "IZQ"
+        },
+        {
+          "name": "虎门",
+          "code": "IUQ"
+        },
+        {
+          "name": "深圳北",
+          "code": "IOQ"
+        },
+        {
+          "name": "香港西九龙",
+          "code": "XJA"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G7001-20261018",
+      "trainNumber": "G7001",
+      "trainNo": "54000G700194",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G7&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=54000G700194&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "NJH",
+      "to": "SHH",
+      "knownStops": [
+        "NJH",
+        "CZH",
+        "WXH",
+        "SZH",
+        "SHH"
+      ],
+      "observedStops": [
+        {
+          "name": "南京",
+          "code": "NJH"
+        },
+        {
+          "name": "常州",
+          "code": "CZH"
+        },
+        {
+          "name": "无锡",
+          "code": "WXH"
+        },
+        {
+          "name": "苏州",
+          "code": "SZH"
+        },
+        {
+          "name": "上海",
+          "code": "SHH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G8002-20261018",
+      "trainNumber": "G8002",
+      "trainNo": "11000G80020F",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=11000G80020F&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "CCT",
+      "to": "DFT",
+      "knownStops": [
+        "CCT",
+        "PPT",
+        "CPT",
+        "PXT",
+        "SBT",
+        "SYT",
+        "AXT",
+        "YGT",
+        "BYT",
+        "WXT",
+        "DFT"
+      ],
+      "observedStops": [
+        {
+          "name": "长春",
+          "code": "CCT"
+        },
+        {
+          "name": "四平东",
+          "code": "PPT"
+        },
+        {
+          "name": "昌图西",
+          "code": "CPT"
+        },
+        {
+          "name": "铁岭西",
+          "code": "PXT"
+        },
+        {
+          "name": "沈阳北",
+          "code": "SBT"
+        },
+        {
+          "name": "沈阳",
+          "code": "SYT"
+        },
+        {
+          "name": "鞍山西",
+          "code": "AXT"
+        },
+        {
+          "name": "营口东",
+          "code": "YGT"
+        },
+        {
+          "name": "鲅鱼圈",
+          "code": "BYT"
+        },
+        {
+          "name": "瓦房店西",
+          "code": "WXT"
+        },
+        {
+          "name": "大连北",
+          "code": "DFT"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D1-20261018",
+      "trainNumber": "D1",
+      "trainNo": "24000000D131",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=24000000D131&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "CSQ",
+      "knownStops": [
+        "BXP",
+        "SJP",
+        "ZZF",
+        "WCN",
+        "YYQ",
+        "CSQ"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "岳阳",
+          "code": "YYQ"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D69-20261018",
+      "trainNumber": "D69",
+      "trainNo": "2400000D6900",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=2400000D6900&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "WAR",
+      "knownStops": [
+        "BXP",
+        "BDP",
+        "VVP",
+        "YPP",
+        "TYV",
+        "LHV",
+        "ODY",
+        "JIY",
+        "DYJ",
+        "WUJ",
+        "JCJ",
+        "JGJ",
+        "HMR",
+        "TAR",
+        "WAR"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "保定",
+          "code": "BDP"
+        },
+        {
+          "name": "石家庄北",
+          "code": "VVP"
+        },
+        {
+          "name": "阳泉北",
+          "code": "YPP"
+        },
+        {
+          "name": "太原",
+          "code": "TYV"
+        },
+        {
+          "name": "吕梁",
+          "code": "LHV"
+        },
+        {
+          "name": "绥德",
+          "code": "ODY"
+        },
+        {
+          "name": "靖边",
+          "code": "JIY"
+        },
+        {
+          "name": "定边",
+          "code": "DYJ"
+        },
+        {
+          "name": "武威",
+          "code": "WUJ"
+        },
+        {
+          "name": "金昌",
+          "code": "JCJ"
+        },
+        {
+          "name": "嘉峪关",
+          "code": "JGJ"
+        },
+        {
+          "name": "哈密",
+          "code": "HMR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "乌鲁木齐",
+          "code": "WAR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D239-20261018",
+      "trainNumber": "D239",
+      "trainNo": "760000D23901",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D23901&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "CNW",
+      "to": "EUM",
+      "knownStops": [
+        "CNW",
+        "XCE",
+        "PNE",
+        "GPM",
+        "CUM",
+        "LHM",
+        "EDM",
+        "EUM"
+      ],
+      "observedStops": [
+        {
+          "name": "成都南",
+          "code": "CNW"
+        },
+        {
+          "name": "西昌西",
+          "code": "XCE"
+        },
+        {
+          "name": "攀枝花南",
+          "code": "PNE"
+        },
+        {
+          "name": "广通北",
+          "code": "GPM"
+        },
+        {
+          "name": "楚雄",
+          "code": "CUM"
+        },
+        {
+          "name": "丽江",
+          "code": "LHM"
+        },
+        {
+          "name": "小中甸",
+          "code": "EDM"
+        },
+        {
+          "name": "香格里拉",
+          "code": "EUM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D271-20261018",
+      "trainNumber": "D271",
+      "trainNo": "760000D27104",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D27104&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "CNW",
+      "to": "ENM",
+      "knownStops": [
+        "CNW",
+        "PSW",
+        "XCE",
+        "DXE",
+        "MDE",
+        "YBE",
+        "PNE",
+        "AMM",
+        "GPM",
+        "LQM",
+        "KMM",
+        "KOM",
+        "AXM",
+        "PEM",
+        "ENM"
+      ],
+      "observedStops": [
+        {
+          "name": "成都南",
+          "code": "CNW"
+        },
+        {
+          "name": "彭山",
+          "code": "PSW"
+        },
+        {
+          "name": "西昌西",
+          "code": "XCE"
+        },
+        {
+          "name": "德昌西",
+          "code": "DXE"
+        },
+        {
+          "name": "米易东",
+          "code": "MDE"
+        },
+        {
+          "name": "盐边",
+          "code": "YBE"
+        },
+        {
+          "name": "攀枝花南",
+          "code": "PNE"
+        },
+        {
+          "name": "元谋西",
+          "code": "AMM"
+        },
+        {
+          "name": "广通北",
+          "code": "GPM"
+        },
+        {
+          "name": "禄丰南",
+          "code": "LQM"
+        },
+        {
+          "name": "昆明",
+          "code": "KMM"
+        },
+        {
+          "name": "昆明南",
+          "code": "KOM"
+        },
+        {
+          "name": "玉溪",
+          "code": "AXM"
+        },
+        {
+          "name": "普洱",
+          "code": "PEM"
+        },
+        {
+          "name": "西双版纳",
+          "code": "ENM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D575-20261018",
+      "trainNumber": "D575",
+      "trainNo": "8d0000D57500",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D5&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=8d0000D57500&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LAJ",
+      "to": "WAR",
+      "knownStops": [
+        "LAJ",
+        "XNO",
+        "JEJ",
+        "MBJ",
+        "ZEJ",
+        "JNJ",
+        "JBJ",
+        "YXJ",
+        "LNR",
+        "HMR",
+        "TAR",
+        "WAR"
+      ],
+      "observedStops": [
+        {
+          "name": "兰州西",
+          "code": "LAJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "山丹马场",
+          "code": "JEJ"
+        },
+        {
+          "name": "民乐",
+          "code": "MBJ"
+        },
+        {
+          "name": "张掖西",
+          "code": "ZEJ"
+        },
+        {
+          "name": "酒泉南",
+          "code": "JNJ"
+        },
+        {
+          "name": "嘉峪关南",
+          "code": "JBJ"
+        },
+        {
+          "name": "玉门",
+          "code": "YXJ"
+        },
+        {
+          "name": "柳园南",
+          "code": "LNR"
+        },
+        {
+          "name": "哈密",
+          "code": "HMR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "乌鲁木齐",
+          "code": "WAR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D954-20261018",
+      "trainNumber": "D954",
+      "trainNo": "760000D95406",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D95406&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "ICW",
+      "to": "SHH",
+      "knownStops": [
+        "ICW",
+        "CUW",
+        "ESN",
+        "HAN",
+        "HKN",
+        "ENH",
+        "NKH",
+        "CZH",
+        "SZH",
+        "SHH"
+      ],
+      "observedStops": [
+        {
+          "name": "成都东",
+          "code": "ICW"
+        },
+        {
+          "name": "重庆北",
+          "code": "CUW"
+        },
+        {
+          "name": "恩施",
+          "code": "ESN"
+        },
+        {
+          "name": "宜昌东",
+          "code": "HAN"
+        },
+        {
+          "name": "汉口",
+          "code": "HKN"
+        },
+        {
+          "name": "合肥南",
+          "code": "ENH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "常州",
+          "code": "CZH"
+        },
+        {
+          "name": "苏州",
+          "code": "SZH"
+        },
+        {
+          "name": "上海",
+          "code": "SHH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D1067-20261018",
+      "trainNumber": "D1067",
+      "trainNo": "24000D106701",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=24000D106701&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "VAP",
+      "to": "YIJ",
+      "knownStops": [
+        "VAP",
+        "ZMP",
+        "WPC",
+        "NDC",
+        "BTC",
+        "FMC",
+        "IAC",
+        "YIJ"
+      ],
+      "observedStops": [
+        {
+          "name": "北京北",
+          "code": "VAP"
+        },
+        {
+          "name": "张家口",
+          "code": "ZMP"
+        },
+        {
+          "name": "乌兰察布",
+          "code": "WPC"
+        },
+        {
+          "name": "呼和浩特东",
+          "code": "NDC"
+        },
+        {
+          "name": "包头",
+          "code": "BTC"
+        },
+        {
+          "name": "巴彦淖尔",
+          "code": "FMC"
+        },
+        {
+          "name": "乌海",
+          "code": "IAC"
+        },
+        {
+          "name": "银川",
+          "code": "YIJ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D1077-20261018",
+      "trainNumber": "D1077",
+      "trainNo": "24000D107703",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=24000D107703&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "QIP",
+      "to": "BTC",
+      "knownStops": [
+        "QIP",
+        "QBP",
+        "VJP",
+        "ZMP",
+        "EBC",
+        "WPC",
+        "NDC",
+        "HHC",
+        "SLC",
+        "BDC",
+        "BTC"
+      ],
+      "observedStops": [
+        {
+          "name": "清河",
+          "code": "QIP"
+        },
+        {
+          "name": "东花园北",
+          "code": "QBP"
+        },
+        {
+          "name": "宣化北",
+          "code": "VJP"
+        },
+        {
+          "name": "张家口",
+          "code": "ZMP"
+        },
+        {
+          "name": "兴和北",
+          "code": "EBC"
+        },
+        {
+          "name": "乌兰察布",
+          "code": "WPC"
+        },
+        {
+          "name": "呼和浩特东",
+          "code": "NDC"
+        },
+        {
+          "name": "呼和浩特",
+          "code": "HHC"
+        },
+        {
+          "name": "萨拉齐",
+          "code": "SLC"
+        },
+        {
+          "name": "包头东",
+          "code": "BDC"
+        },
+        {
+          "name": "包头",
+          "code": "BTC"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D1201-20261018",
+      "trainNumber": "D1201",
+      "trainNo": "76000D120401",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000D120401&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "ICW",
+      "to": "BTC",
+      "knownStops": [
+        "ICW",
+        "IKW",
+        "MYW",
+        "JFW",
+        "GYW",
+        "NOY",
+        "HOY",
+        "CBY",
+        "KXY",
+        "EAY",
+        "EBY",
+        "QBY",
+        "AXJ",
+        "QOJ",
+        "KXJ",
+        "KBJ",
+        "HFJ",
+        "YIJ",
+        "OZJ",
+        "IAC",
+        "FMC",
+        "BTC"
+      ],
+      "observedStops": [
+        {
+          "name": "成都东",
+          "code": "ICW"
+        },
+        {
+          "name": "罗江东",
+          "code": "IKW"
+        },
+        {
+          "name": "绵阳",
+          "code": "MYW"
+        },
+        {
+          "name": "江油",
+          "code": "JFW"
+        },
+        {
+          "name": "广元",
+          "code": "GYW"
+        },
+        {
+          "name": "宁强南",
+          "code": "NOY"
+        },
+        {
+          "name": "汉中",
+          "code": "HOY"
+        },
+        {
+          "name": "城固北",
+          "code": "CBY"
+        },
+        {
+          "name": "鄠邑",
+          "code": "KXY"
+        },
+        {
+          "name": "西安北",
+          "code": "EAY"
+        },
+        {
+          "name": "咸阳北",
+          "code": "EBY"
+        },
+        {
+          "name": "乾县",
+          "code": "QBY"
+        },
+        {
+          "name": "宁县",
+          "code": "AXJ"
+        },
+        {
+          "name": "庆阳",
+          "code": "QOJ"
+        },
+        {
+          "name": "环县",
+          "code": "KXJ"
+        },
+        {
+          "name": "惠安堡",
+          "code": "KBJ"
+        },
+        {
+          "name": "河东机场",
+          "code": "HFJ"
+        },
+        {
+          "name": "银川",
+          "code": "YIJ"
+        },
+        {
+          "name": "石嘴山",
+          "code": "OZJ"
+        },
+        {
+          "name": "乌海",
+          "code": "IAC"
+        },
+        {
+          "name": "巴彦淖尔",
+          "code": "FMC"
+        },
+        {
+          "name": "包头",
+          "code": "BTC"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D2248-20261018",
+      "trainNumber": "D2248",
+      "trainNo": "76000D224502",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000D224502&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BDE",
+      "to": "HGH",
+      "knownStops": [
+        "BDE",
+        "NCE",
+        "CUW",
+        "ESN",
+        "JRN",
+        "GGN",
+        "BNN",
+        "HAN",
+        "JBN",
+        "XAN",
+        "HKN",
+        "VXN",
+        "JZH",
+        "UAH",
+        "ENH",
+        "INH",
+        "NKH",
+        "JWH",
+        "LDH",
+        "DRH",
+        "HGH"
+      ],
+      "observedStops": [
+        {
+          "name": "巴中东",
+          "code": "BDE"
+        },
+        {
+          "name": "南充北",
+          "code": "NCE"
+        },
+        {
+          "name": "重庆北",
+          "code": "CUW"
+        },
+        {
+          "name": "恩施",
+          "code": "ESN"
+        },
+        {
+          "name": "建始",
+          "code": "JRN"
+        },
+        {
+          "name": "高坪",
+          "code": "GGN"
+        },
+        {
+          "name": "野三关",
+          "code": "BNN"
+        },
+        {
+          "name": "宜昌东",
+          "code": "HAN"
+        },
+        {
+          "name": "荆州",
+          "code": "JBN"
+        },
+        {
+          "name": "仙桃西",
+          "code": "XAN"
+        },
+        {
+          "name": "汉口",
+          "code": "HKN"
+        },
+        {
+          "name": "红安西",
+          "code": "VXN"
+        },
+        {
+          "name": "金寨",
+          "code": "JZH"
+        },
+        {
+          "name": "六安",
+          "code": "UAH"
+        },
+        {
+          "name": "合肥南",
+          "code": "ENH"
+        },
+        {
+          "name": "全椒",
+          "code": "INH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "句容西",
+          "code": "JWH"
+        },
+        {
+          "name": "溧水",
+          "code": "LDH"
+        },
+        {
+          "name": "德清",
+          "code": "DRH"
+        },
+        {
+          "name": "杭州东",
+          "code": "HGH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D3060-20261018",
+      "trainNumber": "D3060",
+      "trainNo": "55000D306003",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=55000D306003&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "SNH",
+      "to": "HKN",
+      "knownStops": [
+        "SNH",
+        "AOH",
+        "KNH",
+        "SZH",
+        "CZH",
+        "ZJH",
+        "NKH",
+        "INH",
+        "ENH",
+        "UAH",
+        "MBN",
+        "VXN",
+        "HKN"
+      ],
+      "observedStops": [
+        {
+          "name": "上海南",
+          "code": "SNH"
+        },
+        {
+          "name": "上海虹桥",
+          "code": "AOH"
+        },
+        {
+          "name": "昆山南",
+          "code": "KNH"
+        },
+        {
+          "name": "苏州",
+          "code": "SZH"
+        },
+        {
+          "name": "常州",
+          "code": "CZH"
+        },
+        {
+          "name": "镇江",
+          "code": "ZJH"
+        },
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "全椒",
+          "code": "INH"
+        },
+        {
+          "name": "合肥南",
+          "code": "ENH"
+        },
+        {
+          "name": "六安",
+          "code": "UAH"
+        },
+        {
+          "name": "麻城北",
+          "code": "MBN"
+        },
+        {
+          "name": "红安西",
+          "code": "VXN"
+        },
+        {
+          "name": "汉口",
+          "code": "HKN"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D3289-20261018",
+      "trainNumber": "D3289",
+      "trainNo": "4e000D32890D",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=4e000D32890D&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "WHN",
+      "to": "XKS",
+      "knownStops": [
+        "WHN",
+        "ECN",
+        "KSN",
+        "DBN",
+        "YON",
+        "LSG",
+        "DAG",
+        "ACG",
+        "NXG",
+        "FZG",
+        "NDG",
+        "NFG",
+        "TNS",
+        "JLS",
+        "SHS",
+        "YXS",
+        "YTS",
+        "XWS",
+        "QYS",
+        "XKS"
+      ],
+      "observedStops": [
+        {
+          "name": "武汉",
+          "code": "WHN"
+        },
+        {
+          "name": "鄂州",
+          "code": "ECN"
+        },
+        {
+          "name": "黄石北",
+          "code": "KSN"
+        },
+        {
+          "name": "大冶北",
+          "code": "DBN"
+        },
+        {
+          "name": "阳新",
+          "code": "YON"
+        },
+        {
+          "name": "庐山",
+          "code": "LSG"
+        },
+        {
+          "name": "德安",
+          "code": "DAG"
+        },
+        {
+          "name": "永修",
+          "code": "ACG"
+        },
+        {
+          "name": "南昌西",
+          "code": "NXG"
+        },
+        {
+          "name": "抚州",
+          "code": "FZG"
+        },
+        {
+          "name": "南城",
+          "code": "NDG"
+        },
+        {
+          "name": "南丰",
+          "code": "NFG"
+        },
+        {
+          "name": "泰宁",
+          "code": "TNS"
+        },
+        {
+          "name": "将乐",
+          "code": "JLS"
+        },
+        {
+          "name": "三明北",
+          "code": "SHS"
+        },
+        {
+          "name": "尤溪",
+          "code": "YXS"
+        },
+        {
+          "name": "永泰",
+          "code": "YTS"
+        },
+        {
+          "name": "仙游",
+          "code": "XWS"
+        },
+        {
+          "name": "泉州",
+          "code": "QYS"
+        },
+        {
+          "name": "厦门北",
+          "code": "XKS"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D7149-20261018",
+      "trainNumber": "D7149",
+      "trainNo": "65000D71520I",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D7&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=65000D71520I&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "GGQ",
+      "to": "OTQ",
+      "knownStops": [
+        "GGQ",
+        "XWQ",
+        "KNA",
+        "KDA",
+        "OGQ",
+        "LLQ",
+        "CNQ",
+        "CBQ",
+        "OTQ"
+      ],
+      "observedStops": [
+        {
+          "name": "广州东",
+          "code": "GGQ"
+        },
+        {
+          "name": "广州新塘",
+          "code": "XWQ"
+        },
+        {
+          "name": "惠州南",
+          "code": "KNA"
+        },
+        {
+          "name": "惠东",
+          "code": "KDA"
+        },
+        {
+          "name": "汕尾",
+          "code": "OGQ"
+        },
+        {
+          "name": "陆丰",
+          "code": "LLQ"
+        },
+        {
+          "name": "潮阳",
+          "code": "CNQ"
+        },
+        {
+          "name": "潮汕",
+          "code": "CBQ"
+        },
+        {
+          "name": "汕头",
+          "code": "OTQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D8306-20261018",
+      "trainNumber": "D8306",
+      "trainNo": "73000D83060H",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=73000D83060H&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BHZ",
+      "to": "NFZ",
+      "knownStops": [
+        "BHZ",
+        "QDZ",
+        "NFZ"
+      ],
+      "observedStops": [
+        {
+          "name": "北海",
+          "code": "BHZ"
+        },
+        {
+          "name": "钦州东",
+          "code": "QDZ"
+        },
+        {
+          "name": "南宁东",
+          "code": "NFZ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D920-20261018",
+      "trainNumber": "D920",
+      "trainNo": "710000D92007",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=D9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=710000D92007&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "NFZ",
+      "to": "BXP",
+      "knownStops": [
+        "NFZ",
+        "LZZ",
+        "GBZ",
+        "AOQ",
+        "QWQ",
+        "QMQ",
+        "CWQ",
+        "SJP",
+        "BXP"
+      ],
+      "observedStops": [
+        {
+          "name": "南宁东",
+          "code": "NFZ"
+        },
+        {
+          "name": "柳州",
+          "code": "LZZ"
+        },
+        {
+          "name": "桂林北",
+          "code": "GBZ"
+        },
+        {
+          "name": "永州",
+          "code": "AOQ"
+        },
+        {
+          "name": "祁阳",
+          "code": "QWQ"
+        },
+        {
+          "name": "祁东",
+          "code": "QMQ"
+        },
+        {
+          "name": "长沙南",
+          "code": "CWQ"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "北京西",
+          "code": "BXP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C15-20261018",
+      "trainNumber": "C15",
+      "trainNo": "7600000C1801",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=7600000C1801&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "HIE",
+      "to": "ICW",
+      "knownStops": [
+        "HIE",
+        "ICW"
+      ],
+      "observedStops": [
+        {
+          "name": "黄龙九寨",
+          "code": "HIE"
+        },
+        {
+          "name": "成都东",
+          "code": "ICW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C85-20261018",
+      "trainNumber": "C85",
+      "trainNo": "8c00000C8802",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=8c00000C8802&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "EUM",
+      "to": "KMM",
+      "knownStops": [
+        "EUM",
+        "LHM",
+        "KMM"
+      ],
+      "observedStops": [
+        {
+          "name": "香格里拉",
+          "code": "EUM"
+        },
+        {
+          "name": "丽江",
+          "code": "LHM"
+        },
+        {
+          "name": "昆明",
+          "code": "KMM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C118-20261018",
+      "trainNumber": "C118",
+      "trainNo": "800000C11807",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=800000C11807&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "KMM",
+      "to": "EUM",
+      "knownStops": [
+        "KMM",
+        "LHM",
+        "EDM",
+        "EUM"
+      ],
+      "observedStops": [
+        {
+          "name": "昆明",
+          "code": "KMM"
+        },
+        {
+          "name": "丽江",
+          "code": "LHM"
+        },
+        {
+          "name": "小中甸",
+          "code": "EDM"
+        },
+        {
+          "name": "香格里拉",
+          "code": "EUM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C202-20261018",
+      "trainNumber": "C202",
+      "trainNo": "410000C2020F",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=410000C2020F&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XAY",
+      "to": "HMY",
+      "knownStops": [
+        "XAY",
+        "PEY",
+        "YWY",
+        "QNY",
+        "ODY",
+        "MEY",
+        "ALY",
+        "JEY",
+        "HMY"
+      ],
+      "observedStops": [
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "蒲城东",
+          "code": "PEY"
+        },
+        {
+          "name": "延安",
+          "code": "YWY"
+        },
+        {
+          "name": "清涧县",
+          "code": "QNY"
+        },
+        {
+          "name": "绥德",
+          "code": "ODY"
+        },
+        {
+          "name": "米脂",
+          "code": "MEY"
+        },
+        {
+          "name": "榆林",
+          "code": "ALY"
+        },
+        {
+          "name": "锦界",
+          "code": "JEY"
+        },
+        {
+          "name": "神木",
+          "code": "HMY"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C293-20261018",
+      "trainNumber": "C293",
+      "trainNo": "800000C29603",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=800000C29603&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "KMM",
+      "to": "ENM",
+      "knownStops": [
+        "KMM",
+        "KOM",
+        "AJM",
+        "NEM",
+        "PEM",
+        "ENM"
+      ],
+      "observedStops": [
+        {
+          "name": "昆明",
+          "code": "KMM"
+        },
+        {
+          "name": "昆明南",
+          "code": "KOM"
+        },
+        {
+          "name": "元江",
+          "code": "AJM"
+        },
+        {
+          "name": "宁洱",
+          "code": "NEM"
+        },
+        {
+          "name": "普洱",
+          "code": "PEM"
+        },
+        {
+          "name": "西双版纳",
+          "code": "ENM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C319-20261018",
+      "trainNumber": "C319",
+      "trainNo": "8c0000C31909",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=8c0000C31909&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "DKM",
+      "to": "LHM",
+      "knownStops": [
+        "DKM",
+        "LHM"
+      ],
+      "observedStops": [
+        {
+          "name": "大理",
+          "code": "DKM"
+        },
+        {
+          "name": "丽江",
+          "code": "LHM"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C541-20261018",
+      "trainNumber": "C541",
+      "trainNo": "1g0000C54106",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C5&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=1g0000C54106&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "DFT",
+      "to": "DUT",
+      "knownStops": [
+        "DFT",
+        "JZT",
+        "DWT",
+        "XDT",
+        "PUT",
+        "CWT",
+        "HYT",
+        "ZUT",
+        "RMT",
+        "BRT",
+        "RGT",
+        "DUT"
+      ],
+      "observedStops": [
+        {
+          "name": "大连北",
+          "code": "DFT"
+        },
+        {
+          "name": "金州",
+          "code": "JZT"
+        },
+        {
+          "name": "登沙河",
+          "code": "DWT"
+        },
+        {
+          "name": "杏树屯",
+          "code": "XDT"
+        },
+        {
+          "name": "皮口",
+          "code": "PUT"
+        },
+        {
+          "name": "城子坦",
+          "code": "CWT"
+        },
+        {
+          "name": "花园口",
+          "code": "HYT"
+        },
+        {
+          "name": "庄河北",
+          "code": "ZUT"
+        },
+        {
+          "name": "大孤山",
+          "code": "RMT"
+        },
+        {
+          "name": "北井子",
+          "code": "BRT"
+        },
+        {
+          "name": "东港北",
+          "code": "RGT"
+        },
+        {
+          "name": "丹东",
+          "code": "DUT"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C649-20261018",
+      "trainNumber": "C649",
+      "trainNo": "330000C64903",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=330000C64903&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "NDC",
+      "to": "EEC",
+      "knownStops": [
+        "NDC",
+        "HHC",
+        "TVC",
+        "ZEC",
+        "RSC",
+        "EEC"
+      ],
+      "observedStops": [
+        {
+          "name": "呼和浩特东",
+          "code": "NDC"
+        },
+        {
+          "name": "呼和浩特",
+          "code": "HHC"
+        },
+        {
+          "name": "托克托东",
+          "code": "TVC"
+        },
+        {
+          "name": "准格尔",
+          "code": "ZEC"
+        },
+        {
+          "name": "东胜东",
+          "code": "RSC"
+        },
+        {
+          "name": "鄂尔多斯",
+          "code": "EEC"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C875-20261018",
+      "trainNumber": "C875",
+      "trainNo": "580000C87808",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=580000C87808&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "FZS",
+      "to": "XMS",
+      "knownStops": [
+        "FZS",
+        "SHS",
+        "TNS",
+        "JCS",
+        "SSS",
+        "NHS",
+        "QLS",
+        "AYS",
+        "GPS",
+        "LYS",
+        "XMS"
+      ],
+      "observedStops": [
+        {
+          "name": "福州",
+          "code": "FZS"
+        },
+        {
+          "name": "三明北",
+          "code": "SHS"
+        },
+        {
+          "name": "泰宁",
+          "code": "TNS"
+        },
+        {
+          "name": "建宁县北",
+          "code": "JCS"
+        },
+        {
+          "name": "水茜",
+          "code": "SSS"
+        },
+        {
+          "name": "宁化",
+          "code": "NHS"
+        },
+        {
+          "name": "清流",
+          "code": "QLS"
+        },
+        {
+          "name": "杨源",
+          "code": "AYS"
+        },
+        {
+          "name": "冠豸山",
+          "code": "GPS"
+        },
+        {
+          "name": "龙岩",
+          "code": "LYS"
+        },
+        {
+          "name": "厦门",
+          "code": "XMS"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C881-20261018",
+      "trainNumber": "C881",
+      "trainNo": "880000C88103",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LSO",
+      "to": "LZO",
+      "knownStops": [
+        "LSO",
+        "SAO",
+        "JIO",
+        "LIO",
+        "MIO",
+        "LZO"
+      ],
+      "observedStops": [
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        },
+        {
+          "name": "山南",
+          "code": "SAO"
+        },
+        {
+          "name": "加查",
+          "code": "JIO"
+        },
+        {
+          "name": "朗县",
+          "code": "LIO"
+        },
+        {
+          "name": "米林",
+          "code": "MIO"
+        },
+        {
+          "name": "林芝",
+          "code": "LZO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C883-20261018",
+      "trainNumber": "C883",
+      "trainNo": "880000C88320",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88320&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LSO",
+      "to": "RKO",
+      "knownStops": [
+        "LSO",
+        "RKO"
+      ],
+      "observedStops": [
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        },
+        {
+          "name": "日喀则",
+          "code": "RKO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C1001-20261018",
+      "trainNumber": "C1001",
+      "trainNo": "11000C10010F",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C1&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=11000C10010F&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "CCT",
+      "to": "YXL",
+      "knownStops": [
+        "CCT",
+        "JLL",
+        "JOL",
+        "YXL"
+      ],
+      "observedStops": [
+        {
+          "name": "长春",
+          "code": "CCT"
+        },
+        {
+          "name": "吉林",
+          "code": "JLL"
+        },
+        {
+          "name": "蛟河西",
+          "code": "JOL"
+        },
+        {
+          "name": "延吉西",
+          "code": "YXL"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C2136-20261018",
+      "trainNumber": "C2136",
+      "trainNo": "25000C213623",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=25000C213623&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "TXP",
+      "to": "VNP",
+      "knownStops": [
+        "TXP",
+        "VNP"
+      ],
+      "observedStops": [
+        {
+          "name": "天津西",
+          "code": "TXP"
+        },
+        {
+          "name": "北京南",
+          "code": "VNP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C3005-20261018",
+      "trainNumber": "C3005",
+      "trainNo": "5l000C300501",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C3&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=5l000C300501&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "NKH",
+      "to": "SNH",
+      "knownStops": [
+        "NKH",
+        "LEH",
+        "YUH",
+        "HKU",
+        "KIU",
+        "SJU",
+        "SMU",
+        "SNH"
+      ],
+      "observedStops": [
+        {
+          "name": "南京南",
+          "code": "NKH"
+        },
+        {
+          "name": "溧阳",
+          "code": "LEH"
+        },
+        {
+          "name": "宜兴",
+          "code": "YUH"
+        },
+        {
+          "name": "湖州东",
+          "code": "HKU"
+        },
+        {
+          "name": "湖州南浔",
+          "code": "KIU"
+        },
+        {
+          "name": "盛泽",
+          "code": "SJU"
+        },
+        {
+          "name": "苏州南",
+          "code": "SMU"
+        },
+        {
+          "name": "上海南",
+          "code": "SNH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C4802-20261018",
+      "trainNumber": "C4802",
+      "trainNo": "6t000C480206",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C4&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6t000C480206&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "ZUA",
+      "to": "BBA",
+      "knownStops": [
+        "ZUA",
+        "BDA",
+        "BBA"
+      ],
+      "observedStops": [
+        {
+          "name": "竹料",
+          "code": "ZUA"
+        },
+        {
+          "name": "白云机场东",
+          "code": "BDA"
+        },
+        {
+          "name": "白云机场北",
+          "code": "BBA"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C6132-20261018",
+      "trainNumber": "C6132",
+      "trainNo": "76000C61320B",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000C61320B&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "YAE",
+      "to": "LUE",
+      "knownStops": [
+        "YAE",
+        "CYE",
+        "QLE",
+        "CZE",
+        "ICW",
+        "ZGE",
+        "FSE",
+        "LUE"
+      ],
+      "observedStops": [
+        {
+          "name": "雅安",
+          "code": "YAE"
+        },
+        {
+          "name": "朝阳湖",
+          "code": "CYE"
+        },
+        {
+          "name": "邛崃",
+          "code": "QLE"
+        },
+        {
+          "name": "崇州",
+          "code": "CZE"
+        },
+        {
+          "name": "成都东",
+          "code": "ICW"
+        },
+        {
+          "name": "自贡",
+          "code": "ZGE"
+        },
+        {
+          "name": "富顺",
+          "code": "FSE"
+        },
+        {
+          "name": "泸州",
+          "code": "LUE"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C7099-20261018",
+      "trainNumber": "C7099",
+      "trainNo": "63000C709903",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C7&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=63000C709903&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "GBQ",
+      "to": "SZQ",
+      "knownStops": [
+        "GBQ",
+        "GBA",
+        "GGQ",
+        "XWQ",
+        "DAQ",
+        "PHQ",
+        "SZQ"
+      ],
+      "observedStops": [
+        {
+          "name": "广州北",
+          "code": "GBQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "广州东",
+          "code": "GGQ"
+        },
+        {
+          "name": "广州新塘",
+          "code": "XWQ"
+        },
+        {
+          "name": "常平",
+          "code": "DAQ"
+        },
+        {
+          "name": "平湖",
+          "code": "PHQ"
+        },
+        {
+          "name": "深圳",
+          "code": "SZQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C9317-20261018",
+      "trainNumber": "C9317",
+      "trainNo": "41000C931702",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=41000C931702&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XDY",
+      "to": "APY",
+      "knownStops": [
+        "XDY",
+        "NGY",
+        "ZCY",
+        "ZTY",
+        "APY"
+      ],
+      "observedStops": [
+        {
+          "name": "西安东",
+          "code": "XDY"
+        },
+        {
+          "name": "牛背梁",
+          "code": "NGY"
+        },
+        {
+          "name": "柞水西",
+          "code": "ZCY"
+        },
+        {
+          "name": "镇安西",
+          "code": "ZTY"
+        },
+        {
+          "name": "安康西",
+          "code": "APY"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C9685-20261018",
+      "trainNumber": "C9685",
+      "trainNo": "87000C968500",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C9&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=87000C968500&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "YIJ",
+      "to": "ZTJ",
+      "knownStops": [
+        "YIJ",
+        "HFJ",
+        "WVJ",
+        "ZDJ",
+        "ZTJ"
+      ],
+      "observedStops": [
+        {
+          "name": "银川",
+          "code": "YIJ"
+        },
+        {
+          "name": "河东机场",
+          "code": "HFJ"
+        },
+        {
+          "name": "吴忠",
+          "code": "WVJ"
+        },
+        {
+          "name": "中宁东",
+          "code": "ZDJ"
+        },
+        {
+          "name": "中卫南",
+          "code": "ZTJ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z21-20261018",
+      "trainNumber": "Z21",
+      "trainNo": "2400000Z210W",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z21&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=2400000Z210W&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "LSO",
+      "knownStops": [
+        "BXP",
+        "VVP",
+        "TYV",
+        "ZWJ",
+        "LZJ",
+        "XNO",
+        "DHO",
+        "GRO",
+        "NQO",
+        "LSO"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄北",
+          "code": "VVP"
+        },
+        {
+          "name": "太原",
+          "code": "TYV"
+        },
+        {
+          "name": "中卫",
+          "code": "ZWJ"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "德令哈",
+          "code": "DHO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z22-20261018",
+      "trainNumber": "Z22",
+      "trainNo": "8800000Z220A",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z22&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=8800000Z220A&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LSO",
+      "to": "BXP",
+      "knownStops": [
+        "LSO",
+        "NQO",
+        "GRO",
+        "DHO",
+        "XNO",
+        "LZJ",
+        "ZWJ",
+        "TYV",
+        "VVP",
+        "BDP",
+        "BXP"
+      ],
+      "observedStops": [
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "德令哈",
+          "code": "DHO"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "中卫",
+          "code": "ZWJ"
+        },
+        {
+          "name": "太原",
+          "code": "TYV"
+        },
+        {
+          "name": "石家庄北",
+          "code": "VVP"
+        },
+        {
+          "name": "保定",
+          "code": "BDP"
+        },
+        {
+          "name": "北京西",
+          "code": "BXP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z164-20261018",
+      "trainNumber": "Z164",
+      "trainNo": "550000Z16407",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z164&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=550000Z16407&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "SHH",
+      "to": "LSO",
+      "knownStops": [
+        "SHH",
+        "SZH",
+        "WXH",
+        "NJH",
+        "BBH",
+        "XCH",
+        "ZZF",
+        "LYF",
+        "XAY",
+        "XYY",
+        "BJY",
+        "LZJ",
+        "XNO",
+        "GRO",
+        "ADO",
+        "NQO",
+        "LSO"
+      ],
+      "observedStops": [
+        {
+          "name": "上海",
+          "code": "SHH"
+        },
+        {
+          "name": "苏州",
+          "code": "SZH"
+        },
+        {
+          "name": "无锡",
+          "code": "WXH"
+        },
+        {
+          "name": "南京",
+          "code": "NJH"
+        },
+        {
+          "name": "蚌埠",
+          "code": "BBH"
+        },
+        {
+          "name": "徐州",
+          "code": "XCH"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "洛阳",
+          "code": "LYF"
+        },
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "咸阳",
+          "code": "XYY"
+        },
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "安多",
+          "code": "ADO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z166-20261018",
+      "trainNumber": "Z166",
+      "trainNo": "880000Z1660D",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z166&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000Z1660D&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LSO",
+      "to": "SHH",
+      "knownStops": [
+        "LSO",
+        "NQO",
+        "ADO",
+        "GRO",
+        "XNO",
+        "LZJ",
+        "XAY",
+        "ZZF",
+        "XCH",
+        "BBH",
+        "NJH",
+        "WXH",
+        "SZH",
+        "SHH"
+      ],
+      "observedStops": [
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "安多",
+          "code": "ADO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "徐州",
+          "code": "XCH"
+        },
+        {
+          "name": "蚌埠",
+          "code": "BBH"
+        },
+        {
+          "name": "南京",
+          "code": "NJH"
+        },
+        {
+          "name": "无锡",
+          "code": "WXH"
+        },
+        {
+          "name": "苏州",
+          "code": "SZH"
+        },
+        {
+          "name": "上海",
+          "code": "SHH"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z265-20261018",
+      "trainNumber": "Z265",
+      "trainNo": "650000Z26403",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z265&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=650000Z26403&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "GBA",
+      "to": "LSO",
+      "knownStops": [
+        "GBA",
+        "CZQ",
+        "CSQ",
+        "WCN",
+        "ZZF",
+        "LYF",
+        "XAY",
+        "BJY",
+        "LZJ",
+        "XNO",
+        "DHO",
+        "GRO",
+        "ADO",
+        "NQO",
+        "LSO"
+      ],
+      "observedStops": [
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "郴州",
+          "code": "CZQ"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "洛阳",
+          "code": "LYF"
+        },
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "德令哈",
+          "code": "DHO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "安多",
+          "code": "ADO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z266-20261018",
+      "trainNumber": "Z266",
+      "trainNo": "880000Z2660P",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z266&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000Z2660P&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "LSO",
+      "to": "GBA",
+      "knownStops": [
+        "LSO",
+        "NQO",
+        "GRO",
+        "XNO",
+        "LZJ",
+        "XYY",
+        "XAY",
+        "ZZF",
+        "WCN",
+        "CSQ",
+        "ZZQ",
+        "HYQ",
+        "CZQ",
+        "SGQ",
+        "GBA"
+      ],
+      "observedStops": [
+        {
+          "name": "拉萨",
+          "code": "LSO"
+        },
+        {
+          "name": "那曲",
+          "code": "NQO"
+        },
+        {
+          "name": "格尔木",
+          "code": "GRO"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "咸阳",
+          "code": "XYY"
+        },
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "株洲",
+          "code": "ZZQ"
+        },
+        {
+          "name": "衡阳",
+          "code": "HYQ"
+        },
+        {
+          "name": "郴州",
+          "code": "CZQ"
+        },
+        {
+          "name": "韶关东",
+          "code": "SGQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z385-20261018",
+      "trainNumber": "Z385",
+      "trainNo": "110000Z3840I",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z385&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=110000Z3840I&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "CCT",
+      "to": "VUQ",
+      "knownStops": [
+        "CCT",
+        "SPT",
+        "SBT",
+        "JOD",
+        "SHD",
+        "QTP",
+        "TSP",
+        "TJP",
+        "UCK",
+        "HIK",
+        "BZH",
+        "FYH",
+        "JJG",
+        "NCG",
+        "VAG",
+        "JGG",
+        "HYQ",
+        "GBA",
+        "MDQ",
+        "ZWQ",
+        "VUQ"
+      ],
+      "observedStops": [
+        {
+          "name": "长春",
+          "code": "CCT"
+        },
+        {
+          "name": "四平",
+          "code": "SPT"
+        },
+        {
+          "name": "沈阳北",
+          "code": "SBT"
+        },
+        {
+          "name": "锦州南",
+          "code": "JOD"
+        },
+        {
+          "name": "山海关",
+          "code": "SHD"
+        },
+        {
+          "name": "秦皇岛",
+          "code": "QTP"
+        },
+        {
+          "name": "唐山",
+          "code": "TSP"
+        },
+        {
+          "name": "天津",
+          "code": "TJP"
+        },
+        {
+          "name": "聊城",
+          "code": "UCK"
+        },
+        {
+          "name": "菏泽",
+          "code": "HIK"
+        },
+        {
+          "name": "亳州",
+          "code": "BZH"
+        },
+        {
+          "name": "阜阳",
+          "code": "FYH"
+        },
+        {
+          "name": "九江",
+          "code": "JJG"
+        },
+        {
+          "name": "南昌",
+          "code": "NCG"
+        },
+        {
+          "name": "吉安",
+          "code": "VAG"
+        },
+        {
+          "name": "井冈山",
+          "code": "JGG"
+        },
+        {
+          "name": "衡阳",
+          "code": "HYQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "茂名",
+          "code": "MDQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "海口",
+          "code": "VUQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z386-20261018",
+      "trainNumber": "Z386",
+      "trainNo": "6b0000Z3860H",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z386&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000Z3860H&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "VUQ",
+      "to": "CCT",
+      "knownStops": [
+        "VUQ",
+        "XJQ",
+        "ZWQ",
+        "MDQ",
+        "GBA",
+        "HYQ",
+        "JGG",
+        "VAG",
+        "NCG",
+        "JJG",
+        "FYH",
+        "BZH",
+        "SPF",
+        "HIK",
+        "UCK",
+        "HSP",
+        "RQP",
+        "TJP",
+        "TSP",
+        "QTP",
+        "SHD",
+        "JOD",
+        "SBT",
+        "SPT",
+        "CCT"
+      ],
+      "observedStops": [
+        {
+          "name": "海口",
+          "code": "VUQ"
+        },
+        {
+          "name": "徐闻",
+          "code": "XJQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "茂名",
+          "code": "MDQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "衡阳",
+          "code": "HYQ"
+        },
+        {
+          "name": "井冈山",
+          "code": "JGG"
+        },
+        {
+          "name": "吉安",
+          "code": "VAG"
+        },
+        {
+          "name": "南昌",
+          "code": "NCG"
+        },
+        {
+          "name": "九江",
+          "code": "JJG"
+        },
+        {
+          "name": "阜阳",
+          "code": "FYH"
+        },
+        {
+          "name": "亳州",
+          "code": "BZH"
+        },
+        {
+          "name": "商丘南",
+          "code": "SPF"
+        },
+        {
+          "name": "菏泽",
+          "code": "HIK"
+        },
+        {
+          "name": "聊城",
+          "code": "UCK"
+        },
+        {
+          "name": "衡水",
+          "code": "HSP"
+        },
+        {
+          "name": "任丘",
+          "code": "RQP"
+        },
+        {
+          "name": "天津",
+          "code": "TJP"
+        },
+        {
+          "name": "唐山",
+          "code": "TSP"
+        },
+        {
+          "name": "秦皇岛",
+          "code": "QTP"
+        },
+        {
+          "name": "山海关",
+          "code": "SHD"
+        },
+        {
+          "name": "锦州南",
+          "code": "JOD"
+        },
+        {
+          "name": "沈阳北",
+          "code": "SBT"
+        },
+        {
+          "name": "四平",
+          "code": "SPT"
+        },
+        {
+          "name": "长春",
+          "code": "CCT"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z501-20261018",
+      "trainNumber": "Z501",
+      "trainNo": "240000Z5010I",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z501&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000Z5010I&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BXP",
+      "to": "SEQ",
+      "knownStops": [
+        "BXP",
+        "SJP",
+        "ZZF",
+        "WCN",
+        "CSQ",
+        "CZQ",
+        "SGQ",
+        "GBA",
+        "MDQ",
+        "ZWQ",
+        "VUQ",
+        "UFQ",
+        "UQQ",
+        "SEQ"
+      ],
+      "observedStops": [
+        {
+          "name": "北京西",
+          "code": "BXP"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "郴州",
+          "code": "CZQ"
+        },
+        {
+          "name": "韶关东",
+          "code": "SGQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "茂名",
+          "code": "MDQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "海口",
+          "code": "VUQ"
+        },
+        {
+          "name": "东方",
+          "code": "UFQ"
+        },
+        {
+          "name": "乐东",
+          "code": "UQQ"
+        },
+        {
+          "name": "三亚",
+          "code": "SEQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z502-20261018",
+      "trainNumber": "Z502",
+      "trainNo": "6b0000Z50208",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=Z502&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000Z50208&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "SEQ",
+      "to": "BXP",
+      "knownStops": [
+        "SEQ",
+        "UQQ",
+        "UFQ",
+        "VUQ",
+        "ZWQ",
+        "GBA",
+        "SGQ",
+        "CZQ",
+        "CSQ",
+        "YYQ",
+        "WCN",
+        "ZZF",
+        "SJP",
+        "BXP"
+      ],
+      "observedStops": [
+        {
+          "name": "三亚",
+          "code": "SEQ"
+        },
+        {
+          "name": "乐东",
+          "code": "UQQ"
+        },
+        {
+          "name": "东方",
+          "code": "UFQ"
+        },
+        {
+          "name": "海口",
+          "code": "VUQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "广州白云",
+          "code": "GBA"
+        },
+        {
+          "name": "韶关东",
+          "code": "SGQ"
+        },
+        {
+          "name": "郴州",
+          "code": "CZQ"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "岳阳",
+          "code": "YYQ"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "石家庄",
+          "code": "SJP"
+        },
+        {
+          "name": "北京西",
+          "code": "BXP"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-K457-20261018",
+      "trainNumber": "K457",
+      "trainNo": "380000K457D0",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K457&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=380000K457D0&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XXF",
+      "to": "SEQ",
+      "knownStops": [
+        "XXF",
+        "ZZF",
+        "XCF",
+        "LON",
+        "XUN",
+        "GSN",
+        "WCN",
+        "YYQ",
+        "CSQ",
+        "ZZQ",
+        "HYQ",
+        "AOQ",
+        "GBZ",
+        "LZZ",
+        "GGZ",
+        "YLZ",
+        "ZWQ",
+        "VUQ",
+        "UFQ",
+        "UQQ",
+        "SEQ"
+      ],
+      "observedStops": [
+        {
+          "name": "新乡",
+          "code": "XXF"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "许昌",
+          "code": "XCF"
+        },
+        {
+          "name": "漯河",
+          "code": "LON"
+        },
+        {
+          "name": "信阳",
+          "code": "XUN"
+        },
+        {
+          "name": "广水",
+          "code": "GSN"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "岳阳",
+          "code": "YYQ"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "株洲",
+          "code": "ZZQ"
+        },
+        {
+          "name": "衡阳",
+          "code": "HYQ"
+        },
+        {
+          "name": "永州",
+          "code": "AOQ"
+        },
+        {
+          "name": "桂林北",
+          "code": "GBZ"
+        },
+        {
+          "name": "柳州",
+          "code": "LZZ"
+        },
+        {
+          "name": "贵港",
+          "code": "GGZ"
+        },
+        {
+          "name": "玉林",
+          "code": "YLZ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "海口",
+          "code": "VUQ"
+        },
+        {
+          "name": "东方",
+          "code": "UFQ"
+        },
+        {
+          "name": "乐东",
+          "code": "UQQ"
+        },
+        {
+          "name": "三亚",
+          "code": "SEQ"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-K458-20261018",
+      "trainNumber": "K458",
+      "trainNo": "6b0000K4580M",
+      "serviceDate": "2026-10-18",
+      "completeness": "partial-observed",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K458&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6b0000K4580M&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "SEQ",
+      "to": "XXF",
+      "knownStops": [
+        "SEQ",
+        "UQQ",
+        "UFQ",
+        "VUQ",
+        "XJQ",
+        "UAQ",
+        "ZWQ",
+        "LJZ",
+        "YLZ",
+        "GGZ",
+        "LZZ",
+        "GBZ",
+        "AOQ",
+        "QWQ",
+        "QMQ",
+        "HYQ",
+        "HSQ",
+        "ZZQ",
+        "CSQ",
+        "YYQ",
+        "CBN",
+        "WCN",
+        "XGN",
+        "XUN",
+        "QSN",
+        "ZDN",
+        "LON",
+        "XCF",
+        "ZZF",
+        "XXF"
+      ],
+      "observedStops": [
+        {
+          "name": "三亚",
+          "code": "SEQ"
+        },
+        {
+          "name": "乐东",
+          "code": "UQQ"
+        },
+        {
+          "name": "东方",
+          "code": "UFQ"
+        },
+        {
+          "name": "海口",
+          "code": "VUQ"
+        },
+        {
+          "name": "徐闻",
+          "code": "XJQ"
+        },
+        {
+          "name": "雷州",
+          "code": "UAQ"
+        },
+        {
+          "name": "湛江西",
+          "code": "ZWQ"
+        },
+        {
+          "name": "廉江",
+          "code": "LJZ"
+        },
+        {
+          "name": "玉林",
+          "code": "YLZ"
+        },
+        {
+          "name": "贵港",
+          "code": "GGZ"
+        },
+        {
+          "name": "柳州",
+          "code": "LZZ"
+        },
+        {
+          "name": "桂林北",
+          "code": "GBZ"
+        },
+        {
+          "name": "永州",
+          "code": "AOQ"
+        },
+        {
+          "name": "祁阳",
+          "code": "QWQ"
+        },
+        {
+          "name": "祁东",
+          "code": "QMQ"
+        },
+        {
+          "name": "衡阳",
+          "code": "HYQ"
+        },
+        {
+          "name": "衡山",
+          "code": "HSQ"
+        },
+        {
+          "name": "株洲",
+          "code": "ZZQ"
+        },
+        {
+          "name": "长沙",
+          "code": "CSQ"
+        },
+        {
+          "name": "岳阳",
+          "code": "YYQ"
+        },
+        {
+          "name": "赤壁",
+          "code": "CBN"
+        },
+        {
+          "name": "武昌",
+          "code": "WCN"
+        },
+        {
+          "name": "孝感",
+          "code": "XGN"
+        },
+        {
+          "name": "信阳",
+          "code": "XUN"
+        },
+        {
+          "name": "确山",
+          "code": "QSN"
+        },
+        {
+          "name": "驻马店",
+          "code": "ZDN"
+        },
+        {
+          "name": "漯河",
+          "code": "LON"
+        },
+        {
+          "name": "许昌",
+          "code": "XCF"
+        },
+        {
+          "name": "郑州",
+          "code": "ZZF"
+        },
+        {
+          "name": "新乡",
+          "code": "XXF"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-K9786-20261018",
+      "trainNumber": "K9786",
+      "trainNo": "93000K978600",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K9786&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000K978600&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "WMR",
+      "to": "KSR",
+      "knownStops": [
+        "WMR",
+        "TAR",
+        "MLR",
+        "YSR",
+        "KLR",
+        "WRR",
+        "RQR",
+        "WHR",
+        "QMR",
+        "JSR",
+        "NTR",
+        "MFR",
+        "YWR",
+        "YFR",
+        "CLR",
+        "LVR",
+        "VTR",
+        "MUR",
+        "ESR",
+        "PSR",
+        "YER",
+        "ZPR",
+        "SCR",
+        "YIR",
+        "KSR"
+      ],
+      "observedStops": [
+        {
+          "name": "乌鲁木齐南",
+          "code": "WMR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "马兰",
+          "code": "MLR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "尉犁",
+          "code": "WRR"
+        },
+        {
+          "name": "若羌",
+          "code": "RQR"
+        },
+        {
+          "name": "瓦石峡",
+          "code": "WHR"
+        },
+        {
+          "name": "且末",
+          "code": "QMR"
+        },
+        {
+          "name": "金山",
+          "code": "JSR"
+        },
+        {
+          "name": "南屯",
+          "code": "NTR"
+        },
+        {
+          "name": "民丰",
+          "code": "MFR"
+        },
+        {
+          "name": "于田",
+          "code": "YWR"
+        },
+        {
+          "name": "玉泉镇",
+          "code": "YFR"
+        },
+        {
+          "name": "策勒",
+          "code": "CLR"
+        },
+        {
+          "name": "洛浦",
+          "code": "LVR"
+        },
+        {
+          "name": "和田",
+          "code": "VTR"
+        },
+        {
+          "name": "墨玉",
+          "code": "MUR"
+        },
+        {
+          "name": "昆玉",
+          "code": "ESR"
+        },
+        {
+          "name": "皮山",
+          "code": "PSR"
+        },
+        {
+          "name": "叶城",
+          "code": "YER"
+        },
+        {
+          "name": "泽普",
+          "code": "ZPR"
+        },
+        {
+          "name": "莎车",
+          "code": "SCR"
+        },
+        {
+          "name": "英吉沙",
+          "code": "YIR"
+        },
+        {
+          "name": "喀什",
+          "code": "KSR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-K9718-20261018",
+      "trainNumber": "K9718",
+      "trainNo": "93000K97180H",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=K9718&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000K97180H&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "WAR",
+      "to": "VTR",
+      "knownStops": [
+        "WAR",
+        "YSR",
+        "KLR",
+        "LAR",
+        "KCR",
+        "XIR",
+        "ASR",
+        "BCR",
+        "ATR",
+        "KSR",
+        "YIR",
+        "SCR",
+        "ZPR",
+        "YER",
+        "PSR",
+        "ESR",
+        "MUR",
+        "VTR"
+      ],
+      "observedStops": [
+        {
+          "name": "乌鲁木齐",
+          "code": "WAR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "轮台",
+          "code": "LAR"
+        },
+        {
+          "name": "库车",
+          "code": "KCR"
+        },
+        {
+          "name": "新和",
+          "code": "XIR"
+        },
+        {
+          "name": "阿克苏",
+          "code": "ASR"
+        },
+        {
+          "name": "巴楚",
+          "code": "BCR"
+        },
+        {
+          "name": "阿图什",
+          "code": "ATR"
+        },
+        {
+          "name": "喀什",
+          "code": "KSR"
+        },
+        {
+          "name": "英吉沙",
+          "code": "YIR"
+        },
+        {
+          "name": "莎车",
+          "code": "SCR"
+        },
+        {
+          "name": "泽普",
+          "code": "ZPR"
+        },
+        {
+          "name": "叶城",
+          "code": "YER"
+        },
+        {
+          "name": "皮山",
+          "code": "PSR"
+        },
+        {
+          "name": "昆玉",
+          "code": "ESR"
+        },
+        {
+          "name": "墨玉",
+          "code": "MUR"
+        },
+        {
+          "name": "和田",
+          "code": "VTR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-T269-20261018",
+      "trainNumber": "T269",
+      "trainNo": "410000T2690M",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=T269&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=410000T2690M&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "XAY",
+      "to": "KSR",
+      "knownStops": [
+        "XAY",
+        "XYY",
+        "YSY",
+        "BJY",
+        "TSJ",
+        "GGJ",
+        "LXJ",
+        "DSJ",
+        "LZJ",
+        "XNO",
+        "MBJ",
+        "ZEJ",
+        "JBJ",
+        "YXJ",
+        "HMR",
+        "SMR",
+        "TAR",
+        "YSR",
+        "KLR",
+        "KCR",
+        "ASR",
+        "BCR",
+        "ATR",
+        "KSR"
+      ],
+      "observedStops": [
+        {
+          "name": "西安",
+          "code": "XAY"
+        },
+        {
+          "name": "咸阳",
+          "code": "XYY"
+        },
+        {
+          "name": "杨陵",
+          "code": "YSY"
+        },
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        },
+        {
+          "name": "天水",
+          "code": "TSJ"
+        },
+        {
+          "name": "甘谷",
+          "code": "GGJ"
+        },
+        {
+          "name": "陇西",
+          "code": "LXJ"
+        },
+        {
+          "name": "定西",
+          "code": "DSJ"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "民乐",
+          "code": "MBJ"
+        },
+        {
+          "name": "张掖西",
+          "code": "ZEJ"
+        },
+        {
+          "name": "嘉峪关南",
+          "code": "JBJ"
+        },
+        {
+          "name": "玉门",
+          "code": "YXJ"
+        },
+        {
+          "name": "哈密",
+          "code": "HMR"
+        },
+        {
+          "name": "鄯善北",
+          "code": "SMR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "库车",
+          "code": "KCR"
+        },
+        {
+          "name": "阿克苏",
+          "code": "ASR"
+        },
+        {
+          "name": "巴楚",
+          "code": "BCR"
+        },
+        {
+          "name": "阿图什",
+          "code": "ATR"
+        },
+        {
+          "name": "喀什",
+          "code": "KSR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-T270-20261018",
+      "trainNumber": "T270",
+      "trainNo": "940000T2700B",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=T270&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=940000T2700B&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "KSR",
+      "to": "XAY",
+      "knownStops": [
+        "KSR",
+        "BCR",
+        "ASR",
+        "XIR",
+        "KCR",
+        "KLR",
+        "YSR",
+        "VUR",
+        "TAR",
+        "SMR",
+        "HMR",
+        "JBJ",
+        "JNJ",
+        "LDJ",
+        "ZEJ",
+        "XNO",
+        "LZJ",
+        "DSJ",
+        "LXJ",
+        "GGJ",
+        "TSJ",
+        "BJY",
+        "CJY",
+        "WGY",
+        "XYY",
+        "XAY"
+      ],
+      "observedStops": [
+        {
+          "name": "喀什",
+          "code": "KSR"
+        },
+        {
+          "name": "巴楚",
+          "code": "BCR"
+        },
+        {
+          "name": "阿克苏",
+          "code": "ASR"
+        },
+        {
+          "name": "新和",
+          "code": "XIR"
+        },
+        {
+          "name": "库车",
+          "code": "KCR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "和硕",
+          "code": "VUR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "鄯善北",
+          "code": "SMR"
+        },
+        {
+          "name": "哈密",
+          "code": "HMR"
+        },
+        {
+          "name": "嘉峪关南",
+          "code": "JBJ"
+        },
+        {
+          "name": "酒泉南",
+          "code": "JNJ"
+        },
+        {
+          "name": "临泽南",
+          "code": "LDJ"
+        },
+        {
+          "name": "张掖西",
+          "code": "ZEJ"
+        },
+        {
+          "name": "西宁",
+          "code": "XNO"
+        },
+        {
+          "name": "兰州",
+          "code": "LZJ"
+        },
+        {
+          "name": "定西",
+          "code": "DSJ"
+        },
+        {
+          "name": "陇西",
+          "code": "LXJ"
+        },
+        {
+          "name": "甘谷",
+          "code": "GGJ"
+        },
+        {
+          "name": "天水",
+          "code": "TSJ"
+        },
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        },
+        {
+          "name": "蔡家坡",
+          "code": "CJY"
+        },
+        {
+          "name": "武功",
+          "code": "WGY"
+        },
+        {
+          "name": "咸阳",
+          "code": "XYY"
+        },
+        {
+          "name": "西安",
+          "code": "XAY"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-7556-20261018",
+      "trainNumber": "7556",
+      "trainNo": "93000075560S",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=7556&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=93000075560S&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "WAR",
+      "to": "VTR",
+      "knownStops": [
+        "WAR",
+        "TAR",
+        "YGR",
+        "MLR",
+        "VUR",
+        "YSR",
+        "KLR",
+        "XAR",
+        "KCR",
+        "XIR",
+        "ASR",
+        "BCR",
+        "ATR",
+        "KSR",
+        "AER",
+        "YIR",
+        "SCR",
+        "ZPR",
+        "YER",
+        "PSR",
+        "ESR",
+        "MUR",
+        "VTR"
+      ],
+      "observedStops": [
+        {
+          "name": "乌鲁木齐",
+          "code": "WAR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "鱼儿沟",
+          "code": "YGR"
+        },
+        {
+          "name": "马兰",
+          "code": "MLR"
+        },
+        {
+          "name": "和硕",
+          "code": "VUR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "铁门关",
+          "code": "XAR"
+        },
+        {
+          "name": "库车",
+          "code": "KCR"
+        },
+        {
+          "name": "新和",
+          "code": "XIR"
+        },
+        {
+          "name": "阿克苏",
+          "code": "ASR"
+        },
+        {
+          "name": "巴楚",
+          "code": "BCR"
+        },
+        {
+          "name": "阿图什",
+          "code": "ATR"
+        },
+        {
+          "name": "喀什",
+          "code": "KSR"
+        },
+        {
+          "name": "阿克陶",
+          "code": "AER"
+        },
+        {
+          "name": "英吉沙",
+          "code": "YIR"
+        },
+        {
+          "name": "莎车",
+          "code": "SCR"
+        },
+        {
+          "name": "泽普",
+          "code": "ZPR"
+        },
+        {
+          "name": "叶城",
+          "code": "YER"
+        },
+        {
+          "name": "皮山",
+          "code": "PSR"
+        },
+        {
+          "name": "昆玉",
+          "code": "ESR"
+        },
+        {
+          "name": "墨玉",
+          "code": "MUR"
+        },
+        {
+          "name": "和田",
+          "code": "VTR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-7558-20261018",
+      "trainNumber": "7558",
+      "trainNo": "94000075580L",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=7558&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=94000075580L&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "VTR",
+      "to": "WAR",
+      "knownStops": [
+        "VTR",
+        "MUR",
+        "ESR",
+        "PSR",
+        "YER",
+        "ZPR",
+        "SCR",
+        "YIR",
+        "AER",
+        "KSR",
+        "ATR",
+        "BCR",
+        "ASR",
+        "XIR",
+        "KCR",
+        "XAR",
+        "KLR",
+        "YSR",
+        "VUR",
+        "MLR",
+        "YGR",
+        "TAR",
+        "WAR"
+      ],
+      "observedStops": [
+        {
+          "name": "和田",
+          "code": "VTR"
+        },
+        {
+          "name": "墨玉",
+          "code": "MUR"
+        },
+        {
+          "name": "昆玉",
+          "code": "ESR"
+        },
+        {
+          "name": "皮山",
+          "code": "PSR"
+        },
+        {
+          "name": "叶城",
+          "code": "YER"
+        },
+        {
+          "name": "泽普",
+          "code": "ZPR"
+        },
+        {
+          "name": "莎车",
+          "code": "SCR"
+        },
+        {
+          "name": "英吉沙",
+          "code": "YIR"
+        },
+        {
+          "name": "阿克陶",
+          "code": "AER"
+        },
+        {
+          "name": "喀什",
+          "code": "KSR"
+        },
+        {
+          "name": "阿图什",
+          "code": "ATR"
+        },
+        {
+          "name": "巴楚",
+          "code": "BCR"
+        },
+        {
+          "name": "阿克苏",
+          "code": "ASR"
+        },
+        {
+          "name": "新和",
+          "code": "XIR"
+        },
+        {
+          "name": "库车",
+          "code": "KCR"
+        },
+        {
+          "name": "铁门关",
+          "code": "XAR"
+        },
+        {
+          "name": "库尔勒",
+          "code": "KLR"
+        },
+        {
+          "name": "焉耆",
+          "code": "YSR"
+        },
+        {
+          "name": "和硕",
+          "code": "VUR"
+        },
+        {
+          "name": "马兰",
+          "code": "MLR"
+        },
+        {
+          "name": "鱼儿沟",
+          "code": "YGR"
+        },
+        {
+          "name": "吐鲁番北",
+          "code": "TAR"
+        },
+        {
+          "name": "乌鲁木齐",
+          "code": "WAR"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-5633-20261018",
+      "trainNumber": "5633",
+      "trainNo": "76000056330W",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5633&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000056330W&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "POW",
+      "to": "PNE",
+      "knownStops": [
+        "POW",
+        "上普雄",
+        "尔赛河",
+        "尼波",
+        "乐武",
+        "红峰",
+        "沙马拉达",
+        "瓦祖",
+        "新凉",
+        "联合乡",
+        "EDW",
+        "冕山",
+        "UGW",
+        "YQW",
+        "ECW",
+        "西昌南",
+        "DVW",
+        "乐跃",
+        "蒲坝",
+        "永郎",
+        "弯坵",
+        "米易",
+        "枣子林",
+        "桐子林",
+        "PNE"
+      ],
+      "observedStops": [
+        {
+          "name": "普雄",
+          "code": "POW"
+        },
+        {
+          "name": "上普雄",
+          "code": null
+        },
+        {
+          "name": "尔赛河",
+          "code": null
+        },
+        {
+          "name": "尼波",
+          "code": null
+        },
+        {
+          "name": "乐武",
+          "code": null
+        },
+        {
+          "name": "红峰",
+          "code": null
+        },
+        {
+          "name": "沙马拉达",
+          "code": null
+        },
+        {
+          "name": "瓦祖",
+          "code": null
+        },
+        {
+          "name": "新凉",
+          "code": null
+        },
+        {
+          "name": "联合乡",
+          "code": null
+        },
+        {
+          "name": "喜德",
+          "code": "EDW"
+        },
+        {
+          "name": "冕山",
+          "code": null
+        },
+        {
+          "name": "冕宁",
+          "code": "UGW"
+        },
+        {
+          "name": "月华",
+          "code": "YQW"
+        },
+        {
+          "name": "西昌",
+          "code": "ECW"
+        },
+        {
+          "name": "西昌南",
+          "code": null
+        },
+        {
+          "name": "德昌",
+          "code": "DVW"
+        },
+        {
+          "name": "乐跃",
+          "code": null
+        },
+        {
+          "name": "蒲坝",
+          "code": null
+        },
+        {
+          "name": "永郎",
+          "code": null
+        },
+        {
+          "name": "弯坵",
+          "code": null
+        },
+        {
+          "name": "米易",
+          "code": null
+        },
+        {
+          "name": "枣子林",
+          "code": null
+        },
+        {
+          "name": "桐子林",
+          "code": null
+        },
+        {
+          "name": "攀枝花南",
+          "code": "PNE"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-5634-20261018",
+      "trainNumber": "5634",
+      "trainNo": "76000056340S",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5634&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000056340S&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "PNE",
+      "to": "POW",
+      "knownStops": [
+        "PNE",
+        "桐子林",
+        "枣子林",
+        "米易",
+        "弯坵",
+        "永郎",
+        "蒲坝",
+        "乐跃",
+        "DVW",
+        "西昌南",
+        "ECW",
+        "YQW",
+        "UGW",
+        "冕山",
+        "EDW",
+        "联合乡",
+        "新凉",
+        "瓦祖",
+        "沙马拉达",
+        "红峰",
+        "乐武",
+        "尼波",
+        "尔赛河",
+        "上普雄",
+        "POW"
+      ],
+      "observedStops": [
+        {
+          "name": "攀枝花南",
+          "code": "PNE"
+        },
+        {
+          "name": "桐子林",
+          "code": null
+        },
+        {
+          "name": "枣子林",
+          "code": null
+        },
+        {
+          "name": "米易",
+          "code": null
+        },
+        {
+          "name": "弯坵",
+          "code": null
+        },
+        {
+          "name": "永郎",
+          "code": null
+        },
+        {
+          "name": "蒲坝",
+          "code": null
+        },
+        {
+          "name": "乐跃",
+          "code": null
+        },
+        {
+          "name": "德昌",
+          "code": "DVW"
+        },
+        {
+          "name": "西昌南",
+          "code": null
+        },
+        {
+          "name": "西昌",
+          "code": "ECW"
+        },
+        {
+          "name": "月华",
+          "code": "YQW"
+        },
+        {
+          "name": "冕宁",
+          "code": "UGW"
+        },
+        {
+          "name": "冕山",
+          "code": null
+        },
+        {
+          "name": "喜德",
+          "code": "EDW"
+        },
+        {
+          "name": "联合乡",
+          "code": null
+        },
+        {
+          "name": "新凉",
+          "code": null
+        },
+        {
+          "name": "瓦祖",
+          "code": null
+        },
+        {
+          "name": "沙马拉达",
+          "code": null
+        },
+        {
+          "name": "红峰",
+          "code": null
+        },
+        {
+          "name": "乐武",
+          "code": null
+        },
+        {
+          "name": "尼波",
+          "code": null
+        },
+        {
+          "name": "尔赛河",
+          "code": null
+        },
+        {
+          "name": "上普雄",
+          "code": null
+        },
+        {
+          "name": "普雄",
+          "code": "POW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-5619-20261018",
+      "trainNumber": "5619",
+      "trainNo": "760000561910",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5619&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000561910&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "EMW",
+      "to": "POW",
+      "knownStops": [
+        "EMW",
+        "沙湾",
+        "轸溪",
+        "刘沟",
+        "代湾",
+        "杨漩",
+        "共和",
+        "峨边",
+        "柏村",
+        "金口河",
+        "关村坝",
+        "WHW",
+        "尼日",
+        "苏雄",
+        "凉红",
+        "埃岱",
+        "甘洛",
+        "南尔岗",
+        "阿寨",
+        "白果",
+        "白石岩",
+        "乃托",
+        "铁西",
+        "下普雄",
+        "拉白",
+        "POW"
+      ],
+      "observedStops": [
+        {
+          "name": "峨眉",
+          "code": "EMW"
+        },
+        {
+          "name": "沙湾",
+          "code": null
+        },
+        {
+          "name": "轸溪",
+          "code": null
+        },
+        {
+          "name": "刘沟",
+          "code": null
+        },
+        {
+          "name": "代湾",
+          "code": null
+        },
+        {
+          "name": "杨漩",
+          "code": null
+        },
+        {
+          "name": "共和",
+          "code": null
+        },
+        {
+          "name": "峨边",
+          "code": null
+        },
+        {
+          "name": "柏村",
+          "code": null
+        },
+        {
+          "name": "金口河",
+          "code": null
+        },
+        {
+          "name": "关村坝",
+          "code": null
+        },
+        {
+          "name": "汉源",
+          "code": "WHW"
+        },
+        {
+          "name": "尼日",
+          "code": null
+        },
+        {
+          "name": "苏雄",
+          "code": null
+        },
+        {
+          "name": "凉红",
+          "code": null
+        },
+        {
+          "name": "埃岱",
+          "code": null
+        },
+        {
+          "name": "甘洛",
+          "code": null
+        },
+        {
+          "name": "南尔岗",
+          "code": null
+        },
+        {
+          "name": "阿寨",
+          "code": null
+        },
+        {
+          "name": "白果",
+          "code": null
+        },
+        {
+          "name": "白石岩",
+          "code": null
+        },
+        {
+          "name": "乃托",
+          "code": null
+        },
+        {
+          "name": "铁西",
+          "code": null
+        },
+        {
+          "name": "下普雄",
+          "code": null
+        },
+        {
+          "name": "拉白",
+          "code": null
+        },
+        {
+          "name": "普雄",
+          "code": "POW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-5620-20261018",
+      "trainNumber": "5620",
+      "trainNo": "760000562010",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=5620&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000562010&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "POW",
+      "to": "EMW",
+      "knownStops": [
+        "POW",
+        "拉白",
+        "下普雄",
+        "铁西",
+        "乃托",
+        "白石岩",
+        "白果",
+        "阿寨",
+        "南尔岗",
+        "甘洛",
+        "埃岱",
+        "凉红",
+        "苏雄",
+        "尼日",
+        "WHW",
+        "关村坝",
+        "金口河",
+        "柏村",
+        "峨边",
+        "共和",
+        "杨漩",
+        "代湾",
+        "刘沟",
+        "轸溪",
+        "沙湾",
+        "EMW"
+      ],
+      "observedStops": [
+        {
+          "name": "普雄",
+          "code": "POW"
+        },
+        {
+          "name": "拉白",
+          "code": null
+        },
+        {
+          "name": "下普雄",
+          "code": null
+        },
+        {
+          "name": "铁西",
+          "code": null
+        },
+        {
+          "name": "乃托",
+          "code": null
+        },
+        {
+          "name": "白石岩",
+          "code": null
+        },
+        {
+          "name": "白果",
+          "code": null
+        },
+        {
+          "name": "阿寨",
+          "code": null
+        },
+        {
+          "name": "南尔岗",
+          "code": null
+        },
+        {
+          "name": "甘洛",
+          "code": null
+        },
+        {
+          "name": "埃岱",
+          "code": null
+        },
+        {
+          "name": "凉红",
+          "code": null
+        },
+        {
+          "name": "苏雄",
+          "code": null
+        },
+        {
+          "name": "尼日",
+          "code": null
+        },
+        {
+          "name": "汉源",
+          "code": "WHW"
+        },
+        {
+          "name": "关村坝",
+          "code": null
+        },
+        {
+          "name": "金口河",
+          "code": null
+        },
+        {
+          "name": "柏村",
+          "code": null
+        },
+        {
+          "name": "峨边",
+          "code": null
+        },
+        {
+          "name": "共和",
+          "code": null
+        },
+        {
+          "name": "杨漩",
+          "code": null
+        },
+        {
+          "name": "代湾",
+          "code": null
+        },
+        {
+          "name": "刘沟",
+          "code": null
+        },
+        {
+          "name": "轸溪",
+          "code": null
+        },
+        {
+          "name": "沙湾",
+          "code": null
+        },
+        {
+          "name": "峨眉",
+          "code": "EMW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-6063-20261018",
+      "trainNumber": "6063",
+      "trainNo": "41000060631B",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6063&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=41000060631B&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "BJY",
+      "to": "GYW",
+      "knownStops": [
+        "BJY",
+        "QLY",
+        "FZY",
+        "FXY",
+        "HEY",
+        "LDY",
+        "HYY",
+        "BSY",
+        "LYY",
+        "YAY",
+        "YZY",
+        "CTY",
+        "GYW"
+      ],
+      "observedStops": [
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        },
+        {
+          "name": "秦岭",
+          "code": "QLY"
+        },
+        {
+          "name": "凤州",
+          "code": "FZY"
+        },
+        {
+          "name": "凤县",
+          "code": "FXY"
+        },
+        {
+          "name": "宏庆",
+          "code": "HEY"
+        },
+        {
+          "name": "两当",
+          "code": "LDY"
+        },
+        {
+          "name": "徽县",
+          "code": "HYY"
+        },
+        {
+          "name": "白水江",
+          "code": "BSY"
+        },
+        {
+          "name": "略阳",
+          "code": "LYY"
+        },
+        {
+          "name": "阳平关",
+          "code": "YAY"
+        },
+        {
+          "name": "燕子砭",
+          "code": "YZY"
+        },
+        {
+          "name": "朝天南",
+          "code": "CTY"
+        },
+        {
+          "name": "广元",
+          "code": "GYW"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-6064-20261018",
+      "trainNumber": "6064",
+      "trainNo": "76000060640A",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6064&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=76000060640A&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "GYW",
+      "to": "BJY",
+      "knownStops": [
+        "GYW",
+        "CTY",
+        "YZY",
+        "YAY",
+        "LYY",
+        "BSY",
+        "HYY",
+        "LDY",
+        "HEY",
+        "FXY",
+        "FZY",
+        "QLY",
+        "BJY"
+      ],
+      "observedStops": [
+        {
+          "name": "广元",
+          "code": "GYW"
+        },
+        {
+          "name": "朝天南",
+          "code": "CTY"
+        },
+        {
+          "name": "燕子砭",
+          "code": "YZY"
+        },
+        {
+          "name": "阳平关",
+          "code": "YAY"
+        },
+        {
+          "name": "略阳",
+          "code": "LYY"
+        },
+        {
+          "name": "白水江",
+          "code": "BSY"
+        },
+        {
+          "name": "徽县",
+          "code": "HYY"
+        },
+        {
+          "name": "两当",
+          "code": "LDY"
+        },
+        {
+          "name": "宏庆",
+          "code": "HEY"
+        },
+        {
+          "name": "凤县",
+          "code": "FXY"
+        },
+        {
+          "name": "凤州",
+          "code": "FZY"
+        },
+        {
+          "name": "秦岭",
+          "code": "QLY"
+        },
+        {
+          "name": "宝鸡",
+          "code": "BJY"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-6245-20261018",
+      "trainNumber": "6245",
+      "trainNo": "040000624500",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6245&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=040000624500&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "JGX",
+      "to": "GRX",
+      "knownStops": [
+        "JGX",
+        "松树林",
+        "翠峰",
+        "XYX",
+        "古源",
+        "大扬气",
+        "劲松",
+        "新天",
+        "太阳沟",
+        "塔源",
+        "LXX",
+        "XPX",
+        "大乌苏",
+        "碧州",
+        "翠岗",
+        "塔尔根",
+        "TXX",
+        "绣峰",
+        "WVX",
+        "盘古",
+        "聂河",
+        "JTX",
+        "TQX",
+        "MVX",
+        "GRX"
+      ],
+      "observedStops": [
+        {
+          "name": "加格达奇",
+          "code": "JGX"
+        },
+        {
+          "name": "松树林",
+          "code": null
+        },
+        {
+          "name": "翠峰",
+          "code": null
+        },
+        {
+          "name": "小扬气",
+          "code": "XYX"
+        },
+        {
+          "name": "古源",
+          "code": null
+        },
+        {
+          "name": "大扬气",
+          "code": null
+        },
+        {
+          "name": "劲松",
+          "code": null
+        },
+        {
+          "name": "新天",
+          "code": null
+        },
+        {
+          "name": "太阳沟",
+          "code": null
+        },
+        {
+          "name": "塔源",
+          "code": null
+        },
+        {
+          "name": "林海",
+          "code": "LXX"
+        },
+        {
+          "name": "新林",
+          "code": "XPX"
+        },
+        {
+          "name": "大乌苏",
+          "code": null
+        },
+        {
+          "name": "碧州",
+          "code": null
+        },
+        {
+          "name": "翠岗",
+          "code": null
+        },
+        {
+          "name": "塔尔根",
+          "code": null
+        },
+        {
+          "name": "塔河",
+          "code": "TXX"
+        },
+        {
+          "name": "绣峰",
+          "code": null
+        },
+        {
+          "name": "瓦拉干",
+          "code": "WVX"
+        },
+        {
+          "name": "盘古",
+          "code": null
+        },
+        {
+          "name": "聂河",
+          "code": null
+        },
+        {
+          "name": "阿木尔",
+          "code": "JTX"
+        },
+        {
+          "name": "图强",
+          "code": "TQX"
+        },
+        {
+          "name": "漠河",
+          "code": "MVX"
+        },
+        {
+          "name": "古莲",
+          "code": "GRX"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-6246-20261018",
+      "trainNumber": "6246",
+      "trainNo": "040000624600",
+      "serviceDate": "2026-10-18",
+      "completeness": "full",
+      "sourceURLs": [
+        "https://search.12306.cn/search/v1/train/search?keyword=6246&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=040000624600&leftTicketDTO.train_date=2026-10-18&rand_code="
+      ],
+      "from": "GRX",
+      "to": "JGX",
+      "knownStops": [
+        "GRX",
+        "MVX",
+        "TQX",
+        "JTX",
+        "聂河",
+        "盘古",
+        "WVX",
+        "绣峰",
+        "TXX",
+        "塔尔根",
+        "翠岗",
+        "碧州",
+        "大乌苏",
+        "XPX",
+        "LXX",
+        "塔源",
+        "新天",
+        "劲松",
+        "大扬气",
+        "古源",
+        "XYX",
+        "翠峰",
+        "松树林",
+        "JGX"
+      ],
+      "observedStops": [
+        {
+          "name": "古莲",
+          "code": "GRX"
+        },
+        {
+          "name": "漠河",
+          "code": "MVX"
+        },
+        {
+          "name": "图强",
+          "code": "TQX"
+        },
+        {
+          "name": "阿木尔",
+          "code": "JTX"
+        },
+        {
+          "name": "聂河",
+          "code": null
+        },
+        {
+          "name": "盘古",
+          "code": null
+        },
+        {
+          "name": "瓦拉干",
+          "code": "WVX"
+        },
+        {
+          "name": "绣峰",
+          "code": null
+        },
+        {
+          "name": "塔河",
+          "code": "TXX"
+        },
+        {
+          "name": "塔尔根",
+          "code": null
+        },
+        {
+          "name": "翠岗",
+          "code": null
+        },
+        {
+          "name": "碧州",
+          "code": null
+        },
+        {
+          "name": "大乌苏",
+          "code": null
+        },
+        {
+          "name": "新林",
+          "code": "XPX"
+        },
+        {
+          "name": "林海",
+          "code": "LXX"
+        },
+        {
+          "name": "塔源",
+          "code": null
+        },
+        {
+          "name": "新天",
+          "code": null
+        },
+        {
+          "name": "劲松",
+          "code": null
+        },
+        {
+          "name": "大扬气",
+          "code": null
+        },
+        {
+          "name": "古源",
+          "code": null
+        },
+        {
+          "name": "小扬气",
+          "code": "XYX"
+        },
+        {
+          "name": "翠峰",
+          "code": null
+        },
+        {
+          "name": "松树林",
+          "code": null
+        },
+        {
+          "name": "加格达奇",
+          "code": "JGX"
+        }
+      ]
+    }
+  ]
+}

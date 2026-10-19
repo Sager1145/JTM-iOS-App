@@ -1,0 +1,14 @@
+✔ uses the eastern directional arc instead of turning at its crossing with the straight railway (1.862083ms)
+✔ retains physical topology, station anchors and the complete loop after the crossing (0.410541ms)
+✔ rejects a competing railway source and an unreviewed display override (111.90775ms)
+✔ existing production override is absent or exactly the reviewed candidate; replay is idempotent (339.866875ms)
+✔ operator-backed loop up and straight down metadata preserve stored up order and physical data (144.467417ms)
+✔ retires unproven prefix substitution and rebases only unchanged suffix owners (440.546792ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1226.800125

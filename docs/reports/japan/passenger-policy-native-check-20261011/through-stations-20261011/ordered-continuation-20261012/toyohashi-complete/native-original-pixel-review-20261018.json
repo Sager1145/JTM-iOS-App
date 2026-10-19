@@ -1,0 +1,488 @@
+{
+  "format": "jtm-toyohashi-actual-pixel-review-v1",
+  "reviewedAt": "2026-10-18",
+  "sourceCaptureIndex": "/private/tmp/jtm-toyohashi-missing-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "capturedViewCount": 28,
+  "actuallyInspectedViewCount": 28,
+  "actuallyInspectedOriginalPNGCount": 56,
+  "sourceCaptureFailures": 0,
+  "intervalsInspected": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11
+  ],
+  "excludedInterval": {
+    "intervalIndex": 9,
+    "reason": "Already reviewed by parent in remaining-lines-45-46-20261018.md; not repeated or claimed inspected here"
+  },
+  "artifactStatus": "report only; no acceptance-state or production mutation",
+  "views": [
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#0#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#0",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:20Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Akaiwaguchi end and Ihara approach stay on the named tram street corridor; shallow road bends retained. Exact stop caps not resolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#0#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#0",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:20Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Akaiwaguchi end and Ihara approach stay on the named tram street corridor; shallow road bends retained. Exact stop caps not resolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#0#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#0",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000000/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:21Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Akaiwaguchi end and Ihara approach stay on the named tram street corridor; shallow road bends retained. Exact stop caps not resolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#1#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#1",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:24Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Ihara–Keirinjo-mae follows the same longitudinal tram road, with its shallow change in bearing; no isolated V or transverse connector visible.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#1#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#1",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:24Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Ihara–Keirinjo-mae follows the same longitudinal tram road, with its shallow change in bearing; no isolated V or transverse connector visible.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#1#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#1",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000001/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:24Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Ihara–Keirinjo-mae follows the same longitudinal tram road, with its shallow change in bearing; no isolated V or transverse connector visible.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#2#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#2",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:23Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Keirinjo-mae–Azumada remains in the tram road band; no visible gap at the shared interval end.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#2#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#2",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000004/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:23Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Keirinjo-mae–Azumada remains in the tram road band; no visible gap at the shared interval end.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#3#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#3",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:25Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada–Azumada-sakaue follows the gentle street curve; no opposite-facing fold or isolated cusp found.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#3#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#3",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:25Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada–Azumada-sakaue follows the gentle street curve; no opposite-facing fold or isolated cusp found.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#3#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#3",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000005/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:25Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada–Azumada-sakaue follows the gentle street curve; no opposite-facing fold or isolated cusp found.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#4#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#4",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:25Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada-sakaue–Maehata stays within the broad road/median corridor; near-straight supports do not create an isolated jog.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#4#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#4",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:26Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada-sakaue–Maehata stays within the broad road/median corridor; near-straight supports do not create an isolated jog.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#4#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#4",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000006/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:26Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Azumada-sakaue–Maehata stays within the broad road/median corridor; near-straight supports do not create an isolated jog.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#5#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#5",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:26Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Maehata–Higashihatcho keeps the shallow real street change in bearing, with no detached station connector visible.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#5#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#5",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000007/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:27Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Maehata–Higashihatcho keeps the shallow real street change in bearing, with no detached station connector visible.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#6#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#6",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:27Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Higashihatcho–Toyohashikoen-mae follows the own east–west/slant street corridor and its actual road bend; no neighbor-rail inference used.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#6#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#6",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:27Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Higashihatcho–Toyohashikoen-mae follows the own east–west/slant street corridor and its actual road bend; no neighbor-rail inference used.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#6#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#6",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000008/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:27Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Higashihatcho–Toyohashikoen-mae follows the own east–west/slant street corridor and its actual road bend; no neighbor-rail inference used.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#7#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#7",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:28Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Toyohashikoen-mae–Shiyakusho-mae stays on the slant tram road, including the approach to the east–south road turn.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#7#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#7",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000009/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:28Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Toyohashikoen-mae–Shiyakusho-mae stays on the slant tram road, including the approach to the east–south road turn.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#8#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#8",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:28Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Real east–south street-corridor turn near Nishihatcho; the numerical lead at [137.39063,34.76768] is part of this progressive turn. Preserve; physical curve radius/rail offset unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#8#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#8",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:29Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Real east–south street-corridor turn near Nishihatcho; the numerical lead at [137.39063,34.76768] is part of this progressive turn. Preserve; physical curve radius/rail offset unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#8#point-2",
+      "itemID": "jp-豊橋鉄道-東田本線#8",
+      "pointOrdinal": 2,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000002/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000002/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000010/000002/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:29Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Real east–south street-corridor turn near Nishihatcho; the numerical lead at [137.39063,34.76768] is part of this progressive turn. Preserve; physical curve radius/rail offset unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#10#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#10",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:21Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Shinkawa–Ekimaeodori remains on the own east–west tram street. The incidental Shinkawa diagonal/chamfer is a real turn, not grounds to flatten; exact radius unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#10#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#10",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000002/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:22Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Shinkawa–Ekimaeodori remains on the own east–west tram street. The incidental Shinkawa diagonal/chamfer is a real turn, not grounds to flatten; exact radius unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#11#point-0",
+      "itemID": "jp-豊橋鉄道-東田本線#11",
+      "pointOrdinal": 0,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000000/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000000/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000000/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:22Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Real turn into the station-forecourt tram spur; [137.3834,34.76326] belongs to this approach. Endpoint stays separate from the neighboring mainline fan; exact terminal cap unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    },
+    {
+      "viewpointID": "jp-豊橋鉄道-東田本線#11#point-1",
+      "itemID": "jp-豊橋鉄道-東田本線#11",
+      "pointOrdinal": 1,
+      "actuallyInspectedOriginalFiles": [
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000001/basemap.png",
+        "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000001/smooth.png"
+      ],
+      "metadataFile": "/private/tmp/jtm-toyohashi-missing-20261018/alignment/captures/000003/000001/view.json",
+      "nativeCaptureTimestamp": "2026-10-18T20:25:23Z",
+      "metadataResultUnchanged": "pending",
+      "metadataReviewFreshUnchanged": false,
+      "lineDependencyFromIndex": "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "finding": "Real turn into the station-forecourt tram spur; [137.3834,34.76326] belongs to this approach. Endpoint stays separate from the neighboring mainline fan; exact terminal cap unresolved.",
+      "reviewScope": "Original matched standard basemap/smooth pair; visual corridor/turn review only, no coordinate measurement or station-circle audit"
+    }
+  ]
+}

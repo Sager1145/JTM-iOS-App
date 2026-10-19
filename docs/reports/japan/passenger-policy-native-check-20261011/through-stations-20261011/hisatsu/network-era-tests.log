@@ -1,0 +1,24 @@
+Command: swift test --package-path /Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit --scratch-path /private/tmp/railkit-build-bis --jobs 2 --filter DisplayNetworkEraTests
+Building for debugging...
+[Using on-disk description]
+[1 / 5]
+[1 / 5] RailPresentationTests-product
+Build complete! (1.11 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DisplayNetworkEraTests started.
+◇ Test "Current hides a closed valid_to part and a not-yet-open valid_from part" started.
+◇ Test "A nil ride date uses the Current predicate" started.
+◇ Test "Overlay keeps current geometry and adds historical" started.
+◇ Test "A ride date before a relocation shows the old alignment only" started.
+◇ Test "Undecorated geometry is shown in every era" started.
+◇ Test "Cross-day dash is a different style value than historical" started.
+✔ Test "Cross-day dash is a different style value than historical" passed after 0.001 seconds.
+✔ Test "Undecorated geometry is shown in every era" passed after 0.001 seconds.
+✔ Test "Current hides a closed valid_to part and a not-yet-open valid_from part" passed after 0.001 seconds.
+✔ Test "A nil ride date uses the Current predicate" passed after 0.001 seconds.
+✔ Test "A ride date before a relocation shows the old alignment only" passed after 0.001 seconds.
+✔ Test "Overlay keeps current geometry and adds historical" passed after 0.001 seconds.
+✔ Suite DisplayNetworkEraTests passed after 0.001 seconds.
+✔ Test run with 6 tests in 1 suite passed after 0.001 seconds.

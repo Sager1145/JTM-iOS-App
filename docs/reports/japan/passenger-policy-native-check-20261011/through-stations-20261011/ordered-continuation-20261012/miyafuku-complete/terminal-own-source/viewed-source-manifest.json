@@ -1,0 +1,48 @@
+{
+  "scope": "Read-only terminal followup, exact #12 original points2..5 and two official station diagrams actually opened",
+  "captureIndex": "/private/tmp/jtm-miyafuku-missing-20261018/capture-index.json",
+  "pairCount": 4,
+  "capturePNGCount": 8,
+  "officialDiagramsActuallyViewed": [
+    "official-fukuchiyama-layout.gif",
+    "official-jr-fukuchiyama-layout-20220304.gif"
+  ],
+  "views": [
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-2",
+      "pointOrdinal": 2,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "viewMetadata": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/view.json"
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-3",
+      "pointOrdinal": 3,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/smooth.png"
+      ],
+      "viewMetadata": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/view.json"
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-4",
+      "pointOrdinal": 4,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/smooth.png"
+      ],
+      "viewMetadata": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/view.json"
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-5",
+      "pointOrdinal": 5,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/basemap.png",
+        "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/smooth.png"
+      ],
+      "viewMetadata": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/view.json"
+    }
+  ]
+}

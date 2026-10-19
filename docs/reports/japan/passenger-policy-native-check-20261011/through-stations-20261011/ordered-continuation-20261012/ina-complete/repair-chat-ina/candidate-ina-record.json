@@ -1,0 +1,113 @@
+{
+  "lineID": "jp-埼玉新都市交通-伊奈線",
+  "ordinal": 21,
+  "intervalsReviewed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "stationsReviewed": 13,
+  "nativePrimaryViewsActuallyOpened": 56,
+  "nativePrimaryPanelsActuallyOpened": 168,
+  "stationBasemapImagesActuallyOpened": 13,
+  "stationGridCropsActuallyOpened": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "status": "root-handoff-seven-supported-platform-candidates-six-unresolved",
+  "candidateFrozen": false,
+  "candidateCoordinatesApplied": false,
+  "finalAliases": {
+    "002914": null,
+    "002881": null,
+    "002857": null,
+    "002844": null,
+    "002835": null,
+    "002824": null,
+    "002812": null,
+    "002802": null,
+    "002787": null,
+    "002770": null,
+    "002756": null,
+    "002747": null,
+    "002742": null
+  },
+  "sourceLineMatchesCurrentPackage": true,
+  "physicalFieldsModified": false,
+  "nativeAfterAcceptance": false,
+  "mainAcceptance": false,
+  "ownedLabelConclusion": "Only the western/southwestern Apple-labelled Ina guideway is identifiable from these saved pixels. Both-side passenger allocation is unresolved.",
+  "consultation": "Bounded read-only candidate_inventory consultation independently inspected stations2–7,12 and interval2–7,11 midpoint basemaps; concurred with own-label separation and warned against a cross-Shinkansen average.",
+  "remainingForRoot": [
+    "Resolve complete own platform caps for stations0,8-12; their platform candidates remain null.",
+    "Use the seven western-frame midpoint candidates as screenshot-supported proposals; no cross-Shinkansen averaging.",
+    "After resolving remaining anchors, repartition affected intervals, freeze and integrate, then review actual Inspector/Main after-captures."
+  ],
+  "diagnosticIntervals": 12,
+  "diagnosticIntervalManifest": "diagnostic-interval-manifest.json",
+  "diagnosticStationAnchors": 13,
+  "primaryReprojectionPairsActuallyOpened": 56,
+  "stationReprojectionPairsActuallyOpened": 13,
+  "diagnosticReviewReceipt": "review-receipt.json",
+  "corroborationReview": "corroboration-review.json",
+  "platformCandidateIndex": "platform-midpoint-candidates.json",
+  "screenshotSupportedPlatformCandidates": 7,
+  "unresolvedPlatformMidpoints": 6,
+  "confirmedCandidateAliases": {
+    "002914": null,
+    "002881": [
+      139.61757019014368,
+      35.920243278551226
+    ],
+    "002857": [
+      139.61674992757816,
+      35.93572656561451
+    ],
+    "002844": [
+      139.61809357175832,
+      35.94270671528384
+    ],
+    "002835": [
+      139.61943565641405,
+      35.9499659160949
+    ],
+    "002824": [
+      139.6207950294305,
+      35.95721842868368
+    ],
+    "002812": [
+      139.62216622453707,
+      35.9638356581054
+    ],
+    "002802": [
+      139.6235655975533,
+      35.971172610840206
+    ],
+    "002787": null,
+    "002770": null,
+    "002756": null,
+    "002747": null,
+    "002742": null
+  },
+  "handoff": "ROOT-HANDOFF.md"
+}

@@ -1,0 +1,38 @@
+{
+  "cachePath": "railway-sources/local/osm/degree-cells/E140N35.json",
+  "fetchedAt": "2026-08-18T10:43:41.438Z",
+  "way": {
+    "id": 287004073,
+    "tags": {
+      "bridge": "yes",
+      "electrified": "no",
+      "gauge": "1067",
+      "layer": "1",
+      "name": "いすみ鉄道 いすみ線",
+      "name:en": "Isumi Railway Isumi Line",
+      "name:ja": "いすみ鉄道 いすみ線",
+      "name:ja_rm": "Isumi Tetsudō Isumi-sen",
+      "operator": "いすみ鉄道",
+      "operator:en": "Isumi Railway",
+      "operator:ja": "いすみ鉄道",
+      "operator:ja_rm": "Isumi Tetsudō",
+      "railway": "rail",
+      "source": "Bing",
+      "usage": "branch"
+    },
+    "geometry": [
+      {
+        "lat": 35.2421125,
+        "lon": 140.2443053
+      },
+      {
+        "lat": 35.2418659,
+        "lon": 140.2441329
+      },
+      {
+        "lat": 35.2415431,
+        "lon": 140.2438482
+      }
+    ]
+  }
+}

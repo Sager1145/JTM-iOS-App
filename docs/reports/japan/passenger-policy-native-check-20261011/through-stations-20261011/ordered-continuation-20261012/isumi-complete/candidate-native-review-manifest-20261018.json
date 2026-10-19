@@ -1,0 +1,536 @@
+{
+  "reviewDate": "2026-10-18",
+  "lineID": "jp-いすみ鉄道-いすみ線",
+  "intervalIndex": 10,
+  "scope": "candidate native originals only; no Main/current service acceptance",
+  "actualViewpointCount": 8,
+  "actualOriginalPNGCount": 16,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "0E92F6E1-9855-4B98-8568-356400FF9689",
+    "message": "8/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 61534,
+    "requestID": "isumi-kurohara-own-candidate",
+    "resultPath": "/private/tmp/jtm-isumi-kurohara-native-20261018/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-18T23:05:23Z"
+  },
+  "verdict": "supports narrow source-attributed display curve repair13..34; no visible new seam defect",
+  "sourceAndServiceLimits": [
+    "substitute_bus and native stroke exclusion retained; Inspector red line is evidence mode, not current Main visibility proof.",
+    "Own way1236719220→287004073(bridge=yes)→287004072 has no tunnel tag; standard-map pixels do not establish underground alignment.",
+    "Kominato/上総中野 interface outside all8viewports; own #10 route chain contains only attributed Isumi ways, no terminal connection acceptance."
+  ],
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.25022,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.247665,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-0",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.25022,
+        "longitude": 140.247665,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4860155650737429,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238790766.63113955,
+        "rectY": 106096183.1410557,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 223323,
+          "actualByteCount": 223323,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 277586,
+          "actualByteCount": 277586,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "久我原站与北端原有进出方向；图中红线与蓝色站廊有保留的西偏，处于本次13…34窗口外，不新增站台修复或认证face/cap。红线连续，无新钩。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.248216715641476,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.2482332225174,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-1",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.248216715641476,
+        "longitude": 140.2482332225174,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.486027414053903,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238791190.3285578,
+        "rectY": 106098012.26997185,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 294254,
+          "actualByteCount": 294254,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 351206,
+          "actualByteCount": 351206,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "久我原南侧第一处跨河及转西南大弯，位于窗口北面的保留上下文；保持同一本线方向，无错接道路或断口。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.246587916281754,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24670924412555,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-2",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.246587916281754,
+        "longitude": 140.24670924412555,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4860370475979853,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238790053.96790627,
+        "rectY": 106099499.43641543,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 336426,
+          "actualByteCount": 336426,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 394220,
+          "actualByteCount": 394220,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "窗口北边界附近接入：沿本线从东北斜段进入黒原北弧；接缝未见V/直角/极短横腿，大弯保持，原始上游偏移没有扩修。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.2450207583738,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24503366268885,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-3",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000003/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.2450207583738,
+        "longitude": 140.24503366268885,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4860463161900725,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238788804.56383124,
+        "rectY": 106100930.29326504,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 387548,
+          "actualByteCount": 387548,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 448128,
+          "actualByteCount": 448128,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "窗口弧体及北侧接缝：红线沿own north-south弧回到Isumi蓝轨带附近；旧西弓分离明显收回，无独立新V或跳线。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24295979744159,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24462467895034,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-4",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000004/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24295979744159,
+        "longitude": 140.24462467895034,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.486058504708418,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238788499.60345247,
+        "rectY": 106102811.96331213,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 389597,
+          "actualByteCount": 389597,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 450334,
+          "actualByteCount": 450334,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "黒原北侧弧体、南侧跨河及桥后真实西转：红线连续沿own rail，原西偏弧已收回；南回接无新折返/直角。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.241176570173494,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24337514363324,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-5",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000005/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000005/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.241176570173494,
+        "longitude": 140.24337514363324,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48606905019964514,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238787567.88238958,
+        "rectY": 106104440.0222208,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 379746,
+          "actualByteCount": 379746,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 437042,
+          "actualByteCount": 437042,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "桥梁及桥后向総元弯道，红线维持真实曲线并自然接回保留段；无新增短横腿/断口。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000006",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.240583943213174,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24096776332672,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-6",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000006/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000006/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.240583943213174,
+        "longitude": 140.24096776332672,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48607255471945077,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238785772.80952752,
+        "rectY": 106104981.07354192,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 350163,
+          "actualByteCount": 350163,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 408425,
+          "actualByteCount": 408425,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "南侧保留段/総元进站：真实大弯及东西向站廊连续；13…34尾端上下文无新钩，余留细小红蓝差不扩修。站台face/cap未证实。"
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000007",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24057,
+      "lineDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "longitude": 140.24036,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-7",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000007/basemap.png",
+        "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/captures/000000/000007/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; both original PNGs separately; no pixel modifications",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24057,
+        "longitude": 140.24036,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4860726371724967,
+        "pitch": 0,
+        "rectHeight": 4800,
+        "rectWidth": 6400,
+        "rectX": 238785319.62834492,
+        "rectY": 106104993.80324577,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "ecdb0c1267d3695a6bbfd8cfcf476bfd11a20994d6dbc58e4a9f8b1f2212125a",
+      "namedIdentityPlan": "/private/tmp/jtm-isumi-kurohara-native-20261018/alignment/identity-plan-b45bc5a642a9fc3003941ababe306e60ad3a197f1c77896d5183f98c854443e8.json",
+      "identityMatchesOwnCandidate": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptCheck": {
+        "basemap.png": {
+          "byteCount": 342123,
+          "actualByteCount": 342123,
+          "exists": true
+        },
+        "smooth.png": {
+          "byteCount": 399928,
+          "actualByteCount": 399928,
+          "exists": true
+        }
+      },
+      "badReceiptFiles": [],
+      "observation": "総元站与窗口南侧保留上下文：本线走向连续，无新V/直角/邻线跳接；不能由站体蓝填色推断精确caps。"
+    }
+  ]
+}

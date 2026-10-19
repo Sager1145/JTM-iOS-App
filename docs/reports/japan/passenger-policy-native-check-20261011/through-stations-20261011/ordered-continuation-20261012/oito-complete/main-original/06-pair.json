@@ -1,0 +1,230 @@
+{
+  "caseIndex": 6,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 6,
+  "source": {
+    "caseIndex": 6,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 6,
+    "fromStationID": "002009",
+    "toStationID": "002038",
+    "camera": [
+      36.647717,
+      137.84411949999998,
+      0.04869479999999484
+    ],
+    "effectiveCoordinates": [
+      [
+        137.846613,
+        36.658257
+      ],
+      [
+        137.8466,
+        36.65814
+      ],
+      [
+        137.84653,
+        36.65748
+      ],
+      [
+        137.84646,
+        36.65668
+      ],
+      [
+        137.8464,
+        36.65595
+      ],
+      [
+        137.84638,
+        36.65579
+      ],
+      [
+        137.84636,
+        36.65565
+      ],
+      [
+        137.84618,
+        36.65432
+      ],
+      [
+        137.84613,
+        36.65411
+      ],
+      [
+        137.84607,
+        36.65395
+      ],
+      [
+        137.84598,
+        36.65377
+      ],
+      [
+        137.84588,
+        36.65361
+      ],
+      [
+        137.84477,
+        36.6523
+      ],
+      [
+        137.84468,
+        36.65215
+      ],
+      [
+        137.84454,
+        36.65189
+      ],
+      [
+        137.84438,
+        36.65161
+      ],
+      [
+        137.84425,
+        36.6513
+      ],
+      [
+        137.84416,
+        36.65103
+      ],
+      [
+        137.84409,
+        36.65069
+      ],
+      [
+        137.84406,
+        36.65042
+      ],
+      [
+        137.84405,
+        36.65013
+      ],
+      [
+        137.84411,
+        36.64966
+      ],
+      [
+        137.84423,
+        36.64917
+      ],
+      [
+        137.84426,
+        36.64898
+      ],
+      [
+        137.84425,
+        36.64885
+      ],
+      [
+        137.84422,
+        36.64871
+      ],
+      [
+        137.84402,
+        36.64823
+      ],
+      [
+        137.84391,
+        36.64802
+      ],
+      [
+        137.84339,
+        36.64724
+      ],
+      [
+        137.84306,
+        36.64675
+      ],
+      [
+        137.84293,
+        36.64655
+      ],
+      [
+        137.84286,
+        36.64638
+      ],
+      [
+        137.84281,
+        36.64622
+      ],
+      [
+        137.84275,
+        36.6452
+      ],
+      [
+        137.84267,
+        36.64476
+      ],
+      [
+        137.84254,
+        36.64387
+      ],
+      [
+        137.84253,
+        36.64371
+      ],
+      [
+        137.84261,
+        36.64096
+      ],
+      [
+        137.84264,
+        36.63923
+      ],
+      [
+        137.84263,
+        36.639
+      ],
+      [
+        137.8426,
+        36.63872
+      ],
+      [
+        137.84255,
+        36.63849
+      ],
+      [
+        137.84251,
+        36.63836
+      ],
+      [
+        137.84245,
+        36.63816
+      ],
+      [
+        137.8424,
+        36.63803
+      ],
+      [
+        137.84236,
+        36.63792
+      ],
+      [
+        137.84228,
+        36.63779
+      ],
+      [
+        137.84192,
+        36.63744
+      ],
+      [
+        137.84163,
+        36.63718
+      ],
+      [
+        137.841626,
+        36.637177
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:903;camera:14.20;lod:13.06;backbones:0;networkStations:4;distance:10689.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.647717;centerLon:137.844119;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1583.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.647717;centerLon:137.844119;distance:10689.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-06.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Kamishiro to Minami-Kamishiro continuous gentle bends; own longitudinal passenger frames unresolved."
+}

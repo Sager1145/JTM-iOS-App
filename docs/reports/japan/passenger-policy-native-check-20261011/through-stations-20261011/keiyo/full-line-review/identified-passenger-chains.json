@@ -1,0 +1,857 @@
+{
+  "sourceCache": "2026-08-18T10:37:59.411Z",
+  "chains": [
+    {
+      "ways": [
+        {
+          "id": 239710436,
+          "nodes": [
+            1759654178,
+            243658051,
+            1031594386
+          ],
+          "coordinates": [
+            [
+              139.8784661,
+              35.6382623
+            ],
+            [
+              139.8717529,
+              35.6406942
+            ],
+            [
+              139.8705682,
+              35.6411328
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "2",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 1241339785,
+          "nodes": [
+            1031594386,
+            1031591860,
+            1031594023,
+            1031595401,
+            1031591437
+          ],
+          "coordinates": [
+            [
+              139.8705682,
+              35.6411328
+            ],
+            [
+              139.8691874,
+              35.6416709
+            ],
+            [
+              139.86687,
+              35.6425382
+            ],
+            [
+              139.86608,
+              35.642819
+            ],
+            [
+              139.8651508,
+              35.6431158
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 22717984,
+          "nodes": [
+            1031591437,
+            1031592194,
+            1031594338,
+            6449438084,
+            2474861813,
+            1031592140
+          ],
+          "coordinates": [
+            [
+              139.8651508,
+              35.6431158
+            ],
+            [
+              139.8636743,
+              35.6435791
+            ],
+            [
+              139.8628061,
+              35.6438646
+            ],
+            [
+              139.8615444,
+              35.6443259
+            ],
+            [
+              139.8598963,
+              35.6449285
+            ],
+            [
+              139.8594951,
+              35.6450925
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 239710437,
+          "nodes": [
+            1031592140,
+            1031595454,
+            1031594610,
+            6002374144,
+            6002374149,
+            6002374147,
+            6002374140,
+            1031593762,
+            6002374148,
+            2474861815,
+            1031591880,
+            6369383998,
+            243658932
+          ],
+          "coordinates": [
+            [
+              139.8594951,
+              35.6450925
+            ],
+            [
+              139.8585864,
+              35.6454445
+            ],
+            [
+              139.8582597,
+              35.6455607
+            ],
+            [
+              139.8579706,
+              35.6456459
+            ],
+            [
+              139.8576645,
+              35.6457255
+            ],
+            [
+              139.8573883,
+              35.6457893
+            ],
+            [
+              139.8570457,
+              35.6458545
+            ],
+            [
+              139.8567295,
+              35.6459011
+            ],
+            [
+              139.8563213,
+              35.6459563
+            ],
+            [
+              139.8560386,
+              35.6459772
+            ],
+            [
+              139.8557174,
+              35.6459977
+            ],
+            [
+              139.8530203,
+              35.6461539
+            ],
+            [
+              139.8503069,
+              35.6462995
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "2",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 174040363,
+          "nodes": [
+            243658932,
+            243658933
+          ],
+          "coordinates": [
+            [
+              139.8503069,
+              35.6462995
+            ],
+            [
+              139.8409853,
+              35.6468691
+            ]
+          ],
+          "tags": {
+            "bridge": "yes",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "3",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 174040360,
+          "nodes": [
+            243658933,
+            243658935,
+            243658936,
+            1847905891,
+            1847905890,
+            8189187990,
+            1847905889,
+            8189187981,
+            1847905887,
+            2145486684,
+            243658938,
+            8189187973,
+            2474892241,
+            2474892259,
+            2145486700
+          ],
+          "coordinates": [
+            [
+              139.8409853,
+              35.6468691
+            ],
+            [
+              139.8384789,
+              35.647029
+            ],
+            [
+              139.838005,
+              35.6470617
+            ],
+            [
+              139.8375368,
+              35.6470834
+            ],
+            [
+              139.8371203,
+              35.6470816
+            ],
+            [
+              139.8369214,
+              35.6470752
+            ],
+            [
+              139.8367482,
+              35.6470618
+            ],
+            [
+              139.8365624,
+              35.6470423
+            ],
+            [
+              139.8363504,
+              35.6470184
+            ],
+            [
+              139.8358865,
+              35.6469605
+            ],
+            [
+              139.835307,
+              35.6468766
+            ],
+            [
+              139.8348213,
+              35.646808
+            ],
+            [
+              139.8344511,
+              35.6467558
+            ],
+            [
+              139.8341309,
+              35.6467173
+            ],
+            [
+              139.833266,
+              35.6466387
+            ]
+          ],
+          "tags": {
+            "bridge": "yes",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        }
+      ],
+      "jointNodes": [
+        [
+          1031594386
+        ],
+        [
+          1031591437
+        ],
+        [
+          1031592140
+        ],
+        [
+          243658932
+        ],
+        [
+          243658933
+        ]
+      ]
+    },
+    {
+      "ways": [
+        {
+          "id": 239710447,
+          "nodes": [
+            2474861809,
+            209238997,
+            1759654171
+          ],
+          "coordinates": [
+            [
+              139.8705635,
+              35.6411857
+            ],
+            [
+              139.8717712,
+              35.640725
+            ],
+            [
+              139.8784805,
+              35.6382938
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "2",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 239710443,
+          "nodes": [
+            1031593673,
+            1031593627,
+            2474861809
+          ],
+          "coordinates": [
+            [
+              139.8642982,
+              35.6435187
+            ],
+            [
+              139.8692049,
+              35.641704
+            ],
+            [
+              139.8705635,
+              35.6411857
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 1242538093,
+          "nodes": [
+            2474861812,
+            1031593673
+          ],
+          "coordinates": [
+            [
+              139.86406,
+              35.6436045
+            ],
+            [
+              139.8642982,
+              35.6435187
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 88877992,
+          "nodes": [
+            1031593916,
+            1031593512,
+            6449438083,
+            1031592522,
+            2474861804,
+            2474861812
+          ],
+          "coordinates": [
+            [
+              139.8591962,
+              35.6453376
+            ],
+            [
+              139.8600105,
+              35.6450875
+            ],
+            [
+              139.8616496,
+              35.6444974
+            ],
+            [
+              139.8626562,
+              35.6441252
+            ],
+            [
+              139.8629831,
+              35.644013
+            ],
+            [
+              139.86406,
+              35.6436045
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 22717737,
+          "nodes": [
+            31330099,
+            6369383999,
+            2474861807,
+            6369383997,
+            2474861811,
+            6002374151,
+            1031591471,
+            6002374141,
+            6002374150,
+            6002374145,
+            1761863901,
+            6002374143,
+            1031593916
+          ],
+          "coordinates": [
+            [
+              139.8503101,
+              35.6463451
+            ],
+            [
+              139.8530374,
+              35.6461906
+            ],
+            [
+              139.8557156,
+              35.6460387
+            ],
+            [
+              139.8560201,
+              35.6460181
+            ],
+            [
+              139.8562152,
+              35.6460041
+            ],
+            [
+              139.856638,
+              35.6459663
+            ],
+            [
+              139.8570004,
+              35.6459142
+            ],
+            [
+              139.857337,
+              35.6458554
+            ],
+            [
+              139.857579,
+              35.6458011
+            ],
+            [
+              139.8578429,
+              35.6457309
+            ],
+            [
+              139.8581251,
+              35.6456492
+            ],
+            [
+              139.8586763,
+              35.6454933
+            ],
+            [
+              139.8591962,
+              35.6453376
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "2",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 680252570,
+          "nodes": [
+            6369384000,
+            31330099
+          ],
+          "coordinates": [
+            [
+              139.8409927,
+              35.6469163
+            ],
+            [
+              139.8503101,
+              35.6463451
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        },
+        {
+          "id": 239712148,
+          "nodes": [
+            2474892253,
+            31330022,
+            2474892247,
+            1847905888,
+            1847905892,
+            1847905893,
+            31330085,
+            6002374142,
+            31330086,
+            6369384001,
+            6369384000
+          ],
+          "coordinates": [
+            [
+              139.8331774,
+              35.6467686
+            ],
+            [
+              139.8337525,
+              35.6468216
+            ],
+            [
+              139.8351238,
+              35.6469469
+            ],
+            [
+              139.8361213,
+              35.6470419
+            ],
+            [
+              139.8364253,
+              35.6470691
+            ],
+            [
+              139.8368887,
+              35.6471032
+            ],
+            [
+              139.8373283,
+              35.6471138
+            ],
+            [
+              139.8375549,
+              35.6471145
+            ],
+            [
+              139.8379501,
+              35.6470963
+            ],
+            [
+              139.8384765,
+              35.6470708
+            ],
+            [
+              139.8409927,
+              35.6469163
+            ]
+          ],
+          "tags": {
+            "bridge": "viaduct",
+            "colour": "#c9242f",
+            "electrified": "contact_line",
+            "frequency": "0",
+            "gauge": "1067",
+            "layer": "1",
+            "maxspeed": "100",
+            "name": "JR京葉線",
+            "name:en": "JR Keiyo Line",
+            "name:es": "Línea JR Keiyo",
+            "name:ja": "JR京葉線",
+            "name:ja_rm": "JR Keiyō Sen",
+            "name:ru": "Линия JR Кэйё",
+            "oneway": "yes",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+            "railway": "rail",
+            "usage": "main",
+            "voltage": "1500"
+          }
+        }
+      ],
+      "jointNodes": [
+        [
+          2474861809
+        ],
+        [
+          1031593673
+        ],
+        [
+          2474861812
+        ],
+        [
+          1031593916
+        ],
+        [
+          31330099
+        ],
+        [
+          6369384000
+        ]
+      ]
+    }
+  ]
+}

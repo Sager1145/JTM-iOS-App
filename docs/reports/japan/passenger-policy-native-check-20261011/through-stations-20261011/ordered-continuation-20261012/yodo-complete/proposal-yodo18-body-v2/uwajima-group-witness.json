@@ -1,0 +1,104 @@
+{
+  "status": "candidate-only-group-normal-provisional",
+  "stationID": "009486",
+  "ownNarrowFaces": [
+    [
+      [
+        376,
+        400
+      ],
+      [
+        519,
+        265
+      ]
+    ],
+    [
+      [
+        400,
+        418
+      ],
+      [
+        543,
+        294
+      ]
+    ]
+  ],
+  "faceMidpoints": [
+    [
+      447.5,
+      332.5
+    ],
+    [
+      471.5,
+      356
+    ]
+  ],
+  "stationGroupLongMidpoint": [
+    459.5,
+    344.25
+  ],
+  "identifiedGroupSleeperFlanks": {
+    "NW": [
+      [
+        437,
+        330
+      ],
+      [
+        416,
+        350
+      ]
+    ],
+    "SE": [
+      [
+        482,
+        330
+      ],
+      [
+        460,
+        350
+      ]
+    ]
+  },
+  "groupSpineFlanks": [
+    [
+      459.5,
+      330.0
+    ],
+    [
+      438,
+      350
+    ]
+  ],
+  "groupNormalPixel": [
+    452.39359234560743,
+    336.610611771528
+  ],
+  "candidateGroupAlias": [
+    132.56745730153767,
+    33.22614187322736
+  ],
+  "excluded": "Separate northwest yard railway x421y310; attached southeast large building; no label cap extension543294\u2192552270.",
+  "qualification": "Root authorized common station-group display choice from TWO literal narrow-face midpoints and own passenger railway group. Does not identify one operator track or platform number. Pair shown uses outer passenger rails bounding the wide NW own platform and terminal narrow SE strip; grouped normal not road/casing.",
+  "uncertainty": {
+    "normalPixels": 2,
+    "longitudinalPixels": 3
+  },
+  "basemapAndMagnifiedActuallyOpened": true,
+  "formalAcceptance": false,
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.226184999999944,
+    "longitude": 132.5677100000001,
+    "mapPointsPerPoint": 3.9999999925494194,
+    "metresPerPoint": 0.4976801049187191,
+    "pitch": 0,
+    "rectHeight": 2616,
+    "rectWidth": 3995.9999999701977,
+    "rectX": 233065379.12423837,
+    "rectY": 107923053.33271825,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.00000000268723
+  }
+}

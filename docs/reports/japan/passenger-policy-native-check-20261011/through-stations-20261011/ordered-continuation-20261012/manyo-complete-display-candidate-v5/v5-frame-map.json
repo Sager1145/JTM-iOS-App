@@ -1,0 +1,294 @@
+{
+  "format": "jtm-manyo-v5-changed-frame-map",
+  "changedFrameCount": 24,
+  "frames": [
+    {
+      "intervalIndex": 5,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-32.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-5-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 5,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-33.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-5-frame-1-reprojection.png",
+      "manualPick": {
+        "stationID": "001826",
+        "pixel": [
+          470,
+          367
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            479,
+            344
+          ],
+          [
+            462,
+            390
+          ]
+        ],
+        "coordinate": [
+          137.03766674966806,
+          36.77010811484489
+        ],
+        "oldCoordinate": [
+          137.03758628339762,
+          36.76991044644015
+        ]
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-34.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-6-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-35.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-6-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-36.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-6-frame-2-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-37.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-7-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-38.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-7-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-39.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-7-frame-2-reprojection.png",
+      "manualPick": {
+        "stationID": "001834",
+        "pixel": [
+          607,
+          180
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            629,
+            151
+          ],
+          [
+            574,
+            207
+          ]
+        ],
+        "coordinate": [
+          137.0324666749384,
+          36.76394673201305
+        ],
+        "oldCoordinate": [
+          137.03263297189733,
+          36.764127225918116
+        ]
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-40.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-8-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 8,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-41.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-8-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-45.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-10-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-46.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-10-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-47.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-10-frame-2-reprojection.png",
+      "manualPick": {
+        "stationID": "001845",
+        "pixel": [
+          543,
+          244
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            573,
+            208
+          ],
+          [
+            513,
+            277
+          ]
+        ],
+        "coordinate": [
+          137.02375335218431,
+          36.755661730116074
+        ],
+        "oldCoordinate": [
+          137.02400547983171,
+          36.75586803111289
+        ]
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-48.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-11-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-49.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-11-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-50.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-11-frame-2-reprojection.png",
+      "manualPick": {
+        "stationID": "001851",
+        "pixel": [
+          502,
+          310
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            540,
+            281
+          ],
+          [
+            464,
+            340
+          ]
+        ],
+        "coordinate": [
+          137.02069941104514,
+          36.75258006800441
+        ],
+        "oldCoordinate": [
+          137.0211071068154,
+          36.75304426311316
+        ]
+      }
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-51.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-12-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-52.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-12-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-53.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-12-frame-2-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-54.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-13-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-55.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-13-frame-1-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 2,
+      "raw": "raw/reused-v4/north-56.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-13-frame-2-reprojection.png",
+      "manualPick": {
+        "stationID": "001861",
+        "pixel": [
+          505,
+          294
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            553,
+            267
+          ],
+          [
+            465,
+            321
+          ]
+        ],
+        "coordinate": [
+          137.0149065042993,
+          36.747557847238795
+        ],
+        "oldCoordinate": [
+          137.0150137926599,
+          36.74751916165422
+        ]
+      }
+    },
+    {
+      "intervalIndex": 14,
+      "viewIndex": 0,
+      "raw": "raw/reused-v4/north-57.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-14-frame-0-reprojection.png",
+      "manualPick": null
+    },
+    {
+      "intervalIndex": 14,
+      "viewIndex": 1,
+      "raw": "raw/reused-v4/north-58.png",
+      "finalReprojection": "reprojection/new-v5/taka-interval-14-frame-1-reprojection.png",
+      "manualPick": null
+    }
+  ]
+}

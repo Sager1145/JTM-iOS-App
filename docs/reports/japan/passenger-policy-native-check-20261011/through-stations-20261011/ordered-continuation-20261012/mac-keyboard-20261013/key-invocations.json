@@ -1,0 +1,202 @@
+[
+  {
+    "name": "main-stations-restored",
+    "key": "super+shift+p"
+  },
+  {
+    "name": "main-names-off",
+    "key": "super+shift+alt+p"
+  },
+  {
+    "name": "main-layer-names-off",
+    "key": "super+alt+l"
+  },
+  {
+    "name": "main-layers-escape",
+    "key": "Escape"
+  },
+  {
+    "name": "main-names-restored",
+    "key": "super+shift+alt+p"
+  },
+  {
+    "name": "main-routes-off",
+    "key": "super+shift+r"
+  },
+  {
+    "name": "main-routes-restored",
+    "key": "super+shift+r"
+  },
+  {
+    "name": "main-pan-right",
+    "key": "super+ctrl+Right"
+  },
+  {
+    "name": "main-add-date",
+    "key": "super+shift+d"
+  },
+  {
+    "name": "main-modal-map-key-blocked",
+    "key": "super+shift+p"
+  },
+  {
+    "name": "main-date-cancel",
+    "key": "Escape"
+  },
+  {
+    "name": "main-stations-off-for-pan",
+    "key": "super+shift+p"
+  },
+  {
+    "name": "main-pan-left",
+    "key": "super+ctrl+Left"
+  },
+  {
+    "name": "main-north-up",
+    "key": "super+0"
+  },
+  {
+    "name": "main-pan-up",
+    "key": "super+ctrl+Up"
+  },
+  {
+    "name": "main-pan-down",
+    "key": "super+ctrl+Down"
+  },
+  {
+    "name": "main-stations-final-restored",
+    "key": "super+shift+p"
+  },
+  {
+    "name": "main-date-open-again",
+    "key": "super+shift+d"
+  },
+  {
+    "name": "main-date-final-cancel",
+    "key": "Escape"
+  },
+  {
+    "name": "main-all-dates",
+    "key": "super+alt+0"
+  },
+  {
+    "name": "main-date-follow-toggle",
+    "key": "super+shift+alt+d"
+  },
+  {
+    "name": "main-date-follow-restored",
+    "key": "super+shift+alt+d"
+  },
+  {
+    "name": "inspector-z18",
+    "key": "super+8"
+  },
+  {
+    "name": "inspector-first-view",
+    "key": "super+Home"
+  },
+  {
+    "name": "inspector-previous-at-first",
+    "key": "super+alt+Left"
+  },
+  {
+    "name": "inspector-next-view",
+    "key": "super+alt+Right"
+  },
+  {
+    "name": "inspector-return-first",
+    "key": "super+Home"
+  },
+  {
+    "name": "inspector-next-station",
+    "key": "super+alt+shift+Right"
+  },
+  {
+    "name": "inspector-previous-station",
+    "key": "super+alt+shift+Left"
+  },
+  {
+    "name": "inspector-basemap-mode",
+    "key": "super+1"
+  },
+  {
+    "name": "inspector-overlay-mode",
+    "key": "super+5"
+  },
+  {
+    "name": "inspector-peek",
+    "key": "super+b"
+  },
+  {
+    "name": "inspector-peek-restored",
+    "key": "super+b"
+  },
+  {
+    "name": "inspector-frame-station",
+    "key": "super+9"
+  },
+  {
+    "name": "inspector-frame-interval",
+    "key": "super+0"
+  },
+  {
+    "name": "inspector-frame-line",
+    "key": "super+shift+0"
+  },
+  {
+    "name": "inspector-capture-first",
+    "key": "super+Home"
+  },
+  {
+    "name": "inspector-capture-current-interval",
+    "key": "super+shift+c"
+  },
+  {
+    "name": "inspector-evidence-export",
+    "key": "super+alt+s"
+  },
+  {
+    "name": "inspector-extraction",
+    "key": "super+alt+e"
+  },
+  {
+    "name": "secondary-z18",
+    "key": "super+8"
+  },
+  {
+    "name": "secondary-next-station",
+    "key": "super+alt+shift+Right"
+  },
+  {
+    "name": "secondary-peek",
+    "key": "super+b"
+  },
+  {
+    "name": "secondary-peek-restored",
+    "key": "super+b"
+  },
+  {
+    "name": "third-z17",
+    "key": "super+7"
+  },
+  {
+    "name": "third-next-station",
+    "key": "super+alt+shift+Right"
+  },
+  {
+    "name": "third-basemap",
+    "key": "super+1"
+  },
+  {
+    "name": "third-overlay",
+    "key": "super+5"
+  },
+  {
+    "name": "main-final-layers",
+    "key": "super+alt+l"
+  },
+  {
+    "name": "main-final-layers-dismissed",
+    "key": "Escape"
+  }
+]

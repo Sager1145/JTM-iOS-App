@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "BC641A0C-A1AD-400E-B285-38763A53FE87",
+  "message" : "13\/13 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "denentoshi-missing-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T05:27:27Z"
+}

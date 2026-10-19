@@ -1,0 +1,24 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    0,
+    1
+  ],
+  "lineID": "jp-ゆりかもめ-東京臨海新交通臨海線",
+  "requestID": "yurikamome-missing-own-intervals",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-yurikamome-missing-20261019",
+  "workspace": "alignment"
+}

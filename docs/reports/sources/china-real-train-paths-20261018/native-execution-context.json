@@ -1,0 +1,32 @@
+{
+  "schema": "cn-comparison-isolated-native/1",
+  "sourceApp": "/private/tmp/jtm-rail-diagnostics/Build/Products/Release-maccatalyst/RailDiagnostics.app",
+  "isolatedApp": "/private/tmp/railmap-cn-comparison-20261018/ChinaRailComparison.app",
+  "bundleIdentifier": "com.JRM.RailDiagnostics.ChinaComparison",
+  "sameCNRuntimeInputHashes": {
+    "cn-2025.json": "0cfaa782f70bdca95dcba50c04fdb029b93cfc5f5b0a5687621526372194d61e",
+    "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+    "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+    "rail-sections-cn.json": "523ce1096955deeccc88fb23edcc29d38e3e3176de44cfa89152d00c28c4fa0d",
+    "station-names-cn.json": "52a366ea06c7ae3e18b35d061910e7a70fb9dc5cea13b998828e009706944264",
+    "station-readings-cn.json": "21ddcac3b92f24170c12e933cc4f557037a4aa1ae14a9598527d94182dd688c2",
+    "stations-cn.json": "f3480bbd96c16429ca481789fd0b37ae881c4585592d4f5a39c850abba694c39"
+  },
+  "sameCNJunctionRows": 3655,
+  "priorCNRevision": "b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e",
+  "currentCNRevision": "b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e",
+  "graphCacheMode": "standard",
+  "shippingDefaultUnchanged": "bounded100000",
+  "builtExecutableSHA256": "0fa3d959ee608feaaf2412565dd2f351553327d115ee25f6a3fc7f8d64b93cc7",
+  "resignedExecutableSHA256": "34a092f1bc6ceacb639dcb7234bd03448092267a6063a3211fdc8eda124362d7",
+  "executableBytesIdenticalBeforeResign": true,
+  "compiledUUIDs": [
+    "UUID: B10AD589-BBC4-3E1C-9642-DB1C8DCD6D19 (x86_64)",
+    "UUID: BF38AC52-8A85-3265-A81F-E13CD0A7A0B9 (arm64)"
+  ],
+  "compiledUUIDsMatchBuiltApp": true,
+  "isolationEdits": [
+    "CFBundleIdentifier/CFBundleDisplayName/CFBundleName",
+    "ad-hoc outer signature, preserving existing entitlements and flags"
+  ]
+}

@@ -1,0 +1,484 @@
+{
+  "schema": "china-d271-native-boundary-review/3",
+  "reviewedAt": "2026-10-19",
+  "scope": "One bounded exact-original-source inventory check for native D271 station-boundary gaps at Panzhihua South and Guangtong North. No production edit, build, native rerun, test, national processing or further delegation.",
+  "nativeEvidence": {
+    "path": "/private/tmp/cn-boundary-20261019/focused-session/route-report.json",
+    "trainID": "CN-REAL-D271-20261018-forced-known-stops",
+    "resolvedSectionCount": 12,
+    "expectedSectionCount": 14,
+    "returnedGeometrySections": 14,
+    "physicalGaps": [
+      {
+        "isBoundary": true,
+        "segmentIndex": 6
+      },
+      {
+        "isBoundary": true,
+        "segmentIndex": 8
+      }
+    ],
+    "unresolvedSections": [
+      {
+        "from": "攀枝花南",
+        "isBoundary": true,
+        "sectionIndex": 6,
+        "to": "元谋西"
+      },
+      {
+        "from": "广通北",
+        "isBoundary": true,
+        "sectionIndex": 8,
+        "to": "禄丰南"
+      }
+    ],
+    "geometryIsNotContinuity": "All14geometries exist; native marks boundaries at6PNE and8GPM. Exact last/first source node mismatches are preserved rather than equating station identity."
+  },
+  "source": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "url": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "queriedRelations": [
+      {
+        "id": 10259709,
+        "version": 159,
+        "tags": {
+          "alt_name": "峨广铁路",
+          "description:en": "Chengkun Railway double track Yangang to Guangtong North section",
+          "from": "燕岗",
+          "name": "峨广线",
+          "name:en": "Emei-Guangtong Railway",
+          "network": "中国铁路",
+          "operator": "中国铁路",
+          "operator:en": "China Railway",
+          "operator:wikidata": "Q1073489",
+          "operator:zh": "中国铁路",
+          "railway:traffic_mode": "mixed",
+          "ref": "0084",
+          "route": "railway",
+          "to": "广通北",
+          "tracks": "2",
+          "type": "route",
+          "wikidata": "Q109658267",
+          "wikipedia": "zh:峨广铁路"
+        },
+        "directWayMemberCount": 1010
+      },
+      {
+        "id": 13345565,
+        "version": 13,
+        "tags": {
+          "from": "广通北",
+          "name": "楚大线",
+          "operator": "中国铁路",
+          "operator:en": "China Railway",
+          "operator:wikidata": "Q1073489",
+          "operator:zh": "中国铁路",
+          "owner": "滇西铁路有限责任公司",
+          "ref": "3075",
+          "route": "railway",
+          "to": "大理",
+          "type": "route"
+        },
+        "directWayMemberCount": 293
+      },
+      {
+        "id": 13345566,
+        "version": 15,
+        "tags": {
+          "from": "广通北",
+          "name": "广昆线",
+          "ref": "0827",
+          "route": "railway",
+          "to": "昆明",
+          "type": "route"
+        },
+        "directWayMemberCount": 222
+      }
+    ],
+    "distinctLoadedOriginalWays": 1514,
+    "distinctLoadedOriginalNodes": 6326,
+    "method": "Read only exact way members of the three named relations, retain every consecutive original rail edge with existing original nodes, and compare source-node graph reachability. First active/passenger-eligible graph uses existing cn_package.active policy; second raw rail graph includes otherwise withheld service/freight tags solely to distinguish absence of topology from policy exclusion. No edge is fabricated in either graph."
+  },
+  "boundaries": [
+    {
+      "stationCode": "CN-12306-PNE",
+      "nativeBoundarySectionIndex": 6,
+      "nativeIncomingSection": {
+        "from": "盐边",
+        "to": "攀枝花南",
+        "lastSourceCoordinate": [
+          101.73583,
+          26.4808
+        ]
+      },
+      "nativeOutgoingSection": {
+        "from": "攀枝花南",
+        "to": "元谋西",
+        "firstSourceCoordinate": [
+          101.7457,
+          26.4708
+        ]
+      },
+      "incomingSourceNode": {
+        "id": 5230617665,
+        "coordinate": [
+          101.7358267,
+          26.4808022
+        ],
+        "tags": {},
+        "version": 3
+      },
+      "outgoingSourceNode": {
+        "id": 14072871990,
+        "coordinate": [
+          101.745703,
+          26.4707994
+        ],
+        "tags": {},
+        "version": 1
+      },
+      "incomingPublishedOwnLineIDs": [
+        "cn-osm-relation-10259709-branch-8"
+      ],
+      "outgoingPublishedOwnLineIDs": [
+        "cn-osm-relation-10259709-branch-7"
+      ],
+      "eligibleOriginalPath": null,
+      "rawOriginalRailPath": null,
+      "boundedActiveComponentNodeCounts": [
+        1729,
+        1671
+      ],
+      "boundedActiveComponentsIntersect": false,
+      "fromComponentTerminalsWithin10km": [
+        {
+          "id": 5230617665,
+          "coordinate": [
+            101.7358267,
+            26.4808022
+          ],
+          "tags": {},
+          "version": 3
+        }
+      ],
+      "toComponentTerminalsWithin10km": [
+        {
+          "id": 5230023398,
+          "coordinate": [
+            101.7390985,
+            26.4778035
+          ],
+          "tags": {},
+          "version": 7
+        }
+      ]
+    },
+    {
+      "stationCode": "CN-12306-GPM",
+      "nativeBoundarySectionIndex": 8,
+      "nativeIncomingSection": {
+        "from": "元谋西",
+        "to": "广通北",
+        "lastSourceCoordinate": [
+          101.75693,
+          25.17101
+        ]
+      },
+      "nativeOutgoingSection": {
+        "from": "广通北",
+        "to": "禄丰南",
+        "firstSourceCoordinate": [
+          101.75938,
+          25.16973
+        ]
+      },
+      "incomingSourceNode": {
+        "id": 4528283542,
+        "coordinate": [
+          101.7569348,
+          25.1710117
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 5
+      },
+      "outgoingSourceNode": {
+        "id": 9265647942,
+        "coordinate": [
+          101.7593752,
+          25.1697278
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 2
+      },
+      "incomingPublishedOwnLineIDs": [
+        "cn-osm-relation-10259709",
+        "cn-osm-relation-13345565-branch-2"
+      ],
+      "outgoingPublishedOwnLineIDs": [
+        "cn-osm-relation-13345566"
+      ],
+      "eligibleOriginalPath": {
+        "nodeIds": [
+          4528283542,
+          9265647953,
+          7701253436,
+          9265647942
+        ],
+        "edgeWayIds": [
+          619166034,
+          619166034,
+          619166034
+        ],
+        "km": 0.2840777468207934
+      },
+      "rawOriginalRailPath": {
+        "nodeIds": [
+          4528283542,
+          9265647953,
+          7701253436,
+          9265647942
+        ],
+        "edgeWayIds": [
+          619166034,
+          619166034,
+          619166034
+        ],
+        "km": 0.2840777468207934
+      },
+      "boundedActiveComponentNodeCounts": [
+        1671,
+        1671
+      ],
+      "boundedActiveComponentsIntersect": true,
+      "fromComponentTerminalsWithin10km": [],
+      "toComponentTerminalsWithin10km": []
+    }
+  ],
+  "guangtongAdmissibleRepair": {
+    "decision": "Proven original owned passenger track continuation; preserve all current station anchors and returned geometry.",
+    "manifest": {
+      "schema": "cn-reviewed-physical-sections/1",
+      "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+      "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+      "reviewedAt": "2026-10-19",
+      "sections": [
+        {
+          "id": "cn-reviewed-physical-guangtongbei-guangkun-own-prefix",
+          "region": "cn",
+          "identity": {
+            "trackID": "cn-osm-relation-13345566",
+            "lineName": "广昆线",
+            "operatorName": "中国铁路昆明局集团有限公司",
+            "railwayClassCode": "12"
+          },
+          "institutionTypeCode": "1",
+          "sourceRelations": [
+            {
+              "id": 13345566,
+              "version": 15
+            }
+          ],
+          "nodeIds": [
+            4528283542,
+            9265647953,
+            7701253436,
+            9265647942
+          ],
+          "edgeWayIds": [
+            619166034,
+            619166034,
+            619166034
+          ],
+          "coordinates": [
+            [
+              101.7569348,
+              25.1710117
+            ],
+            [
+              101.7570884,
+              25.1709272
+            ],
+            [
+              101.7592281,
+              25.1698062
+            ],
+            [
+              101.7593752,
+              25.1697278
+            ]
+          ],
+          "nodeVersions": {
+            "4528283542": 5,
+            "9265647953": 2,
+            "7701253436": 2,
+            "9265647942": 2
+          },
+          "wayVersions": {
+            "619166034": 14
+          },
+          "operatorEvidence": {
+            "kind": "original-way-operator",
+            "urls": [
+              "https://www.openstreetmap.org/way/619166034",
+              "https://www.openstreetmap.org/relation/13345566"
+            ],
+            "support": "The exact original member way619166034v14 explicitly operator=中国铁路昆明局集团有限公司, matching the unchanged published cn-osm-relation-13345566 identity. This own-way prefix ends at its existing published source vertex9265647942 and begins at the exact published Eguang/Chuda switch4528283542. No station identity is changed; legal infrastructure ownership is not asserted."
+          },
+          "passengerEvidence": {
+            "kind": "source-way-passenger-tags",
+            "urls": [
+              "https://www.openstreetmap.org/way/619166034",
+              "https://www.openstreetmap.org/relation/13345566"
+            ],
+            "support": "Exact original active railway=rail way619166034v14 explicitly passenger_lines=1, highspeed=yes, usage=main, name=广昆线, ref0827. The three consecutive original edges have no service, freight, construction or disused exclusions. Exact original member inventory of Guangkun relation13345566v15 establishes corridor ownership."
+          },
+          "reviewedAt": "2026-10-19",
+          "validFrom": null,
+          "validTo": null,
+          "temporalEvidence": "Original source and operational passenger tags pinned to china-261017.osm.pbf; no per-track opening/closure date or legal ownership inferred."
+        }
+      ]
+    },
+    "originalWayRecord": {
+      "id": 619166034,
+      "nodes": [
+        3231253256,
+        9265647972,
+        5599439474,
+        9265647968,
+        9265647942,
+        7701253436,
+        9265647953,
+        4528283542
+      ],
+      "tags": {
+        "alt_name": "成昆铁路广昆复线段;昆楚大铁路",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "maxspeed": "200",
+        "name": "广昆线",
+        "name:en": "Guangtong-Kunming Line",
+        "name:zh": "广昆线",
+        "operator": "中国铁路昆明局集团有限公司",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "ref": "0827",
+        "source": "DigitalGlobe Premium Imagery",
+        "usage": "main",
+        "voltage": "25000",
+        "wikidata": "Q67608744",
+        "wikipedia": "zh:昆楚大铁路"
+      },
+      "version": 14
+    },
+    "exactPathLengthMeters": 284.0777468207934,
+    "diagnosis": "Existing Guangkun sourceInterval begins at9265647942. Its very same original passenger mainline way619166034v14 continues through7701253436 and9265647953 to4528283542, the exact published Eguang/Chuda switch. The omitted three-edge prefix is enough to connect the current incoming and outgoing source strands. No alternate station anchor, opposite platform switch, invented junction or new line identity is required.",
+    "parentOwnedNextStep": "Parent may compile and install the single reviewed physical row under unchanged published13345566 identity, then reuse its authorized focused validation context."
+  },
+  "panzhihuaBoundedNegativeProof": {
+    "decision": "No admissible path in the three checked original relation inventories; preserve explicit source gap.",
+    "incomingTerminus": {
+      "id": 5230617665,
+      "coordinate": [
+        101.7358267,
+        26.4808022
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "incomingOriginalWayRecord": {
+      "id": 742037843,
+      "nodes": [
+        5230617665,
+        9147886547,
+        9147886712,
+        9147883548,
+        9147886781
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "radius": "1600",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-05-26",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 14
+    },
+    "outgoingStationAnchor": {
+      "id": 14072871990,
+      "coordinate": [
+        101.745703,
+        26.4707994
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "outgoingComponentNorthernTerminus": {
+      "id": 5230023398,
+      "coordinate": [
+        101.7390985,
+        26.4778035
+      ],
+      "tags": {},
+      "version": 7
+    },
+    "outgoingOriginalWayRecord": {
+      "id": 1101437978,
+      "nodes": [
+        5230023396,
+        10079590119,
+        10079590118,
+        10079590117,
+        10079583416,
+        10079583415,
+        10079583414,
+        14072871999,
+        14072871990,
+        14072871985,
+        10079583413,
+        10079583411,
+        10079583409,
+        10079583407,
+        10079583404,
+        5230023398
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-01-09",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 9
+    },
+    "activeOriginalPathExists": false,
+    "rawOriginalRailPathExists": false,
+    "interpretation": "Incoming station anchor5230617665v3 terminates exact own Eguang way742037843v14. The outgoing original component containing station anchor14072871990v1 ends northward at5230023398v7 on way1101437978v9. No original edge sequence bridges them in10259709v159,13345565,13345566v15, even when raw service-excluded rail edges are retained. This is a bounded missing-original-topology result, not a claim that no physical railway exists or that all original OSM ways outside these three inventories were searched.",
+    "prohibitedInference": "Station name/code equivalence and geographic separation cannot supply the missing original edge or prove a passenger switch. Do not snap, draw a chord, change station anchors, or promote freight/siding/owner-unknown infrastructure."
+  },
+  "artifact": "/private/tmp/cn-boundary-20261019/d271/guangtong-guangkun-prefix-candidate.json",
+  "productionMutation": false,
+  "newRuntimeResult": null
+}

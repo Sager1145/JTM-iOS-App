@@ -1,0 +1,110 @@
+{
+  "caseIndex": 3,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 3,
+  "source": {
+    "caseIndex": 3,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 3,
+    "fromStationID": "001910",
+    "toStationID": "001946",
+    "camera": [
+      36.703525,
+      137.8679025,
+      0.03471929999999048
+    ],
+    "effectiveCoordinates": [
+      [
+        137.87191,
+        36.71104
+      ],
+      [
+        137.87157,
+        36.71086
+      ],
+      [
+        137.87124,
+        36.71069
+      ],
+      [
+        137.87048,
+        36.71025
+      ],
+      [
+        137.86991,
+        36.70981
+      ],
+      [
+        137.8696,
+        36.70947
+      ],
+      [
+        137.86929,
+        36.7091
+      ],
+      [
+        137.8688,
+        36.70842
+      ],
+      [
+        137.86859,
+        36.70812
+      ],
+      [
+        137.86839,
+        36.70771
+      ],
+      [
+        137.86826,
+        36.70735
+      ],
+      [
+        137.86812,
+        36.70669
+      ],
+      [
+        137.86797,
+        36.70604
+      ],
+      [
+        137.86776,
+        36.70505
+      ],
+      [
+        137.86747,
+        36.70357
+      ],
+      [
+        137.86721,
+        36.70213
+      ],
+      [
+        137.86659,
+        36.70093
+      ],
+      [
+        137.86556,
+        36.69908
+      ],
+      [
+        137.8643,
+        36.69674
+      ],
+      [
+        137.863895,
+        36.69601
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:14.69;lod:13.54;backbones:0;networkStations:3;distance:7621.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.703525;centerLon:137.867903;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2666.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.703525;centerLon:137.867903;distance:7621.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-03.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Himekawa crossing and Hakuba approach continuous; local east-side difference at broad Hakuba station band. Own passenger frame unresolved."
+}

@@ -1,0 +1,16 @@
+{
+  "pid": 46271,
+  "state": "Ts",
+  "signal": "SIGSTOP",
+  "executable": "/private/tmp/jtm-rail-alignment-inspector/Build/Products/Debug-maccatalyst/RailAlignmentInspector.app/Contents/MacOS/RailAlignmentInspector",
+  "requestingThread": "01a12d77-271a-7eb2-a55c-46995376121d",
+  "reason": "architecture focused Swift tests and Main incremental build",
+  "checkpoint": {
+    "capturedCount": 78146,
+    "failedCount": 6,
+    "format": "jtm-native-batch-capture-v1",
+    "pendingCount": 14064,
+    "planDigest": "1e616b862b86493543065ce15a1a7c0961f8dbc481124be66005108c9997587a",
+    "unavailableIntervalCount": 0
+  }
+}

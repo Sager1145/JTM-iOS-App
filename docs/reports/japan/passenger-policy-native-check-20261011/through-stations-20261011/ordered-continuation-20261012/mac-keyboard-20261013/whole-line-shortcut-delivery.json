@@ -1,0 +1,41 @@
+{
+  "buildLog": "/private/tmp/jtm-mac-whole-line-shortcut-build.log",
+  "build": "PASS",
+  "runtime": "PASS: actual Return selection and Option-Shift-Command-C complete line capture in all three Inspector apps",
+  "apps": [
+    {
+      "app": "/private/tmp/jtm-audit-fixed-alignment-products/RailAlignmentInspector.app",
+      "binarySha256": "20088c2a8332c465389596154b5ea6f65b621fe963f1b0126940afa0c5d27933",
+      "signature": "strict-deep-pass",
+      "resourceChange": false
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app",
+      "binarySha256": "20088c2a8332c465389596154b5ea6f65b621fe963f1b0126940afa0c5d27933",
+      "signature": "strict-deep-pass",
+      "resourceChange": false
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Hakone Inspector.app",
+      "binarySha256": "20088c2a8332c465389596154b5ea6f65b621fe963f1b0126940afa0c5d27933",
+      "signature": "strict-deep-pass",
+      "resourceChange": false
+    }
+  ],
+  "runtimeScope": {
+    "lines": [
+      "jp-伊予鉄道-城南線",
+      "jp-伊予鉄道-花園線"
+    ],
+    "intervalCountPerApp": 12,
+    "viewpointCountPerApp": 30,
+    "panelCountPerApp": 90,
+    "failedPerApp": 0,
+    "modalNegativeCases": "not measured",
+    "reports": [
+      "../jounan-group-display-candidate-v3/native-candidate/primary/fresh-report.json",
+      "../jounan-group-display-candidate-v3/native-candidate/secondary/fresh-report.json",
+      "../jounan-group-display-candidate-v3/native-candidate/third/fresh-report.json"
+    ]
+  }
+}

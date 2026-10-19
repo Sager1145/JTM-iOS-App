@@ -1,0 +1,18 @@
+{
+  "lineIDs": [
+    "jp-名古屋市-1号線東山線"
+  ],
+  "lineObjectSha256": "551e25913d9dce4e3ff22c0d9968893b23ba0072c47bf7ffee7609b97e59820e",
+  "actualMapBounds": [
+    136.791964,
+    35.034411,
+    137.082511,
+    35.287033
+  ],
+  "completeSelectedLineGeometryInsideActualMap": true,
+  "diagnosticProbeStatus": "7 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:42;overlays:34;rides:0;budgetDrops:0;vertices:17784;camera:11.86;lod:10.71;backbones:1;networkStations:0;distance:55437.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.160820;centerLon:136.937238;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2132.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:84;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:15;covered:1;basemapMuted:0;rideOverlaysMs:0;ri",
+  "diagnosticProbe": "Station dots temporarily hidden to expose AX items omitted by 476-item pagination; restored before both ON/OFF evidence captures; camera was not moved.",
+  "stationDotsEnabledForEvidence": true,
+  "overlayKey": "Shift-Command-L",
+  "pixelReview": "pending"
+}

@@ -1,0 +1,30 @@
+{
+  "date": "2026-10-10",
+  "scope": "Passenger Hakone switchback branch drawing; Deyama, Ohiradai, Kami-Ohiradai. Existing six-interval continuous corridor source repair retained.",
+  "connectionChange": "Exact reviewed retraces split into two main legs and one fork-to-terminal stem. Draw terminal once; do not round away surveyed corners.",
+  "networkParts": 7,
+  "physicalSourceChanged": false,
+  "passengerOnly": true,
+  "nativeChecks": {
+    "alignmentViewpoints": 18,
+    "captureFailures": 0,
+    "routeElapsedSeconds": 25.14220905303955,
+    "routeReviewFindings": 6,
+    "routeFailures": 0
+  },
+  "regressions": {
+    "javascript": 6,
+    "HakoneSourceReversalTests": 2,
+    "PrecomputedRouteDisplayTests": 3,
+    "mainCatalystBuild": "succeeded",
+    "bothInspectorBuilds": "succeeded"
+  },
+  "manualReview": "Both contact sheets (18 views), original Deyama view3, Kami-Ohiradai view2 and Ohiradai view0 inspected. Terminal branch connection is repaired. Native verdicts remain needsRepair for local source-to-Apple placement disagreement; not a full pixel alignment pass. Ohiradai display station anchor unchanged; prior station-footprint evidence remains applicable.",
+  "cacheRepair": "Zero-distance source ownership uses a repeated point when a corrected fork and terminal project to the same old source vertex; original physical edge coverage and total source length unchanged. Category visibility inherits the same journey section.",
+  "evidenceDirectory": "docs/reports/japan/hakone-switchback-branches-20261010",
+  "limitations": [
+    "No Apple pixel residual measured.",
+    "Six prior physical_intervals_unproven review findings retained.",
+    "Timetable-specific platform choice remains uncertified."
+  ]
+}

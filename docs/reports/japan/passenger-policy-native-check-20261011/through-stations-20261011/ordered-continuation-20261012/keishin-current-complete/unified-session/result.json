@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/candidate-tasks.json",
+  "capturedCount" : 11,
+  "captureIndexPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/native-review-notes.md",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-京阪電気鉄道-京津線#4",
+    "jp-京阪電気鉄道-京津線#5"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "11\/11 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "pendingCount" : 0,
+  "requestID" : "ordered-35-keishin-current-4-5-20261017",
+  "requestPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/review-notes.json",
+  "runStatusPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:50:18Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

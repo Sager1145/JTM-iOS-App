@@ -1,0 +1,12 @@
+# Keiyo3 own west approach repaired — 2026-10-18
+
+Applied the own west passenger-route window22..34 replacement using exact route14656632 ordered ways229030139→180845372→180845377→180845376. Frozen boundary projections use the repository geo helper,6.9269173m/0.7751701m residuals. This attributed directional track is a display reference, not a surveyed representative centre. East-arm passenger ways are explicitly excluded. Unchanged outer controls21/35, canonical station/mileage/source/physical graph and all lower-fork/station-tail coordinates survive.
+
+One guarded helper in the existing Shio module accepts only the exact old/new own window; earlier tail, midcurve and Shio replays reuse it. Physical fork index39 and display fork index48 are distinct; lower fork stays[139.95346,35.68953]. No new repair stage or alternate pipeline. Existing partsForRetainedKeiyoStage +repairParts updates native rulers; final west complex part96 controls/5906.9m, eastern part86/5411.1m and mainline487/42990.6m. Shared trunk8 coordinates and existing Shio/Minami station supports remain exact. Ebigawa policy/provenance refreshed by same apply path.
+
+Focused own-approach and old-full-replay tests2/2 passed36.53s. Subsequent concise provenance field addition reran only affected replay:1/1 passed44.12s. Logs /private/tmp/jtm-keiyo3-west-tests.log and jtm-keiyo3-west-provenance-test.log. Native candidate18/18 standard views completed,0failed. Parent inspected original legacy004531/000004/smooth.png, candidate smooth3/4/5/6/17 and basemap4/5. The false eastward bulge/return is absent; west branch stays west and lower real fork/station-tail retains direction. This limited pixel review is not every hidden track/platform or full physical acceptance. Main final composition pending current shared batch build.
+
+Candidate export and apply both used existing repair-keiyo-midcurve CLI, --west with --candidate-root then --apply. The old CLI log named only the eastern arm; its summary now lists actual affected lineIDs and all their native rows for agent readability, without altering geometry. First export's old summary is retained honestly; apply log /private/tmp/jtm-keiyo3-west-apply.log reports all3 identities. No commit or publish.
+
+
+Main batch follow-up: see ../main-repair-batch-20261018.md and main-batch-20261018/. Actual local pixels and bundled owner resources were reviewed; Hikifune same-camera OFF was blank and its reopened OFF camera changed, so that case retains the explicit limitation. No whole-line acceptance.

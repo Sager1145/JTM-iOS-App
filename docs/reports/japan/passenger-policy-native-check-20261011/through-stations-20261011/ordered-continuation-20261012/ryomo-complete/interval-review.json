@@ -1,0 +1,552 @@
+{
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "002407",
+        "小山"
+      ],
+      "toStation": [
+        "002349",
+        "思川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "00",
+          "01",
+          "02",
+          "03",
+          "04"
+        ]
+      },
+      "observation": "Oyama own Ryomo anchor lies on east edge of broad station band; Omoigawa River bend has changing local offset. Own platform identity and midpoint unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/00-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "002349",
+        "思川"
+      ],
+      "toStation": [
+        "002313",
+        "栃木"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "04",
+          "05",
+          "06",
+          "07",
+          "08"
+        ]
+      },
+      "observation": "Tochigi east approach has local north bump/kink above own Ryomo band. Independent Tobu Nikko corridor remains south; no whole-line translation justified.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/01-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "002313",
+        "栃木"
+      ],
+      "toStation": [
+        "002360",
+        "大平下"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "08",
+          "09",
+          "10",
+          "11"
+        ]
+      },
+      "observation": "Tochigi west / Ohirashita approach remains continuous, with local contour and own platform midpoint unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/02-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "002360",
+        "大平下"
+      ],
+      "toStation": [
+        "002381",
+        "岩舟"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 13,
+        "sheets": [
+          "12",
+          "13",
+          "14",
+          "15"
+        ]
+      },
+      "observation": "Iwafune northeast approach outer arc lies south of the Apple railway bend; keep the actual bend and check own station frame.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/03-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "002381",
+        "岩舟"
+      ],
+      "toStation": [
+        "002398",
+        "佐野"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 22,
+        "sheets": [
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20"
+        ]
+      },
+      "observation": "Sano passenger corridor lies slightly south of platform band; Tobu Sano crossing remains independent. Do not absorb yard fan.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/04-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "002398",
+        "佐野"
+      ],
+      "toStation": [
+        "002401",
+        "富田"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "20",
+          "21",
+          "22",
+          "23",
+          "24"
+        ]
+      },
+      "observation": "Tomita approach continuous; station frame and longitudinal midpoint remain unaccepted.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/05-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "002401",
+        "富田"
+      ],
+      "toStation": [
+        "002405",
+        "あしかがフラワーパーク"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "24",
+          "25"
+        ]
+      },
+      "observation": "Tomita–Flower Park short corridor continuous, but Apple curved glyph and current stroke differ locally. Own platform caps/midpoint unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/06-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "002405",
+        "あしかがフラワーパーク"
+      ],
+      "toStation": [
+        "002373",
+        "足利"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 19,
+        "sheets": [
+          "25",
+          "26",
+          "27",
+          "28",
+          "29"
+        ]
+      },
+      "observation": "Ashikaga east watercourse/bridge approach has varying north bias. JR Ashikaga remains distinct from Tobu Ashikagashi across river.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/07-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "002373",
+        "足利"
+      ],
+      "toStation": [
+        "002354",
+        "山前"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 15,
+        "sheets": [
+          "30",
+          "31",
+          "32",
+          "33"
+        ]
+      },
+      "observation": "Ashikaga–Yamamae varies locally at bends and road crossings; neither a constant translation nor platform acceptance established.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/08-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "002354",
+        "山前"
+      ],
+      "toStation": [
+        "002308",
+        "小俣"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "33",
+          "34",
+          "35",
+          "36",
+          "37"
+        ]
+      },
+      "observation": "Yamamae–Omata mainly straight, with smaller local offset; platform midpoint unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/09-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "002308",
+        "小俣"
+      ],
+      "toStation": [
+        "002255",
+        "桐生"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 18,
+        "sheets": [
+          "37",
+          "38",
+          "39",
+          "40",
+          "41"
+        ]
+      },
+      "observation": "Kiryugawa river S retained. Local river and northeast Kiryu approach offsets vary; do not flatten S.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/10-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "002255",
+        "桐生"
+      ],
+      "toStation": [
+        "002274",
+        "岩宿"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 13,
+        "sheets": [
+          "41",
+          "42",
+          "43",
+          "44"
+        ]
+      },
+      "observation": "Kiryu–Iwajuku own corridor kept separate from Watarase Keikoku branch, Tobu Kiryu crossing and large yard fan. Own passenger platform centres unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/11-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "002274",
+        "岩宿"
+      ],
+      "toStation": [
+        "002335",
+        "国定"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 20,
+        "sheets": [
+          "45",
+          "46",
+          "47",
+          "48",
+          "49"
+        ]
+      },
+      "observation": "Iwajuku–Kunisada long straight continuous; later approach lies southeast of Apple glyph locally. Own midpoint unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/12-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "002335",
+        "国定"
+      ],
+      "toStation": [
+        "002380",
+        "伊勢崎"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 18,
+        "sheets": [
+          "50",
+          "51",
+          "52",
+          "53",
+          "54"
+        ]
+      },
+      "observation": "High-priority candidate: south departure from Ryomo glyph at Kasukawa bridge / west turn into Isesaki, near Tobu side. Own JR platform identity must be resolved before repair.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/13-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 14,
+      "fromStation": [
+        "002380",
+        "伊勢崎"
+      ],
+      "toStation": [
+        "002344",
+        "駒形"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 18,
+        "sheets": [
+          "54",
+          "55",
+          "56",
+          "57",
+          "58"
+        ]
+      },
+      "observation": "Isesaki south-side station departure repeats; Isesaki–Komagata local offsets vary near Hirose, Arao, Momonoki and motorway. No whole-line translation.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/14-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 15,
+      "fromStation": [
+        "002344",
+        "駒形"
+      ],
+      "toStation": [
+        "002318",
+        "前橋大島"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "59",
+          "60",
+          "61"
+        ]
+      },
+      "observation": "Komagata–Maebashi Oshima straight corridor continuous; own station longitudinal platform midpoints unresolved.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/15-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 16,
+      "fromStation": [
+        "002318",
+        "前橋大島"
+      ],
+      "toStation": [
+        "002297",
+        "前橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 12,
+        "sheets": [
+          "61",
+          "62",
+          "63",
+          "64"
+        ]
+      },
+      "observation": "Hirose River and Maebashi east approach has north bias; station stroke lies north of broad platform band. Own passenger frame requires identification.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/16-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 17,
+      "fromStation": [
+        "002297",
+        "前橋"
+      ],
+      "toStation": [
+        "002301",
+        "新前橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 9,
+        "sheets": [
+          "64",
+          "65",
+          "66"
+        ]
+      },
+      "observation": "Tone River bridge stroke north of Apple railway glyph, with varying curve offset; Shin-Maebashi joins Joetsu passenger corridor, yard fan excluded. Named line boundary is not physical end.",
+      "geographicAcceptance": "WARNING: local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/17-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    }
+  ]
+}

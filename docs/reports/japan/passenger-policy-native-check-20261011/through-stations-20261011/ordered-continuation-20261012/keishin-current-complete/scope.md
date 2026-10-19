@@ -1,0 +1,3 @@
+# #35 Keishin current complete evidence scope
+
+Reuse20 historical views of intervals0–3 only after raw/display/ID comparison and current complete-DisplayParts clipping correspond. Current owning row also matches frozen final Kamisakaemachi builder result. Old Library intervals4/5 are BEFORE42/16display points, current55/47. Retained final AFTER contact sheets/coverage/native-review-notes remain valid historical evidence, but original temporary receipt roots are gone. New exact request captures only the two affected complete intervals4/5 to restore current original PNG+view/projection receipts. This does not invalidate the historical repair or require a three-app/full-line recapture.

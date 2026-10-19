@@ -1,0 +1,33 @@
+{
+  "status": "candidate-only",
+  "candidateSha256": "2b080fcfe778a441a4daaebe9cb7f79d7e1851452a04615aca712a8d9b66efb9",
+  "intervalIDs": [
+    "jp-名古屋鉄道-津島線#0",
+    "jp-名古屋鉄道-津島線#1",
+    "jp-名古屋鉄道-津島線#2",
+    "jp-名古屋鉄道-津島線#3",
+    "jp-名古屋鉄道-津島線#4",
+    "jp-名古屋鉄道-津島線#5",
+    "jp-名古屋鉄道-津島線#6",
+    "jp-名古屋鉄道-名古屋本線#16",
+    "jp-名古屋鉄道-名古屋本線#17",
+    "jp-名古屋鉄道-名古屋本線#18",
+    "jp-名古屋鉄道-名古屋本線#19",
+    "jp-名古屋鉄道-名古屋本線#20",
+    "jp-名古屋鉄道-名古屋本線#21",
+    "jp-名古屋鉄道-名古屋本線#22",
+    "jp-名古屋鉄道-名古屋本線#23"
+  ],
+  "physicalOwnerLinesExact": true,
+  "candidateRowsSha256": {
+    "jp-名古屋鉄道-津島線": "3022e732cd9b3ab9ca6224625565dcaaf49571c157c94cb0138ed1588827f195",
+    "jp-名古屋鉄道-名古屋本線": "9456fdefad3664daf23d98b227bb68b56d26935bb092399e36c6fbb47b3f0f36"
+  },
+  "nativeRowsCount": {
+    "jp-名古屋鉄道-津島線": 1,
+    "jp-名古屋鉄道-名古屋本線": 1
+  },
+  "measuredReferencesMappedWithinOwnIntervals": true,
+  "productionInputsChanged": false,
+  "nativeAccepted": false
+}

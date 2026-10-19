@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "7145B87E-9649-4C11-BD36-C79DCD962080",
+  "message" : "11\/11 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "ordered-35-keishin-current-4-5-20261017",
+  "resultPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:50:18Z"
+}

@@ -1,0 +1,50 @@
+{
+  "status": "installed-three-apps-actual-case-and-keyboard-reviewed",
+  "change": "Opt-in blue railway palette rejects cyan line peaks; default blue/cyan and paired physical modes preserved. Colour does not prove ownership.",
+  "files": [
+    "ios/auxiliary/RailAlignmentInspector/InspectionKit/Sources/RailInspection/AppleMapRailExtractor.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectorModel.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectorApp.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/InspectorMap.swift",
+    "ios/auxiliary/RailAlignmentInspector/Sources/AppleMapAnalysisService.swift"
+  ],
+  "red": "Actual Shimookui raw regression failed median<4m and x>475 own-rail assertions before palette gate.",
+  "green": "Same actual regression and 3 existing transit tests passed (4 total, 0.370s).",
+  "incrementalBuild": "/private/tmp/jtm-toyama-inspector-build.log: BUILD SUCCEEDED, CODE_SIGNING_ALLOWED=NO, 2 jobs",
+  "installed": [
+    "RailAlignmentInspector.app",
+    "Kisuki Keiyo Inspector.app",
+    "Hakone Inspector.app"
+  ],
+  "installation": "Only executable, debug dylib and preview bytes replaced; existing identities/resources preserved. All three deep strict codesign verifications succeeded.",
+  "shortcut": "Cmd+Option+Shift+B; observed primary checkbox switched to 1 after transit mode enabled.",
+  "formalToyamaGeometryChanged": false,
+  "mainAcceptance": false,
+  "nativeResults": {
+    "primary": {
+      "supportFraction": 0.7080745341614907,
+      "medianOffsetMetres": 1.908896602201045,
+      "p95OffsetMetres": 1.908896602201045,
+      "maximumOffsetMetres": 2.8633449033015674,
+      "uiPixelReviewed": true,
+      "platformCandidatesRemainUnresolved": true
+    },
+    "secondary": {
+      "supportFraction": 0.7080745341614907,
+      "medianOffsetMetres": 1.908896602201045,
+      "p95OffsetMetres": 1.908896602201045,
+      "maximumOffsetMetres": 2.8633449033015674,
+      "uiPixelReviewed": true,
+      "platformCandidatesRemainUnresolved": true
+    },
+    "third": {
+      "supportFraction": 0.7080745341614907,
+      "medianOffsetMetres": 1.908896602201045,
+      "p95OffsetMetres": 1.908896602201045,
+      "maximumOffsetMetres": 2.8633449033015674,
+      "uiPixelReviewed": true,
+      "platformCandidatesRemainUnresolved": true
+    }
+  },
+  "scope": "Extractor fix only. Toyama 14-interval baseline reviewed; full geometry repair and Main review pending."
+}

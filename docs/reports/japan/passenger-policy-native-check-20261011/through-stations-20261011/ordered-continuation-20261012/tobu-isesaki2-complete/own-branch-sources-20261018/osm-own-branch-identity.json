@@ -1,0 +1,1226 @@
+{
+  "sourceAPI": "https://api.openstreetmap.org/api/0.6/map?bbox=139.8155,35.7162,139.8176,35.7195",
+  "attribution": "© OpenStreetMap contributors, ODbL1.0",
+  "ways": [
+    {
+      "id": "61754727",
+      "version": "20",
+      "timestamp": "2026-03-01T22:42:56Z",
+      "tags": {
+        "alt_name": "東武スカイツリーライン",
+        "alt_name:en": "Tobu Skytree Line",
+        "alt_name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "alt_name:zh": "东武晴空塔线",
+        "bridge": "yes",
+        "colour": "#0f6cc3",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "東武伊勢崎線",
+        "name:en": "Tōbu Isesaki Line",
+        "name:es": "Línea Tobu Isesaki",
+        "name:ja": "東武伊勢崎線",
+        "name:ja-Hira": "とうぶいせさきせん",
+        "name:ja-Latn": "Tobu Isesaki Sen",
+        "name:ko": "도부 이세사키선",
+        "name:zh": "东武伊势崎线",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "official_name": "東武伊勢崎線",
+        "official_name:en": "Tobu Isesaki Line",
+        "official_name:es": "Línea Tobu Isesaki",
+        "official_name:ja": "東武伊勢崎線",
+        "oneway": "yes",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "nodeIDs": [
+        "1682293947",
+        "13610175919",
+        "13610175920",
+        "1682293945",
+        "13610175921",
+        "1682293936",
+        "1682293924",
+        "13610175922",
+        "1666311618",
+        "769413250",
+        "7967415777",
+        "769413251",
+        "769413249",
+        "13610574285",
+        "1682293887",
+        "13610175866",
+        "13610175867",
+        "769413243",
+        "13610175868",
+        "13610175869",
+        "769412399"
+      ],
+      "coordinates": [
+        [
+          139.817021,
+          35.7198203
+        ],
+        [
+          139.8169302,
+          35.719582
+        ],
+        [
+          139.8168926,
+          35.7194803
+        ],
+        [
+          139.8168504,
+          35.7193475
+        ],
+        [
+          139.8168261,
+          35.7192672
+        ],
+        [
+          139.8168057,
+          35.7191773
+        ],
+        [
+          139.8167754,
+          35.7190154
+        ],
+        [
+          139.8167543,
+          35.7188826
+        ],
+        [
+          139.816739,
+          35.7187403
+        ],
+        [
+          139.8167062,
+          35.7183054
+        ],
+        [
+          139.8166487,
+          35.7178117
+        ],
+        [
+          139.8166091,
+          35.7173008
+        ],
+        [
+          139.8165877,
+          35.7166404
+        ],
+        [
+          139.8165798,
+          35.7162942
+        ],
+        [
+          139.8165754,
+          35.7160505
+        ],
+        [
+          139.8165741,
+          35.7158519
+        ],
+        [
+          139.8165753,
+          35.7157368
+        ],
+        [
+          139.8165786,
+          35.7156275
+        ],
+        [
+          139.8165827,
+          35.7154671
+        ],
+        [
+          139.8165854,
+          35.7153764
+        ],
+        [
+          139.8165868,
+          35.7152904
+        ]
+      ]
+    },
+    {
+      "id": "155704809",
+      "version": "4",
+      "timestamp": "2026-03-01T19:16:25Z",
+      "tags": {
+        "area": "yes",
+        "covered": "yes",
+        "layer": "1",
+        "public_transport": "platform",
+        "railway": "platform",
+        "source": "bing"
+      },
+      "nodeIDs": [
+        "1680721113",
+        "1680721110",
+        "1680721101",
+        "1680721067",
+        "1680721001",
+        "1680721005",
+        "13610175885",
+        "1680721063",
+        "13610175890",
+        "1680721102",
+        "13610175889",
+        "1680721113"
+      ],
+      "coordinates": [
+        [
+          139.8166718,
+          35.7190233
+        ],
+        [
+          139.8166955,
+          35.7190198
+        ],
+        [
+          139.8166761,
+          35.718805
+        ],
+        [
+          139.8166015,
+          35.7178145
+        ],
+        [
+          139.8165401,
+          35.7170761
+        ],
+        [
+          139.8165113,
+          35.7170762
+        ],
+        [
+          139.8165206,
+          35.7175762
+        ],
+        [
+          139.8165315,
+          35.7178346
+        ],
+        [
+          139.8165944,
+          35.7185863
+        ],
+        [
+          139.8166132,
+          35.7187312
+        ],
+        [
+          139.8166542,
+          35.7189577
+        ],
+        [
+          139.8166718,
+          35.7190233
+        ]
+      ]
+    },
+    {
+      "id": "155704812",
+      "version": "4",
+      "timestamp": "2026-03-01T19:16:25Z",
+      "tags": {
+        "area": "yes",
+        "covered": "yes",
+        "layer": "1",
+        "public_transport": "platform",
+        "railway": "platform",
+        "source": "bing"
+      },
+      "nodeIDs": [
+        "1680721132",
+        "1680721129",
+        "1680721099",
+        "1680721058",
+        "13610175884",
+        "1680721020",
+        "1680721036",
+        "1680721061",
+        "1680721104",
+        "13610175888",
+        "1680721116",
+        "1680721132"
+      ],
+      "coordinates": [
+        [
+          139.8168375,
+          35.7192315
+        ],
+        [
+          139.8168728,
+          35.7192292
+        ],
+        [
+          139.8168353,
+          35.7187913
+        ],
+        [
+          139.8167532,
+          35.7178213
+        ],
+        [
+          139.8167153,
+          35.7175606
+        ],
+        [
+          139.8166734,
+          35.7173433
+        ],
+        [
+          139.816644,
+          35.7173457
+        ],
+        [
+          139.8166756,
+          35.7178108
+        ],
+        [
+          139.8167604,
+          35.7187967
+        ],
+        [
+          139.8167795,
+          35.7189354
+        ],
+        [
+          139.8168051,
+          35.7190895
+        ],
+        [
+          139.8168375,
+          35.7192315
+        ]
+      ]
+    },
+    {
+      "id": "155874950",
+      "version": "17",
+      "timestamp": "2026-03-01T19:16:25Z",
+      "tags": {
+        "alt_name": "東武スカイツリーライン",
+        "alt_name:en": "Tobu Skytree Line",
+        "alt_name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "alt_name:zh": "东武晴空塔线",
+        "bridge": "yes",
+        "colour": "#0f6cc3",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "東武伊勢崎線",
+        "name:en": "Tōbu Isesaki Line",
+        "name:es": "Línea Tobu Isesaki",
+        "name:ja": "東武伊勢崎線",
+        "name:ja-Hira": "とうぶいせさきせん",
+        "name:ja-Latn": "Tobu Isesaki Sen",
+        "name:ko": "도부 이세사키선",
+        "name:zh": "东武伊势崎线",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "official_name": "東武伊勢崎線",
+        "official_name:en": "Tobu Isesaki Line",
+        "official_name:es": "Línea Tobu Isesaki",
+        "official_name:ja": "東武伊勢崎線",
+        "oneway": "yes",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "nodeIDs": [
+        "1682293862",
+        "1682293866",
+        "13610175865",
+        "1682293894",
+        "13610175880",
+        "1682293902",
+        "13610175879",
+        "1682293904",
+        "7967415778",
+        "1682293917",
+        "1682293921",
+        "13610175891",
+        "1682293927",
+        "13610175892",
+        "1682293938",
+        "13610175893",
+        "13610175899",
+        "13610175900",
+        "1682293942"
+      ],
+      "coordinates": [
+        [
+          139.8165462,
+          35.7152908
+        ],
+        [
+          139.8165321,
+          35.7156914
+        ],
+        [
+          139.8165292,
+          35.7159318
+        ],
+        [
+          139.8165331,
+          35.7166425
+        ],
+        [
+          139.8165349,
+          35.7167897
+        ],
+        [
+          139.8165444,
+          35.7169485
+        ],
+        [
+          139.8165563,
+          35.7171076
+        ],
+        [
+          139.8165793,
+          35.7173197
+        ],
+        [
+          139.8166196,
+          35.7178141
+        ],
+        [
+          139.8166638,
+          35.7183121
+        ],
+        [
+          139.8167051,
+          35.7188156
+        ],
+        [
+          139.8167192,
+          35.7189971
+        ],
+        [
+          139.8167341,
+          35.71916
+        ],
+        [
+          139.8167437,
+          35.7192287
+        ],
+        [
+          139.816758,
+          35.7193185
+        ],
+        [
+          139.816786,
+          35.7194445
+        ],
+        [
+          139.8167987,
+          35.7194983
+        ],
+        [
+          139.8168252,
+          35.7195775
+        ],
+        [
+          139.8168517,
+          35.7196492
+        ]
+      ]
+    },
+    {
+      "id": "155874972",
+      "version": "6",
+      "timestamp": "2026-03-01T22:42:56Z",
+      "tags": {
+        "bridge": "yes",
+        "gauge": "1067",
+        "layer": "1",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "service": "crossover"
+      },
+      "nodeIDs": [
+        "769413249",
+        "13610574290",
+        "13610574289",
+        "13610574286",
+        "13610574287",
+        "13610574288",
+        "1682293890"
+      ],
+      "coordinates": [
+        [
+          139.8165877,
+          35.7166404
+        ],
+        [
+          139.8165896,
+          35.7165729
+        ],
+        [
+          139.8165962,
+          35.7165158
+        ],
+        [
+          139.8166094,
+          35.7163732
+        ],
+        [
+          139.8166143,
+          35.7163151
+        ],
+        [
+          139.8166174,
+          35.7162575
+        ],
+        [
+          139.8166193,
+          35.7161905
+        ]
+      ]
+    },
+    {
+      "id": "723619184",
+      "version": "11",
+      "timestamp": "2026-03-01T19:16:25Z",
+      "tags": {
+        "alt_name": "東武スカイツリーライン",
+        "alt_name:en": "Tobu Skytree Line",
+        "alt_name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "alt_name:zh": "东武晴空塔线",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "東武伊勢崎線",
+        "name:en": "Tōbu Isesaki Line",
+        "name:es": "Línea Tobu Isesaki",
+        "name:ja": "東武伊勢崎線",
+        "name:ja-Hira": "とうぶいせさきせん",
+        "name:ja-Latn": "Tobu Isesaki Sen",
+        "name:ko": "도부 이세사키선",
+        "name:zh": "东武伊势崎线",
+        "official_name": "東武伊勢崎線",
+        "official_name:en": "Tobu Isesaki Line",
+        "official_name:es": "Línea Tobu Isesaki",
+        "official_name:ja": "東武伊勢崎線",
+        "oneway": "yes",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "nodeIDs": [
+        "12394923282",
+        "13610175855",
+        "1682293837",
+        "13610175854",
+        "10879341530",
+        "1682293838",
+        "10879341531",
+        "13610175853",
+        "1682293849",
+        "1682293854",
+        "1682293867",
+        "1682293869",
+        "1682293871",
+        "13610175878",
+        "13610175881",
+        "1682293901",
+        "4074508543",
+        "1682293913",
+        "13610175886",
+        "3558471787",
+        "1682293922",
+        "13610175896",
+        "1682293928",
+        "13610175895",
+        "13610175894",
+        "1682293939",
+        "13610175897",
+        "13610175898",
+        "1682293942"
+      ],
+      "coordinates": [
+        [
+          139.8163806,
+          35.7143758
+        ],
+        [
+          139.8163925,
+          35.7144064
+        ],
+        [
+          139.8164063,
+          35.714455
+        ],
+        [
+          139.8164178,
+          35.714498
+        ],
+        [
+          139.8164344,
+          35.714569
+        ],
+        [
+          139.8164533,
+          35.7146653
+        ],
+        [
+          139.8164632,
+          35.7147345
+        ],
+        [
+          139.8164714,
+          35.7148182
+        ],
+        [
+          139.8164769,
+          35.7148819
+        ],
+        [
+          139.8164814,
+          35.715096
+        ],
+        [
+          139.8164899,
+          35.7156908
+        ],
+        [
+          139.816489,
+          35.7158997
+        ],
+        [
+          139.8164891,
+          35.7161843
+        ],
+        [
+          139.8164919,
+          35.7166249
+        ],
+        [
+          139.8164952,
+          35.716955
+        ],
+        [
+          139.8164953,
+          35.7170914
+        ],
+        [
+          139.8164974,
+          35.7173105
+        ],
+        [
+          139.816506,
+          35.7176776
+        ],
+        [
+          139.8165111,
+          35.7178424
+        ],
+        [
+          139.816549,
+          35.7183229
+        ],
+        [
+          139.8166028,
+          35.7187991
+        ],
+        [
+          139.8166192,
+          35.7189013
+        ],
+        [
+          139.8166448,
+          35.7190231
+        ],
+        [
+          139.8166603,
+          35.7190826
+        ],
+        [
+          139.8166835,
+          35.7191648
+        ],
+        [
+          139.816717,
+          35.7192764
+        ],
+        [
+          139.816783,
+          35.7194702
+        ],
+        [
+          139.8168174,
+          35.7195629
+        ],
+        [
+          139.8168517,
+          35.7196492
+        ]
+      ]
+    },
+    {
+      "id": "723619185",
+      "version": "11",
+      "timestamp": "2026-03-01T22:42:56Z",
+      "tags": {
+        "alt_name": "東武スカイツリーライン",
+        "alt_name:en": "Tobu Skytree Line",
+        "alt_name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "alt_name:zh": "东武晴空塔线",
+        "bridge": "yes",
+        "colour": "#0f6cc3",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "東武伊勢崎線",
+        "name:en": "Tōbu Isesaki Line",
+        "name:es": "Línea Tobu Isesaki",
+        "name:ja": "東武伊勢崎線",
+        "name:ja-Hira": "とうぶいせさきせん",
+        "name:ja-Latn": "Tobu Isesaki Sen",
+        "name:ko": "도부 이세사키선",
+        "name:zh": "东武伊势崎线",
+        "official_name": "東武伊勢崎線",
+        "official_name:en": "Tobu Isesaki Line",
+        "official_name:es": "Línea Tobu Isesaki",
+        "official_name:ja": "東武伊勢崎線",
+        "oneway": "yes",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "source": "KSJ2",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "nodeIDs": [
+        "1682293947",
+        "13610175926",
+        "13610175925",
+        "13610175927",
+        "13610175924",
+        "1682293941",
+        "13610175923",
+        "308839909",
+        "769050599",
+        "308841810",
+        "1682293910",
+        "13610175887",
+        "13610175882",
+        "13610175883",
+        "308841811",
+        "1682293899",
+        "1682293891",
+        "1682293890",
+        "13610175862",
+        "1682293868",
+        "13610175861",
+        "308842106",
+        "13610175860",
+        "13610175859",
+        "1682293864",
+        "13610175858",
+        "308842108",
+        "13610175857",
+        "10879277387",
+        "1682293843",
+        "13610175856",
+        "10879277386"
+      ],
+      "coordinates": [
+        [
+          139.817021,
+          35.7198203
+        ],
+        [
+          139.8169931,
+          35.7197376
+        ],
+        [
+          139.8169716,
+          35.719665
+        ],
+        [
+          139.8169515,
+          35.7195969
+        ],
+        [
+          139.8169327,
+          35.719516
+        ],
+        [
+          139.81692,
+          35.7194526
+        ],
+        [
+          139.8169029,
+          35.7193523
+        ],
+        [
+          139.8168917,
+          35.7192593
+        ],
+        [
+          139.8168512,
+          35.7187888
+        ],
+        [
+          139.816812,
+          35.7183044
+        ],
+        [
+          139.8167844,
+          35.7179371
+        ],
+        [
+          139.8167584,
+          35.7177304
+        ],
+        [
+          139.8167013,
+          35.7174171
+        ],
+        [
+          139.8166868,
+          35.7173395
+        ],
+        [
+          139.8166757,
+          35.7172565
+        ],
+        [
+          139.8166404,
+          35.7169282
+        ],
+        [
+          139.8166311,
+          35.7166397
+        ],
+        [
+          139.8166193,
+          35.7161905
+        ],
+        [
+          139.8166186,
+          35.7160556
+        ],
+        [
+          139.8166199,
+          35.7159275
+        ],
+        [
+          139.8166247,
+          35.7158207
+        ],
+        [
+          139.8166328,
+          35.7156918
+        ],
+        [
+          139.8166439,
+          35.7155287
+        ],
+        [
+          139.8166538,
+          35.7153857
+        ],
+        [
+          139.8166574,
+          35.715286
+        ],
+        [
+          139.8166582,
+          35.715217
+        ],
+        [
+          139.8166545,
+          35.7151137
+        ],
+        [
+          139.8166502,
+          35.7150304
+        ],
+        [
+          139.8166441,
+          35.7149593
+        ],
+        [
+          139.8166305,
+          35.7148672
+        ],
+        [
+          139.8166153,
+          35.7147717
+        ],
+        [
+          139.8165922,
+          35.7146714
+        ]
+      ]
+    },
+    {
+      "id": "800175600",
+      "version": "4",
+      "timestamp": "2026-03-01T22:42:56Z",
+      "tags": {
+        "bridge": "yes",
+        "gauge": "1067",
+        "layer": "1",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "operator:ja-Latn": "Tōbu Tetsudō",
+        "railway": "rail",
+        "railway:ats": "yes",
+        "service": "crossover"
+      },
+      "nodeIDs": [
+        "1682293887",
+        "13610574284",
+        "13610175874",
+        "13610175875",
+        "13610175876",
+        "13610175877",
+        "1682293894"
+      ],
+      "coordinates": [
+        [
+          139.8165754,
+          35.7160505
+        ],
+        [
+          139.8165709,
+          35.7161862
+        ],
+        [
+          139.8165641,
+          35.7162934
+        ],
+        [
+          139.8165475,
+          35.7164448
+        ],
+        [
+          139.8165397,
+          35.7165099
+        ],
+        [
+          139.8165358,
+          35.7165693
+        ],
+        [
+          139.8165331,
+          35.7166425
+        ]
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "5392090",
+      "version": "82",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "blue",
+        "from": "浅草",
+        "interval": "7",
+        "interval:conditional": "6 @ (Mo-Fr 06:00-07:59, 21:00-21:59); 5 @ (Mo-Fr 08:00-10:00, 18:00-20:59); 10 @ (Mo-Su 05:30-06:00, 22:00-23:30)",
+        "name": "東武スカイツリーライン",
+        "name:en": "TOBU SKYTREE Line (Southwest->North)",
+        "name:es": "Línea Tobu Skytree (Suroeste->Norte)",
+        "name:ja": "東武スカイツリーライン (浅草=>東武動物公園)",
+        "name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "name:ko": "도부 스카이트리 라인",
+        "name:zh": "东武晴空塔线",
+        "network": "東武スカイツリーライン",
+        "network:en": "Tobu Skytree Line",
+        "network:metro": "スカイツリーライン",
+        "note:en": "Part of Tobu Isesaki Line",
+        "note:interval": "See Skytree station timetable: https://ekitan.com/timetable/railway/line-station/212-1/d2",
+        "opening_hours": "Mo-Su 05:45-23:30",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "train",
+        "to": "東武動物公園",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "en:Tobu Skytree Line"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "723619184",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "9504526",
+      "version": "47",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "#0f6cc3",
+        "from": "東武動物公園",
+        "interval": "7",
+        "interval:conditional": "6 @ (Mo-Fr 06:00-07:59, 21:00-21:59); 5 @ (Mo-Fr 08:00-10:00, 18:00-20:59); 10 @ (Mo-Su 05:30-06:00, 22:00-23:30)",
+        "name": "東武スカイツリーライン",
+        "name:en": "TOBU SKYTREE Line (North → Southwest)",
+        "name:es": "Línea Tobu Skytree (Norte → Suroeste)",
+        "name:ja": "東武スカイツリーライン (東武動物公園→浅草)",
+        "name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "name:ko": "도부 스카이트리 라인",
+        "name:zh": "东武晴空塔线",
+        "network": "東武スカイツリーライン",
+        "network:en": "Tobu Skytree Line",
+        "network:metro": "スカイツリーライン",
+        "note:en": "Part of Tobu Isesaki Line",
+        "note:interval": "See Skytree station timetable: https://ekitan.com/timetable/railway/line-station/212-1/d2",
+        "opening_hours": "Mo-Su 05:45-23:30",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "train",
+        "to": "浅草",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "en:Tobu Skytree Line"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "723619185",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "10025573",
+      "version": "42",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "#937CB9",
+        "colour:infill": "#939598",
+        "description": "Suburban throught line from Hanzomon and Hibiya line",
+        "from": "押上〈スカイツリー前〉",
+        "interval": "10",
+        "name": "東京地下鉄の直通運転 - スカイツリーライン",
+        "name:en": "Tokyo Metro - Skytree Bypass Line (Hanzomon, South->North)",
+        "name:es": "Tokyo Metro - Línea baipás Skytree (Hanzomon, Sur->Norte)",
+        "name:ja": "東京地下鉄の直通運転 - スカイツリーライン (押上〈スカイツリー前〉=>東武動物公園)",
+        "name:ja-Latn": "Tōkyō chikatetsu no chokutsū unten - sukaitsurīrain",
+        "name:ko": "도쿄 지하철 직통 운전 - 스카이 트리 라인",
+        "name:zh": "东京地铁直营 - 天空树线",
+        "network": "東武スカイツリーライン",
+        "network:en": "Tobu Skytree Line;Tokyo Metro",
+        "network:metro": "東京メトロ直通運転",
+        "network:note": "Tokyo Metro commuter service through third railways lines. Trains cross Tokyo metropolitan area without having to change trains. In japanese is called 直通運転 (direct operation).",
+        "operator": "東武鉄道;東京地下鉄",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "subway",
+        "source:interval": "https://www.tokyometro.jp/lang_en/station/hatchobori/timetable/hibiya/b/index.html",
+        "source:network": "https://www.tokyometro.jp/support/startguide/pdf/startguide_03.pdf;https://www.tokyometro.jp/news/images_h/20150617metroNews_g18n91.pdf;https://en.wikipedia.org/wiki/List_of_through_trains_in_Japan",
+        "to": "東武動物公園",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "ja:東武伊勢崎線"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "155874950",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "10025574",
+      "version": "47",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "blue",
+        "description": "Suburban throught line from Hanzomon and Hibiya line",
+        "from": "東武動物公園",
+        "interval": "10",
+        "name": "東京地下鉄の直通運転 - スカイツリーライン",
+        "name:en": "Tokyo Metro - Skytree Bypass Line (Hanzomon, North->South)",
+        "name:es": "Tokyo Metro - Línea baipás Skytree (Hanzomon, Norte->Sur)",
+        "name:ja": "東京地下鉄の直通運転 - スカイツリーライン (東武動物公園=>押上〈スカイツリー前〉)",
+        "name:ja-Latn": "Tōkyō chikatetsu no chokutsū unten - sukaitsurīrain",
+        "name:ko": "도쿄 지하철 직통 운전 - 스카이 트리 라인",
+        "name:zh": "东京地铁直营 - 天空树线",
+        "network": "東武スカイツリーライン;東京メトロ",
+        "network:en": "Tobu Skytree Line;Tokyo Metro",
+        "network:metro": "東京メトロ直通運転",
+        "network:note": "Tokyo Metro commuter service through third railways lines. Trains cross Tokyo metropolitan area without having to change trains. In japanese is called 直通運転 (direct operation).",
+        "operator": "東武鉄道;東京地下鉄",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "subway",
+        "source:interval": "https://www.tokyometro.jp/lang_en/station/hatchobori/timetable/hibiya/b/index.html",
+        "source:network": "https://www.tokyometro.jp/support/startguide/pdf/startguide_03.pdf;https://www.tokyometro.jp/news/images_h/20150617metroNews_g18n91.pdf;https://en.wikipedia.org/wiki/List_of_through_trains_in_Japan",
+        "to": "押上〈スカイツリー前〉",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "ja:東武伊勢崎線"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "61754727",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "11065584",
+      "version": "45",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "#0f6cc3",
+        "from": "押上〈スカイツリー前〉",
+        "interval": "7",
+        "interval:conditional": "6 @ (Mo-Fr 06:00-07:59, 21:00-21:59); 5 @ (Mo-Fr 08:00-10:00, 18:00-20:59); 10 @ (Mo-Su 05:30-06:00, 22:00-23:30)",
+        "name": "東武スカイツリーライン",
+        "name:en": "TOBU SKYTREE Line (South->North)",
+        "name:es": "Línea Tobu Skytree (Sur->Norte)",
+        "name:ja": "東武スカイツリーライン (押上〈スカイツリー前〉=>東武動物公園)",
+        "name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "name:ko": "도부 스카이트리 라인",
+        "name:zh": "东武晴空塔线",
+        "network": "東武スカイツリーライン",
+        "network:en": "Tobu Skytree Line",
+        "network:metro": "スカイツリーライン",
+        "note:en": "Part of Tobu Isesaki Line",
+        "note:interval": "See Skytree station timetable: https://ekitan.com/timetable/railway/line-station/212-1/d2",
+        "opening_hours": "Mo-Su 05:45-23:30",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "train",
+        "to": "東武動物公園",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "en:Tobu Skytree Line"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "155874950",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "11065585",
+      "version": "44",
+      "timestamp": "2026-10-05T04:41:31Z",
+      "tags": {
+        "colour": "#0f6cc3",
+        "from": "東武動物公園",
+        "interval": "7",
+        "interval:conditional": "6 @ (Mo-Fr 06:00-07:59, 21:00-21:59); 5 @ (Mo-Fr 08:00-10:00, 18:00-20:59); 10 @ (Mo-Su 05:30-06:00, 22:00-23:30)",
+        "name": "東武スカイツリーライン",
+        "name:en": "TOBU SKYTREE Line (North->South)",
+        "name:es": "Línea Tobu Skytree (Norte->Sur)",
+        "name:ja": "東武スカイツリーライン (東武動物公園=>押上〈スカイツリー前〉)",
+        "name:ja-Latn": "Tōbu Sukaitsurī rain",
+        "name:ko": "도부 스카이트리 라인",
+        "name:zh": "东武晴空塔线",
+        "network": "東武スカイツリーライン",
+        "network:en": "Tobu Skytree Line",
+        "network:metro": "スカイツリーライン",
+        "note:en": "Part of Tobu Isesaki Line",
+        "note:interval": "See Skytree station timetable: https://ekitan.com/timetable/railway/line-station/212-1/d2",
+        "opening_hours": "Mo-Su 05:45-23:30",
+        "operator": "東武鉄道",
+        "operator:en": "Tobu Railway",
+        "operator:ja": "東武鉄道",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "TS",
+        "route": "train",
+        "to": "押上〈スカイツリー前〉",
+        "type": "route",
+        "wikidata": "Q13360900",
+        "wikipedia": "en:Tobu Skytree Line"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "61754727",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "11068946",
+      "version": "2",
+      "timestamp": "2020-08-12T08:16:54Z",
+      "tags": {
+        "name": "曳舟",
+        "public_transport": "stop_area",
+        "type": "public_transport"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "155704809",
+          "role": "platform"
+        },
+        {
+          "type": "way",
+          "ref": "155704812",
+          "role": "platform"
+        }
+      ]
+    }
+  ]
+}

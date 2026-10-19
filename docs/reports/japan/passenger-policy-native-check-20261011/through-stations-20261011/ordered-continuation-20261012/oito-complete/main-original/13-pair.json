@@ -1,0 +1,70 @@
+{
+  "caseIndex": 13,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 13,
+  "source": {
+    "caseIndex": 13,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 13,
+    "fromStationID": "002179",
+    "toStationID": "002187",
+    "camera": [
+      36.4959245,
+      137.859002,
+      0.020279490000009445
+    ],
+    "effectiveCoordinates": [
+      [
+        137.861734,
+        36.500314
+      ],
+      [
+        137.86143,
+        36.49979
+      ],
+      [
+        137.86142,
+        36.49977
+      ],
+      [
+        137.86128,
+        36.49955
+      ],
+      [
+        137.86105,
+        36.49917
+      ],
+      [
+        137.86045,
+        36.49818
+      ],
+      [
+        137.86027,
+        36.49788
+      ],
+      [
+        137.85784,
+        36.49394
+      ],
+      [
+        137.85666,
+        36.49202
+      ],
+      [
+        137.85627,
+        36.491535
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:15.47;lod:14.32;backbones:0;networkStations:2;distance:4451.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.495925;centerLon:137.859002;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1555.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.495925;centerLon:137.859002;distance:4451.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-13.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Shinano-Omachi to Minami-Omachi corridor continuous; separate station fan and passenger axis; own midpoint unresolved."
+}

@@ -1,0 +1,2265 @@
+{
+  "queueOrdinal": 57,
+  "lineID": "jp-くま川鉄道-湯前線",
+  "packageVersion": "2025.5.2",
+  "stations": [
+    [
+      "009897",
+      "湯前",
+      130.979865,
+      32.281365,
+      "Yunomae",
+      1
+    ],
+    [
+      "009898",
+      "新鶴羽",
+      130.96621,
+      32.275445,
+      "Shin-Tsuruba",
+      1
+    ],
+    [
+      "009899",
+      "東多良木",
+      130.9508,
+      32.272245,
+      "Higashi-Taragi",
+      1
+    ],
+    [
+      "009902",
+      "多良木",
+      130.93319,
+      32.262755,
+      "Taragi",
+      1
+    ],
+    [
+      "009903",
+      "公立病院前",
+      130.92189,
+      32.256035,
+      "Kōritsubyōinmae",
+      1
+    ],
+    [
+      "009906",
+      "東免田",
+      130.91302,
+      32.2502,
+      "Higashi-Menda",
+      1
+    ],
+    [
+      "009909",
+      "あさぎり",
+      130.89376,
+      32.23625,
+      "Asagiri",
+      1
+    ],
+    [
+      "009911",
+      "おかどめ幸福",
+      130.875105,
+      32.23145,
+      "Okadome-Kōfuku",
+      1
+    ],
+    [
+      "009913",
+      "木上",
+      130.85891,
+      32.224275,
+      "Kinoe",
+      1
+    ],
+    [
+      "009917",
+      "一武",
+      130.83994,
+      32.21456,
+      "Ichibu",
+      1
+    ],
+    [
+      "009922",
+      "肥後西村",
+      130.808865,
+      32.20227,
+      "Higo-Nishinomura",
+      1
+    ],
+    [
+      "009920",
+      "川村",
+      130.79535,
+      32.207235,
+      "Kawamura",
+      1
+    ],
+    [
+      "009914",
+      "相良藩願成寺",
+      130.769635,
+      32.218365,
+      "Sagarahanganjoji",
+      1
+    ],
+    [
+      "009916",
+      "人吉温泉",
+      130.753815,
+      32.21614,
+      "Hitoyoshionsen",
+      1
+    ]
+  ],
+  "intervalCount": 13,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 13,
+  "plannedViewCount": 92,
+  "actualCompletedViewCount": 79,
+  "matchingCompleteViewCount": 79,
+  "missingViewCount": 13,
+  "ownCaptureStates": {
+    "captured": 79
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "009897",
+        "湯前"
+      ],
+      "toStation": [
+        "009898",
+        "新鶴羽"
+      ],
+      "legacySortedSlot": 154,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 27,
+      "displayControlCount": 27
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "009898",
+        "新鶴羽"
+      ],
+      "toStation": [
+        "009899",
+        "東多良木"
+      ],
+      "legacySortedSlot": 155,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 34,
+      "displayControlCount": 34
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "009899",
+        "東多良木"
+      ],
+      "toStation": [
+        "009902",
+        "多良木"
+      ],
+      "legacySortedSlot": 159,
+      "plannedViewCount": 7,
+      "completedViewCount": 0,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 7,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 38,
+      "displayControlCount": 38
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "009902",
+        "多良木"
+      ],
+      "toStation": [
+        "009903",
+        "公立病院前"
+      ],
+      "legacySortedSlot": 160,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 5,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 23,
+      "displayControlCount": 23
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "009903",
+        "公立病院前"
+      ],
+      "toStation": [
+        "009906",
+        "東免田"
+      ],
+      "legacySortedSlot": 161,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 5,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 17,
+      "displayControlCount": 17
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "009906",
+        "東免田"
+      ],
+      "toStation": [
+        "009909",
+        "あさぎり"
+      ],
+      "legacySortedSlot": 162,
+      "plannedViewCount": 8,
+      "completedViewCount": 8,
+      "matchingCompleteViewCount": 8,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 51,
+      "displayControlCount": 51
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "009909",
+        "あさぎり"
+      ],
+      "toStation": [
+        "009911",
+        "おかどめ幸福"
+      ],
+      "legacySortedSlot": 163,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 57,
+      "displayControlCount": 57
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "009911",
+        "おかどめ幸福"
+      ],
+      "toStation": [
+        "009913",
+        "木上"
+      ],
+      "legacySortedSlot": 164,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 42,
+      "displayControlCount": 42
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "009913",
+        "木上"
+      ],
+      "toStation": [
+        "009917",
+        "一武"
+      ],
+      "legacySortedSlot": 165,
+      "plannedViewCount": 8,
+      "completedViewCount": 8,
+      "matchingCompleteViewCount": 8,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 49,
+      "displayControlCount": 49
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "009917",
+        "一武"
+      ],
+      "toStation": [
+        "009922",
+        "肥後西村"
+      ],
+      "legacySortedSlot": 166,
+      "plannedViewCount": 11,
+      "completedViewCount": 11,
+      "matchingCompleteViewCount": 11,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 74,
+      "displayControlCount": 74
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "009922",
+        "肥後西村"
+      ],
+      "toStation": [
+        "009920",
+        "川村"
+      ],
+      "legacySortedSlot": 156,
+      "plannedViewCount": 6,
+      "completedViewCount": 0,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 6,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 42,
+      "displayControlCount": 42
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "009920",
+        "川村"
+      ],
+      "toStation": [
+        "009914",
+        "相良藩願成寺"
+      ],
+      "legacySortedSlot": 157,
+      "plannedViewCount": 10,
+      "completedViewCount": 10,
+      "matchingCompleteViewCount": 10,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 60,
+      "displayControlCount": 60
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "009914",
+        "相良藩願成寺"
+      ],
+      "toStation": [
+        "009916",
+        "人吉温泉"
+      ],
+      "legacySortedSlot": 158,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 35,
+      "displayControlCount": 35
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.275445,
+          "longitude": 130.96621
+        },
+        "distanceMetres": 1477.6313169725493,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27947016980335,
+          "longitude": 130.972973539827
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27765655668881,
+          "longitude": 130.96993094360545
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27584894419057,
+          "longitude": 130.96688346602414
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.28100004331992,
+          "longitude": 130.9762041405758
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000154/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.281365,
+          "longitude": 130.979865
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.272245,
+          "longitude": 130.9508
+        },
+        "distanceMetres": 1546.2619231588446,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27347699387325,
+          "longitude": 130.95949069744532
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27364870413358,
+          "longitude": 130.95580287214446
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.27270628482541,
+          "longitude": 130.95225688335825
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.273707929612975,
+          "longitude": 130.9631111455916
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000155/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.275445,
+          "longitude": 130.96621
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#1",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000160/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.259140988782555,
+          "longitude": 130.92710212418052
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#3",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000160/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.257336173112925,
+          "longitude": 130.9240530487337
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#3",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000160/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.256035,
+          "longitude": 130.92189
+        },
+        "distanceMetres": 1299.614765677288,
+        "itemID": "jp-くま川鉄道-湯前線#3",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000160/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.26095022352321,
+          "longitude": 130.93014037901372
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#3",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000160/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.262755,
+          "longitude": 130.93319
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#3",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000161/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.25233522622149,
+          "longitude": 130.9158736347827
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#4",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000161/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.25024930027614,
+          "longitude": 130.9130870481293
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#4",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000161/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2502,
+          "longitude": 130.91302
+        },
+        "distanceMetres": 1058.3551083925547,
+        "itemID": "jp-くま川鉄道-湯前線#4",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000161/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.25424131499123,
+          "longitude": 130.91883148350135
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#4",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000161/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.256035,
+          "longitude": 130.92189
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#4",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.239796040013104,
+          "longitude": 130.89906024545357
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.246038910803804,
+          "longitude": 130.90743547912302
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.24395496763853,
+          "longitude": 130.90464662327358
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.24187317749041,
+          "longitude": 130.90185585607654
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.24812228266831,
+          "longitude": 130.91022495947283
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23783091108353,
+          "longitude": 130.8961564558636
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000007",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23625,
+          "longitude": 130.89376
+        },
+        "distanceMetres": 2385.8625103069767,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 7
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000162/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2502,
+          "longitude": 130.91302
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23183419099798,
+          "longitude": 130.87744895843662
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.232395925867294,
+          "longitude": 130.8878758077866
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23075258206738,
+          "longitude": 130.88475065571154
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23127997058712,
+          "longitude": 130.88110350156362
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.234325092321676,
+          "longitude": 130.89081600724907
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23145,
+          "longitude": 130.875105
+        },
+        "distanceMetres": 1976.1893132832076,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000163/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23625,
+          "longitude": 130.89376
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#6",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.224381925228,
+          "longitude": 130.85901482842544
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.22943951802228,
+          "longitude": 130.86805399281084
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.22842824018502,
+          "longitude": 130.86453048532877
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.22678867302671,
+          "longitude": 130.86141089125312
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23043581810769,
+          "longitude": 130.8715831567113
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.224275,
+          "longitude": 130.85891
+        },
+        "distanceMetres": 1765.4466696010927,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000164/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.23145,
+          "longitude": 130.875105
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#7",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.216626840220236,
+          "longitude": 130.8432139734269
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.22008666763081,
+          "longitude": 130.85349111318467
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21914780536853,
+          "longitude": 130.84994303397426
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21825951646292,
+          "longitude": 130.84637733049155
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.22186578538252,
+          "longitude": 130.85651609807172
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21474652313171,
+          "longitude": 130.84023043695717
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000007",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21456,
+          "longitude": 130.83994
+        },
+        "distanceMetres": 2134.303786808004,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 7
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000165/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.224275,
+          "longitude": 130.85891
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#8",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.205449727288425,
+          "longitude": 130.82480911368555
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21081569694913,
+          "longitude": 130.83395896692755
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.208942597890704,
+          "longitude": 130.83096941764236
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.20706475206333,
+          "longitude": 130.82798441018957
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000010",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.20227,
+          "longitude": 130.808865
+        },
+        "distanceMetres": 3320.051716105628,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 10
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000008",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2022870482832,
+          "longitude": 130.81429664339254
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 8
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21268174304156,
+          "longitude": 130.8369549230524
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.204386402643195,
+          "longitude": 130.8213098789334
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000007",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.203343037686736,
+          "longitude": 130.81780074865546
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 7
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21456,
+          "longitude": 130.83994
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000166/000009",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2019962839477,
+          "longitude": 130.81064287054247
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-くま川鉄道-湯前線#9",
+        "pointOrdinal": 9
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.214881426387144,
+          "longitude": 130.7800742189645
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.20851566654941,
+          "longitude": 130.78829791702685
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21067707669968,
+          "longitude": 130.78559376381787
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21283409550939,
+          "longitude": 130.78288448519837
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000008",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21832322880429,
+          "longitude": 130.7699830936172
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 8
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2072558964817,
+          "longitude": 130.79163219168964
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21631566199223,
+          "longitude": 130.77679169064672
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000007",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21690663268812,
+          "longitude": 130.77327083439175
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 7
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.207235,
+          "longitude": 130.79535
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000157/000009",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.218365,
+          "longitude": 130.769635
+        },
+        "distanceMetres": 2833.0741648852,
+        "itemID": "jp-くま川鉄道-湯前線#11",
+        "pointOrdinal": 9
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21614,
+          "longitude": 130.753815
+        },
+        "distanceMetres": 1556.2594442855589,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.2185828082488,
+          "longitude": 130.76220263284537
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.218354465061914,
+          "longitude": 130.7585122881577
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.21684362851406,
+          "longitude": 130.75525267468075
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.218520000042865,
+          "longitude": 130.7659222468924
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000158/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 32.218365,
+          "longitude": 130.769635
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-くま川鉄道-湯前線#12",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "4494edbb15b67e895fb77eed19413e1e9ce1401052c8b8182405953b947a425c"
+    }
+  ],
+  "requestPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/kumagawa-yunomae-complete/missing-native-request-20261018.json",
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval.",
+    "All retained receipts use legacy fixed-z17-v2 isolated centreline,1024×768,light,ownLane=0/mainLane=0. Availability and exact identity do not establish current specified-capture-v3 pixels, Main joins, platform centre, or human/model acceptance.",
+    "No source image was visually opened in this preparation. No station name/current railway operation inference is made from immutable plan station IDs."
+  ],
+  "missingViewpoints": [
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-0",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-1",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-2",
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-3",
+      "intervalIndex": 2,
+      "pointOrdinal": 3,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-4",
+      "intervalIndex": 2,
+      "pointOrdinal": 4,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-5",
+      "intervalIndex": 2,
+      "pointOrdinal": 5,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-6",
+      "intervalIndex": 2,
+      "pointOrdinal": 6,
+      "legacySortedSlot": 159
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-0",
+      "intervalIndex": 10,
+      "pointOrdinal": 0,
+      "legacySortedSlot": 156
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-1",
+      "intervalIndex": 10,
+      "pointOrdinal": 1,
+      "legacySortedSlot": 156
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-2",
+      "intervalIndex": 10,
+      "pointOrdinal": 2,
+      "legacySortedSlot": 156
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-3",
+      "intervalIndex": 10,
+      "pointOrdinal": 3,
+      "legacySortedSlot": 156
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-4",
+      "intervalIndex": 10,
+      "pointOrdinal": 4,
+      "legacySortedSlot": 156
+    },
+    {
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-5",
+      "intervalIndex": 10,
+      "pointOrdinal": 5,
+      "legacySortedSlot": 156
+    }
+  ],
+  "ownScopeNote": "Own named order is 湯前→人吉温泉,14 stations; retain own river/valley bends and distinguish JR肥薩線 at 人吉/人吉温泉. Current service/reopening status was not researched; this is package/receipt identity preparation only.",
+  "renderContracts": [
+    "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings"
+  ],
+  "displayStationCoordinates": {},
+  "displayIntervalOverrideKeys": []
+}

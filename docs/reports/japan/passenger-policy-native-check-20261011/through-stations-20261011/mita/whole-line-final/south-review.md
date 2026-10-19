@@ -1,0 +1,7 @@
+# Mita final south display review — 2026-10-12
+
+Root viewed all pages and all 58 native viewpoints for intervals 13–25, including the station endpoints and short tails. Source files are identified in `coverage.json`; each page compares the same native snapshot with its displayed and smoothed stroke.
+
+The final stroke follows the labelled Apple Mita corridor throughout this reviewed southern range. The rejected baseline-return triangle at 千石–白山 is absent; the 白山 approach remains continuous into 春日. Long straights through 春日、水道橋、内幸町 and 御成門 retain gentle continuity. The 神保町–大手町 corners and the 大手町–日比谷 station approaches follow the corresponding cartographic corridor without switching to the nearby generic railway. The 三田–白金高輪 campus-side cut is replaced by the visible northward Apple arc; no old-source detour reappears under the dashed glyph. 白金高輪、白金台 and the registered 目黒 endpoint remain continuous.
+
+No new disconnected caps, reverse spikes, triangular detours or station seam gaps were seen in these 58 final native views. Small residuals at glyph width, label occlusions and platform bodies remain display-reference limits; this review accepts the user-requested cartographic alignment, not an engineering tunnel survey or physical platform measurement. Inspector single-line previews do not certify Main's lanes, shared-company composition or station cards; those require the subsequent Main check.

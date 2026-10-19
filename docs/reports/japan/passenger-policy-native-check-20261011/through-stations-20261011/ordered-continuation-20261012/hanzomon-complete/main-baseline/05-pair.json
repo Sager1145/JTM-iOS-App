@@ -1,0 +1,52 @@
+{
+  "intervalIndex": 5,
+  "source": {
+    "intervalIndex": 5,
+    "fromStationID": "003657",
+    "toStationID": "003651",
+    "camera": [
+      35.6957375,
+      139.754437,
+      0.010068830977549022
+    ],
+    "effectiveCoordinates": [
+      [
+        139.751122,
+        35.695496
+      ],
+      [
+        139.7514,
+        35.69554
+      ],
+      [
+        139.75215,
+        35.69569
+      ],
+      [
+        139.75221999999997,
+        35.695610000000045
+      ],
+      [
+        139.75387000000012,
+        35.69581000000011
+      ],
+      [
+        139.7568540852958,
+        35.69594942252678
+      ],
+      [
+        139.757752,
+        35.695979
+      ]
+    ],
+    "initialCamera": [
+      35.6957375,
+      139.754437,
+      0.005922841751499425
+    ],
+    "framingReason": "Root pixel review: eastern endpoint or curve cropped/obscured in initial camera; widen and recapture whole interval."
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "49 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:11;rides:0;budgetDrops:0;vertices:4515;camera:16.32;lod:15.34;backbones:0;networkStations:18;distance:2226.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.695737;centerLon:139.754437;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:3178.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:18;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.695737;centerLon:139.754437;distance:2226.7;viewportWidth:1024.0;viewportHeight:768.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0"
+}

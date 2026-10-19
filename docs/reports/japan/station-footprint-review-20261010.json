@@ -1,0 +1,668 @@
+{
+  "format": "jtm-station-footprint-review-v1",
+  "date": "2026-10-10",
+  "scope": "17 distinct endpoint coordinates of nine repaired passenger intervals; not all Japanese stations",
+  "method": "Exact native MKMapSnapshotter visible mapRect and WGS84 Web Mercator projection; red ring is package display point. Visual comparison against Apple blue station footprint. Green cross is independently returned Apple station POI reference, not an applied repair.",
+  "counts": {
+    "reviewed": 17,
+    "visuallyInside": 14,
+    "visuallyOutside": 2,
+    "boundaryUnresolved": 1
+  },
+  "stations": [
+    {
+      "stationID": "009925",
+      "name": "大畑",
+      "lineID": "jp-九州旅客鉄道-肥薩線",
+      "coordinate": [
+        130.787805,
+        32.164965
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000947/000000",
+      "pixel": [
+        512.0,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.164965,
+        "longitude": 130.787805,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0070951452323251,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 231736087.76226133,
+        "rectY": 108861603.35336038,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "009928",
+      "name": "矢岳",
+      "lineID": "jp-九州旅客鉄道-肥薩線",
+      "coordinate": [
+        130.76982,
+        32.10427
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000947/000027",
+      "pixel": [
+        512.0,
+        384.00000000186265
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.10427,
+        "longitude": 130.76982,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0077558693946658,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 231722677.174272,
+        "rectY": 108915048.60433587,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "005694",
+      "name": "出雲坂根",
+      "lineID": "jp-西日本旅客鉄道-木次線",
+      "coordinate": [
+        133.120675,
+        35.10238
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/008040/000000",
+      "pixel": [
+        512.0,
+        383.99999999813735
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.10238,
+        "longitude": 133.120675,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9737767964086792,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233475601.71292445,
+        "rectY": 106230377.56116669,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "005725",
+      "name": "三井野原",
+      "lineID": "jp-西日本旅客鉄道-木次線",
+      "coordinate": [
+        133.116475,
+        35.09123
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/008040/000019",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.09123,
+        "longitude": 133.116475,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9739081889710568,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233472469.96593782,
+        "rectY": 106240539.16928549,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "outside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified.",
+      "appleStationPOI": {
+        "latitude": 35.0913323,
+        "longitude": 133.1163599,
+        "name": "Miinohara Station",
+        "title": "Yakawa, Okuizumo, Nita-Gun, Shimane, Japan",
+        "url": ""
+      }
+    },
+    {
+      "stationID": "005260",
+      "name": "大平台",
+      "lineID": "jp-小田急箱根-鉄道線",
+      "coordinate": [
+        139.07386,
+        35.239065
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/003419/000000",
+      "pixel": [
+        511.9999999962747,
+        384.00000000186265
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.239065,
+        "longitude": 139.07386,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721630736062128,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237914618.18550044,
+        "rectY": 106105695.80683054,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "outside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified.",
+      "appleStationPOI": {
+        "latitude": 35.2387071,
+        "longitude": 139.0739151,
+        "name": "Ohiradai Station",
+        "title": "Ohiradai, Hakone, Ashigarashimo-Gun, Kanagawa, Japan",
+        "url": ""
+      }
+    },
+    {
+      "stationID": "005254",
+      "name": "宮ノ下",
+      "lineID": "jp-小田急箱根-鉄道線",
+      "coordinate": [
+        139.063025,
+        35.24199
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/003419/000006",
+      "pixel": [
+        512.0,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24199,
+        "longitude": 139.063025,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721284797385764,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237906539.0239289,
+        "rectY": 106103025.37781379,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "006037",
+      "name": "大谷",
+      "lineID": "jp-京阪電気鉄道-京津線",
+      "coordinate": [
+        135.853165,
+        34.99431
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/001474/000000",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 34.99431,
+        "longitude": 135.853165,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9750487384427617,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235513093.93282846,
+        "rectY": 106328809.25492454,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "005987",
+      "name": "上栄町",
+      "lineID": "jp-京阪電気鉄道-京津線",
+      "coordinate": [
+        135.86019,
+        35.00518
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/001474/000005",
+      "pixel": [
+        511.9999999962747,
+        383.99999999813735
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.00518,
+        "longitude": 135.86019,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9749209605862124,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235518332.15249068,
+        "rectY": 106318914.59094226,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "boundary_unresolved",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "003547",
+      "name": "西船橋",
+      "lineID": "jp-東日本旅客鉄道-京葉線-2",
+      "coordinate": [
+        139.95953,
+        35.707218
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/004530/000000",
+      "pixel": [
+        512.0,
+        383.99999999813735
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.707218,
+        "longitude": 139.95953,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9665938374934707,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238575021.60304353,
+        "rectY": 105677052.10450089,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "003761",
+      "name": "南船橋",
+      "lineID": "jp-東日本旅客鉄道-京葉線-2",
+      "coordinate": [
+        139.9957,
+        35.681665
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/004530/000016",
+      "pixel": [
+        512.0,
+        383.99999999813735
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.681665,
+        "longitude": 139.9957,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9668995009509017,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238601991.9098311,
+        "rectY": 105700513.20105541,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "003870",
+      "name": "市川塩浜",
+      "lineID": "jp-東日本旅客鉄道-京葉線-3",
+      "coordinate": [
+        139.923651,
+        35.666478
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/004531/000017",
+      "pixel": [
+        512.0,
+        384.00000000186265
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.666478,
+        "longitude": 139.923651,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9670810751642485,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238548268.28158295,
+        "rectY": 105714453.35325338,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "004531",
+      "name": "浅野",
+      "lineID": "jp-東日本旅客鉄道-鶴見線-2",
+      "coordinate": [
+        139.695745,
+        35.497285
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006018/000000",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.497285,
+        "longitude": 139.695745,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9690992985801388,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238378329.2509298,
+        "rectY": 105869576.79455882,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "004547",
+      "name": "新芝浦",
+      "lineID": "jp-東日本旅客鉄道-鶴見線-2",
+      "coordinate": [
+        139.700125,
+        35.491915
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006018/000003",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.491915,
+        "longitude": 139.700125,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9691632155291439,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238381595.21564448,
+        "rectY": 105874494.88416928,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "004522",
+      "name": "安善",
+      "lineID": "jp-東日本旅客鉄道-鶴見線-3",
+      "coordinate": [
+        139.701245,
+        35.49984
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006020/000000",
+      "pixel": [
+        512.0,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.49984,
+        "longitude": 139.701245,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9690688844337287,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238382430.3481742,
+        "rectY": 105867236.69423172,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "004540",
+      "name": "大川",
+      "lineID": "jp-東日本旅客鉄道-鶴見線-3",
+      "coordinate": [
+        139.71138,
+        35.495405
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006020/000004",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.495405,
+        "longitude": 139.71138,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9691216764388086,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238389987.55191466,
+        "rectY": 105871298.62124245,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "009241",
+      "name": "西屋敷",
+      "lineID": "jp-九州旅客鉄道-日豊線-p1",
+      "coordinate": [
+        131.429545,
+        33.50443
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000876/000000",
+      "pixel": [
+        511.9999999962747,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.50443,
+        "longitude": 131.429545,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9922265133066238,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 232214603.7887431,
+        "rectY": 107672870.26669428,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    },
+    {
+      "stationID": "009262",
+      "name": "立石",
+      "lineID": "jp-九州旅客鉄道-日豊線-p1",
+      "coordinate": [
+        131.477065,
+        33.48177
+      ],
+      "view": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000876/000017",
+      "pixel": [
+        512.0,
+        384.0
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.48177,
+        "longitude": 131.477065,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9924825985887429,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 232250037.26893514,
+        "rectY": 107693131.04320039,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "cropOrigin": [
+        312,
+        184
+      ],
+      "method": "Exact WGS84 Web Mercator projection into native MKMapSnapshotter rect; red ring marks package display coordinate, no Apple polygon inferred.",
+      "verdict": "inside_blue_station_area_visual",
+      "scope": "Package display coordinate projected into actual native snapshot; production ridden circle/lane placement not runtime-certified."
+    }
+  ],
+  "limits": [
+    "No Apple polygon extraction or numerical pixel residual",
+    "Blue cartography is display evidence, not surveyed platform ownership",
+    "No production station-coordinate or drawn-circle change applied in this follow-up",
+    "Initial 大平台駅 search returned the Ohiradai neighborhood and was rejected; only filtered Ohiradai Station POI is retained as station evidence."
+  ],
+  "localRepairFollowup": {
+    "date": "2026-10-10",
+    "report": "docs/reports/japan/passenger-local-repair-recheck-20261010.json",
+    "scope": "71 new scoped native snapshots; three local display repairs; two previously outside station points freshly inside. Earlier wider findings remain."
+  }
+}

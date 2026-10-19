@@ -1,0 +1,235 @@
+{
+  "version": "0.6",
+  "generator": "openstreetmap-cgimap 2.1.0 (3964113 spike-06.openstreetmap.org)",
+  "copyright": "OpenStreetMap and contributors",
+  "attribution": "http://www.openstreetmap.org/copyright",
+  "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+  "elements": [
+    {
+      "type": "node",
+      "id": 3977860744,
+      "lat": 36.5796149,
+      "lon": 136.6485479,
+      "timestamp": "2020-09-27T09:01:37Z",
+      "version": 2,
+      "changeset": 91574721,
+      "user": "Masataka Yuki",
+      "uid": 8402052
+    },
+    {
+      "type": "node",
+      "id": 3977860749,
+      "lat": 36.5797904,
+      "lon": 136.6487269,
+      "timestamp": "2019-12-07T08:56:45Z",
+      "version": 2,
+      "changeset": 78081554,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860756,
+      "lat": 36.5801218,
+      "lon": 136.6490824,
+      "timestamp": "2020-09-27T09:01:37Z",
+      "version": 2,
+      "changeset": 91574721,
+      "user": "Masataka Yuki",
+      "uid": 8402052
+    },
+    {
+      "type": "node",
+      "id": 3977860762,
+      "lat": 36.5804424,
+      "lon": 136.6494465,
+      "timestamp": "2023-09-03T10:18:21Z",
+      "version": 4,
+      "changeset": 140751226,
+      "user": "tutuw002",
+      "uid": 4531722,
+      "tags": {
+        "railway": "switch"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3977860765,
+      "lat": 36.5806969,
+      "lon": 136.6497164,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860781,
+      "lat": 36.581561,
+      "lon": 136.6506586,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860785,
+      "lat": 36.5818585,
+      "lon": 136.6509977,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860789,
+      "lat": 36.5820357,
+      "lon": 136.6512055,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860792,
+      "lat": 36.5822174,
+      "lon": 136.6514321,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860795,
+      "lat": 36.5824053,
+      "lon": 136.6517011,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860798,
+      "lat": 36.5825897,
+      "lon": 136.6519884,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 3977860801,
+      "lat": 36.5828339,
+      "lon": 136.65242,
+      "timestamp": "2023-09-03T10:18:21Z",
+      "version": 3,
+      "changeset": 140751226,
+      "user": "tutuw002",
+      "uid": 4531722,
+      "tags": {
+        "railway": "switch"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3977860804,
+      "lat": 36.5829485,
+      "lon": 136.6526135,
+      "timestamp": "2019-12-08T07:43:07Z",
+      "version": 2,
+      "changeset": 78102892,
+      "user": "yamambaswitch",
+      "uid": 4137753
+    },
+    {
+      "type": "node",
+      "id": 7787823070,
+      "lat": 36.5817253,
+      "lon": 136.6508459,
+      "timestamp": "2020-08-05T16:22:17Z",
+      "version": 1,
+      "changeset": 88991863,
+      "user": "carrotrain",
+      "uid": 11602661
+    },
+    {
+      "type": "node",
+      "id": 7787823071,
+      "lat": 36.5816456,
+      "lon": 136.650755,
+      "timestamp": "2020-08-05T16:22:17Z",
+      "version": 1,
+      "changeset": 88991863,
+      "user": "carrotrain",
+      "uid": 11602661
+    },
+    {
+      "type": "node",
+      "id": 11164797904,
+      "lat": 36.5833821,
+      "lon": 136.6533852,
+      "timestamp": "2023-09-03T10:18:21Z",
+      "version": 1,
+      "changeset": 140751226,
+      "user": "tutuw002",
+      "uid": 4531722
+    },
+    {
+      "type": "way",
+      "id": 394894111,
+      "timestamp": "2023-09-03T10:18:21Z",
+      "version": 7,
+      "changeset": 140751226,
+      "user": "tutuw002",
+      "uid": 4531722,
+      "nodes": [
+        3977860744,
+        3977860749,
+        3977860756,
+        3977860762,
+        3977860765,
+        3977860781,
+        7787823071,
+        7787823070,
+        3977860785,
+        3977860789,
+        3977860792,
+        3977860795,
+        3977860798,
+        3977860801,
+        3977860804,
+        11164797904
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "60",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "IRいしかわ鉄道線",
+        "name:en": "IR Ishikawa Railway Line",
+        "name:ja": "IRいしかわ鉄道線",
+        "operator": "IRいしかわ鉄道",
+        "operator:en": "IR Ishikawa Railway",
+        "railway": "rail",
+        "railway:track_ref": "2",
+        "source": "KSJ2",
+        "usage": "main",
+        "voltage": "20000"
+      }
+    }
+  ]
+}

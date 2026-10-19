@@ -1,0 +1,71 @@
+{
+  "caseIndex": 10,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 10,
+  "source": {
+    "caseIndex": 10,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 10,
+    "fromStationID": "003805",
+    "toStationID": "003799",
+    "camera": [
+      35.6751525,
+      139.749109,
+      0.011023244044442018
+    ],
+    "effectiveCoordinates": [
+      [
+        139.75268,
+        35.674235
+      ],
+      [
+        139.7519,
+        35.67456
+      ],
+      [
+        139.75155,
+        35.67471
+      ],
+      [
+        139.749,
+        35.67578
+      ],
+      [
+        139.74836,
+        35.676
+      ],
+      [
+        139.74782,
+        35.67607
+      ],
+      [
+        139.74734,
+        35.67605
+      ],
+      [
+        139.747,
+        35.676
+      ],
+      [
+        139.74677,
+        35.67593
+      ],
+      [
+        139.74627,
+        35.67572
+      ],
+      [
+        139.74588,
+        35.67523
+      ],
+      [
+        139.745538,
+        35.674896
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "69 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:15;overlays:15;rides:0;budgetDrops:0;vertices:5418;camera:16.37;lod:15.22;backbones:1;networkStations:30;distance:2419.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.675152;centerLon:139.749109;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3629.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.675152;centerLon:139.749109;distance:2419.2;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

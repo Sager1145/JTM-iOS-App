@@ -1,0 +1,245 @@
+{
+  "schema": "cn-topology-repair-source-review/1",
+  "validatedAffectedPaths": [
+    {
+      "id": "cn-osm-relation-8381929",
+      "sourceNodes": 1335,
+      "intervals": 15
+    },
+    {
+      "id": "cn-osm-relation-8415510",
+      "sourceNodes": 3389,
+      "intervals": 27
+    },
+    {
+      "id": "cn-osm-relation-7963957",
+      "sourceNodes": 1608,
+      "intervals": 33
+    },
+    {
+      "id": "cn-osm-relation-12149467",
+      "sourceNodes": 1608,
+      "intervals": 28
+    },
+    {
+      "id": "cn-osm-relation-12149467-branch-2",
+      "sourceNodes": 569,
+      "intervals": 7
+    },
+    {
+      "id": "cn-osm-relation-12265072",
+      "sourceNodes": 232,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-2",
+      "sourceNodes": 19,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-3",
+      "sourceNodes": 33,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-4",
+      "sourceNodes": 77,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-5",
+      "sourceNodes": 67,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-6",
+      "sourceNodes": 68,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-7",
+      "sourceNodes": 98,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-8",
+      "sourceNodes": 99,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-9",
+      "sourceNodes": 101,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-10",
+      "sourceNodes": 96,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-11",
+      "sourceNodes": 97,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-12",
+      "sourceNodes": 108,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-13",
+      "sourceNodes": 134,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-14",
+      "sourceNodes": 135,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-15",
+      "sourceNodes": 162,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-16",
+      "sourceNodes": 91,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-17",
+      "sourceNodes": 98,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-18",
+      "sourceNodes": 82,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-19",
+      "sourceNodes": 73,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-20",
+      "sourceNodes": 160,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-21",
+      "sourceNodes": 242,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-22",
+      "sourceNodes": 85,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-23",
+      "sourceNodes": 125,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-24",
+      "sourceNodes": 61,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-25",
+      "sourceNodes": 82,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-26",
+      "sourceNodes": 187,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-27",
+      "sourceNodes": 159,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-28",
+      "sourceNodes": 153,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-29",
+      "sourceNodes": 165,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-30",
+      "sourceNodes": 151,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-31",
+      "sourceNodes": 133,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-32",
+      "sourceNodes": 218,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-33",
+      "sourceNodes": 250,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-34",
+      "sourceNodes": 151,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-35",
+      "sourceNodes": 154,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-36",
+      "sourceNodes": 183,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-37",
+      "sourceNodes": 192,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-38",
+      "sourceNodes": 112,
+      "intervals": 1
+    },
+    {
+      "id": "cn-osm-relation-12265072-branch-39",
+      "sourceNodes": 273,
+      "intervals": 1
+    }
+  ],
+  "addedLineIDs": [
+    "cn-osm-relation-8381929",
+    "cn-osm-relation-7963957",
+    "cn-osm-relation-12149467",
+    "cn-osm-relation-12265072-branch-5",
+    "cn-osm-relation-12265072-branch-6"
+  ],
+  "changedExistingRuntimeLineIDs": [
+    "cn-osm-relation-8415510"
+  ],
+  "otherExistingRuntimeLineObjectsUnchanged": true,
+  "enmAll3388DirectedOriginalEdgeWayTriplesUnchanged": true,
+  "ownership": "All CN; unchanged GSH; no XJA in HK/MO",
+  "counts": {
+    "sourceRoutes": 3363,
+    "publishedLines": 3991,
+    "publishedStationMemberships": 21573,
+    "publishedIntervals": 17594,
+    "unresolved": 6074
+  }
+}

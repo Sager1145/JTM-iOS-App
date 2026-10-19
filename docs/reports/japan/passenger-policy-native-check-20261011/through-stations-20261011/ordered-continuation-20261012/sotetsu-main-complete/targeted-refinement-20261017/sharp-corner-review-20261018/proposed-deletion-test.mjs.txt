@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import test from 'node:test';
+import { createRequire } from 'node:module';
+import { LINE, repairLine } from '../repair-sotetsu-yokohama-tip-display.mjs';
+
+const network = createRequire(import.meta.url)('../../../public/rail-network.js');
+const pkg = JSON.parse(fs.readFileSync(new URL('../../../public/rail/jp-2025.json', import.meta.url)));
+const input = pkg.lines.find(line => line.id === LINE);
+const angle = (a, b, c) => {
+  const scale = Math.cos(b[1] * Math.PI / 180);
+  const u = [(b[0] - a[0]) * scale, b[1] - a[1]];
+  const v = [(c[0] - b[0]) * scale, c[1] - b[1]];
+  return Math.acos(Math.max(-1, Math.min(1,
+    (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(...u) * Math.hypot(...v))))) * 180 / Math.PI;
+};
+
+test('Yokohama display follows its own incoming tangent without the short terminal hook', () => {
+  const before = network.decodeIntervals(input)[0];
+  assert(angle(...before.slice(0, 3)) > 49);
+  const line = repairLine(input), display = network.decodeDisplayIntervals(line)[0];
+  assert.deepEqual(display[0], before[0], 'keep the current station anchor');
+  assert.deepEqual(display.slice(1), before.slice(2), 'retain every other own-line support');
+  assert(angle(...display.slice(0, 3)) < 15, 'do not replace the hook with another sharp entry');
+  assert.deepEqual(network.decodeDisplayIntervals(line).slice(1), network.decodeDisplayIntervals(input).slice(1));
+  assert(network.displayPartsForLine(line)[0].some(point => point[0] === before[0][0] && point[1] === before[0][1]));
+});
+
+test('tip correction leaves physical routing, station identity and unrelated line fields intact', () => {
+  const before = structuredClone(input), line = repairLine(input);
+  assert.deepEqual(input, before);
+  for (const key of Object.keys(input).filter(key => key !== 'displayIntervalCoordinates'))
+    assert.deepEqual(line[key], input[key]);
+  assert.deepEqual(line.segments, input.segments);
+  assert.deepEqual(line.stations, input.stations);
+  assert.deepEqual(repairLine(line), line);
+});

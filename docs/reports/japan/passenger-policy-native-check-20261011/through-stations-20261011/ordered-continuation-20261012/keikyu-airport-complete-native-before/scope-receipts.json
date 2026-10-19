@@ -1,0 +1,44 @@
+{
+  "format": "jtm-manual-native-scope-v1",
+  "lineID": "jp-京浜急行電鉄-空港線",
+  "intervalCount": 6,
+  "viewCount": 27,
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001329",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    },
+    {
+      "intervalIndex": 1,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001330",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    },
+    {
+      "intervalIndex": 2,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001331",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    },
+    {
+      "intervalIndex": 3,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001332",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    },
+    {
+      "intervalIndex": 4,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001333",
+      "viewpointCount": 5,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    },
+    {
+      "intervalIndex": 5,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/001334",
+      "viewpointCount": 7,
+      "wholeLineRenderDependency": "fcd50c5f0c670794a733dcb9a2393b4450e14b5321338beebac977a9a815e2c8"
+    }
+  ]
+}

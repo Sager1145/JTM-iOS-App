@@ -1,0 +1,702 @@
+[
+  {
+    "stationIndex": 0,
+    "stationID": "009535",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/00-009535/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.18809245153725,
+      "longitude": 133.10591991458483,
+      "mapPointsPerPoint": 4.000000007450581,
+      "metresPerPoint": 0.4978936966422194,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233466697.52380857,
+      "rectY": 107957000.98031491,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.99999999731277
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      355,
+      181,
+      655,
+      481
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station00-raw-pair.jpg",
+    "opened": true,
+    "warning": "East attached access bulb near515,334; broad purple casing is not platform length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 1,
+    "stationID": "009558",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/01-009558/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.16140999999995,
+      "longitude": 133.07474500000004,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4980431765705354,
+      "pitch": 0,
+      "rectHeight": 2615.999999985099,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233443451.82266313,
+      "rectY": 107980771.28713317,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      341,
+      175,
+      641,
+      475
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station01-raw-pair.jpg",
+    "opened": true,
+    "warning": "Attached north small dot/cap and south casing bulb excluded; two narrow parallel face lengths agree.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 2,
+    "stationID": "009549",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/02-009549/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.17549999999999,
+      "longitude": 133.029745,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4979642537112766,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233409897.39066315,
+      "rectY": 107968219.98309979,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      350,
+      183,
+      650,
+      483
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station02-raw-pair.jpg",
+    "opened": true,
+    "warning": "North road55 and wide purple station casing excluded.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 3,
+    "stationID": "009526",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/03-009526/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.19475899999996,
+      "longitude": 132.9756040000002,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978563309955096,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233369526.93504298,
+      "rectY": 107951060.89412895,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      326,
+      167,
+      626,
+      467
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station03-raw-pair.jpg",
+    "opened": true,
+    "warning": "Large west attached building shapes excluded from narrow own longitudinal strip.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 4,
+    "stationID": "009493",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/04-009493/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.21999399999999,
+      "longitude": 132.89731099999995,
+      "mapPointsPerPoint": 4,
+      "metresPerPoint": 0.4977148346202908,
+      "pitch": 0,
+      "rectHeight": 2616.000000014901,
+      "rectWidth": 3996,
+      "rectX": 233311147.44294113,
+      "rectY": 107928571.68738663,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      317,
+      112,
+      617,
+      412
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station04-raw-pair.jpg",
+    "opened": true,
+    "warning": "East lateral casing bulb at553,319 and south thin access continuation excluded; own light platform caps determine length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 5,
+    "stationID": "009477",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/05-009477/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.2349,
+      "longitude": 132.85594000000012,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4976312091234418,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233280298.9894686,
+      "rectY": 107915284.54592428,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      303,
+      198,
+      603,
+      498
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station05-raw-pair.jpg",
+    "opened": true,
+    "warning": "Road381 and south row of buildings excluded; single railparallel light face is inside own station rectangle.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 6,
+    "stationID": "009515",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/06-009515/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.20179,
+      "longitude": 132.79196000000005,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978169167528756,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233232592.04370493,
+      "rectY": 107944795.58119166,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      290,
+      221,
+      590,
+      521
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station06-raw-pair.jpg",
+    "opened": true,
+    "warning": "SE attached access/building arm and north casing bulb excluded.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 7,
+    "stationID": "009545",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/07-009545/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.17821499999999,
+      "longitude": 132.78318000000013,
+      "mapPointsPerPoint": 4.000000011175871,
+      "metresPerPoint": 0.49794904518997646,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233226045.20119476,
+      "rectY": 107965801.2423433,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999995969155
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      298,
+      173,
+      598,
+      473
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station07-raw-pair.jpg",
+    "opened": true,
+    "warning": "Central platform access patch and broad southeast attached building excluded; two parallel narrow faces support matching longitudinal centre.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 8,
+    "stationID": "009537",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/08-009537/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.18744999999994,
+      "longitude": 132.7671600000001,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978972956659891,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233214099.8234028,
+      "rectY": 107957573.39920643,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      357,
+      203,
+      657,
+      503
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station08-raw-pair.jpg",
+    "opened": true,
+    "warning": "East parallel gray access strip and south bulb excluded; one segmented narrow light platform supports full capped length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 9,
+    "stationID": "009489",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/09-009489/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22409000000001,
+      "longitude": 132.74515000000005,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.49769185898665685,
+      "pitch": 0,
+      "rectHeight": 2615.9999999701977,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233197687.9778845,
+      "rectY": 107924920.75699356,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      337,
+      139,
+      637,
+      439
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station09-raw-pair.jpg",
+    "opened": true,
+    "warning": "East rounded access bulb at548,300 excluded; west light cap and thin railparallel strip determine length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 10,
+    "stationID": "009488",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/10-009488/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22451499999996,
+      "longitude": 132.729315,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4976894748459659,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233185880.5460907,
+      "rectY": 107924541.9275229,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      319,
+      154,
+      619,
+      454
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station10-raw-pair.jpg",
+    "opened": true,
+    "warning": "West attached building near484,328 and east casing bulb excluded; label partly overlaps north platform cap, longitudinal uncertainty applies.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 11,
+    "stationID": "009484",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/11-009484/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22824999999997,
+      "longitude": 132.70888500000018,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49766851988363814,
+      "pitch": 0,
+      "rectHeight": 2615.999999985099,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233170646.8339628,
+      "rectY": 107921212.60583074,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      278,
+      127,
+      618,
+      467
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station11-raw-pair.jpg",
+    "opened": true,
+    "warning": "Broad south attached station building excluded from thin continuous platform; own black sleeper rail runs immediately north of face.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 12,
+    "stationID": "009459",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/12-009459/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.251795000000016,
+      "longitude": 132.6919350000001,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4975363835471016,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233158007.9979094,
+      "rectY": 107900221.67989242,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      301,
+      148,
+      601,
+      448
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station12-raw-pair.jpg",
+    "opened": true,
+    "warning": "North attached access patch and southeast casing cap excluded; sole light face north of own railway determines length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 13,
+    "stationID": "009455",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/13-009455/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.255660000000006,
+      "longitude": 132.67639000000003,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4975146831929287,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999403954,
+      "rectX": 233146416.80578852,
+      "rectY": 107896775.40041155,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      381,
+      185,
+      681,
+      485
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station13-raw-pair.jpg",
+    "opened": true,
+    "warning": "North station building and southern yard rail excluded. Island strip lies between two sleeper rails; group-centre normal is display choice, not a platform-number assignment. East cap near label has additional uncertainty.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 14,
+    "stationID": "009441",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/14-009441/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.267635000000006,
+      "longitude": 132.66039500000005,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4974474384655244,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233134490.06934762,
+      "rectY": 107886096.76178244,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      346,
+      158,
+      646,
+      458
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station14-raw-pair.jpg",
+    "opened": true,
+    "warning": "East attached access arm at509,305 and long southern broad casing excluded; only short light capped strip determines platform length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 15,
+    "stationID": "009416",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/15-009416/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.28731499999996,
+      "longitude": 132.64175999999992,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49733687948997485,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233120594.80622935,
+      "rectY": 107868544.05172223,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      422,
+      226,
+      722,
+      526
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station15-raw-pair.jpg",
+    "opened": true,
+    "warning": "East rounded access bulb at604,410 excluded; narrow light strip ends at its junction with attached bulb. Road283 and river excluded.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 16,
+    "stationID": "009411",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/16-009411/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.29150999999998,
+      "longitude": 132.62902500000004,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.49731330552094183,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996,
+      "rectX": 233111098.9019734,
+      "rectY": 107864801.99431041,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      296,
+      192,
+      596,
+      492
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station16-raw-pair.jpg",
+    "opened": true,
+    "warning": "North building and southeast gray access strip excluded. Rounded terminal cap lies on narrow face axis; uncertainty includes whether small terminal widening belongs to cap.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 17,
+    "stationID": "009414",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/17-009414/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.288804999999975,
+      "longitude": 132.60585500000008,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49732850651785515,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233093822.09776357,
+      "rectY": 107867214.95062014,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      270,
+      133,
+      665,
+      528
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station17-raw-pair.jpg",
+    "opened": true,
+    "warning": "North attached station building and central access bridge excluded. Two curved narrow faces have unequal lengths; common longitudinal midpoint is provisional with additional chainage uncertainty. Own sleeperflanks400376,440344.5,520292,550276,600257 independently bound label gap.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 18,
+    "stationID": "009423",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/18-009423/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.28286,
+      "longitude": 132.60061000000002,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4973619121002477,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233089911.14230046,
+      "rectY": 107872517.83946279,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      325,
+      174,
+      625,
+      474
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station18-raw-pair.jpg",
+    "opened": true,
+    "warning": "North casing bulb and tiny west attached access patch excluded; caps of own railparallel narrowface determine full length.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  },
+  {
+    "stationIndex": 19,
+    "stationID": "009471",
+    "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/19-009471/view.json",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.238689923845335,
+      "longitude": 132.56978339632983,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.49760994049244817,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996,
+      "rectX": 233066925.16059732,
+      "rectY": 107911905.8637,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "pixelDimensions": [
+      999,
+      654
+    ],
+    "cropBox": [
+      351,
+      176,
+      651,
+      476
+    ],
+    "pair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station19-raw-pair.jpg",
+    "opened": true,
+    "warning": "East attached building near519330 excluded. Island light strip between two actual sleeper rails; Root-authorized group normal retained, no individual Yodo/Yosan rail/platform-number assignment.",
+    "openedAs": "magnified literal raw crop left and same-camera candidate/own-face overlay right"
+  }
+]

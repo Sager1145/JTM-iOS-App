@@ -1,0 +1,9 @@
+# Yodo Third complete pixel review
+
+Independently opened all 62 Third sheets: 19 complete intervals, 245 actual views and 735 basemap/display/smooth panels, shown at half size. Additionally opened original1024×768 #0views9–15 all21panels, Wakai start/Kita tail basemaps and all27 mountain interval #3basemaps. No other concrete reversal, station-seam gap, road/building borrowing or smoothing fragment was established in this review.
+
+Interval #0 is rejected for alignment. In original view12 the sleeper-marked blue own guide at approximately(580,422) separates from display/smooth around(580,396); view15 similarly separates near x430 by approximately25px. These are approximate visual supports, not surveyed metre residuals. Both display and smoothing share the discrepancy, and Inspector ownLane=0 rules out the small Main lane-offset explanation. This corroborates the independently opened Root Main0 ON/OFF loop finding. No replacement locus is inferred under forest/tunnel wash.
+
+All245 actual capture IDs, station IDs, camera coordinates, captured states, plan digests and receipt directories agree individually with the Third plan. Scoped captured245/pending0/failed0. The actual installed Third Yodo object deep-equals current shipped production and matches the scope SHA. Third scoped source bit identities exactly equal the independently validated Primary plan. Reports are separate; counts are not merged.
+
+Both endpoints are through stations: Wakai common sourceprefix is not physical turnout proof; Kita incoming rail joins the shared north/south corridor and continues south. All #3mountain images remain WARNING where only labelled thin cartography or terrain/tunnel wash is visible. No exact station-frame midpoint or surveyed physical rail acceptance is claimed. Main acceptance belongs to Root. No source/UI/build changes or ordered-list closure.

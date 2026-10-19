@@ -1,0 +1,52 @@
+{
+  "ordinal": 23,
+  "lineID": "jp-広島電鉄-宇品線",
+  "intervals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "stationIDs": [
+    "008043",
+    "008048",
+    "008060",
+    "008070",
+    "008081",
+    "008089",
+    "008093",
+    "008099",
+    "008107",
+    "008110",
+    "008116",
+    "008125",
+    "008129",
+    "008133",
+    "008138",
+    "008143",
+    "008146",
+    "008154",
+    "008155",
+    "008159"
+  ],
+  "status": "starting-three-inspector-complete-baseline",
+  "carryPending": [
+    "toyama-port-complete:13 whole passenger-frame centres"
+  ],
+  "riskOrderSource": "ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json"
+}

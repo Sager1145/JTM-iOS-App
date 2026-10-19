@@ -1,0 +1,79 @@
+{
+  "kind": "targeted-existing-native-capture-receipt",
+  "app": "primary",
+  "intervals": [
+    {
+      "candidateViewpointCountOver10m": 0,
+      "capturedCount": 3,
+      "displayToDecodedDisplayMaximumMetres": 3.646540659776554e-09,
+      "failedCount": 0,
+      "geometryStatus": "available",
+      "itemID": "jp-東日本旅客鉄道-大糸線#31",
+      "lineID": "jp-東日本旅客鉄道-大糸線",
+      "lineName": "大糸線",
+      "pendingCount": 0,
+      "reviewVerdict": "pending",
+      "smoothToDisplayMaximumMetres": 3.1877261325384945,
+      "viewpointCount": 3
+    },
+    {
+      "candidateViewpointCountOver10m": 0,
+      "capturedCount": 7,
+      "displayToDecodedDisplayMaximumMetres": 0.010498485704244699,
+      "failedCount": 0,
+      "geometryStatus": "available",
+      "itemID": "jp-東日本旅客鉄道-大糸線#30",
+      "lineID": "jp-東日本旅客鉄道-大糸線",
+      "lineName": "大糸線",
+      "pendingCount": 0,
+      "reviewVerdict": "pending",
+      "smoothToDisplayMaximumMetres": 2.6061234314072648,
+      "viewpointCount": 7
+    },
+    {
+      "candidateViewpointCountOver10m": 0,
+      "capturedCount": 8,
+      "displayToDecodedDisplayMaximumMetres": 0.02133944195971249,
+      "failedCount": 0,
+      "geometryStatus": "available",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#4",
+      "lineID": "jp-東日本旅客鉄道-篠ノ井線",
+      "lineName": "篠ノ井線",
+      "pendingCount": 0,
+      "reviewVerdict": "pending",
+      "smoothToDisplayMaximumMetres": 0.48481197325885317,
+      "viewpointCount": 8
+    },
+    {
+      "candidateViewpointCountOver10m": 0,
+      "capturedCount": 26,
+      "displayToDecodedDisplayMaximumMetres": 8.300168215386478e-09,
+      "failedCount": 0,
+      "geometryStatus": "available",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#5",
+      "lineID": "jp-東日本旅客鉄道-篠ノ井線",
+      "lineName": "篠ノ井線",
+      "pendingCount": 0,
+      "reviewVerdict": "pending",
+      "smoothToDisplayMaximumMetres": 2.069242010532482,
+      "viewpointCount": 26
+    },
+    {
+      "candidateViewpointCountOver10m": 0,
+      "capturedCount": 3,
+      "displayToDecodedDisplayMaximumMetres": 4.182207951813045e-09,
+      "failedCount": 0,
+      "geometryStatus": "available",
+      "itemID": "jp-アルピコ交通-上高地線#0",
+      "lineID": "jp-アルピコ交通-上高地線",
+      "lineName": "上高地線",
+      "pendingCount": 0,
+      "reviewVerdict": "pending",
+      "smoothToDisplayMaximumMetres": 0.9680929839524095,
+      "viewpointCount": 3
+    }
+  ],
+  "viewCount": 47,
+  "panelCount": 141,
+  "interpretation": "Capture receipt; actual visual review is recorded separately."
+}

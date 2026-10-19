@@ -1,0 +1,288 @@
+{
+  "elapsedSeconds" : 17.11288595199585,
+  "findings" : [
+
+  ],
+  "importElapsedSeconds" : 0.14541196823120117,
+  "inspectionElapsedSeconds" : 0.01772308349609375,
+  "inspectionState" : "0 项失败 · 0 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "phase" : "completed",
+  "routeCacheVersion" : "31",
+  "rows" : [
+    {
+      "destination" : "香港西九龙",
+      "expectedSectionCount" : 6,
+      "id" : "CN-INTEGRATION-complete",
+      "indicesAreAuthoritative" : true,
+      "number" : "数据接入检查",
+      "origin" : "广州南",
+      "parts" : [
+        {
+          "from" : "广州南",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-izq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-izq:cn-official-12306-qsq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 30.97413597640878,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-qsq"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 299,
+          "temporalKind" : "current",
+          "to" : "南沙北"
+        },
+        {
+          "from" : "南沙北",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-qsq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-iuq:cn-official-12306-qsq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 18.91024238622462,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-iuq"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 72,
+          "temporalKind" : "current",
+          "to" : "虎门"
+        },
+        {
+          "from" : "虎门",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-iuq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-imq:cn-official-12306-iuq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 36.21322557810444,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-imq"
+          },
+          "sectionIndex" : 2,
+          "sourceVertexCount" : 228,
+          "temporalKind" : "current",
+          "to" : "光明城"
+        },
+        {
+          "from" : "光明城",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-imq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-imq:cn-official-12306-ioq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 16.432178590179348,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-ioq"
+          },
+          "sectionIndex" : 3,
+          "sourceVertexCount" : 77,
+          "temporalKind" : "current",
+          "to" : "深圳北"
+        },
+        {
+          "from" : "深圳北",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-ioq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-ioq:cn-official-12306-nzq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 9.212177345547218,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-nzq"
+          },
+          "sectionIndex" : 4,
+          "sourceVertexCount" : 46,
+          "temporalKind" : "current",
+          "to" : "福田"
+        },
+        {
+          "from" : "福田",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-nzq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-nzq:cn-official-12306-xja",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 29.403783427640978,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-xja"
+          },
+          "sectionIndex" : 5,
+          "sourceVertexCount" : 129,
+          "temporalKind" : "current",
+          "to" : "香港西九龙"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 6,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    },
+    {
+      "destination" : "香港西九龙",
+      "expectedSectionCount" : 2,
+      "id" : "CN-INTEGRATION-shenzhen-west-kowloon",
+      "indicesAreAuthoritative" : true,
+      "number" : "数据接入检查",
+      "origin" : "深圳北",
+      "parts" : [
+        {
+          "from" : "深圳北",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-ioq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-ioq:cn-official-12306-nzq",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 9.212177345547218,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-nzq"
+          },
+          "sectionIndex" : 0,
+          "sourceVertexCount" : 46,
+          "temporalKind" : "current",
+          "to" : "福田"
+        },
+        {
+          "from" : "福田",
+          "partIndex" : 0,
+          "physicalSelection" : {
+            "fromStationCode" : "cn-official-12306-nzq",
+            "intervals" : [
+              {
+                "code" : "cn-guangshengan-hsr@cn-official-12306-nzq:cn-official-12306-xja",
+                "direction" : 1,
+                "lineID" : "cn-guangshengan-hsr"
+              }
+            ],
+            "lines" : [
+              {
+                "km" : 29.403783427640978,
+                "lineID" : "cn-guangshengan-hsr",
+                "name" : "广深港高速铁路",
+                "operatorName" : "中国铁路／港铁"
+              }
+            ],
+            "provenance" : "stationSequence",
+            "toStationCode" : "cn-official-12306-xja"
+          },
+          "sectionIndex" : 1,
+          "sourceVertexCount" : 129,
+          "temporalKind" : "current",
+          "to" : "香港西九龙"
+        }
+      ],
+      "physicalGaps" : [
+
+      ],
+      "resolvedSectionCount" : 2,
+      "status" : "路线已解析",
+      "unresolvedSections" : [
+
+      ]
+    }
+  ],
+  "schemaVersion" : 2,
+  "sectionIndexBase" : 0,
+  "sharedWork" : {
+    "cacheHits" : 0,
+    "completedOperations" : 2,
+    "inFlight" : 0,
+    "joinedRequests" : 0,
+    "retainedEntries" : 2,
+    "retainedVertices" : 1053,
+    "scope" : "processLifetime",
+    "startedOperations" : 2,
+    "subscribers" : 0
+  },
+  "source" : "journeys.json",
+  "timingScope" : "routeLoad"
+}

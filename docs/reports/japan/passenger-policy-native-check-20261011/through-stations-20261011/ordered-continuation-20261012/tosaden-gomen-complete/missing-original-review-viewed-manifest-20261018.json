@@ -1,0 +1,2525 @@
+{
+  "format": "bounded-original-pixel-review-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-とさでん交通-後免線",
+  "captureIndex": "/private/tmp/jtm-tosaden-gomen-missing-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "actualPairsViewed": 42,
+  "actualOriginalPNGsViewed": 84,
+  "unviewedPairsInThisCaptureIndex": 0,
+  "unavailableItemIDs": [],
+  "otherLegacyPairsNotViewedHere": 39,
+  "processID": 61534,
+  "verdict": "Multiple sustained own-corridor and terminal-placement leads; no whole-line acceptance and no coordinate/deletion candidate proposed. Real street bends retained.",
+  "currentOwnMetadata": {
+    "stationCount": 33,
+    "intervalCount": 32,
+    "displayStationCoordinatesPresent": false,
+    "displayIntervalCoordinatesPresent": false,
+    "physicalAndServiceDataChanged": false
+  },
+  "capturedSourceComparison": [
+    {
+      "intervalIndex": 0,
+      "fromStationID": "009117",
+      "toStationID": "009120",
+      "fromStationName": "はりまや橋",
+      "toStationName": "デンテツターミナルビル前",
+      "decodedControlCount": 4,
+      "sourceViewRoundtripMaxDegrees": 2.842170943040401e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 5,
+      "fromStationID": "009135",
+      "toStationID": "009137",
+      "fromStationName": "知寄町二丁目",
+      "toStationName": "知寄町",
+      "decodedControlCount": 4,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 7,
+      "fromStationID": "009139",
+      "toStationID": "009146",
+      "fromStationName": "知寄町三丁目",
+      "toStationName": "葛島橋東詰",
+      "decodedControlCount": 12,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 8,
+      "fromStationID": "009146",
+      "toStationID": "009134",
+      "fromStationName": "葛島橋東詰",
+      "toStationName": "西高須",
+      "decodedControlCount": 7,
+      "sourceViewRoundtripMaxDegrees": 2.842170943040401e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 10,
+      "fromStationID": "009128",
+      "toStationID": "009122",
+      "fromStationName": "県立美術館通",
+      "toStationName": "高須",
+      "decodedControlCount": 5,
+      "sourceViewRoundtripMaxDegrees": 2.842170943040401e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 12,
+      "fromStationID": "009121",
+      "toStationID": "009115",
+      "fromStationName": "文珠通",
+      "toStationName": "介良通",
+      "decodedControlCount": 12,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 16,
+      "fromStationID": "009101",
+      "toStationID": "009093",
+      "fromStationName": "田辺島通",
+      "toStationName": "鹿児",
+      "decodedControlCount": 11,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 18,
+      "fromStationID": "009088",
+      "toStationID": "009084",
+      "fromStationName": "舟戸",
+      "toStationName": "北浦",
+      "decodedControlCount": 13,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 19,
+      "fromStationID": "009084",
+      "toStationID": "009081",
+      "fromStationName": "北浦",
+      "toStationName": "領石通",
+      "decodedControlCount": 10,
+      "sourceViewRoundtripMaxDegrees": 8.526512829121202e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 20,
+      "fromStationID": "009081",
+      "toStationID": "009074",
+      "fromStationName": "領石通",
+      "toStationName": "清和学園前",
+      "decodedControlCount": 16,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 21,
+      "fromStationID": "009074",
+      "toStationID": "009076",
+      "fromStationName": "清和学園前",
+      "toStationName": "一条橋",
+      "decodedControlCount": 7,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 23,
+      "fromStationID": "009075",
+      "toStationID": "009073",
+      "fromStationName": "明見橋",
+      "toStationName": "長崎",
+      "decodedControlCount": 9,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 24,
+      "fromStationID": "009073",
+      "toStationID": "009069",
+      "fromStationName": "長崎",
+      "toStationName": "小篭通",
+      "decodedControlCount": 12,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 25,
+      "fromStationID": "009069",
+      "toStationID": "009065",
+      "fromStationName": "小篭通",
+      "toStationName": "篠原",
+      "decodedControlCount": 15,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 27,
+      "fromStationID": "009067",
+      "toStationID": "009068",
+      "fromStationName": "住吉通",
+      "toStationName": "東工業前",
+      "decodedControlCount": 7,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 30,
+      "fromStationID": "009072",
+      "toStationID": "009078",
+      "fromStationName": "後免中町",
+      "toStationName": "後免東町",
+      "decodedControlCount": 11,
+      "sourceViewRoundtripMaxDegrees": 5.684341886080802e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    },
+    {
+      "intervalIndex": 31,
+      "fromStationID": "009078",
+      "toStationID": "009077",
+      "fromStationName": "後免東町",
+      "toStationName": "後免町",
+      "decodedControlCount": 7,
+      "sourceViewRoundtripMaxDegrees": 8.526512829121202e-14,
+      "scope": "Direct current own decoded input vs captured sourceCoordinates, accounting for snapshot roundtrip floating-point error. Not IEEE-bit identity claim."
+    }
+  ],
+  "targetedOriginalN02Proof": [
+    {
+      "intervalIndex": 7,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 11286,
+      "sourceProperties": {
+        "N02_001": "21",
+        "N02_002": "5",
+        "N02_003": "後免線",
+        "N02_004": "とさでん交通"
+      },
+      "sourceDirection": "reverse",
+      "exactCompactSegmentCoordinateIndices": [
+        0,
+        8
+      ],
+      "decodedControlIndices": [
+        1,
+        9
+      ],
+      "exactRawCoordinates": [
+        [
+          133.56587,
+          33.55744
+        ],
+        [
+          133.56655,
+          33.55737
+        ],
+        [
+          133.56727,
+          33.55731
+        ],
+        [
+          133.56773,
+          33.55721
+        ],
+        [
+          133.5681,
+          33.55713
+        ],
+        [
+          133.56895,
+          33.55695
+        ],
+        [
+          133.56911,
+          33.55692
+        ],
+        [
+          133.56924,
+          33.5569
+        ],
+        [
+          133.56942,
+          33.55689
+        ]
+      ],
+      "scope": "Exact list equality to the compact segment interior slice. Remaining station anchor/other source controls not asserted to be this feature."
+    },
+    {
+      "intervalIndex": 16,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 11283,
+      "sourceProperties": {
+        "N02_001": "21",
+        "N02_002": "5",
+        "N02_003": "後免線",
+        "N02_004": "とさでん交通"
+      },
+      "sourceDirection": "reverse",
+      "exactCompactSegmentCoordinateIndices": [
+        0,
+        8
+      ],
+      "decodedControlIndices": [
+        1,
+        9
+      ],
+      "exactRawCoordinates": [
+        [
+          133.59304,
+          33.56628
+        ],
+        [
+          133.59346,
+          33.56649
+        ],
+        [
+          133.59395,
+          33.56665
+        ],
+        [
+          133.59486,
+          33.56696
+        ],
+        [
+          133.59538,
+          33.5671
+        ],
+        [
+          133.59565,
+          33.56715
+        ],
+        [
+          133.59584,
+          33.56716
+        ],
+        [
+          133.59616,
+          33.56714
+        ],
+        [
+          133.59674,
+          33.56706
+        ]
+      ],
+      "scope": "Exact list equality to the compact segment interior slice. Remaining station anchor/other source controls not asserted to be this feature."
+    },
+    {
+      "intervalIndex": 19,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 11299,
+      "sourceProperties": {
+        "N02_001": "21",
+        "N02_002": "5",
+        "N02_003": "後免線",
+        "N02_004": "とさでん交通"
+      },
+      "sourceDirection": "forward",
+      "exactCompactSegmentCoordinateIndices": [
+        0,
+        7
+      ],
+      "decodedControlIndices": [
+        1,
+        8
+      ],
+      "exactRawCoordinates": [
+        [
+          133.60382,
+          33.57342
+        ],
+        [
+          133.60431,
+          33.57363
+        ],
+        [
+          133.60473,
+          33.57378
+        ],
+        [
+          133.60514,
+          33.57393
+        ],
+        [
+          133.60621,
+          33.57402
+        ],
+        [
+          133.60675,
+          33.57402
+        ],
+        [
+          133.60742,
+          33.57393
+        ],
+        [
+          133.60779,
+          33.57385
+        ]
+      ],
+      "scope": "Exact list equality to the compact segment interior slice. Remaining station anchor/other source controls not asserted to be this feature."
+    },
+    {
+      "intervalIndex": 20,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 11293,
+      "sourceProperties": {
+        "N02_001": "21",
+        "N02_002": "5",
+        "N02_003": "後免線",
+        "N02_004": "とさでん交通"
+      },
+      "sourceDirection": "forward",
+      "exactCompactSegmentCoordinateIndices": [
+        0,
+        13
+      ],
+      "decodedControlIndices": [
+        1,
+        14
+      ],
+      "exactRawCoordinates": [
+        [
+          133.60804,
+          33.57379
+        ],
+        [
+          133.60838,
+          33.57375
+        ],
+        [
+          133.60852,
+          33.57374
+        ],
+        [
+          133.60869,
+          33.57375
+        ],
+        [
+          133.60891,
+          33.57381
+        ],
+        [
+          133.6091,
+          33.57389
+        ],
+        [
+          133.60928,
+          33.57398
+        ],
+        [
+          133.60974,
+          33.57422
+        ],
+        [
+          133.61043,
+          33.57451
+        ],
+        [
+          133.61069,
+          33.57459
+        ],
+        [
+          133.61092,
+          33.57463
+        ],
+        [
+          133.61115,
+          33.57465
+        ],
+        [
+          133.61149,
+          33.57467
+        ],
+        [
+          133.61216,
+          33.57468
+        ]
+      ],
+      "scope": "Exact list equality to the compact segment interior slice. Remaining station anchor/other source controls not asserted to be this feature."
+    },
+    {
+      "intervalIndex": 31,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 11320,
+      "sourceProperties": {
+        "N02_001": "21",
+        "N02_002": "5",
+        "N02_003": "後免線",
+        "N02_004": "とさでん交通"
+      },
+      "sourceDirection": "reverse",
+      "exactCompactSegmentCoordinateIndices": [
+        0,
+        4
+      ],
+      "decodedControlIndices": [
+        1,
+        5
+      ],
+      "exactRawCoordinates": [
+        [
+          133.64869,
+          33.57456
+        ],
+        [
+          133.64913,
+          33.57454
+        ],
+        [
+          133.64935,
+          33.57453
+        ],
+        [
+          133.64966,
+          33.57452
+        ],
+        [
+          133.64986,
+          33.57449
+        ]
+      ],
+      "scope": "Exact list equality to the compact segment interior slice. Remaining station anchor/other source controls not asserted to be this feature."
+    }
+  ],
+  "views": [
+    {
+      "itemID": "jp-とさでん交通-後免線#0",
+      "viewpointID": "jp-とさでん交通-後免線#0#point-0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.559509,
+        "longitude": 133.542851,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916034044545682,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788094.95479184,
+        "rectY": 107621872.85751078,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999994574,
+        "centerYPoints": 599.9999999998715,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:11Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Harimayabashi departure follows east arm, separate from north/south tram crossing. Real street S bend retained. Red lies modestly south of blue; full own platform caps/centre and junction composition are not proved."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#0",
+      "viewpointID": "jp-とさでん交通-後免線#0#point-1",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000000/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.559385,
+        "longitude": 133.54406,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916048083008031,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788996.45053157,
+        "rectY": 107621983.81357808,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999997607,
+        "centerYPoints": 600.000000001473,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999950328,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17.000000000008956
+      },
+      "timestamp": "2026-10-18T23:26:11Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same own east departure and real S bend remain continuous. Red/blue lateral difference persists; no isolated V or wrong north/south arm."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#5",
+      "viewpointID": "jp-とさでん交通-後免線#5#point-0",
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.558075,
+        "longitude": 133.55992,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991619638971878,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233800822.52367648,
+        "rectY": 107623156.00100991,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000054547,
+        "centerYPoints": 599.9999999982551,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:20Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Continuous own street-running straight, with red south of depicted rail band. No isolated V; own stop faces/caps unresolved."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#5",
+      "viewpointID": "jp-とさでん交通-後免線#5#point-1",
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000014/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5579,
+        "longitude": 133.56151,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916216201289829,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233802008.1136071,
+        "rectY": 107623312.58958791,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000006316,
+        "centerYPoints": 600.0000000009272,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018627,
+        "mapPointsPerPointY": 8.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.99999999999664
+      },
+      "timestamp": "2026-10-18T23:26:20Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "South-side difference continues toward Chiyori3/bridge context. Preserve real street/bridge transition; no isolated sharp hook."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#7",
+      "viewpointID": "jp-とさでん交通-後免線#7#point-0",
+      "intervalIndex": 7,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.557475,
+        "longitude": 133.5656,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916264314718292,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233805057.83864892,
+        "rectY": 107623692.87481363,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000023754,
+        "centerYPoints": 599.9999999966572,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012415,
+        "mapPointsPerPointY": 8.000000000062089,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999988802
+      },
+      "timestamp": "2026-10-18T23:26:21Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own bridge corridor and real bend retained, but red is south of own blue rail across bridge and east street approach. Corridor-offset research lead, no deletion candidate."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#7",
+      "viewpointID": "jp-とさでん交通-後免線#7#point-1",
+      "intervalIndex": 7,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55689643698339,
+        "longitude": 133.56930413484142,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916329811837783,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233807819.84177458,
+        "rectY": 107624210.56349415,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000003059,
+        "centerYPoints": 599.9999999997774,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:21Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Clear sustained south-side displacement across own bridge/east street, with red reaching roadside/building context. Actual rail/representative-pair identity must precede a fit."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#7",
+      "viewpointID": "jp-とさでん交通-後免線#7#point-2",
+      "intervalIndex": 7,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000015/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.556993,
+        "longitude": 133.569819,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916318880343049,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233808203.75306243,
+        "rectY": 107624124.16073465,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999988079,
+        "centerYPoints": 600.0000000015223,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018627,
+        "mapPointsPerPointY": 8.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.99999999999664
+      },
+      "timestamp": "2026-10-18T23:26:21Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Southern offset continues through east bridge stop. Distinct nearby highways are not rail supports; preserve real northward east-bank turn."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#8",
+      "viewpointID": "jp-とさでん交通-後免線#8#point-0",
+      "intervalIndex": 8,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.556993,
+        "longitude": 133.569819,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916318880343049,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233808203.75306243,
+        "rectY": 107624124.16073465,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999988079,
+        "centerYPoints": 600.0000000015223,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018627,
+        "mapPointsPerPointY": 8.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.99999999999664
+      },
+      "timestamp": "2026-10-18T23:26:21Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same east-bank own stop as interval7 endpoint: south-side red/blue separation persists, no isolated V."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#8",
+      "viewpointID": "jp-とさでん交通-後免線#8#point-1",
+      "intervalIndex": 8,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000016/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55813,
+        "longitude": 133.57314,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916190163205896,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233810680.070144,
+        "rectY": 107623106.78739132,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000004927,
+        "centerYPoints": 599.9999999947678,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 7.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17.000000000008956
+      },
+      "timestamp": "2026-10-18T23:26:22Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own northeast diagonal and eastward bend remain continuous but south of blue rail/stop band. Station caps/centres and exact own rail band are not accepted."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#10",
+      "viewpointID": "jp-とさでん交通-後免線#10#point-0",
+      "intervalIndex": 10,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.558865,
+        "longitude": 133.575615,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916106953470644,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233812525.563904,
+        "rectY": 107622449.11148047,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999952151,
+        "centerYPoints": 600.0000000008644,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:11Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Red follows continuous east-west/curved own corridor direction but remains south of blue through street and stop context. No isolated false V."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#10",
+      "viewpointID": "jp-とさでん交通-後免線#10#point-1",
+      "intervalIndex": 10,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000001/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55913,
+        "longitude": 133.577115,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916076952279822,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233813644.04497066,
+        "rectY": 107622211.98886102,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.99999999925,
+        "centerYPoints": 599.9999999987739,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:12Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Sustained south-side offset remains through the true northeast street bend. Do not straighten the genuine turn to address this lateral defect."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#12",
+      "viewpointID": "jp-とさでん交通-後免線#12#point-0",
+      "intervalIndex": 12,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55916,
+        "longitude": 133.580135,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916073555904967,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233815895.9201849,
+        "rectY": 107622185.14474507,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999984293,
+        "centerYPoints": 599.9999999992951,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:12Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Monju approach remains south of own rail band; genuine northeast turn is preserved but displaced."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#12",
+      "viewpointID": "jp-とさでん交通-後免線#12#point-1",
+      "intervalIndex": 12,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56011076257103,
+        "longitude": 133.58354076235975,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915965916293625,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233818435.44066286,
+        "rectY": 107621334.3938909,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999985628,
+        "centerYPoints": 599.9999999948328,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:12Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own northeast corridor is continuous, with red southeast of the identified cartographic tram band. No neighboring route substitution established."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#12",
+      "viewpointID": "jp-とさでん交通-後免線#12#point-2",
+      "intervalIndex": 12,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000002/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.560207,
+        "longitude": 133.583637,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915955020718782,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233818507.20064858,
+        "rectY": 107621248.27925655,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000057291,
+        "centerYPoints": 600.000000001003,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17.000000000008956
+      },
+      "timestamp": "2026-10-18T23:26:13Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kera endpoint and northeast continuation remain southeast of blue. Own face/caps and real rail locus need attribution before any coordinate proposal."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#16",
+      "viewpointID": "jp-とさでん交通-後免線#16#point-0",
+      "intervalIndex": 16,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.566085,
+        "longitude": 133.592755,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915289486358237,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233825306.07422578,
+        "rectY": 107615988.37845962,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999973497,
+        "centerYPoints": 599.9999999992086,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:13Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Strong lead: red cuts into green/open area south of own curved street/tram corridor around Tanabeshima. Real curve must be retained."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#16",
+      "viewpointID": "jp-とさでん交通-後免線#16#point-1",
+      "intervalIndex": 16,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56712976125581,
+        "longitude": 133.59623423204968,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915171182682956,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233827900.3776752,
+        "rectY": 107615053.4412632,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999942912,
+        "centerYPoints": 600.0000000001112,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8.000000000000002,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:13Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Strong lead persists: repaired-looking smooth red follows south green margin then east of own north-running street. No nearest-JR or road snap allowed."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#16",
+      "viewpointID": "jp-とさでん交通-後免線#16#point-2",
+      "intervalIndex": 16,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000003/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.567005,
+        "longitude": 133.597105,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915185310213722,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233828549.66931912,
+        "rectY": 107615165.08835912,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999986691,
+        "centerYPoints": 600.0000000002302,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999999,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:13Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kako endpoint/turn remains displaced southeast of blue, with no isolated V. Whole local curve and both station anchors need review together."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#18",
+      "viewpointID": "jp-とさでん交通-後免線#18#point-0",
+      "intervalIndex": 18,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57022,
+        "longitude": 133.59967,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914821239717746,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233830462.27194312,
+        "rectY": 107612287.97851732,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999981973,
+        "centerYPoints": 600.000000001897,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999999,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:14Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Funato departure remains east/south of tram corridor; red enters green area below real eastward bend. JR Dosan stays separately north."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#18",
+      "viewpointID": "jp-とさでん交通-後免線#18#point-1",
+      "intervalIndex": 18,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57235677829124,
+        "longitude": 133.60223555081123,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914579251008586,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233832375.28528172,
+        "rectY": 107610375.71214165,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999997904,
+        "centerYPoints": 599.9999999945285,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012415,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:26:14Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own hill-foot curve shows sustained red south displacement and local chord-like cutting through green edge. No deletion of real tram bend justified."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#18",
+      "viewpointID": "jp-とさでん交通-後免線#18#point-2",
+      "intervalIndex": 18,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000004/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57319,
+        "longitude": 133.603525,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914484885455114,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233833336.76828444,
+        "rectY": 107609630.02445284,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999993911,
+        "centerYPoints": 599.999999998891,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012417,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:26:14Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kitaura endpoint is displaced south of own band; nearby north JR Dosan is excluded as a replacement direction."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#19",
+      "viewpointID": "jp-とさでん交通-後免線#19#point-0",
+      "intervalIndex": 19,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57319,
+        "longitude": 133.603525,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914484885455114,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233833336.76828444,
+        "rectY": 107609630.02445284,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999993911,
+        "centerYPoints": 599.999999998891,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012417,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:26:15Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same Kitaura endpoint context; own hill-foot arc displaced south, not switched onto north JR."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#19",
+      "viewpointID": "jp-とさでん交通-後免線#19#point-1",
+      "intervalIndex": 19,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.573979865412305,
+        "longitude": 133.60704878320098,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914395428223769,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233835964.29148,
+        "rectY": 107608923.13162376,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999995882,
+        "centerYPoints": 600.0000000016344,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:15Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Strong lead: broad own north-bowing hill-foot curve is underrepresented by red across southern green/open area, with a low trough near Ryoseki. Full own source/rail locus needed."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#19",
+      "viewpointID": "jp-とさでん交通-後免線#19#point-2",
+      "intervalIndex": 19,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000005/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57382,
+        "longitude": 133.607915,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914413534141074,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233836610.18953958,
+        "rectY": 107609066.20425892,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000049102,
+        "centerYPoints": 600.0000000007233,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:15Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Ryoseki endpoint/context remains south of blue, with sustained off-corridor body rather than a lone acute point."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#20",
+      "viewpointID": "jp-とさでん交通-後免線#20#point-0",
+      "intervalIndex": 20,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57382,
+        "longitude": 133.607915,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914413534141074,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233836610.18953958,
+        "rectY": 107609066.20425892,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000049102,
+        "centerYPoints": 600.0000000007233,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:15Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same Ryoseki view: southern trough and sustained green-area offset persist; own JR distinction remains clear."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#20",
+      "viewpointID": "jp-とさでん交通-後免線#20#point-1",
+      "intervalIndex": 20,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57466644480816,
+        "longitude": 133.61142956057233,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914317667246443,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233839230.83584476,
+        "rectY": 107608308.66972362,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999986469,
+        "centerYPoints": 599.9999999995732,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:16Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Strong lead: red omits the full north-bowing own corridor and crosses green/building context before returning toward the Seiwa side; assess full window/anchors, not one-angle deletion."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#20",
+      "viewpointID": "jp-とさでん交通-後免線#20#point-2",
+      "intervalIndex": 20,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000006/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57468,
+        "longitude": 133.612555,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914316131991164,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233840070.02430576,
+        "rectY": 107608296.53830405,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999963139,
+        "centerYPoints": 600.0000000007511,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:16Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Southern chord/offset remains west of Seiwa; later eastern body approaches blue. No full own platform centre acceptance."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#21",
+      "viewpointID": "jp-とさでん交通-後免線#21#point-0",
+      "intervalIndex": 21,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57468,
+        "longitude": 133.612555,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914316131991164,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233840070.02430576,
+        "rectY": 107608296.53830405,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999963139,
+        "centerYPoints": 600.0000000007511,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:16Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Seiwa endpoint/eastward straight is continuous; inherited western arc offset remains visible in context, but not attributed to an interval21 point defect."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#21",
+      "viewpointID": "jp-とさでん交通-後免線#21#point-1",
+      "intervalIndex": 21,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000007/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57466,
+        "longitude": 133.614075,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914318397182728,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233841203.41845337,
+        "rectY": 107608314.43759939,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999944977,
+        "centerYPoints": 600.000000001555,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012415,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:26:16Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Short Seiwa–Ichijobashi body is continuous and closer to own band in centre/east context. Western retained offset is visible; no isolated V."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#23",
+      "viewpointID": "jp-とさでん交通-後免線#23#point-0",
+      "intervalIndex": 23,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57468,
+        "longitude": 133.617935,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914316131991164,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233844081.6430649,
+        "rectY": 107608296.53830405,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999973705,
+        "centerYPoints": 600.0000000007511,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:16Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Myoken eastward own curve/diagonal remains continuous, with red south of blue increasingly eastward. North JR remains distinct."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#23",
+      "viewpointID": "jp-とさでん交通-後免線#23#point-1",
+      "intervalIndex": 23,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000008/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.575025,
+        "longitude": 133.62098,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914277057242112,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233846352.15963027,
+        "rectY": 107607987.77480659,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000023391,
+        "centerYPoints": 599.9999999998802,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:17Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Nagasaki approach/endpoint is south of own roadway rail/stop band, crossing open ground. Sustained offset lead, no isolated sharp corner."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#24",
+      "viewpointID": "jp-とさでん交通-後免線#24#point-0",
+      "intervalIndex": 24,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.575025,
+        "longitude": 133.62098,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914277057242112,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233846352.15963027,
+        "rectY": 107607987.77480659,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000023391,
+        "centerYPoints": 599.9999999998802,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:17Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same Nagasaki endpoint context: own red stays south of the blue tram band. No wrong JR selection."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#24",
+      "viewpointID": "jp-とさでん交通-後免線#24#point-1",
+      "intervalIndex": 24,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57586536366456,
+        "longitude": 133.62461774434988,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914181876023521,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233849064.65841734,
+        "rectY": 107607235.672181,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000003896,
+        "centerYPoints": 599.9999999964265,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999987582,
+        "mapPointsPerPointY": 7.999999999987584,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17.000000000002238,
+        "zoom256Y": 17.000000000002238
+      },
+      "timestamp": "2026-10-18T23:26:17Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own northeast diagonal runs through open field south of the depicted tram/road corridor. Positive own physical/representative band needed before fitting."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#24",
+      "viewpointID": "jp-とさでん交通-後免線#24#point-2",
+      "intervalIndex": 24,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000009/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.576171,
+        "longitude": 133.626105,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991414725852793,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233850173.63660803,
+        "rectY": 107606962.1341569,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000032154,
+        "centerYPoints": 600.0000000009417,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:17Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kogome approach still south of blue; real eastward street turn is preserved, with no isolated V."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#25",
+      "viewpointID": "jp-とさでん交通-後免線#25#point-0",
+      "intervalIndex": 25,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.576171,
+        "longitude": 133.626105,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991414725852793,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233850173.63660803,
+        "rectY": 107606962.1341569,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000032154,
+        "centerYPoints": 600.0000000009417,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:18Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same Kogome endpoint and real street turn; continuous south-side difference remains."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#25",
+      "viewpointID": "jp-とさでん交通-後免線#25#point-1",
+      "intervalIndex": 25,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57696496545589,
+        "longitude": 133.62975979238396,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914057329756285,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233852898.84733072,
+        "rectY": 107606251.54742292,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999997385,
+        "centerYPoints": 600.0000000010225,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17.000000000008956
+      },
+      "timestamp": "2026-10-18T23:26:18Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Long own eastward stretch remains south of rail/stop band; no isolated sharp turn, station centres not accepted."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#25",
+      "viewpointID": "jp-とさでん交通-後免線#25#point-2",
+      "intervalIndex": 25,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000002/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000002/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000010/000002/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.576875,
+        "longitude": 133.631644,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914067519821002,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233854303.8143602,
+        "rectY": 107606332.06543502,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999994635,
+        "centerYPoints": 599.9999999982576,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:18Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Shinohara endpoint and eastward body remain south of own band. North JR is distinct; no co-track inferred."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#27",
+      "viewpointID": "jp-とさでん交通-後免線#27#point-0",
+      "intervalIndex": 27,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.576371,
+        "longitude": 133.636469,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914124605639347,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233857901.59512466,
+        "rectY": 107606783.13788351,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000021574,
+        "centerYPoints": 600.0000000007855,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018629,
+        "mapPointsPerPointY": 8.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.99999999999664
+      },
+      "timestamp": "2026-10-18T23:26:18Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Continuous own street corridor, red persistently south of rail/stop band around Sumiyoshi/HigashiKogyo. No isolated V."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#27",
+      "viewpointID": "jp-とさでん交通-後免線#27#point-1",
+      "intervalIndex": 27,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000011/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.576248,
+        "longitude": 133.63766,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914138537180273,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233858789.66909155,
+        "rectY": 107606893.22064075,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000061139,
+        "centerYPoints": 599.9999999989217,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:19Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Same sustained south-side difference; later east context tends closer to blue. No coordinate proposal from overview alone."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#30",
+      "viewpointID": "jp-とさでん交通-後免線#30#point-0",
+      "intervalIndex": 30,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.575461,
+        "longitude": 133.646026,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914227675303908,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233865027.81082737,
+        "rectY": 107607597.56757785,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999975612,
+        "centerYPoints": 599.9999999982368,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:19Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Gomen street bend remains, separate from GomenNahari railway curving from the north. Red follows the tram approach; own terminal farther east needs cap evidence."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#30",
+      "viewpointID": "jp-とさでん交通-後免線#30#point-1",
+      "intervalIndex": 30,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000012/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.574603,
+        "longitude": 133.648284,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914324852972741,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233866711.49765974,
+        "rectY": 107608365.45056836,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000023467,
+        "centerYPoints": 599.9999999982531,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:19Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "True own southeast/east street bend retained, with local lateral differences. Red terminal ends west of the small own cartographic terminal frame; no adoption of neighboring rail frame."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#31",
+      "viewpointID": "jp-とさでん交通-後免線#31#point-0",
+      "intervalIndex": 31,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000000/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000000/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000000/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.574603,
+        "longitude": 133.648284,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914324852972741,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233866711.49765974,
+        "rectY": 107608365.45056836,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000023467,
+        "centerYPoints": 599.9999999982531,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:26:19Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own last street approach is continuous; red endpoint sits west of small own terminal frame, distinct from GomenNahari frame farther north/east."
+    },
+    {
+      "itemID": "jp-とさでん交通-後免線#31",
+      "viewpointID": "jp-とさでん交通-後免線#31#point-1",
+      "intervalIndex": 31,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000001/smooth.png"
+      },
+      "completionCheckedBeforeViewing": "capture-state progress.status=captured and both PNG/view.json present before each pair",
+      "viewMethod": "Both original PNGs opened separately through view_image(detail=original), no contact sheet substitute.",
+      "viewJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000001/view.json",
+      "captureStateJSON": "/private/tmp/jtm-tosaden-gomen-missing-20261018/alignment/captures/000013/000001/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.574419,
+        "longitude": 133.650249,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9914345692648131,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233868176.7078571,
+        "rectY": 107608530.1237822,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000050484,
+        "centerYPoints": 599.9999999984874,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8.00000000004967,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 16.999999999991044
+      },
+      "timestamp": "2026-10-18T23:26:20Z",
+      "wholeLineRenderDependency": "d2bde76e3ac24f236ee7e4ff00b9e5365a7f96140665432462f1f6a25f6ec04a",
+      "intervalIdentityPlan": "identity-plan-7ff8401c7269feeadd4da7a00c017706003447e4b682713127a2afedbca65b4b.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Terminal lead: red ends at camera centre (800,600), west of own small blue stop/terminal area approximately x830 in this view. Full own cap-to-cap extent/rail band unresolved; no alias or neighbor-frame substitution."
+    }
+  ],
+  "limits": [
+    "Snapshot cartography may simplify physical tram rails; own passenger rail/pair/terminal binding needed before fit.",
+    "North JR Dosan and GomenNahari railways are excluded as replacement directions or station frames.",
+    "Platform full longitudinal caps and representative faces not accepted from z17 fill.",
+    "Isolated centreline omits final Main lane/follow/join/family composition.",
+    "No additional native/capture/build/tests/apply or production/source mutation."
+  ]
+}

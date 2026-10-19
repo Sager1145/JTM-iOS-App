@@ -1,0 +1,51 @@
+{
+  "caseIndex": 21,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 21,
+  "source": {
+    "caseIndex": 21,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 21,
+    "fromStationID": "003628",
+    "toStationID": "003632",
+    "camera": [
+      35.697964999999996,
+      139.6534025,
+      0.015098236206214937
+    ],
+    "effectiveCoordinates": [
+      [
+        139.658295,
+        35.697965
+      ],
+      [
+        139.65759,
+        35.69806
+      ],
+      [
+        139.65706,
+        35.69807
+      ],
+      [
+        139.6552,
+        35.69806
+      ],
+      [
+        139.65226,
+        35.69799
+      ],
+      [
+        139.64926,
+        35.69788
+      ],
+      [
+        139.64851,
+        35.69786
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "38 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:737;camera:15.91;lod:14.76;backbones:0;networkStations:8;distance:3313.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.697965;centerLon:139.653402;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3898.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.697965;centerLon:139.653402;distance:3313.6;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

@@ -1,0 +1,515 @@
+{
+  "format": "jtm-tsushima-display-evidence-v3",
+  "views": [
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000000/basemap.png",
+      "basemapSha256": "1efaf56a8f27bae007d9895f9e939e1c3b0ceb73d691905b2565a3b3ef070b5c",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-0.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000001/basemap.png",
+      "basemapSha256": "2b7a26076d0669e27718467655906b5d3fc0421f266c676e2974eb3a0ee63dbd",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-1.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000002/basemap.png",
+      "basemapSha256": "56844f9a406c82c0d1c5f5583f53ccef9e42fe87765f80b48925c52f7824a4e4",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-2.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000003/basemap.png",
+      "basemapSha256": "4ad746c0d0777b3c4b75fb498d755f5ef67918e1d7ba1be0e8e3c047517523ae",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-3.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000004/basemap.png",
+      "basemapSha256": "20eb377d351a8ad7c92a59b2326bd880dc5c496bf6dd20a2b39e82acbc6079e7",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-4.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 4,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002591/000005/basemap.png",
+      "basemapSha256": "6866f33a82bcdf67ffe2b4297f8b18dff8d48d1a125bd9ed228f6ed6647f15e5",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-4-view-5.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 5,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000000/basemap.png",
+      "basemapSha256": "9df0d1e896ef4df2cf48bbef78c7c3c6de4271c68bf9c9c07e5fd40b58fba49a",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-5-view-0.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 5,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000001/basemap.png",
+      "basemapSha256": "e3e5af74523b920b9511dca49dcdb5052ccfb0c5b55ce2cb2f3aee4a77ab2a34",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-5-view-1.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 5,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000002/basemap.png",
+      "basemapSha256": "d7b8fff584809e5cb1fdc971c0cbc249f77b7a69ef630083c9eb816b2c4e5b1d",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-5-view-2.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 5,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000003/basemap.png",
+      "basemapSha256": "08cafe992e2567521e7c7682da824296d3864d9351ea0a701fd3466542ac777d",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-5-view-3.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 5,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002592/000004/basemap.png",
+      "basemapSha256": "2ea67951e29a8f5b487e3033ed25b8972fa9d983ce41f7dab5f9edc1483ac92b",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-5-view-4.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000000/basemap.png",
+      "basemapSha256": "8a49cc9d29731b7590b54c1ca5f9ff560d99118f1b69a93b6a0054d76004331c",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-0.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000001/basemap.png",
+      "basemapSha256": "034eeb9c7f5828ae0649b9beeee5ad2e48faa1fa5db10d9bf1fde7aab3c06e1f",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-1.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000002/basemap.png",
+      "basemapSha256": "8a2c442dff39e02afed97ab7cb9310a986799b0676e11c9195e042715bd1f200",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-2.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000003/basemap.png",
+      "basemapSha256": "e9c92b0bee6243b617dc2af884a73ecff9e3d87bd3d272136739dc69d9e85928",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-3.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000004/basemap.png",
+      "basemapSha256": "b027f9b12ce424d69b0142023d6b38da67a7d4edb6e384e66e72d8f5d886b86a",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-4.png"
+    },
+    {
+      "app": "primary",
+      "intervalIndex": 6,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/primary/captures/002593/000005/basemap.png",
+      "basemapSha256": "df76ab8fd992a933fa82960094fc64e64c162e9f38984483fae22303e5d9bfb4",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/primary-interval-6-view-5.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000000/basemap.png",
+      "basemapSha256": "6df2965f4e5cae81984673b054e9653bfa88ae7bbfbdd2ecf96602ed9c3a6e4a",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-0.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000001/basemap.png",
+      "basemapSha256": "72d86f3ec66a0a7ac578c013ac7e75697e0268b4dd003e8831dae623b53d5902",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-1.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000002/basemap.png",
+      "basemapSha256": "23895202944440b5402783a7db052a83b95f41c26ed6a0f28f8f6c2ed6343080",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-2.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000003/basemap.png",
+      "basemapSha256": "138c8ebd1167e1ed910a8ed0d841962cf5db1b9fb99df19a5d4b4a6a93706555",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-3.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000004/basemap.png",
+      "basemapSha256": "6d4018249382b646d49d318b90959a7d29b2ff78dd03d6c5f8f7a0d868131915",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-4.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 4,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002591/000005/basemap.png",
+      "basemapSha256": "dff510dc8cb2f377201e0b88e20bf0f96e8bb1570a860c3b6522888fc662fee3",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-4-view-5.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 5,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000000/basemap.png",
+      "basemapSha256": "3c6af2908debf4e02b0b9f17c091882cdc87abb567ed44fa4548fc6c571d7194",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-5-view-0.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 5,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000001/basemap.png",
+      "basemapSha256": "45eeb81abccd634ca68f34842024c77ce22aa4463a4e81421e0d680ae61597fe",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-5-view-1.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 5,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000002/basemap.png",
+      "basemapSha256": "84625ec1258bfe5d688222acf00f754247e0867c160948dcb1e8b14951380529",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-5-view-2.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 5,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000003/basemap.png",
+      "basemapSha256": "2199280025615e9aef54b1ec14b1c0375bc71d3da19f77e8ca03d6363f0960c5",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-5-view-3.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 5,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002592/000004/basemap.png",
+      "basemapSha256": "3c5fdd8671029aff2427eb4146ac30066a11fcdb4ca7a6551465a69ef2f471c6",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-5-view-4.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000000/basemap.png",
+      "basemapSha256": "3a93c14e242c944d51a4fe41a644f01a98d69cc3b3022b8faabf0b1a8e928e16",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-0.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000001/basemap.png",
+      "basemapSha256": "f915f6fed72d9609a10594cdba7c7a35aef58085e811a463a49628f21daf36ed",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-1.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000002/basemap.png",
+      "basemapSha256": "beaa77f21564e743e8ad4876fc6063c04ce9e4e0bc5016b56059e7e5ce6f242d",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-2.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000003/basemap.png",
+      "basemapSha256": "f007162fafbd832d73b7f9e3078bd463e46977255503955b71d11e97b1c13c81",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-3.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000004/basemap.png",
+      "basemapSha256": "1119d9caee4cf318ba9467ebc6f417c1bc28b8a0d74d0d30b9cf1034323a3450",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-4.png"
+    },
+    {
+      "app": "secondary",
+      "intervalIndex": 6,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/secondary/captures/002593/000005/basemap.png",
+      "basemapSha256": "c8bc220f6d93c85dd642cbf3cc53c01d384a584cb961fcecdaa42aa0d8cde369",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/secondary-interval-6-view-5.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000000/basemap.png",
+      "basemapSha256": "328dfada7937bb4af9f4e29dee34fdd2823b0b467b7b51e2f703c39dc85fca6b",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-0.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000001/basemap.png",
+      "basemapSha256": "bcb885377526941919b985dabb47f861d22d6febcbda29fc19b80526f0423180",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-1.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000002/basemap.png",
+      "basemapSha256": "3408ea9a68252f33207c753f431d9c9c03b709b77da1c7f115b1c723635d7590",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-2.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000003/basemap.png",
+      "basemapSha256": "d4cb77ecbfdab2bbda2438e59b36c369849817a970286ef181e2682feb65a1c5",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-3.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000004/basemap.png",
+      "basemapSha256": "f4f2bd9d404db1112b6b9336649a17f981cfa4cb8b656afe40f59378242ae83d",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-4.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 4,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#4#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002591/000005/basemap.png",
+      "basemapSha256": "6b6ec79f1568fe29069799812e9521e7c8ebb1938367d7ab63595423a376a740",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-4-view-5.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 5,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000000/basemap.png",
+      "basemapSha256": "f75a2f46dcff0638306c694bd6e8c1f6bebfba97325e1d0702401d4bf208d3de",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-5-view-0.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 5,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000001/basemap.png",
+      "basemapSha256": "b9c15f2c8ddd0d9ef9b8029b7287789c19675ed2beb30824e4cd56671cf8f5a5",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-5-view-1.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 5,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000002/basemap.png",
+      "basemapSha256": "b4dd1a99ac5c6e626d8f8b96b4a41603b47fcd6f3a421ba4fd12830b779f34b1",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-5-view-2.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 5,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000003/basemap.png",
+      "basemapSha256": "8681c3623de6d5447a8c5493733b32697cb8876cf57982d55c7eafaa6fd1dfd4",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-5-view-3.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 5,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#5#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002592/000004/basemap.png",
+      "basemapSha256": "02e62c14c4f681f25e81ea2446787608498eb09179e5d05b01f810277781b9e7",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-5-view-4.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 0,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-0",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000000/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000000/basemap.png",
+      "basemapSha256": "3b16ba30be22aaac84992fdb1e557ff4c0810b9ae5c961b291e3e6270e6374c5",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-0.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 1,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-1",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000001/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000001/basemap.png",
+      "basemapSha256": "3d25b2df84e54160bda650a692c5762fffa66d924938423ab0de88e705607783",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-1.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 2,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-2",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000002/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000002/basemap.png",
+      "basemapSha256": "063f18ea7d2211525aa4dc5ecd41c25fbb15252061eef4fd0a23931d698bfb5d",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-2.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 3,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-3",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000003/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000003/basemap.png",
+      "basemapSha256": "8862791cc254775768c0aded89019af135008506a5b31b9c54f971f7d3cd6337",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-3.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 4,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-4",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000004/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000004/basemap.png",
+      "basemapSha256": "43f2afa41eed6184bf795ba1258b3f397981f71a11849b6b966f9049f8534969",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-4.png"
+    },
+    {
+      "app": "third",
+      "intervalIndex": 6,
+      "view": 5,
+      "viewpointID": "jp-名古屋鉄道-津島線#6#point-5",
+      "viewJSON": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000005/view.json",
+      "basemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/third/captures/002593/000005/basemap.png",
+      "basemapSha256": "6c104236bb2abdb4dcf6aeccc7289b01f456ae6218222b43295169f25558b1d2",
+      "reprojection": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v3/reprojections/third-interval-6-view-5.png"
+    }
+  ]
+}

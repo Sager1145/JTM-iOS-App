@@ -1,0 +1,125 @@
+{
+  "format": "jtm-jounan-associated-display-candidate-review-v2",
+  "candidateSha256": "dc7633845a456cbfe89083f276353daf1a6eab1412a1685f75b829d33fc3e3c1",
+  "reviewedRawReprojections": 13,
+  "expectedRawReprojections": 13,
+  "allRawReprojectionsPresent": true,
+  "reusedUnchangedPanelReviewFromV1": true,
+  "changedPanelsReinspected": [
+    "hanazono-interval-0-view-0",
+    "hanazono-interval-0-view-1",
+    "hanazono-interval-0-view-2",
+    "otemachi-interval-2-view-1",
+    "otemachi-interval-2-view-2"
+  ],
+  "geojsonExactCoordinateMatch": true,
+  "allCoordinatesFinite": true,
+  "noZeroLengthEdges": true,
+  "physicalTopologyChanged": false,
+  "lines": [
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervals": [
+        {
+          "intervalIndex": 0,
+          "pointCount": 38,
+          "minimumEdgeMetres": 7.306311851503693,
+          "maximumEdgeMetres": 7.30631680220565,
+          "maximumInteriorTurnDegrees": 3.751404165086569e-08,
+          "start": [
+            132.75832908,
+            33.84010841
+          ],
+          "end": [
+            132.75540294,
+            33.84016796
+          ]
+        },
+        {
+          "intervalIndex": 1,
+          "pointCount": 54,
+          "minimumEdgeMetres": 5.5516686827211,
+          "maximumEdgeMetres": 7.439603721682913,
+          "maximumInteriorTurnDegrees": 29.507515131904427,
+          "start": [
+            132.75540294,
+            33.84016796
+          ],
+          "end": [
+            132.75235341,
+            33.84109927
+          ]
+        },
+        {
+          "intervalIndex": 2,
+          "pointCount": 47,
+          "minimumEdgeMetres": 4.486272846446279,
+          "maximumEdgeMetres": 7.315529291935985,
+          "maximumInteriorTurnDegrees": 15.461243575799472,
+          "start": [
+            132.75235341,
+            33.84109927
+          ],
+          "end": [
+            132.75247321,
+            33.84390441
+          ]
+        },
+        {
+          "intervalIndex": 3,
+          "pointCount": 68,
+          "minimumEdgeMetres": 5.964308454132012,
+          "maximumEdgeMetres": 7.315603024517668,
+          "maximumInteriorTurnDegrees": 22.328734406696128,
+          "start": [
+            132.75247321,
+            33.84390441
+          ],
+          "end": [
+            132.75516422,
+            33.84721501
+          ]
+        }
+      ],
+      "adjacentJoins": [
+        {
+          "leftInterval": 0,
+          "rightInterval": 1,
+          "exactCoordinateEquality": true
+        },
+        {
+          "leftInterval": 1,
+          "rightInterval": 2,
+          "exactCoordinateEquality": true
+        },
+        {
+          "leftInterval": 2,
+          "rightInterval": 3,
+          "exactCoordinateEquality": true
+        }
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervals": [
+        {
+          "intervalIndex": 0,
+          "pointCount": 58,
+          "minimumEdgeMetres": 3.917028615910187,
+          "maximumEdgeMetres": 7.214936084792312,
+          "maximumInteriorTurnDegrees": 26.107301028104587,
+          "start": [
+            132.7623587755,
+            33.8361393967
+          ],
+          "end": [
+            132.76179275,
+            33.83907901
+          ]
+        }
+      ],
+      "adjacentJoins": []
+    }
+  ],
+  "visualFinding": "V1 is rejected and frozen. V2 removes the Hanazono terminal hook, follows the visible black Loop glyph into the rail point at the lower frame longitudinal chainage, terminates on the Minamihoribata south arm without visiting the west frame, and replaces the Miyata angular shortcut with the rounded own black bend. All other actual-z18 reprojections are byte-equivalent in geometry to V1 and their prior panel review remains applicable. No visible reverse U, V cusp, zero edge, or cross-line platform snap. Root native/runtime review remains required."
+}

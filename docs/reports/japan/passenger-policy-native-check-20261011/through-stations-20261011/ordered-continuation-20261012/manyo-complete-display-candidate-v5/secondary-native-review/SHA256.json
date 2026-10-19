@@ -1,0 +1,27 @@
+{
+  "receipt": "/private/tmp/jtm-manyo-v5-secondary-review/review-receipt.json",
+  "receiptSha256": "6a29e8b9de75a10a96f2e5db6387c07b505a43cfe7d57931004f46c44002bee7",
+  "result": "/private/tmp/jtm-manyo-v5-secondary-review/RESULT.md",
+  "resultSha256": "bd657d6f3fab1b908fe30ef16ce3f1494d50db248a2bf529d6f2b83e8cbaf7b5",
+  "counts": {
+    "captureItemCount": 9,
+    "tripleCount": 23,
+    "panelCount": 69,
+    "panelCountsByType": {
+      "basemap": 23,
+      "display": 23,
+      "smooth": 23
+    },
+    "captureFailureCount": 0,
+    "targetPendingCount": 0,
+    "contactSheetCount": 6,
+    "focusedOriginalPanelCount": 20,
+    "decodedImageDimensions": {
+      "width": 1024,
+      "height": 768
+    },
+    "allPanelsActuallyViewed": true,
+    "fiveOwnFrameEndpointsActuallyViewedAtFullResolution": true
+  },
+  "status": "ACCEPTED_CARTOGRAPHY_WITH_RETAINED_WARNING"
+}

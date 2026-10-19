@@ -1,0 +1,152 @@
+{
+  "status": "rejected",
+  "reviewer": "meitetsu_regional_identity",
+  "candidateSha256": "87fd1c46f5dafb9546fc6bd6f80d5453f425722042563b1f18f45d985ed488bc",
+  "packageSha256ReportedByRoot": "481c1a86374c861dbd48ed5b263c43adb69a4853645fef7916259a79cc00fd66",
+  "planSha256": "f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b",
+  "captureRoot": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1",
+  "actualIndependentPixelCoverage": {
+    "YodoIntervals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18
+    ],
+    "views": 245,
+    "panels": 735,
+    "allThreePanelsOpened": true,
+    "method": "All68 contacts followed by all245 original-file triptychs. Tool resized some triptychs3072x768 to2048x512. Exact08/09 risk witnesses separately opened1024x768 raw basemap/display originals and pixel-sampled."
+  },
+  "intendedScopeIncomplete": {
+    "expectedIntervals": 24,
+    "expectedViews": 316,
+    "actualCapturedViews": 259,
+    "missing": "Nakamura1/2 and Yosan87/88 not captured in this Secondary V1 run; Nakamura0 captured but baseline comparison reported separately."
+  },
+  "intervalFindings": {
+    "0": "Revised common stem/lower Yodo loop follows identified own band; downstream retained approach has local few-pixel separation; no previous 29m loop failure.",
+    "1": "Local curve separations at start and views1–10; station tail is closer. Local fit required, no constant shift.",
+    "2": "Most straight/forest bands close; local polyline curve corners at views5–10 need focused supports.",
+    "3": "All27 views opened, including forest/tunnel risk. Mostly own band; local curve corners views15–18 differ, no competing-road substitution.",
+    "4": "Mostly close; local curve and downstream approach separations remain.",
+    "5": "Local inside-curve departures, especially views18–20 approach; straight tunnel guide close.",
+    "6": "Local bend departures views4–6 and downstream river arc; straight band close.",
+    "7": "South separation along river arc/bridge and station approaches; varying local fit needed.",
+    "8": "Concrete east departure at start station approach; exact raw y500 ownblue x464, cyan/red x473 (9px horizontal). Full interval fit needed.",
+    "9": "Concrete south departure at start station curve; raw x500 ownrail y365–366, cyan/red y380 (14–15px vertical). Full interval fit needed.",
+    "10": "Mostly close; local curve corners remain, station chainage awaits precise frame.",
+    "11": "Mostly close; east departure at view9 urban approach, local fit needed.",
+    "12": "Urban curves show small varying separation; preserve matching straight sections.",
+    "13": "Most straight band close; local curve supports and station frame pending.",
+    "14": "Most body follows own band; station guard requires precise frame.",
+    "15": "Most body follows own band; station guard requires precise frame.",
+    "16": "Most body close; local corners and downstream station precision pending.",
+    "17": "Muden approach/station arc south separation; Root separately confirmed dot normal/chainage defect. Alias awaits highzoom witness.",
+    "18": "Rejected full body: departures at initial road57 arc, views2–3, Mitsuma-gawa views5–7 and downstream Maruyamabashi arc views15–17; not suffix-only."
+  },
+  "exactPixelWitnesses": [
+    {
+      "intervalIndex": 8,
+      "pointOrdinal": 0,
+      "rawDirectory": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002710/000000",
+      "ownRailPixel": [
+        464,
+        500
+      ],
+      "ownRailRGB": [
+        166,
+        193,
+        250
+      ],
+      "displayPixel": [
+        473,
+        500
+      ],
+      "displayRGB": [
+        12,
+        211,
+        224
+      ],
+      "smoothPixel": [
+        473,
+        500
+      ],
+      "smoothRGB": [
+        254,
+        74,
+        109
+      ],
+      "axisSeparationPixels": 9,
+      "meaning": "East separation at unlabelled own thin-blue station approach. Axis distance, not exact surveyed normal."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 0,
+      "rawDirectory": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000",
+      "ownRailPixel": [
+        500,
+        365.5
+      ],
+      "ownRailRGBRange": [
+        [
+          167,
+          194,
+          251
+        ],
+        [
+          159,
+          189,
+          251
+        ]
+      ],
+      "displayPixel": [
+        500,
+        380
+      ],
+      "displayRGB": [
+        15,
+        212,
+        224
+      ],
+      "smoothPixel": [
+        500,
+        380
+      ],
+      "smoothRGB": [
+        254,
+        66,
+        103
+      ],
+      "axisSeparationPixels": 14.5,
+      "meaning": "South separation from own rail stroke; pale platform fill at y360–362 excluded."
+    }
+  ],
+  "baselineNakamura0": {
+    "captureRoot": "/private/tmp/jtm-yodo-complete-primary-v1",
+    "viewsOpened": 14,
+    "panelsOpened": 42,
+    "claim": "Baseline evidence only. Retained body departures at views1–3,4–6,8–11; full own-band fit necessary if candidate retains those supports."
+  },
+  "limits": [
+    "Rejected V1 cannot yield a complete seven-owned-interval or Main acceptance receipt.",
+    "All measurements are Apple cartographic pixel evidence, not physical rail survey.",
+    "Root owns highzoom station adjudication; no alias derived from hidden/lowzoom frame.",
+    "Small body separations require local lane/raw-reference distinction; none is blanket accepted as a precision warning.",
+    "Physical station IDs, km, topology and source coordinates unchanged by this review."
+  ]
+}

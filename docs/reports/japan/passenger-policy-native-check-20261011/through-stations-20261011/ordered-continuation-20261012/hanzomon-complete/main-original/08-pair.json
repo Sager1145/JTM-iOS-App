@@ -1,0 +1,109 @@
+{
+  "caseIndex": 8,
+  "intervalIndex": 8,
+  "source": {
+    "intervalIndex": 8,
+    "fromStationID": "003716",
+    "toStationID": "003753",
+    "camera": [
+      35.6843205,
+      139.77912600000002,
+      0.018375588819206336
+    ],
+    "effectiveCoordinates": [
+      [
+        139.773077,
+        35.684932
+      ],
+      [
+        139.77461,
+        35.68464
+      ],
+      [
+        139.77471,
+        35.68463
+      ],
+      [
+        139.77545,
+        35.68467
+      ],
+      [
+        139.77602,
+        35.68473
+      ],
+      [
+        139.77655,
+        35.6848
+      ],
+      [
+        139.77715,
+        35.68487
+      ],
+      [
+        139.77775,
+        35.6849
+      ],
+      [
+        139.77849,
+        35.68493
+      ],
+      [
+        139.77926,
+        35.68512
+      ],
+      [
+        139.78038,
+        35.68552
+      ],
+      [
+        139.78084,
+        35.68564
+      ],
+      [
+        139.78173,
+        35.68562
+      ],
+      [
+        139.78252,
+        35.68548
+      ],
+      [
+        139.78316,
+        35.6852
+      ],
+      [
+        139.78331,
+        35.68514
+      ],
+      [
+        139.78401,
+        35.68436
+      ],
+      [
+        139.78443,
+        35.68383
+      ],
+      [
+        139.78457,
+        35.68368
+      ],
+      [
+        139.78484,
+        35.68339
+      ],
+      [
+        139.785175,
+        35.683001
+      ]
+    ],
+    "initialCamera": [
+      35.6843205,
+      139.77912600000002,
+      0.010809169893650786
+    ],
+    "framingReason": "Root pixel review: eastern endpoint or curve cropped/obscured in initial camera; widen and recapture whole interval."
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "82 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:21;overlays:20;rides:0;budgetDrops:0;vertices:9187;camera:15.63;lod:14.48;backbones:2;networkStations:75;distance:4032.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.684320;centerLon:139.779126;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4212.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:23;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:10;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:1;labelPassMs:2;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:75;markerPhases:setup=0,endpointSpecsClaims=0,endpointLayout=0,selectedNames=0,ridesDigest=0,records=0,connections=1,hiddenRides=0,rideDotLoop=0,rideLabels=0,networkStations=4,annotationDiff=0,annotationApply=0,rideStationOverlayInstall=2,annotationRestyle=0,endpointsAdd=0,other=3,drawnCount=0,stationsCount=1499,culled=0,annAdded=75,annRemoved=0,annRetained=0,annCoordChanged=0,restyledViews=0",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.684320;centerLon:139.779126;distance:4032.9;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:2;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0"
+}

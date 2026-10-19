@@ -1,0 +1,290 @@
+{
+  "format": "jtm-tsushima-display-proposal-manifest-v3",
+  "status": "proposal-only",
+  "lineID": "jp-名古屋鉄道-津島線",
+  "intervalIndexes": [
+    4,
+    5,
+    6
+  ],
+  "sourceViewCount": 51,
+  "sourcePanelCount": 153,
+  "reprojectionCount": 51,
+  "files": [
+    {
+      "path": "candidate-v3.geojson",
+      "sha256": "7befe0a21951345a0725df245720783f42ecd18661f3e4b8b9feb4de6a92243e",
+      "bytes": 5025
+    },
+    {
+      "path": "candidate-v3.json",
+      "sha256": "4bc9baf1d748ae61af6ad265f19b8f67e7a989c0968f5ca68de979ff50a0842c",
+      "bytes": 51204
+    },
+    {
+      "path": "evidence-receipts-v3.json",
+      "sha256": "57e46b4f7f7bb7a2ccd06fecfa2941e8f2dd2417c4f82eab24a5bedff99e40fa",
+      "bytes": 43316
+    },
+    {
+      "path": "proposal-v3.md",
+      "sha256": "22fc311b9b60a7f761f23ee4769571abe0950d825734a4975982d22b78999c5b",
+      "bytes": 3488
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-0.png",
+      "sha256": "50f5b94b95ce6f5a2ede281dfcddf947a0f0f1dc35f77d8aa2d714fb8de7a946",
+      "bytes": 335017
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-1.png",
+      "sha256": "f09d088a8131a9423f7fe9b4f8702511ad626da0e376423aa7e8348a2071b0c0",
+      "bytes": 312497
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-2.png",
+      "sha256": "a6cf26c2f61be6962a496e9b12c99f22ca55d439205386caa14fcb7d3ab71aa0",
+      "bytes": 302941
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-3.png",
+      "sha256": "b93d35cae53d2245bfd54c62c4d685994b335dd23606d07ba54bda38c21cf38f",
+      "bytes": 294488
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-4.png",
+      "sha256": "8840cf327484e3da11654c7cf00361f2b5031855c9739d4430329d610fd9fd6a",
+      "bytes": 356770
+    },
+    {
+      "path": "reprojections/primary-interval-4-view-5.png",
+      "sha256": "d948e7e8ab2fc11fcf47159a32570a469b47a61f1a2f3deaa6faa10e1210e2ec",
+      "bytes": 388158
+    },
+    {
+      "path": "reprojections/primary-interval-5-view-0.png",
+      "sha256": "2c19e1899f106db0da6c66da558d1c5bd0694b7ddfe39ca837ad5f2cfe6b5d1d",
+      "bytes": 387053
+    },
+    {
+      "path": "reprojections/primary-interval-5-view-1.png",
+      "sha256": "dcbab5fb091b43bcb84946935994e9b5037bb809076b2856de37513b361eca24",
+      "bytes": 395462
+    },
+    {
+      "path": "reprojections/primary-interval-5-view-2.png",
+      "sha256": "a0b09d6969a30847af51d624ddc93de1ac8774628ea2465b5415b4dfbdfe51ad",
+      "bytes": 384187
+    },
+    {
+      "path": "reprojections/primary-interval-5-view-3.png",
+      "sha256": "c74d8b87f5845a6b08dfe53ef05a3b2a08927d9d5facbdb25d7e534192ab308e",
+      "bytes": 403980
+    },
+    {
+      "path": "reprojections/primary-interval-5-view-4.png",
+      "sha256": "df6b975c9ecaf9db16d432d72710a3c20d5996ae274c7bb78d35adae94c74ee7",
+      "bytes": 400324
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-0.png",
+      "sha256": "b32d53c9d25ac319199140a2a69e9767496775b324c764385b87befe399875ae",
+      "bytes": 398327
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-1.png",
+      "sha256": "84d04b7895edd64a4e2fe3147ca767a2d0347ccedb09af01627c46f5d6e79ffa",
+      "bytes": 339300
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-2.png",
+      "sha256": "a337b46044e9c8155fd5e16119031fde5035e0f76982d66939a80f907232fe59",
+      "bytes": 326253
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-3.png",
+      "sha256": "d2bf3f4010af79a3d222d1f1381a489373c517970590b3a221e087b4c8a34ae9",
+      "bytes": 331326
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-4.png",
+      "sha256": "84f17a1e25ab537a97fadabdb25631eb7c7bd9c1d45da501a912a39f8a9cb5ae",
+      "bytes": 365207
+    },
+    {
+      "path": "reprojections/primary-interval-6-view-5.png",
+      "sha256": "29281e87a20cd153905bd6604463f498492d689313deed868d6779f7601d79e0",
+      "bytes": 361874
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-0.png",
+      "sha256": "48b21d85e3f14eccd054d7e27fcf7730ed039ce46364797e59b99b57b76c41a0",
+      "bytes": 335013
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-1.png",
+      "sha256": "495295b56eaf024c293cc274c7c0f457ee0455063c5a61dfc2eda6f3ef1d826a",
+      "bytes": 312513
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-2.png",
+      "sha256": "552ca017d74bcc6a12316bec6770842318ddcde327d72e4e6695b8ae8ddcc273",
+      "bytes": 302944
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-3.png",
+      "sha256": "543e6cca9ea47e22a59a4d8dc69d042306dbc040b5d367d71df4d75c7b8ae1c0",
+      "bytes": 294032
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-4.png",
+      "sha256": "b3f3102b16d3bb54ae22a47d2dc5d69de17872238f5514aca58bb6bbfd5afc73",
+      "bytes": 356767
+    },
+    {
+      "path": "reprojections/secondary-interval-4-view-5.png",
+      "sha256": "4873fc99e38987e00159f0d0920b80c2dbb1d3aa4e0b0c0a00cf7370ac524fa0",
+      "bytes": 388164
+    },
+    {
+      "path": "reprojections/secondary-interval-5-view-0.png",
+      "sha256": "f3514612c10e79a68146324264566a404c33b425f9a05fec09b0e7913a02ef46",
+      "bytes": 387032
+    },
+    {
+      "path": "reprojections/secondary-interval-5-view-1.png",
+      "sha256": "442025c8c17e8859762eedff0e6341ea495f7e2c8c9f4153a6750bd96bd07a36",
+      "bytes": 395456
+    },
+    {
+      "path": "reprojections/secondary-interval-5-view-2.png",
+      "sha256": "1fbc8ec826af311edb2fcae6fa07544a3c8ef93f8701f9009e8de3cdd5d3e961",
+      "bytes": 384181
+    },
+    {
+      "path": "reprojections/secondary-interval-5-view-3.png",
+      "sha256": "a368368c78d616fc59eabb986675577119f9d92ecf14754d49f49b374ea69d46",
+      "bytes": 403978
+    },
+    {
+      "path": "reprojections/secondary-interval-5-view-4.png",
+      "sha256": "dc9cf74470ef2e6efdffb6a2f2b2b95a2ec18b97638490d102e8b645843d69c3",
+      "bytes": 400332
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-0.png",
+      "sha256": "4039b457401a50a2010f7707df1d91875480609b193f09b2f23a682e831aa945",
+      "bytes": 398329
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-1.png",
+      "sha256": "a5d8a739c1a0db942c2929700c78e74236a66a9b77f7c22a84df7373d5bc25ca",
+      "bytes": 339300
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-2.png",
+      "sha256": "9f6aa09feee7dc23de4b244af98273f52c81d1072ed9f67f0a214986f2875757",
+      "bytes": 326269
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-3.png",
+      "sha256": "9755da78a70e4e6a6fb5baa35988b9ea8157ca04891605fe7cef3e0608144aa7",
+      "bytes": 331332
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-4.png",
+      "sha256": "c413567483fc644bf1a2a4215aa7cb8e354c2a37b9cd724ec31a26ce26efcd53",
+      "bytes": 364442
+    },
+    {
+      "path": "reprojections/secondary-interval-6-view-5.png",
+      "sha256": "5906f73d6235551fe5eec270468eccf1426e7e0b191e3840458a40ba64b0eeb7",
+      "bytes": 361857
+    },
+    {
+      "path": "reprojections/third-interval-4-view-0.png",
+      "sha256": "fb38698a36d2f87e198a4d27f636c77ce8c705fd3dbff9db607b71dee5fa55ec",
+      "bytes": 335003
+    },
+    {
+      "path": "reprojections/third-interval-4-view-1.png",
+      "sha256": "7534bacc9acfa7a9b2898056e65f66cb751436f7c95841a86bb926be4942b4d2",
+      "bytes": 312500
+    },
+    {
+      "path": "reprojections/third-interval-4-view-2.png",
+      "sha256": "a2700ef8e758599d59b1a45411a20a3f759c272de6e5f427d3142977a7d46693",
+      "bytes": 302940
+    },
+    {
+      "path": "reprojections/third-interval-4-view-3.png",
+      "sha256": "a7e4719fa454281c690354a1921c40221bdc456e954b136a40dce3bfe275de73",
+      "bytes": 294818
+    },
+    {
+      "path": "reprojections/third-interval-4-view-4.png",
+      "sha256": "c48244dd18606b5b34d47e38f7a7abffd56811805fb45ba6f57ac5d64fa984be",
+      "bytes": 356765
+    },
+    {
+      "path": "reprojections/third-interval-4-view-5.png",
+      "sha256": "4de7675327ea4e82484e640ba17fa892ef0facf6e76fe132652679c64bda2842",
+      "bytes": 388260
+    },
+    {
+      "path": "reprojections/third-interval-5-view-0.png",
+      "sha256": "f17f15b14ae24a98d490ae4b8818f847c9a381705204c76bc85aac3f82907db9",
+      "bytes": 387194
+    },
+    {
+      "path": "reprojections/third-interval-5-view-1.png",
+      "sha256": "3e6ac26056dec473e194e9d412991fbb7255aa3f25a82235519c8400a9b78e23",
+      "bytes": 395008
+    },
+    {
+      "path": "reprojections/third-interval-5-view-2.png",
+      "sha256": "cc355d8eb45d6f4c7978ebe74ee433d16bf78da1f61f6b2c65e96a6802f9fb75",
+      "bytes": 384787
+    },
+    {
+      "path": "reprojections/third-interval-5-view-3.png",
+      "sha256": "9dc3c2d99dc4daafdd66cee08081f9548b47aa4c44d33862a70422714fbdd939",
+      "bytes": 403338
+    },
+    {
+      "path": "reprojections/third-interval-5-view-4.png",
+      "sha256": "9192ba748874cd51edc6c084f45513cd9b854f0d5a3bfd0653ea244ceb3405c5",
+      "bytes": 399655
+    },
+    {
+      "path": "reprojections/third-interval-6-view-0.png",
+      "sha256": "6f972dfb97c7325a37bcbd6e3b3fd52f5bc8848f32a14e1fe707e136baa9a472",
+      "bytes": 398945
+    },
+    {
+      "path": "reprojections/third-interval-6-view-1.png",
+      "sha256": "63ea5e44a2a2f17d19b9103278b33be218fca9857d82264ad035a6eef9f8bfd1",
+      "bytes": 339298
+    },
+    {
+      "path": "reprojections/third-interval-6-view-2.png",
+      "sha256": "f785a62952c9f6fd8c394f5229aeeba998cb2186cd2309133e7c25ae5ac10e45",
+      "bytes": 326268
+    },
+    {
+      "path": "reprojections/third-interval-6-view-3.png",
+      "sha256": "3d3607c762214ebd87485d81f84b9d0d79f52dc65542eb5e01f7a8d0d05c571a",
+      "bytes": 330981
+    },
+    {
+      "path": "reprojections/third-interval-6-view-4.png",
+      "sha256": "c3a29759bf02718ce562dbca4f5008d7bbab84dbe5152702b6427901ba22f9b3",
+      "bytes": 365192
+    },
+    {
+      "path": "reprojections/third-interval-6-view-5.png",
+      "sha256": "05bc44dab62e925e3a99ce72caa0273bd5ac5b6c2a0feabdb6944875896fad4d",
+      "bytes": 361939
+    }
+  ]
+}

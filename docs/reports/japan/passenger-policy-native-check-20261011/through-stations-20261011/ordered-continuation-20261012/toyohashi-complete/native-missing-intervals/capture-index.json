@@ -1,0 +1,552 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#0",
+      "latitude" : 34.763399999999997,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.42912000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#0",
+      "latitude" : 34.763410316906253,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.42530140991127,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#0",
+      "latitude" : 34.764184999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.42183499999999,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#1",
+      "latitude" : 34.764184999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.42183499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#1#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#1",
+      "latitude" : 34.764948991651067,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.41812571990872,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#1#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#1",
+      "latitude" : 34.765009999999997,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.41727499999999,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#1#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000004\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#2",
+      "latitude" : 34.765009999999997,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.41727499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#2#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000004\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#2",
+      "latitude" : 34.765309999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.41371000000001,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#2#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000005\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#3",
+      "latitude" : 34.765309999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.41371000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#3#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000005\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#3",
+      "latitude" : 34.765638241617609,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40989934746912,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#3#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000005\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#3",
+      "latitude" : 34.765729999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40841499999999,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#3#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000006\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#4",
+      "latitude" : 34.765729999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40841499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#4#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000006\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#4",
+      "latitude" : 34.765753120775855,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40458396420755,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#4#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000006\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#4",
+      "latitude" : 34.765754999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40449000000001,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#4#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000007\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#5",
+      "latitude" : 34.765754999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40449000000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#5#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000007\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#5",
+      "latitude" : 34.765864999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40072499999999,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#5#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000008\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#6",
+      "latitude" : 34.765864999999998,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.40072499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#6#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000008\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#6",
+      "latitude" : 34.766514040160068,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39698337738147,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#6#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000008\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#6",
+      "latitude" : 34.766734999999997,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39586,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#6#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000009\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#7",
+      "latitude" : 34.766734999999997,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39586,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#7#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000009\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#7",
+      "latitude" : 34.767265000000002,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39306500000001,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#7#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000010\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#8",
+      "latitude" : 34.767265000000002,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39306500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#8#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000010\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#8",
+      "latitude" : 34.766623968118033,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39043317452231,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#8#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000010\/000002",
+      "itemID" : "jp-豊橋鉄道-東田本線#8",
+      "latitude" : 34.764479999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.39028500000001,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#8#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#10",
+      "latitude" : 34.762905000000003,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.38947999999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#10#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#10",
+      "latitude" : 34.763095,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.38605999999999,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#10#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000003\/000000",
+      "itemID" : "jp-豊橋鉄道-東田本線#11",
+      "latitude" : 34.763095,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.38605999999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#11#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment\/captures\/000003\/000001",
+      "itemID" : "jp-豊橋鉄道-東田本線#11",
+      "latitude" : 34.763629999999999,
+      "lineDependency" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+      "longitude" : 137.38312500000001,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-豊橋鉄道-東田本線#11#point-1"
+    }
+  ]
+}

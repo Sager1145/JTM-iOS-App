@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "5E21F4B2-461A-480E-BD8E-32EB8CDEBCA7",
+  "message" : "18\/18 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "keiyo3-own-west-approach-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-keiyo3-west-native-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T20:29:35Z"
+}

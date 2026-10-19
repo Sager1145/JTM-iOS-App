@@ -1,0 +1,107 @@
+{
+  "scope": "Asa ordinal20 all20 intervals /21 station rows",
+  "status": "candidate-delivered-five-face-assignments-withheld-not-freeze-input",
+  "candidateFile": "all-intervals-and-aliases.json",
+  "parentActuallyOpened": {
+    "rawStationBasemaps": "all21 full saved z18 basemaps, plus targeted enlarged raw/grid crops",
+    "primaryRaw": "interval0 views0..3 full; other critical body originals reviewed by workers as below",
+    "finalStationSeamsFull": [
+      2,
+      3,
+      4,
+      5,
+      8,
+      15,
+      16,
+      17,
+      20
+    ],
+    "finalStationSeamsHalfSize": [
+      0,
+      1,
+      6,
+      7,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      18,
+      19
+    ],
+    "finalPrimaryCandidateFull": [
+      [
+        10,
+        4
+      ],
+      [
+        2,
+        4
+      ],
+      [
+        19,
+        4
+      ]
+    ],
+    "secondaryRawFull": [
+      [
+        0,
+        0
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        19,
+        4
+      ]
+    ],
+    "thirdRawFull": [
+      [
+        0,
+        0
+      ],
+      [
+        10,
+        4
+      ],
+      [
+        19,
+        4
+      ]
+    ]
+  },
+  "workerReviewedEvidence": {
+    "west": "body00-09/REVIEW.md plus MICROEDGE-RECEIPT.md;70 Primary panels as half-size exact-camera source/candidate contact sheets, specified critical originals full. Final microedge2 follow-up reviewed views0..4,6..8.",
+    "east": "body10-19/REVIEW.md;80 Primary panels as half-size exact-camera candidate contact sheets, specified critical originals/reprojections full."
+  },
+  "generatedNotReviewedClaim": "150 final Primary reprojections generated; parent did not independently open all150 final panels. Outside listed local integration operations, reuse worker body review and unchanged input digests. Secondary/Third full150 review and native smooth/Main acceptance remain Root responsibilities.",
+  "focusedResults": {
+    "intervals": 20,
+    "aliases": 16,
+    "withheldStationIndexes": [
+      0,
+      3,
+      4,
+      13,
+      14
+    ],
+    "exactAdjacentJoins": 19,
+    "terminalEndEqualsCandidateAlias": true,
+    "turnsAbove35": [],
+    "meaning": "Numeric diagnostic and saved-image candidate review only; angle threshold is not rail/pixel/native acceptance."
+  },
+  "unchangedDependencies": "No production package, physical station IDs/coordinates, segments/km/routes, shared owner scripts, app/build/capture state, or Nakamura candidate edited. Candidate path preserves reviewed source body points outside explicit integration ranges and local-join-removals.json. Input SHA records are limited to the three actual candidate inputs, not whole-tree custody.",
+  "delegation": "GPT6.1 body workers hit capacity; GPT6-sol high resumed existing files. Grok catalog returned unauthenticated; no Grok task ran.",
+  "nativeAcceptance": false,
+  "supplementalFiveStationReview": {
+    "date": "2026-10-14",
+    "result": "all5 aliases still withheld; no candidate coordinate edits",
+    "note": "unresolved-five/README.md",
+    "captureRequests": "unresolved-five/root-supplemental-shots.json",
+    "minimumFirstPassBasemapShots": 8,
+    "nativeAcceptance": false
+  }
+}

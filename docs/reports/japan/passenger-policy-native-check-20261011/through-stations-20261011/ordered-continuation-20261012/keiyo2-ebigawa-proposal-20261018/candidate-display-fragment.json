@@ -1,0 +1,51 @@
+{
+  "format": "jtm-scoped-display-proposal-v1",
+  "status": "proposed-pending-native-review",
+  "lineID": "jp-東日本旅客鉄道-京葉線-2",
+  "interval": 0,
+  "operation": "delete one retained off-track display alias",
+  "baselineWindowIndicesInclusive": [
+    67,
+    70
+  ],
+  "baselineWindow": [
+    [
+      139.9865736,
+      35.685471
+    ],
+    [
+      139.98762,
+      35.6851
+    ],
+    [
+      139.9879815,
+      35.6850998
+    ],
+    [
+      139.9889705,
+      35.6848371
+    ]
+  ],
+  "candidateWindow": [
+    [
+      139.9865736,
+      35.685471
+    ],
+    [
+      139.9879815,
+      35.6850998
+    ],
+    [
+      139.9889705,
+      35.6848371
+    ]
+  ],
+  "deletedIndex": 68,
+  "deletedCoordinate": [
+    139.98762,
+    35.6851
+  ],
+  "sourceWay": 1436589310,
+  "reason": "Surrounding controls are consecutive supports of the same explicitly passenger-member OSM way; obsolete N02 alias creates the native-image dip. Removing the alias restores the selected exact source segment without adding a coordinate.",
+  "requiredDependency": "Mirror the same display support deletion in shared trunk interval7; it copies this whole same-company corridor from arm #2. Preserve physical segments, station aliases/IDs, mileage, dates and topology. Update owning replay/evidence so old stage does not restore seam."
+}

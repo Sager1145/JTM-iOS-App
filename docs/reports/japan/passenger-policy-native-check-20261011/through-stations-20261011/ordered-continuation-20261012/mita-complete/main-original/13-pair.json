@@ -1,0 +1,149 @@
+{
+  "caseIndex": 13,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 13,
+  "source": {
+    "caseIndex": 13,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 13,
+    "fromStationID": "003415",
+    "toStationID": "003461",
+    "camera": [
+      35.72466608729788,
+      139.74867053854607,
+      0.011998615871786182
+    ],
+    "effectiveCoordinates": [
+      [
+        139.7447811506182,
+        35.72799717459574
+      ],
+      [
+        139.74488503083228,
+        35.727920255645344
+      ],
+      [
+        139.74574674071127,
+        35.72741038218894
+      ],
+      [
+        139.746112038774,
+        35.72716588508398
+      ],
+      [
+        139.7462704348605,
+        35.72706980230556
+      ],
+      [
+        139.7467087173606,
+        35.7267671254975
+      ],
+      [
+        139.7471279534872,
+        35.72651265604981
+      ],
+      [
+        139.74723349453015,
+        35.7264366674317
+      ],
+      [
+        139.74784712690618,
+        35.72605326800324
+      ],
+      [
+        139.7481173700383,
+        35.725896383454966
+      ],
+      [
+        139.74821233822436,
+        35.7258494629989
+      ],
+      [
+        139.74847911383358,
+        35.7256893502089
+      ],
+      [
+        139.74893461261976,
+        35.72543458290252
+      ],
+      [
+        139.7490304431639,
+        35.72538870566082
+      ],
+      [
+        139.74929447902088,
+        35.72522856914358
+      ],
+      [
+        139.74948298314044,
+        35.72513354421796
+      ],
+      [
+        139.74985223082902,
+        35.72491540423847
+      ],
+      [
+        139.75048988691623,
+        35.72450171135398
+      ],
+      [
+        139.7508717663519,
+        35.72430385809654
+      ],
+      [
+        139.7511112038556,
+        35.72422129835294
+      ],
+      [
+        139.75136508481327,
+        35.72409052705645
+      ],
+      [
+        139.7514326913022,
+        35.72404260375623
+      ],
+      [
+        139.75200107892766,
+        35.72374473409266
+      ],
+      [
+        139.75230461249237,
+        35.723261785258366
+      ],
+      [
+        139.75234391861974,
+        35.723177812933905
+      ],
+      [
+        139.75249167914578,
+        35.72292385770514
+      ],
+      [
+        139.75255629059907,
+        35.722776654451536
+      ],
+      [
+        139.75255992647394,
+        35.722752606041865
+      ],
+      [
+        139.7525004602253,
+        35.7222148508197
+      ],
+      [
+        139.75243524548796,
+        35.72204236187861
+      ],
+      [
+        139.752212,
+        35.721335
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t38 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:7;overlays:7;rides:0;budgetDrops:0;vertices:1935;camera:16.24;lod:15.10;backbones:1;networkStations:8;distance:2633.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.724666;centerLon:139.748671;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3831.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:14;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.724666;centerLon:139.748671;distance:2633.5;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/case-13.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

@@ -1,0 +1,184 @@
+{
+  "format": "jtm-jounan-full-display-candidate-manifest-v2",
+  "frozenCandidateSHA256": "659e3c97f7fa906696b166ace66070147ae6dd692bd6b3d49974a3f9758073bf",
+  "rawAssociationCount": 29,
+  "fileCountExcludingManifest": 44,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "cf320fe1e1811ad625b9f6f0361f937e38365dc8df6457d325742b816b9ef1c9"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "659e3c97f7fa906696b166ace66070147ae6dd692bd6b3d49974a3f9758073bf"
+    },
+    {
+      "path": "derivation-constraints.md",
+      "sha256": "2568d8f83e3efdfa6c39e9c774552eaa26fe4f7c7687b44028e39085fc1d107c"
+    },
+    {
+      "path": "jounan-interval-0.geojson",
+      "sha256": "e691616397a9a91964b353f0dd1f6a973359f434816f46f276dd60483e9a0308"
+    },
+    {
+      "path": "jounan-interval-1.geojson",
+      "sha256": "a853ff774db52400ce8e2f73cf6b9c3e6ba453f1b4469b8f99475d0bc7d1870c"
+    },
+    {
+      "path": "jounan-interval-10.geojson",
+      "sha256": "3d3e21cde65908c308a6e6842aa7cf8a80a2d1ddd2ebab08aff1be0cc5473bad"
+    },
+    {
+      "path": "jounan-interval-2.geojson",
+      "sha256": "fe85bbc21b376c551f667d006666d84745ffd9a537ece1fd1b963c9f4ece62b6"
+    },
+    {
+      "path": "jounan-interval-3.geojson",
+      "sha256": "093d4d5363283b3e8eee203b5e719e37c6ec86e38e857e0886924735f45907c7"
+    },
+    {
+      "path": "jounan-interval-4.geojson",
+      "sha256": "09480dc1a1628e8e164d2fa9eddb6798948c193b7e975c21649e47dc6c589e5b"
+    },
+    {
+      "path": "jounan-interval-5.geojson",
+      "sha256": "e58965826050872aa7b8a2f8a8703bd4d680fa728cd134e1f4fcc6232fbaf89d"
+    },
+    {
+      "path": "jounan-interval-6.geojson",
+      "sha256": "87d58be2c1ac07155d4f1982602ce1388e485da266a1987df31a610916da7157"
+    },
+    {
+      "path": "jounan-interval-7.geojson",
+      "sha256": "c486ec5b739de1a063aa3f8becf0c9e488d596625d4a51ac5f2bfeb4706f8e40"
+    },
+    {
+      "path": "jounan-interval-8.geojson",
+      "sha256": "bd16624f2fe678c1e376414bf3b9be36889b6c92e7d495fe7006354c0316270b"
+    },
+    {
+      "path": "jounan-interval-9.geojson",
+      "sha256": "43cd5440b72be0f307f09311566347641a7e19aa5ac7fff86b61708427968818"
+    },
+    {
+      "path": "review.json",
+      "sha256": "f701a0df5fdf8fab94463afbcf023c0b5d315f5997e293a17dfd0f5510f6a2ad"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-0-view-0-honmachi1-z18-before.png",
+      "sha256": "9a4c4bac0aa7472f62c7acb7a5bb9c3ba7afdc92a1d07bb87a5dd46a1881f7d3"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-0-view-1-nishihoribata-west-z18-before.png",
+      "sha256": "dba57c748ab06baa68a361855c22b51ed943def3beb60bd70edb873648c554b3"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-0-view-2-nishihoribata-z18-before.png",
+      "sha256": "28c5fa392bd5b93153277e64e9397a0bdbdff447b7e0244ea5587ee995503262"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-1-view-0-nishihoribata-west-z18-before.png",
+      "sha256": "4a40b9d8062102e53238d34853182136779d126a745dbf6b34a43cef4388bd90"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-1-view-1-nishihoribata-z18-before.png",
+      "sha256": "94c6e9e0e684049df822ba6d00579754ede0c52e4fc8f5d354e25b455ffa1528"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-1-view-2-nishihoribata-minami-middle-z18-before.png",
+      "sha256": "721f033d2f150ac3c0a071441ed67818b420c089d2af6a1a4a650fb09611f9df"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-1-view-3-minamihoribata-z18-before.png",
+      "sha256": "9969f82827eeb4f28f135daf5f13f96f4266d28a62017b54168a893cd5e0db6d"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-10-view-0-jounan-interval10-view0-z18-before.png",
+      "sha256": "ac9ccf17eafcd30c4c306ac637030f88d19b7074cc1e72f2e571ac6d7cf91b7b"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-10-view-1-jounan-interval10-view1-z18-before.png",
+      "sha256": "c24b0ce865f78d12fe67cbf6c3a830a9b43caf1e7929bacf3e98f20dd0382a65"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-2-view-0-jounan-interval2-view0-z18-before.png",
+      "sha256": "be6e659952db656dfd859f64413935b24299db3d8369db25b8f8c9242945d31c"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-2-view-1-jounan-interval2-view1-z18-before.png",
+      "sha256": "88d341543597cb12b49abc3f9b87fd45c0cc19376c32b957ad709d5a2c80016d"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-2-view-2-jounan-interval2-view2-z18-before.png",
+      "sha256": "bfb440c73bbf18c72eb6c665548664684ccf8def3394e32a34888592166aad5f"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-3-view-0-jounan-interval3-view0-z18-before.png",
+      "sha256": "69f82b13ef1bb8028db3d4d19a6ddc2fd81f00005d0fdc54fd79164d70ed0037"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-3-view-1-jounan-interval3-view1-z18-before.png",
+      "sha256": "2ff4d67af13f26de80c7c40e2426414058d6ac4b6b3686b4749b32d117ede989"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-4-view-0-jounan-interval4-view0-z18-before.png",
+      "sha256": "72842823560c0668afef18e5ed406c9f62d46e8210121a9c777b39e1a10f69ea"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-4-view-1-jounan-interval4-view1-z18-before.png",
+      "sha256": "fadb16e7e8eda5f9109bb50c2dcbf691d1798414358bdb2c336d8d1f5a424cc1"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-5-view-0-jounan-interval5-view0-z18-before.png",
+      "sha256": "689b8eeb57478012c84da36a2767b8238a5738e5acec21501213aeacb64df83c"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-5-view-1-jounan-interval5-view1-z18-before.png",
+      "sha256": "d52a15866b69c2806a996cb809803eda47c1b9e0a24d2dc05a0694d612e9068b"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-5-view-2-jounan-interval5-view2-z18-before.png",
+      "sha256": "5d4aa4f5c97f2103b9ce6181ecaf202102130609b3a201c23f2f6f4e4f230dc3"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-6-view-0-jounan-interval6-view0-z18-before.png",
+      "sha256": "e4e635f9609fed7a5ad545680882814042af68ad33d5a3c00e0c7d284fb97f30"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-6-view-1-jounan-interval6-view1-z18-before.png",
+      "sha256": "5047540e78d990916cf47d0b279217d597ff3a36a8f766a2ebddafe16bb9d7c7"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-7-view-0-jounan-interval7-view0-z18-before.png",
+      "sha256": "90a295a659ec712be0ae6d3fb0d4dfcaddf85a2ee0f4a20fa8ca90862f8c2da7"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-7-view-1-jounan-interval7-view1-z18-before.png",
+      "sha256": "2a11c82d269d8e479621f18c4e6ad5db0e7616e691163d18581460b01f082d19"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-8-view-0-jounan-interval8-view0-z18-before.png",
+      "sha256": "78c35d99d089092817f902296fe06ec088ebff49b39ee3dcb2e419891624cdd0"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-8-view-1-jounan-interval8-view1-z18-before.png",
+      "sha256": "fba2a0687cc3ab40e21ca2f1fa1eeac5e5ed4a664aeff5da97158ab00313ba13"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-8-view-2-jounan-interval8-view2-z18-before.png",
+      "sha256": "86a93a2ce120aac480ee55030cc4fce42359b366d2a1178a3ff3da19d6360fc1"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-9-view-0-jounan-interval9-view0-z18-before.png",
+      "sha256": "b80c3040a2f8362c541dc3befa4bd6921997c5e160d6565b093622e51a8d7b26"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-9-view-1-jounan-interval9-view1-z18-before.png",
+      "sha256": "d6430fd8b4327a673040b90f4b9ab11082027152eb846be26c8273080ec4a0bf"
+    },
+    {
+      "path": "raw-reprojections/jounan-interval-9-view-2-jounan-interval9-view2-z18-before.png",
+      "sha256": "3bbca1a7015b60d4496a1be87f012b6bf384173027f4a138fe8adfc20a4d03b1"
+    }
+  ]
+}

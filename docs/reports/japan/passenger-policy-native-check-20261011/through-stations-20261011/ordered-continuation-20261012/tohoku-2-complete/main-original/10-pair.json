@@ -1,0 +1,66 @@
+{
+  "caseIndex": 10,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 10,
+  "source": {
+    "caseIndex": 10,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 10,
+    "fromStationID": "003624",
+    "toStationID": "003677",
+    "camera": [
+      35.6951525,
+      139.77195999999998,
+      0.015627150000003382
+    ],
+    "effectiveCoordinates": [
+      [
+        139.773045,
+        35.698535
+      ],
+      [
+        139.77292,
+        35.69772
+      ],
+      [
+        139.7728,
+        35.69635
+      ],
+      [
+        139.77268,
+        35.69586
+      ],
+      [
+        139.77229,
+        35.69494
+      ],
+      [
+        139.77185,
+        35.69403
+      ],
+      [
+        139.77159,
+        35.69345
+      ],
+      [
+        139.77121,
+        35.69258
+      ],
+      [
+        139.770875,
+        35.69177
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t98 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:19;overlays:18;rides:0;budgetDrops:0;vertices:7606;camera:15.86;lod:14.71;backbones:2;networkStations:57;distance:3429.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.695152;centerLon:139.771960;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:13844.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:23;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:13;covered:1;basemapMuted:0;rideOverlaysMs:0;ri",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.695152;centerLon:139.771960;distance:3429.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-10.jpg",
+  "observation": "秋葉原至神田跨神田川连续，中央线北端汇入独立；Main 并行轴线保留，局部西侧线位和神田京浜東北站台锚点仍待核。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

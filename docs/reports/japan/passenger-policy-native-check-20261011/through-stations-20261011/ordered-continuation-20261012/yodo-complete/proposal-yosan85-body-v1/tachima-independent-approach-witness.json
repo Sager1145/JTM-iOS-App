@@ -1,0 +1,164 @@
+{
+  "status": "independent-original-and-magnified-reviewed-candidate-only",
+  "stationID": "009408",
+  "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-tachima-009408/view.json",
+  "approvedOwnerWitnessReference": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo18-body-v2/tachima-group-witness.json",
+  "candidateDisplayAlias": [
+    132.53944609643924,
+    33.29686934128572
+  ],
+  "groupNormalPixel": [
+    495.97612088800446,
+    294.80815869659847
+  ],
+  "actualOwnFaces": [
+    [
+      [
+        469,
+        174
+      ],
+      [
+        554,
+        420
+      ]
+    ],
+    [
+      [
+        470,
+        230
+      ],
+      [
+        515,
+        347
+      ]
+    ]
+  ],
+  "approachControls": [
+    {
+      "pixel": [
+        430,
+        150
+      ],
+      "coordinate": [
+        132.53909217294466,
+        33.297518626940345
+      ]
+    },
+    {
+      "pixel": [
+        456.5,
+        200
+      ],
+      "coordinate": [
+        132.53923433002234,
+        33.297294439271205
+      ]
+    },
+    {
+      "pixel": [
+        479,
+        250
+      ],
+      "coordinate": [
+        132.5393550294279,
+        33.297070251025914
+      ]
+    },
+    {
+      "pixel": [
+        487.5,
+        270
+      ],
+      "coordinate": [
+        132.5394006269811,
+        33.296980575566494
+      ]
+    },
+    {
+      "pixel": [
+        495.97612088800446,
+        294.80815869659847
+      ],
+      "coordinate": [
+        132.5394460964368,
+        33.296869341286936
+      ]
+    },
+    {
+      "pixel": [
+        508,
+        330
+      ],
+      "coordinate": [
+        132.5395105975506,
+        33.29671154863505
+      ]
+    },
+    {
+      "pixel": [
+        516.5,
+        350
+      ],
+      "coordinate": [
+        132.53955619510378,
+        33.296621872806895
+      ]
+    },
+    {
+      "pixel": [
+        530.5,
+        400
+      ],
+      "coordinate": [
+        132.5396312969562,
+        33.29639768283314
+      ]
+    },
+    {
+      "pixel": [
+        544.5,
+        450
+      ],
+      "coordinate": [
+        132.5397063988085,
+        33.29617349228323
+      ]
+    },
+    {
+      "pixel": [
+        559,
+        500
+      ],
+      "coordinate": [
+        132.53978418286988,
+        33.2959493011572
+      ]
+    },
+    {
+      "pixel": [
+        571,
+        550
+      ],
+      "coordinate": [
+        132.53984855588618,
+        33.29572510945502
+      ]
+    },
+    {
+      "pixel": [
+        583,
+        600
+      ],
+      "coordinate": [
+        132.53991292890248,
+        33.295500917176675
+      ]
+    }
+  ],
+  "limits": [
+    "West438183→520434 isbroadpurplecasing andexplicitlywithdrawn asfaceauthority.",
+    "Actualisland470230→515347 narrowstripbetweenpairedrails pluslongright469174→554420 face arecoextensive aroundgroupmidpoint; ownerapprovedgroupaliasretained.",
+    "Groupcentre controls betweenactualpairedblackrails; approachsinglelineaftermerge. Normal±2px/groupchainage±4px, notindividualrail surveyproof.",
+    "No physical/source writes, nofreeze/nativeacceptance."
+  ]
+}

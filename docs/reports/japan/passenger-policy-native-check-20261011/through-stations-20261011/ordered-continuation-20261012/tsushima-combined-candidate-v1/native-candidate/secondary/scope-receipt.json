@@ -1,0 +1,100 @@
+{
+  "id": "secondary",
+  "status": "actual-capture-complete",
+  "candidateSha256": "2b080fcfe778a441a4daaebe9cb7f79d7e1851452a04615aca712a8d9b66efb9",
+  "intervals": [
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#16",
+      "captureDirectory": "002451",
+      "views": 4,
+      "panels": 12
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#17",
+      "captureDirectory": "002452",
+      "views": 4,
+      "panels": 12
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#18",
+      "captureDirectory": "002453",
+      "views": 3,
+      "panels": 9
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#19",
+      "captureDirectory": "002454",
+      "views": 3,
+      "panels": 9
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#20",
+      "captureDirectory": "002456",
+      "views": 3,
+      "panels": 9
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#21",
+      "captureDirectory": "002457",
+      "views": 4,
+      "panels": 12
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#22",
+      "captureDirectory": "002458",
+      "views": 4,
+      "panels": 12
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#23",
+      "captureDirectory": "002459",
+      "views": 7,
+      "panels": 21
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#0",
+      "captureDirectory": "002587",
+      "views": 7,
+      "panels": 21
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#1",
+      "captureDirectory": "002588",
+      "views": 7,
+      "panels": 21
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#2",
+      "captureDirectory": "002589",
+      "views": 6,
+      "panels": 18
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#3",
+      "captureDirectory": "002590",
+      "views": 7,
+      "panels": 21
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#4",
+      "captureDirectory": "002591",
+      "views": 6,
+      "panels": 18
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#5",
+      "captureDirectory": "002592",
+      "views": 5,
+      "panels": 15
+    },
+    {
+      "itemID": "jp-名古屋鉄道-津島線#6",
+      "captureDirectory": "002593",
+      "views": 6,
+      "panels": 18
+    }
+  ],
+  "totalViews": 76,
+  "totalPanels": 228,
+  "pixelAcceptance": "See independent actual review receipt; capture counts are not alignment acceptance"
+}

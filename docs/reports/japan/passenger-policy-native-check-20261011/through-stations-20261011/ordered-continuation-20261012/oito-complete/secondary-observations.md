@@ -1,0 +1,7 @@
+# Oito secondary native pixel review
+
+Root directly opened and reviewed all 62 contact sheets 00..61, covering all 247 current-line viewpoints. Native UI confirmed 247 captures, zero failures and idle controls. Capture is evidence collection, not an alignment pass.
+
+North-to-south observations repeat primary: Minami-Otari / Chikuni own passenger frames remain unresolved; Himekawa and Shiojima curves have varying local offsets. Hakuba approach has local east offset. Preserve Sanosaka mountain curves. Interval 7 north Aoki Lake turn and east shore straight visibly sit east of Apple rail glyph; variable offset requires local review, not whole-line translation. Kizaki shore and southern river approach remain continuous, with local offset and unaccepted own platform midpoints. Shinano-Kizaki to Kita-Omachi straight is east of the rail glyph; Kita-Omachi / Shinano-Omachi north curve and broad station fan need passenger-only identity.
+
+Intervals 13..27: continuous long corridor, Takase bridge, Tokiwa, Kutsukake, Matsukawa, Hosono, Oiwake, Ariake, Hotaka, Hakuyacho, Toyoshina, Minami-Toyoshina, Nakagaya and Hitoichiba; offsets vary locally. Ariake yard fan must not become the passenger display axis. Interval 28 Azusa bridge and Shimatakamatsu approach/station remain south of glyph; interval 29 Shimauchi curve also south. Interval 30 preserves actual curve and independent Miyabuchi fork. Interval 31 retains the existing Matsumoto tail repair without the former acute hook. No new station longitudinal midpoint acceptance and no metre accuracy claim.

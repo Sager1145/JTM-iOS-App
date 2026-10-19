@@ -1,0 +1,58 @@
+{
+  "schema": "cn-boundary-d271-focused-review/1",
+  "status": "completed-source-boundary-review-pending",
+  "nativeRows": 4,
+  "phase": "completed",
+  "processID": 17443,
+  "rows": [
+    {
+      "id": "CN-REAL-G101-20261018-forced-known-stops",
+      "resolved": 3,
+      "expected": 4,
+      "geometrySections": 4,
+      "physicalGaps": [
+        {
+          "isBoundary": true,
+          "segmentIndex": 1
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G6045-20261018-forced-known-stops",
+      "resolved": 10,
+      "expected": 11,
+      "geometrySections": 11,
+      "physicalGaps": [
+        {
+          "isBoundary": true,
+          "segmentIndex": 4
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D271-20261018-endpoint-only",
+      "resolved": 0,
+      "expected": 1,
+      "geometrySections": 0,
+      "physicalGaps": []
+    },
+    {
+      "id": "CN-REAL-D271-20261018-forced-known-stops",
+      "resolved": 12,
+      "expected": 14,
+      "geometrySections": 14,
+      "physicalGaps": [
+        {
+          "isBoundary": true,
+          "segmentIndex": 6
+        },
+        {
+          "isBoundary": true,
+          "segmentIndex": 8
+        }
+      ]
+    }
+  ],
+  "sessionDirectory": "/private/tmp/cn-boundary-20261019/focused-session",
+  "D271ReturnedGeometryIsNotThroughCompleteness": true
+}

@@ -1,0 +1,128 @@
+[
+  {
+    "intervalIndex": 12,
+    "pointOrdinal": 0,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003312/000000",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.75197081732397,
+      "longitude": 137.23044003655588,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.953931375587574,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236540064.63414872,
+      "rectY": 104711278.13083656,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 12,
+    "pointOrdinal": 1,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003312/000001",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.75479163776178,
+      "longitude": 137.2321809503277,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9538967523053163,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236541362.75354367,
+      "rectY": 104708652.93413529,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 12,
+    "pointOrdinal": 2,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003312/000002",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.757542592228255,
+      "longitude": 137.23387890984742,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9538629843249279,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236542628.84392688,
+      "rectY": 104706092.66523036,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 13,
+    "pointOrdinal": 0,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003313/000000",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.757542592228255,
+      "longitude": 137.23387890984742,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9538629843249279,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236542628.84392688,
+      "rectY": 104706092.66523036,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 13,
+    "pointOrdinal": 1,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003313/000001",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.76060089439032,
+      "longitude": 137.2342303863831,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9538254410464607,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236542890.92382723,
+      "rectY": 104703246.24500555,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  },
+  {
+    "intervalIndex": 13,
+    "pointOrdinal": 2,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/toyama-port-complete/native-candidate-v3/primary/captures/003313/000002",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.761508772997225,
+      "longitude": 137.23400068873673,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9538142955312814,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 236542719.64884824,
+      "rectY": 104702401.24320176,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    }
+  }
+]

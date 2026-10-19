@@ -1,0 +1,49 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-北陸線-p1#0\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-北陸線-p1#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-北陸線-p1#0\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-北陸線-p1#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-北陸線-p1#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-北陸線-p1#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-北陸線-p1\/station\/010186",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-北陸線-p1#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "010186"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-北陸線-p1\/station\/004256",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-北陸線-p1#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004256"
+  }
+]

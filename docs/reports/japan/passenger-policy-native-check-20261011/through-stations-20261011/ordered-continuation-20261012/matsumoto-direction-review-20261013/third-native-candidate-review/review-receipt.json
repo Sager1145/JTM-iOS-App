@@ -1,0 +1,183 @@
+{
+  "format": "jtm-matsumoto-third-inspector-actual-review-receipt-v1",
+  "status": "accepted-third-actual-runtime",
+  "verdict": "accept-third-runtime",
+  "source": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/third-complete-native-candidate",
+  "reviewScope": {
+    "inspector": "Third Inspector",
+    "intervalCount": 5,
+    "actualCaptureTriplesReviewed": 47,
+    "actualPanelsReviewed": 141,
+    "panelCounts": {
+      "basemap": 47,
+      "display": 47,
+      "smooth": 47
+    },
+    "captureFailures": 0,
+    "targetPendingCount": 0,
+    "contactSheetsActuallyViewed": 11,
+    "focusedOriginalPanelsActuallyViewed": 16,
+    "panelDimensions": [
+      [
+        1024,
+        768
+      ]
+    ],
+    "overlayMeaning": "display.png is actual runtime cyan display geometry; smooth.png adds actual runtime red smooth geometry. These are not external reference overlays."
+  },
+  "intervals": [
+    {
+      "captureItemID": "000333",
+      "itemID": "jp-アルピコ交通-上高地線#0",
+      "triples": 3,
+      "smoothToDisplayMaximumMetres": 0.9680929839524095,
+      "capturedCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0
+    },
+    {
+      "captureItemID": "004875",
+      "itemID": "jp-東日本旅客鉄道-大糸線#30",
+      "triples": 7,
+      "smoothToDisplayMaximumMetres": 2.6061234314072648,
+      "capturedCount": 7,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0
+    },
+    {
+      "captureItemID": "004876",
+      "itemID": "jp-東日本旅客鉄道-大糸線#31",
+      "triples": 3,
+      "smoothToDisplayMaximumMetres": 3.1877261325384945,
+      "capturedCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0
+    },
+    {
+      "captureItemID": "005681",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#4",
+      "triples": 8,
+      "smoothToDisplayMaximumMetres": 0.48481197325885317,
+      "capturedCount": 8,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0
+    },
+    {
+      "captureItemID": "005682",
+      "itemID": "jp-東日本旅客鉄道-篠ノ井線#5",
+      "triples": 26,
+      "smoothToDisplayMaximumMetres": 2.069242010532482,
+      "capturedCount": 26,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0
+    }
+  ],
+  "renderWitnesses": {
+    "oito31StationTail": {
+      "view": "004876/000002",
+      "renderedDisplayPenultimate": [
+        137.96350000000004,
+        36.23248999999999
+      ],
+      "renderedDisplayEndpoint": [
+        137.96367165960635,
+        36.23167271499838
+      ],
+      "physicalJunctionAbsentFromDisplay": true
+    },
+    "shinonoiMatsumoto": {
+      "views": [
+        "005681/000007",
+        "005682/000000"
+      ],
+      "stationCoordinate": [
+        137.96462500000004,
+        36.23027000000001
+      ],
+      "sameWholeLineRenderedDisplay": true
+    },
+    "alpicoMatsumoto": {
+      "view": "000333/000000",
+      "independentEndpoint": [
+        137.96378000000004,
+        36.23105499999999
+      ]
+    }
+  },
+  "visualFindings": [
+    {
+      "check": "Oito #31 station tail",
+      "result": "pass",
+      "finding": "Actual cyan display and red smooth traces share the west Oito platform axis and terminate together; the former diagonal platform-crossing hook is absent."
+    },
+    {
+      "check": "Oito #30/#31 seam",
+      "result": "pass",
+      "finding": "The preceding interval and repaired terminal interval remain visually continuous with no gap, reversal, or branch jump."
+    },
+    {
+      "check": "Shinonoi #4/#5 through direction",
+      "result": "pass",
+      "finding": "The south approach crosses Matsumoto and continues north on the same train-passable alignment; no reverse U or invented north bypass appears."
+    },
+    {
+      "check": "Alpico independence",
+      "result": "pass",
+      "finding": "The Kamikochi Line terminates on its independent western alignment and does not merge into JR geometry."
+    },
+    {
+      "check": "Complete scoped continuity",
+      "result": "pass",
+      "finding": "All 141 actual panels were viewed. No break, loop, wrong branch, terminal hook, or capture artifact was found in the five scoped intervals."
+    }
+  ],
+  "numericContext": {
+    "maximumSmoothToDisplayMetresAcrossTargets": 3.1877261325384945,
+    "candidateViewpointCountOver10mAcrossTargets": 0
+  },
+  "reviewArtifacts": {
+    "contactSheets": [
+      "000333-page1.jpg",
+      "004875-page1.jpg",
+      "004875-page2.jpg",
+      "004876-page1.jpg",
+      "005681-page1.jpg",
+      "005681-page2.jpg",
+      "005682-page1.jpg",
+      "005682-page2.jpg",
+      "005682-page3.jpg",
+      "005682-page4.jpg",
+      "005682-page5.jpg"
+    ],
+    "focusedOriginalPanels": [
+      "captures/004876/000002/basemap.png",
+      "captures/004876/000002/display.png",
+      "captures/004876/000002/smooth.png",
+      "captures/000333/000000/basemap.png",
+      "captures/000333/000000/display.png",
+      "captures/000333/000000/smooth.png",
+      "captures/004875/000006/display.png",
+      "captures/004875/000006/smooth.png",
+      "captures/004876/000000/display.png",
+      "captures/004876/000000/smooth.png",
+      "captures/005681/000007/basemap.png",
+      "captures/005681/000007/display.png",
+      "captures/005681/000007/smooth.png",
+      "captures/005682/000000/basemap.png",
+      "captures/005682/000000/display.png",
+      "captures/005682/000000/smooth.png"
+    ],
+    "focusedCrop": "oito31-station-tail-actual-crop.png"
+  },
+  "custody": {
+    "report.json": "10d1ee75ad290afe4ff58b9bb009f53bcbe2b22fd8739902b27c3c8080f727bc",
+    "checkpoint.json": "f7bea97c7f7f5336b390c2913f794a8570ab0be56c7ccca3d11f744e37f32d42",
+    "plan.json": "01abad4a02e0fb6777995851fa37e42c69a5ea3f14926a80febcde4953af189c"
+  },
+  "limitation": "This receipt accepts the Third Inspector actual-render evidence only. Main and the other inspectors remain separate root-owned acceptance evidence."
+}

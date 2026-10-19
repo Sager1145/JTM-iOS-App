@@ -1,0 +1,48 @@
+{
+  "status": "bounded_normal_passenger_pair_reference_ready",
+  "consultation": "../chat-south-final.ax.txt",
+  "sources": [
+    {
+      "publisher": "GSI",
+      "type": "2019 orthophoto tile",
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/nendophoto2019/18/232826/103276.png"
+    },
+    {
+      "publisher": "GSI",
+      "type": "experimental large-scale vector tiles",
+      "urls": [
+        "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/58206/25819.pbf",
+        "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/58206/25818.pbf"
+      ]
+    },
+    {
+      "publisher": "Reports for the future",
+      "date": "2014-04-08",
+      "surveyPeriod": "2013-11/12",
+      "url": "https://mirai-report.com/blog-entry-1296.html",
+      "locallyRead": "Article confirms historical south-throat switch rearrangement; not current georeferenced survey."
+    },
+    {
+      "publisher": "配線略図.net",
+      "url": "https://www.haisenryakuzu.net/documents/jr/east/tokaido/",
+      "file": "track-diagram-v7.pdf",
+      "version": "7.0",
+      "published": "2025-11-03",
+      "surveyDates": {
+        "TokyoAtami": "2025-08",
+        "ShinagawaShinTsurumi": "2022-10"
+      },
+      "license": "CC BY4.0",
+      "status": "Independently read schematic; identifies normal corridor and west curve, not georeferenced switch geometry"
+    },
+    {
+      "publisher": "OpenStreetMap contributors",
+      "file": "osm-bounded-rail-ways.json",
+      "cacheFetchedAt": "2026-08-18T10:37:59.411Z",
+      "purpose": "Continuous main/passenger/JR East up-down way identities; KSJ2/2007 source tags do not establish fresh survey or independence"
+    }
+  ],
+  "remaining": "Precise surveyed platform centre beneath roof and October2026 per-switch train-specific topology remain unmeasured; neither is required or claimed for this representative display-only corridor. Last shallow curve35.61677–35.6166 uses identified OSM main-pair midpoint where GSI latitude-only fragment correspondence is ambiguous.",
+  "acceptedReference": "passenger-pair-reference-20261011.json",
+  "coordinateScope": "Display only: exact retained normal-up north support35.6297092, source-based two-main-rail station midpoint, GSI-referenced southern corridor and real west curve, exact source rejoin35.61655. Physical identities/topology/km preserved."
+}

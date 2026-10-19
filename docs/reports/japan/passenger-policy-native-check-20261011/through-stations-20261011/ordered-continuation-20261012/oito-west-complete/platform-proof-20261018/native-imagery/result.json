@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/candidate-tasks.json",
+  "capturedCount" : 29,
+  "captureIndexPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment",
+    "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-西日本旅客鉄道-大糸線#7"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "29\/29 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-rail-diagnostics\/Build\/Products\/Debug-maccatalyst\/RailDiagnostics.app\/Contents\/Resources\/jp-2025.json",
+  "packageInputSource" : "bundle",
+  "pendingCount" : 0,
+  "requestID" : "itoigawa-own-platform-imagery",
+  "requestPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T04:54:03Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

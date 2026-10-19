@@ -1,0 +1,165 @@
+{
+  "status": "candidate-only-Unomachi-move-confirmed-82-required",
+  "stationID": "009339",
+  "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+  "rawDimensions": [
+    999,
+    654
+  ],
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.36317499999994,
+    "longitude": 132.509775,
+    "mapPointsPerPoint": 3.9999999962747097,
+    "metresPerPoint": 0.4969101599150618,
+    "pitch": 0,
+    "rectHeight": 2615.9999999701977,
+    "rectWidth": 3996,
+    "rectX": 233022179.65717334,
+    "rectY": 107800846.98680443,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.000000001343615
+  },
+  "ownNarrowFaces": [
+    [
+      [
+        475.0,
+        251.0
+      ],
+      [
+        644.0,
+        504.0
+      ]
+    ],
+    [
+      [
+        496.0,
+        315.0
+      ],
+      [
+        689.0,
+        598.0
+      ]
+    ]
+  ],
+  "faceMidpoints": [
+    [
+      559.5,
+      377.5
+    ],
+    [
+      592.5,
+      456.5
+    ]
+  ],
+  "groupLongitudinalMidpoint": [
+    576.0,
+    417.0
+  ],
+  "literalPairedRailFlanks": {
+    "y400": [
+      [
+        564,
+        400
+      ],
+      [
+        571,
+        400
+      ]
+    ],
+    "y420": [
+      [
+        578,
+        420
+      ],
+      [
+        585,
+        420
+      ]
+    ],
+    "y440": [
+      [
+        592,
+        440
+      ],
+      [
+        598,
+        440
+      ]
+    ]
+  },
+  "groupSpineFlanks": [
+    [
+      567.5,
+      400.0
+    ],
+    [
+      581.5,
+      420.0
+    ],
+    [
+      595.0,
+      440.0
+    ]
+  ],
+  "normalPixel": [
+    578.2210433244913,
+    415.4730327144121
+  ],
+  "candidateDisplayAlias": [
+    132.51019729258417,
+    33.3627786071795
+  ],
+  "oldDisplayAlias": [
+    132.509775,
+    33.363175
+  ],
+  "oldAliasPixel": [
+    499.5,
+    327
+  ],
+  "cartographicDisplacementMetres": 58.84658475387572,
+  "coextensiveTest": "Normal y415.473 lies inside BOTH actual cap ranges251..504 and315..598. No roadgap or longitudinally disjoint frame average.",
+  "groupChoice": "Actual two eastern sleeper rails lie BETWEEN the central island narrow light face and eastern narrow light face. Western single rail remains visibly separate. Passenger-group cartographic choice only, no unique operational/operator track assignment.",
+  "excluded": [
+    "Western grey band has no independent cap at615516; ordinary casing, not identified face.",
+    "Eastern507316 is intermediate, not north cap; rounded thin northcap475251 continues above attached building.",
+    "Building bulge around535320 excluded without chopping continuous narrow strip.",
+    "River, grey roads and line label glyphs excluded."
+  ],
+  "uncertainty": {
+    "capPixels": 3,
+    "normalPixels": 2,
+    "individualRailAssignment": false,
+    "surveyedPrecision": false
+  },
+  "requiredCompleteIntervals": [
+    "jp-四国旅客鉄道-予讃線#82",
+    "jp-四国旅客鉄道-予讃線#83"
+  ],
+  "rootCaptureRequest": "Root to capture complete82 in allthree Inspectors and Main, precise Unomachi station/both approaches. This repair chat does not operate UI.",
+  "reviewers": [
+    "Primary opened actual original and precise cap/rail/continuation crops",
+    "GPT-6.1 Sol medium independent saved PNG review agreed actual caps and rejected westcasing615516 cap."
+  ],
+  "formalAcceptance": false,
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true,
+  "requiredCompleteIntervalDetails": [
+    {
+      "intervalIndex": 82,
+      "fromStationID": "009324",
+      "fromName": "上宇和",
+      "toStationID": "009339",
+      "toName": "卯之町"
+    },
+    {
+      "intervalIndex": 83,
+      "fromStationID": "009339",
+      "fromName": "卯之町",
+      "toStationID": "009352",
+      "toName": "下宇和"
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+Command: swift test --package-path /Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit --scratch-path /private/tmp/railkit-build-bis --jobs 2 --filter ContinuousStroke\(DenseCorner\|Curve\|BendPreservation\|MinimumRadius\)Tests
+Building for debugging...
+[2 / 6] RailCore
+[3 / 7] RailCore
+[7 / 10] RailCore
+[10 / 11] RailApplicationTests-product
+[12 / 12] RailApplicationTests-product
+[13 / 16] RailCoreTests-product
+[15 / 18] RailCoreTests-product
+[21 / 23] RailCoreTests-product
+[23 / 23] RailCoreTests-product
+[24 / 25] RailPresentationTests-product
+[26 / 26] RailPresentationTests-product
+Build complete! (10.89 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite ContinuousStrokeBendPreservationTests started.
+◇ Suite ContinuousStrokeMinimumRadiusTests started.
+◇ Suite ContinuousStrokeDenseCornerTests started.
+◇ Suite ContinuousStrokeCurveTests started.
+◇ Test innerHairpinCannotCrossItsOppositeLeg() started.
+◇ Test roundedCornersStayPositiveAcrossZoomAndLaneSides() started.
+◇ Test localizedModerateCornerKeepsItsDeflection() started.
+◇ Test compressedHairpinLanesKeepTheirOrder() started.
+◇ Test neighbouringOppositeCornersDoNotCancelIntoACurve() started.
+◇ Test sixteenLanesKeepOrderAndForwardDirectionAcrossZoom() started.
+◇ Test surveyedCompoundBendsAndNarrowReturnsNeverSelfIntersect() started.
+◇ Test floorOverridesSmallerRequestedRadius() started.
+◇ Test nearBendSamplesCannotEraseTheCurveAcrossZoomAndLaneSides() started.
+◇ Test overlappingInnerCornersRetainTheDominantSurveyedBend() started.
+◇ Test stableTangentsKeepInteriorAnchorsAndBothSharedJoins() started.
+◇ Test anchorsNeverCreateReflexLoops() started.
+◇ Test finalInkRetainsAnIsolatedSurveyedCorner() started.
+◇ Test windowedLaneSamplingMatchesFullKernel() started.
+◇ Test ambiguousShortConnectorIsNotAssumedToBeASurveySeam() started.
+◇ Test sparseSurveyIncludesEntireLaneExcursionAtEveryZoom() started.
+◇ Test surveyedHairpinSurvivesCascadingNeighbourFolds() started.
+◇ Test infeasibleFloorDoesNotEmitTinyArc() started.
+◇ Test strictGeometryPreservesFixtureMeasuresAndAnchorAttachment() started.
+◇ Test branchEndpointSurvivesNearbyLaneChangeAndPixelFloor() started.
+◇ Test branchTangentIgnoresSurveyDirection() started.
+◇ Test overlappingRampsRetainAnchorsAndApproximateTheCombinedKernel() started.
+◇ Test reversalOverOneHundredFiftyDegreesStaysHard() started.
+◇ Test tangentJunctionBlendsButFortyFiveDegreeJunctionDoesNot() started.
+◇ Test hundredMetreChordsOnFourHundredMetreRadiusAreSmoothAndBounded() started.
+◇ Test midCurveStationIsProjectedOntoTheFinalStrokeByMeasure() started.
+◇ Test sCurvePreservesBothDirectionsAndMonotonicMeasures() started.
+◇ Test constantLaneOffsetStaysParallelOutsideRamps() started.
+◇ Test branchEndpointInheritsMainLane() started.
+◇ Test bothBranchTargetsSurviveOverlappingAndCoalescedRamps() started.
+◇ Test confirmedEndpointJunctionMeetsPhysicalSwitch() started.
+✔ Test floorOverridesSmallerRequestedRadius() passed after 0.004 seconds.
+✔ Test overlappingInnerCornersRetainTheDominantSurveyedBend() passed after 0.004 seconds.
+✔ Test anchorsNeverCreateReflexLoops() passed after 0.004 seconds.
+✔ Test stableTangentsKeepInteriorAnchorsAndBothSharedJoins() passed after 0.004 seconds.
+✔ Test compressedHairpinLanesKeepTheirOrder() passed after 0.004 seconds.
+✔ Test finalInkRetainsAnIsolatedSurveyedCorner() passed after 0.005 seconds.
+✔ Test localizedModerateCornerKeepsItsDeflection() passed after 0.006 seconds.
+✔ Test surveyedHairpinSurvivesCascadingNeighbourFolds() passed after 0.006 seconds.
+✔ Test ambiguousShortConnectorIsNotAssumedToBeASurveySeam() passed after 0.006 seconds.
+✔ Test infeasibleFloorDoesNotEmitTinyArc() passed after 0.006 seconds.
+✔ Test branchEndpointSurvivesNearbyLaneChangeAndPixelFloor() passed after 0.006 seconds.
+✔ Test roundedCornersStayPositiveAcrossZoomAndLaneSides() passed after 0.006 seconds.
+✔ Test branchTangentIgnoresSurveyDirection() passed after 0.006 seconds.
+✔ Test reversalOverOneHundredFiftyDegreesStaysHard() passed after 0.006 seconds.
+✔ Test neighbouringOppositeCornersDoNotCancelIntoACurve() passed after 0.006 seconds.
+✔ Test tangentJunctionBlendsButFortyFiveDegreeJunctionDoesNot() passed after 0.006 seconds.
+✔ Test sCurvePreservesBothDirectionsAndMonotonicMeasures() passed after 0.005 seconds.
+✔ Test midCurveStationIsProjectedOntoTheFinalStrokeByMeasure() passed after 0.005 seconds.
+✔ Test branchEndpointInheritsMainLane() passed after 0.005 seconds.
+✔ Test bothBranchTargetsSurviveOverlappingAndCoalescedRamps() passed after 0.005 seconds.
+✔ Test constantLaneOffsetStaysParallelOutsideRamps() passed after 0.005 seconds.
+✔ Test confirmedEndpointJunctionMeetsPhysicalSwitch() passed after 0.005 seconds.
+✔ Suite ContinuousStrokeDenseCornerTests passed after 0.006 seconds.
+✔ Test hundredMetreChordsOnFourHundredMetreRadiusAreSmoothAndBounded() passed after 0.006 seconds.
+✔ Suite ContinuousStrokeCurveTests passed after 0.007 seconds.
+✔ Test overlappingRampsRetainAnchorsAndApproximateTheCombinedKernel() passed after 0.010 seconds.
+✔ Test surveyedCompoundBendsAndNarrowReturnsNeverSelfIntersect() passed after 0.013 seconds.
+✔ Test sparseSurveyIncludesEntireLaneExcursionAtEveryZoom() passed after 0.015 seconds.
+✔ Test innerHairpinCannotCrossItsOppositeLeg() passed after 0.016 seconds.
+✔ Test sixteenLanesKeepOrderAndForwardDirectionAcrossZoom() passed after 0.021 seconds.
+✔ Test nearBendSamplesCannotEraseTheCurveAcrossZoomAndLaneSides() passed after 0.023 seconds.
+✔ Suite ContinuousStrokeBendPreservationTests passed after 0.023 seconds.
+✔ Test windowedLaneSamplingMatchesFullKernel() passed after 0.080 seconds.
+✔ Test strictGeometryPreservesFixtureMeasuresAndAnchorAttachment() passed after 0.348 seconds.
+✔ Suite ContinuousStrokeMinimumRadiusTests passed after 0.348 seconds.
+✔ Test run with 31 tests in 4 suites passed after 0.348 seconds.

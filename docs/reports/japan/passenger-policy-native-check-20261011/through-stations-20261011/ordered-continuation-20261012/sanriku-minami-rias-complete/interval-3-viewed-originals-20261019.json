@@ -1,0 +1,373 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-三陸鉄道-南リアス線",
+  "intervalIndex": 3,
+  "stations": [
+    [
+      "000952",
+      "恋し浜",
+      141.816025,
+      39.074245,
+      "Koishihama",
+      1
+    ],
+    [
+      "000950",
+      "甫嶺",
+      141.806715,
+      39.09326,
+      "Horei",
+      1
+    ]
+  ],
+  "actualViewpointCount": 8,
+  "actualOriginalPNGCount": 16,
+  "otherLineViewsActuallyViewedThisPass": 0,
+  "otherLineViewsNotViewed": 110,
+  "reviewMethod": "functions.view_image separately opened every original basemap/smooth PNG; no pixel modification",
+  "reusedReceiptEvidence": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sanriku-minami-rias-complete/existing-evidence-20261019.json",
+  "currentDisplayInterface": "app/public/rail-network.js decodeIntervals(current own compact line), aliases absent",
+  "confirmedSourceReadyRepairs": [],
+  "limits": [
+    "Long green mountain segment does not provide independent tunnel axis/portal proof.",
+    "Koishihama station west offset and Horei east offset unresolved; exact usable caps unknown."
+  ],
+  "views": [
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000000/basemap.png",
+          "recordedByteCount": 156616,
+          "actualByteCount": 156616,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000000/smooth.png",
+          "recordedByteCount": 188258,
+          "actualByteCount": 188258,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.074245,
+        "longitude": 141.816025,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9246451266675656,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239959324.6082844,
+        "rectY": 102516094.98814674,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "恋し浜站及北出真实弯连续；红线在站组和北侧道路交叉附近明显偏西，再向山内长段靠拢。平台caps与自身物理轴未证。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000001/basemap.png",
+          "recordedByteCount": 121339,
+          "actualByteCount": 121339,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000001/smooth.png",
+          "recordedByteCount": 150188,
+          "actualByteCount": 150188,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.07730551824165,
+        "longitude": 141.8152132080218,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9246055065244737,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239958719.29231265,
+        "rectY": 102513155.33901061,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "恋し浜北出向NNW进入山地长直走向，红线先西侧后东侧偏移，连续无孤立V。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000002/basemap.png",
+          "recordedByteCount": 46418,
+          "actualByteCount": 46418,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000002/smooth.png",
+          "recordedByteCount": 67835,
+          "actualByteCount": 67835,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.0801589151334,
+        "longitude": 141.81350188123872,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9245685652800906,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239957443.2345755,
+        "rectY": 102510414.51651925,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "山内长直段仅有标准地图细铁路glyph，红线偏东侧；地下/隧道工程轴不能由绿色填色证明。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000003/basemap.png",
+          "recordedByteCount": 87278,
+          "actualByteCount": 87278,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000003/smooth.png",
+          "recordedByteCount": 110530,
+          "actualByteCount": 110530,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.08295700242589,
+        "longitude": 141.81164617531377,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.924532337843231,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239956059.51994723,
+        "rectY": 102507726.71386161,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "长NNW山内段向鬼沢聚落过渡，红线连续偏东，未见孤立V或借沿海道路跳接；准确洞口未知。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000004",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000004/basemap.png",
+          "recordedByteCount": 150217,
+          "actualByteCount": 150217,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000004/smooth.png",
+          "recordedByteCount": 178103,
+          "actualByteCount": 178103,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.0857319016011,
+        "longitude": 141.80973215555724,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9244964084244365,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239954632.32337466,
+        "rectY": 102505061.08008932,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "鬼沢聚落山侧长直走向连续，交叉道路与铁路方向分开，无回头；桥/洞口细节不足。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000005",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000005/basemap.png",
+          "recordedByteCount": 176588,
+          "actualByteCount": 176588,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000005/smooth.png",
+          "recordedByteCount": 205664,
+          "actualByteCount": 205664,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.08852586613299,
+        "longitude": 141.80786902443822,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.924460229930375,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239953243.07212043,
+        "rectY": 102502377.02573612,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "向甫嶺南侧真实缓北弯，红线连续，近河渠交叉无尖钩；不能仅据标准地图确认桥梁工程。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000006",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000006/basemap.png",
+          "recordedByteCount": 173938,
+          "actualByteCount": 173938,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000006/smooth.png",
+          "recordedByteCount": 203929,
+          "actualByteCount": 203929,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.0915864866142,
+        "longitude": 141.80701482902026,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9244205960082396,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239952606.13785228,
+        "rectY": 102499436.6832278,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "甫嶺南接近北向缓弯和河渠跨越连续，红线略东偏；站口真弯保留，完整平台端帽未证。"
+    },
+    {
+      "itemID": "jp-三陸鉄道-南リアス線#3",
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000007",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000007/basemap.png",
+          "recordedByteCount": 167080,
+          "actualByteCount": 167080,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000500/000007/smooth.png",
+          "recordedByteCount": 197709,
+          "actualByteCount": 197709,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 39.09326,
+        "longitude": 141.806715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9243989234897914,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239952382.56913066,
+        "rectY": 102497828.88254298,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "甫嶺站及北延伸，红线偏站组东侧，未跳接西侧県道9号；没有精确face/caps或新站点中心。"
+    }
+  ]
+}

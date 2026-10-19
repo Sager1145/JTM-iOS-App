@@ -1,0 +1,166 @@
+{
+  "format": "jtm-proposal-manifest-v2",
+  "status": "proposal-only",
+  "files": [
+    {
+      "path": "Z18-REVIEW.md",
+      "sha256": "2921c083852ffbc3c0126c000c42e0b7d93913d12ec0d24275795a2bf180941b"
+    },
+    {
+      "path": "candidate.geojson",
+      "sha256": "0d6d9a904e666685ef1a7ecfb951426a9d34d64c12c9eef0f17e2dfff91808d4"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "feac9dcbe999cf397dd63f25d5576b56ec7ba517e9881ac27c693a96a0892859"
+    },
+    {
+      "path": "controls.json",
+      "sha256": "15b7abf6c82daa2c02c0905971c2dad8313f66ecc657a346cc11d551fd97b6c0"
+    },
+    {
+      "path": "proposal.md",
+      "sha256": "a16eb810825a4186812cea084e36953ca935e67cb5b0826ee9672d65daa4672d"
+    },
+    {
+      "path": "reprojections/interval-16-view-000000.png",
+      "sha256": "d5ec7b89501c854409a24d18c4bd961f22a99d220dc3da5e2c9adcebb318a7bd"
+    },
+    {
+      "path": "reprojections/interval-16-view-000001.png",
+      "sha256": "669959c44058b6d575004566da7ab8a21401be420f6e322e6132427b2b9bb40a"
+    },
+    {
+      "path": "reprojections/interval-16-view-000002.png",
+      "sha256": "603f6a81810bd32a226bbb187a60aee0e2838fac6d7902f66810c4f4a5cf9917"
+    },
+    {
+      "path": "reprojections/interval-16-view-000003.png",
+      "sha256": "2f66ea9697af2bfc03ef96a9918faaebefb7ee09ea44394b894ce137911dfa27"
+    },
+    {
+      "path": "reprojections/interval-17-view-000000.png",
+      "sha256": "df3de135eea308b54b3907c598691f54c8232fc8222f2d74134f928fd778c44b"
+    },
+    {
+      "path": "reprojections/interval-17-view-000001.png",
+      "sha256": "a390e996f7bd1c5934d5aac74a600250a12949c56a518672703d48c322489654"
+    },
+    {
+      "path": "reprojections/interval-17-view-000002.png",
+      "sha256": "1e9de07e572ac2cfb027485696a906af25a96f213c9894a1139118beee377b18"
+    },
+    {
+      "path": "reprojections/interval-18-view-000000.png",
+      "sha256": "d5f1a21b955995f88572be2ea6ad44a01b7a9a1de8a71d19fdcaec048fe86ecb"
+    },
+    {
+      "path": "reprojections/interval-18-view-000001.png",
+      "sha256": "84ba7e327d572e7329370241e359c29beba5ddbea3b2d834a5caaeca9645454a"
+    },
+    {
+      "path": "reprojections/interval-18-view-000002.png",
+      "sha256": "c129948eee64f1f8f380859924c3ae7556c86c40019a1757b075a89278242179"
+    },
+    {
+      "path": "reprojections/interval-18-view-000003.png",
+      "sha256": "f988ca0f027d89241a201cdd42834e92135c5c07ad443bf0ab86a170530e9347"
+    },
+    {
+      "path": "reprojections/interval-19-view-000000.png",
+      "sha256": "f9a15741829928e23130d3da2d4d92064f6aa3a45ac2bb226221f56015caedab"
+    },
+    {
+      "path": "reprojections/interval-19-view-000001.png",
+      "sha256": "64f3f23a2e4487d734c91f9553a26c5dbdeca171b5b201fb9291e271a097434a"
+    },
+    {
+      "path": "reprojections/interval-19-view-000002.png",
+      "sha256": "528cd9adc7110bda4b73105823a90ef505806177e6be65e60d66ced3007bcd82"
+    },
+    {
+      "path": "reprojections/interval-20-view-000000.png",
+      "sha256": "18ad02bc643d0597517d3b6a2d70df23af81c948464a0385b775a69430e8569c"
+    },
+    {
+      "path": "reprojections/interval-20-view-000001.png",
+      "sha256": "88186ee2928fb3963edf58910db2f6b146ca6960acacda55ccff3695e89dba80"
+    },
+    {
+      "path": "reprojections/interval-20-view-000002.png",
+      "sha256": "0fc3c865923fad8cf1f2af8cc2aeaf3e47b19c70ad57be5c619690df84afeca1"
+    },
+    {
+      "path": "z18-reprojection-receipt.json",
+      "sha256": "e0b0fcdb090e4ee5585ac351048f89fd85dc3de11569f231538da12b1d7e0130"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-0.png",
+      "sha256": "96be0741823284cb18d122a5b84d9fae31093e43776d01f77814b103e69094a4"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-1.png",
+      "sha256": "1279210741d6dee308b3693c51e658da10bfeb660f5da280db6055d210cb676b"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-2.png",
+      "sha256": "f942f7424cbcae1189944ff1bf08d4f36f46f2981245e731b021081551f2d828"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-3.png",
+      "sha256": "d4f562e1988ebf4c737f1d83b8d20a3311b968be3a9af879202a357d9f5ae2ff"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-0.png",
+      "sha256": "72014a61ff2ce458bc9ff270c0c4bac0f4f66fc604544a138266326a2c746817"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-1.png",
+      "sha256": "a3368069d28036435a4895ae476a5ad195c3b1e82db68ace96a725b4922062f2"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-2.png",
+      "sha256": "fd0431ee43bce7dc66669c0cd027764f8ba4beb9efc3a2363b29d9eab9a195f6"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-0.png",
+      "sha256": "cc453db64185512d7b9db9f74bb71782b139b40fbcce291909fef9094cc32869"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-1.png",
+      "sha256": "226940d6b5bbdac0163fff40b1ff1e1d1509690ff6dcb49ea3a7c4907d67c755"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-2.png",
+      "sha256": "b4205408c8b8122b485ec7a522bb69e61a4e8dd70463971b90a4ef274c3fd13e"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-3.png",
+      "sha256": "7859f7e2321fdccdb0365462269bb94d9acbc2a88f233da42c7f1932c8d74ef5"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-0.png",
+      "sha256": "fffa36846ebb2a5a16aad2824f913457ed3243c9c6eec12248809c3e37ac5fc6"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-1.png",
+      "sha256": "eba93a2d2a76779ef71a4f453213378de58d3a8bc6c0ef859435ffbe5565dbb6"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-2.png",
+      "sha256": "d40a23655a422df535f838a3ef13c1ece419241b4435e4b2c2a7d4d2390a8b8d"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-0.png",
+      "sha256": "702784d18a825f268fa40b644df63120a60ca37ad01dde3087e3f207aa8f73b8"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-1.png",
+      "sha256": "508386ce328243d0cc3ca1b05a0f646c090e07c166dc358378cb1c86dbe5f1e5"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-2.png",
+      "sha256": "700da22ce8bbd2389dd51b6e02a2a87f5bf65320e9cce700a56177c2fd63f0fd"
+    }
+  ]
+}

@@ -1,0 +1,637 @@
+{
+  "status": "candidate-preparation-only",
+  "formalNativeAcceptance": false,
+  "appsOperated": [],
+  "buildsOrProductionWrites": false,
+  "rawBasemapContactViewsOpened": {
+    "83": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "86": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "87": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "88": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "fullSizeAdditionalRawIntervalViewsOpened": {
+    "83": [
+      0,
+      5,
+      6
+    ],
+    "85": [
+      7
+    ],
+    "87": [
+      0
+    ],
+    "88": [
+      0,
+      4
+    ],
+    "86": [
+      3
+    ]
+  },
+  "fullSizePreciseStationBasemapsOpened": [
+    "009339",
+    "009352",
+    "009408",
+    "009434",
+    "009452",
+    "009486",
+    "009471"
+  ],
+  "initialCandidateContactViewsOpened": {
+    "83": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "84": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "85": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "86": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "87": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "88": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "afterManualCorrectionContactsOpened": {
+    "83": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "85": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "88": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "fullSizeStationCandidatePanelsOpened": 12,
+  "fullSizeCandidateBranchPanelOpened": "yosan86-reprojection-03.png",
+  "rawCornerCropsOpened": 9,
+  "otherCropsOpened": [
+    "unomachi-face-crop.png",
+    "uwajima-ingress-crop.png"
+  ],
+  "regionalAerialFilesOpened": [
+    "yosan86-coast-regional-aerial.png",
+    "yosan86-coast-wide-regional-aerial.png"
+  ],
+  "displayAndSmoothIntervalPanelsOpenedInThisChat": 0,
+  "dependencyReuse": [
+    "84 prior manual-review-receipt complete-body review",
+    "85 prior regional full-body review",
+    "Yodo18 exact final last-four shared Kita controls"
+  ],
+  "candidatePointCounts": {
+    "83": 127,
+    "84": 81,
+    "85": 143,
+    "86": 127,
+    "87": 38,
+    "88": 29,
+    "81": 78,
+    "82": 41,
+    "80": 167,
+    "79": 158
+  },
+  "candidateLocalInvariantReview": {
+    "fiveAdjacentEndpointsLiteralEqual": true,
+    "KitaLastFourLiteralEqualYodo18": true,
+    "UwajimaLineEndLiteralEqualGroupStation": true,
+    "computedTurnsOver30": {
+      "83": [],
+      "84": [],
+      "85": [],
+      "86": [],
+      "87": [],
+      "88": []
+    }
+  },
+  "limits": "Currentpacket80\u201388 lacks required79. New80all15rawbasemaps/candidatepanels openedoriginalsize, notcaptureacceptance. Historic67contactviews areoverviewonly; no blanketoriginalsizeclaim. Allnative/Maincandidateacceptancepending.",
+  "independentReviewer": {
+    "model": "gpt-5.6-sol",
+    "scope": "Read-only 87/88 retained middle-body review",
+    "fullSizeRawBasemapPanelsOpened": 13,
+    "fullSizeRawDisplayPanelsOpened": 13,
+    "smoothPanelsOpened": 0,
+    "findings": "No concrete retained middle departure outside station splices; labelled Yosan stays west of separate Yodo fork in87. 88 yard fan remains multiple rails and cannot uniquely assign a passenger/operator track.",
+    "actualViewFolders": {
+      "87": "native/primary/captures/002798/000000..000006",
+      "88": "native/primary/captures/002799/000000..000005"
+    },
+    "nativeCandidateAcceptance": false
+  },
+  "overviewCoverageClarification": {
+    "67Views": "Overview only: each1024x768actualsavedview was reduced to512x384 oncontacts. This is not67 original-size full-panel openings and notpixel acceptance.",
+    "fullSizeIntervalRawPrimary": "83v0/v5/v6,85v7,86v3,87v0,88v0/v4; corner crops separately9.",
+    "fullSizeIntervalCandidatePrimary": "86v3 and latest83v0/v1; all12 precise999x654stationoverlays.",
+    "independentFullSizeIntervalRaw": "87seven+88sixbasemap andmatchingdisplay; no smooth."
+  },
+  "latestUnomachiReview": {
+    "status": "aliasmoveconfirmed82required",
+    "witness": "unomachi-boundary-witness.json",
+    "normalPixel": [
+      578.2210433244913,
+      415.4730327144121
+    ],
+    "alias": [
+      132.51019729258417,
+      33.3627786071795
+    ],
+    "fullSizeRawStationOpened": true,
+    "newCropsOpened": [
+      "unomachi-caps-full-crop.png",
+      "unomachi-root-caps-locator.png",
+      "unomachi-north-grid.png",
+      "unomachi-south-grid.png",
+      "unomachi-rail-middle-grid.png",
+      "unomachi-east-northcap-grid.png",
+      "unomachi-south-continuation-native0-grid.png"
+    ],
+    "latest83ContactsOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "latest83OriginalSizeReprojectionsOpened": [
+      0,
+      1
+    ],
+    "stationHeadAndWitnessOpened": true,
+    "independentReviewer": "GPT-6.1 Sol medium, read-only savedpixels, actualcapsagreed; normalsapprox2\u20133px",
+    "formalAcceptance": false
+  },
+  "latest81and82Review": {
+    "raw81BasemapOriginalSizeOpened": {
+      "app": "secondary",
+      "queue": "002792",
+      "views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    "raw82BasemapOriginalSizeOpened": {
+      "app": "primary",
+      "queue": "002793",
+      "views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    "candidate81OriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "candidate82OriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "additionalPreciseGuardOriginalsOpened": [
+      "009324",
+      "009319"
+    ],
+    "guardCropsOpened": [
+      "kamiuwa-face-crop.png",
+      "kamiuwa-face-grid.png",
+      "iyoiwaki-faces-crop.png",
+      "iyoiwaki-faces-grid.png",
+      "unomachi-north-approach-grid.png"
+    ],
+    "independentGuardReviewer": "GPT-6.1Solmedium read-only actual savedcaps, agreed KamiUwa479262\u2192503318 andIyoIwaki414300\u2192615364/409313\u2192612377",
+    "candidatePoints": {
+      "81": 78,
+      "82": 41
+    },
+    "joins": [
+      {
+        "incoming": 81,
+        "outgoing": 82,
+        "alias": [
+          132.50131185940495,
+          33.38012344711494
+        ],
+        "forwardDot": 9044.04594782909,
+        "joinTurnDegrees": 3.86165382915988
+      },
+      {
+        "incoming": 82,
+        "outgoing": 83,
+        "alias": [
+          132.51019729258417,
+          33.3627786071795
+        ],
+        "forwardDot": 12626.753906512417,
+        "joinTurnDegrees": 0.16208716060503867
+      }
+    ],
+    "requiredNextCompleteInterval": "80\u53cc\u5ca9009291\u2192\u4f0a\u4e88\u77f3\u57ce009319",
+    "scopeMinimum": 32,
+    "nativeAcceptance": false
+  },
+  "rootRestoredInspectorContext": {
+    "source": "Root explicit update,2026-10-14",
+    "productionSourceApplied": false,
+    "restoredApps": "Root rebuiltexistingInspectoronce andrestoredthreeindependentlysignedapps in persistentlocaldirectories aftertmpappslost. Recoveredcurrentproductionbaseline differsfromoldV1overlayinput.",
+    "rootReported81ThreeAppCoverage": {
+      "primary": 10,
+      "secondary": 10,
+      "third": 10
+    },
+    "rootReported82ThreeAppCoverage": {
+      "primary": 7,
+      "secondary": 7,
+      "third": 7
+    },
+    "coverageMeaning": "Captureavailability only; notalignment/nativecandidateacceptance. Do notrecapturecompletedbatches.",
+    "evidenceBoundary": "ActualsavedApplebasemaps/cameras remain cartographicevidence. HistoricalV1overlays donotdescribe restoredappcurrentloadedinput. Candidate81usedactualsavedSecondary002792; candidate82usedactualsavedPrimary002793; no restatedfullthreeappcandidateacceptance."
+  },
+  "latest80Review": {
+    "actualRawBasemapOriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "actualCandidateReprojectionOriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "actualRawFolder": "native-outer-adjacent-baseline/primary/captures/002791",
+    "imageDimensions": {
+      "0": [
+        1024,
+        768
+      ],
+      "1": [
+        1024,
+        768
+      ],
+      "2": [
+        1024,
+        768
+      ],
+      "3": [
+        1024,
+        768
+      ],
+      "4": [
+        1024,
+        768
+      ],
+      "5": [
+        1024,
+        768
+      ],
+      "6": [
+        1024,
+        768
+      ],
+      "7": [
+        1024,
+        768
+      ],
+      "8": [
+        1024,
+        768
+      ],
+      "9": [
+        1024,
+        768
+      ],
+      "10": [
+        1024,
+        768
+      ],
+      "11": [
+        1024,
+        768
+      ],
+      "12": [
+        1024,
+        768
+      ],
+      "13": [
+        1024,
+        768
+      ],
+      "14": [
+        1024,
+        768
+      ]
+    },
+    "preciseGuardRawDimensions": [
+      999,
+      638
+    ],
+    "preciseGuardOriginalAndCropsOpened": [
+      "guard-futaiwa-009291/basemap.png",
+      "futaiwa-face-crop.png",
+      "futaiwa-face-grid.png",
+      "futaiwa-own-rail-grid.png"
+    ],
+    "independentSavedGuardReview": "GPT-6.1Solmedium confirmedclearEasternlongface475154\u2192531319; westshortshapeunidentified/notaveraged; oldpointnearsouthend",
+    "candidatePoints": 167,
+    "newFutaiwaAlias": [
+      132.45784664285196,
+      33.424626519353936
+    ],
+    "80to81Join": {
+      "exactAliasEqual": true,
+      "forwardDot": 41403.62844890909,
+      "turnDegrees": 1.2074182697257333e-06
+    },
+    "requiredNextCompleteInterval": {
+      "fromStationID": "009272",
+      "fromName": "\u516b\u5e61\u6d5c",
+      "toStationID": "009291",
+      "toName": "\u53cc\u5ca9"
+    },
+    "scopeMinimum": 33,
+    "formalAcceptance": false
+  },
+  "latest79Review": {
+    "actualRawFolder": "native-outer-adjacent-baseline/secondary/captures/002789",
+    "actualRawBasemapOriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "initialCandidateOriginalSizeOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "afterRiverCrossingCorrectionOriginalSizeOpened": [
+      12,
+      13,
+      14
+    ],
+    "unaffectedCandidateEvidenceReused": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "preciseStationPanelsOpened": [
+      "station-79-head.png",
+      "station-79-tail.png"
+    ],
+    "riverCrossingRawCropsOpened": [
+      "yosan79-river-crossing-crop.png",
+      "yosan79-river-crossing-grid.png"
+    ],
+    "candidatePoints": 158,
+    "79to80Join": {
+      "exactAliasEqual": true,
+      "forwardDot": 446.03283541261555,
+      "turnDegrees": 0.6310231235808113
+    },
+    "Yawatahama": "Retained alias warning; NW face caps/own passenger group unresolved; no accepted move/no interval78 dependency.",
+    "formalAcceptance": false,
+    "currentPacket": "candidate-input-yosan79-88.json",
+    "scopeMinimum": 33
+  },
+  "third79and80Supplement": {
+    "context": "Restored production baseline; not rejected V1 and not candidate installed acceptance.",
+    "inventory": {
+      "79": {
+        "index": "native-outer-adjacent-baseline/third/capture-index-yosan79.json",
+        "completeSavedViews": 15
+      },
+      "80": {
+        "index": "native-outer-adjacent-baseline/third/capture-index-yosan80.json",
+        "completeSavedViews": 15
+      }
+    },
+    "originalSizeBasemapsActuallyOpened": {
+      "79": [
+        0,
+        13
+      ],
+      "80": [
+        0
+      ]
+    },
+    "otherThirdViews": "Available/inventory checked only; not claimed visually opened. Existing Secondary79/Primary80 candidate evidence remains applicable.",
+    "guardYawatahamaOriginalReopened": true,
+    "decision": "No supported move: northwest own face caps and passenger group still unresolved; retain existing alias as WARNING, not aligned/PASS. No factual interval78 dependency.",
+    "candidateGeometryChanged": false,
+    "nativeAcceptance": false
+  },
+  "primary79Supplement": {
+    "index": "native-outer-adjacent-baseline/primary/capture-index-yosan79.json",
+    "records": 15,
+    "completeSavedViews": 15,
+    "context": "Restored production baseline, not rejected V1 or installed candidate acceptance",
+    "review": "Inventory checked; no additional image-opening claim. Candidate79 Secondary original-size review remains evidence.",
+    "candidateGeometryChanged": false,
+    "YawatahamaDecision": "Retain original alias with unresolved own NW platform/passenger-group WARNING; no supported interval78 dependency. Regional close-up pending from Root."
+  }
+}

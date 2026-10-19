@@ -1,0 +1,138 @@
+{
+  "status": "independent-candidate-pixel-witness-only",
+  "stationID": "009558",
+  "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/01-009558/view.json",
+  "westApproach": [
+    {
+      "pixel": [
+        450,
+        326.5
+      ],
+      "coordinate": [
+        133.0744794613098,
+        33.161412245363984
+      ]
+    },
+    {
+      "pixel": [
+        425,
+        327
+      ],
+      "coordinate": [
+        133.07434535085895,
+        33.161409999998554
+      ]
+    },
+    {
+      "pixel": [
+        400,
+        327.5
+      ],
+      "coordinate": [
+        133.07421124040803,
+        33.16140775463305
+      ]
+    },
+    {
+      "pixel": [
+        375,
+        328
+      ],
+      "coordinate": [
+        133.07407712995717,
+        33.16140550926751
+      ]
+    },
+    {
+      "pixel": [
+        350,
+        330
+      ],
+      "coordinate": [
+        133.07394301950632,
+        33.16139652780471
+      ]
+    },
+    {
+      "pixel": [
+        325,
+        332.5
+      ],
+      "coordinate": [
+        133.07380890905546,
+        33.16138530097495
+      ]
+    },
+    {
+      "pixel": [
+        300,
+        334.5
+      ],
+      "coordinate": [
+        133.0736747986046,
+        33.16137631951009
+      ]
+    },
+    {
+      "pixel": [
+        225,
+        353
+      ],
+      "coordinate": [
+        133.07327246725197,
+        33.16129324091658
+      ]
+    },
+    {
+      "pixel": [
+        200,
+        363
+      ],
+      "coordinate": [
+        133.0731383568011,
+        33.16124833353595
+      ]
+    },
+    {
+      "pixel": [
+        175,
+        373.5
+      ],
+      "coordinate": [
+        133.07300424635025,
+        33.16120118076155
+      ]
+    },
+    {
+      "pixel": [
+        150,
+        384
+      ],
+      "coordinate": [
+        133.0728701358994,
+        33.161154027961786
+      ]
+    },
+    {
+      "pixel": [
+        125,
+        394.5
+      ],
+      "coordinate": [
+        133.07273602544853,
+        33.16110687513666
+      ]
+    },
+    {
+      "pixel": [
+        100,
+        404.5
+      ],
+      "coordinate": [
+        133.07260191499762,
+        33.1610619676606
+      ]
+    }
+  ],
+  "warning": "Label area x275/250 excluded. Corrected farther-west initial visual estimate using actual black pixel minima. Curve diverges from road329; no extrapolated straight return."
+}

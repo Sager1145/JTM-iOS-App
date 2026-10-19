@@ -1,0 +1,49 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/candidate-tasks.json",
+  "capturedCount" : 13,
+  "captureIndexPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "d840eb769102c5ab4daa4423e122835e71aad3431e3fc54be5a0b09b784b12b7",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-denentoshi-missing-20261018\/alignment",
+    "\/private\/tmp\/jtm-denentoshi-missing-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東急電鉄-田園都市線#7",
+    "jp-東急電鉄-田園都市線#9",
+    "jp-東急電鉄-田園都市線#12"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "13\/13 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "denentoshi-missing-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-denentoshi-missing-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T05:27:27Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

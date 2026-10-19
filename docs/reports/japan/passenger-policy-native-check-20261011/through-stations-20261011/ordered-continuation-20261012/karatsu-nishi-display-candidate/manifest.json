@@ -1,0 +1,140 @@
+{
+  "format": "jtm-karatsu-nishi-display-candidate-manifest-v1",
+  "status": "candidate-only",
+  "baselineFrameCount": 8,
+  "rawFrameCount": 8,
+  "finalReprojectionFrameCount": 8,
+  "fileCount": 26,
+  "files": [
+    {
+      "path": "baseline/frame-0.png",
+      "sha256": "7971f1fc1a6626315bc52eea56fef4a0f6f01b9d8658447f26ab490c7b195133",
+      "bytes": 1284018
+    },
+    {
+      "path": "baseline/frame-1.png",
+      "sha256": "03e5ac9194cff78585ebabd537961d29f849138ff9aec7e2f485ae71f8308b2d",
+      "bytes": 1452217
+    },
+    {
+      "path": "baseline/frame-2.png",
+      "sha256": "c38346cbca737395a6b06bc81a552f9e4aa1f51ba5adc3a61b523bc37b23a752",
+      "bytes": 1517398
+    },
+    {
+      "path": "baseline/frame-3.png",
+      "sha256": "acd209836ff90dc47a5a8d849bf550c51b54ee69d4c387e55ca07da36658ed33",
+      "bytes": 1477357
+    },
+    {
+      "path": "baseline/frame-4.png",
+      "sha256": "bf8fec4a27b4b04ce496190cc452c44652414bc8530d0e6f1026a7c6081fe4f5",
+      "bytes": 1556312
+    },
+    {
+      "path": "baseline/frame-5.png",
+      "sha256": "783c25888b802741f93782df11da89c0ed55abe250c636aab04e34e69f8b2cd5",
+      "bytes": 1651425
+    },
+    {
+      "path": "baseline/frame-6.png",
+      "sha256": "66e5249251abcadc8de7dd331e1d34f6aff4666583fe37afd210742cc6b95fbb",
+      "bytes": 1689702
+    },
+    {
+      "path": "baseline/frame-7.png",
+      "sha256": "6d61413f9503a5f9fa76f3ab96894dc72e79df25c8b5c5a4efb5cba32c9d9895",
+      "bytes": 1698419
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "fcf089037a37b0d140b491d53e4b6fd12b8e46ae52bd0b758dccd096c05a654a",
+      "bytes": 19532
+    },
+    {
+      "path": "interval-0.geojson",
+      "sha256": "a2a47ab2a37e8334a3c20fb364c3241ddc03d48d42941e38cd9c3ccbe7d54bc4",
+      "bytes": 14801
+    },
+    {
+      "path": "raw/frame-0.png",
+      "sha256": "fbe1a16bc64bad50127189a6c3946736c3faa5df44ceda6cf84a6753b4d2a2fb",
+      "bytes": 250636
+    },
+    {
+      "path": "raw/frame-1.png",
+      "sha256": "e99c8bb3def78dfbf835b0f1890b445c344431acb5f5a32e1460f2b1992b6b06",
+      "bytes": 280146
+    },
+    {
+      "path": "raw/frame-2.png",
+      "sha256": "2bfaf0195deadfe9b674bbe7e1fee5b2e2247fde2863443f9fa51d0d35d216bc",
+      "bytes": 275049
+    },
+    {
+      "path": "raw/frame-3.png",
+      "sha256": "fc74374e42d33235a1f61e0b5d3f58a5acbe614344a415f6fe8ae196d1fb4af0",
+      "bytes": 254761
+    },
+    {
+      "path": "raw/frame-4.png",
+      "sha256": "d7c5062d9c1a7e2d827fb13f47a58073d7f2b69a5aeaa45222b342aafab2f697",
+      "bytes": 278853
+    },
+    {
+      "path": "raw/frame-5.png",
+      "sha256": "6896e5b1a6cb012331109ccd896bc8e32d86b2627728787286b3a32de7e40e1b",
+      "bytes": 293752
+    },
+    {
+      "path": "raw/frame-6.png",
+      "sha256": "a6791d943da616241aea9e7dfcbc8e38cccceb5c6d8dcb81f99bf64900ae1755",
+      "bytes": 282193
+    },
+    {
+      "path": "raw/frame-7.png",
+      "sha256": "b704ea2b92944eac0fa162e03e4f1a97ce981b85e3a224ab234f9fefba776968",
+      "bytes": 291387
+    },
+    {
+      "path": "reprojection/frame-0.png",
+      "sha256": "c212443dee4064bdcd70b760092ac21a095ce8adf45d4fc7e5618a56bc5a8903",
+      "bytes": 258771
+    },
+    {
+      "path": "reprojection/frame-1.png",
+      "sha256": "91658325a9e500872253773b829e5b48bb74a6cc0a2e4732a27e8702670c8530",
+      "bytes": 293290
+    },
+    {
+      "path": "reprojection/frame-2.png",
+      "sha256": "b0fec77d09d65bd7cecf562caa9f3087f3c063e13f552d4070ad15fd6e700490",
+      "bytes": 275823
+    },
+    {
+      "path": "reprojection/frame-3.png",
+      "sha256": "e7525a46e2c1391f249dcd44a72c8d5549656148a9bc8b367fcc91ccf6a4bc13",
+      "bytes": 243731
+    },
+    {
+      "path": "reprojection/frame-4.png",
+      "sha256": "edc058ec0fefaacd6236fc3f32260a8104982ba8a26b5e341c43fd7c6ca59ab2",
+      "bytes": 286516
+    },
+    {
+      "path": "reprojection/frame-5.png",
+      "sha256": "97ef6558506c6ef4c3cc4b7512bda7323721213b076fe44f92361e4f01e85204",
+      "bytes": 302249
+    },
+    {
+      "path": "reprojection/frame-6.png",
+      "sha256": "09e17e376b051084a5dcad457152cd2cb19aa88f84a0a6140937f5d4ab96cad0",
+      "bytes": 280968
+    },
+    {
+      "path": "reprojection/frame-7.png",
+      "sha256": "9bcd987d2d6acd7e63be240a8536b5e4a7eff34d340b0ea72c7c5c37426ba6a8",
+      "bytes": 287374
+    }
+  ]
+}

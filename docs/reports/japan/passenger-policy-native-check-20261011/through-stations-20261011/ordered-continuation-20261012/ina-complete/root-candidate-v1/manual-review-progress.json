@@ -1,0 +1,35 @@
+{
+  "candidateRevision": "v1",
+  "formalSourceApplied": false,
+  "reviewer": "root, this chat only",
+  "inspectors": {
+    "primary": {
+      "completeIntervals": 12,
+      "continuousCaptures": 55,
+      "manuallyReviewed": 55
+    },
+    "secondary": {
+      "completeIntervals": 12,
+      "continuousCaptures": 55,
+      "manuallyReviewed": 55
+    },
+    "third": {
+      "completeIntervals": 12,
+      "continuousCaptures": 55,
+      "manuallyReviewed": 55
+    }
+  },
+  "limitations": [
+    "Omiya and Uchijuku passenger frame endpoints unresolved; provisional diagnostic endpoints are not accepted.",
+    "Whole corridor screenshot review does not establish survey-grade alignment."
+  ],
+  "main": {
+    "completeIntervals": 12,
+    "onOffPairsCaptured": 12,
+    "manuallyReviewedImages": 24,
+    "actualCentreVerified": true,
+    "allOnRendered": true,
+    "allBudgetDrops": 0,
+    "launchMode": "frameForUITest exact camera; normal Main renderer, no production fit claim"
+  }
+}

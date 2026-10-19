@@ -1,0 +1,202 @@
+[
+  {
+    "intervalIndex": 0,
+    "count": 60,
+    "maxTurn": [
+      54,
+      22.1802109325191
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 6.930442638085183
+  },
+  {
+    "intervalIndex": 1,
+    "count": 69,
+    "maxTurn": [
+      24,
+      14.2349305973105
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 7.5645978941927075
+  },
+  {
+    "intervalIndex": 2,
+    "count": 109,
+    "maxTurn": [
+      37,
+      16.731083933551936
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 5.2309275955103445
+  },
+  {
+    "intervalIndex": 3,
+    "count": 113,
+    "maxTurn": [
+      81,
+      15.551513324824
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 5.4605596331386375
+  },
+  {
+    "intervalIndex": 4,
+    "count": 56,
+    "maxTurn": [
+      52,
+      14.880172420031753
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 8.42389875656046
+  },
+  {
+    "intervalIndex": 5,
+    "count": 56,
+    "maxTurn": [
+      42,
+      7.858798007334349
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 31.589812712685895
+  },
+  {
+    "intervalIndex": 6,
+    "count": 69,
+    "maxTurn": [
+      26,
+      15.989273097860703
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 12.236044479622384
+  },
+  {
+    "intervalIndex": 7,
+    "count": 123,
+    "maxTurn": [
+      85,
+      12.884343874589263
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 4.0769883885847875
+  },
+  {
+    "intervalIndex": 8,
+    "count": 59,
+    "maxTurn": [
+      25,
+      8.865781956132764
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 25.7736388015599
+  },
+  {
+    "intervalIndex": 9,
+    "count": 52,
+    "maxTurn": [
+      2,
+      20.471553584458057
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 12.801847090046605
+  },
+  {
+    "intervalIndex": 10,
+    "count": 55,
+    "maxTurn": [
+      38,
+      22.480333668038945
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 154.97085321456507
+  },
+  {
+    "intervalIndex": 11,
+    "count": 40,
+    "maxTurn": [
+      12,
+      20.80525070368219
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 3.8518560679512723
+  },
+  {
+    "intervalIndex": 12,
+    "count": 10,
+    "maxTurn": [
+      3,
+      13.664540444997174
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 17.989767321098995
+  },
+  {
+    "intervalIndex": 13,
+    "count": 14,
+    "maxTurn": [
+      12,
+      34.646198047398734
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 173.68651321170736
+  },
+  {
+    "intervalIndex": 14,
+    "count": 41,
+    "maxTurn": [
+      3,
+      29.404958200753427
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 135.67684131652246
+  },
+  {
+    "intervalIndex": 15,
+    "count": 60,
+    "maxTurn": [
+      35,
+      21.045152845326307
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 14.122096535092725
+  },
+  {
+    "intervalIndex": 16,
+    "count": 30,
+    "maxTurn": [
+      12,
+      15.47860439080467
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 134.08057279585145
+  },
+  {
+    "intervalIndex": 17,
+    "count": 20,
+    "maxTurn": [
+      13,
+      17.634239333227413
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 101.63577097423256
+  },
+  {
+    "intervalIndex": 18,
+    "count": 33,
+    "maxTurn": [
+      29,
+      32.219806256130234
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 14.26092116303071
+  },
+  {
+    "intervalIndex": 19,
+    "count": 18,
+    "maxTurn": [
+      11,
+      9.5012141712869
+    ],
+    "turnsAbove35": [],
+    "minimumEdgeMapPoints": 24.477158346944403
+  }
+]

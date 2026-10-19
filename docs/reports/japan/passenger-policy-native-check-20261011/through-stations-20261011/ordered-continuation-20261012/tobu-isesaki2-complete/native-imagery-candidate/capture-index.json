@@ -1,0 +1,170 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.36060681011257,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.718313999999999,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81663699999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.71726855262191,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81658046251712,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.716225465640598,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81647723107096,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.715180966914403,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81640332655033,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.71414333903823,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81624362027725,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.713173253779395,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81577609871496,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.712316507410954,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81505348190214,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.711564100262599,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81418502015717,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.710627701421522,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81361384996259,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東武鉄道-伊勢崎線-2#0",
+      "latitude" : 35.709708426555792,
+      "lineDependency" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+      "longitude" : 139.81345102105016,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東武鉄道-伊勢崎線-2#0#point-9"
+    }
+  ]
+}

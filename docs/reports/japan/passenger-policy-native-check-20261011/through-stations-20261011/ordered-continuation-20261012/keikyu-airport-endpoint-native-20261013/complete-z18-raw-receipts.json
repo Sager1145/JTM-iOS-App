@@ -1,0 +1,191 @@
+[
+  {
+    "interval": 0,
+    "view": 0,
+    "analysis": "interval0-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 0
+  },
+  {
+    "interval": 0,
+    "view": 1,
+    "analysis": "interval0-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 0
+  },
+  {
+    "interval": 0,
+    "view": 2,
+    "analysis": "interval0-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 0
+  },
+  {
+    "interval": 0,
+    "view": 3,
+    "analysis": "interval0-view3-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 0
+  },
+  {
+    "interval": 1,
+    "view": 0,
+    "analysis": "interval1-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 1
+  },
+  {
+    "interval": 1,
+    "view": 1,
+    "analysis": "interval1-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 1
+  },
+  {
+    "interval": 1,
+    "view": 2,
+    "analysis": "interval1-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 1
+  },
+  {
+    "interval": 1,
+    "view": 3,
+    "analysis": "interval1-view3-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 1
+  },
+  {
+    "interval": 2,
+    "view": 0,
+    "analysis": "interval2-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 2
+  },
+  {
+    "interval": 2,
+    "view": 1,
+    "analysis": "interval2-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 2
+  },
+  {
+    "interval": 2,
+    "view": 2,
+    "analysis": "interval2-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 2
+  },
+  {
+    "interval": 3,
+    "view": 0,
+    "analysis": "interval3-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 3
+  },
+  {
+    "interval": 3,
+    "view": 1,
+    "analysis": "interval3-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 3
+  },
+  {
+    "interval": 3,
+    "view": 2,
+    "analysis": "interval3-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 3
+  },
+  {
+    "interval": 3,
+    "view": 3,
+    "analysis": "interval3-view3-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 3
+  },
+  {
+    "interval": 4,
+    "view": 0,
+    "analysis": "interval4-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 4
+  },
+  {
+    "interval": 4,
+    "view": 1,
+    "analysis": "interval4-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 4
+  },
+  {
+    "interval": 4,
+    "view": 2,
+    "analysis": "interval4-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 4
+  },
+  {
+    "interval": 4,
+    "view": 3,
+    "analysis": "interval4-view3-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 4
+  },
+  {
+    "interval": 4,
+    "view": 4,
+    "analysis": "interval4-view4-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 4
+  },
+  {
+    "interval": 5,
+    "view": 0,
+    "analysis": "interval5-view0-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 1,
+    "analysis": "interval5-view1-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 2,
+    "analysis": "interval5-view2-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 3,
+    "analysis": "interval5-view3-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 4,
+    "analysis": "interval5-view4-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 5,
+    "analysis": "interval5-view5-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  },
+  {
+    "interval": 5,
+    "view": 6,
+    "analysis": "interval5-view6-z18-before/apple-map-extraction/analysis.json",
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "actualIntervalIndex": 5
+  }
+]

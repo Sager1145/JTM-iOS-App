@@ -1,0 +1,250 @@
+{
+  "completed": 8,
+  "missing": 0,
+  "failedCaptures": 0,
+  "excludedCameraMismatch": [
+    "14-009240-west-throat-z18"
+  ],
+  "views": [
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/00-009057-face-z19",
+      "stationID": "009057",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57917999999999,
+        "longitude": 133.645135,
+        "mapPointsPerPoint": 1.9999999962747097,
+        "metresPerPoint": 0.2478451603632083,
+        "pitch": 0,
+        "rectHeight": 1308,
+        "rectWidth": 1998.0000000298023,
+        "rectX": 233869764.43307376,
+        "rectY": 107608415.09140146,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 19.00000000268723
+      },
+      "mapRect": {
+        "height": 1308,
+        "width": 1998.0000000298023,
+        "x": 233869764.43307376,
+        "y": 107608415.09140146
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/03-009112-face-z19",
+      "stationID": "009112",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56190199999996,
+        "longitude": 133.69774900000007,
+        "mapPointsPerPoint": 2.000000014901161,
+        "metresPerPoint": 0.24789407974021843,
+        "pitch": 0,
+        "rectHeight": 1308,
+        "rectWidth": 1997.9999999701977,
+        "rectX": 233908996.2749682,
+        "rectY": 107623877.5531713,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.999999989251084
+      },
+      "mapRect": {
+        "height": 1308,
+        "width": 1997.9999999701977,
+        "x": 233908996.2749682,
+        "y": 107623877.5531713
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/04-009193-face-z19",
+      "stationID": "009193",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54596,
+        "longitude": 133.7104100000001,
+        "mapPointsPerPoint": 2.0000000037252903,
+        "metresPerPoint": 0.2479391928873766,
+        "pitch": 0,
+        "rectHeight": 1307.9999999850988,
+        "rectWidth": 1998.0000000298023,
+        "rectX": 233918437.000825,
+        "rectY": 107638141.65545098,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.99999999731277
+      },
+      "mapRect": {
+        "height": 1307.9999999850988,
+        "width": 1998.0000000298023,
+        "x": 233918437.000825,
+        "y": 107638141.65545098
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/13-009242-face-z19",
+      "stationID": "009242",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.504294999999985,
+        "longitude": 133.8975000000001,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24805700985769144,
+        "pitch": 0,
+        "rectHeight": 1308,
+        "rectWidth": 1997.9999999701977,
+        "rectX": 234057941.41600013,
+        "rectY": 107675408.98870072,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 19
+      },
+      "mapRect": {
+        "height": 1308,
+        "width": 1997.9999999701977,
+        "x": 234057941.41600013,
+        "y": 107675408.98870072
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/14-009240-face-z19",
+      "stationID": "009240",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5048,
+        "longitude": 133.90643500000004,
+        "mapPointsPerPoint": 1.9999999925494194,
+        "metresPerPoint": 0.2480555817178434,
+        "pitch": 0,
+        "rectHeight": 1308,
+        "rectWidth": 1998,
+        "rectX": 234064603.8348872,
+        "rectY": 107674957.39800769,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 19.000000005374456
+      },
+      "mapRect": {
+        "height": 1308,
+        "width": 1998,
+        "x": 234064603.8348872,
+        "y": 107674957.39800769
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/00-009057-east-throat-z18",
+      "stationID": "009057",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.579792406817134,
+        "longitude": 133.64872745015236,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.49568685315516153,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 233871444.15805936,
+        "rectY": 107607212.97829312,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 233871444.15805936,
+        "y": 107607212.97829312
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/14-009240-west-throat-z18-precise",
+      "stationID": "009240",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.50507732953066,
+        "longitude": 133.9050429335189,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4961095977066721,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 234062566.8348854,
+        "rectY": 107674055.39800575,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3995.9999999701977,
+        "x": 234062566.8348854,
+        "y": 107674055.39800575
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    },
+    {
+      "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/14-009240-east-throat-z18",
+      "stationID": "009240",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.504127830342206,
+        "longitude": 133.91012272538944,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4961149646065457,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 234066354.60223857,
+        "rectY": 107674904.47774717,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 234066354.60223857,
+        "y": 107674904.47774717
+      },
+      "appearance": "light",
+      "snapshotDisplayScale": 1,
+      "rawBasemapActuallyViewed": true,
+      "alignmentAccepted": false
+    }
+  ]
+}

@@ -1,0 +1,817 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.72590301035332,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.464424000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.62046599999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.4635493296799,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61989326536107,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.462700741565619,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61913459123787,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461854029504309,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61837288974945,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461022637680571,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.6175860627273,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.460198332052002,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61678806601299,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.459845000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61646500000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.459845000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61646500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.45898955562037,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61571839997632,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.458133099905794,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61497411885222,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.4573167738507,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61416388144377,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000004",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.456485664357047,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61337713373575,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000005",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.455708560056834,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61251597520874,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000006",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.455032218411866,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61153237077099,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000007",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.454431000387366,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.61047647114387,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000008",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.453840443230682,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.60941108525506,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000001\/000009",
+      "itemID" : "jp-相模鉄道-相鉄本線#1",
+      "latitude" : 35.453595,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.60897,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#1#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.466844999999999,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.415885,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.466413497682346,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41471007137596,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.465956415604651,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41354986551511,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000003",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.465386689533602,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41247070316345,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000004",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.464641341932108,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41157128093067,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000005",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.463784829334493,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41082668524692,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000006",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.462930849348247,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.41007728948793,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000007",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.462086404948174,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40931206604492,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000008",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.461314809687053,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40844167360305,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000009",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.460624971247448,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40747234751259,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000010",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.460001561048479,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.4064362607144,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000011",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.459377128303011,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40540083091929,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000012",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.458833958760501,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40429848302205,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000013",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.458329705758267,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40316911718611,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000014",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.457999611837792,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40194781656268,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000015",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.457857263683408,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.40067401476153,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-15"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000016",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.457827651416984,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39938579990667,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-16"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000017",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.457731272368747,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39810581487481,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-17"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000018",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.457475793075027,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39685962043353,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-18"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000019",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.456928889118757,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39578450993397,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-19"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000020",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.4560973292349,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39500822572751,
+      "pointOrdinal" : 20,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-20"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000021",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.455260891915515,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39423064979638,
+      "pointOrdinal" : 21,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-21"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000022",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.454463945085116,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39339193884547,
+      "pointOrdinal" : 22,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-22"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000023",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.453686967830151,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.39252570048782,
+      "pointOrdinal" : 23,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-23"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment\/captures\/000002\/000024",
+      "itemID" : "jp-相模鉄道-相鉄本線#16",
+      "latitude" : 35.453440000000001,
+      "lineDependency" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+      "longitude" : 139.392235,
+      "pointOrdinal" : 24,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#16#point-24"
+    }
+  ]
+}

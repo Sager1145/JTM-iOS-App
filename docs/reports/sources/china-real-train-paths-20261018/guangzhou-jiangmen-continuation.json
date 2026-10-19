@@ -1,0 +1,1512 @@
+{
+  "schema": "cn-guangzhou-jiangmen-continuation-evidence-v1",
+  "reviewedAt": "2026-10-19",
+  "source": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+  "scope": "Evidence only; no production modifications",
+  "sources": [
+    {
+      "url": "https://www.ndrc.gov.cn/fggz/zcssfz/dffz/201808/t20180829_1147897.html",
+      "title": "深茂铁路正式开通运营",
+      "published": "2018-08-29",
+      "supports": "Passenger operation opened July 1, east endpoint Guangzhu Intercity Xinhui and west endpoint Zhanjiang West; it comprises new Jiangmen–Maoming, electrified Maoming–Huanglue, and new Huanglue–Zhanjiang West.",
+      "limits": "Corridor evidence; does not enumerate OSM tracks or platform paths."
+    },
+    {
+      "url": "https://www.ndrc.gov.cn/xwdt/ztzl/ygadwqjs1/202011/t20201109_1250067.html",
+      "title": "珠西综合交通枢纽江门高铁站完成初步验收 即将进入安全评估阶段",
+      "published": "2020-11-09",
+      "supports": "From China Railway Guangzhou Group Jiangmen construction headquarters; Guangzhu Intercity and Jiangzhan are existing operating routes at Jiangmen, while Guangzhu Railway is explicitly freight.",
+      "limits": "Pre-opening Jiangmen passenger station article; cannot alone establish current platform use."
+    },
+    {
+      "url": "https://www.jiangmen.gov.cn/bmpd/jmsfzhggj/gggs/content/post_2116255.html",
+      "title": "关于政协江门市第十三届委员会第四次会议2020052建议答复的函",
+      "supports": "Jiangmen Development and Reform Bureau directly explains west-Guangdong trains to Guangzhou use Guangzhu Intercity because Shenzhen–Jiangmen is not yet open; describes existing Xinhui passenger service and Guangzhou Group coordination.",
+      "limits": "2020 corridor statement, not per-track passenger identity."
+    },
+    {
+      "url": "https://www.highspeed.mtr.com.hk/res/pdf/long-haul-train-timetable.pdf",
+      "title": "HSR_train Sch_11_10_2026 LH(R1)",
+      "supports": "Current primary operator timetable retrieved; confirms retained 12306 evidence should be checked against currently dated operator schedule.",
+      "limits": "PDF title read via web; image content not extracted here, so specific current G6045 times are not certified by this report."
+    },
+    {
+      "url": "https://www.highspeed.mtr.com.hk/sc/ticket/destination.html",
+      "title": "高速铁路 目的地",
+      "effective": "2026-09-27",
+      "supports": "Operator lists Jiangmen and Guangzhou South in service network; long-haul service operated by mainland railway units.",
+      "limits": "No OSM way or platform assignment."
+    }
+  ],
+  "xinhuiToJiangmen": {
+    "status": "Exact original source-owned continuation is now attached to two published lines; passenger evidence remains corridor-level on two ways",
+    "fromAttachment": {
+      "lineId": "cn-osm-relation-5496304-branch-3",
+      "nodeId": 1831762682,
+      "coordinate": [
+        113.0660001,
+        22.520347
+      ],
+      "published": true,
+      "exactPublishedVertexMatches": [
+        {
+          "segmentIndex": 0,
+          "vertexIndex": 0
+        }
+      ],
+      "sourceStationBindings": [
+        {
+          "groupId": "cn-official-12306-efq",
+          "stationCode": "CN-12306-EFQ",
+          "markerNodeId": 8401400286,
+          "markerVersion": 5,
+          "markerCoordinate": [
+            113.0658947,
+            22.5203259
+          ],
+          "markerTags": {
+            "alt_name": "新会站;新会火车站;Xinhui Railway Station",
+            "name": "新会",
+            "name:en": "Xinhui",
+            "operator": "中国铁路广州局集团有限公司",
+            "public_transport": "station",
+            "railway": "station",
+            "train": "yes",
+            "wikidata": "Q8044600"
+          },
+          "anchorNodeId": 1831762682,
+          "anchorVersion": 14,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            1831762682,
+            5926619799
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 8401400286,
+              "anchorNodeIds": [],
+              "stopAreaIds": []
+            }
+          ],
+          "stopAreaIds": [],
+          "officialTelecode": "EFQ",
+          "officialPinyin": "xinhui",
+          "nameTraditional": "",
+          "nameEnglish": "Xinhui",
+          "englishSourceType": "original-OSM",
+          "englishSource": "https://www.openstreetmap.org/node/8401400286"
+        }
+      ]
+    },
+    "toAttachment": {
+      "lineId": "cn-osm-relation-8381929",
+      "nodeId": 11469965754,
+      "coordinate": [
+        113.0650735,
+        22.4826588
+      ],
+      "published": true,
+      "exactPublishedVertexMatches": [
+        {
+          "segmentIndex": 0,
+          "vertexIndex": 0
+        }
+      ],
+      "sourceStationBindings": [
+        {
+          "groupId": "cn-official-12306-joq",
+          "stationCode": "CN-12306-JOQ",
+          "markerNodeId": 2414867084,
+          "markerVersion": 13,
+          "markerCoordinate": [
+            113.0653353,
+            22.4910006
+          ],
+          "markerTags": {
+            "alt_name": "江门站;江门火车站;Jiangmen Railway Station",
+            "name": "江门",
+            "name:en": "Jiangmen",
+            "name:zh": "江门",
+            "name:zh-Hans": "江门",
+            "name:zh-Hant": "江門",
+            "public_transport": "station",
+            "railway": "station",
+            "train": "yes",
+            "wikidata": "Q17025373",
+            "wikipedia": "en:Jiangmen railway station"
+          },
+          "anchorNodeId": 11469965754,
+          "anchorVersion": 3,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            11469965754,
+            11597704831
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 2414867084,
+              "anchorNodeIds": [],
+              "stopAreaIds": []
+            }
+          ],
+          "stopAreaIds": [],
+          "officialTelecode": "JOQ",
+          "officialPinyin": "jiangmen",
+          "nameTraditional": "",
+          "nameEnglish": "Jiangmen",
+          "englishSourceType": "original-OSM",
+          "englishSource": "https://www.openstreetmap.org/node/2414867084"
+        }
+      ]
+    },
+    "ownerRelationId": 5496304,
+    "ownerRelationVersion": 15,
+    "ownerRelationTags": {
+      "from": "小榄",
+      "name": "江门线",
+      "name:en": "Jiangmen Branch",
+      "name:zh": "江门线",
+      "operator": "中国铁路",
+      "operator:en": "China Railway",
+      "operator:wikidata": "Q1073489",
+      "operator:zh": "中国铁路",
+      "owner:note": "小榄至新会属广东广珠城际轨道交通有限责任公司，新会（不含）至江门属广东深茂铁路有限责任公司",
+      "ref": "3016",
+      "route": "railway",
+      "to": "江门",
+      "type": "route"
+    },
+    "path": {
+      "ownerRelationId": 5496304,
+      "relationVersion": 15,
+      "nodeIds": [
+        1831762682,
+        1831762696,
+        11597823683,
+        5486919674,
+        14026388665,
+        5486919675,
+        5486919676,
+        11469965746,
+        11597704868,
+        11597741573,
+        11597741584,
+        11469965745,
+        11469965752,
+        11469977672,
+        11597704834,
+        11597704843,
+        11597704841,
+        11597704836,
+        11597704835,
+        11469965754
+      ],
+      "coordinates": [
+        [
+          113.0660001,
+          22.520347
+        ],
+        [
+          113.0663127,
+          22.5160922
+        ],
+        [
+          113.0664286,
+          22.5145989
+        ],
+        [
+          113.0665451,
+          22.5129816
+        ],
+        [
+          113.0665821,
+          22.5121823
+        ],
+        [
+          113.0666031,
+          22.5112581
+        ],
+        [
+          113.066565,
+          22.5100998
+        ],
+        [
+          113.0659903,
+          22.5018426
+        ],
+        [
+          113.0657527,
+          22.4988971
+        ],
+        [
+          113.0655082,
+          22.4954422
+        ],
+        [
+          113.0654834,
+          22.495092
+        ],
+        [
+          113.0650642,
+          22.4891689
+        ],
+        [
+          113.0650471,
+          22.4887224
+        ],
+        [
+          113.0650383,
+          22.4882117
+        ],
+        [
+          113.0650408,
+          22.4876877
+        ],
+        [
+          113.0650599,
+          22.4861299
+        ],
+        [
+          113.0650783,
+          22.4846275
+        ],
+        [
+          113.0650925,
+          22.483469
+        ],
+        [
+          113.0650888,
+          22.483163
+        ],
+        [
+          113.0650735,
+          22.4826588
+        ]
+      ],
+      "nodeVersions": {
+        "1831762682": 14,
+        "1831762696": 4,
+        "11597823683": 3,
+        "5486919674": 3,
+        "14026388665": 1,
+        "5486919675": 2,
+        "5486919676": 2,
+        "11469965746": 3,
+        "11597704868": 1,
+        "11597741573": 1,
+        "11597741584": 1,
+        "11469965745": 2,
+        "11469965752": 2,
+        "11469977672": 2,
+        "11597704834": 1,
+        "11597704843": 1,
+        "11597704841": 1,
+        "11597704836": 1,
+        "11597704835": 1,
+        "11469965754": 3
+      },
+      "edgeWayIds": [
+        164295943,
+        1082539566,
+        1082539566,
+        1082539566,
+        1082539566,
+        1082539566,
+        1082539566,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733,
+        1235551733
+      ],
+      "wayVersions": {
+        "1235551733": 4,
+        "1082539566": 9,
+        "164295943": 22
+      },
+      "wayTags": {
+        "1235551733": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "old_name": "深茂铁路江茂段",
+          "operator": "中国铁路广州局集团有限公司",
+          "railway": "rail",
+          "ref": "0720",
+          "source": "Setinel-2",
+          "start_date": "2018-07-01",
+          "usage": "main",
+          "voltage": "25000",
+          "wikidata": "Q15921445",
+          "wikipedia": "zh:深湛铁路"
+        },
+        "1082539566": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "old_name": "深茂铁路江茂段",
+          "operator": "中国铁路广州局集团有限公司",
+          "railway": "rail",
+          "ref": "0720",
+          "source": "Setinel-2",
+          "start_date": "2018-07-01",
+          "usage": "main",
+          "voltage": "25000",
+          "wikidata": "Q15921445",
+          "wikipedia": "zh:深湛铁路"
+        },
+        "164295943": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "2",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "operator": "中国铁路广州局集团有限公司",
+          "passenger_lines": "2",
+          "railway": "rail",
+          "ref": "0720",
+          "start_date": "2011-01-07",
+          "usage": "main",
+          "voltage": "25000"
+        }
+      },
+      "lengthMeters": 4198.02557185712
+    },
+    "perWaySourceChecks": [
+      {
+        "wayId": 164295943,
+        "version": 22,
+        "ownerRelationId": 5496304,
+        "relationVersion": 15,
+        "tags": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "2",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "operator": "中国铁路广州局集团有限公司",
+          "passenger_lines": "2",
+          "railway": "rail",
+          "ref": "0720",
+          "start_date": "2011-01-07",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "originalConsecutiveEdgesVerified": true
+      },
+      {
+        "wayId": 1082539566,
+        "version": 9,
+        "ownerRelationId": 5496304,
+        "relationVersion": 15,
+        "tags": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "old_name": "深茂铁路江茂段",
+          "operator": "中国铁路广州局集团有限公司",
+          "railway": "rail",
+          "ref": "0720",
+          "source": "Setinel-2",
+          "start_date": "2018-07-01",
+          "usage": "main",
+          "voltage": "25000",
+          "wikidata": "Q15921445",
+          "wikipedia": "zh:深湛铁路"
+        },
+        "originalConsecutiveEdgesVerified": true
+      },
+      {
+        "wayId": 1235551733,
+        "version": 4,
+        "ownerRelationId": 5496304,
+        "relationVersion": 15,
+        "tags": {
+          "alt_name": "广珠城际江门支线",
+          "alt_name:zh": "广珠城际江门支线",
+          "alt_name:zh-Hans": "广珠城际江门支线",
+          "alt_name:zh-Hant": "廣珠城際江門支線",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "200",
+          "name": "江门线",
+          "name:zh": "江门线",
+          "name:zh-Hans": "江门线",
+          "name:zh-Hant": "江門線",
+          "old_name": "深茂铁路江茂段",
+          "operator": "中国铁路广州局集团有限公司",
+          "railway": "rail",
+          "ref": "0720",
+          "source": "Setinel-2",
+          "start_date": "2018-07-01",
+          "usage": "main",
+          "voltage": "25000",
+          "wikidata": "Q15921445",
+          "wikipedia": "zh:深湛铁路"
+        },
+        "originalConsecutiveEdgesVerified": true
+      }
+    ],
+    "missingExplicitPassengerTags": [
+      1082539566,
+      1235551733
+    ],
+    "decision": "Candidate for narrowly reviewed source-owned SectionFeatures if per-way official passenger evidence is independently accepted. Do not claim current tag contract passes or full Guangzhou South→Jiangmen route repaired."
+  },
+  "guangzhouSouth": {
+    "fromAttachment": {
+      "lineId": "cn-guangshengan-hsr",
+      "nodeId": 3676493382,
+      "coordinate": [
+        113.2643985,
+        22.9916267
+      ],
+      "published": true,
+      "exactPublishedVertexMatches": [
+        {
+          "segmentIndex": 0,
+          "vertexIndex": 0
+        }
+      ],
+      "sourceStationBindings": [
+        {
+          "groupId": "cn-official-12306-izq",
+          "stationCode": "CN-12306-IZQ",
+          "markerNodeId": 3677030154,
+          "markerVersion": 10,
+          "markerCoordinate": [
+            113.2640375,
+            22.9914143
+          ],
+          "markerTags": {
+            "alt_name": "广州南站;Guangzhou South;Guangzhou South Railway Station;Guangzhounan Railway Station",
+            "name": "广州南",
+            "name:en": "Guangzhounan",
+            "name:zh": "广州南",
+            "operator": "中国铁路广州局集团有限公司",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:ref": "65848",
+            "train": "yes",
+            "wikidata": "Q1073420",
+            "wikipedia": "zh:广州南站"
+          },
+          "anchorNodeId": 3676493382,
+          "anchorVersion": 3,
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "anchorEvidence": "exact-member-node",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            3676493382,
+            3676500715
+          ],
+          "bindingEvidence": [
+            {
+              "method": "official-corridor-membership-and-order",
+              "markerNodeId": 3677030154,
+              "anchorNodeIds": [
+                3676493382,
+                3676500715
+              ],
+              "stopAreaIds": [
+                13696629
+              ]
+            }
+          ],
+          "stopAreaIds": [
+            13696629
+          ],
+          "officialTelecode": "IZQ",
+          "officialPinyin": "guangzhounan",
+          "nameTraditional": "廣州南",
+          "nameEnglish": "Guangzhounan",
+          "englishSourceType": "official-corridor",
+          "englishSource": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf"
+        }
+      ]
+    },
+    "toAttachment": {
+      "lineId": "cn-osm-relation-5456788",
+      "nodeId": 3676506337,
+      "coordinate": [
+        113.2631271,
+        22.9908436
+      ],
+      "published": true,
+      "exactPublishedVertexMatches": [
+        {
+          "segmentIndex": 0,
+          "vertexIndex": 0
+        }
+      ],
+      "sourceStationBindings": [
+        {
+          "groupId": "cn-official-12306-izq",
+          "stationCode": "CN-12306-IZQ",
+          "markerNodeId": 3677030154,
+          "markerVersion": 10,
+          "markerCoordinate": [
+            113.2640375,
+            22.9914143
+          ],
+          "markerTags": {
+            "alt_name": "广州南站;Guangzhou South;Guangzhou South Railway Station;Guangzhounan Railway Station",
+            "name": "广州南",
+            "name:en": "Guangzhounan",
+            "name:zh": "广州南",
+            "operator": "中国铁路广州局集团有限公司",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:ref": "65848",
+            "train": "yes",
+            "wikidata": "Q1073420",
+            "wikipedia": "zh:广州南站"
+          },
+          "anchorNodeId": 3676506337,
+          "anchorVersion": 3,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "exact-member-node",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            3676506337,
+            3676506338
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 3677030154,
+              "anchorNodeIds": [
+                3676506337,
+                3676506338
+              ],
+              "stopAreaIds": [
+                13696629
+              ]
+            },
+            {
+              "method": "actual-route-track-node",
+              "markerNodeId": 3676506337,
+              "anchorNodeIds": [
+                3676506337
+              ],
+              "stopAreaIds": [
+                13696629
+              ]
+            },
+            {
+              "method": "stop-area-original-track-node-membership",
+              "markerNodeId": 3677030154,
+              "anchorNodeIds": [
+                3676506337,
+                3676506338
+              ],
+              "stopAreaIds": [
+                13696629
+              ]
+            },
+            {
+              "method": "actual-route-track-node",
+              "markerNodeId": 3676506338,
+              "anchorNodeIds": [
+                3676506338
+              ],
+              "stopAreaIds": [
+                13696629
+              ]
+            }
+          ],
+          "stopAreaIds": [
+            13696629
+          ],
+          "officialTelecode": "IZQ",
+          "officialPinyin": "guangzhounan",
+          "nameTraditional": "",
+          "nameEnglish": "Guangzhounan",
+          "englishSourceType": "original-OSM",
+          "englishSource": "https://www.openstreetmap.org/node/3677030154"
+        }
+      ]
+    },
+    "boundedSearch": {
+      "bbox": [
+        113.2,
+        22.925,
+        113.29,
+        23.02
+      ],
+      "originalWaysFetched": 676,
+      "localPublishedNodes": {
+        "cn-guangshengan-hsr": 75,
+        "cn-osm-relation-5456788": 82
+      },
+      "movementConstraint": "All successive heading changes <=90 degrees; no open-track reversals; station reversal not inferred at arbitrary switch nodes",
+      "results": {
+        "explicitPassengerTaggedOriginalRail": "No path from anchor or any local published HSR vertex to any local published Guangzhu vertex",
+        "allActiveOriginalRail": "No path from anchor or any local published HSR vertex to any local published Guangzhu vertex"
+      },
+      "limits": "Bounded source search only. Not proof that real-world Guangzhou South passenger through-service is disconnected. No global source scan or native route solve executed."
+    },
+    "rejectedNaiveUndirectedCandidate": {
+      "passengerTaggedOnly": true,
+      "lengthMeters": 3590.830270363864,
+      "nodeIds": [
+        3676493382,
+        3676457518,
+        3676457514,
+        3676457512,
+        3676452318,
+        3676452317,
+        3676452316,
+        3676451881,
+        3676448656,
+        3676448657,
+        3676448658,
+        3676448659,
+        3676448660,
+        3676448661,
+        3676448662,
+        3676448663,
+        3676448664,
+        2323943220,
+        3676403897,
+        3676403895,
+        3676403893,
+        3676403892,
+        3676403891,
+        3676405002,
+        3676405000,
+        3676405001,
+        3676401678,
+        3676402127,
+        3676402128,
+        1683689880,
+        3676506337
+      ],
+      "edgeWayIds": [
+        845559692,
+        904423879,
+        904423879,
+        363488752,
+        363483748,
+        363483748,
+        469938251,
+        916051581,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363482782,
+        363476146,
+        363476146,
+        363476146,
+        363476146,
+        363476146,
+        363476146,
+        363477238,
+        363477924,
+        363490127,
+        363490127,
+        363490127,
+        363490127,
+        845559667
+      ],
+      "nodes": {
+        "3676493382": {
+          "id": 3676493382,
+          "coordinate": [
+            113.2643985,
+            22.9916267
+          ],
+          "tags": {
+            "name": "广州南",
+            "name:de": "Guangzhou Süd",
+            "name:en": "Guangzhounan",
+            "name:zh": "广州南",
+            "public_transport": "stop_position",
+            "railway": "stop",
+            "train": "yes"
+          },
+          "version": 3
+        },
+        "3676457518": {
+          "id": 3676457518,
+          "coordinate": [
+            113.2660251,
+            22.9894356
+          ],
+          "tags": {},
+          "version": 3
+        },
+        "3676457514": {
+          "id": 3676457514,
+          "coordinate": [
+            113.2677239,
+            22.9871408
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676457512": {
+          "id": 3676457512,
+          "coordinate": [
+            113.2684808,
+            22.9861163
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 3
+        },
+        "3676452318": {
+          "id": 3676452318,
+          "coordinate": [
+            113.2677834,
+            22.9869604
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 2
+        },
+        "3676452317": {
+          "id": 3676452317,
+          "coordinate": [
+            113.2683998,
+            22.9861292
+          ],
+          "tags": {},
+          "version": 3
+        },
+        "3676452316": {
+          "id": 3676452316,
+          "coordinate": [
+            113.2693345,
+            22.9848744
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 3
+        },
+        "3676451881": {
+          "id": 3676451881,
+          "coordinate": [
+            113.2685822,
+            22.9857795
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 4
+        },
+        "3676448656": {
+          "id": 3676448656,
+          "coordinate": [
+            113.2693409,
+            22.9847641
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 3
+        },
+        "3676448657": {
+          "id": 3676448657,
+          "coordinate": [
+            113.2687037,
+            22.9855516
+          ],
+          "tags": {},
+          "version": 3
+        },
+        "3676448658": {
+          "id": 3676448658,
+          "coordinate": [
+            113.2681791,
+            22.9861546
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448659": {
+          "id": 3676448659,
+          "coordinate": [
+            113.2678637,
+            22.9864636
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448660": {
+          "id": 3676448660,
+          "coordinate": [
+            113.267353,
+            22.9868965
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448661": {
+          "id": 3676448661,
+          "coordinate": [
+            113.26638,
+            22.9876105
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448662": {
+          "id": 3676448662,
+          "coordinate": [
+            113.2658491,
+            22.9880568
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448663": {
+          "id": 3676448663,
+          "coordinate": [
+            113.2654562,
+            22.9884474
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676448664": {
+          "id": 3676448664,
+          "coordinate": [
+            113.2652306,
+            22.9887212
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "2323943220": {
+          "id": 2323943220,
+          "coordinate": [
+            113.2649691,
+            22.9890343
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 4
+        },
+        "3676403897": {
+          "id": 3676403897,
+          "coordinate": [
+            113.2654212,
+            22.9883966
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676403895": {
+          "id": 3676403895,
+          "coordinate": [
+            113.2657564,
+            22.9878929
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676403893": {
+          "id": 3676403893,
+          "coordinate": [
+            113.2659832,
+            22.9875117
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676403892": {
+          "id": 3676403892,
+          "coordinate": [
+            113.266343,
+            22.9867924
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676403891": {
+          "id": 3676403891,
+          "coordinate": [
+            113.2666417,
+            22.9862576
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "3676405002": {
+          "id": 3676405002,
+          "coordinate": [
+            113.2672804,
+            22.9852871
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 2
+        },
+        "3676405000": {
+          "id": 3676405000,
+          "coordinate": [
+            113.2677649,
+            22.9846245
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 3
+        },
+        "3676405001": {
+          "id": 3676405001,
+          "coordinate": [
+            113.2680577,
+            22.9841384
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 3
+        },
+        "3676401678": {
+          "id": 3676401678,
+          "coordinate": [
+            113.2670332,
+            22.9855302
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 2
+        },
+        "3676402127": {
+          "id": 3676402127,
+          "coordinate": [
+            113.2662448,
+            22.986595
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 2
+        },
+        "3676402128": {
+          "id": 3676402128,
+          "coordinate": [
+            113.265816,
+            22.9871997
+          ],
+          "tags": {},
+          "version": 2
+        },
+        "1683689880": {
+          "id": 1683689880,
+          "coordinate": [
+            113.2647246,
+            22.988656
+          ],
+          "tags": {},
+          "version": 6
+        },
+        "3676506337": {
+          "id": 3676506337,
+          "coordinate": [
+            113.2631271,
+            22.9908436
+          ],
+          "tags": {
+            "name": "广州南",
+            "name:de": "Guangzhou Süd",
+            "name:en": "Guangzhounan",
+            "name:zh": "广州南",
+            "public_transport": "stop_position",
+            "railway": "stop",
+            "train": "yes"
+          },
+          "version": 3
+        }
+      },
+      "ways": {
+        "363476146": {
+          "id": 363476146,
+          "nodes": [
+            2323943220,
+            3676403897,
+            3676403895,
+            3676403893,
+            3676403892,
+            3676403891,
+            3676405002
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "note": "from GPS tracks and partly bing pics",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 8
+        },
+        "363477238": {
+          "id": 363477238,
+          "nodes": [
+            3676402131,
+            3676405005,
+            3676405003,
+            3676405002,
+            3676405000,
+            3676409730,
+            3676409728,
+            12071693932,
+            3676409727
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "160",
+            "name": "广珠城际线",
+            "name:en": "Guangzhou–Zhuhai Intercity Railway",
+            "name:zh": "广珠城际线",
+            "note": "from GPS tracks and partly bing pics",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "ref": "3016",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 17
+        },
+        "363477924": {
+          "id": 363477924,
+          "nodes": [
+            3676405000,
+            3676405001
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 3
+        },
+        "363482782": {
+          "id": 363482782,
+          "nodes": [
+            2323943220,
+            3676448664,
+            3676448663,
+            3676448662,
+            3676448661,
+            3676448660,
+            3676448659,
+            3676448658,
+            3676448657,
+            3676448656
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "note": "from GPS tracks and partly bing pics",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 4
+        },
+        "363483748": {
+          "id": 363483748,
+          "nodes": [
+            3676452315,
+            3676452316,
+            3676452317,
+            3676452318,
+            3676452319,
+            3676452321,
+            3676457625
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 5
+        },
+        "363488752": {
+          "id": 363488752,
+          "nodes": [
+            3676452318,
+            3676457512
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 3
+        },
+        "363490127": {
+          "id": 363490127,
+          "nodes": [
+            3676409726,
+            3676409729,
+            3676405001,
+            3676401678,
+            3676402127,
+            3676402128,
+            1683689880
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "160",
+            "name": "广珠城际线",
+            "name:en": "Guangzhou–Zhuhai Intercity Railway",
+            "name:zh": "广珠城际线",
+            "note": "from GPS tracks and partly bing pics",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "ref": "3016",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 16
+        },
+        "469938251": {
+          "id": 469938251,
+          "nodes": [
+            3676451881,
+            3676452316
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "layer": "1",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "service": "siding",
+            "voltage": "25000"
+          },
+          "version": 1
+        },
+        "845559667": {
+          "id": 845559667,
+          "nodes": [
+            1683689880,
+            3676506337,
+            1683689895
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "160",
+            "name": "广珠城际线",
+            "name:en": "Guangzhou–Zhuhai Intercity Railway",
+            "name:zh": "广珠城际线",
+            "note": "from GPS tracks and partly bing pics",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:track_ref": "XXIV",
+            "railway:traffic_mode": "passenger",
+            "ref": "3016",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 11
+        },
+        "845559692": {
+          "id": 845559692,
+          "nodes": [
+            3676457518,
+            3676493382
+          ],
+          "tags": {
+            "alt_name": "广深港高速铁路",
+            "alt_name:en": "Guangzhou-Shenzhen-Hong Kong Highspeed Line",
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "name": "广深港高速线",
+            "name:en": "Guangshengang Highspeed Line",
+            "name:ja": "広深港高速線",
+            "name:nan": "Kńg-Tshim-Káng-ko-sok-thih-lōo",
+            "name:yue": "廣深港高速綫",
+            "name:zh": "广深港高速线",
+            "name:zh-Hans": "广深港高速线",
+            "name:zh-Hant": "廣深港高速綫",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:track_ref": "X",
+            "railway:traffic_mode": "passenger",
+            "ref": "3021",
+            "short_name": "广深港高铁",
+            "start_date": "2011-12-26",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 7
+        },
+        "904423879": {
+          "id": 904423879,
+          "nodes": [
+            3676457511,
+            3676457512,
+            3676457514,
+            3676457518
+          ],
+          "tags": {
+            "alt_name": "广深港高速铁路",
+            "alt_name:en": "Guangzhou-Shenzhen-Hong Kong Highspeed Line",
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "name": "广深港高速线",
+            "name:en": "Guangshengang Highspeed Line",
+            "name:ja": "広深港高速線",
+            "name:nan": "Kńg-Tshim-Káng-ko-sok-thih-lōo",
+            "name:yue": "廣深港高速綫",
+            "name:zh": "广深港高速线",
+            "name:zh-Hans": "广深港高速线",
+            "name:zh-Hant": "廣深港高速綫",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "ref": "3021",
+            "short_name": "广深港高铁",
+            "start_date": "2011-12-26",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 6
+        },
+        "916051581": {
+          "id": 916051581,
+          "nodes": [
+            3676448656,
+            3676451881
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "railway:traffic_mode": "passenger",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "version": 3
+        }
+      },
+      "routeRelationMembershipByWay": {
+        "363490127": [
+          {
+            "relationId": 5456788,
+            "version": 31,
+            "memberRole": ""
+          }
+        ],
+        "845559667": [
+          {
+            "relationId": 5456788,
+            "version": 31,
+            "memberRole": ""
+          }
+        ],
+        "363477238": [
+          {
+            "relationId": 5456788,
+            "version": 31,
+            "memberRole": ""
+          }
+        ],
+        "845559692": [
+          {
+            "relationId": 9405634,
+            "version": 33,
+            "memberRole": ""
+          }
+        ],
+        "904423879": [
+          {
+            "relationId": 9405634,
+            "version": 33,
+            "memberRole": ""
+          }
+        ]
+      },
+      "rejectionReasons": [
+        {
+          "nodeId": 3676457512,
+          "turnDegrees": 176.9643482455017,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 3676452318,
+          "turnDegrees": 177.06445705697124,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 3676452316,
+          "turnDegrees": 177.01793856071615,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 3676451881,
+          "turnDegrees": 177.1001495792817,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 3676448656,
+          "turnDegrees": 177.84044466301273,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 2323943220,
+          "turnDegrees": 175.57500515235066,
+          "kind": "open-track-switch-reversal"
+        },
+        {
+          "nodeId": 3676405001,
+          "turnDegrees": 174.88559738537433,
+          "kind": "open-track-switch-reversal"
+        }
+      ],
+      "decision": "Reject. Multiple open-track switch reversals; no single railway route owns full path. Passenger tags do not establish valid movement or corridor identity."
+    }
+  },
+  "contractConstraints": [
+    "Do not create station chord or shared station-coordinate edge between independent platform tracks.",
+    "Do not promote undirected graph adjacency that requires open-track switch reversals.",
+    "Maintain actual owner railway identity and explicit original relation/way/node versions for every adopted physical section.",
+    "Do not infer all sidings or unnamed tracks to be passenger-owned by surrounding corridor.",
+    "Do not invent passenger stations to publish stationless original physical continuations."
+  ]
+}

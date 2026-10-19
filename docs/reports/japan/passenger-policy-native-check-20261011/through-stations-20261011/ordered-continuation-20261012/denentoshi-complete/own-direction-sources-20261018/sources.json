@@ -1,0 +1,77 @@
+{
+  "scope": "bounded own-line interval03 research",
+  "downloads": [
+    {
+      "file": "tokyu-shintamasen-chapter03-contents.pdf",
+      "url": "https://www.tokyu.co.jp/history/shintamasen/pdf/shintamasen_chapter03.pdf",
+      "bytes": 7215344,
+      "retrieved": "2026-10-18",
+      "status": "original archived locally; relevant original page images retained in report",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/tokyu-shintamasen-chapter03-contents.pdf"
+    },
+    {
+      "file": "tokyu-shintamasen-chapter04-route.pdf",
+      "url": "https://www.tokyu.co.jp/history/shintamasen/pdf/shintamasen_chapter04.pdf",
+      "bytes": 3656397,
+      "retrieved": "2026-10-18",
+      "status": "original archived locally; relevant original page images retained in report",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/tokyu-shintamasen-chapter04-route.pdf"
+    },
+    {
+      "file": "tokyu-shintamasen-chapter06-civil.pdf",
+      "url": "https://www.tokyu.co.jp/history/shintamasen/pdf/shintamasen_chapter06.pdf",
+      "bytes": 359960528,
+      "retrieved": "2026-10-18",
+      "status": "original archived locally; relevant original page images retained in report",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/tokyu-shintamasen-chapter06-civil.pdf"
+    },
+    {
+      "file": "tokyu-shintamasen-chapter08-track.pdf",
+      "url": "https://www.tokyu.co.jp/history/shintamasen/pdf/shintamasen_chapter08.pdf",
+      "bytes": 34425212,
+      "retrieved": "2026-10-18",
+      "status": "original archived locally; relevant original page images retained in report",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/tokyu-shintamasen-chapter08-track.pdf"
+    },
+    {
+      "file": "mlit-N02-25_GML.zip",
+      "url": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip",
+      "bytes": 14903774,
+      "retrieved": "2026-10-18",
+      "status": "original archived locally; relevant original page images retained in report",
+      "archivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/mlit-N02-25_GML.zip"
+    },
+    {
+      "file": "tokyu-construction-history-index.html",
+      "url": "https://www.tokyu.co.jp/history/shintamasen/",
+      "bytes": 15746,
+      "retrieved": "2026-10-18",
+      "status": "downloaded"
+    },
+    {
+      "file": "osm-api-local-map.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=139.651,35.629,139.657,35.632",
+      "bytes": 1890682,
+      "retrieved": "2026-10-18",
+      "status": "downloaded",
+      "attribution": "© OpenStreetMap contributors; ODbL 1.0"
+    }
+  ],
+  "derivatives": {
+    "civil-pdf-page010.png": "civil PDF page10, scale-to2000",
+    "civil-pdf-page012.png": "civil PDF page12 (printed170), scale-to2000",
+    "civil-pdf-page013.png": "civil PDF page13 (printed171), scale-to2300",
+    "civil-page010-shinmachi-chainage-crop.png": "civil PDF page10, scale-to5000 render then pixel crop(200,1200,1700,1950)",
+    "mlit-N02-25-own-interval03-fragment.json": "exact named official GeoJSON feature containing disputed coordinate",
+    "own-source-comparison.json": "targeted source/capture comparison, local equirectangular turn/edge lengths",
+    "osm-local-railways-extracted.json": "own named railway ways in saved API XML, full tags/nodeIDs/coordinates",
+    "osm-own-direction-reference-fragments.json": "exact own local controls plus actual directional relation memberships; no geometry transformation except reversing opposite-way coordinate order"
+  },
+  "excludedAttempts": [
+    {
+      "url": "https://overpass-api.de/api/interpreter",
+      "query": "[out:json][timeout:25];way[railway](35.628,139.650,35.633,139.660);out tags geom;",
+      "status": "HTTP406; no geometry evidence"
+    }
+  ]
+}

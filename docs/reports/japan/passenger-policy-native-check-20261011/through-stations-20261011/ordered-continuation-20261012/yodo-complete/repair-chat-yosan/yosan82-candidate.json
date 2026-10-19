@@ -1,0 +1,895 @@
+{
+  "status": "candidate-only-81-required-nativepending",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 82,
+  "fromStationID": "009324",
+  "toStationID": "009339",
+  "coordinates": [
+    [
+      132.50131185940495,
+      33.38012344711494
+    ],
+    [
+      132.50135049570088,
+      33.38001875404634
+    ],
+    [
+      132.50143632638935,
+      33.379861971318036
+    ],
+    [
+      132.501554343586,
+      33.37963799550152
+    ],
+    [
+      132.5016777252007,
+      33.37941401910813
+    ],
+    [
+      132.50180110681538,
+      33.379190042137864
+    ],
+    [
+      132.501913759594,
+      33.37896606459073
+    ],
+    [
+      132.50203177679066,
+      33.37874208646674
+    ],
+    [
+      132.5020666455079,
+      33.37856738312962
+    ],
+    [
+      132.50258717496098,
+      33.37753236631919
+    ],
+    [
+      132.5028446670264,
+      33.37699480899051
+    ],
+    [
+      132.5031128879279,
+      33.37645724833918
+    ],
+    [
+      132.5033811088294,
+      33.37591968436523
+    ],
+    [
+      132.50370913433926,
+      33.37524464907909
+    ],
+    [
+      132.5039666264047,
+      33.374707077610324
+    ],
+    [
+      132.50423484730618,
+      33.37416950281901
+    ],
+    [
+      132.50450306820767,
+      33.37363192470519
+    ],
+    [
+      132.5047605602731,
+      33.37309434326888
+    ],
+    [
+      132.50519554042364,
+      33.372238268099565
+    ],
+    [
+      132.505442303653,
+      33.371700678050026
+    ],
+    [
+      132.5057105245545,
+      33.3711630846781
+    ],
+    [
+      132.50597338103796,
+      33.37062548798381
+    ],
+    [
+      132.50624160193945,
+      33.37008788796718
+    ],
+    [
+      132.50661956161804,
+      33.36931855384573
+    ],
+    [
+      132.50687973589248,
+      33.368780945752476
+    ],
+    [
+      132.50713991016693,
+      33.36824333433699
+    ],
+    [
+      132.50741349548645,
+      33.36770571959928
+    ],
+    [
+      132.50768171638794,
+      33.367168101539384
+    ],
+    [
+      132.50804035520986,
+      33.366403205630576
+    ],
+    [
+      132.50830857611135,
+      33.36586557952199
+    ],
+    [
+      132.50858216143087,
+      33.365327950091306
+    ],
+    [
+      132.50884501791433,
+      33.36479031733855
+    ],
+    [
+      132.50915004529952,
+      33.36419203803607
+    ],
+    [
+      132.50926001586913,
+      33.364012825148016
+    ],
+    [
+      132.5094343594551,
+      33.36374400512385
+    ],
+    [
+      132.5095631054878,
+      33.36356479131301
+    ],
+    [
+      132.5096301607132,
+      33.36343038071266
+    ],
+    [
+      132.50977231779098,
+      33.36329596990467
+    ],
+    [
+      132.50996007242202,
+      33.36307195142999
+    ],
+    [
+      132.51013978042602,
+      33.36284793237857
+    ],
+    [
+      132.51019729258417,
+      33.3627786071795
+    ]
+  ],
+  "preciseHeadControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        494,
+        315
+      ],
+      "coordinate": [
+        132.50135049570088,
+        33.38001875404634
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        510,
+        350
+      ],
+      "coordinate": [
+        132.50143632638935,
+        33.379861971318036
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        532,
+        400
+      ],
+      "coordinate": [
+        132.501554343586,
+        33.37963799550152
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        555,
+        450
+      ],
+      "coordinate": [
+        132.5016777252007,
+        33.37941401910813
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        578,
+        500
+      ],
+      "coordinate": [
+        132.50180110681538,
+        33.379190042137864
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        599,
+        550
+      ],
+      "coordinate": [
+        132.501913759594,
+        33.37896606459073
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        621,
+        600
+      ],
+      "coordinate": [
+        132.50203177679066,
+        33.37874208646674
+      ]
+    }
+  ],
+  "bodyPixelControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000000/view.json",
+      "pixel": [
+        576.0,
+        540
+      ],
+      "coordinate": [
+        132.5020666455079,
+        33.37856738312962
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        571,
+        540
+      ],
+      "actualBlueBandRowPixels": [
+        574,
+        575,
+        576,
+        577,
+        578
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000001/view.json",
+      "pixel": [
+        492.5,
+        330
+      ],
+      "coordinate": [
+        132.50258717496098,
+        33.37753236631919
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        493,
+        330
+      ],
+      "actualBlueBandRowPixels": [
+        491,
+        492,
+        493,
+        494
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000001/view.json",
+      "pixel": [
+        516.5,
+        390
+      ],
+      "coordinate": [
+        132.5028446670264,
+        33.37699480899051
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        514,
+        390
+      ],
+      "actualBlueBandRowPixels": [
+        515,
+        516,
+        517,
+        518
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000001/view.json",
+      "pixel": [
+        541.5,
+        450
+      ],
+      "coordinate": [
+        132.5031128879279,
+        33.37645724833918
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        537,
+        450
+      ],
+      "actualBlueBandRowPixels": [
+        540,
+        541,
+        542,
+        543
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000001/view.json",
+      "pixel": [
+        566.5,
+        510
+      ],
+      "coordinate": [
+        132.5033811088294,
+        33.37591968436523
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        559,
+        510
+      ],
+      "actualBlueBandRowPixels": [
+        565,
+        566,
+        567,
+        568
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000002/view.json",
+      "pixel": [
+        464.5,
+        260
+      ],
+      "coordinate": [
+        132.50370913433926,
+        33.37524464907909
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        464,
+        260
+      ],
+      "actualBlueBandRowPixels": [
+        463,
+        464,
+        465,
+        466
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000002/view.json",
+      "pixel": [
+        488.5,
+        320
+      ],
+      "coordinate": [
+        132.5039666264047,
+        33.374707077610324
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        487,
+        320
+      ],
+      "actualBlueBandRowPixels": [
+        486,
+        487,
+        488,
+        490,
+        491
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000002/view.json",
+      "pixel": [
+        513.5,
+        380
+      ],
+      "coordinate": [
+        132.50423484730618,
+        33.37416950281901
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        508,
+        380
+      ],
+      "actualBlueBandRowPixels": [
+        512,
+        513,
+        514,
+        515
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000002/view.json",
+      "pixel": [
+        538.5,
+        440
+      ],
+      "coordinate": [
+        132.50450306820767,
+        33.37363192470519
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        531,
+        440
+      ],
+      "actualBlueBandRowPixels": [
+        537,
+        538,
+        539,
+        540
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000002/view.json",
+      "pixel": [
+        562.5,
+        500
+      ],
+      "coordinate": [
+        132.5047605602731,
+        33.37309434326888
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        553,
+        500
+      ],
+      "actualBlueBandRowPixels": [
+        561,
+        562,
+        563,
+        564
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000003/view.json",
+      "pixel": [
+        471.0,
+        270
+      ],
+      "coordinate": [
+        132.50519554042364,
+        33.372238268099565
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        463,
+        270
+      ],
+      "actualBlueBandRowPixels": [
+        468,
+        469,
+        470,
+        471,
+        472,
+        473,
+        474
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000003/view.json",
+      "pixel": [
+        494.0,
+        330
+      ],
+      "coordinate": [
+        132.505442303653,
+        33.371700678050026
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        486,
+        330
+      ],
+      "actualBlueBandRowPixels": [
+        492,
+        493,
+        494,
+        495,
+        496
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000003/view.json",
+      "pixel": [
+        519.0,
+        390
+      ],
+      "coordinate": [
+        132.5057105245545,
+        33.3711630846781
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        508,
+        390
+      ],
+      "actualBlueBandRowPixels": [
+        517,
+        518,
+        519,
+        520,
+        521
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000003/view.json",
+      "pixel": [
+        543.5,
+        450
+      ],
+      "coordinate": [
+        132.50597338103796,
+        33.37062548798381
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        530,
+        450
+      ],
+      "actualBlueBandRowPixels": [
+        542,
+        543,
+        544,
+        545
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000003/view.json",
+      "pixel": [
+        568.5,
+        510
+      ],
+      "coordinate": [
+        132.50624160193945,
+        33.37008788796718
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        554,
+        510
+      ],
+      "actualBlueBandRowPixels": [
+        567,
+        568,
+        569,
+        570
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000004/view.json",
+      "pixel": [
+        472.5,
+        270
+      ],
+      "coordinate": [
+        132.50661956161804,
+        33.36931855384573
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        464,
+        270
+      ],
+      "actualBlueBandRowPixels": [
+        471,
+        472,
+        473,
+        474
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000004/view.json",
+      "pixel": [
+        496.75,
+        330
+      ],
+      "coordinate": [
+        132.50687973589248,
+        33.368780945752476
+      ],
+      "basis": "Actual glyphlabel occludesrow330: continuity between literal sameownband472.5y270 and521y390, not blueletter at481330.",
+      "initialVisualPixel": [
+        487,
+        330
+      ],
+      "actualBlueBandRowPixels": [
+        481
+      ],
+      "rejectedRowTextPick": [
+        481.0,
+        330
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000004/view.json",
+      "pixel": [
+        521.0,
+        390
+      ],
+      "coordinate": [
+        132.50713991016693,
+        33.36824333433699
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        510,
+        390
+      ],
+      "actualBlueBandRowPixels": [
+        519,
+        520,
+        521,
+        523
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000004/view.json",
+      "pixel": [
+        546.5,
+        450
+      ],
+      "coordinate": [
+        132.50741349548645,
+        33.36770571959928
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        532,
+        450
+      ],
+      "actualBlueBandRowPixels": [
+        544,
+        545,
+        546,
+        548,
+        549
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000004/view.json",
+      "pixel": [
+        571.5,
+        510
+      ],
+      "coordinate": [
+        132.50768171638794,
+        33.367168101539384
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        556,
+        510
+      ],
+      "actualBlueBandRowPixels": [
+        569,
+        570,
+        571,
+        573,
+        574
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000005/view.json",
+      "pixel": [
+        472.5,
+        270
+      ],
+      "coordinate": [
+        132.50804035520986,
+        33.366403205630576
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        463,
+        270
+      ],
+      "actualBlueBandRowPixels": [
+        472,
+        473
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000005/view.json",
+      "pixel": [
+        497.5,
+        330
+      ],
+      "coordinate": [
+        132.50830857611135,
+        33.36586557952199
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        486,
+        330
+      ],
+      "actualBlueBandRowPixels": [
+        497,
+        498
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000005/view.json",
+      "pixel": [
+        523.0,
+        390
+      ],
+      "coordinate": [
+        132.50858216143087,
+        33.365327950091306
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        509,
+        390
+      ],
+      "actualBlueBandRowPixels": [
+        521,
+        522,
+        524,
+        525
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002793/000005/view.json",
+      "pixel": [
+        547.5,
+        450
+      ],
+      "coordinate": [
+        132.50884501791433,
+        33.36479031733855
+      ],
+      "basis": "Actual thin blueband cross-section inside manually identified unique labelled Yosan corridor. Separate text clusters excluded. No branch selected by RGB persistence.",
+      "initialVisualPixel": [
+        532,
+        450
+      ],
+      "actualBlueBandRowPixels": [
+        546,
+        547,
+        548,
+        549
+      ]
+    }
+  ],
+  "preciseTailControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        383,
+        100
+      ],
+      "coordinate": [
+        132.50915004529952,
+        33.36419203803607
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        403.5,
+        140
+      ],
+      "coordinate": [
+        132.50926001586913,
+        33.364012825148016
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        436,
+        200
+      ],
+      "coordinate": [
+        132.5094343594551,
+        33.36374400512385
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        460,
+        240
+      ],
+      "coordinate": [
+        132.5095631054878,
+        33.36356479131301
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        472.5,
+        270
+      ],
+      "coordinate": [
+        132.5096301607132,
+        33.36343038071266
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        499,
+        300
+      ],
+      "coordinate": [
+        132.50977231779098,
+        33.36329596990467
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        534,
+        350
+      ],
+      "coordinate": [
+        132.50996007242202,
+        33.36307195142999
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-unomachi-009339/view.json",
+      "pixel": [
+        567.5,
+        400
+      ],
+      "coordinate": [
+        132.51013978042602,
+        33.36284793237857
+      ]
+    }
+  ],
+  "headAlias": [
+    132.50131185940495,
+    33.38012344711494
+  ],
+  "tailAlias": [
+    132.51019729258417,
+    33.3627786071795
+  ],
+  "warnings": [
+    "KamiUwa move confirmed; complete81 required beforefreeze.",
+    "Literal unique labelledbluecartographic body controls ±2px; exactrawcandidate reviewpending.",
+    "Unomachi eastern pairedgroup allocationwarning retained; no physicalgraph/railallocationclaim."
+  ],
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true,
+  "nativeAcceptance": false,
+  "turnsOver30": [],
+  "rejectedBodyPixelControls": []
+}

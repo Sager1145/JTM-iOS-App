@@ -1,0 +1,1 @@
+Root visually reviewed all five changed Jounan #7/#8 reprojections and both accompanying Renraku proposals. Jounan sharedKami frame chainage correction is accepted at raw level with exact unchangedV2 interval reuse for0–6,9–10; native/Main acceptance pending. Accompanying RenrakuV1 start rejected separately for off-rail platform-body axis.

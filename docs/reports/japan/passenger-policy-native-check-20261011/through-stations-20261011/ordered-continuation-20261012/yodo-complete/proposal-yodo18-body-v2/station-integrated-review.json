@@ -1,0 +1,10 @@
+{
+  "status": "candidate-only-raw-reprojections-reviewed",
+  "coordinateFile": "yodo-interval-18-station-integrated-coordinates.json",
+  "fileSha256": "14ec3112692daac7e0a5f5d8d3f26627451f6b1fe6dfab508df7c77f7d62684f",
+  "pointCount": 120,
+  "all19StationIntegratedReprojectionsActuallyOpened": true,
+  "maxTurnDegrees": 25.055375304413413,
+  "turnsOver30": [],
+  "formalAcceptance": false
+}

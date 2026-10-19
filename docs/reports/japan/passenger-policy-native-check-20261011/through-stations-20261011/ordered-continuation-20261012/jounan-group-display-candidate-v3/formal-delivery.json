@@ -1,0 +1,33 @@
+{
+  "status": "formally-applied-and-delivered",
+  "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+  "formalPackageSha256": "fc1b976887463fcf262235178fdefd8038d954eb12189d07fe63ce1586354455",
+  "geometryEqualsAcceptedCandidate": true,
+  "physicalTopologyChanged": false,
+  "focusedTests": "10/10 PASS; 670.676ms",
+  "appsUpdated": 6,
+  "strictDeepSignatures": "all6 PASS",
+  "nativeCoveragePerInspector": {
+    "intervals": 29,
+    "viewpoints": 71,
+    "panels": 213,
+    "freshViews": 30,
+    "reusedInputEquivalentViews": 41
+  },
+  "mainAcceptance": {
+    "completeIntervalPairs": 29,
+    "contextPairs": 1,
+    "panels": 60
+  },
+  "formalMainConfirmation": {
+    "pairs": [
+      "jounan-interval-02",
+      "full-six-line-context"
+    ],
+    "actualPixelsReviewedByRoot": true,
+    "budgetDrops": 0
+  },
+  "builderEvidence": "reused accepted V3 production inputs; no new builder run",
+  "nextOriginalOrdinal": 17,
+  "nationwideCompletion": false
+}

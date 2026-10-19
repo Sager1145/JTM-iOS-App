@@ -1,0 +1,400 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 350,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.601703000000001,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.721609,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.598738388509481,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.72030857948388,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.596006541774429,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.71848676169193,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.594270774597277,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.71531847595512,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.593228740294919,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.7116660507233,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.592169194103455,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.70802345080966,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.591113149408081,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.70437828068839,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.590062023248173,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.70072997545458,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.589027644589336,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.69707482592619,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.587992311033382,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.69342000941793,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.586896876918679,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.68979255698292,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.585818600043019,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.6861574268429,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.58476954060302,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.682508376735,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.583726574842878,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.67885667393173,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.582560509336915,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.67526347412357,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.581327511221858,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.67170253621987,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.580050197350289,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.66816588546027,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.57851153609171,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.66481072206722,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-17"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000018",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.575691674410045,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.66326862051568,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-18"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment\/captures\/000000\/000019",
+      "itemID" : "jp-東日本旅客鉄道-総武線-3#3",
+      "latitude" : 35.574666999999998,
+      "lineDependency" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+      "longitude" : 139.66336200000001,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-総武線-3#3#point-19"
+    }
+  ]
+}

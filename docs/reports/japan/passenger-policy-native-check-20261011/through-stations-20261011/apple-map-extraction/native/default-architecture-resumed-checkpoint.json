@@ -1,0 +1,16 @@
+{
+  "pid": 46271,
+  "signal": "SIGCONT",
+  "observedProcessState": "Rs",
+  "beforeCapturedCount": 78146,
+  "beforeFailedCount": 6,
+  "checkpoint": {
+    "capturedCount": 78260,
+    "failedCount": 7,
+    "format": "jtm-native-batch-capture-v1",
+    "pendingCount": 13949,
+    "planDigest": "1e616b862b86493543065ce15a1a7c0961f8dbc481124be66005108c9997587a",
+    "unavailableIntervalCount": 0
+  },
+  "runtimeScope": "existing loaded Inspector; no evidence for newly compiled Core interfaces or admission"
+}

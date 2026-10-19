@@ -1,0 +1,627 @@
+{
+  "sourceFile": "osm-api-komagome-own-platforms.xml",
+  "attribution": "© OpenStreetMap contributors, ODbL1.0",
+  "ways": [
+    {
+      "id": "144126002",
+      "version": "12",
+      "timestamp": "2025-09-10T22:16:56Z",
+      "tags": {
+        "area": "yes",
+        "bench": "yes",
+        "level": "-1",
+        "public_transport": "platform",
+        "railway": "platform",
+        "ref": "1;2",
+        "shelter": "yes",
+        "train": "yes"
+      },
+      "nodeIDs": [
+        "1577053049",
+        "6871503174",
+        "13055975924",
+        "6871503175",
+        "13055975989",
+        "6871503176",
+        "1577052730",
+        "1577053049"
+      ],
+      "coordinates": [
+        [
+          139.7493573,
+          35.7375175
+        ],
+        [
+          139.7493714,
+          35.7375015
+        ],
+        [
+          139.7491493,
+          35.7373788
+        ],
+        [
+          139.7485973,
+          35.7371242
+        ],
+        [
+          139.7476189,
+          35.7367138
+        ],
+        [
+          139.7469923,
+          35.7364565
+        ],
+        [
+          139.7469707,
+          35.736498
+        ],
+        [
+          139.7493573,
+          35.7375175
+        ]
+      ]
+    },
+    {
+      "id": "1332808517",
+      "version": "2",
+      "timestamp": "2024-12-06T13:20:37Z",
+      "tags": {
+        "layer": "-3",
+        "level": "-2",
+        "public_transport": "platform",
+        "railway": "platform",
+        "subway": "yes",
+        "tunnel": "yes"
+      },
+      "nodeIDs": [
+        "12330438340",
+        "12330438345",
+        "12330438346",
+        "12330438342",
+        "12330438349",
+        "12330438341",
+        "12330438338",
+        "12330438348",
+        "12330438343",
+        "12330438347",
+        "12330438344",
+        "12330438339",
+        "12330438334",
+        "12330438340"
+      ],
+      "coordinates": [
+        [
+          139.746463,
+          35.7366578
+        ],
+        [
+          139.7464803,
+          35.7366112
+        ],
+        [
+          139.7465962,
+          35.7363119
+        ],
+        [
+          139.7467653,
+          35.7358902
+        ],
+        [
+          139.7468302,
+          35.7357311
+        ],
+        [
+          139.7469877,
+          35.7354422
+        ],
+        [
+          139.7470434,
+          35.7354653
+        ],
+        [
+          139.7469058,
+          35.7357518
+        ],
+        [
+          139.7468385,
+          35.7359129
+        ],
+        [
+          139.7466695,
+          35.7363293
+        ],
+        [
+          139.7465487,
+          35.7366291
+        ],
+        [
+          139.7465316,
+          35.7366735
+        ],
+        [
+          139.7464967,
+          35.7366655
+        ],
+        [
+          139.746463,
+          35.7366578
+        ]
+      ]
+    },
+    {
+      "id": "1565073018",
+      "version": "2",
+      "timestamp": "2026-10-06T13:48:54Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "JR Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:track_ref": "山手線 : 内回り",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "nodeIDs": [
+        "14250777934",
+        "1577053102",
+        "1577052973",
+        "1577052923",
+        "1577052824"
+      ],
+      "coordinates": [
+        [
+          139.7498905,
+          35.7377276
+        ],
+        [
+          139.7495474,
+          35.7375589
+        ],
+        [
+          139.7487845,
+          35.7371918
+        ],
+        [
+          139.7483874,
+          35.7370137
+        ],
+        [
+          139.7477459,
+          35.7367446
+        ]
+      ]
+    },
+    {
+      "id": "1565541052",
+      "version": "1",
+      "timestamp": "2026-10-06T13:48:54Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "cutting": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "JR Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:track_ref": "山手線 : 内回り",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "nodeIDs": [
+        "1577052824",
+        "3708276247",
+        "1577052677",
+        "1577052590",
+        "1577052549",
+        "1577052536",
+        "1577052518",
+        "1577052499"
+      ],
+      "coordinates": [
+        [
+          139.7477459,
+          35.7367446
+        ],
+        [
+          139.7472559,
+          35.7365575
+        ],
+        [
+          139.7463757,
+          35.7361948
+        ],
+        [
+          139.7456615,
+          35.7359034
+        ],
+        [
+          139.7448995,
+          35.7355907
+        ],
+        [
+          139.7444512,
+          35.7354078
+        ],
+        [
+          139.7439956,
+          35.7352219
+        ],
+        [
+          139.7435532,
+          35.7350448
+        ]
+      ]
+    },
+    {
+      "id": "1565541057",
+      "version": "1",
+      "timestamp": "2026-10-06T13:48:54Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "JR Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:track_ref": "山手線 : 外回り",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "nodeIDs": [
+        "3708276248",
+        "1577052995",
+        "1577053115",
+        "14250777922"
+      ],
+      "coordinates": [
+        [
+          139.747219,
+          35.7366191
+        ],
+        [
+          139.7487011,
+          35.7372551
+        ],
+        [
+          139.7495136,
+          35.7376008
+        ],
+        [
+          139.7498644,
+          35.7377629
+        ]
+      ]
+    },
+    {
+      "id": "1565541058",
+      "version": "1",
+      "timestamp": "2026-10-06T13:48:54Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "cutting": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "JR Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:track_ref": "山手線 : 外回り",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "nodeIDs": [
+        "1577110829",
+        "1577110867",
+        "1577110930",
+        "1577110975",
+        "1577111017",
+        "1577111063",
+        "1577111093",
+        "1577111128",
+        "1577052618",
+        "1577052701",
+        "3708276248"
+      ],
+      "coordinates": [
+        [
+          139.7427025,
+          35.7347704
+        ],
+        [
+          139.7430727,
+          35.7349262
+        ],
+        [
+          139.743514,
+          35.7351085
+        ],
+        [
+          139.7439522,
+          35.7352834
+        ],
+        [
+          139.7444191,
+          35.7354589
+        ],
+        [
+          139.7448724,
+          35.7356319
+        ],
+        [
+          139.7452403,
+          35.7357731
+        ],
+        [
+          139.7456349,
+          35.7359405
+        ],
+        [
+          139.7460025,
+          35.7360887
+        ],
+        [
+          139.7465177,
+          35.7363181
+        ],
+        [
+          139.747219,
+          35.7366191
+        ]
+      ]
+    }
+  ],
+  "relations": [
+    {
+      "id": "1972920",
+      "version": "130",
+      "timestamp": "2026-10-08T05:49:00Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "distance": "34.5",
+        "duration": "60",
+        "from": "品川",
+        "interval": "4",
+        "interval:conditional": "7 @ Mo-Fr 04:30-05:59; 10 @ Sa-Su 04:30-05:59; 5 @ Mo-Fr 06:00-08:09; 3 @ Mo-Fr 08:10-09:50, 16:50-17:50; 8 @ Sa-Su 06:00-08:09; 4 @ Sa-Su 08:10-09:50; 5 @ Mo-Su 21:00-23:00; 8 @ Mo-Su 23:00-00:59",
+        "name": "JR山手線",
+        "name:de": "JR Yamanote Linie (im Uhrzeigersinn)",
+        "name:en": "JR Yamanote Line (Outer)",
+        "name:es": "Línea JR Yamanote (Exterior)",
+        "name:it": "Linea Yamanote (esterna)",
+        "name:ja": "JR山手線 (外回り)",
+        "name:ja-Latn": "Sotomawari",
+        "name:ko": "JR 야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:zh": "JR山手线 (外圈)",
+        "network": "東京近郊区間;山手線",
+        "network:en": "Tokyo Suburban Area",
+        "network:metro": "山手線",
+        "note:interval": "See also traffic information: https://gigazine.net/gsc_news/en/20171206-traffic-information-map",
+        "opening_hours": "Mo-Su 04:26-01:18",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway Company",
+        "public_transport:version": "2",
+        "ref": "JY",
+        "roundtrip": "yes",
+        "route": "train",
+        "to": "品川",
+        "type": "route",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "144126002",
+          "role": "platform"
+        },
+        {
+          "type": "way",
+          "ref": "1565541058",
+          "role": ""
+        },
+        {
+          "type": "way",
+          "ref": "1565541057",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "1972960",
+      "version": "134",
+      "timestamp": "2026-10-08T05:49:00Z",
+      "tags": {
+        "colour": "#B1CB39",
+        "distance": "34.5",
+        "duration": "60",
+        "from": "品川",
+        "interval": "4",
+        "interval:conditional": "7 @ Mo-Fr 04:30-05:59; 10 @ Sa-Su 04:30-05:59; 5 @ Mo-Fr 06:00-08:09; 3 @ Mo-Fr 08:10-09:50, 16:50-17:50; 8 @ Sa-Su 06:00-08:09; 4 @ Sa-Su 08:10-09:50; 5 @ Mo-Su 21:00-23:00; 8 @ Mo-Su 23:00-00:59",
+        "name": "JR山手線",
+        "name:de": "JR Yamanote Linie (entgegen dem Uhrzeigersinn)",
+        "name:en": "JR Yamanote Line (Inner)",
+        "name:es": "Línea JR Yamanote (Interior)",
+        "name:it": "Linea Yamanote (interna)",
+        "name:ja": "JR山手線 (内回り)",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:zh": "JR山手线 (内圈)",
+        "network": "東京近郊区間;山手線",
+        "network:en": "Tokyo Suburban Area",
+        "network:metro": "山手線",
+        "note:interval": "See also traffic information: https://gigazine.net/gsc_news/en/20171206-traffic-information-map",
+        "opening_hours": "Mo-Su 04:26-01:18",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway Company",
+        "operator:ko": "동일본 여객철도 주식회사",
+        "public_transport:version": "2",
+        "ref": "JY",
+        "roundtrip": "yes",
+        "route": "train",
+        "to": "品川",
+        "type": "route",
+        "wikidata": "Q693036",
+        "wikipedia": "ja:山手線"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "144126002",
+          "role": "platform"
+        },
+        {
+          "type": "way",
+          "ref": "1565073018",
+          "role": ""
+        },
+        {
+          "type": "way",
+          "ref": "1565541052",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "7967130",
+      "version": "11",
+      "timestamp": "2024-12-06T13:20:37Z",
+      "tags": {
+        "name": "駒込 (東京メトロ南北線)",
+        "name:en": "Komagome (Tokyo Metro)",
+        "name:es": "Komagome (Tokyo Metro)",
+        "name:ja": "駒込 (東京メトロ南北線)",
+        "public_transport": "stop_area",
+        "public_transport:version": "2",
+        "type": "public_transport"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "1332808517",
+          "role": "platform"
+        }
+      ]
+    },
+    {
+      "id": "9873846",
+      "version": "8",
+      "timestamp": "2025-09-10T22:16:56Z",
+      "tags": {
+        "name": "駒込",
+        "name:en": "Komagome",
+        "name:es": "Komagome",
+        "name:fr": "Komagome",
+        "name:it": "Komagome",
+        "name:ja": "駒込",
+        "name:ja-Hira": "こまごめ",
+        "name:ja-Latn": "Komagome",
+        "name:ko": "고마고메",
+        "name:ru": "Комагомэ",
+        "name:th": "โคมาโกเมะ",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway Company",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:wikidata": "Q499071",
+        "public_transport": "stop_area",
+        "ref": "JY10",
+        "type": "public_transport"
+      },
+      "localMembers": [
+        {
+          "type": "way",
+          "ref": "144126002",
+          "role": "platform"
+        }
+      ]
+    }
+  ]
+}

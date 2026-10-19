@@ -1,0 +1,33 @@
+{
+  "note": "Target compact rows only, not binary/derived geometry equality",
+  "apps": [
+    {
+      "app": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app",
+      "compactLineEqual": {
+        "jp-東京地下鉄-4号線丸ノ内線": true,
+        "jp-東京地下鉄-4号線丸ノ内線分岐線": true
+      }
+    },
+    {
+      "app": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app",
+      "compactLineEqual": {
+        "jp-東京地下鉄-4号線丸ノ内線": true,
+        "jp-東京地下鉄-4号線丸ノ内線分岐線": true
+      }
+    },
+    {
+      "app": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app",
+      "compactLineEqual": {
+        "jp-東京地下鉄-4号線丸ノ内線": true,
+        "jp-東京地下鉄-4号線丸ノ内線分岐線": true
+      }
+    },
+    {
+      "app": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app",
+      "compactLineEqual": {
+        "jp-東京地下鉄-4号線丸ノ内線": true,
+        "jp-東京地下鉄-4号線丸ノ内線分岐線": true
+      }
+    }
+  ]
+}

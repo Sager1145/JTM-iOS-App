@@ -1,0 +1,376 @@
+{
+  "scope": "Only nine already identified own ways and one direct relations response; no bbox acquisition or nearest-track selection. Exact retained API response custody, not a national digest campaign.",
+  "retrievedAt": "2026-10-18T22:46:40.106440+00:00",
+  "rawResponses": [
+    {
+      "file": "way-1137778621-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1137778621/full.json",
+      "byteCount": 1454,
+      "sha256": "e05dc0cb9d3f3b5eed11710d5f92af9a5f4790360de76fbab78e99d8fc15f14e",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860890,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669981,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 1137778621,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:55Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-1137778622-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1137778622/full.json",
+      "byteCount": 1624,
+      "sha256": "458a8d232d5ba62bc14719c85c8d59e17c137c95aa5f8648248f8939c43ef144",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860857,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860860,
+          "version": 4,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860868,
+          "version": 3,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "way",
+          "id": 1137778622,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:55Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-1137778623-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1137778623/full.json",
+      "byteCount": 1454,
+      "sha256": "c87059478fd76ed9c1b5ff4f3a37defa163c2ee5329a02e4e445963ced8dc5b2",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860857,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669982,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 1137778623,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:55Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-1137778624-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1137778624/full.json",
+      "byteCount": 1609,
+      "sha256": "5087290b1e0ef7b153f3627bacc6a5e6e067c608aff3543df64cb88ee18be0fa",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860880,
+          "version": 6,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860900,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669867,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 1137778624,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:55Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-32055918-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/32055918/full.json",
+      "byteCount": 1796,
+      "sha256": "aaf4a4c9475dcd13163aced6a577e4f215228f469490dc2efb146f86ec364b76",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860890,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860894,
+          "version": 4,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860896,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860900,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "way",
+          "id": 32055918,
+          "version": 13,
+          "timestamp": "2023-02-04T09:12:04Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-32055924-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/32055924/full.json",
+      "byteCount": 2185,
+      "sha256": "59eae6b952af867999c41d906e2c5be0052e4698d007d4e3a3f5a9cd0c3283fb",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860845,
+          "version": 4,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860868,
+          "version": 3,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669984,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669985,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669986,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669987,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 32055924,
+          "version": 11,
+          "timestamp": "2023-02-04T09:12:04Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-44001348-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/44001348/full.json",
+      "byteCount": 2165,
+      "sha256": "37b59194caf42f060137be9f4e1501b8233d0dd0a4c506e82af2b20c4c6f189d",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860878,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860882,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860884,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860888,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 6244367146,
+          "version": 2,
+          "timestamp": "2023-02-04T09:12:04Z"
+        },
+        {
+          "type": "node",
+          "id": 6244367147,
+          "version": 2,
+          "timestamp": "2023-02-04T09:12:04Z"
+        },
+        {
+          "type": "way",
+          "id": 44001348,
+          "version": 12,
+          "timestamp": "2022-03-27T13:20:32Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-44001348-relations.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/44001348/relations.json",
+      "byteCount": 22096,
+      "sha256": "87e8bede8addc80e3d5e9f97d553c8346d31143c126be1a10c32315aa129a1b3",
+      "objects": [
+        {
+          "type": "relation",
+          "id": 6014983,
+          "version": 39,
+          "timestamp": "2024-04-19T05:54:17Z"
+        },
+        {
+          "type": "relation",
+          "id": 12018222,
+          "version": 19,
+          "timestamp": "2024-04-19T05:54:17Z"
+        },
+        {
+          "type": "relation",
+          "id": 12030449,
+          "version": 9,
+          "timestamp": "2024-04-19T05:54:17Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-44001349-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/44001349/full.json",
+      "byteCount": 1817,
+      "sha256": "214981320244d3bbf3a990495697a088c2bb474fc40bac722ceb669b342debfe",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860878,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 359860880,
+          "version": 6,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669378,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:50Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669980,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 44001349,
+          "version": 9,
+          "timestamp": "2023-02-04T09:12:04Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    },
+    {
+      "file": "way-490130188-full.json",
+      "url": "https://api.openstreetmap.org/api/0.6/way/490130188/full.json",
+      "byteCount": 1631,
+      "sha256": "9b74742db3ff69611443588e4897000845a6bee97bed86bd32b826794948f29a",
+      "objects": [
+        {
+          "type": "node",
+          "id": 359860892,
+          "version": 5,
+          "timestamp": "2023-02-04T09:11:55Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669981,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "node",
+          "id": 10605669982,
+          "version": 1,
+          "timestamp": "2023-02-04T09:11:52Z"
+        },
+        {
+          "type": "way",
+          "id": 490130188,
+          "version": 6,
+          "timestamp": "2023-02-04T09:12:09Z"
+        }
+      ],
+      "license": "http://opendatacommons.org/licenses/odbl/1-0/",
+      "attribution": "http://www.openstreetmap.org/copyright"
+    }
+  ]
+}

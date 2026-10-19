@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "0D2D35A5-CD1B-4143-B32B-025A6CCB2470",
+  "message" : "28\/28 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "toyohashi-missing-own-intervals",
+  "resultPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T20:25:30Z"
+}

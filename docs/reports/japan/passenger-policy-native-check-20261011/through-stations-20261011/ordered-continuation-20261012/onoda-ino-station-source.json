@@ -1,0 +1,64 @@
+{
+  "sourcePath": "/Users/sager/Documents/GitHub/Japan-Train-Map/app/data/stations.json",
+  "stationFeatures": [
+    {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "宇部線",
+        "N02_004": "西日本旅客鉄道",
+        "N02_005": "居能",
+        "N02_005c": "008610",
+        "N02_005g": "008610",
+        "display_point": [
+          131.22805,
+          33.96664
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            131.22826,
+            33.96602
+          ],
+          [
+            131.22784,
+            33.96726
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "小野田線",
+        "N02_004": "西日本旅客鉄道",
+        "N02_005": "居能",
+        "N02_005c": "008611",
+        "N02_005g": "008610",
+        "display_point": [
+          131.22805,
+          33.96664
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            131.22826,
+            33.96602
+          ],
+          [
+            131.22784,
+            33.96726
+          ]
+        ]
+      }
+    }
+  ],
+  "interpretation": "Both Ube/Onoda N02 features use same broad 134m group line and shared display point; Apple station band north difference is cartographic candidate, not proved physical error."
+}

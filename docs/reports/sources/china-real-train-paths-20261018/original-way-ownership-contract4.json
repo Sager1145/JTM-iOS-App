@@ -1,0 +1,907 @@
+{
+  "schema": "cn-original-way-ownership-contract-audit/4",
+  "reviewedAt": "2026-10-19T09:10:19.371704+00:00",
+  "scope": "Bounded read-only source and current shared Swift/JavaScript contract audit. Only this report and task scratch written. No production edits, graph compilation, source rebuild, test, native replay, national graph search, external consultation or delegation.",
+  "source": {
+    "sqlite": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "mode": "read-only",
+    "metadata": {
+      "source": "railway-sources/local/china/osm/china-261017.osm.pbf",
+      "counts": "{\"nodes\": 3233444, \"ways\": 457021, \"relations\": 96648}",
+      "crs": "WGS84"
+    },
+    "sourceUrl": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sourceSha256FromExistingManifest": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "shaRecomputed": false,
+    "membershipMethod": "Targeted SQL text prefilter plus exact decoded member type/reference comparison; no relation membership invented. Immediate onward ways selected by exact node reference, not geographic proximity."
+  },
+  "decisiveAssessment": {
+    "currentPhysicalSectionAdmission": "No direct-way alternative is currently accepted by cn-reviewed-physical-sections/1. Compiler lines123-132 and manifest policy line6 require nonempty original owner relations covering every edge way, before operator/passenger checks. All proposed missing-membership ways remain rejected under current manifest.",
+    "sharedContractFinding": "Mandatory OSM relation membership is not a universal shared N02/physical graph requirement. Swift and JS consume sourced operator/line/class/track identity and original survey geometry; reviewed OSM registry paths identify source ways without any required relation field. Existing CN named-way lines also have sourceRelation=null and no sourceRelations.",
+    "noLoweringJudgment": "Direct original name+ref+operator for every contributing versioned way can supply stronger per-way identity/agency attribution than merely inheriting an agency from an inventory relation with missing own-way agency. This is an evidence-based alternative source form already represented by CN named-way compilation, not evidence of relation membership. It is not universally stronger in every fact: only a real relation proves membership in that relation. A separately explicit reviewed source mode could preserve the semantic identity/topology/passenger standard, but would change the current CN manifest admission policy and needs a deliberate parent decision; it is not admitted by this audit.",
+    "passengerIndependence": "Own operator/name/ref do not establish passenger use. Any alternative must independently retain the current positive source passenger or reviewed official named-corridor evidence requirement and every existing exclusion, crossover safeguard, original-node adjacency/version, country, published identity, exact attachment and station-binding rule. Matching names/refs must never manufacture geometry or attach distinct source nodes.",
+    "existingPublishedIdentityCaveat": "Exact original bureau operator strings cannot silently become the different existing published operator 中国铁路. An unchanged existing identity requires its own explicit reviewed agency/identity evidence; otherwise the original way keeps a separate identity and only an evidenced physical junction can join it.",
+    "legalOwnership": "An OSM operator tag is operating-agency evidence. Legal infrastructure ownership is not asserted.",
+    "G101Verdict": "Withheld. 1067140203v3 has direct name/ref/passenger and real topology but no own operator, owner, network or relation membership. It fails the proposed strict all-direct identity/agency form as well as current relation-inventory form.",
+    "G6045Verdict": "Withheld. Direct stop-area binding exists for track15 way845559683 only; five other missing-agency candidate ways lack a stop member or track_ref. Generic station operator propagation cannot cover the six-way set. All six are service=siding, a separate current exclusion. Fixed X/XXIV anchors remain unchanged."
+  },
+  "contractEvidence": [
+    {
+      "file": "railway-sources/china-reviewed-physical-sections.json",
+      "lines": [
+        2,
+        6
+      ],
+      "fact": "Current CN physical manifest explicitly says exact original nodes/adjacent ways and owner relations required; operator and passenger reviews explicit."
+    },
+    {
+      "file": "app/scripts/railway/build-china-physical-junctions.py",
+      "lines": [
+        119,
+        150
+      ],
+      "fact": "Nonrepeated original-node path, exact relations/version/member-way coverage, exact node coordinates/versions and way adjacency/versions; inactive/freight/foreign/service exclusions."
+    },
+    {
+      "file": "app/scripts/railway/build-china-physical-junctions.py",
+      "lines": [
+        151,
+        194
+      ],
+      "fact": "Original-way operator is checked against every way; passenger tags, original passenger relation or reviewed named official corridor are separate modes; crossover remains protected."
+    },
+    {
+      "file": "app/scripts/railway/tests/test_china_physical_junctions.py",
+      "lines": [
+        136,
+        145
+      ],
+      "fact": "Existing regression explicitly rejects source way removed from original relation inventory; not executed."
+    },
+    {
+      "file": "app/scripts/railway/cn_package.py",
+      "lines": [
+        629,
+        648
+      ],
+      "fact": "Existing same-country compiler accepts original named-way operator identity separately from original relation operator identity."
+    },
+    {
+      "file": "app/scripts/railway/cn_package.py",
+      "lines": [
+        724,
+        742
+      ],
+      "fact": "Named original-mainline fallback uses original way geometry. Name corroborates identity and contributes zero edges. The locally constructed member list is a named-way corridor inventory, explicitly not an original OSM relation; published provenance has sourceRelation=None at709."
+    },
+    {
+      "file": "ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift",
+      "lines": [
+        24,
+        64
+      ],
+      "fact": "Physical graph scopes identity by operator/line/class and track/source identifiers; passenger station groups do not establish connectivity."
+    },
+    {
+      "file": "ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift",
+      "lines": [
+        280,
+        392
+      ],
+      "fact": "Reviewed osmTrack retains own identity, source path and attachment bounds; endJunction requires explicit foreign identity and same-train evidence. No original-relation requirement."
+    },
+    {
+      "file": "ios/RailKit/Sources/RailCore/History/PhysicalRailJunctionRegistry.swift",
+      "lines": [
+        32,
+        40
+      ],
+      "fact": "Shared registry OSM source structure records provider/license/ways/retrieved/cache, with no required relation field."
+    },
+    {
+      "file": "ios/RailKit/Sources/RailCore/Routing/RouteGraph.swift",
+      "lines": [
+        3215,
+        3248
+      ],
+      "fact": "Raw N02 and neutral section fields decode to the same identity; original source_node_ids are retained."
+    },
+    {
+      "file": "app/public/app-route-graph.js",
+      "lines": [
+        1093,
+        1103
+      ],
+      "fact": "JS identity explicitly uses operator/line/class/level/track ID; no OSM relation gate."
+    },
+    {
+      "file": "app/public/app-route-graph.js",
+      "lines": [
+        1191,
+        1207
+      ],
+      "fact": "JS uses RailroadSection consecutive vertices and validates one original source ID per source vertex."
+    },
+    {
+      "file": "app/public/app-route-solver.js",
+      "lines": [
+        177,
+        238
+      ],
+      "fact": "JS reviews country, evidence, existing surveyed endpoint, OSM source ways, exact identity, path, attachments and ambiguity; no relation membership requirement."
+    }
+  ],
+  "sameCountryExistingNamedWayPrecedents": [
+    {
+      "id": "cn-osm-named-151201073",
+      "name": "南广线",
+      "operator": "中国铁路广州局集团有限公司",
+      "operatorEvidence": {
+        "source": "original-OSM-named-way-operator-tag",
+        "wayId": 151201073
+      },
+      "sourceRelation": null,
+      "sourceRelations": null,
+      "sourceWayInventoryRef": "wayInventoriesById/d6d8b1827ed32c5ee10f",
+      "inventoryCount": 1221
+    },
+    {
+      "id": "cn-osm-named-100198457",
+      "name": "南昆客专线",
+      "operator": "中国铁路南宁局集团有限公司",
+      "operatorEvidence": {
+        "source": "original-OSM-named-way-operator-tag",
+        "wayId": 100198457
+      },
+      "sourceRelation": null,
+      "sourceRelations": null,
+      "sourceWayInventoryRef": "wayInventoriesById/b4b2d786647e760798c7",
+      "inventoryCount": 1189
+    }
+  ],
+  "otherCountryRegistrySample": {
+    "file": "app/data/physical-rail-junctions.json",
+    "id": "tokyo-tohoku-kanda",
+    "region": "jp",
+    "kind": "osmTrack",
+    "identity": {
+      "operatorName": "東日本旅客鉄道",
+      "lineName": "東北線",
+      "railwayClassCode": "11"
+    },
+    "sourceWays": [
+      348681062,
+      348681077,
+      362230881,
+      362230888,
+      34282732,
+      896850007,
+      896850005,
+      896850010,
+      273056373
+    ],
+    "sourceRelationFieldRequired": false,
+    "limit": "Schema/data precedent only. Original Japanese ways were not re-queried in this task; this does not establish their lack of OSM relation membership or validate a CN candidate."
+  },
+  "SBTAndHarbin": {
+    "crossoverRejected": {
+      "id": 1364948209,
+      "nodes": [
+        12640376454,
+        12640376427,
+        12640376426,
+        12640376425
+      ],
+      "tags": {
+        "gauge": "1435",
+        "railway": "rail",
+        "service": "crossover"
+      },
+      "version": 1,
+      "memberships": []
+    },
+    "reusedPathEvidence": {
+      "file": "docs/reports/sources/china-real-train-paths-20261018/shenyang-north-boundary-continuation3.json",
+      "own306LengthMetres": 519930.36949285056,
+      "own704LengthMetres": 75223.38306081037,
+      "limit": "Prior bounded own-relation component search retained as historical source review; no fresh path solve or full-path revalidation here."
+    },
+    "real306To704Node": {
+      "id": 6728392266,
+      "version": 5,
+      "ref": "1038",
+      "coordinate": [
+        126.6356027,
+        45.7646662
+      ],
+      "own704OnwardWay": 715782824,
+      "own704OnwardVersion": 18
+    },
+    "sourceRelation704Identity": {
+      "id": 7047176,
+      "tags": {
+        "from": "哈尔滨",
+        "name": "哈牡客专线",
+        "name:en": "Harbin–Mudanjiang High–Speed Railway",
+        "name:zh": "哈牡客专线",
+        "network": "中国铁路",
+        "operator": "中国铁路哈尔滨局集团有限公司",
+        "operator:en": "China Railway Harbin Group",
+        "operator:wikidata": "Q10922014",
+        "operator:zh": "中国铁路哈尔滨局集团有限公司",
+        "owner": "黑龙江铁路发展集团有限公司",
+        "ref": "3073",
+        "route": "railway",
+        "start_date": "2018-12-25",
+        "to": "牡丹江",
+        "type": "route",
+        "wikidata": "Q10922181",
+        "wikipedia": "en:Harbin–Mudanjiang Intercity Railway",
+        "wikipedia:zh": "zh:哈牡客运专线"
+      },
+      "version": 65
+    },
+    "ownershipHole": {
+      "id": 1067140203,
+      "nodes": [
+        9798408901,
+        9798408903
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "maxspeed": "250",
+        "name": "哈牡客专线",
+        "name:en": "Harbin–Mudanjiang High–Speed Railway",
+        "railway": "rail",
+        "railway:ctcs": "3",
+        "railway:traffic_mode": "passenger",
+        "ref": "3073",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "memberships": []
+    },
+    "immediateOwnedWayBeforeHole": {
+      "id": 1067140217,
+      "nodes": [
+        9798408903,
+        9798408918
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "-1",
+        "maxspeed": "250",
+        "name": "哈牡客专线",
+        "name:en": "Harbin–Mudanjiang High–Speed Railway",
+        "railway": "rail",
+        "railway:ctcs": "3",
+        "railway:traffic_mode": "passenger",
+        "ref": "3073",
+        "tunnel": "yes",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "memberships": [
+        {
+          "id": 7047176,
+          "version": 65,
+          "tags": {
+            "from": "哈尔滨",
+            "name": "哈牡客专线",
+            "name:en": "Harbin–Mudanjiang High–Speed Railway",
+            "name:zh": "哈牡客专线",
+            "network": "中国铁路",
+            "operator": "中国铁路哈尔滨局集团有限公司",
+            "operator:en": "China Railway Harbin Group",
+            "operator:wikidata": "Q10922014",
+            "operator:zh": "中国铁路哈尔滨局集团有限公司",
+            "owner": "黑龙江铁路发展集团有限公司",
+            "ref": "3073",
+            "route": "railway",
+            "start_date": "2018-12-25",
+            "to": "牡丹江",
+            "type": "route",
+            "wikidata": "Q10922181",
+            "wikipedia": "en:Harbin–Mudanjiang Intercity Railway",
+            "wikipedia:zh": "zh:哈牡客运专线"
+          },
+          "exactMembers": [
+            [
+              "w",
+              1067140217,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    "immediateOwnedWayAfterHole": {
+      "id": 1067140215,
+      "nodes": [
+        9798408900,
+        9798408901
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "maxspeed": "250",
+        "name": "哈牡客专线",
+        "name:en": "Harbin–Mudanjiang High–Speed Railway",
+        "railway": "rail",
+        "railway:ctcs": "3",
+        "railway:traffic_mode": "passenger",
+        "ref": "3073",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "memberships": [
+        {
+          "id": 7047176,
+          "version": 65,
+          "tags": {
+            "from": "哈尔滨",
+            "name": "哈牡客专线",
+            "name:en": "Harbin–Mudanjiang High–Speed Railway",
+            "name:zh": "哈牡客专线",
+            "network": "中国铁路",
+            "operator": "中国铁路哈尔滨局集团有限公司",
+            "operator:en": "China Railway Harbin Group",
+            "operator:wikidata": "Q10922014",
+            "operator:zh": "中国铁路哈尔滨局集团有限公司",
+            "owner": "黑龙江铁路发展集团有限公司",
+            "ref": "3073",
+            "route": "railway",
+            "start_date": "2018-12-25",
+            "to": "牡丹江",
+            "type": "route",
+            "wikidata": "Q10922181",
+            "wikipedia": "en:Harbin–Mudanjiang Intercity Railway",
+            "wikipedia:zh": "zh:哈牡客运专线"
+          }
+        }
+      ]
+    },
+    "localExactSequence": {
+      "nodeIds": [
+        9798408918,
+        9798408903,
+        9798408901,
+        9798408900
+      ],
+      "edgeWayIds": [
+        1067140217,
+        1067140203,
+        1067140215
+      ],
+      "edgeWayVersions": [
+        3,
+        3,
+        3
+      ],
+      "interpretation": "Real original adjacency resumes on own704 relation way1067140215v3 immediately beyond the two-node unmembered way. This local fact does not establish an admitted complete onward route to MDB."
+    },
+    "published704Comparisons": [
+      {
+        "id": 1067140203,
+        "isPublished704Way": false,
+        "published704NodeIntersections": []
+      },
+      {
+        "id": 715782824,
+        "isPublished704Way": false,
+        "published704NodeIntersections": []
+      },
+      {
+        "id": 1067140217,
+        "isPublished704Way": false,
+        "published704NodeIntersections": []
+      },
+      {
+        "id": 1067140215,
+        "isPublished704Way": false,
+        "published704NodeIntersections": []
+      }
+    ],
+    "operatorProof": "7047176v65 names 中国铁路哈尔滨局集团有限公司 as operator and 黑龙江铁路发展集团有限公司 as owner. 1067140203 has neither tag and is not its member. The relation does not prove this way agency by membership; same name/ref is not an original membership assertion.",
+    "directModeDecision": "No operator proof for1067140203 was established. Do not populate its operator from nearby ways, a generic station marker, or the unrelated presence of an operating agency on a corridor relation."
+  },
+  "GuangzhouSouth": {
+    "priorTwelveWaySourceRecheck": [
+      {
+        "id": 155878386,
+        "version": 9,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 223504983,
+        "version": 8,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 223504991,
+        "version": 8,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 363483747,
+        "version": 9,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 363483748,
+        "version": 5,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 363487311,
+        "version": 3,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 469938251,
+        "version": 1,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 469938255,
+        "version": 3,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 845559682,
+        "version": 1,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 845559683,
+        "version": 3,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 916051581,
+        "version": 3,
+        "matchesPriorNodesTagsVersion": true
+      },
+      {
+        "id": 916051582,
+        "version": 3,
+        "matchesPriorNodesTagsVersion": true
+      }
+    ],
+    "stationStopArea": {
+      "id": 13696629,
+      "version": 4,
+      "operator": "中国铁路广州局集团有限公司",
+      "public_transport": "stop_area",
+      "exactCandidateStopMember": [
+        "n",
+        11832431941,
+        "stop"
+      ],
+      "railTrackWayMembersAmongCandidateTwelve": []
+    },
+    "sixMissingAgencyWays": [
+      {
+        "id": 363483748,
+        "nodes": [
+          3676452315,
+          3676452316,
+          3676452317,
+          3676452318,
+          3676452319,
+          3676452321,
+          3676457625
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 5,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 3676452315,
+            "version": 4,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676452316,
+            "version": 3,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676452318,
+            "version": 2,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676452319,
+            "version": 2,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676452321,
+            "version": 2,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          }
+        ]
+      },
+      {
+        "id": 363487311,
+        "nodes": [
+          3676452315,
+          3676482861
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 3,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 3676452315,
+            "version": 4,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676482861,
+            "version": 3,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          }
+        ]
+      },
+      {
+        "id": 469938251,
+        "nodes": [
+          3676451881,
+          3676452316
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 1,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 3676451881,
+            "version": 4,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676452316,
+            "version": 3,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          }
+        ]
+      },
+      {
+        "id": 469938255,
+        "nodes": [
+          3676451882,
+          3676451884,
+          3676451888
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 3,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 3676451882,
+            "version": 2,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          },
+          {
+            "id": 3676451888,
+            "version": 3,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          }
+        ]
+      },
+      {
+        "id": 845559682,
+        "nodes": [
+          3676457629,
+          3676457627,
+          3676452324,
+          3676451888
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 1,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 3676451888,
+            "version": 3,
+            "tags": {
+              "railway": "switch"
+            },
+            "exactStopMember": false
+          }
+        ]
+      },
+      {
+        "id": 845559683,
+        "nodes": [
+          3676457632,
+          11832431941,
+          3676457629
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "railway": "rail",
+          "railway:track_ref": "15",
+          "railway:traffic_mode": "passenger",
+          "service": "siding",
+          "voltage": "25000"
+        },
+        "version": 3,
+        "memberships": [],
+        "taggedNodesAndStopAreaBindings": [
+          {
+            "id": 11832431941,
+            "version": 2,
+            "tags": {
+              "name": "广州南",
+              "name:de": "Guangzhou Süd",
+              "name:en": "Guangzhounan",
+              "name:zh": "广州南",
+              "public_transport": "stop_position",
+              "railway": "stop",
+              "train": "yes"
+            },
+            "exactStopMember": true
+          }
+        ]
+      }
+    ],
+    "directStopMeaning": "11832431941v2 is explicitly a train stop_position in this operated station and an original node of track15 way845559683v3. This is direct station/track association stronger than a projected station-marker proximity binding. It does not give the other five ways their own operator or track identity, nor state the physical way legal owner.",
+    "allSixCoverage": "Only845559683 has its own train-stop member or railway:track_ref. The other five have no track_ref and no exact stop_area stop node. Their continuity to track15 is geometric adjacency, not explicit agency evidence. No original station control/boundary document covering all six was established.",
+    "platformMemberLimit": {
+      "members": [
+        {
+          "id": 363477021,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477022,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477027,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477028,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477029,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477015,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477016,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477017,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477019,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477020,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477023,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477024,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477025,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477075,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        },
+        {
+          "id": 363477026,
+          "role": "platform",
+          "retainedInRailSQLite": false
+        }
+      ],
+      "fact": "All fifteen platform-role ways named in the stop_area are absent from this rail-only SQLite ways table. Their own tags/track-number correspondences cannot be inspected from this extract. Do not invent platform→rail ownership assignments."
+    },
+    "strictAnchors": {
+      "arrival": {
+        "nodeId": 3676493382,
+        "version": 3,
+        "trackRef": "X",
+        "ways": [
+          845559692,
+          845559693
+        ]
+      },
+      "departure": {
+        "nodeId": 3676506337,
+        "version": 3,
+        "trackRef": "XXIV",
+        "ways": [
+          845559667
+        ]
+      },
+      "result": "Prior bounded original-node graph found no connecting walk under the allowed single stop-position reversal. This review supplies no new original edge."
+    },
+    "serviceExclusion": "All six explicitly passenger-tagged ways also carry service=siding. Current compiler excludes siding at147 before passenger review. Changing this requires a separate precise reviewed platform-track admission decision with whole-set agency/stop evidence; this report does not relax it.",
+    "servicePlatformAssignment": "No target-day G6045→track15 evidence was established; station name or shared stop_area cannot replace the X/XXIV bindings."
+  },
+  "PNEParentQuestion": {
+    "originalWay": {
+      "id": 742037844,
+      "nodes": [
+        5230023398,
+        9147886574,
+        9160115812,
+        9147883544,
+        9147886523,
+        9160116433,
+        9147883563,
+        9147886743,
+        5230617665
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "layer": "-1",
+        "length": "466",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "radius": "1600",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-05-26",
+        "tunnel": "yes",
+        "tunnel:name": "观音岩2号隧道",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 20,
+      "memberships": []
+    },
+    "strictDirectIdentityAttributesPresent": true,
+    "explicitPassengerWayTagPresent": false,
+    "assessment": "This way has direct original name峨广线/ref0084/operator中国铁路成都局集团 and eight consecutive original edges. Those own tags provide source-bound physical identity and agency without pretending relation membership. Unlike1067140203 or the GZS six, it is a suitable candidate for considering an explicit direct-way provenance form. Admission remains withheld under the current physical manifest policy. Passenger use, precise official-corridor mapping, published-identity compatibility and both source attachments are separate questions; they are not proved by the three tags.",
+    "officialPassengerModeCaveat": "Existing reviewed-official-corridor support binds relation sourceNames and sourceRelationIds at184-188. Reusing its underlying primary publication for a direct named/ref way could preserve the same passenger evidence quality if the document and exact corridor mapping really cover it; merely reusing a URL or route name is insufficient. No such new mapping is adopted here.",
+    "operatorCompatibility": "Exact own operator string 中国铁路成都局集团 is retained. The current original-way-operator mode requires exact equality to row.identity.operatorName; do not silently equate this source string with a different published generic or expanded agency identity."
+  },
+  "verification": {
+    "testsRun": false,
+    "buildsRun": false,
+    "nativeRun": false,
+    "nationalGraphBuilt": false,
+    "productionEdited": false,
+    "checks": "Source/code chat review, targeted keyed source rows, exact memberships, two-node immediate onward comparison, twelve existing GZS way records matched nodes/tags/versions. Report JSON parse performed after write.",
+    "remainingUncertainty": "No independent primary exact-way agency proof for unmembered Harbin or Guangzhou approaches. No all-six station-control mapping, G6045 platform assignment or complete currently admitted G101 path."
+  },
+  "parentDecisionBoundary": "The existing shared/country source forms justify considering a precise direct-original-way provenance mode as a semantic-preserving alternative; current manifest policy and compiler must not be silently bypassed. Parent owns whether any explicitly reviewed amendment is in scope. No contract, production data or policy change made."
+}

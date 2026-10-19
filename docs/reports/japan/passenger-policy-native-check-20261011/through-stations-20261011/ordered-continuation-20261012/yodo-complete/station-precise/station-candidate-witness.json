@@ -1,0 +1,273 @@
+{
+  "status": "candidate-only-station-witness-no-native-acceptance",
+  "wakai": {
+    "stationID": "009535",
+    "rawPhysicalCoordinate": [
+      133.105835,
+      33.188045
+    ],
+    "rawDimensions": [
+      999,
+      654
+    ],
+    "view": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/wakai-z18/view.json",
+    "panelsActuallyOpened": [
+      "basemap.png",
+      "display.png",
+      "smooth.png"
+    ],
+    "ownLightPlatformEndsApprox": [
+      [
+        546,
+        277
+      ],
+      [
+        498,
+        363
+      ]
+    ],
+    "platformLongMidpoint": [
+      522,
+      320
+    ],
+    "excludedAttachedBulbApprox": [
+      530,
+      324
+    ],
+    "ownBlackRailFlankSupports": [
+      [
+        530,
+        290
+      ],
+      [
+        524,
+        300
+      ],
+      [
+        518,
+        310
+      ],
+      [
+        513.5,
+        320
+      ],
+      [
+        503,
+        340
+      ]
+    ],
+    "railFit": "x=a+b*y, least-squares on explicit own sleeper rail supports; orthogonal projection of own face long midpoint",
+    "fitIntercept": 684.6621621621622,
+    "fitSlope": -0.5351351351351351,
+    "candidateNormalPixel": [
+      515.3292259119611,
+      316.4302344069414
+    ],
+    "candidateDisplayAlias": [
+      133.10591991458483,
+      33.188092451537244
+    ],
+    "uncertainty": {
+      "normalPixelsApprox": 1,
+      "chainagePixelsApprox": 2,
+      "metresPerPoint": 0.497893961180287,
+      "warning": "Pixel cartography candidate, not surveyed physical station coordinate; native replay not performed."
+    },
+    "requiredScope": [
+      [
+        "jp-四国旅客鉄道-予土線",
+        0
+      ],
+      [
+        "jp-土佐くろしお鉄道-中村線",
+        0
+      ],
+      [
+        "jp-土佐くろしお鉄道-中村線",
+        1
+      ]
+    ],
+    "endpointRule": "same candidate display alias in both owners; retain physical IDs/km, freeze only display geometry after full adjacent interval review. No claim61supports locate actual turnout."
+  },
+  "kitaUwajima": {
+    "status": "candidate-only-explicit-shared-corridor-group-normal",
+    "stationID": "009471",
+    "rawPhysicalCoordinate": [
+      132.569715,
+      33.23924
+    ],
+    "view": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/kita-uwajima-z18/view.json",
+    "rawDimensions": [
+      999,
+      654
+    ],
+    "panelsActuallyOpened": [
+      "basemap.png",
+      "display.png",
+      "smooth.png"
+    ],
+    "ownIslandLightStripEndsApprox": [
+      [
+        512,
+        404
+      ],
+      [
+        523,
+        494
+      ]
+    ],
+    "longMidpoint": [
+      517.5,
+      449
+    ],
+    "excludedEastBuildingApprox": [
+      531,
+      455
+    ],
+    "westSleeperRailAtMidApprox": [
+      506,
+      449
+    ],
+    "eastSleeperRailAtMidApprox": [
+      518.5,
+      449
+    ],
+    "commonGroupMidNormalProvisional": [
+      512.25,
+      449.6
+    ],
+    "commonGroupDisplayAliasProvisional": [
+      132.56978339632985,
+      33.238689923845335
+    ],
+    "eastRailAlternativeNotAccepted": [
+      132.56981692394254,
+      33.23869261590673
+    ],
+    "warning": "Two sleeper rails flank the island strip. Panel does not independently identify one unique incoming Yodo/Yosan shared rail. Normal must remain multitrack WARNING until own-group topology decides. Do not silently average casing/road edges: these are two actual sleeper rails, explicit group uncertainty.",
+    "chainageMetresSouthApprox": 61,
+    "requiredScope": [
+      [
+        "jp-四国旅客鉄道-予土線",
+        18
+      ],
+      [
+        "jp-四国旅客鉄道-予讃線",
+        87
+      ],
+      [
+        "jp-四国旅客鉄道-予讃線",
+        88
+      ]
+    ],
+    "candidateNormalPixel": [
+      512.25,
+      449.6
+    ],
+    "candidateDisplayAlias": [
+      132.56978339632985,
+      33.238689923845335
+    ],
+    "normalPolicy": "Root authorized cartographic group midpoint between the TWO actual sleeper rails flanking the own island platform. Does not assign physical Yodo/Yosan platform numbers or individual railway rail.",
+    "uncertainty": {
+      "longFaceEndpointPixelsApprox": 2,
+      "normalGroupPixelsApprox": 1.5,
+      "surveyedPrecision": false,
+      "nativeReplayRequired": true
+    },
+    "approachControls": {
+      "northSharedExtensionPixels": [
+        [
+          504,
+          375
+        ],
+        [
+          507,
+          400
+        ],
+        [
+          509.5,
+          425
+        ],
+        [
+          512.25,
+          449.6
+        ]
+      ],
+      "northSharedExtensionCoordinates": [
+        [
+          132.5697391398811,
+          33.23902463617553
+        ],
+        [
+          132.5697552331352,
+          33.23891246730684
+        ],
+        [
+          132.56976864418027,
+          33.23880029829422
+        ],
+        [
+          132.56978339632985,
+          33.238689923845335
+        ]
+      ],
+      "southSharedContinuationPixels": [
+        [
+          512.25,
+          449.6
+        ],
+        [
+          515,
+          475
+        ],
+        [
+          517.5,
+          500
+        ],
+        [
+          520.5,
+          525
+        ],
+        [
+          523,
+          550
+        ]
+      ],
+      "southSharedContinuationCoordinates": [
+        [
+          132.56978339632985,
+          33.238689923845335
+        ],
+        [
+          132.56979814847944,
+          33.23857595983728
+        ],
+        [
+          132.5698115595245,
+          33.238463790392935
+        ],
+        [
+          132.5698276527786,
+          33.23835162080468
+        ],
+        [
+          132.56984106382367,
+          33.23823945107252
+        ]
+      ],
+      "southResumeOriginalCoordinate": [
+        132.56991,
+        33.23766
+      ],
+      "southResumeOriginalPixel": [
+        535.8506346608428,
+        679.1455300487578
+      ],
+      "integration": "Extend Yodo18 and Yosan87 through original raw station coordinate as interior approach support, then listed north group controls to exact shared alias. Yosan88 starts at exact alias and south controls, resumes original point index2 [132.56991,33.23766]; omit old northward original prefix indices0/1 from display only. No source physical mutation; no artificial return to north raw station. All controls are candidate-group spine with flank ±1.5px uncertainty, not unique individual-rail survey."
+    }
+  },
+  "sourceChanged": false,
+  "UIBuildPerformed": false,
+  "acceptance": false
+}

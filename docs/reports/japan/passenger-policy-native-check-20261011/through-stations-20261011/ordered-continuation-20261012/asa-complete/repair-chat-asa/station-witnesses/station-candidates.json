@@ -1,0 +1,1588 @@
+{
+  "format": "jtm-asa-own-station-display-candidates-v1",
+  "status": "candidate-only-with-explicit-withheld-aliases",
+  "lineID": "jp-土佐くろしお鉄道-阿佐線",
+  "stations": [
+    {
+      "stationIndex": 0,
+      "stationID": "009057",
+      "name": "後免",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/00-009057/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57917999999999,
+        "longitude": 133.645135,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4956903221113594,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 233868765.4330738,
+        "rectY": 107607761.09140146,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 233868765.4330738,
+        "y": 107607761.09140146
+      },
+      "physicalCoordinate": [
+        133.645135,
+        33.57918
+      ],
+      "nativeAcceptance": false,
+      "status": "WARNING-alias-withheld",
+      "displayCandidate": [
+        133.645135,
+        33.57918
+      ],
+      "warning": "Gomen multi-rail/unequal face allocation to Asa vsDosan is unresolved from saved station raw. Retain physical guard; no common code assignment or guessed alias. Own E→SE branch outside station is separately identified.",
+      "faceEndpoints": null,
+      "aliasPixel": [
+        499.5,
+        327
+      ]
+    },
+    {
+      "stationIndex": 1,
+      "stationID": "009077",
+      "name": "後免町",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/01-009077/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57460799999995,
+        "longitude": 133.65117499999997,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.4957162138721107,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 233873269.1835022,
+        "rectY": 107611852.97574791,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 233873269.1835022,
+        "y": 107611852.97574791
+      },
+      "physicalCoordinate": [
+        133.651175,
+        33.574608
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          507,
+          332
+        ],
+        [
+          579,
+          355
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        543.0,
+        343.5
+      ],
+      "railBandControls": [
+        [
+          490,
+          320
+        ],
+        [
+          540,
+          335
+        ],
+        [
+          590,
+          350
+        ]
+      ],
+      "aliasPixel": [
+        545.0917431192661,
+        336.5275229357798
+      ],
+      "displayCandidate": [
+        133.65141957316604,
+        33.57456541717584
+      ],
+      "basis": "South own narrow face; separate Tosaden stop/line south excluded.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        0,
+        1
+      ]
+    },
+    {
+      "stationIndex": 2,
+      "stationID": "009087",
+      "name": "立田",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/02-009087/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.57062899999997,
+        "longitude": 133.670425,
+        "mapPointsPerPoint": 4.000000011175871,
+        "metresPerPoint": 0.49573874747576807,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 233887623.02385786,
+        "rectY": 107615413.9559288,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999995969155
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 233887623.02385786,
+        "y": 107615413.9559288
+      },
+      "physicalCoordinate": [
+        133.670425,
+        33.570629
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          490,
+          294
+        ],
+        [
+          550,
+          309
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        520.0,
+        301.5
+      ],
+      "railBandControls": [
+        [
+          470,
+          298.5
+        ],
+        [
+          530,
+          311
+        ],
+        [
+          590,
+          324
+        ]
+      ],
+      "aliasPixel": [
+        518.5191347753744,
+        308.608153078203
+      ],
+      "displayCandidate": [
+        133.67052702659743,
+        33.570711205239476
+      ],
+      "basis": "North own narrow face; label splits fill fragments, cap limits retained.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        1,
+        2
+      ]
+    },
+    {
+      "stationIndex": 3,
+      "stationID": "009112",
+      "name": "のいち",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/03-009112/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56190199999999,
+        "longitude": 133.69774900000007,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.4957881553247967,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999403954,
+        "rectX": 233907997.2749682,
+        "rectY": 107623223.55317128,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999403954,
+        "x": 233907997.2749682,
+        "y": 107623223.55317128
+      },
+      "physicalCoordinate": [
+        133.697749,
+        33.561902
+      ],
+      "nativeAcceptance": false,
+      "status": "WARNING-alias-withheld",
+      "displayCandidate": [
+        133.697749,
+        33.561902
+      ],
+      "warning": "Noichi upper/lower narrow strips join wide eastern station/building shapes; exact trueface caps vsattached fill remain unresolved. Do not adopt broad gray railway casing or aggregate connected fill.",
+      "faceEndpoints": null,
+      "aliasPixel": [
+        499.5,
+        327
+      ]
+    },
+    {
+      "stationIndex": 4,
+      "stationID": "009193",
+      "name": "よしかわ",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/04-009193/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54596,
+        "longitude": 133.7104100000001,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.49587838531293044,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 233917438.00082502,
+        "rectY": 107637487.65545097,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 233917438.00082502,
+        "y": 107637487.65545097
+      },
+      "physicalCoordinate": [
+        133.71041,
+        33.54596
+      ],
+      "nativeAcceptance": false,
+      "status": "WARNING-alias-withheld",
+      "displayCandidate": [
+        133.71041,
+        33.54596
+      ],
+      "warning": "Yoshikawa actual narrow strip connects a rectangular NW bulb and broad SE L-shaped fill. Original fine-grid shows prior endpoint490344 lies in broad attached fill rather than independently capped narrow face. Alias withheld, not guessed from connected component.",
+      "faceEndpoints": null,
+      "aliasPixel": [
+        499.5,
+        327
+      ]
+    },
+    {
+      "stationIndex": 5,
+      "stationID": "009203",
+      "name": "あかおか",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/05-009203/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.53991999999999,
+        "longitude": 133.72218,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4959125601732833,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 233926214.348928,
+        "rectY": 107642891.25718755,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 233926214.348928,
+        "y": 107642891.25718755
+      },
+      "physicalCoordinate": [
+        133.72218,
+        33.53992
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          395,
+          335
+        ],
+        [
+          526,
+          359
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        460.5,
+        347.0
+      ],
+      "railBandControls": [
+        [
+          400,
+          320
+        ],
+        [
+          450,
+          331
+        ],
+        [
+          500,
+          341
+        ],
+        [
+          550,
+          345
+        ],
+        [
+          600,
+          349
+        ],
+        [
+          650,
+          353.5
+        ],
+        [
+          700,
+          358.5
+        ]
+      ],
+      "aliasPixel": [
+        463.1730769230769,
+        333.63461538461536
+      ],
+      "displayCandidate": [
+        133.72198512719888,
+        33.53989033498318
+      ],
+      "basis": "South clear long own face; unequal north strip/label fragments disclosed, not averaged.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        4,
+        5
+      ],
+      "groupWarning": "Own co-track/platform-group allocation only; no individual operator/direction proof. Alternate/unequal own faces and label occlusions must remain visible in Root review."
+    },
+    {
+      "stationIndex": 6,
+      "stationID": "009205",
+      "name": "香我美",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/06-009205/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.53918999999998,
+        "longitude": 133.73736000000008,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.49591669072134564,
+        "pitch": 0,
+        "rectHeight": 2615.999999985099,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 233937533.37732276,
+        "rectY": 107643544.31592532,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3995.9999999701977,
+        "x": 233937533.37732276,
+        "y": 107643544.31592532
+      },
+      "physicalCoordinate": [
+        133.73736,
+        33.53919
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          455,
+          300
+        ],
+        [
+          531,
+          319
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        493.0,
+        309.5
+      ],
+      "railBandControls": [
+        [
+          460,
+          286
+        ],
+        [
+          500,
+          297
+        ],
+        [
+          540,
+          306
+        ]
+      ],
+      "aliasPixel": [
+        496.6879721092388,
+        296.08919233004065
+      ],
+      "displayCandidate": [
+        133.73734491510953,
+        33.53932821094695
+      ],
+      "basis": "South narrow face excluding attached small south bulb and road55 north.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        5,
+        6
+      ]
+    },
+    {
+      "stationIndex": 7,
+      "stationID": "009211",
+      "name": "夜須",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/07-009211/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.53438000000004,
+        "longitude": 133.75456500000018,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.49594390108364095,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 233950362.35515746,
+        "rectY": 107647847.20889756,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 233950362.35515746,
+        "y": 107647847.20889756
+      },
+      "physicalCoordinate": [
+        133.754565,
+        33.53438
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          303,
+          225
+        ],
+        [
+          558,
+          387
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        430.5,
+        306.0
+      ],
+      "railBandControls": [
+        [
+          400,
+          285.5
+        ],
+        [
+          450,
+          316
+        ],
+        [
+          500,
+          349.5
+        ],
+        [
+          550,
+          382.5
+        ]
+      ],
+      "aliasPixel": [
+        431.34246775016396,
+        304.61890532760003
+      ],
+      "displayCandidate": [
+        133.75419937450312,
+        33.534480077785055
+      ],
+      "basis": "Own island between two passenger rails; narrow interior light band, not outer railway casing. North building/access pieces excluded.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        6,
+        7
+      ],
+      "groupWarning": "Own co-track/platform-group allocation only; no individual operator/direction proof. Alternate/unequal own faces and label occlusions must remain visible in Root review."
+    },
+    {
+      "stationIndex": 8,
+      "stationID": "009227",
+      "name": "西分",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/08-009227/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.517825,
+        "longitude": 133.79091000000005,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.49603752972387,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996,
+        "rectX": 233977463.1514027,
+        "rectY": 107662655.02448007,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996,
+        "x": 233977463.1514027,
+        "y": 107662655.02448007
+      },
+      "physicalCoordinate": [
+        133.79091,
+        33.517825
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          300,
+          334
+        ],
+        [
+          411,
+          337
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        355.5,
+        335.5
+      ],
+      "railBandControls": [
+        [
+          300,
+          344
+        ],
+        [
+          350,
+          347
+        ],
+        [
+          400,
+          349
+        ],
+        [
+          450,
+          350
+        ]
+      ],
+      "aliasPixel": [
+        355.03194888178916,
+        347.20127795527156
+      ],
+      "displayCandidate": [
+        133.79013501298016,
+        33.51773465194468
+      ],
+      "basis": "North narrow face on LOWER actual paired railway; independent upper named single transit glyph explicitly rejected.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        7,
+        8
+      ]
+    },
+    {
+      "stationIndex": 9,
+      "stationID": "009229",
+      "name": "和食",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/09-009229/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.51780999999999,
+        "longitude": 133.80945499999999,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4960376154631189,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 233991291.30565688,
+        "rectY": 107662668.4401223,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 233991291.30565688,
+        "y": 107662668.4401223
+      },
+      "physicalCoordinate": [
+        133.809455,
+        33.51781
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          349,
+          314
+        ],
+        [
+          449,
+          326
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        399.0,
+        320.0
+      ],
+      "railBandControls": [
+        [
+          300,
+          294
+        ],
+        [
+          500,
+          321.5
+        ],
+        [
+          550,
+          330.5
+        ]
+      ],
+      "aliasPixel": [
+        400.671676123294,
+        307.84235546695294
+      ],
+      "displayCandidate": [
+        133.8089248435595,
+        33.51789568044422
+      ],
+      "basis": "South identified narrow face beside LOWER actual paired physical rail; upper single transit glyph rejected as rail authority. North light strip is an alternative, not averaged.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        8,
+        9
+      ],
+      "groupWarning": "Own co-track/platform-group allocation only; no individual operator/direction proof. Alternate/unequal own faces and label occlusions must remain visible in Root review."
+    },
+    {
+      "stationIndex": 10,
+      "stationID": "009230",
+      "name": "赤野",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/10-009230/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.51603,
+        "longitude": 133.82478999999998,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4960476799702914,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 234002725.91042846,
+        "rectY": 107664260.41314954,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 234002725.91042846,
+        "y": 107664260.41314954
+      },
+      "physicalCoordinate": [
+        133.82479,
+        33.51603
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          453,
+          326
+        ],
+        [
+          539,
+          341
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        496.0,
+        333.5
+      ],
+      "railBandControls": [
+        [
+          400,
+          309.5
+        ],
+        [
+          450,
+          320.5
+        ],
+        [
+          550,
+          342.5
+        ],
+        [
+          600,
+          353.5
+        ]
+      ],
+      "aliasPixel": [
+        496.6043494849294,
+        330.75295688668444
+      ],
+      "displayCandidate": [
+        133.82477446652268,
+        33.516013214958875
+      ],
+      "basis": "South narrow strip excluding small attached lower bulb; paired physical band, not upper named transit glyph.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        9,
+        10
+      ]
+    },
+    {
+      "stationIndex": 11,
+      "stationID": "009239",
+      "name": "穴内",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/11-009239/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.506197,
+        "longitude": 133.8640880000002,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.49610326783960196,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 234032028.62306714,
+        "rectY": 107673054.1324031,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 234032028.62306714,
+        "y": 107673054.1324031
+      },
+      "physicalCoordinate": [
+        133.864088,
+        33.506197
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          456,
+          343
+        ],
+        [
+          535,
+          352
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        495.5,
+        347.5
+      ],
+      "railBandControls": [
+        [
+          450,
+          321
+        ],
+        [
+          500,
+          335
+        ],
+        [
+          550,
+          342.5
+        ],
+        [
+          600,
+          350
+        ]
+      ],
+      "aliasPixel": [
+        499.0727002967359,
+        334.74035608308606
+      ],
+      "displayCandidate": [
+        133.86408570778093,
+        33.506162377446
+      ],
+      "basis": "South identified narrow face on LOWER paired physical rail, excluding upper named single glyph.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        10,
+        11
+      ]
+    },
+    {
+      "stationIndex": 12,
+      "stationID": "009244",
+      "name": "球場前",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/12-009244/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.50269,
+        "longitude": 133.89157000000003,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.49612309100148927,
+        "pitch": 0,
+        "rectHeight": 2615.999999985099,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 234052520.68751645,
+        "rectY": 107676190.22479488,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996.0000000298023,
+        "x": 234052520.68751645,
+        "y": 107676190.22479488
+      },
+      "physicalCoordinate": [
+        133.89157,
+        33.50269
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          404,
+          343
+        ],
+        [
+          485,
+          325
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        444.5,
+        334.0
+      ],
+      "railBandControls": [
+        [
+          400,
+          354
+        ],
+        [
+          450,
+          336
+        ],
+        [
+          500,
+          316
+        ]
+      ],
+      "aliasPixel": [
+        445.7684135977337,
+        337.52337110481585
+      ],
+      "displayCandidate": [
+        133.8912817613069,
+        33.502642927127766
+      ],
+      "basis": "North own narrow face; train label/buildings and south road55 excluded.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        11,
+        12
+      ]
+    },
+    {
+      "stationIndex": 13,
+      "stationID": "009242",
+      "name": "あき総合病院前",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/13-009242/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.504294999999985,
+        "longitude": 133.8975000000001,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.49611402017742506,
+        "pitch": 0,
+        "rectHeight": 2615.999999985099,
+        "rectWidth": 3996,
+        "rectX": 234056942.41600013,
+        "rectY": 107674754.98870073,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996,
+        "x": 234056942.41600013,
+        "y": 107674754.98870073
+      },
+      "physicalCoordinate": [
+        133.8975,
+        33.504295
+      ],
+      "nativeAcceptance": false,
+      "status": "WARNING-alias-withheld",
+      "displayCandidate": [
+        133.8975,
+        33.504295
+      ],
+      "warning": "Aki General Hospital Front: no independently identified narrow bright own face in actual raw; blue station box/attached grey L-shaped building alone not a face.",
+      "faceEndpoints": null,
+      "aliasPixel": [
+        499.5,
+        327
+      ]
+    },
+    {
+      "stationIndex": 14,
+      "stationID": "009240",
+      "name": "安芸",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/14-009240/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5048,
+        "longitude": 133.90643500000004,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.4961111643597659,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 234063604.83488715,
+        "rectY": 107674303.39800769,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 234063604.83488715,
+        "y": 107674303.39800769
+      },
+      "physicalCoordinate": [
+        133.906435,
+        33.5048
+      ],
+      "nativeAcceptance": false,
+      "status": "WARNING-alias-withheld",
+      "displayCandidate": [
+        133.906435,
+        33.5048
+      ],
+      "warning": "Aki multiple fan rails; south narrow face433349→539377 is visible, but own passenger track/group allocation among middle/lower fans needs continuation proof. Withhold a guessed nearest-rail normal.",
+      "faceEndpoints": null,
+      "aliasPixel": [
+        499.5,
+        327
+      ]
+    },
+    {
+      "stationIndex": 15,
+      "stationID": "009256",
+      "name": "伊尾木",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/15-009256/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.490864999999964,
+        "longitude": 133.92922500000003,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.49618991550930464,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 234080598.2905601,
+        "rectY": 107686763.6518248,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 234080598.2905601,
+        "y": 107686763.6518248
+      },
+      "physicalCoordinate": [
+        133.929225,
+        33.490865
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          423,
+          274
+        ],
+        [
+          499,
+          307
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        461.0,
+        290.5
+      ],
+      "railBandControls": [
+        [
+          420,
+          279
+        ],
+        [
+          460,
+          300
+        ],
+        [
+          500,
+          321.5
+        ],
+        [
+          600,
+          375.5
+        ],
+        [
+          700,
+          431
+        ],
+        [
+          780,
+          479
+        ]
+      ],
+      "aliasPixel": [
+        456.8740813326801,
+        298.358892699657
+      ],
+      "displayCandidate": [
+        133.92899633674892,
+        33.49099313403933
+      ],
+      "basis": "North actual narrow longitudinal strip; attached two small roof rectangles excluded from endpoints.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        14,
+        15
+      ]
+    },
+    {
+      "stationIndex": 16,
+      "stationID": "009271",
+      "name": "下山",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/16-009271/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.45853499999999,
+        "longitude": 133.94797900000003,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.49637251008358685,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 234094582.28650954,
+        "rectY": 107715664.43647721,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 234094582.28650954,
+        "y": 107715664.43647721
+      },
+      "physicalCoordinate": [
+        133.947979,
+        33.458535
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          482,
+          337
+        ],
+        [
+          540,
+          459
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        511.0,
+        398.0
+      ],
+      "railBandControls": [
+        [
+          500,
+          327
+        ],
+        [
+          520,
+          377
+        ],
+        [
+          536,
+          425
+        ],
+        [
+          550,
+          470
+        ]
+      ],
+      "aliasPixel": [
+        525.4,
+        393.2
+      ],
+      "displayCandidate": [
+        133.948117938427,
+        33.45823872445782
+      ],
+      "basis": "West actual long narrow face, east face506323→556452 disclosed; slightly unequal centres/curvature remain direction warning, no averaging.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        15,
+        16
+      ],
+      "groupWarning": "Own co-track/platform-group allocation only; no individual operator/direction proof. Alternate/unequal own faces and label occlusions must remain visible in Root review."
+    },
+    {
+      "stationIndex": 17,
+      "stationID": "009280",
+      "name": "唐浜",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/17-009280/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.44594299999999,
+        "longitude": 133.96646099999998,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4964435843425873,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996,
+        "rectX": 234108363.46455893,
+        "rectY": 107726917.89732385,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996,
+        "x": 234108363.46455893,
+        "y": 107726917.89732385
+      },
+      "physicalCoordinate": [
+        133.966461,
+        33.445943
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          324,
+          286
+        ],
+        [
+          396,
+          296
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        360.0,
+        291.0
+      ],
+      "railBandControls": [
+        [
+          300,
+          292
+        ],
+        [
+          400,
+          307
+        ],
+        [
+          500,
+          322
+        ]
+      ],
+      "aliasPixel": [
+        358.5330073349633,
+        300.7799511002445
+      ],
+      "displayCandidate": [
+        133.96570479412298,
+        33.446060363575896
+      ],
+      "basis": "North own short narrow face, long ordinary rail casing excluded.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        16,
+        17
+      ]
+    },
+    {
+      "stationIndex": 18,
+      "stationID": "009281",
+      "name": "安田",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/18-009281/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.44334499999997,
+        "longitude": 133.98425499999996,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4964582454918096,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996,
+        "rectX": 234121631.63262576,
+        "rectY": 107729239.52463844,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996,
+        "x": 234121631.63262576,
+        "y": 107729239.52463844
+      },
+      "physicalCoordinate": [
+        133.984255,
+        33.443345
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          438,
+          328
+        ],
+        [
+          521,
+          342
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        479.5,
+        335.0
+      ],
+      "railBandControls": [
+        [
+          400,
+          301.5
+        ],
+        [
+          450,
+          311
+        ],
+        [
+          550,
+          329.5
+        ]
+      ],
+      "aliasPixel": [
+        482.8168435301796,
+        317.07111605308324
+      ],
+      "displayCandidate": [
+        133.9841655045746,
+        33.44338944403283
+      ],
+      "basis": "South own narrow face; western roof/bulb excluded.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        17,
+        18
+      ]
+    },
+    {
+      "stationIndex": 19,
+      "stationID": "009288",
+      "name": "田野",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/19-009288/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.430414999999996,
+        "longitude": 134.00760500000004,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4965311978583231,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 234139042.6545636,
+        "rectY": 107740793.01003999,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 234139042.6545636,
+        "y": 107740793.01003999
+      },
+      "physicalCoordinate": [
+        134.007605,
+        33.430415
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          566,
+          327
+        ],
+        [
+          644,
+          337
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        605.0,
+        332.0
+      ],
+      "railBandControls": [
+        [
+          560,
+          336
+        ],
+        [
+          600,
+          342
+        ],
+        [
+          650,
+          349
+        ]
+      ],
+      "aliasPixel": [
+        603.5307963907414,
+        342.4943114947038
+      ],
+      "displayCandidate": [
+        134.0081630646829,
+        33.43034563341461
+      ],
+      "basis": "North clear own narrow bar; attached centre access rectangle excluded; south label fragments not merged for a count.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        18,
+        19
+      ],
+      "groupWarning": "Own co-track/platform-group allocation only; no individual operator/direction proof. Alternate/unequal own faces and label occlusions must remain visible in Root review."
+    },
+    {
+      "stationIndex": 20,
+      "stationID": "009290",
+      "name": "奈半利",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/20-009290/view.json",
+      "dimensions": [
+        999,
+        654
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.42523499999997,
+        "longitude": 134.01825000000005,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.4965604166319416,
+        "pitch": 0,
+        "rectHeight": 2615.9999999701977,
+        "rectWidth": 3995.9999999403954,
+        "rectX": 234146980.14186677,
+        "rectY": 107745421.06961507,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "mapRect": {
+        "height": 2615.9999999701977,
+        "width": 3995.9999999403954,
+        "x": 234146980.14186677,
+        "y": 107745421.06961507
+      },
+      "physicalCoordinate": [
+        134.01825,
+        33.425235
+      ],
+      "nativeAcceptance": false,
+      "status": "candidate-only-qualified",
+      "faceEndpoints": [
+        [
+          408,
+          330
+        ],
+        [
+          486,
+          402
+        ]
+      ],
+      "faceLongitudinalMidpoint": [
+        447.0,
+        366.0
+      ],
+      "railBandControls": [
+        [
+          395,
+          289
+        ],
+        [
+          425,
+          319
+        ],
+        [
+          455,
+          347
+        ],
+        [
+          474,
+          363
+        ]
+      ],
+      "aliasPixel": [
+        459.6807131280389,
+        350.9416531604538
+      ],
+      "displayCandidate": [
+        134.01803639270202,
+        33.42512780903577
+      ],
+      "basis": "Exclusive terminal own platform box: midpoint projected onto identified ending railway. Exclude roads/arrows/casing. Final line ends exactly at alias.",
+      "precisionWarning": "Manual cartographic support: approx2px normal/2px face caps; local rail/group centre and lane replay pending. Not surveyed/physical.",
+      "requiredCompleteIntervals": [
+        19
+      ]
+    }
+  ],
+  "limits": [
+    "Actual ownface caps identified manually in saved999x654 raws; connected fill mask used only as fragment-location aid, never platform identity.",
+    "Withheld face/rail assignments remain source physical guards pluswarnings, not correct anchors. Parent must not freeze warning connectors.",
+    "Both complete adjacent intervals need respective moved station joins; terminal20 has no outgoinginterval."
+  ]
+}

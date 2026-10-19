@@ -1,0 +1,894 @@
+{
+  "reason": "North America retired from the app; offline repository archive only.",
+  "files": [
+    {
+      "path": "app/data/rail-sections-ca.json",
+      "bytes": 501239,
+      "sha256": "2b8efaa1be051df0e63b8e2b2cdad1c6922a91e7ce944aa0738fb326a9ce244d"
+    },
+    {
+      "path": "app/data/rail-sections-us.json",
+      "bytes": 5876235,
+      "sha256": "a7622be7ba78664763eb46a6db52ed1095f2350580e63893487019d82151276a"
+    },
+    {
+      "path": "app/data/sample-data-ca/manifest.json",
+      "bytes": 1492,
+      "sha256": "11089b876a99062045da68750e18c81da272de421ddbcee9159610919cbda41d"
+    },
+    {
+      "path": "app/data/sample-data-ca/part-000.json",
+      "bytes": 37461,
+      "sha256": "346dcc0c302fa8d7caf5fb62d2e30578041d343152322dd097cb6fa03dab3e5c"
+    },
+    {
+      "path": "app/data/sample-data-ca/part-001.json",
+      "bytes": 4564,
+      "sha256": "350d8a3d21cc6125086d0342e27c9cbddd5f1c011c88ace938caa2bf372e4dc7"
+    },
+    {
+      "path": "app/data/sample-data-ca/part-002.json",
+      "bytes": 20323,
+      "sha256": "6e549cbeeaf31e1a21a9305eab5487296c0e97b2a71c4ed51f47cd5b200791ab"
+    },
+    {
+      "path": "app/data/sample-data-ca/part-003.json",
+      "bytes": 101059,
+      "sha256": "f5dfcee714392ecd634f363bbdc98a4a2afd9cba878b579a59bfd7bcc26bfde6"
+    },
+    {
+      "path": "app/data/sample-data-ca/sample-full.json",
+      "bytes": 43152,
+      "sha256": "f3b1857c03d8cf63110e2856fbb248f8bd8c196ee7fec4bbd44726629aad092a"
+    },
+    {
+      "path": "app/data/sample-data-us/manifest.json",
+      "bytes": 1486,
+      "sha256": "bb0477c31ba1c831ed36eac807837be5bce2cc8d3995973abe29d19e14251fa0"
+    },
+    {
+      "path": "app/data/sample-data-us/part-000.json",
+      "bytes": 59588,
+      "sha256": "9e09ee6a6af292f0967dc97bdda52c7504a35e82c3508b5c28da3dafff42a51a"
+    },
+    {
+      "path": "app/data/sample-data-us/part-001.json",
+      "bytes": 322076,
+      "sha256": "71eb6507e3657193708cf059c6bfd5b639e4a826958d148c353b17357fc4c2e6"
+    },
+    {
+      "path": "app/data/sample-data-us/part-002.json",
+      "bytes": 85145,
+      "sha256": "68ca6d904a18ca5a4ba07ca2e0395ac61f23ac118d7e6b0be1dd9265f07b7efd"
+    },
+    {
+      "path": "app/data/sample-data-us/part-003.json",
+      "bytes": 90637,
+      "sha256": "21aa17eb745f3f52506817d8db4e5853e1c77a48553a8e0475c0a078128bbb1e"
+    },
+    {
+      "path": "app/data/sample-data-us/sample-full.json",
+      "bytes": 37291,
+      "sha256": "af73ef9e9b04aedc6936a2fe0cad0c0997cdc221cee6a157896bc410accac24c"
+    },
+    {
+      "path": "app/data/station-english-verified-na.json",
+      "bytes": 7468409,
+      "sha256": "d450593c78d0fa20efe8bd4f30573bf10ef80970f59a1e2eb996511e505c0810"
+    },
+    {
+      "path": "app/data/station-readings-ca.json",
+      "bytes": 310128,
+      "sha256": "317ad3f567c2041b3bdb4f06576dee83727e5c747760afddc0b02e746306fc6a"
+    },
+    {
+      "path": "app/data/station-readings-us.json",
+      "bytes": 1590769,
+      "sha256": "900922014650de19c78b9e72ffb5dd9987736c162d05a45871223d8164bdfda7"
+    },
+    {
+      "path": "app/data/stations-ca.json",
+      "bytes": 437162,
+      "sha256": "07a1f45e29a6df77b40f98e1b0a4bbe2d2f1d62faa6dd3c63516f6630bf8fff6"
+    },
+    {
+      "path": "app/data/stations-us.json",
+      "bytes": 2868329,
+      "sha256": "fea81734f77e80498481e6d0723302e721de72f02438bef4a210b1aca93e5e42"
+    },
+    {
+      "path": "app/data/train-store-ca.json",
+      "bytes": 43152,
+      "sha256": "f3b1857c03d8cf63110e2856fbb248f8bd8c196ee7fec4bbd44726629aad092a"
+    },
+    {
+      "path": "app/data/train-store-us.json",
+      "bytes": 37291,
+      "sha256": "af73ef9e9b04aedc6936a2fe0cad0c0997cdc221cee6a157896bc410accac24c"
+    },
+    {
+      "path": "app/public/rail/audit-hotspots.json",
+      "bytes": 9543,
+      "sha256": "da656a0e7f8a270a115722c6eaea8dc1af526a018843043d5de3271fad8f5599",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/ca-2025.audit.json",
+      "bytes": 142773,
+      "sha256": "b338569b8eb82f196866d093c44c51b4fd7ed1557aa968323ddf8cf66a120e8f"
+    },
+    {
+      "path": "app/public/rail/ca-2025.audit.md",
+      "bytes": 2308,
+      "sha256": "617febb835a23292cc615369815484352524baeb8bf047f7b27d30421db8d6a8"
+    },
+    {
+      "path": "app/public/rail/ca-2025.json",
+      "bytes": 2500452,
+      "sha256": "86069a810674f019f79331bbdd639a734f53b6a42ffeb734c7a4aff04e6a62cb"
+    },
+    {
+      "path": "app/public/rail/ca-2025.sources.md",
+      "bytes": 4591,
+      "sha256": "41f56a819830be0d007da6fc92af6ca22b8bc9e287fb83a43fe563df2a7bce21"
+    },
+    {
+      "path": "app/public/rail/display-chain-boundaries.json",
+      "bytes": 803,
+      "sha256": "992feaa1b9f10c75f068c74f26f82f3f19dfb583134f1e6a9831907110886f04",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/display-hubs.json",
+      "bytes": 40232,
+      "sha256": "902df08127a36bb8c4119a075fdd810a55cf35b51dc155131e19a77f42c5fd43",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/display-lanes.json",
+      "bytes": 11812253,
+      "sha256": "4d1d0e52fc7ef13674561e79b53681645e285c769b990cc4f2c25af0aa4c79c3",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/display-releases.json",
+      "bytes": 28183,
+      "sha256": "f485a465a9e30c7f8a97101eeea3f00a1b5c959ca0b6d2c52dc88638639c02f7",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/na-2025-blocked-intervals.md",
+      "bytes": 39362,
+      "sha256": "17ca293670b4274213db7fa23b33197eb1769414224281507cc610d2874af895"
+    },
+    {
+      "path": "app/public/rail/na-2025-build-report.json",
+      "bytes": 232889,
+      "sha256": "355058ed22d77e56de9237a0ff15e5100b30a54d3df5ee538471bd998b034a34"
+    },
+    {
+      "path": "app/public/rail/na-2025-city-ledger.md",
+      "bytes": 49135,
+      "sha256": "f05e06a99c075b9e621fc9d1c57799a2f165bc791066d3013ea92c4af02bb56a"
+    },
+    {
+      "path": "app/public/rail/na-2025-display-ledger.md",
+      "bytes": 63971,
+      "sha256": "adb9b850726d36c8ac658fa4762007c150e6af1ca1a30b2b62225871b8d1764b"
+    },
+    {
+      "path": "app/public/rail/na-2025-display-review.json",
+      "bytes": 389134,
+      "sha256": "ed882e830e6e8858e026919f6407c6113782a1736a66e16b196634a17dcef238"
+    },
+    {
+      "path": "app/public/rail/na-2025-display-review.md",
+      "bytes": 65063,
+      "sha256": "dabc26d797e82fe13d073aa88eb2b2fa64fb0155d3e005a398a31c4ce4719417"
+    },
+    {
+      "path": "app/public/rail/na-2025-line-review.json",
+      "bytes": 689795,
+      "sha256": "e9cdb07cf4af47fe9f0ea67084465b84b7b59af88638d6184b5575bdd772e618"
+    },
+    {
+      "path": "app/public/rail/na-2025-line-review.md",
+      "bytes": 142571,
+      "sha256": "24a18f4cb9bf3a6e2f5cf66ecefd86112647ebf7c4719401b97d1bae78fd4420"
+    },
+    {
+      "path": "app/public/rail/na-2025-service-pattern-ledger.md",
+      "bytes": 68824,
+      "sha256": "5c16bc453a180ebdffff709f95b1195e942ed35599f1a7fbe9cc937f3b57c905"
+    },
+    {
+      "path": "app/public/rail/na-2025-straight-intervals.md",
+      "bytes": 65237,
+      "sha256": "2a7eea7da0dac3142ea077ccda4def938c86be828902d7303737bb0f7e4acf28"
+    },
+    {
+      "path": "app/public/rail/na-2025.acceptance.md",
+      "bytes": 9339,
+      "sha256": "4a17080573ab2087121f884f0d2b55ae85df91ed81606d95d58e9d8ac0aaa82b"
+    },
+    {
+      "path": "app/public/rail/na-2025.audit.json",
+      "bytes": 230573,
+      "sha256": "c11fce8577d6b9d98ad2af9ed4435128bb5304cff287c2dd4db23745a448f0d4"
+    },
+    {
+      "path": "app/public/rail/na-render-groups.json",
+      "bytes": 40759,
+      "sha256": "b206c2c6171ffd8acd0172259f85cb29ea398814824ccc65eb94e456dd8017e6"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/ace.png",
+      "bytes": 34682,
+      "sha256": "3b9ebe16e10df61ae0fd068e3b539338b9fcc44c73764ba059f35c642842d8d5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/alaska-railroad.png",
+      "bytes": 151708,
+      "sha256": "7babe63a498345cbf5ed4e9da228db09ef3d9f86c8447d27d2f709943978b9e8"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/amtrak-san-joaquins.png",
+      "bytes": 15070,
+      "sha256": "5737b74daf22db985d6878dcba444ed28307339471b354aa427909125cfba642"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/amtrak-vermonter.png",
+      "bytes": 15070,
+      "sha256": "5737b74daf22db985d6878dcba444ed28307339471b354aa427909125cfba642"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/amtrak.png",
+      "bytes": 15070,
+      "sha256": "5737b74daf22db985d6878dcba444ed28307339471b354aa427909125cfba642"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/bart.png",
+      "bytes": 23730,
+      "sha256": "93a14b144ba45d65cef22f998754b3b8020c7eedc19644b3417049fdc4233de5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/brightline-trains-llc.png",
+      "bytes": 31801,
+      "sha256": "adf5356ab31c95431d47666446754deeb4c8a3663a8bff47e432d2862dfae0dd"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/calgary-transit.png",
+      "bytes": 3741,
+      "sha256": "d69a022c74937f196b6bbb0ffe7ad7d79aa7b4ff96c78dd513650215e3f5724d"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/caltrain.png",
+      "bytes": 38283,
+      "sha256": "873b41f3423bfed38604bd7fb46ff59f43592e6d8607aa69b76b347399f1e038"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/capital-metro.png",
+      "bytes": 25303,
+      "sha256": "01ffb7473a4fedaa8c6b5c0c2d2f2f87dd021a08f7e6fa20b0efd1d2d39c7d66"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/capitol-corridor-joint-power.png",
+      "bytes": 45306,
+      "sha256": "6f8c363653cd2555ce49dd4d64c9f02b916bbc5c70c15c991bb34846a781b0b1"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/charlotte-area-transit-syste.png",
+      "bytes": 11948,
+      "sha256": "7237225babeadd0097778d00f86986a099c6b51658eae5435dafa517370d8b9f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/chattanooga-carta.png",
+      "bytes": 47529,
+      "sha256": "ba71c9bfdc992c321ae943094ebcf1d34bc2b37587520e1de321c2949e4b9961"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/cincinnati-metro.png",
+      "bytes": 22742,
+      "sha256": "9ebb58c6385706429c97e2ce74d325f981a54c730f96bf27c57ee09152046312"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/cleveland-rta.png",
+      "bytes": 9241,
+      "sha256": "31d65a835a6b516eb6053f5c344aa13a15d0effd19e0871a6134b2ee7baf500a"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/connecticut-transit.png",
+      "bytes": 16677,
+      "sha256": "c8fae89be81628971310cbf98c4fc687a2329748fec6228bc0874c04f97ffd2f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/cta.png",
+      "bytes": 79558,
+      "sha256": "6b6ce8b79db64c5abf3a28e8c05bed45500a356410372aaf002ed48cbfbf63d6"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/dallas-area-rapid-transit-da.png",
+      "bytes": 36148,
+      "sha256": "3fed1f2c405f08a6621dbd4bb3e54fcfeb16b63182435a36153239747c8703ec"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/dc-streetcar.png",
+      "bytes": 30029,
+      "sha256": "2789553e4f6ba7a0ac5e191e9257e503b99f2db11c4d6b470856f48fbb75c921"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/denton-county-transportation.png",
+      "bytes": 27485,
+      "sha256": "3d1532c7f42d9f9af4bac740a06f3664885cf4e0563dbe3e908c4f3c3794ffa8"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/detroit-people-mover.png",
+      "bytes": 121660,
+      "sha256": "9b40985f712a6e6d069a2e86aab092615e75e9124cd94c8ab6e1131b118acd74"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/edmonton-transit-system.png",
+      "bytes": 24446,
+      "sha256": "7e642489e49f6ce28af7d79ec7da573e36579b9f3ebeb24b7c9d86bc332d60ae"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/embark.png",
+      "bytes": 19568,
+      "sha256": "40aaf7919272ae27e2b10c86854238fd5a5733d8a9ed763c3429a7aebb432d33"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/exo.png",
+      "bytes": 15259,
+      "sha256": "a5da7dc611199149a72905b72e2083c0f3166542cb98e1111877d84d687f9d0d"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/florida-department-of-transp.png",
+      "bytes": 480296,
+      "sha256": "fbdcb574557ef99cf1c405fd2dbb95ffacf41bfe747246ad0f1c1273818c56a0"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/fort-worth-transit-authority.png",
+      "bytes": 16024,
+      "sha256": "321895df48cf4d9a5af36f444de53935ef1cf9e92990728dff973acb125aff33"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/go-transit.png",
+      "bytes": 19607,
+      "sha256": "b997d7f80e2aa1eb5ee8392e10277cd8f91e6fb2e742d0c881bf2ee13f67d957"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/grt-ion-light-rail.png",
+      "bytes": 43676,
+      "sha256": "2c5ea8755d6812034ac0a7f691e22182eb7ad279e6d67c770ed73be18f8de458"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/hillsborough-hart-official.png",
+      "bytes": 7271,
+      "sha256": "c40af4c002027b2e5fccf3d9388fc9bd4227d93157cd706ceb6918e0ed506629"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/houston-metro-official.png",
+      "bytes": 4337,
+      "sha256": "87cacc59070f73b19d734c28cb1b1d13737275ec4bcc4df5381bc84c39ce73c1"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/jacksonville-jta.png",
+      "bytes": 22219,
+      "sha256": "894d5781e3ba2525adb7a13cac11ec2d82037337b79846775f6c810c2bfbb83b"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/kansas-city-area-transportat.png",
+      "bytes": 24414,
+      "sha256": "d05724e4a9bc39cbadadae1656a4d588af38ba3046b7832e93723ccb5fe8a8d8"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/king-county-metro.png",
+      "bytes": 23341,
+      "sha256": "8b90c5da740e4c3f4890d49a01fdf87eeedf9cc130e0173b071bf4f1344b84fc"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/loop-trolley.png",
+      "bytes": 26690,
+      "sha256": "0f18934d69bbf227a286f56311ae5fd9fc23b5e1c36b5d59fb6ccbf4ffec8318"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/los-angeles-county-metropoli.png",
+      "bytes": 14918,
+      "sha256": "8843ed1d6ce80b0576eaba3e03640430fc349db094a28230edfba2a8a0d8f2d1"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/manifest.json",
+      "bytes": 68031,
+      "sha256": "0095778f5c6b7ec315c9537ea7119ac8ced6492c5fd7a89b66007fd853350d20"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/maryland-transit-administrat-2.png",
+      "bytes": 23445,
+      "sha256": "f560e048a15ef2a47497e6392ab6653ca41853f6371a516e719461d6e0df1faa"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/maryland-transit-administrat.png",
+      "bytes": 19372,
+      "sha256": "0e0629ebaf0b775de47cf16f832646ba8300980d0a6f7e7534ec24ea2814cb34"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/mbta.png",
+      "bytes": 28647,
+      "sha256": "c4a4b271f31d71e7e57cb5a86cb0912ef325f2ac98e77181856d515013a790c5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/mckinney-avenue-trolley.png",
+      "bytes": 120771,
+      "sha256": "165ab93461a8f378dbc563a43f0247732207df9c306d9deeb08a185c245a3751"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metra.png",
+      "bytes": 13018,
+      "sha256": "3c22b0c4da2bfc251a5fe823214e53945343cd925407d0f0e33669335b31c94c"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metro-north-railroad.png",
+      "bytes": 18854,
+      "sha256": "a67ce957225e70356d22df0103d5fb048c941e063a89d484248a394817404798"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metro-st-louis.png",
+      "bytes": 26690,
+      "sha256": "0f18934d69bbf227a286f56311ae5fd9fc23b5e1c36b5d59fb6ccbf4ffec8318"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metro-transit.png",
+      "bytes": 23012,
+      "sha256": "b3cb973c99a23cac404659f0ef2eecf64e0726673f44c55a65eff7bc012d13ad"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metrolink.png",
+      "bytes": 12309,
+      "sha256": "2f295397dd12ae6c7524a031f46f44ddbfbd38c25bd20dadd251fdff1ce40e0b"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metropolitan-atlanta-rapid-t.png",
+      "bytes": 10977,
+      "sha256": "a40791d41a4f9c1e56f7b2b1357e08c33c130d772faa4c481d2ee77f2ac73722"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/metropolitan-transit-authori.png",
+      "bytes": 10268,
+      "sha256": "cb8cae06f96e39eb2521f41f08dbfbad1f7790b371de9e557776b431c63461a2"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/miami-dade-transit.png",
+      "bytes": 13468,
+      "sha256": "35980c733fde84964b0472b514147411d77f179d06e792b56e0566127e2bd1e7"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/mta-long-island-rail-road.png",
+      "bytes": 20496,
+      "sha256": "1b25083a9fedcae1eea274f4390175f66fea8fbf56b2f139aa4b9da0cf98b733"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/nashville-mta-wego-public-tr.png",
+      "bytes": 33405,
+      "sha256": "c9d8aa4fd7b64f0f0951a9f3ed99c644b4b8f5a63db7ce95a0472c7c97762461"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/new-jersey-transit-nj-transi.png",
+      "bytes": 22318,
+      "sha256": "0ccdb28cee51830e185375c93caeea6821ccc509b4aa6d11dea9b7bbb7bcf7dd"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/north-county-transit-distric.png",
+      "bytes": 43568,
+      "sha256": "522a23a22e3d373c51f2278d546487b02a1866744433049857a72215819dc4bd"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/official-recovery-evidence.md",
+      "bytes": 6037,
+      "sha256": "ff0339fb6878c78e8e5ef1b5e2e5bd0e492245079356abf081bce88d6d3c8b78"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/ottawa-carleton-regional-tra.png",
+      "bytes": 11012,
+      "sha256": "66f5974f5808a223539b80f9f4960ef4149279d559117430ed26dbbb90604bfb"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/patco-speedline.png",
+      "bytes": 23535,
+      "sha256": "0e581ceb12c7e85853321c5191d13d6376ada556a6bb6463d9169b3c7a3f7e6c"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/port-authority-of-allegheny.png",
+      "bytes": 59252,
+      "sha256": "23314159c9002b7e98fd6bb688b61f45b57d6dad30005ba3bc26e518d8eb0fc1"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/port-authority-trans-hudson.png",
+      "bytes": 12370,
+      "sha256": "c5df4ec8eab15e4255bdc541475839fdfa91e9a35fa09f1bae91c4b01914d22e"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/qline-detroit.png",
+      "bytes": 21702,
+      "sha256": "eb327826f033691b0de26234e3de36e4ba4b5257dc4db8acaeee0973b1fce0a6"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/regional-transportation-dist.png",
+      "bytes": 9722,
+      "sha256": "f430b0fdab645ff0f914e4df0e10ccccb68e3164fc4e456ceffc9d6ac360eb77"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/rem.png",
+      "bytes": 27804,
+      "sha256": "6db3accfc1826953d9f92845dc4c571059f3a61294002b2fd657496d56edfff5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/rock-region-metro.png",
+      "bytes": 38384,
+      "sha256": "d825b5d1020a119d7c93097dfe11e85981bf5ab8159a9a74e752ae5a7061a3e6"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/sacramento-regional-transit.png",
+      "bytes": 73393,
+      "sha256": "50ec1a930fc636135048e2da3b3701cca06dc1d0fae49cb6397ef64496fa7e7f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/san-diego-international-airp.png",
+      "bytes": 91608,
+      "sha256": "eb4016f7a58d8c893477d3d18729ba247d27fb67918507735f7450253e59355f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/san-francisco-municipal-tran.png",
+      "bytes": 29482,
+      "sha256": "09162fb06b73e42c90bb61936c4c0f89c5420656fe0aee0f34f9f183a55fdc53"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/santa-clara-valley-transport.png",
+      "bytes": 35229,
+      "sha256": "94034c4b5e863244901d6ea306bf54ba16e41bf516f6109041001111b14c1a18"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/seattle-center-monorail-official.png",
+      "bytes": 50455,
+      "sha256": "7b44818496bcaf56498d7e46e2b2a7be288fbc696b925641c8f1ff60f0f47c67"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/septa.png",
+      "bytes": 39504,
+      "sha256": "b83c5d509d1814771f9aa57466186be010f6528886ef5254c7acb0b8aebd7d6c"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/shore-line-east.png",
+      "bytes": 16677,
+      "sha256": "c8fae89be81628971310cbf98c4fc687a2329748fec6228bc0874c04f97ffd2f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/smart.png",
+      "bytes": 32312,
+      "sha256": "e0edf4bf06d38e98fbec88fbcd323a1f0144b269a8d224fae7183caa07b0e6f3"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/soci-t-de-transport-de-montr.png",
+      "bytes": 18252,
+      "sha256": "6762a48dc60c5247040e1df9b802b880b580399dfc324a9e36fe9af995d4c4b1"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/sound-transit.png",
+      "bytes": 21741,
+      "sha256": "b16e1e356f3dec77d1b7bdfcf8708ba5272b0c406f81fcc166b9db78bbff30de"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/south-florida-regional-trans.png",
+      "bytes": 24824,
+      "sha256": "826c66303cb846de7f3c21dda82c0498e9848cadc7a115fad5d64c6c603a4b0f"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/south-shore-line.png",
+      "bytes": 15734,
+      "sha256": "ebafa632bf10ab5490068d0c27efd88d21758d047c019938d6d45ad76b95dc51"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/sun-metro.png",
+      "bytes": 26236,
+      "sha256": "bc8b64177d26bcf64a1203021008f8a0507daf730f1019855baf20ce200428d9"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/thebus.png",
+      "bytes": 21862,
+      "sha256": "e7682cedc149b0a8bd7eacb8c5d3d29ab9bb616626c65ceb9d7dffa75feef8bf"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/translink.png",
+      "bytes": 27095,
+      "sha256": "c95da21a4abf72db38a68aa713da554f211a2607146d6e0410c015ac808287c5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/trimet-portland-streetcar.png",
+      "bytes": 21297,
+      "sha256": "3eb2caea85ed2a6a99a82a052c2a4c594652bf2f78f35af45cfea8540bf6509b"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/trinity-metro.png",
+      "bytes": 16024,
+      "sha256": "321895df48cf4d9a5af36f444de53935ef1cf9e92990728dff973acb125aff33"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/ttc.png",
+      "bytes": 38243,
+      "sha256": "15ed92076c6d8491bb2ed630867a119f1d61c8f7b87ad15e5b0c8cf54b5481d5"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/union-pearson-express-up-exp.png",
+      "bytes": 35418,
+      "sha256": "eda6523e01e448d3b1a781f26ba3efab16330fc398513ec1ea0ff115c892746a"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/utah-transit-authority-uta.png",
+      "bytes": 14379,
+      "sha256": "26dd3aba6a530306abf715ad119dd29ff95dd8936ee88c578a95bc293e70982b"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/valley-metro-vm.png",
+      "bytes": 30875,
+      "sha256": "2d7ec42ec6680d2778f5b1302fd66eafbd831b1d5a4b77c1afd515d75517cc69"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/via.png",
+      "bytes": 17607,
+      "sha256": "a83957da49227bfe501beb3871d37416db5300892ee8d31ee1e438affc45d833"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/vre.png",
+      "bytes": 90795,
+      "sha256": "b8c7779b2554047d51cf1390d48cae6882098d1e2eef1d116f7c729fce38d756"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/wmata.png",
+      "bytes": 40716,
+      "sha256": "f23052a3bc9c7c80b640092f123373c0592abbc44d16d9266a3cb0a36551039a"
+    },
+    {
+      "path": "app/public/rail/operator-logos/na/wvu-prt.png",
+      "bytes": 29188,
+      "sha256": "44673be6155fa5ab45a5129993579ebbca3ac9d38f51a3f514c0c06321fdc1ce"
+    },
+    {
+      "path": "app/public/rail/shared-corridor-audit.json",
+      "bytes": 709708,
+      "sha256": "82434c8e2b0bc13d95f90c875f763ef987cfb64a38c1e6b3b593a8800487ebed",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/shared-corridors.json",
+      "bytes": 88727,
+      "sha256": "82843dbe7adf3fa2af967c60b8391724066e7ec49afbf1dbd2ea8eaed234c6fb",
+      "archive": "Original mixed-country document before North America records removed"
+    },
+    {
+      "path": "app/public/rail/us-2025.audit.json",
+      "bytes": 279785,
+      "sha256": "14027f4f6e3e9aaa6bb536376913669a7a9de1efb358519f5d4de245d97489bc"
+    },
+    {
+      "path": "app/public/rail/us-2025.audit.md",
+      "bytes": 4156,
+      "sha256": "cde9b8ad736f5550285e38ec68b64ff3acd8cc8fa0be058af78f2db648a8d00a"
+    },
+    {
+      "path": "app/public/rail/us-2025.json",
+      "bytes": 7910842,
+      "sha256": "ea5199ef9e6d542d8b2c4d38dbb9b74ab7b69e42939ef17adf7f8d703ab4c7da"
+    },
+    {
+      "path": "app/public/rail/us-2025.sources.md",
+      "bytes": 23131,
+      "sha256": "6910c58673a3f16e28524458cb2934479da954dccb9f0d554679343954e78636"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/continuous-stroke.mjs",
+      "bytes": 43369,
+      "sha256": "52fb6569c02dd471fa2fc39f3a22cdf1bd74edda8e19836763bd90c9ccccbe45"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/display-parts.mjs",
+      "bytes": 38747,
+      "sha256": "737b20534131f31be7231f0e6753c56b08a125fee30d7c3408b078a7cea731ce"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/family-windows.mjs",
+      "bytes": 22450,
+      "sha256": "ceb3959073c5515e8b810f2c1fc91492b67f330205c5e7af85c2f8a97431a1c6"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/grooming.mjs",
+      "bytes": 26863,
+      "sha256": "8ff7d8332ffc59c6731faca5ecedae63610c86bee01cb9d1ab1d81265212ba9f"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/i18n.mjs",
+      "bytes": 41542,
+      "sha256": "41136baca16155fab9c21d2f0a05074ba7bde2c9dd11edf2258a8d5d870822ea"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/operator-branding.mjs",
+      "bytes": 17741,
+      "sha256": "2fc1f8f56cf730798f5833745c8b78acb3e50fcd50c574f181f5c60d1f834c08"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/route-feature.mjs",
+      "bytes": 44114,
+      "sha256": "c64f140eaf1bb47e161df2e828f015be42473f4e4e3699ef3334282cc2a66bf5"
+    },
+    {
+      "path": "legacy-fixture-builders/app/scripts/build/port-fixtures/station-visibility.mjs",
+      "bytes": 10648,
+      "sha256": "c6eadf2b2be3ea4e2747a9e1c43daa2832dcad42bd38be4f64ba055bafc940e5"
+    },
+    {
+      "path": "legacy-fixture-builders/ios/Resources/Localizable.xcstrings",
+      "bytes": 384708,
+      "sha256": "5a1a7b998bad43e93fc8c23dc746fc1e9a606662f68e685e104ac640cc3c9db8"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/display-parts.json",
+      "bytes": 7421923,
+      "sha256": "49dfc73df5b3b774391157656827e1f9488bb18905a0a7babce5d42106b3a643",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/grooming.json",
+      "bytes": 2713074,
+      "sha256": "8bd4904483f01bc420d7701f2ff960b004ec7132f053a33d1a651040987ad287",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/i18n.json",
+      "bytes": 2280088,
+      "sha256": "605794b55764a2b89ecb453481c976b01d0cec76ef4f3d7247219c3401646815",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/operator-branding.json",
+      "bytes": 755245,
+      "sha256": "e9208a7a9307acbe9a1c34f58d0d3b140cc7ba766945a58a02e6ac848744b75a",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/route-feature.json",
+      "bytes": 11314972,
+      "sha256": "33fdc4429f7b70fab9703a79f82e1f3dc943be3af33725f9a0c5576506cbcf8c",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/route-graph.json",
+      "bytes": 4085760,
+      "sha256": "fec1e9042ca315da85479d822d45e43ba60672bf3b8b5e7a0ae49165c003d5d7",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/station-display.json",
+      "bytes": 7169508,
+      "sha256": "7e157c71f15022a8e97b4d0b504330ad7dd2770ba4f1101451ba81d174db635e",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/station-visibility.json",
+      "bytes": 443974,
+      "sha256": "202f93a3b7f305ab32458cd887cdf0b74103f4cecf24748390fb2be3e01749e4",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/stations.json",
+      "bytes": 11256692,
+      "sha256": "f921986ddc90139b78a0cc7c6ed24897f1b6c064c409bd6153beff503d18b8b6",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/stats.json",
+      "bytes": 3413098,
+      "sha256": "d6a53b66fa627e0544e07f37c081308ffc14d43f1772e8ee60e922fe4f29d457",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-fixtures/port-fixtures/visibility.json",
+      "bytes": 231704,
+      "sha256": "233b283759877fb1ca4e9f4aecb4773fc3fa2a89fce3161c27d84deae1bb453e",
+      "archive": "Original fixture before retired-region rows removed"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/CompactPackageHeadersTests.swift",
+      "bytes": 6492,
+      "sha256": "cdc61fcf07107a6d28a4b0c31a7a85a7998ed8400372267fe34bde5c05cf2fb6",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/CompactPackageLoopTests.swift",
+      "bytes": 13563,
+      "sha256": "2a6c1c7ea90025eb591a826e66622c4ac81a78bb9ea9db83967655411bbdfc3c",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/EditorCatalogTests.swift",
+      "bytes": 15209,
+      "sha256": "f32ca2f1747f0f8b7c6772f39f86c359131f3cc0ae1a1e1ca45dd6ce97993a2c",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/JourneyCompletionTests.swift",
+      "bytes": 35368,
+      "sha256": "fa1ecbc0e8bd1526c43bc299261c43d58c160d77a1cbf9939e4c3a683a326e5c",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/RailHistoryTests.swift",
+      "bytes": 23576,
+      "sha256": "fe5162bfeaaedd9a605347286e6cee5ca0ffeb58d3c3e6fa33806bec2078a950",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/RailResourceRevisionsTests.swift",
+      "bytes": 3990,
+      "sha256": "55dadf833e36fd72f43e07d9411ba5b2e01c8936a5f00eb946502a33e8cc803d",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/StationsParityTests.swift",
+      "bytes": 43805,
+      "sha256": "6fb9bc09dcef6fea69b62555c59d9b3c29ab7d24fe94000769cea13a365dba98",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/StatisticsParityTests.swift",
+      "bytes": 50414,
+      "sha256": "4867bb6b8cd3a864326c8574f8a1fa847541882620ec5582170b94c10d7f976b",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailCoreTests/TimetableCountryScopeTests.swift",
+      "bytes": 2897,
+      "sha256": "6cfd57e30eed27335c05c8bda524dc4c9f28c3c7d1292500152959e0b218042d",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailPresentationTests/NetworkVisibilityPolicyTests.swift",
+      "bytes": 7958,
+      "sha256": "d49398373221c09c63c77fddb3b0df73d79eaf7620a02fe44b59a7cb3bb232f3",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailPresentationTests/RegionClockTests.swift",
+      "bytes": 23886,
+      "sha256": "a11942b17637878bf3458367daedec7a753af570a5b593b78f4d1981377b0ff4",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailPresentationTests/RegionScopeRuleTests.swift",
+      "bytes": 8620,
+      "sha256": "6fde436be7b40aed698d7ef4ccd35b6cf0565ccf0541ee9063a0acd353961407",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailPresentationTests/StationLabelVisibilityTests.swift",
+      "bytes": 4833,
+      "sha256": "e477db7ee81cf38ef917b351dc631c207b903e933aff98acf0c50357d2539058",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailKit/Tests/RailPresentationTests/StationLineSelectionTests.swift",
+      "bytes": 14955,
+      "sha256": "5cbfe5fbf6bdc713babdbaaec130e219b23c739bfd2f42f132fbdc8f81aec2e1",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/RailMapUITests/MapZoomPerformanceTests.swift",
+      "bytes": 20504,
+      "sha256": "f02a9aa2302d1c80cf1db29862675111a6b7cbf6ff9a7c9dd3ed1f18359c571d",
+      "archive": "Original tests for the retired North America feature"
+    },
+    {
+      "path": "legacy-tests/ios/tools/persistence-harness/EditorChecks.swift",
+      "bytes": 8637,
+      "sha256": "4b8dd1584daa8bb939fc51c31933cc633bdf97b6deead990d61a5a84793f70b5",
+      "archive": "Original tests for the retired North America feature"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "ownerChecks": [
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    }
+  ],
+  "scope": "Targeted owning-line row equality only; no full-tree custody workflow."
+}

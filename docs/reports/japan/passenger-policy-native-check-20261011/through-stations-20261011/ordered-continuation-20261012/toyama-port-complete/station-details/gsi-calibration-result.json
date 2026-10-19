@@ -1,0 +1,53 @@
+[
+  {
+    "name": "northern-corridor-gsi",
+    "targetCoordinate": [
+      137.234,
+      36.7595
+    ],
+    "derivedCentre": [
+      137.23400115966797,
+      36.759498798260296
+    ],
+    "reference": {
+      "world_size": 67108864,
+      "world_x_at_screen_zero": 59136064.0,
+      "world_y_at_screen_zero": 26176456.0,
+      "world_pixels_per_screen_pixel": 1.0
+    }
+  },
+  {
+    "name": "13-keirin-gsi",
+    "targetCoordinate": [
+      137.233945,
+      36.75749
+    ],
+    "derivedCentre": [
+      137.23394751548767,
+      36.757491732920464
+    ],
+    "reference": {
+      "world_size": 67108864,
+      "world_x_at_screen_zero": 59136054.0,
+      "world_y_at_screen_zero": 26176923.0,
+      "world_pixels_per_screen_pixel": 1.0
+    }
+  },
+  {
+    "name": "14-iwasehama-gsi",
+    "targetCoordinate": [
+      137.23398,
+      36.7615
+    ],
+    "derivedCentre": [
+      137.23397970199585,
+      36.76150151346652
+    ],
+    "reference": {
+      "world_size": 67108864,
+      "world_x_at_screen_zero": 59136060.0,
+      "world_y_at_screen_zero": 26175990.0,
+      "world_pixels_per_screen_pixel": 1.0
+    }
+  }
+]

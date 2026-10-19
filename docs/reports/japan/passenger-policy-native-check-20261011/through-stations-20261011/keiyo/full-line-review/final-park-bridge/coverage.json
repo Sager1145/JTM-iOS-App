@@ -1,0 +1,268 @@
+[
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 0,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000000",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.63616,
+        "longitude": 139.88372
+      },
+      "distanceMetres": 0,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 0
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 1,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000001",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.63743141797189,
+        "longitude": 139.8801771499982
+      },
+      "distanceMetres": 350,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 1
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 2,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000002",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.638750390432385,
+        "longitude": 139.8766616106689
+      },
+      "distanceMetres": 700,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 2
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 3,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000003",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.640168281104536,
+        "longitude": 139.87320411355768
+      },
+      "distanceMetres": 1050,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 3
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 4,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000004",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64149600076888,
+        "longitude": 139.86969256221667
+      },
+      "distanceMetres": 1400,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 4
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 5,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000005",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.642806339201336,
+        "longitude": 139.86617105220316
+      },
+      "distanceMetres": 1750,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 5
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 6,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000006",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.644040082486704,
+        "longitude": 139.86260784551422
+      },
+      "distanceMetres": 2100,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 6
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#11",
+    "ordinal": 7,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004516/000007",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.644405247130116,
+        "longitude": 139.86161424152854
+      },
+      "distanceMetres": 2198.5396109182375,
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "pointOrdinal": 7
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 0,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000000",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.644405247130116,
+        "longitude": 139.86161424152854
+      },
+      "distanceMetres": 0,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 0
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 1,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000001",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64564524474397,
+        "longitude": 139.85805505471004
+      },
+      "distanceMetres": 350,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 1
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 2,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000002",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64610289380952,
+        "longitude": 139.85423886440884
+      },
+      "distanceMetres": 700,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 2
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 3,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000003",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64631865699003,
+        "longitude": 139.85037460724507
+      },
+      "distanceMetres": 1050,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 3
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 4,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000004",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64655471221054,
+        "longitude": 139.84651213491117
+      },
+      "distanceMetres": 1400,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 4
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 5,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000005",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64679108425551,
+        "longitude": 139.84264967869217
+      },
+      "distanceMetres": 1750,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 5
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 6,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000006",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64691879816979,
+        "longitude": 139.83878117624994
+      },
+      "distanceMetres": 2100,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 6
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 7,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000007",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.646756590017844,
+        "longitude": 139.83492422207001
+      },
+      "distanceMetres": 2450,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 7
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 8,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000008",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64639408943961,
+        "longitude": 139.8310766062261
+      },
+      "distanceMetres": 2800,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 8
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 9,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000009",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.64603130410583,
+        "longitude": 139.82722904851641
+      },
+      "distanceMetres": 3150,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 9
+    }
+  },
+  {
+    "itemID": "jp-東日本旅客鉄道-京葉線#12",
+    "ordinal": 10,
+    "directory": "/private/tmp/jtm-keiyo-park-bridge-final-evidence/captures/004517/000010",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.645995,
+        "longitude": 139.826845
+      },
+      "distanceMetres": 3184.9369330517297,
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "pointOrdinal": 10
+    }
+  }
+]

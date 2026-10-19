@@ -1,0 +1,380 @@
+[
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 0,
+    "fromStation": "池袋",
+    "toStation": "新大塚",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/00-pair.json",
+    "observation": "池袋东出站额外折点及 Sunshine 一带北拱与自身丸之内线底图不同；不沿 JR/东武大站场找中心。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 1,
+    "fromStation": "新大塚",
+    "toStation": "茗荷谷",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/01-pair.json",
+    "observation": "新大塚至茗荷谷自身走廊连续，局部小弯保留候选；不能把道路边线作为铁路。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 2,
+    "fromStation": "茗荷谷",
+    "toStation": "後楽園",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/02-pair.json",
+    "observation": "茗荷谷车辆基地扇出与所选客运主线分开，后乐园西侧弧线与底图略不同。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 3,
+    "fromStation": "後楽園",
+    "toStation": "本郷三丁目",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/03-pair.json",
+    "observation": "后乐园至本乡三丁目连续，保留既有003546自身显示锚点及区间3/4覆盖；大江户线东西走廊独立。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 4,
+    "fromStation": "本郷三丁目",
+    "toStation": "御茶ノ水",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/04-pair.json",
+    "observation": "本乡三丁目至御茶水自身东南、南、东弯道连续；JR 河岸线与丸之内线不同，既有锚点不回退。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 5,
+    "fromStation": "御茶ノ水",
+    "toStation": "淡路町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/05-pair.json",
+    "observation": "御茶水至淡路町越过JR走廊后沿自身南北路径；不建立跨线连接。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 6,
+    "fromStation": "淡路町",
+    "toStation": "大手町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/06-pair.json",
+    "observation": "淡路町至大手町保持自身南北线，西侧三田线与东侧JR/银座线独立。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 7,
+    "fromStation": "大手町",
+    "toStation": "東京",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/07-pair.json",
+    "observation": "大手町至东京沿JR西侧丸之内自身走廊，横向东西/半藏门线不加连接。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 8,
+    "fromStation": "東京",
+    "toStation": "銀座",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/08-pair.json",
+    "observation": "东京南侧及有乐町北侧转弯与Apple自身示意轮廓不同，列显示候选。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 9,
+    "fromStation": "銀座",
+    "toStation": "霞ヶ関",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/09-pair.json",
+    "observation": "银座至霞关穿过日比谷公园的红线小起伏与自身蓝色路径不同，列候选。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 10,
+    "fromStation": "霞ヶ関",
+    "toStation": "国会議事堂前",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/10-pair.json",
+    "observation": "霞关至国会议事堂前在国会庭园的弧线差异明显；完整自身站台框待核，不吸附南侧千代田线。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 11,
+    "fromStation": "国会議事堂前",
+    "toStation": "赤坂見附",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/11-pair.json",
+    "observation": "国会议事堂前西侧预览接近千代田线后北弯，偏离自身丸之内示意走廊；身份与轮廓候选。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 12,
+    "fromStation": "赤坂見附",
+    "toStation": "四ツ谷",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/12-pair.json",
+    "observation": "赤坂见附至四谷沿护城河连续；四谷北端圆角与底图有差异，南北线/JR保持独立。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 13,
+    "fromStation": "四ツ谷",
+    "toStation": "四谷三丁目",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/13-pair.json",
+    "observation": "四谷至四谷三丁目自身东西走廊连续。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 14,
+    "fromStation": "四谷三丁目",
+    "toStation": "新宿御苑前",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/14-pair.json",
+    "observation": "四谷三丁目至新宿御苑前自身走廊连续。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 15,
+    "fromStation": "新宿御苑前",
+    "toStation": "新宿三丁目",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/15-pair.json",
+    "observation": "新宿御苑前至新宿三丁目连续，副都心/新宿线横穿不构造连接。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 16,
+    "fromStation": "新宿三丁目",
+    "toStation": "新宿",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/16-pair.json",
+    "observation": "新宿三丁目至新宿红色S弯在JR北侧抬起，与自身丸之内轴线不同；Main公共新宿站点位于JR大站场，不能当作丸之内自身平台框验收。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 17,
+    "fromStation": "新宿",
+    "toStation": "西新宿",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/17-pair.json",
+    "observation": "新宿至西新宿同一S弯差异；自身东西站台与南北JR/大江户走廊需分开。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 18,
+    "fromStation": "西新宿",
+    "toStation": "中野坂上",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/18-pair.json",
+    "observation": "西新宿至中野坂上自身东西线连续，大江户线南北穿越独立。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 19,
+    "fromStation": "中野坂上",
+    "toStation": "新中野",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/19-pair.json",
+    "observation": "中野坂上至新中野主线连续，南侧关联支线另作完整三段检查。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 20,
+    "fromStation": "新中野",
+    "toStation": "東高円寺",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/20-pair.json",
+    "observation": "新中野至东高圆寺自身东西走廊连续。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 21,
+    "fromStation": "東高円寺",
+    "toStation": "新高円寺",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/21-pair.json",
+    "observation": "东高圆寺至新高圆寺自身东西走廊连续。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 22,
+    "fromStation": "新高円寺",
+    "toStation": "南阿佐ヶ谷",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/22-pair.json",
+    "observation": "新高圆寺至南阿佐谷自身走廊连续。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 23,
+    "fromStation": "南阿佐ヶ谷",
+    "toStation": "荻窪",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/23-pair.json",
+    "observation": "南阿佐谷至荻洼含西北转弯和终端接近段；自身丸之内站台在JR以南，不能以JR大填色作终点框。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+    "intervalIndex": 0,
+    "fromStation": "方南町",
+    "toStation": "中野富士見町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/24-pair.json",
+    "observation": "方南町至中野富士见町车辆基地旁弯道与自身客运蓝线不同，车场扇出排除。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+    "intervalIndex": 1,
+    "fromStation": "中野富士見町",
+    "toStation": "中野新橋",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/25-pair.json",
+    "observation": "中野富士见町至中野新桥东西转北的红色折角与自身弯道不同，列候选。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  },
+  {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+    "intervalIndex": 2,
+    "fromStation": "中野新橋",
+    "toStation": "中野坂上",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/26-pair.json",
+    "observation": "中野新桥至中野坂上以大45度斜切接主线；Apple自身走廊与原生Transit是南转东圆弧。方向朝中野坂上相符，具体fork与曲线未验收；不得补南转西连接。",
+    "verdict": "baseline-reviewed; repair-and-own-platform-acceptance-pending"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "operatorPage": "https://railway.ichibata.co.jp/operate/route/%E5%B8%83%E5%B4%8E/",
+  "sources": [
+    {
+      "file": "official-nunozaki.html",
+      "role": "operator own station page"
+    },
+    {
+      "file": "official-type1.gif",
+      "url": "https://railway.ichibata.co.jp/wp-content/media/type1.gif",
+      "role": "generic one-face access schematic, not georeferenced"
+    },
+    {
+      "file": "official-s10-3-scaled.jpg",
+      "url": "https://railway.ichibata.co.jp/wp-content/media/s10-3-scaled.jpg",
+      "role": "own platform photograph"
+    }
+  ],
+  "imagesActuallyViewedByParent": 2,
+  "ownPlatformIdentity": "single own passenger platform face supported",
+  "geographicCaps": "unresolved",
+  "candidateCoordinate": null
+}

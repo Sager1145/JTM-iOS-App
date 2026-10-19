@@ -1,0 +1,92 @@
+{
+  "format": "jtm-manual-native-scope-v1",
+  "lineID": "jp-九州旅客鉄道-唐津線",
+  "intervalCount": 12,
+  "viewCount": 140,
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "itemID": "jp-九州旅客鉄道-唐津線#0",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000647",
+      "viewpointCount": 8,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 1,
+      "itemID": "jp-九州旅客鉄道-唐津線#1",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000648",
+      "viewpointCount": 12,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 2,
+      "itemID": "jp-九州旅客鉄道-唐津線#2",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000651",
+      "viewpointCount": 12,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 3,
+      "itemID": "jp-九州旅客鉄道-唐津線#3",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000652",
+      "viewpointCount": 10,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 4,
+      "itemID": "jp-九州旅客鉄道-唐津線#4",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000653",
+      "viewpointCount": 13,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 5,
+      "itemID": "jp-九州旅客鉄道-唐津線#5",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000654",
+      "viewpointCount": 9,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 6,
+      "itemID": "jp-九州旅客鉄道-唐津線#6",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000655",
+      "viewpointCount": 9,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 7,
+      "itemID": "jp-九州旅客鉄道-唐津線#7",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000656",
+      "viewpointCount": 18,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 8,
+      "itemID": "jp-九州旅客鉄道-唐津線#8",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000657",
+      "viewpointCount": 6,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 9,
+      "itemID": "jp-九州旅客鉄道-唐津線#9",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000658",
+      "viewpointCount": 10,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 10,
+      "itemID": "jp-九州旅客鉄道-唐津線#10",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000649",
+      "viewpointCount": 17,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    },
+    {
+      "intervalIndex": 11,
+      "itemID": "jp-九州旅客鉄道-唐津線#11",
+      "captureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000650",
+      "viewpointCount": 16,
+      "wholeLineRenderDependency": "3ccabbed2eb3ceb104cb6f38c9ad72494fe1695b5d342bddab457613bab1eb42"
+    }
+  ]
+}

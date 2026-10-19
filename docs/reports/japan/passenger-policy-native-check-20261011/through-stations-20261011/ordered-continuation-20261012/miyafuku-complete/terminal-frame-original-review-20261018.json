@@ -1,0 +1,648 @@
+{
+  "format": "bounded-terminal-frame-original-review-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-WILLER　TRAINS-宮福線",
+  "stationID": "005124",
+  "intervalIndex": 12,
+  "scope": "Own Tango/Miyafuku island platform north of JR only. Full longitudinal cap check; no owner/evidence/production changes.",
+  "actualPairedViewsViewed": 4,
+  "actualOriginalPNGsViewed": 8,
+  "unviewedRequestedPairs": 0,
+  "views": [
+    {
+      "session": "/private/tmp/jtm-miyafuku-terminal-detail-20261018",
+      "captureIndex": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/capture-index.json",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-12",
+      "pointOrdinal": 12,
+      "basemapStyle": "standard",
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000012/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000012/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original.",
+      "viewJSON": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000012/view.json",
+      "captureStateJSON": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000012/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.29721902969664,
+        "longitude": 135.11677388172484,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24286870235317268,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 234966496.91719362,
+        "rectY": 106054456.99112663,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000170708,
+        "centerYPoints": 600.0000000031268,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      },
+      "mapRect": {
+        "height": 2400,
+        "width": 3200,
+        "x": 234966496.91719362,
+        "y": 106054456.99112663
+      },
+      "timestamp": "2026-10-18T23:10:11Z",
+      "wholeLineRenderDependency": "5ede7cb0aef8a6c3d5bd2380d8c3afc78624d4c8a622f4775ce00de267e63ff0",
+      "intervalDependency": "e425a3d73a57c49d7d1bf9c2c961a822ffed67d9de1aa336b53b4c0a24a5689b",
+      "planDigest": "821075762c39869c54133d11e71baf74a547dd10a549aaf815b0e9fe872b558b",
+      "processID": 61534,
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false
+    },
+    {
+      "session": "/private/tmp/jtm-miyafuku-terminal-detail-20261018",
+      "captureIndex": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/capture-index.json",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-13",
+      "pointOrdinal": 13,
+      "basemapStyle": "standard",
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000013/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000013/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original.",
+      "viewJSON": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000013/view.json",
+      "captureStateJSON": "/private/tmp/jtm-miyafuku-terminal-detail-20261018/alignment/captures/000000/000013/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.296995,
+        "longitude": 135.11767,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24286936569527182,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 234967165.11140978,
+        "rectY": 106054661.66577925,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000009166,
+        "centerYPoints": 599.9999999958445,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 1.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19.00000000003583
+      },
+      "mapRect": {
+        "height": 2400,
+        "width": 3200,
+        "x": 234967165.11140978,
+        "y": 106054661.66577925
+      },
+      "timestamp": "2026-10-18T23:10:11Z",
+      "wholeLineRenderDependency": "5ede7cb0aef8a6c3d5bd2380d8c3afc78624d4c8a622f4775ce00de267e63ff0",
+      "intervalDependency": "e425a3d73a57c49d7d1bf9c2c961a822ffed67d9de1aa336b53b4c0a24a5689b",
+      "planDigest": "821075762c39869c54133d11e71baf74a547dd10a549aaf815b0e9fe872b558b",
+      "processID": 61534,
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false
+    },
+    {
+      "session": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018",
+      "captureIndex": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/capture-index.json",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-12",
+      "pointOrdinal": 12,
+      "basemapStyle": "imagery",
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000012/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000012/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original.",
+      "viewJSON": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000012/view.json",
+      "captureStateJSON": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000012/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.29721902969664,
+        "longitude": 135.11677388172484,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24286870235317268,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 234966496.91719362,
+        "rectY": 106054456.99112663,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000170708,
+        "centerYPoints": 600.0000000031268,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      },
+      "mapRect": {
+        "height": 2400,
+        "width": 3200,
+        "x": 234966496.91719362,
+        "y": 106054456.99112663
+      },
+      "timestamp": "2026-10-18T23:17:29Z",
+      "wholeLineRenderDependency": "6e33df46afd3480e840d6039da59834ae5e24de64ffd59ba32436612e11fea22",
+      "intervalDependency": "e425a3d73a57c49d7d1bf9c2c961a822ffed67d9de1aa336b53b4c0a24a5689b",
+      "planDigest": "22420a281511d4af7ce9decfddab2a46cb27a6e312ce264d4f52bbb1cfef8507",
+      "processID": 61534,
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false
+    },
+    {
+      "session": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018",
+      "captureIndex": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/capture-index.json",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-13",
+      "pointOrdinal": 13,
+      "basemapStyle": "imagery",
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000013/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000013/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original.",
+      "viewJSON": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000013/view.json",
+      "captureStateJSON": "/private/tmp/jtm-miyafuku-terminal-imagery-20261018/alignment/captures/000000/000013/capture-state.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.296995,
+        "longitude": 135.11767,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24286936569527182,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 234967165.11140978,
+        "rectY": 106054661.66577925,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000009166,
+        "centerYPoints": 599.9999999958445,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 1.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19.00000000003583
+      },
+      "mapRect": {
+        "height": 2400,
+        "width": 3200,
+        "x": 234967165.11140978,
+        "y": 106054661.66577925
+      },
+      "timestamp": "2026-10-18T23:17:30Z",
+      "wholeLineRenderDependency": "6e33df46afd3480e840d6039da59834ae5e24de64ffd59ba32436612e11fea22",
+      "intervalDependency": "e425a3d73a57c49d7d1bf9c2c961a822ffed67d9de1aa336b53b4c0a24a5689b",
+      "planDigest": "22420a281511d4af7ce9decfddab2a46cb27a6e312ce264d4f52bbb1cfef8507",
+      "processID": 61534,
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false
+    }
+  ],
+  "transform": {
+    "frame": "p13 standard and imagery; identical flat snapshot map rect and snapshotProjection",
+    "mapKitWorldWidth": 268435456,
+    "xMapPoint": "(longitude+180)/360*2^28",
+    "yMapPoint": "(1-asinh(tan(latitude*pi/180))/pi)/2*2^28",
+    "pixelX": "(xMapPoint-mapRect.x)/snapshotProjection.mapPointsPerPointX",
+    "pixelY": "(yMapPoint-mapRect.y)/snapshotProjection.mapPointsPerPointY",
+    "pixelOrigin": "top-left",
+    "displayScale": 1,
+    "metresPerPointAtCamera": 0.24286936569527182
+  },
+  "oldEndpoint": {
+    "coordinate": [
+      135.11767,
+      35.296995
+    ],
+    "p13Pixel": [
+      799.9999999850986,
+      600.0000000149012
+    ],
+    "finding": "Actually visible north of the own terminal rail group, in building/parking context."
+  },
+  "rejectedSameChainageReference": {
+    "coordinate": [
+      135.11767,
+      35.29658587785136
+    ],
+    "p13Pixel": [
+      799.9999999850986,
+      786.8872907655161
+    ],
+    "meaning": "Prior source-only equal-longitude transverse own-pair axis; near west polygon cap, not full longitudinal centre. No adoption."
+  },
+  "sourceObjectProjection": [
+    {
+      "sourceFile": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/terminal-own-source/way-734217344-full.json",
+      "wayID": 734217344,
+      "version": 5,
+      "tags": {
+        "area": "yes",
+        "public_transport": "platform",
+        "railway": "platform",
+        "shelter": "yes"
+      },
+      "scope": "Existing OSM source object projected for identity/extent comparison; not an independently extracted Apple or physical platform cap.",
+      "nodes": [
+        {
+          "id": 6875857728,
+          "coordinate": [
+            135.1188236,
+            35.2963697
+          ],
+          "p13Pixel": [
+            1230.0932528525589,
+            885.6371067311773
+          ]
+        },
+        {
+          "id": 6875857727,
+          "coordinate": [
+            135.1187976,
+            35.2962896
+          ],
+          "p13Pixel": [
+            1220.3997502475975,
+            922.2266358217156
+          ]
+        },
+        {
+          "id": 9317859439,
+          "coordinate": [
+            135.1185562,
+            35.2963433
+          ],
+          "p13Pixel": [
+            1130.3993070870636,
+            897.6965809985423
+          ]
+        },
+        {
+          "id": 9317859438,
+          "coordinate": [
+            135.1185648,
+            35.2963632
+          ],
+          "p13Pixel": [
+            1133.6056194752452,
+            888.6062958386691
+          ]
+        },
+        {
+          "id": 6875857725,
+          "coordinate": [
+            135.1176418,
+            35.2965796
+          ],
+          "p13Pixel": [
+            789.4862779676912,
+            789.7550104084053
+          ]
+        },
+        {
+          "id": 6875857724,
+          "coordinate": [
+            135.1176483,
+            35.2966028
+          ],
+          "p13Pixel": [
+            791.9096536338327,
+            779.157259863594
+          ]
+        },
+        {
+          "id": 6875857722,
+          "coordinate": [
+            135.1179435,
+            35.2965524
+          ],
+          "p13Pixel": [
+            901.9681905806062,
+            802.1799554502512
+          ]
+        },
+        {
+          "id": 9317859440,
+          "coordinate": [
+            135.1185825,
+            35.2963993
+          ],
+          "p13Pixel": [
+            1140.2046577781437,
+            872.1158733360994
+          ]
+        },
+        {
+          "id": 9317859441,
+          "coordinate": [
+            135.1185908,
+            35.2964199
+          ],
+          "p13Pixel": [
+            1143.2991220504043,
+            862.7058228543079
+          ]
+        },
+        {
+          "id": 6875857728,
+          "coordinate": [
+            135.1188236,
+            35.2963697
+          ],
+          "p13Pixel": [
+            1230.0932528525589,
+            885.6371067311773
+          ]
+        }
+      ]
+    },
+    {
+      "sourceFile": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/terminal-own-source/way-734217345-full.json",
+      "wayID": 734217345,
+      "version": 4,
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "宮福線",
+        "layer": "1",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "railway": "rail",
+        "service": "siding",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "voltage": "1500"
+      },
+      "scope": "Existing OSM source object projected for identity/extent comparison; not an independently extracted Apple or physical platform cap.",
+      "nodes": [
+        {
+          "id": 6875857741,
+          "coordinate": [
+            135.1170296,
+            35.296704
+          ],
+          "p13Pixel": [
+            561.2415749728679,
+            732.9291056055062
+          ]
+        },
+        {
+          "id": 6875857733,
+          "coordinate": [
+            135.1174159,
+            35.2966498
+          ],
+          "p13Pixel": [
+            705.2646536380051,
+            757.6876697206916
+          ]
+        },
+        {
+          "id": 6875857732,
+          "coordinate": [
+            135.1176564,
+            35.2966148
+          ],
+          "p13Pixel": [
+            794.9295524954794,
+            773.6756635649422
+          ]
+        },
+        {
+          "id": 8018056595,
+          "coordinate": [
+            135.1179528,
+            35.2965656
+          ],
+          "p13Pixel": [
+            905.4354818910358,
+            796.1502032254176
+          ]
+        },
+        {
+          "id": 6875857729,
+          "coordinate": [
+            135.118572,
+            35.2964227
+          ],
+          "p13Pixel": [
+            1136.2899740338323,
+            861.4267866750912
+          ]
+        }
+      ]
+    },
+    {
+      "sourceFile": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/terminal-own-source/way-734230257-full.json",
+      "wayID": 734230257,
+      "version": 6,
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "宮福線",
+        "layer": "1",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "scope": "Existing OSM source object projected for identity/extent comparison; not an independently extracted Apple or physical platform cap.",
+      "nodes": [
+        {
+          "id": 6875954491,
+          "coordinate": [
+            135.1156341,
+            35.2970944
+          ],
+          "p13Pixel": [
+            40.96146544814109,
+            554.593866116171
+          ]
+        },
+        {
+          "id": 6875857739,
+          "coordinate": [
+            135.1163381,
+            35.2968819
+          ],
+          "p13Pixel": [
+            303.4316890984773,
+            651.6642555681781
+          ]
+        },
+        {
+          "id": 6875857740,
+          "coordinate": [
+            135.1166424,
+            35.2967953
+          ],
+          "p13Pixel": [
+            416.8829519599675,
+            691.2232211850887
+          ]
+        },
+        {
+          "id": 6875857741,
+          "coordinate": [
+            135.1170296,
+            35.296704
+          ],
+          "p13Pixel": [
+            561.2415749728679,
+            732.9291056055062
+          ]
+        },
+        {
+          "id": 6875857742,
+          "coordinate": [
+            135.1172809,
+            35.2966455
+          ],
+          "p13Pixel": [
+            654.933005645871,
+            759.6519093404127
+          ]
+        },
+        {
+          "id": 6875857743,
+          "coordinate": [
+            135.1176339,
+            35.2965675
+          ],
+          "p13Pixel": [
+            786.5409444868562,
+            795.2822842720966
+          ]
+        },
+        {
+          "id": 359860798,
+          "coordinate": [
+            135.1179371,
+            35.2964979
+          ],
+          "p13Pixel": [
+            899.5820976346729,
+            827.075512906588
+          ]
+        }
+      ]
+    },
+    {
+      "sourceFile": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/terminal-own-source/way-884808925-full.json",
+      "wayID": 884808925,
+      "version": 3,
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "宮福線",
+        "layer": "1",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "scope": "Existing OSM source object projected for identity/extent comparison; not an independently extracted Apple or physical platform cap.",
+      "nodes": [
+        {
+          "id": 359860798,
+          "coordinate": [
+            135.1179371,
+            35.2964979
+          ],
+          "p13Pixel": [
+            899.5820976346729,
+            827.075512906588
+          ]
+        },
+        {
+          "id": 6875857745,
+          "coordinate": [
+            135.1185472,
+            35.2963581
+          ],
+          "p13Pixel": [
+            1127.0438638776538,
+            890.9359671247735
+          ]
+        }
+      ]
+    }
+  ],
+  "decision": "UNRESOLVED full own platform caps/longitudinal centre; no WGS84 centre estimate or proposed alias. Old endpoint is visibly misplaced but that does not identify a replacement centre.",
+  "unproved": [
+    "Exact usable island platform west/east caps in imagery under roof/shadow",
+    "Own narrow Apple platform frame cap-to-cap extent within merged station fill",
+    "Whether eastern source polygon extension denotes boarding platform, access/concourse or other terminal support area",
+    "Independent mapping between each OSM track and official platform1/2 number",
+    "Survey-grade alignment or elevated-roof parallax correction"
+  ],
+  "constraints": [
+    "Do not substitute same-longitude projection, stop-node mean, roof-centre, buffer-midpoint or JR shared box for full own frame centre.",
+    "Retain raw originals unchanged; no screenshot edits or generated pick overlay.",
+    "No native/app/capture/build/tests/apply; no repair owner/evidence edits."
+  ]
+}

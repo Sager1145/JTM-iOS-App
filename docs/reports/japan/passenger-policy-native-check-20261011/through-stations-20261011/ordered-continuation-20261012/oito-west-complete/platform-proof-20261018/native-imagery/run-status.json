@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "9497E602-FFAC-4938-A3DB-5A16BA339286",
+  "message" : "29\/29 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "itoigawa-own-platform-imagery",
+  "resultPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T04:54:03Z"
+}

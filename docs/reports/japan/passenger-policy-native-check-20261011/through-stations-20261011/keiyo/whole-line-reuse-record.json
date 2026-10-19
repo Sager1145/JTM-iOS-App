@@ -1,0 +1,817 @@
+{
+  "freshInterval": "jp-東日本旅客鉄道-京葉線#0",
+  "lineDependency": "4b9dbee09010985bd3881cc6c0c549425cc2560bade187ae693a7278d0911702",
+  "reusedViewpoints": [
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000009"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000010"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#1",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004514/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004514/000011"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000009"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#10",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004515/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004515/000010"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#11",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004516/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004516/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000009"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#12",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004517/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004517/000010"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#13",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004518/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004518/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#14",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004519/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004519/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#15",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004520/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004520/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#16",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004521/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004521/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#16",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004521/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004521/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#16",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004521/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004521/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#16",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004521/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004521/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#16",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004521/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004521/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#2",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004522/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004522/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#3",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004523/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004523/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#4",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004524/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004524/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#5",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004525/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004525/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#6",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004526/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004526/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000009"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#7",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004527/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004527/000010"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000007"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000008"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000009"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000010"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000011"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000012"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#8",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004528/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004528/000013"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000000"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000001"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000002"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000003"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000004"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000005"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000006"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線#9",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004529/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/004529/000007"
+    }
+  ],
+  "policy": "Exact native line dependency, interval identity and viewpoint equality; native configure validates receipts."
+}

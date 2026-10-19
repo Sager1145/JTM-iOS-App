@@ -1,0 +1,30 @@
+{
+  "id": "secondary",
+  "status": "accepted",
+  "candidateSha256": "147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26",
+  "intervalIDs": [
+    "jp-名古屋鉄道-津島線#0",
+    "jp-名古屋鉄道-津島線#1",
+    "jp-名古屋鉄道-津島線#2",
+    "jp-名古屋鉄道-津島線#3",
+    "jp-名古屋鉄道-津島線#4",
+    "jp-名古屋鉄道-津島線#5",
+    "jp-名古屋鉄道-津島線#6",
+    "jp-名古屋鉄道-名古屋本線#16",
+    "jp-名古屋鉄道-名古屋本線#17",
+    "jp-名古屋鉄道-名古屋本線#18",
+    "jp-名古屋鉄道-名古屋本線#19",
+    "jp-名古屋鉄道-名古屋本線#20",
+    "jp-名古屋鉄道-名古屋本線#21",
+    "jp-名古屋鉄道-名古屋本線#22",
+    "jp-名古屋鉄道-名古屋本線#23"
+  ],
+  "actualNewMainViews": 32,
+  "actualNewMainPanels": 96,
+  "reusedUnchangedTsushimaViews": 44,
+  "independentReview": {
+    "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/native-candidate/secondary/independent-review-secondary.json",
+    "sha256": "d5aa0790211f3a34748f3566ec486752d65309b209d9b012f526145891154783"
+  },
+  "scopeLimit": "native cartographic display, station/underground precision warnings retained"
+}

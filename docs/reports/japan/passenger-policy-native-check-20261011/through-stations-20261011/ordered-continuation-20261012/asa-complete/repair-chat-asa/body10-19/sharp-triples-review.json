@@ -1,0 +1,158 @@
+[
+  {
+    "interval": 10,
+    "vertex": 17,
+    "angle": 47.29,
+    "coordinate": [
+      133.838222028,
+      33.513678898
+    ],
+    "lengthsM": [
+      178.11,
+      28.73
+    ]
+  },
+  {
+    "interval": 10,
+    "vertex": 18,
+    "angle": 127.61,
+    "coordinate": [
+      133.838317207,
+      33.513433286
+    ],
+    "lengthsM": [
+      28.73,
+      20.0
+    ]
+  },
+  {
+    "interval": 10,
+    "vertex": 19,
+    "angle": 136.19,
+    "coordinate": [
+      133.838439249,
+      33.51358141
+    ],
+    "lengthsM": [
+      20.0,
+      29.46
+    ]
+  },
+  {
+    "interval": 10,
+    "vertex": 20,
+    "angle": 39.87,
+    "coordinate": [
+      133.838490669,
+      33.513320287
+    ],
+    "lengthsM": [
+      29.46,
+      81.56
+    ]
+  },
+  {
+    "interval": 11,
+    "vertex": 37,
+    "angle": 40.04,
+    "coordinate": [
+      133.891523194,
+      33.502676163
+    ],
+    "lengthsM": [
+      82.35,
+      5.36
+    ]
+  },
+  {
+    "interval": 12,
+    "vertex": 1,
+    "angle": 82.22,
+    "coordinate": [
+      133.891563789,
+      33.502705254
+    ],
+    "lengthsM": [
+      1.4,
+      21.87
+    ]
+  },
+  {
+    "interval": 13,
+    "vertex": 11,
+    "angle": 33.2,
+    "coordinate": [
+      133.905540415,
+      33.504837926
+    ],
+    "lengthsM": [
+      88.8,
+      13.16
+    ]
+  },
+  {
+    "interval": 13,
+    "vertex": 12,
+    "angle": 65.1,
+    "coordinate": [
+      133.905677311,
+      33.504868743
+    ],
+    "lengthsM": [
+      13.16,
+      13.17
+    ]
+  },
+  {
+    "interval": 13,
+    "vertex": 13,
+    "angle": 69.72,
+    "coordinate": [
+      133.905768521,
+      33.504778132
+    ],
+    "lengthsM": [
+      13.17,
+      15.87
+    ]
+  },
+  {
+    "interval": 13,
+    "vertex": 15,
+    "angle": 66.68,
+    "coordinate": [
+      133.906189538,
+      33.504816638
+    ],
+    "lengthsM": [
+      24.17,
+      13.47
+    ]
+  },
+  {
+    "interval": 13,
+    "vertex": 16,
+    "angle": 63.38,
+    "coordinate": [
+      133.906241022,
+      33.504703505
+    ],
+    "lengthsM": [
+      13.47,
+      14.39
+    ]
+  },
+  {
+    "interval": 15,
+    "vertex": 53,
+    "angle": 81.8,
+    "coordinate": [
+      133.947949264,
+      33.458537027
+    ],
+    "lengthsM": [
+      22.04,
+      2.42
+    ]
+  }
+]

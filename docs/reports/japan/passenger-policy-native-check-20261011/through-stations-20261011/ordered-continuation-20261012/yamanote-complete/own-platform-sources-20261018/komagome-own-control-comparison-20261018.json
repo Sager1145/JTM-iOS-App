@@ -1,0 +1,492 @@
+{
+  "status": "candidate-only; parent not applying; current native own-corridor confirmation and larger south offset remain unresolved",
+  "sourceRole": "Only explicitly identified Yamanote passenger ways are used for projection; Namboku and Yamanote freight excluded",
+  "localMetric": {
+    "longitudeMetresPerDegree": 90360.05527444393,
+    "latitudeMetresPerDegree": 111320,
+    "referenceLatitude": 35.73622
+  },
+  "ownOuterWayIDs": [
+    1565541058,
+    1565541057
+  ],
+  "ownInnerWayIDs": [
+    1565541052,
+    1565073018
+  ],
+  "projections": {
+    "A": {
+      "coordinate": [
+        139.74531,
+        35.73572
+      ],
+      "outer": {
+        "distanceMetres": 8.155964308273981,
+        "coordinate": [
+          139.74526819239316,
+          35.73578493270809
+        ],
+        "segmentIndex": 6,
+        "segmentControls": [
+          [
+            139.7452403,
+            35.7357731
+          ],
+          [
+            139.7456349,
+            35.7359405
+          ]
+        ],
+        "fraction": 0.07068523352234381
+      },
+      "inner": {
+        "distanceMetres": 3.8899703197970075,
+        "coordinate": [
+          139.7452905770154,
+          35.735751185279156
+        ],
+        "segmentIndex": 3,
+        "segmentControls": [
+          [
+            139.7448995,
+            35.7355907
+          ],
+          [
+            139.7456615,
+            35.7359034
+          ]
+        ],
+        "fraction": 0.5132244296614864
+      }
+    },
+    "B": {
+      "coordinate": [
+        139.74648,
+        35.73618
+      ],
+      "outer": {
+        "distanceMetres": 11.840221075910314,
+        "coordinate": [
+          139.74641698050752,
+          35.73627325323841
+        ],
+        "segmentIndex": 8,
+        "segmentControls": [
+          [
+            139.7460025,
+            35.7360887
+          ],
+          [
+            139.7465177,
+            35.7363181
+          ]
+        ],
+        "fraction": 0.8045040906973798
+      },
+      "inner": {
+        "distanceMetres": 5.735208391292386,
+        "coordinate": [
+          139.74645126931904,
+          35.736225939504685
+        ],
+        "segmentIndex": 5,
+        "segmentControls": [
+          [
+            139.7463757,
+            35.7361948
+          ],
+          [
+            139.7472559,
+            35.7365575
+          ]
+        ],
+        "fraction": 0.08585471377227971
+      }
+    },
+    "C": {
+      "coordinate": [
+        139.74677,
+        35.73622
+      ],
+      "outer": {
+        "distanceMetres": 20.310579517323134,
+        "coordinate": [
+          139.74666493209034,
+          35.73638129244146
+        ],
+        "segmentIndex": 9,
+        "segmentControls": [
+          [
+            139.7465177,
+            35.7363181
+          ],
+          [
+            139.747219,
+            35.7366191
+          ]
+        ],
+        "fraction": 0.20994166596650832
+      },
+      "inner": {
+        "distanceMetres": 13.626444609272395,
+        "coordinate": [
+          139.74670173795863,
+          35.73632914897478
+        ],
+        "segmentIndex": 5,
+        "segmentControls": [
+          [
+            139.7463757,
+            35.7361948
+          ],
+          [
+            139.7472559,
+            35.7365575
+          ]
+        ],
+        "fraction": 0.37041349538956825
+      }
+    },
+    "D": {
+      "coordinate": [
+        139.74697,
+        35.73634
+      ],
+      "outer": {
+        "distanceMetres": 16.948959962010726,
+        "coordinate": [
+          139.74688232196047,
+          35.73647459680607
+        ],
+        "segmentIndex": 9,
+        "segmentControls": [
+          [
+            139.7465177,
+            35.7363181
+          ],
+          [
+            139.747219,
+            35.7366191
+          ]
+        ],
+        "fraction": 0.5199229437571381
+      },
+      "inner": {
+        "distanceMetres": 9.895488423707125,
+        "coordinate": [
+          139.74692042828417,
+          35.736419263699915
+        ],
+        "segmentIndex": 5,
+        "segmentControls": [
+          [
+            139.7463757,
+            35.7361948
+          ],
+          [
+            139.7472559,
+            35.7365575
+          ]
+        ],
+        "fraction": 0.6188687618301913
+      }
+    },
+    "station": {
+      "coordinate": [
+        139.748054,
+        35.736861
+      ],
+      "outer": {
+        "distanceMetres": 11.456937678930817,
+        "coordinate": [
+          139.74799474139516,
+          35.7369519868007
+        ],
+        "segmentIndex": 10,
+        "segmentControls": [
+          [
+            139.747219,
+            35.7366191
+          ],
+          [
+            139.7487011,
+            35.7372551
+          ]
+        ],
+        "fraction": 0.523406919340003
+      },
+      "inner": {
+        "distanceMetres": 1.2701537133994585,
+        "coordinate": [
+          139.7480475465346,
+          35.73687113637172
+        ],
+        "segmentIndex": 7,
+        "segmentControls": [
+          [
+            139.7477459,
+            35.7367446
+          ],
+          [
+            139.7483874,
+            35.7370137
+          ]
+        ],
+        "fraction": 0.47022063069919334
+      }
+    }
+  },
+  "variants": {
+    "current": {
+      "coordinates": [
+        [
+          139.74531,
+          35.73572
+        ],
+        [
+          139.74648,
+          35.73618
+        ],
+        [
+          139.74677,
+          35.73622
+        ],
+        [
+          139.74697,
+          35.73634
+        ],
+        [
+          139.748054,
+          35.736861
+        ]
+      ],
+      "turnsDegrees": [
+        16.19981279056677,
+        26.82702933475889,
+        5.8405703769014545
+      ]
+    },
+    "deleteCOnly": {
+      "coordinates": [
+        [
+          139.74531,
+          35.73572
+        ],
+        [
+          139.74648,
+          35.73618
+        ],
+        [
+          139.74697,
+          35.73634
+        ],
+        [
+          139.748054,
+          35.736861
+        ]
+      ],
+      "turnsDegrees": [
+        3.930133527660704,
+        8.71677969495111
+      ]
+    },
+    "deleteBOnly": {
+      "coordinates": [
+        [
+          139.74531,
+          35.73572
+        ],
+        [
+          139.74677,
+          35.73622
+        ],
+        [
+          139.74697,
+          35.73634
+        ],
+        [
+          139.748054,
+          35.736861
+        ]
+      ],
+      "turnsDegrees": [
+        13.595843269089146,
+        5.8405703769014545
+      ]
+    },
+    "deleteBAndC": {
+      "coordinates": [
+        [
+          139.74531,
+          35.73572
+        ],
+        [
+          139.74697,
+          35.73634
+        ],
+        [
+          139.748054,
+          35.736861
+        ]
+      ],
+      "turnsDegrees": [
+        5.921793190155984
+      ]
+    }
+  },
+  "officialN02MatchingFeatures": [
+    {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "山手線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.74144,
+            35.73419
+          ],
+          [
+            139.74435,
+            35.73534
+          ],
+          [
+            139.74531,
+            35.73572
+          ],
+          [
+            139.74648,
+            35.73618
+          ],
+          [
+            139.74677,
+            35.73622
+          ],
+          [
+            139.74697,
+            35.73634
+          ]
+        ]
+      }
+    }
+  ],
+  "officialN02URL": "https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-25/N02-25_GML.zip",
+  "officialArchivePath": "/private/tmp/jtm-denentoshi-own-direction-originals-20261018/mlit-N02-25_GML.zip",
+  "minimalCandidateOnly": {
+    "lineID": "jp-東日本旅客鉄道-山手線",
+    "intervalIndex": 14,
+    "operation": "Delete exact decoded display vertex5 C only; do not edit physical segments",
+    "sourceIntervalCoordinates": [
+      [
+        139.74035,
+        35.73372
+      ],
+      [
+        139.74144,
+        35.73419
+      ],
+      [
+        139.74435,
+        35.73534
+      ],
+      [
+        139.74531,
+        35.73572
+      ],
+      [
+        139.74648,
+        35.73618
+      ],
+      [
+        139.74677,
+        35.73622
+      ],
+      [
+        139.74697,
+        35.73634
+      ],
+      [
+        139.748054,
+        35.736861
+      ]
+    ],
+    "proposedDisplayCoordinates": [
+      [
+        139.74035,
+        35.73372
+      ],
+      [
+        139.74144,
+        35.73419
+      ],
+      [
+        139.74435,
+        35.73534
+      ],
+      [
+        139.74531,
+        35.73572
+      ],
+      [
+        139.74648,
+        35.73618
+      ],
+      [
+        139.74697,
+        35.73634
+      ],
+      [
+        139.748054,
+        35.736861
+      ]
+    ],
+    "physicalChanged": false,
+    "stationCoordinatesChanged": false,
+    "mileageKmPreserved": 0.779,
+    "stationIDsPreserved": [
+      "003354",
+      "003343"
+    ],
+    "neighborIntervalsPreserved": [
+      13,
+      15
+    ],
+    "notAcceptedBecause": "C is13.63m from the nearer identified own passenger rail; removing it does not align the inherited whole approach, and legacy z17 pixels cannot certify the physical own pair."
+  },
+  "ownPlatform": {
+    "wayID": 144126002,
+    "version": 12,
+    "routeRelationIDs": [
+      1972920,
+      1972960
+    ],
+    "stationRelationID": 9873846,
+    "westernCapControls": [
+      [
+        139.7469923,
+        35.7364565
+      ],
+      [
+        139.7469707,
+        35.736498
+      ]
+    ],
+    "comparisonWesternCapCentre": [
+      139.7469815,
+      35.73647725
+    ],
+    "CToCapCentreMetres": 34.4284460457663,
+    "centreRole": "cross-section/location comparison only; not accepted whole-platform midpoint or a proposed station alias"
+  },
+  "officialDiagramAttempt": {
+    "stationPage": "https://www.jreast.co.jp/estation/stations/712.html",
+    "imageURL": "https://www.jreast.co.jp/estation/stations/img/floormap/0712_b1-2f.png",
+    "stationPageRead": true,
+    "imageSavedOrViewed": false,
+    "downloadOutcome": "HTTP403; not image evidence"
+  }
+}

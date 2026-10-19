@@ -1,0 +1,62 @@
+{
+  "intervalIndex": 16,
+  "source": {
+    "intervalIndex": 16,
+    "fromStationID": "008146",
+    "toStationID": "008154",
+    "camera": [
+      34.356565,
+      132.463505,
+      0.005395999999998224
+    ],
+    "sourceCoordinates": [
+      [
+        132.463915,
+        34.357985
+      ],
+      [
+        132.4639,
+        34.35782
+      ],
+      [
+        132.46388,
+        34.35755
+      ],
+      [
+        132.46386,
+        34.35738
+      ],
+      [
+        132.46379,
+        34.35719
+      ],
+      [
+        132.46354,
+        34.3566
+      ],
+      [
+        132.46334,
+        34.35612
+      ],
+      [
+        132.46318,
+        34.35578
+      ],
+      [
+        132.46312,
+        34.35552
+      ],
+      [
+        132.46311,
+        34.35532
+      ],
+      [
+        132.463095,
+        34.355145
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:17.24;lod:16.26;backbones:0;networkStations:4;distance:1193.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:34.356565;centerLon:132.463505;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:14134.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:34.356565;centerLon:132.463505;distance:1193.0;viewportWidth:1024.0;viewportHeight:768.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0"
+}

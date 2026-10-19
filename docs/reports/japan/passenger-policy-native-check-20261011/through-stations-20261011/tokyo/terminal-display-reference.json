@@ -1,0 +1,56 @@
+{
+  "reviewedAt": "2026-10-11",
+  "crs": "WGS84",
+  "lineId": "jp-東日本旅客鉄道-東北新幹線",
+  "stationCode": "003766",
+  "physicalAnchor": [
+    139.767579,
+    35.68113
+  ],
+  "displayCandidateExistingSupport": [
+    139.7676701,
+    35.681109
+  ],
+  "scope": "Remove last8.55m lateral station-anchor seam in display only; retain all upstream surveyed supports and physical terminal. Representative black-track point near station middle, not measured platform survey.",
+  "nativeEvidence": [
+    "tohoku-terminal-no-pin-z19-overlay.png",
+    "tohoku-terminal-no-pin-z19-basemap.png"
+  ],
+  "camera": {
+    "center": [
+      139.767577,
+      35.681131
+    ],
+    "altitude": 311,
+    "pitch": 0,
+    "yaw": 0,
+    "UIZoom": 19,
+    "AXZoom": 20
+  },
+  "mapping": {
+    "mapRectPixels": [
+      255,
+      149,
+      769,
+      530
+    ],
+    "cornersSW": [
+      139.766238,
+      35.680379
+    ],
+    "cornersNE": [
+      139.768917,
+      35.681882
+    ],
+    "candidatePixelApprox": [
+      666,
+      422
+    ],
+    "oldAnchorPixelApprox": [
+      640,
+      414
+    ]
+  },
+  "source": "Existing N02/registered package interval21 source supports; JR official platform map Sept2026 independently identifies20–23 northern Shinkansen group.",
+  "limitations": "Native cartographic artwork not a measured physical rail survey. Company corridor kept distinct; no new physical through-edge or grade allocation inferred."
+}

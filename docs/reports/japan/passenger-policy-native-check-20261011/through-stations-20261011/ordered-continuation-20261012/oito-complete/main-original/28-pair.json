@@ -1,0 +1,118 @@
+{
+  "caseIndex": 28,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 28,
+  "source": {
+    "caseIndex": 28,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 28,
+    "fromStationID": "002487",
+    "toStationID": "002496",
+    "camera": [
+      36.248090000000005,
+      137.92485,
+      0.01801721927466888
+    ],
+    "effectiveCoordinates": [
+      [
+        137.91808,
+        36.25018
+      ],
+      [
+        137.9187,
+        36.24979
+      ],
+      [
+        137.91892,
+        36.24965
+      ],
+      [
+        137.91914,
+        36.24951
+      ],
+      [
+        137.91915,
+        36.2495
+      ],
+      [
+        137.92028,
+        36.24882
+      ],
+      [
+        137.92041,
+        36.24874
+      ],
+      [
+        137.92167,
+        36.24798
+      ],
+      [
+        137.92227,
+        36.24765
+      ],
+      [
+        137.92402,
+        36.24679
+      ],
+      [
+        137.92433,
+        36.24664
+      ],
+      [
+        137.92475,
+        36.24646
+      ],
+      [
+        137.9252,
+        36.2463
+      ],
+      [
+        137.92564,
+        36.24616
+      ],
+      [
+        137.92602,
+        36.24607
+      ],
+      [
+        137.92639,
+        36.24602
+      ],
+      [
+        137.92681,
+        36.246
+      ],
+      [
+        137.92731,
+        36.24601
+      ],
+      [
+        137.92837,
+        36.2461
+      ],
+      [
+        137.93025,
+        36.24623
+      ],
+      [
+        137.93106,
+        36.24629
+      ],
+      [
+        137.93162,
+        36.24633
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:516;camera:15.65;lod:14.50;backbones:0;networkStations:4;distance:3954.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.248090;centerLon:137.924850;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1746.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.248090;centerLon:137.924850;distance:3954.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-28.jpg",
+  "observation": "Azusa River rail bridge and Shimatakamatsu curve/station corridor south of Apple glyph; local repair candidate, retain actual river crossing.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

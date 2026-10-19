@@ -1,0 +1,56 @@
+{
+  "caseIndex": 15,
+  "intervalIndex": 15,
+  "source": {
+    "intervalIndex": 15,
+    "fromStationID": "003624",
+    "toStationID": "003560",
+    "camera": [
+      35.702309,
+      139.77586100000002,
+      0.015645599999993466
+    ],
+    "effectiveCoordinates": [
+      [
+        139.775532,
+        35.697963
+      ],
+      [
+        139.77555,
+        35.69874
+      ],
+      [
+        139.77555,
+        35.69938
+      ],
+      [
+        139.77554,
+        35.69997
+      ],
+      [
+        139.77556,
+        35.7003
+      ],
+      [
+        139.77562,
+        35.70099
+      ],
+      [
+        139.77582,
+        35.70299
+      ],
+      [
+        139.77612,
+        35.70591
+      ],
+      [
+        139.77619,
+        35.706655
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; geographic-and-platform-acceptance-pending",
+  "actualOnStatus": "94 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:18;overlays:17;rides:0;budgetDrops:0;vertices:7175;camera:15.86;lod:14.71;backbones:1;networkStations:50;distance:3433.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.702309;centerLon:139.775861;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3966.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:22;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.702309;centerLon:139.775861;distance:3433.7;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

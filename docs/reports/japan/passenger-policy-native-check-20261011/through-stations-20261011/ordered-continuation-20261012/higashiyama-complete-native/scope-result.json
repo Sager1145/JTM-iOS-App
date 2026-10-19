@@ -1,0 +1,46 @@
+{
+  "ordinal": 17,
+  "lineID": "jp-名古屋市-1号線東山線",
+  "status": "complete-native-and-main-display-review-with-precision-warnings",
+  "intervalCount": 21,
+  "viewpointCountPerInspector": 90,
+  "panelsPerInspector": 270,
+  "inspectorReceipts": [
+    {
+      "id": "primary",
+      "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/primary/scoped-report.json",
+      "reportSha256": "95b4cf9b1fe25e606f589d4745487efd91151687c1e5128eae2e3b4a2f6495f7",
+      "review": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/primary/native-review.md",
+      "reviewSha256": "9606139af12637d26c61185dadb150f6f100c656a9d90a17ffce39647cc45368"
+    },
+    {
+      "id": "secondary",
+      "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/secondary/scoped-report.json",
+      "reportSha256": "95b4cf9b1fe25e606f589d4745487efd91151687c1e5128eae2e3b4a2f6495f7",
+      "review": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/secondary/native-review.md",
+      "reviewSha256": "bfce4c5c6284ebd08423268673717122857e61a59d4df27bfa455d4f91d435d7"
+    },
+    {
+      "id": "third",
+      "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/third/scoped-report.json",
+      "reportSha256": "95b4cf9b1fe25e606f589d4745487efd91151687c1e5128eae2e3b4a2f6495f7",
+      "review": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/third/native-review.md",
+      "reviewSha256": "74918960b7a8103755f059deb3899330058e3e9ff06c0ea1bc5659bdfa46eb68"
+    }
+  ],
+  "main": {
+    "review": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/higashiyama-complete-native/main/Main-review.md",
+    "sha256": "6fc2dcf34db0e03c1cd4c268ac3be4b769a57432c7d637cb9248d61e4ab970c3",
+    "intervalPairs": 21,
+    "contextPairs": 1,
+    "panels": 44
+  },
+  "warnings": [
+    "Underground Apple blue guides do not establish surveyed tunnel centrelines.",
+    "Fujigaoka and Takabata platform bounds do not prove an exact longitudinal midpoint."
+  ],
+  "sourceRepair": null,
+  "physicalTopologyChanged": false,
+  "nextOrdinal": 18,
+  "nationwideCompletion": false
+}

@@ -1,0 +1,18 @@
+{
+  "all3Captured153": true,
+  "intervalsPerApp": 20,
+  "failuresPerApp": 0,
+  "pixelComparisons": [
+    {
+      "role": "secondary",
+      "exactPixelMatchesToPrimary": 9,
+      "total": 153
+    },
+    {
+      "role": "third",
+      "exactPixelMatchesToPrimary": 6,
+      "total": 153
+    }
+  ],
+  "accepted": false
+}

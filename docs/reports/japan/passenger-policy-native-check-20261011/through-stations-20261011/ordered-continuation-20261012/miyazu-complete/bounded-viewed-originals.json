@@ -1,0 +1,463 @@
+{
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "reviewedAt": "2026-10-18",
+  "pairCount": 11,
+  "originalCount": 22,
+  "views": [
+    {
+      "lead": "turn-14-27",
+      "interval": 14,
+      "targetCoordinate": [
+        134.9255,
+        35.61907
+      ],
+      "viewDistanceFromTargetMetres": 88.50806537271136,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.618275193846756,
+          "longitude": 134.92547443312105
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-WILLER　TRAINS-宮津線#14",
+        "pointOrdinal": 4
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000004/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Visible red polygonal shoulders around real broad S-curve/route178 crossing. Strong26-degree control is a source-review lead; broad S must remain."
+    },
+    {
+      "lead": "turn-16-17",
+      "interval": 16,
+      "targetCoordinate": [
+        134.88508,
+        35.59802
+      ],
+      "viewDistanceFromTargetMetres": 7.397487387092242,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.59795925417256,
+          "longitude": 134.8850468658899
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-WILLER　TRAINS-宮津線#16",
+        "pointOrdinal": 3
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000003/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Visible angular red shoulder where broad curve joins southwest/south leg; red offset from blue band. Preserve real directional turn; no repair geometry established."
+    },
+    {
+      "lead": "turn-16-7",
+      "interval": 16,
+      "targetCoordinate": [
+        134.891,
+        35.60144
+      ],
+      "viewDistanceFromTargetMetres": 34.060684068071716,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.601492269444826,
+          "longitude": 134.89137077651574
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-WILLER　TRAINS-宮津線#16",
+        "pointOrdinal": 1
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "West of Kumihama river bridge: red chords lie southeast of smooth blue curve and create sharper support transition. Real bridge curve remains; exact independent own rail reference needed."
+    },
+    {
+      "lead": "turn-9-4",
+      "interval": 9,
+      "targetCoordinate": [
+        135.12226,
+        35.54194
+      ],
+      "viewDistanceFromTargetMetres": 69.51974597610491,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000040/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.542187865301315,
+          "longitude": 135.12296445501326
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-WILLER　TRAINS-宮津線#9",
+        "pointOrdinal": 1
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000040/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000040/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Strongest concrete pixel lead: shallow red southward dip/flat trough near decoded4 contradicts locally monotone gentle blue curve; source review needed before any deletion."
+    },
+    {
+      "lead": "turn-4-41",
+      "interval": 4,
+      "targetCoordinate": [
+        135.26873,
+        35.53042
+      ],
+      "viewDistanceFromTargetMetres": 84.02066813506404,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000035/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.53113313817547,
+          "longitude": 135.26842624399015
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-WILLER　TRAINS-宮津線#4",
+        "pointOrdinal": 6
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000035/000006/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000035/000006/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Coastal bend has an outer blue curve and a straight blue chord/alternative. Red generalized curve differs, but this frame does not identify which physical alignment to adopt. No confirmed repair."
+    },
+    {
+      "lead": "turn-11-7",
+      "interval": 11,
+      "targetCoordinate": [
+        135.07087,
+        35.63026
+      ],
+      "viewDistanceFromTargetMetres": 141.1859820480929,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.6290312404427,
+          "longitude": 135.0712565416615
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-WILLER　TRAINS-宮津線#11",
+        "pointOrdinal": 1
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Mineyama northwest approach broad hill curve follows own blue corridor; no isolated false V confirmed."
+    },
+    {
+      "lead": "turn-11-43",
+      "interval": 11,
+      "targetCoordinate": [
+        135.04511,
+        35.64598
+      ],
+      "viewDistanceFromTargetMetres": 79.15504852775453,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000010",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.645912512592325,
+          "longitude": 135.0459810555037
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-WILLER　TRAINS-宮津線#11",
+        "pointOrdinal": 10
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000010/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000026/000010/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Broad compound curve near Ishimaru: red inside shoulder/chord differs modestly from blue; real compound geometry remains. Secondary alignment lead, no topology defect confirmed."
+    },
+    {
+      "lead": "turn-14-18",
+      "interval": 14,
+      "targetCoordinate": [
+        134.92468,
+        35.62182
+      ],
+      "viewDistanceFromTargetMetres": 57.130713062106025,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.62130722539295,
+          "longitude": 134.9246539521419
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-WILLER　TRAINS-宮津線#14",
+        "pointOrdinal": 3
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000029/000003/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Other half of real S-curve confirms corridor bend. Red generalized angularity/offset, not permission to flatten S."
+    },
+    {
+      "lead": "turn-16-30",
+      "interval": 16,
+      "targetCoordinate": [
+        134.88496,
+        35.59506
+      ],
+      "viewDistanceFromTargetMetres": 22.162366098263934,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.59486293161953,
+          "longitude": 134.88492522316423
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-WILLER　TRAINS-宮津線#16",
+        "pointOrdinal": 4
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000031/000004/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "South of route178 crossing: localized red eastward shoulder against gentler blue curve. Secondary false-support candidate; own source chain not established."
+    },
+    {
+      "lead": "miyazu-real-junction",
+      "interval": 5,
+      "targetCoordinate": [
+        135.195,
+        35.53084
+      ],
+      "viewDistanceFromTargetMetres": 603.1009127529036,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000036/000013",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.53444,
+          "longitude": 135.199975
+        },
+        "distanceMetres": 4506.667940843839,
+        "itemID": "jp-WILLER　TRAINS-宮津線#5",
+        "pointOrdinal": 13
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000036/000013/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000036/000013/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Miyazu station broad platform group/approach visible, no obvious hook. Real physical fork603m southwest is outside or clipped at frame boundary; no junction/cap acceptance."
+    },
+    {
+      "lead": "amino-seam",
+      "interval": 12,
+      "targetCoordinate": [
+        135.025606,
+        35.667335
+      ],
+      "viewDistanceFromTargetMetres": 0.0,
+      "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000027/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 35.667335,
+          "longitude": 135.025606
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-WILLER　TRAINS-宮津線#12",
+        "pointOrdinal": 0
+      },
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "34d523da4b9643b0a484f403ce6c181a22da20b34eb91011ec76d1d63f90ccd9",
+      "reviewedOriginalFiles": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000027/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000027/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image original files, no pixel editing",
+      "observation": "Amino station seam lies on a real long curve; red runs through broad own platform group without visible isolated hook. Exact platform cap/centre cannot be inferred from fill."
+    }
+  ],
+  "sourceReviewLeads": [
+    {
+      "interval": 9,
+      "decodedControl": 4,
+      "canonicalCoordinate": [
+        135.12226,
+        35.54194
+      ],
+      "before": [
+        135.12334,
+        35.54232
+      ],
+      "after": [
+        135.12221,
+        35.54194
+      ],
+      "lead": "shallow-dip",
+      "status": "pixel-supported source-review candidate; not an accepted repair"
+    },
+    {
+      "interval": 14,
+      "decodedControl": 27,
+      "canonicalCoordinate": [
+        134.9255,
+        35.61907
+      ],
+      "before": [
+        134.92541,
+        35.61922
+      ],
+      "after": [
+        134.9255,
+        35.61868
+      ],
+      "lead": "S-curve-angular-shoulder",
+      "status": "pixel-supported source-review candidate; not an accepted repair"
+    },
+    {
+      "interval": 16,
+      "decodedControl": 17,
+      "canonicalCoordinate": [
+        134.88508,
+        35.59802
+      ],
+      "before": [
+        134.88522,
+        35.59812
+      ],
+      "after": [
+        134.88502,
+        35.59791
+      ],
+      "lead": "curve-shoulder",
+      "status": "pixel-supported source-review candidate; not an accepted repair"
+    },
+    {
+      "interval": 16,
+      "decodedControl": 30,
+      "canonicalCoordinate": [
+        134.88496,
+        35.59506
+      ],
+      "before": [
+        134.8849,
+        35.59532
+      ],
+      "after": [
+        134.8849,
+        35.59472
+      ],
+      "lead": "eastward-shoulder",
+      "status": "pixel-supported source-review candidate; not an accepted repair"
+    }
+  ],
+  "scopeGaps": [
+    "Only11/237 retained completed pairs reviewed; not complete-line pixel acceptance.",
+    "No completed views for intervals3,6,15; Miyazu physical fork cannot be accepted from station fill.",
+    "Coast interval4 blue curve/chord identity unresolved."
+  ],
+  "preparedMissingRequest": "/private/tmp/jtm-miyazu-missing-20261018/request.json",
+  "requestRun": false
+}

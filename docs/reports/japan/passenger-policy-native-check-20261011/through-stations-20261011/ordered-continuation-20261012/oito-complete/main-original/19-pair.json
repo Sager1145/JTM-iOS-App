@@ -1,0 +1,126 @@
+{
+  "caseIndex": 19,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 19,
+  "source": {
+    "caseIndex": 19,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 19,
+    "fromStationID": "002272",
+    "toStationID": "002314",
+    "camera": [
+      36.3844675,
+      137.86928,
+      0.058223549999999305
+    ],
+    "effectiveCoordinates": [
+      [
+        137.865785,
+        36.39707
+      ],
+      [
+        137.8658,
+        36.39676
+      ],
+      [
+        137.86593,
+        36.39449
+      ],
+      [
+        137.86613,
+        36.39041
+      ],
+      [
+        137.86625,
+        36.38878
+      ],
+      [
+        137.8663,
+        36.38775
+      ],
+      [
+        137.86632,
+        36.38738
+      ],
+      [
+        137.86635,
+        36.38709
+      ],
+      [
+        137.86649,
+        36.38669
+      ],
+      [
+        137.86657,
+        36.38648
+      ],
+      [
+        137.86676,
+        36.386
+      ],
+      [
+        137.86797,
+        36.38376
+      ],
+      [
+        137.86912,
+        36.38157
+      ],
+      [
+        137.87022,
+        36.37948
+      ],
+      [
+        137.87035,
+        36.37917
+      ],
+      [
+        137.87049,
+        36.37868
+      ],
+      [
+        137.87063,
+        36.37811
+      ],
+      [
+        137.87113,
+        36.37611
+      ],
+      [
+        137.87162,
+        36.37409
+      ],
+      [
+        137.87182,
+        36.37373
+      ],
+      [
+        137.87192,
+        36.37358
+      ],
+      [
+        137.87246,
+        36.37243
+      ],
+      [
+        137.87247,
+        36.37242
+      ],
+      [
+        137.872775,
+        36.371865
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t37 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:903;camera:13.95;lod:12.80;backbones:0;networkStations:7;distance:12780.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.384467;centerLon:137.869280;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:7077.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.384467;centerLon:137.869280;distance:12780.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-19.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Hosono to Azumi-Oiwake long corridor and southern river-side turn continuous; local offset and own frames unresolved."
+}

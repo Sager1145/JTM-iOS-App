@@ -1,0 +1,168 @@
+{
+  "status": "three-inspectors-full-baseline-root-reviewed-offsets-require-repair",
+  "allIntervals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "baselineViews": {
+    "primary": 44,
+    "secondary": 44,
+    "third": 44
+  },
+  "all132ViewsRootReviewed": true,
+  "findings": [
+    "constructed line east/south of own Apple railway in multiple intervals",
+    "Miyuki bridge bend and harbour approach require own-corridor correction",
+    "retain3displaybranches atKamiyacho; station-list walk is not a direct train movement"
+  ],
+  "officialSources": [
+    "https://www.hiroden.co.jp/train/route-guide/route-distance.html",
+    "https://www.hiroden.co.jp/train/route-guide/route-all.html"
+  ],
+  "carryPending": [
+    "Toyama13whole-frame station centres"
+  ],
+  "mainCompleteReview": "all19 complete-interval actual-Main-candidate ON/OFF pairs root-reviewed; baseline repairs required",
+  "nativeAppleMapsTransitJunctionReview": {
+    "status": "actual-native-three-junctions-reviewed",
+    "report": "apple-maps-transit-style/observations.md",
+    "junctions": [
+      "Hiroshima Kamiyacho",
+      "Hiroshima Dobashi",
+      "Toyama Marunouchi"
+    ],
+    "productionChange": false
+  },
+  "junctionMainBaseline": {
+    "path": "apple-maps-transit-style/main-baseline-on.png",
+    "actualCamera": [
+      34.39499,
+      132.45765,
+      18.18
+    ],
+    "viewport": [
+      1024,
+      768
+    ],
+    "status": "actual-on-off-pair-root-reviewed-not-fix-acceptance"
+  },
+  "junctionProposal": {
+    "path": "root-candidate-v1/kamiyacho-own-corridor-proposal.json",
+    "status": "partial-window-proposal-not-applied",
+    "fullLineAcceptance": false
+  },
+  "stationDetailExports": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "appliedDisplayGuideline": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "stationDetailWideExports": [
+    4,
+    5,
+    15,
+    18,
+    19
+  ],
+  "all20StationContextsRootReviewed": true,
+  "stationFramesAccepted": false,
+  "analysisReport": "complete-analysis.md",
+  "minamiJunction": {
+    "sourceAlreadyHasSeparateNSStation": true,
+    "sameStationIDDoesNotImplyOnePlatform": true,
+    "mainLeadInVerdict": "visible gap confirmed in actual Main interval10 ON/OFF pair",
+    "officialServiceSource": "https://www.hiroden.co.jp/train/route-guide/route-all.html",
+    "evidence": [
+      "main-baseline/10-on.png",
+      "main-baseline/10-off.png",
+      "station-details/10-station-full-frame-z19/basemap.png"
+    ],
+    "requiredRelatedScope": "all6 Minami intervals plus own station-to-junction display continuation; no new physical route edge"
+  },
+  "mainBaselineCapturedIntervals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "mainBaselineRootReviewedIntervals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "mainBaselineResult": "source station/corridor departures reproduced; repair pending; no post-fix acceptance",
+  "mainScopeNote": "full source-interval coverage is visually reviewed in actual Main pairs; diagnostic camera center and zoom alone do not establish pixel georeferencing because MapKit framing margins affect the screen focus",
+  "mainBaselinePanelCount": 38,
+  "mainPostFixAcceptance": false,
+  "originalMainCriticalView": {
+    "status": "actual-original ON/OFF pair root-reviewed; same Minami gap reproduced",
+    "path": "main-original-minami",
+    "networkRestoredOn": true,
+    "productionGeometryChanged": false
+  }
+}

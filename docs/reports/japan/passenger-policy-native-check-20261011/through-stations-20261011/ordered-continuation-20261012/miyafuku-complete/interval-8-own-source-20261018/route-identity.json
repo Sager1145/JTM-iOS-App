@@ -1,0 +1,207 @@
+{
+  "relations": [
+    {
+      "id": 6014983,
+      "version": 39,
+      "timestamp": "2024-04-19T05:54:17Z",
+      "tags": {
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "route": "railway",
+        "type": "route"
+      },
+      "ownMembers": [
+        {
+          "index": 61,
+          "ref": 32055924,
+          "role": ""
+        },
+        {
+          "index": 62,
+          "ref": 1137778622,
+          "role": ""
+        },
+        {
+          "index": 63,
+          "ref": 1137778623,
+          "role": ""
+        },
+        {
+          "index": 64,
+          "ref": 490130188,
+          "role": ""
+        },
+        {
+          "index": 65,
+          "ref": 1137778621,
+          "role": ""
+        },
+        {
+          "index": 66,
+          "ref": 32055918,
+          "role": ""
+        },
+        {
+          "index": 67,
+          "ref": 1137778624,
+          "role": ""
+        },
+        {
+          "index": 68,
+          "ref": 44001349,
+          "role": ""
+        },
+        {
+          "index": 69,
+          "ref": 44001348,
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": 12018222,
+      "version": 19,
+      "timestamp": "2024-04-19T05:54:17Z",
+      "tags": {
+        "colour": "#ea4f6f",
+        "from": "宮津",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線 (宮津->福知山)",
+        "network": "丹鉄",
+        "note": "14stations",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "public_transport:version": "2",
+        "ref": "F",
+        "route": "train",
+        "to": "福知山",
+        "type": "route",
+        "wikipedia": "ja:京都丹後鉄道宮福線"
+      },
+      "ownMembers": [
+        {
+          "index": 105,
+          "ref": 44001348,
+          "role": ""
+        },
+        {
+          "index": 106,
+          "ref": 44001349,
+          "role": ""
+        },
+        {
+          "index": 107,
+          "ref": 1137778624,
+          "role": ""
+        },
+        {
+          "index": 108,
+          "ref": 32055918,
+          "role": ""
+        },
+        {
+          "index": 109,
+          "ref": 1137778621,
+          "role": ""
+        },
+        {
+          "index": 110,
+          "ref": 490130188,
+          "role": ""
+        },
+        {
+          "index": 111,
+          "ref": 1137778623,
+          "role": ""
+        },
+        {
+          "index": 112,
+          "ref": 1137778622,
+          "role": ""
+        },
+        {
+          "index": 113,
+          "ref": 32055924,
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": 12030449,
+      "version": 9,
+      "timestamp": "2024-04-19T05:54:17Z",
+      "tags": {
+        "colour": "#ea4f6f",
+        "from": "福知山",
+        "name": "京都丹後鉄道宮福線",
+        "name:en": "Kyoto Tango Railway Miyafuku Line",
+        "name:ja": "京都丹後鉄道宮福線 (福知山->宮津)",
+        "network": "丹鉄",
+        "note": "14stations",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "public_transport:version": "2",
+        "ref": "F",
+        "route": "train",
+        "to": "宮津",
+        "type": "route",
+        "wikipedia": "ja:京都丹後鉄道宮福線"
+      },
+      "ownMembers": [
+        {
+          "index": 60,
+          "ref": 32055924,
+          "role": ""
+        },
+        {
+          "index": 61,
+          "ref": 1137778622,
+          "role": ""
+        },
+        {
+          "index": 62,
+          "ref": 1137778623,
+          "role": ""
+        },
+        {
+          "index": 63,
+          "ref": 490130188,
+          "role": ""
+        },
+        {
+          "index": 64,
+          "ref": 1137778621,
+          "role": ""
+        },
+        {
+          "index": 65,
+          "ref": 32055918,
+          "role": ""
+        },
+        {
+          "index": 66,
+          "ref": 1137778624,
+          "role": ""
+        },
+        {
+          "index": 67,
+          "ref": 44001349,
+          "role": ""
+        },
+        {
+          "index": 68,
+          "ref": 44001348,
+          "role": ""
+        }
+      ]
+    }
+  ],
+  "operatorIdentityInterpretation": "Current OSM uses Kyoto Tango Railway/京都丹後鉄道 brand and explicit Miyafuku name. Own passenger train routes Miyazu↔Fukuchiyama corroborate corridor, not closest-track inference. No neighboring Miyazu/JR lines are selected."
+}

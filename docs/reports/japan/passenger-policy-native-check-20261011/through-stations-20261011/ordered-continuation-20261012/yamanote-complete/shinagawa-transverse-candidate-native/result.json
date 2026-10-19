@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/candidate-tasks.json",
+  "capturedCount" : 8,
+  "captureIndexPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "aca59c82638d9573607d6110755164ce0581128952279264a3f8b3ad4361aab6",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/alignment",
+    "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東日本旅客鉄道-山手線#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "8\/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-shinagawa-transverse-candidate-20261018\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "yamanote-transverse-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:50:36Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

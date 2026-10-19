@@ -1,0 +1,27 @@
+{
+  "lineID": "jp-伊予鉄道-大手町線",
+  "intervalIndex": 2,
+  "plannedCamera": [
+    33.84250184,
+    132.75240347,
+    0.0042077099999993095
+  ],
+  "actualCenter": [
+    33.842502,
+    132.752403
+  ],
+  "actualMapBounds": [
+    132.750022,
+    33.840398,
+    132.754785,
+    33.844606
+  ],
+  "completeIntervalInsideActualMap": true,
+  "displayBranchLeadInsInsideActualMap": true,
+  "renderStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:902;camera:17.79;lod:16.64;backbones:0;networkStations:5;distance:923.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.842502;centerLon:132.752403;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2082.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+  "pixelReview": "pending",
+  "pair": [
+    "otemachi-interval-02-overlay.png",
+    "otemachi-interval-02-basemap.png"
+  ]
+}

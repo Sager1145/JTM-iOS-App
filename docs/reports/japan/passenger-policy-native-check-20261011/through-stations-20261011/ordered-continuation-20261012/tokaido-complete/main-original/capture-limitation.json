@@ -1,0 +1,9 @@
+{
+  "caseIndex": 0,
+  "status": "awaiting-manual-Mac-unlock",
+  "capturedPairs": 0,
+  "rootPixelReviewedPairs": 0,
+  "message": "The Mac is locked and automatic unlock could not unlock it. Ask the user to unlock the Mac manually before continuing.",
+  "source": "cua.getApp(original RailMap full path)",
+  "productionChanges": false
+}

@@ -1,0 +1,52 @@
+{
+  "lineID": "jp-一般社団法人札幌市交通事業振興公社-都心線",
+  "reviewer": "parent Codex",
+  "pairsViewed": 4,
+  "originalPNGsViewed": 8,
+  "newNamedIdentityPlan": "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/identity-plan-9eb7c81e131146499cc8ce731e5f9605c8be954e6c789baf1c4a3155ade22c3e.json",
+  "newIntervalSourceDisplayStationIDsExactlyMatchCurrent": true,
+  "views": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000000",
+      "originalPaths": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "evidenceKind": "historical isolated zero-lane"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000001",
+      "originalPaths": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000413/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "evidenceKind": "historical isolated zero-lane"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000000",
+      "originalPaths": [
+        "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "evidenceKind": "new specified capture"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000001",
+      "originalPaths": [
+        "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-sapporo-toshin-missing-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "evidenceKind": "new specified capture"
+    }
+  ]
+}

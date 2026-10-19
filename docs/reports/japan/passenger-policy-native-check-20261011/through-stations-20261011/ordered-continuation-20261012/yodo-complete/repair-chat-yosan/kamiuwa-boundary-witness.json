@@ -1,0 +1,87 @@
+{
+  "status": "candidate-only-own-single-face-move-confirmed-81-required",
+  "stationID": "009324",
+  "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.37996499999992,
+    "longitude": 132.50138000000007,
+    "mapPointsPerPoint": 4,
+    "metresPerPoint": 0.49681559671028097,
+    "pitch": 0,
+    "rectHeight": 2615.999999985099,
+    "rectWidth": 3996,
+    "rectX": 233015919.89147025,
+    "rectY": 107785855.70664547,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18
+  },
+  "ownNarrowFace": [
+    [
+      479,
+      262
+    ],
+    [
+      503,
+      318
+    ]
+  ],
+  "faceMidpoint": [
+    491.0,
+    290.0
+  ],
+  "literalOwnRailCentres": [
+    [
+      478.5,
+      270.0
+    ],
+    [
+      486.0,
+      290.0
+    ],
+    [
+      494.0,
+      310.0
+    ]
+  ],
+  "normalPixel": [
+    486.797672417697,
+    291.62840193814236
+  ],
+  "candidateDisplayAlias": [
+    132.50131185940495,
+    33.38012344711494
+  ],
+  "oldAlias": [
+    132.50138,
+    33.379965
+  ],
+  "oldAliasPixel": [
+    499.5,
+    327
+  ],
+  "excluded": [
+    "South broad bulb and Yosan text",
+    "Separate eastern grey building"
+  ],
+  "uncertainty": {
+    "capPixels": 2,
+    "normalPixels": 1.5,
+    "surveyedPrecision": false
+  },
+  "requiredCompleteIntervals": [
+    81,
+    82
+  ],
+  "requiredInterval81": {
+    "fromStationID": "009319",
+    "fromName": "伊予石城",
+    "toStationID": "009324",
+    "toName": "上宇和"
+  },
+  "independentSavedImageReview": "GPT-6.1 Sol medium confirmed narrowcaps479262→503318 and single rail486y290; own original/crops opened.",
+  "formalAcceptance": false,
+  "physicalIDsCoordinatesKmRoutingUnchanged": true
+}

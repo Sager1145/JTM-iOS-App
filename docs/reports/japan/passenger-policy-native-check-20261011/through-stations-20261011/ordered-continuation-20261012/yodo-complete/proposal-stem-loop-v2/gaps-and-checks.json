@@ -1,0 +1,141 @@
+{
+  "status": "candidate-only",
+  "actualControlWitnesses": 213,
+  "sharedCandidatePointCount": 145,
+  "sharedPrefixLiteralEqualBothOwners": true,
+  "unsupportedSamples": [
+    {
+      "controlID": "S002",
+      "chainageMapPoints": 740.3598102011132,
+      "sourceBracket": [
+        3,
+        4
+      ]
+    },
+    {
+      "controlID": "S006",
+      "chainageMapPoints": 1543.457354346063,
+      "sourceBracket": [
+        5,
+        6
+      ]
+    },
+    {
+      "controlID": "S007",
+      "chainageMapPoints": 1744.2317403823006,
+      "sourceBracket": [
+        6,
+        7
+      ]
+    },
+    {
+      "controlID": "S008",
+      "chainageMapPoints": 1945.006126418538,
+      "sourceBracket": [
+        6,
+        7
+      ]
+    },
+    {
+      "controlID": "S009",
+      "chainageMapPoints": 2145.7805124547754,
+      "sourceBracket": [
+        7,
+        8
+      ]
+    },
+    {
+      "controlID": "S013",
+      "chainageMapPoints": 2948.8780565997254,
+      "sourceBracket": [
+        7,
+        8
+      ]
+    },
+    {
+      "controlID": "S021",
+      "chainageMapPoints": 4555.073144889624,
+      "sourceBracket": [
+        15,
+        16
+      ]
+    },
+    {
+      "controlID": "S022",
+      "chainageMapPoints": 4755.847530925861,
+      "sourceBracket": [
+        15,
+        16
+      ]
+    },
+    {
+      "controlID": "S023",
+      "chainageMapPoints": 4956.621916962098,
+      "sourceBracket": [
+        16,
+        17
+      ]
+    },
+    {
+      "controlID": "S165",
+      "chainageMapPoints": 33466.58473410791,
+      "sourceBracket": [
+        71,
+        72
+      ]
+    },
+    {
+      "controlID": "S206",
+      "chainageMapPoints": 41698.33456159371,
+      "sourceBracket": [
+        89,
+        90
+      ]
+    }
+  ],
+  "neighbourWitnessGaps": [
+    {
+      "before": "S001",
+      "after": "S003",
+      "sourceChainageMetres": 50.00000000000001
+    },
+    {
+      "before": "S005",
+      "after": "S010",
+      "sourceChainageMetres": 125.0
+    },
+    {
+      "before": "S012",
+      "after": "S014",
+      "sourceChainageMetres": 50.00000000000001
+    },
+    {
+      "before": "S020",
+      "after": "S024",
+      "sourceChainageMetres": 99.99999999999979
+    },
+    {
+      "before": "S164",
+      "after": "S166",
+      "sourceChainageMetres": 50.00000000000035
+    },
+    {
+      "before": "S205",
+      "after": "S207",
+      "sourceChainageMetres": 50.00000000000035
+    }
+  ],
+  "all18CandidateReprojectionsViewed": true,
+  "focusedOriginalReprojectionsViewed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    6,
+    11,
+    15
+  ],
+  "yodoCoordinatesSha256": "e714202a02e4504be25ec058c506c832145ba14436351c2cfa857eaa8fe0f9c4",
+  "nakamuraCoordinatesSha256": "7a8e30e40c1c59ec3fbbb5d2ecdb0bf8b059255f6c00bbe3b19b962084ba5e5e"
+}

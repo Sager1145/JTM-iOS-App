@@ -1,0 +1,117 @@
+{
+  "format": "jtm-johoku-display-candidate-manifest-v1",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "4a12d854cdd930911b06c8cebebc8960025906fe5a2348ff00ae04a5b6400582"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "ee9477614b6b866a6554d263b5ad13ae56a287f51ea431d8cfd8fafe19c7b3a9"
+    },
+    {
+      "path": "johoku-complete.geojson",
+      "sha256": "71949b2188b18437c10151a40bf52e8b927286ca84c16bd849105946045bfd34"
+    },
+    {
+      "path": "review.json",
+      "sha256": "ee4d620e5e606d3f4e18ccac315dfd7d3d0986b18dde03eb3d4dfe0e9d4dc51e"
+    },
+    {
+      "path": "contact/page-1.jpg",
+      "sha256": "48132e05d4cf1160135b1cc254bac888907fef67066d20feb28e29d1c86faec3"
+    },
+    {
+      "path": "contact/page-2.jpg",
+      "sha256": "27c36eed0258c0fcae245d75d38df5cccfd353e4f7c331dc13bef20cd109193d"
+    },
+    {
+      "path": "contact/page-3.jpg",
+      "sha256": "71cb4512a1d3dc2ce7f3a03f7e86521e958a09c59f37ba635f26a52bc8916654"
+    },
+    {
+      "path": "contact/page-4.jpg",
+      "sha256": "9a736546ae8c33a1ce3254c93a0ea808c32034bfadd4313f1068c40734a4b6cf"
+    },
+    {
+      "path": "contact/page-5.jpg",
+      "sha256": "9a8b8cb209ffe1410284ea5ad5589356ee91d49c9f1bbe5b199be1ff990cdffd"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-0-view-0.png",
+      "sha256": "883f1928b249048746bc25373768433b55d5c4f126136ac55e801f343ba0e93d"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-0-view-1.png",
+      "sha256": "bb653c6f7f90b0430c32e96f5c32863db97daddc53e03c785d7ab02e3c09b94a"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-1-view-0.png",
+      "sha256": "dd1e9e63657c52205ed429afef70750d2f82b60e190abba435ca1d11fb1a7b35"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-1-view-1.png",
+      "sha256": "156d32cbb88cf527cdf7bc00655e9b6b38ccab942272d73690e437cd28e2255d"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-2-view-0.png",
+      "sha256": "03130aa82cfad0d1b0a3a96399fdead0e76dc60bcbc8ece14705ed0900a597e2"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-2-view-1.png",
+      "sha256": "dc172f9bff4ad09589a088c53bb4f8d67872a78cbecf7d4c7fc6d600f4b22d55"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-2-view-2.png",
+      "sha256": "d7a14c581842737e8e65a83b144455563020da8cfeb0a24bda8847cd2a5884c1"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-3-view-0.png",
+      "sha256": "f950eb2647680061633bc19a6e615588baa8bdc91848a0083bfb1960e6f457e7"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-3-view-1.png",
+      "sha256": "6d36a0b8008b025fff7ec6da28829f6a5ce4d3d065073fa0b3380d05c06a5bf0"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-3-view-2.png",
+      "sha256": "37efd592032f59958f72f04580a59800464c1122eba50dc7337e6f61c798f803"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-4-view-0.png",
+      "sha256": "803cbf2044322a2fd5e7a1f2c009439eb7d1e11e5348de2359e96f8ffccd0843"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-4-view-1.png",
+      "sha256": "84dd1e714115c5f64b09170bfb18d8d4dac5ddc1a884fdc91fed287f4592d219"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-5-view-0.png",
+      "sha256": "2db9a18f456a0686edf336e382fba7decd383275a5faba97ef358a506e094eb2"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-5-view-1.png",
+      "sha256": "ccd2a32c9a31afc1afb0ef9a3cf30709978fb44207da73545ec61bc6c62d92ac"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-6-view-0.png",
+      "sha256": "fbc601b2e789e82a21043389cda7f368b1ec10686e9417a2ac528cb383d8a5f1"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-6-view-1.png",
+      "sha256": "b9b594b2ee671aea1c0e06cd3cd8c6dda5c35a9f1f54706376387f85581eb7f1"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-7-view-0.png",
+      "sha256": "3334e06f908c075136e08f716085b7086e363c89023ce627cc096adb9d21ca20"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-7-view-1.png",
+      "sha256": "a103b8710a08f3dbca0a83132cab78864e76d9d0627ccbcdf077b2a02baac2ec"
+    },
+    {
+      "path": "raw-reprojections/johoku-interval-7-view-2.png",
+      "sha256": "9a582a19fa1d8e781d3731b63eed587fe0f283d3b04da10e32041567a0bd4f70"
+    }
+  ]
+}

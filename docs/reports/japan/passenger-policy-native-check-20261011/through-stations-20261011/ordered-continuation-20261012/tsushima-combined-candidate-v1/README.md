@@ -1,0 +1,13 @@
+# Frozen combined Tsushima/Main candidate v1
+
+Candidate-only; no production apply or native acceptance. Frozen geometry includes complete Tsushima#0–6 and Main#16–23, all15intervals. Sources are Sukaguchi proposal Tsush#0/Main#17/#18, reviewed Tsushima V5#1–6 and direct own-glyph Main V4#16/#19–23. All arrays are copied literally; adjacent boundaries and the three-coordinate reverse shared stem agree exactly.
+
+Candidate SHA256:2b080fcfe778a441a4daaebe9cb7f79d7e1851452a04615aca712a8d9b66efb9.
+
+`evidence.json` binds unchanged current production physical owner lines, display maps, native rows and measured references. Exported repair helpers derived `candidate-native-rows.json` (one complete native row for each owner), `candidate-measured-references.json` and15-feature `candidate.geojson`. `derivation-receipt.json` records physical-line equality and candidate native hashes. Candidate native Main hash9456fdefad3664daf23d98b227bb68b56d26935bb092399e36c6fbb47b3f0f36; Tsushima hash3022e732cd9b3ab9ca6224625565dcaaf49571c157c94cb0138ed1588827f195.
+
+Candidate-only builder completed successfully into/private/tmp/jtm-tsushima-combined-candidate on the single Root-authorized retry after Finder Keep Downloaded and actual byte-count/JSON reads resolved the prior cloud empty-read failure. Seven outputs exist: package, display-lanes, four dependency JSONs and15-feature display GeoJSON. `builder-receipt.json` records the actual output comparison, including exact physical owner lines and decoded physical intervals, frozen display arrays/aliases, actual native row hashes and mapped measured-reference equality. No production input was applied and native acceptance remains pending.
+
+`measured-reference-witness-29575.json` records Main#22 oldmeasure29575 at[136.87064869642236,35.185994388277656] projected within that same owned interval to[136.87054368734255,35.18592040346337], newmeasure29567.4 (unrounded29567.362423355782), geographic residual12.613711313m. New#22 measures span29060.569727925624–29886.9334269841. Prefix/suffix geographic arrays remain exact; suffix measures shift−9.828593429m. This is geographic projection displacement, not Apple pixel residual. No reversed-range or scope-projection warning occurred; the station/frame/underground warnings remain. Three actual Inspectors and Main acceptance remain pending.
+
+Retain explicit warnings for Shin Kiyosu multitrack frame, selected opposing frame directions, Tsushima shared-terminal frame, and original MeitetsuNagoya005457 underground source span/guard where no independent own glyph/frame is readable. Pixel proposal review is not native smoothing/lane/circle acceptance.

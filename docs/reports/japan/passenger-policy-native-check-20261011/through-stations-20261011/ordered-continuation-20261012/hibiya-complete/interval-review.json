@@ -1,0 +1,275 @@
+[
+  {
+    "intervalIndex": 0,
+    "fromStation": "中目黒",
+    "toStation": "恵比寿",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/00-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "中目黑出站与东横线分开后可见额外 S/折点，作为自身出站走廊的显示候选；端点完整乘客框尚未核定。"
+  },
+  {
+    "intervalIndex": 1,
+    "fromStation": "恵比寿",
+    "toStation": "広尾",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/01-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "广尾南侧自身蓝色日比谷线弯道与红色预览明显不同；地下示意线不足以作为实际轨道测量。"
+  },
+  {
+    "intervalIndex": 2,
+    "fromStation": "広尾",
+    "toStation": "六本木",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/02-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "广尾北行、西麻布转向六本木完整；六本木的大江户线交叉不建立轨道连接。"
+  },
+  {
+    "intervalIndex": 3,
+    "fromStation": "六本木",
+    "toStation": "神谷町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/03-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "饭仓弯道的自身红色预览与 Apple 日比谷线轮廓不同；保留显示候选，不按道路角点直接修正。"
+  },
+  {
+    "intervalIndex": 4,
+    "fromStation": "神谷町",
+    "toStation": "虎ノ門ヒルズ",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/04-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "神谷町至虎之门 Hills 连续；邻近银座线是独立线路。"
+  },
+  {
+    "intervalIndex": 5,
+    "fromStation": "虎ノ門ヒルズ",
+    "toStation": "霞ヶ関",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/05-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "虎之门 Hills 至霞关连续；与银座、千代田及丸之内线交叉保持身份。"
+  },
+  {
+    "intervalIndex": 6,
+    "fromStation": "霞ヶ関",
+    "toStation": "日比谷",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/06-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "霞关北转至日比谷护城河角的红色弧线与 Apple 自身示意弯道不同；全区间和两端均见。"
+  },
+  {
+    "intervalIndex": 7,
+    "fromStation": "日比谷",
+    "toStation": "銀座",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/07-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "日比谷至银座连续穿过 JR 走廊；原尺寸 Main 07-on.png 额外打开确认银座端点在画面内。"
+  },
+  {
+    "intervalIndex": 8,
+    "fromStation": "銀座",
+    "toStation": "東銀座",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/08-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "银座至东银座完整；银座、丸之内、浅草线交叉不当成 junction。"
+  },
+  {
+    "intervalIndex": 9,
+    "fromStation": "東銀座",
+    "toStation": "築地",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/09-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "东银座至筑地圆弧切在 Apple 自身弯道内侧，列显示候选；不是把道路当铁路。"
+  },
+  {
+    "intervalIndex": 10,
+    "fromStation": "築地",
+    "toStation": "八丁堀",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/10-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "筑地至八丁堀完整；京叶线横穿与本线保持独立。"
+  },
+  {
+    "intervalIndex": 11,
+    "fromStation": "八丁堀",
+    "toStation": "茅場町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/11-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "八丁堀至茅场町自身南北段完整，东西线横穿不补连接。"
+  },
+  {
+    "intervalIndex": 12,
+    "fromStation": "茅場町",
+    "toStation": "人形町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/12-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "茅场町至人形町红线向西绕弯与自身日比谷线示意轮廓不同，且近半藏门线；需先保持本线身份再决定拟合。"
+  },
+  {
+    "intervalIndex": 13,
+    "fromStation": "人形町",
+    "toStation": "小伝馬町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/13-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "人形町至小传马町完整；浅草线及半藏门线独立。"
+  },
+  {
+    "intervalIndex": 14,
+    "fromStation": "小伝馬町",
+    "toStation": "秋葉原",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/14-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "小传马町至秋叶原完整；不得吸附西侧 JR 或银座线。"
+  },
+  {
+    "intervalIndex": 15,
+    "fromStation": "秋葉原",
+    "toStation": "仲御徒町",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/15-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "秋叶原至仲御徒町完整；大江户线横穿仍独立。"
+  },
+  {
+    "intervalIndex": 16,
+    "fromStation": "仲御徒町",
+    "toStation": "上野",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/16-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "仲御徒町至上野完整；本线在 JR 以东，不能吸附 JR 平台组。"
+  },
+  {
+    "intervalIndex": 17,
+    "fromStation": "上野",
+    "toStation": "入谷",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/17-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "上野至入谷完整；本线东北行与西侧 JR 走廊分开。"
+  },
+  {
+    "intervalIndex": 18,
+    "fromStation": "入谷",
+    "toStation": "三ノ輪",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/18-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "入谷至三之轮完整；primary 曾失败的 point4 已以本线 scope 恢复并实际看图。"
+  },
+  {
+    "intervalIndex": 19,
+    "fromStation": "三ノ輪",
+    "toStation": "南千住",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/19-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "三之轮至南千住向东转地面接近段红色预览偏离自身蓝轨，列待修候选；不吸附常磐、TX 或车场扇出。"
+  },
+  {
+    "intervalIndex": 20,
+    "fromStation": "南千住",
+    "toStation": "北千住",
+    "rootReviewedInspectors": [
+      "primary",
+      "secondary",
+      "third"
+    ],
+    "mainOriginalPair": "main-original/20-pair.json",
+    "verdict": "baseline-reviewed; geographic-and-platform-acceptance-pending",
+    "observation": "南千住至北千住含整段河桥、京成交叉、东武东南支臂和入站段；未观察到明显人工反向 U，但真实通行臂对仍须独立拓扑证据。北千住完整本线站台框未验收。"
+  }
+]

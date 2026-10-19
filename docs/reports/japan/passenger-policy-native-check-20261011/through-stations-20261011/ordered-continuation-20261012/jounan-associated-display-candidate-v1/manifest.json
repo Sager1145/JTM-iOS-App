@@ -1,0 +1,91 @@
+{
+  "format": "jtm-jounan-associated-display-candidate-manifest-v1",
+  "rawFrameCount": 13,
+  "finalReprojectionFrameCount": 13,
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "0e181b191bca18330f5ea1279f40436c34c36047c1330c87712f1aba3fd0a893"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "a22e92b84ba01f128efea1799a03103edf754a6c95cf1d8da666867a48ada84d"
+    },
+    {
+      "path": "hanazono-interval-0.geojson",
+      "sha256": "1bc51088cd73217657e24cb463dfb61e22e46e25897718ba055c5d90faa7a242"
+    },
+    {
+      "path": "otemachi-interval-0.geojson",
+      "sha256": "f5b0d2a6c5bc93464f07217e161582c917776a9f89b91250bd28a645c0c25c8e"
+    },
+    {
+      "path": "otemachi-interval-1.geojson",
+      "sha256": "4d4888cc9d603f71e6e7469af2bb550c8f7db4a2facaa8c22172e5e728b1e29c"
+    },
+    {
+      "path": "otemachi-interval-2.geojson",
+      "sha256": "9596cb2fbb4521b7803f3f2b4ab7dd7475b0b7f012ceef851785568b7e0cf54d"
+    },
+    {
+      "path": "otemachi-interval-3.geojson",
+      "sha256": "d1343d06cd28ad4ebe3fbe79b0f71860a8e0f5370ef286edb64bdea0cbce9bf6"
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval-0-view-0.png",
+      "sha256": "36a818b52add318cfcb86f8ae0fc3eecbd91b4c86ce14f86923bc0aabd3ffa40"
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval-0-view-1.png",
+      "sha256": "da813f6c5959e359c04041988e6fe67adec2f65ab6ce3c4057ec80edec21c51c"
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval-0-view-2.png",
+      "sha256": "882ce27ff432bc20960b656359ebb9626a1124ac624310c463aadbed81abee09"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-0-view-0.png",
+      "sha256": "72f25d6a971b7ec36bc5a34ed9bd933c752ca62cdbda8ab69c834df6cb6ee04d"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-0-view-1.png",
+      "sha256": "7ad852c5746ac30b34ff894ae2905733288a417e4ee7cd2c5a135c8a3a77ef44"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-1-view-0.png",
+      "sha256": "a5420a7d6708144a08b9c23e1d3c98b7865dc4f1e9a26d8e6c93d27fcd59ae26"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-1-view-1.png",
+      "sha256": "cfe305bc0469019d4fa892d793a4716166fe2c16df74e2add0274639a37ca923"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-2-view-0.png",
+      "sha256": "81a6c434898e972ba16f7197bfbf7852e9892d009553ce90674b8cecae6151f5"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-2-view-1.png",
+      "sha256": "2751d688abd67920b5f6e6a35026a116bd5691f30d30812d23b4d9a8445368d4"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-2-view-2.png",
+      "sha256": "e44d1d45f5ca4957b81f9abcb30ec6907d5e8276921ecaa2f7aba3c685262ae1"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-3-view-0.png",
+      "sha256": "a105eb0c050f4646d9aa8124c56adddd3f8a57de2a4b8ccbba1277bceaf337bf"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-3-view-1.png",
+      "sha256": "339dadbac2b33730bc4a2a0b95e7c2e8467c684a2b77fb801764cdca2ed33da5"
+    },
+    {
+      "path": "raw-reprojections/otemachi-interval-3-view-2.png",
+      "sha256": "105d3b9ca8415e665e79e604182d39c97b3f25783a1032fd75507de53d70574a"
+    },
+    {
+      "path": "review.json",
+      "sha256": "dfb49ef9590c06d9a7692c6fd3b7bd88abc316cef25375366947ccf2cb5b0f76"
+    }
+  ]
+}

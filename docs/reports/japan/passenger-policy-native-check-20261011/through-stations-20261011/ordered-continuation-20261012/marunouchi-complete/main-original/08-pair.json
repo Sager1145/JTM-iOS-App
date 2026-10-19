@@ -1,0 +1,87 @@
+{
+  "caseIndex": 8,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 8,
+  "source": {
+    "caseIndex": 8,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 8,
+    "fromStationID": "003766",
+    "toStationID": "003823",
+    "camera": [
+      35.677530000000004,
+      139.764818,
+      0.01585800000000717
+    ],
+    "effectiveCoordinates": [
+      [
+        139.7648,
+        35.681935
+      ],
+      [
+        139.7646,
+        35.68114
+      ],
+      [
+        139.7646,
+        35.68098
+      ],
+      [
+        139.76467,
+        35.68076
+      ],
+      [
+        139.76566,
+        35.67968
+      ],
+      [
+        139.76568,
+        35.67952
+      ],
+      [
+        139.76564,
+        35.67933
+      ],
+      [
+        139.76515,
+        35.67771
+      ],
+      [
+        139.76525,
+        35.67692
+      ],
+      [
+        139.76554,
+        35.676
+      ],
+      [
+        139.76571,
+        35.67548
+      ],
+      [
+        139.76564,
+        35.67523
+      ],
+      [
+        139.76496,
+        35.67421
+      ],
+      [
+        139.76443,
+        35.67358
+      ],
+      [
+        139.76413,
+        35.67325
+      ],
+      [
+        139.763926,
+        35.673125
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "92 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:20;overlays:20;rides:0;budgetDrops:0;vertices:8613;camera:15.84;lod:14.69;backbones:2;networkStations:60;distance:3480.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.677530;centerLon:139.764818;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3745.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:22;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.677530;centerLon:139.764818;distance:3480.3;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

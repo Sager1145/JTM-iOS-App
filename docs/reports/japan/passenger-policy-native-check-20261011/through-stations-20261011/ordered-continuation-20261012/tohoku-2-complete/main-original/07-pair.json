@@ -1,0 +1,86 @@
+{
+  "caseIndex": 7,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 7,
+  "source": {
+    "caseIndex": 7,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 7,
+    "fromStationID": "003460",
+    "toStationID": "003505",
+    "camera": [
+      35.7173375,
+      139.7778075,
+      0.01902284999999793
+    ],
+    "effectiveCoordinates": [
+      [
+        139.77803,
+        35.721455
+      ],
+      [
+        139.77865,
+        35.72085
+      ],
+      [
+        139.77916,
+        35.72034
+      ],
+      [
+        139.77936,
+        35.71998
+      ],
+      [
+        139.77958,
+        35.71951
+      ],
+      [
+        139.77972,
+        35.71905
+      ],
+      [
+        139.77976,
+        35.71871
+      ],
+      [
+        139.7797,
+        35.71829
+      ],
+      [
+        139.77962,
+        35.71797
+      ],
+      [
+        139.77936,
+        35.71756
+      ],
+      [
+        139.77847,
+        35.71646
+      ],
+      [
+        139.77764,
+        35.71551
+      ],
+      [
+        139.77664,
+        35.71439
+      ],
+      [
+        139.775855,
+        35.71322
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t100 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:19;overlays:18;rides:0;budgetDrops:0;vertices:7018;camera:15.58;lod:14.43;backbones:1;networkStations:50;distance:4175.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.717337;centerLon:139.777807;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3782.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:24;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.717337;centerLon:139.777807;distance:4175.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-07.jpg",
+  "observation": "鶯谷至上野绕公园东侧大弧连续；Main 进入上野宽站场时与终到股道及地下新干线区分，站点标记和本线客运轴仍未验收。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

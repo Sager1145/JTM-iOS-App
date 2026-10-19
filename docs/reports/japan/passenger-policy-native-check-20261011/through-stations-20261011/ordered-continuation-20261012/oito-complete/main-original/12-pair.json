@@ -1,0 +1,170 @@
+{
+  "caseIndex": 12,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 12,
+  "source": {
+    "caseIndex": 12,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 12,
+    "fromStationID": "002167",
+    "toStationID": "002179",
+    "camera": [
+      36.5089595,
+      137.86089750000002,
+      0.03994221000000039
+    ],
+    "effectiveCoordinates": [
+      [
+        137.858065,
+        36.517605
+      ],
+      [
+        137.85824,
+        36.51734
+      ],
+      [
+        137.85852,
+        36.51692
+      ],
+      [
+        137.85901,
+        36.51617
+      ],
+      [
+        137.85949,
+        36.51544
+      ],
+      [
+        137.85984,
+        36.51484
+      ],
+      [
+        137.86,
+        36.51453
+      ],
+      [
+        137.86014,
+        36.51419
+      ],
+      [
+        137.86028,
+        36.51383
+      ],
+      [
+        137.8603,
+        36.51374
+      ],
+      [
+        137.86053,
+        36.51314
+      ],
+      [
+        137.86071,
+        36.51266
+      ],
+      [
+        137.86095,
+        36.51203
+      ],
+      [
+        137.86113,
+        36.51156
+      ],
+      [
+        137.86136,
+        36.51096
+      ],
+      [
+        137.86155,
+        36.51042
+      ],
+      [
+        137.86184,
+        36.50966
+      ],
+      [
+        137.86208,
+        36.50903
+      ],
+      [
+        137.86212,
+        36.50893
+      ],
+      [
+        137.86268,
+        36.50741
+      ],
+      [
+        137.86326,
+        36.50583
+      ],
+      [
+        137.86351,
+        36.50525
+      ],
+      [
+        137.86361,
+        36.50493
+      ],
+      [
+        137.86368,
+        36.5046
+      ],
+      [
+        137.86372,
+        36.50424
+      ],
+      [
+        137.86373,
+        36.50389
+      ],
+      [
+        137.8637,
+        36.50362
+      ],
+      [
+        137.86359,
+        36.50333
+      ],
+      [
+        137.86347,
+        36.50309
+      ],
+      [
+        137.86316,
+        36.50263
+      ],
+      [
+        137.86277,
+        36.50205
+      ],
+      [
+        137.86231,
+        36.50124
+      ],
+      [
+        137.86207,
+        36.50085
+      ],
+      [
+        137.86183,
+        36.50048
+      ],
+      [
+        137.861734,
+        36.500314
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:14.49;lod:13.35;backbones:0;networkStations:4;distance:8767.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.508959;centerLon:137.860898;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1759.0;rebuilds:2;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.508959;centerLon:137.860898;distance:8767.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-12.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Kita-Omachi to Shinano-Omachi north curve outside Apple arc locally; broad station yard fan separate from own passenger platform."
+}

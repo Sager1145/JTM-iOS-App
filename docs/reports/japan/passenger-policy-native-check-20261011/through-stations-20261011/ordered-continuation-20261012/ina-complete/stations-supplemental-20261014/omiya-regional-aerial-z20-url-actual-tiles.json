@@ -1,0 +1,395 @@
+{
+  "mapRect": {
+    "height": 680,
+    "width": 1280,
+    "x": 0,
+    "y": 40
+  },
+  "tiles": [
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232741/103022.png?_=20210915a",
+      "width": 256,
+      "x": 495,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232742/103022.png?_=20210915a",
+      "width": 256,
+      "x": 751,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232741/103023.png?_=20210915a",
+      "width": 256,
+      "x": 495,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232742/103023.png?_=20210915a",
+      "width": 256,
+      "x": 751,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232741/103021.png?_=20210915a",
+      "width": 256,
+      "x": 495,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232742/103021.png?_=20210915a",
+      "width": 256,
+      "x": 751,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232740/103022.png?_=20210915a",
+      "width": 256,
+      "x": 239,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232743/103022.png?_=20210915a",
+      "width": 256,
+      "x": 1007,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232740/103023.png?_=20210915a",
+      "width": 256,
+      "x": 239,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232743/103023.png?_=20210915a",
+      "width": 256,
+      "x": 1007,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232741/103024.png?_=20210915a",
+      "width": 256,
+      "x": 495,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232742/103024.png?_=20210915a",
+      "width": 256,
+      "x": 751,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232740/103021.png?_=20210915a",
+      "width": 256,
+      "x": 239,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232743/103021.png?_=20210915a",
+      "width": 256,
+      "x": 1007,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232740/103024.png?_=20210915a",
+      "width": 256,
+      "x": 239,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232743/103024.png?_=20210915a",
+      "width": 256,
+      "x": 1007,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232739/103022.png?_=20210915a",
+      "width": 256,
+      "x": -17,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232744/103022.png?_=20210915a",
+      "width": 256,
+      "x": 1263,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232739/103023.png?_=20210915a",
+      "width": 256,
+      "x": -17,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232744/103023.png?_=20210915a",
+      "width": 256,
+      "x": 1263,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232739/103021.png?_=20210915a",
+      "width": 256,
+      "x": -17,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232744/103021.png?_=20210915a",
+      "width": 256,
+      "x": 1263,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232739/103024.png?_=20210915a",
+      "width": 256,
+      "x": -17,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/std/18/232744/103024.png?_=20210915a",
+      "width": 256,
+      "x": 1263,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232741/103022.jpg",
+      "width": 256,
+      "x": 495,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232742/103022.jpg",
+      "width": 256,
+      "x": 751,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232741/103023.jpg",
+      "width": 256,
+      "x": 495,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232742/103023.jpg",
+      "width": 256,
+      "x": 751,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232741/103021.jpg",
+      "width": 256,
+      "x": 495,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232742/103021.jpg",
+      "width": 256,
+      "x": 751,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232740/103022.jpg",
+      "width": 256,
+      "x": 239,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232743/103022.jpg",
+      "width": 256,
+      "x": 1007,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232740/103023.jpg",
+      "width": 256,
+      "x": 239,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232743/103023.jpg",
+      "width": 256,
+      "x": 1007,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232741/103024.jpg",
+      "width": 256,
+      "x": 495,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232742/103024.jpg",
+      "width": 256,
+      "x": 751,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232740/103021.jpg",
+      "width": 256,
+      "x": 239,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232743/103021.jpg",
+      "width": 256,
+      "x": 1007,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232740/103024.jpg",
+      "width": 256,
+      "x": 239,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232743/103024.jpg",
+      "width": 256,
+      "x": 1007,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232739/103022.jpg",
+      "width": 256,
+      "x": -17,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232744/103022.jpg",
+      "width": 256,
+      "x": 1263,
+      "y": 73
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232739/103023.jpg",
+      "width": 256,
+      "x": -17,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232744/103023.jpg",
+      "width": 256,
+      "x": 1263,
+      "y": 329
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232739/103021.jpg",
+      "width": 256,
+      "x": -17,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232744/103021.jpg",
+      "width": 256,
+      "x": 1263,
+      "y": -183
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232739/103024.jpg",
+      "width": 256,
+      "x": -17,
+      "y": 585
+    },
+    {
+      "height": 256,
+      "parent": "z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);",
+      "src": "//maps.gsi.go.jp/xyz/seamlessphoto/18/232744/103024.jpg",
+      "width": 256,
+      "x": 1263,
+      "y": 585
+    }
+  ],
+  "url": "https://maps.gsi.go.jp/#20/35.907740/139.621900/&base=std&ls=std%7Cseamlessphoto&blend=0&disp=11&vs=c1g1j0h0k0l0u0t0z0r0s0m0f1"
+}

@@ -1,0 +1,136 @@
+{
+  "format": "jtm-manually-viewed-originals-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-しなの鉄道-しなの鉄道線",
+  "scope": "Bounded risk/source-control and station-end subset only",
+  "oldOwnAvailablePairs": 214,
+  "actuallyViewedPairs": 7,
+  "actuallyViewedOriginalPNGs": 14,
+  "notViewedPairs": 207,
+  "notViewedOriginalPNGs": 414,
+  "views": [
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000003",
+      "reason": "source36.68turn-v17",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#16#point-3",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000003/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000003/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:50:05Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000005",
+      "reason": "source27.63turn-v30",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#16#point-5",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000005/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000005/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000005/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:50:05Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000008",
+      "reason": "source37.21turn-v48",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#16#point-8",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000008/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000008/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000176/000008/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:50:06Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 12,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000172/000004",
+      "reason": "source36.68turn-v30",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#12#point-4",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000172/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000172/000004/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000172/000004/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:49Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000168/000000",
+      "reason": "Shinonoi-own-shared-station",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#0#point-0",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000168/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000168/000000/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000168/000000/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:39Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 7,
+      "pointOrdinal": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000183/000013",
+      "reason": "Ueda-own-conventional-vs-shinkansen",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#7#point-13",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000183/000013/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000183/000013/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000183/000013/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:50:26Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 17,
+      "pointOrdinal": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000177/000011",
+      "reason": "Karuizawa-own-conventional-vs-shinkansen",
+      "viewpointID": "jp-しなの鉄道-しなの鉄道線#17#point-11",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000177/000011/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000177/000011/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000177/000011/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:50:09Z",
+      "wholeLineRenderDependency": "a7d51c6c962858b7940838a897ba3c8280cd5a35180e95ef4fd0da623fc18b1e",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    }
+  ],
+  "limits": [
+    "Original basemap and smooth opened separately, original detail; no crops/composites/redraws.",
+    "Legacy isolated centreline receipt; no current wrapper or Main acceptance. No app/native/build/apply/tests."
+  ]
+}

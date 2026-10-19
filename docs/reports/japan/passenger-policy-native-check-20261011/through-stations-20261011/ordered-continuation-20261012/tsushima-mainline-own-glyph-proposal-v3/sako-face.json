@@ -1,0 +1,70 @@
+{
+  "status": "raw-provisional-parent-adjudication-and-native-pending",
+  "stationID": "005407",
+  "view": "meitetsu-main-22-view3-z18-before",
+  "identifiedNortheastOwnNarrowFace": {
+    "ends": [
+      [
+        365,
+        200
+      ],
+      [
+        575,
+        451
+      ]
+    ],
+    "longitudinalMidpoint": [
+      470,
+      325.5
+    ]
+  },
+  "ownRailNormalPixels": [
+    457,
+    337
+  ],
+  "ownRailNormalCoordinate": [
+    136.87283701223373,
+    35.18374615617322
+  ],
+  "chainageUncertaintyPixels": 3,
+  "normalUncertaintyPixels": 2,
+  "glyphSupports": [
+    [
+      432,
+      310
+    ],
+    [
+      441,
+      320
+    ],
+    [
+      446,
+      325
+    ],
+    [
+      450,
+      330
+    ],
+    [
+      458,
+      340
+    ]
+  ],
+  "rejected": [
+    {
+      "pixel": [
+        544,
+        489
+      ],
+      "reason": "well southeast of full own narrowface midpoint; broad building/access end is not longitudinal frame centre"
+    },
+    {
+      "pixel": [
+        499.5,
+        327
+      ],
+      "reason": "old source is approximately40px northeast of own glyph at same y"
+    }
+  ],
+  "boundsMethod": "Actual continuous capped pale narrow face inside own blue station polygon, NW cap365200 toSE roundedtip575451; attached access bulb excluded from longitudinal face ends. Color samples only corroborate visually identified own station face. Side yard/freight glyphs excluded."
+}

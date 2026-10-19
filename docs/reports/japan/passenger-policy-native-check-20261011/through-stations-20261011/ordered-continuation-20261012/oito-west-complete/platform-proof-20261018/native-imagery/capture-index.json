@@ -1,0 +1,571 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 114.39361975272715,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.020420000000001,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.860975,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.021113907388475,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.86002389737683,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.021816495892423,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85908268065549,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.022523545291001,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85814671944718,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.023223334190625,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85720222340035,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.02392105761605,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85625542201828,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.024625514401748,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85531764472043,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.025539795708774,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85477560856395,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.026565045336255,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85470481195961,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.02759335469451,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85467030670901,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.028621850186525,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85464098857415,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.029650255251923,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85460689790534,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.03067871986358,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85457590459683,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.03170724300017,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85454795551536,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.032735692710716,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85451614004606,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.033764113199112,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85448278558258,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.034792656600615,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85445619471716,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.035821279482747,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85443476508681,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-17"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000018",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.03684988934419,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85441238163315,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-18"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000019",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.03787849547939,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85438972500339,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-19"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000020",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.038906095872996,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85438440626797,
+      "pointOrdinal" : 20,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-20"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000021",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.039926712561147,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85453167807685,
+      "pointOrdinal" : 21,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-21"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000022",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.040863562846027,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85505032044614,
+      "pointOrdinal" : 22,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-22"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000023",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.041650189815194,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85587122428922,
+      "pointOrdinal" : 23,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-23"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000024",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.04223648997587,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85692170287231,
+      "pointOrdinal" : 24,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-24"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000025",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.042578852566102,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85813678828876,
+      "pointOrdinal" : 25,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-25"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000026",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.042908474344429,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.85935767750937,
+      "pointOrdinal" : 26,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-26"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000027",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.043237548320064,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.86057881829649,
+      "pointOrdinal" : 27,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-27"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery\/alignment\/captures\/000000\/000028",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.043114000000003,
+      "lineDependency" : "ea5ea7c1e2a4c6fc51dc7967c5e29b54331358659d0bf3c51a78566cc00d1dab",
+      "longitude" : 137.86111500000001,
+      "pointOrdinal" : 28,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-28"
+    }
+  ]
+}

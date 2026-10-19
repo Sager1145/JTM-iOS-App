@@ -1,0 +1,45 @@
+{
+  "status": "one-build-three-distinct-apps-recovered-not-runtime-accepted",
+  "apps": [
+    {
+      "role": "primary",
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector",
+      "signatureVerified": true,
+      "copyMetadataRemoved": [],
+      "resourceStatus": "current-production-baseline-not-new-candidate",
+      "defaultCapturePath": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-captures/primary"
+    },
+    {
+      "role": "secondary",
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector.KisukiKeiyo",
+      "signatureVerified": true,
+      "copyMetadataRemoved": [],
+      "resourceStatus": "current-production-baseline-not-new-candidate",
+      "defaultCapturePath": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-captures/secondary"
+    },
+    {
+      "role": "third",
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector.Hakone",
+      "signatureVerified": true,
+      "copyMetadataRemoved": [],
+      "resourceStatus": "current-production-baseline-not-new-candidate",
+      "defaultCapturePath": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-captures/third"
+    }
+  ],
+  "buildLog": "/Users/sager/Documents/GitHub/JTM-iOS-App/.build/rail-inspector-recovery/build.log",
+  "currentSourceBaseline": true,
+  "priorV1TemporaryAppsLost": true,
+  "permanentEvidencePreserved": true,
+  "cloudDocumentBundleSigningFailed": true,
+  "persistentLocalOutput": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps",
+  "executablePermissionsRestored": true,
+  "primaryActualRuntimeObserved": true,
+  "primaryObservedActualMapDrawn": true,
+  "primaryActual81CaptureCount": 10,
+  "secondaryThirdRuntimePending": true,
+  "secondaryActualRuntimeObserved": true,
+  "secondaryActual80CaptureCount": 15
+}

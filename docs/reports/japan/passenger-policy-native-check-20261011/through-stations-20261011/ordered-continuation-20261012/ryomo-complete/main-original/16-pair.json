@@ -1,0 +1,230 @@
+{
+  "caseIndex": 16,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 16,
+  "source": {
+    "caseIndex": 16,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 16,
+    "fromStationID": "002318",
+    "toStationID": "002297",
+    "camera": [
+      36.37757,
+      139.0911925,
+      0.03382348895349111
+    ],
+    "effectiveCoordinates": [
+      [
+        139.109015,
+        36.3709
+      ],
+      [
+        139.10827,
+        36.37133
+      ],
+      [
+        139.10777,
+        36.37158
+      ],
+      [
+        139.10748,
+        36.37175
+      ],
+      [
+        139.10675,
+        36.37218
+      ],
+      [
+        139.10588,
+        36.37265
+      ],
+      [
+        139.10521,
+        36.37304
+      ],
+      [
+        139.10429,
+        36.37358
+      ],
+      [
+        139.10391,
+        36.37381
+      ],
+      [
+        139.10292,
+        36.3744
+      ],
+      [
+        139.10155,
+        36.37525
+      ],
+      [
+        139.10059,
+        36.37583
+      ],
+      [
+        139.09852,
+        36.37709
+      ],
+      [
+        139.09753,
+        36.37768
+      ],
+      [
+        139.09656,
+        36.37829
+      ],
+      [
+        139.09588,
+        36.37868
+      ],
+      [
+        139.09503,
+        36.37921
+      ],
+      [
+        139.09407,
+        36.3798
+      ],
+      [
+        139.09346,
+        36.38013
+      ],
+      [
+        139.09294,
+        36.38039
+      ],
+      [
+        139.09257,
+        36.38055
+      ],
+      [
+        139.09171,
+        36.38087
+      ],
+      [
+        139.09106,
+        36.38107
+      ],
+      [
+        139.09053,
+        36.38124
+      ],
+      [
+        139.08978,
+        36.38146
+      ],
+      [
+        139.08946,
+        36.38156
+      ],
+      [
+        139.08841,
+        36.38189
+      ],
+      [
+        139.0874,
+        36.38219
+      ],
+      [
+        139.08621,
+        36.38259
+      ],
+      [
+        139.08537,
+        36.38286
+      ],
+      [
+        139.08479,
+        36.38305
+      ],
+      [
+        139.0844,
+        36.38319
+      ],
+      [
+        139.08372,
+        36.38339
+      ],
+      [
+        139.08294,
+        36.38366
+      ],
+      [
+        139.08213,
+        36.38391
+      ],
+      [
+        139.08146,
+        36.38407
+      ],
+      [
+        139.08091,
+        36.38415
+      ],
+      [
+        139.0805,
+        36.38421
+      ],
+      [
+        139.08003,
+        36.38424
+      ],
+      [
+        139.07966,
+        36.38424
+      ],
+      [
+        139.07928,
+        36.38423
+      ],
+      [
+        139.0787,
+        36.38417
+      ],
+      [
+        139.07848,
+        36.38415
+      ],
+      [
+        139.07795,
+        36.38408
+      ],
+      [
+        139.07752,
+        36.38402
+      ],
+      [
+        139.07706,
+        36.38395
+      ],
+      [
+        139.07652,
+        36.38389
+      ],
+      [
+        139.07553,
+        36.38376
+      ],
+      [
+        139.07472,
+        36.38365
+      ],
+      [
+        139.07337,
+        36.38347
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t47 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:1071;camera:14.25;lod:13.10;backbones:0;networkStations:13;distance:10394.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.377570;centerLon:139.091193;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1683.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.377570;centerLon:139.091193;distance:10394.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-16.jpg",
+  "observation": "Hirose River and Maebashi east approach has north bias; station stroke lies north of broad platform band. Own passenger frame requires identification.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

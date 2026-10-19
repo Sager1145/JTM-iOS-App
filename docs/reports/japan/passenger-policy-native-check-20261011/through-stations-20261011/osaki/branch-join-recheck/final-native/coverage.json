@@ -1,0 +1,78 @@
+{
+  "records": [
+    {
+      "source": "/private/tmp/jtm-osaki-branch-join-final-base",
+      "intervalIndex": "004839",
+      "viewPaths": [
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000000/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000001/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000002/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000003/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000004/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000005/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000006/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000007/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-base/captures/004839/000008/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-osaki-branch-join-final-pair",
+      "intervalIndex": "004840",
+      "viewPaths": [
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000000/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000001/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000002/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000003/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000004/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000005/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000006/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000007/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-pair/captures/004840/000008/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-osaki-branch-join-final-owners",
+      "intervalIndex": "005027",
+      "viewPaths": [
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000000/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000001/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000002/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000003/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000004/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000005/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005027/000006/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-osaki-branch-join-final-owners",
+      "intervalIndex": "005028",
+      "viewPaths": [
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005028/000000/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005028/000001/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005028/000002/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005028/000003/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-osaki-branch-join-final-owners",
+      "intervalIndex": "005753",
+      "viewPaths": [
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000000/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000001/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000002/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000003/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000004/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000005/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000006/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000007/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000008/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000009/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000010/view.json",
+        "/private/tmp/jtm-osaki-branch-join-final-owners/captures/005753/000011/view.json"
+      ]
+    }
+  ],
+  "viewCount": 41,
+  "review": "all 41 viewpoints manually reviewed; static centreline evidence only",
+  "reviewReport": "review.md"
+}

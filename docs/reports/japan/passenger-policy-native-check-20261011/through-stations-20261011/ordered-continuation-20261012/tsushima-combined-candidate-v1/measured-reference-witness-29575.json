@@ -1,0 +1,31 @@
+{
+  "lineID": "jp-名古屋鉄道-名古屋本線",
+  "intervalIndex": 22,
+  "oldMeasure": 29575,
+  "oldGeo": [
+    136.87064869642236,
+    35.185994388277656
+  ],
+  "oldEdgeEnd": 370,
+  "oldEdgeFraction": 0.3504705556490171,
+  "newGeo": [
+    136.87054368734255,
+    35.18592040346337
+  ],
+  "newMeasure": 29567.4,
+  "unroundedNewMeasure": 29567.362423355782,
+  "newEdgeEnd": 556,
+  "newEdgeFraction": 0.7611236660424767,
+  "projectionResidualMetres": 12.613711313264037,
+  "ownedCandidateIntervalMeasures": [
+    29060.569727925624,
+    29886.9334269841
+  ],
+  "suffixDeltaMetres": -9.828593429028842,
+  "prefixExact": true,
+  "suffixExact": true,
+  "warnings": [
+    "Nearest projection is constrained to Main#22; residual is original-to-candidate geographic displacement, not Apple pixel residual.",
+    "Station/frame/underground raw warnings retained; native acceptance remains pending."
+  ]
+}

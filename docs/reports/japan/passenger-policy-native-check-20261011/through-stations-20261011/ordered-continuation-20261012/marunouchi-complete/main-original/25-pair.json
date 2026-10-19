@@ -1,0 +1,55 @@
+{
+  "caseIndex": 25,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+  "intervalIndex": 1,
+  "source": {
+    "caseIndex": 25,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+    "intervalIndex": 1,
+    "fromStationID": "003688",
+    "toStationID": "003679",
+    "camera": [
+      35.691247000000004,
+      139.6710885,
+      0.009053532339958432
+    ],
+    "effectiveCoordinates": [
+      [
+        139.668155,
+        35.69082
+      ],
+      [
+        139.6689,
+        35.69089
+      ],
+      [
+        139.67074,
+        35.6911
+      ],
+      [
+        139.67245,
+        35.69129
+      ],
+      [
+        139.67304,
+        35.69134
+      ],
+      [
+        139.67348,
+        35.69136
+      ],
+      [
+        139.6739,
+        35.69159
+      ],
+      [
+        139.674022,
+        35.691674
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:538;camera:16.65;lod:15.50;backbones:0;networkStations:3;distance:1987.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.691247;centerLon:139.671089;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2858.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.691247;centerLon:139.671089;distance:1987.0;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

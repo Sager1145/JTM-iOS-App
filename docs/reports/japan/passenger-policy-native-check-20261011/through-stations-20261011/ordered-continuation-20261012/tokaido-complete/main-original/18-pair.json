@@ -1,0 +1,276 @@
+{
+  "caseIndex": 18,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 18,
+  "source": {
+    "caseIndex": 18,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 18,
+    "fromStationID": "004961",
+    "toStationID": "004997",
+    "camera": [
+      35.345012,
+      139.5087915,
+      0.06021859961059241
+    ],
+    "effectiveCoordinates": [
+      [
+        139.531163,
+        35.354154
+      ],
+      [
+        139.53115,
+        35.35412
+      ],
+      [
+        139.53069,
+        35.35289
+      ],
+      [
+        139.5306,
+        35.35267
+      ],
+      [
+        139.53023,
+        35.35183
+      ],
+      [
+        139.52967,
+        35.35081
+      ],
+      [
+        139.52925,
+        35.35026
+      ],
+      [
+        139.52896,
+        35.34999
+      ],
+      [
+        139.52847,
+        35.34964
+      ],
+      [
+        139.52773,
+        35.34916
+      ],
+      [
+        139.52685,
+        35.34864
+      ],
+      [
+        139.52597,
+        35.34816
+      ],
+      [
+        139.52541,
+        35.34786
+      ],
+      [
+        139.5217,
+        35.34587
+      ],
+      [
+        139.51978,
+        35.34483
+      ],
+      [
+        139.51972,
+        35.3448
+      ],
+      [
+        139.51948,
+        35.34468
+      ],
+      [
+        139.51922,
+        35.34454
+      ],
+      [
+        139.51871,
+        35.34427
+      ],
+      [
+        139.51647,
+        35.34305
+      ],
+      [
+        139.5162,
+        35.34291
+      ],
+      [
+        139.51367,
+        35.34155
+      ],
+      [
+        139.51283,
+        35.3411
+      ],
+      [
+        139.50922,
+        35.33915
+      ],
+      [
+        139.50631,
+        35.33759
+      ],
+      [
+        139.50537,
+        35.33708
+      ],
+      [
+        139.5044,
+        35.33661
+      ],
+      [
+        139.50425,
+        35.33655
+      ],
+      [
+        139.50406,
+        35.33645
+      ],
+      [
+        139.5037,
+        35.33632
+      ],
+      [
+        139.5033,
+        35.33616
+      ],
+      [
+        139.50282,
+        35.33606
+      ],
+      [
+        139.50232,
+        35.33596
+      ],
+      [
+        139.50186,
+        35.33591
+      ],
+      [
+        139.50136,
+        35.33587
+      ],
+      [
+        139.50121,
+        35.33588
+      ],
+      [
+        139.50008,
+        35.33599
+      ],
+      [
+        139.49908,
+        35.3362
+      ],
+      [
+        139.49829,
+        35.33638
+      ],
+      [
+        139.49775,
+        35.33654
+      ],
+      [
+        139.49756,
+        35.33661
+      ],
+      [
+        139.49714,
+        35.33673
+      ],
+      [
+        139.4968,
+        35.33682
+      ],
+      [
+        139.49534,
+        35.33722
+      ],
+      [
+        139.49438,
+        35.33746
+      ],
+      [
+        139.49392,
+        35.33759
+      ],
+      [
+        139.49277,
+        35.33789
+      ],
+      [
+        139.49165,
+        35.33819
+      ],
+      [
+        139.49066,
+        35.33845
+      ],
+      [
+        139.49023,
+        35.33856
+      ],
+      [
+        139.48933,
+        35.3388
+      ],
+      [
+        139.4892,
+        35.33882
+      ],
+      [
+        139.48881,
+        35.33886
+      ],
+      [
+        139.48811,
+        35.3389
+      ],
+      [
+        139.4878,
+        35.33889
+      ],
+      [
+        139.48642,
+        35.338835
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t98 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:8;rides:0;budgetDrops:0;vertices:4076;camera:13.92;lod:12.77;backbones:0;networkStations:44;distance:13216.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.345012;centerLon:139.508792;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1775.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:12;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.345012;centerLon:139.508792;distance:13216.3;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.345012",
+      "35.345012"
+    ],
+    "centerLon": [
+      "139.508792",
+      "139.508792"
+    ],
+    "distance": [
+      "13216.3",
+      "13216.3"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false
+}

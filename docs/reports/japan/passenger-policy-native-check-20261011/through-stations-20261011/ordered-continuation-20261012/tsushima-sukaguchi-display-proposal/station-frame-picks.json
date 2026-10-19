@@ -1,0 +1,79 @@
+{
+  "format": "jtm-display-frame-picks-v1",
+  "status": "draft-not-frozen",
+  "coordinateOrder": "longitude-latitude",
+  "picks": [
+    {
+      "stationID": "005337",
+      "name": "丸ノ内",
+      "view": "../tsushima-complete-native/meitetsu-marunouchi-z18-before/view.json",
+      "pixel": [
+        474,
+        231
+      ],
+      "coordinate": [
+        136.84200320734033,
+        35.204625793777495
+      ],
+      "uncertaintyPixels": 2,
+      "disposition": "move; synchronize Main #16/#17"
+    },
+    {
+      "stationID": "005374",
+      "name": "新川橋",
+      "view": "../tsushima-complete-native/meitetsu-shinkawabashi-z18-before/view.json",
+      "pixel": [
+        454,
+        269
+      ],
+      "coordinate": [
+        136.85237591897993,
+        35.19550425786567
+      ],
+      "uncertaintyPixels": 2,
+      "disposition": "move; synchronize Main #18/#19"
+    },
+    {
+      "stationID": "005377",
+      "name": "二ツ杁",
+      "view": "../tsushima-complete-native/meitetsu-futatsuiri-z18-before/view.json",
+      "pixel": [
+        482,
+        309
+      ],
+      "coordinate": [
+        136.8596121226845,
+        35.19473890827177
+      ],
+      "uncertaintyPixels": 2,
+      "disposition": "move; synchronize Main #19/#20"
+    },
+    {
+      "stationID": "005368",
+      "name": "甚目寺",
+      "view": "../tsushima-complete-native/tsushima-sukaguchi-interval0-view6-z18-before/view.json",
+      "pixel": [
+        482,
+        318
+      ],
+      "coordinate": [
+        136.8257611226847,
+        35.19599445351652
+      ],
+      "uncertaintyPixels": 2,
+      "disposition": "move candidate; synchronize Tsushima #0/#1"
+    },
+    {
+      "stationID": "005323",
+      "name": "新清洲",
+      "view": "../tsushima-complete-native/meitetsu-shinkiyosu-z18-before/view.json",
+      "disposition": "retain source; WARNING multi-track face unresolved"
+    },
+    {
+      "stationID": "005376",
+      "name": "西枇杷島",
+      "view": "../tsushima-complete-native/meitetsu-nishibiwajima-z18-before/view.json",
+      "disposition": "retain source; near own-frame midpoint and own rail"
+    }
+  ]
+}

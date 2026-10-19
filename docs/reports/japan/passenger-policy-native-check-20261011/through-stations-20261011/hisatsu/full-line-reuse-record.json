@@ -1,0 +1,1963 @@
+{
+  "freshInterval": "jp-九州旅客鉄道-肥薩線#18",
+  "lineDependency": "078f475a4e3105898ad46b29b1fde7cae2a441b82cc12c774c552afa9922bc02",
+  "reusedViewpoints": [
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#0",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000940/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000940/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#1",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000941/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000941/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#11",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000943/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000943/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#12",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000944/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000944/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#13",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000945/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000945/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000018",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000018"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000019",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000019"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000020",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000020"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 21,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000021",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000021"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 22,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000022",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000022"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 23,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000023",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000023"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 24,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000024",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000024"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 25,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000025",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000025"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 26,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000026",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000026"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 27,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000027",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000027"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 28,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000028",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000028"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 29,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000029",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000029"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#14",
+      "ordinal": 30,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000946/000030",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000946/000030"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000018",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000018"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000019",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000019"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000020",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000020"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 21,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000021",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000021"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 22,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000022",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000022"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 23,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000023",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000023"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 24,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000024",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000024"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 25,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000025",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000025"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 26,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000026",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000026"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "ordinal": 27,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000947/000027",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000947/000027"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000018",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000018"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000019",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000019"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#16",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000948/000020",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000948/000020"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000018",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000018"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000019",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000019"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 20,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000020",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000020"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 21,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000021",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000021"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 22,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000022",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000022"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#17",
+      "ordinal": 23,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000949/000023",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000949/000023"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 18,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000018",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000018"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#19",
+      "ordinal": 19,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000951/000019",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000951/000019"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#20",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000953/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000953/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#21",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000954/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000954/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 16,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000016",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000016"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#22",
+      "ordinal": 17,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000955/000017",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000955/000017"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#24",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000957/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000957/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#25",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000958/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000958/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#26",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000959/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000959/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#5",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000962/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000962/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#6",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000963/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000963/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#7",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000964/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000964/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#8",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000965/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000965/000015"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000000"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000001"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000002"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000003"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000004"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000005"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000006",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000006"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000007",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000007"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000008",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000008"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000009",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000009"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 10,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000010",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000010"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 11,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000011",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000011"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 12,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000012",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000012"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 13,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000013",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000013"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 14,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000014",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000014"
+    },
+    {
+      "itemID": "jp-九州旅客鉄道-肥薩線#9",
+      "ordinal": 15,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000966/000015",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/000966/000015"
+    }
+  ],
+  "policy": "Exact native line dependency, interval identity and viewpoint equality; native configure validates receipts; geographic evidence separate from operating-era visibility."
+}

@@ -1,0 +1,186 @@
+{
+  "caseIndex": 5,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 5,
+  "source": {
+    "caseIndex": 5,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 5,
+    "fromStationID": "002398",
+    "toStationID": "002401",
+    "camera": [
+      36.316245,
+      139.553845,
+      0.047586770195375265
+    ],
+    "effectiveCoordinates": [
+      [
+        139.5789,
+        36.31656
+      ],
+      [
+        139.57739,
+        36.31653
+      ],
+      [
+        139.576,
+        36.31651
+      ],
+      [
+        139.57451,
+        36.31647
+      ],
+      [
+        139.57111,
+        36.31634
+      ],
+      [
+        139.56963,
+        36.31628
+      ],
+      [
+        139.56888,
+        36.31626
+      ],
+      [
+        139.56791,
+        36.31624
+      ],
+      [
+        139.56656,
+        36.3162
+      ],
+      [
+        139.56539,
+        36.31616
+      ],
+      [
+        139.56495,
+        36.31615
+      ],
+      [
+        139.56443,
+        36.31614
+      ],
+      [
+        139.56229,
+        36.31607
+      ],
+      [
+        139.56031,
+        36.31601
+      ],
+      [
+        139.55826,
+        36.31596
+      ],
+      [
+        139.55685,
+        36.31594
+      ],
+      [
+        139.55583,
+        36.31593
+      ],
+      [
+        139.55548,
+        36.31594
+      ],
+      [
+        139.55474,
+        36.31593
+      ],
+      [
+        139.55417,
+        36.31593
+      ],
+      [
+        139.55265,
+        36.31595
+      ],
+      [
+        139.5504,
+        36.31598
+      ],
+      [
+        139.54788,
+        36.31601
+      ],
+      [
+        139.54558,
+        36.31603
+      ],
+      [
+        139.54322,
+        36.31604
+      ],
+      [
+        139.54308,
+        36.31605
+      ],
+      [
+        139.5426,
+        36.31605
+      ],
+      [
+        139.54238,
+        36.31605
+      ],
+      [
+        139.54144,
+        36.31607
+      ],
+      [
+        139.54027,
+        36.31608
+      ],
+      [
+        139.53996,
+        36.31609
+      ],
+      [
+        139.53834,
+        36.31609
+      ],
+      [
+        139.53597,
+        36.31612
+      ],
+      [
+        139.53435,
+        36.31615
+      ],
+      [
+        139.53328,
+        36.31617
+      ],
+      [
+        139.53293,
+        36.31618
+      ],
+      [
+        139.53069,
+        36.31618
+      ],
+      [
+        139.5297,
+        36.31617
+      ],
+      [
+        139.52879,
+        36.31618
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t45 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:3;rides:0;budgetDrops:0;vertices:2064;camera:13.76;lod:12.61;backbones:0;networkStations:12;distance:14623.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.316245;centerLon:139.553845;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2595.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:7;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.316245;centerLon:139.553845;distance:14623.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-05.jpg",
+  "observation": "Tomita approach continuous; station frame and longitudinal midpoint remain unaccepted.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

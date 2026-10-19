@@ -1,0 +1,152 @@
+[
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-0",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000000",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.53444,
+      "longitude": 135.199975,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9686568227516282,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235026040.1675378,
+      "rectY": 105835539.54851499,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  },
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-1",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000001",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.53245674912643,
+      "longitude": 135.19697220174203,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9686804514876812,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235023801.11887208,
+      "rectY": 105837356.77875379,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  },
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-2",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000002",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.53005608926662,
+      "longitude": 135.19457565353292,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9687090517307493,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235022014.12300727,
+      "rectY": 105839556.41600657,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  },
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-3",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000003",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.527025772526486,
+      "longitude": 135.19353304715088,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.96874515094101,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235021236.6993417,
+      "rectY": 105842332.89097476,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  },
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-4",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000004",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.52400104176431,
+      "longitude": 135.19246556043893,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9687811808859615,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235020440.72355756,
+      "rectY": 105845104.14333154,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  },
+  {
+    "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-5",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000005",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 35.523345,
+      "longitude": 135.192245,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.968788995156144,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 235020276.26177424,
+      "rectY": 105845705.1937179,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent functions.view_image original pixels"
+  }
+]

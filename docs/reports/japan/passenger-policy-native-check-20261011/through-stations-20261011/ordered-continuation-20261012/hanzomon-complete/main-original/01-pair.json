@@ -1,0 +1,83 @@
+{
+  "caseIndex": 1,
+  "intervalIndex": 1,
+  "source": {
+    "intervalIndex": 1,
+    "fromStationID": "003883",
+    "toStationID": "003812",
+    "camera": [
+      35.66905,
+      139.7182295,
+      0.014065199999993184
+    ],
+    "effectiveCoordinates": [
+      [
+        139.712387,
+        35.665143
+      ],
+      [
+        139.71244,
+        35.6652
+      ],
+      [
+        139.71305,
+        35.66588
+      ],
+      [
+        139.71582,
+        35.66913
+      ],
+      [
+        139.71657,
+        35.67001
+      ],
+      [
+        139.7167,
+        35.67009
+      ],
+      [
+        139.71689,
+        35.6702
+      ],
+      [
+        139.71717,
+        35.67033
+      ],
+      [
+        139.71801,
+        35.67067
+      ],
+      [
+        139.71833,
+        35.67075
+      ],
+      [
+        139.71876,
+        35.67093
+      ],
+      [
+        139.72107,
+        35.67191
+      ],
+      [
+        139.72233,
+        35.6724
+      ],
+      [
+        139.72311,
+        35.67264
+      ],
+      [
+        139.72399,
+        35.67293
+      ],
+      [
+        139.724072,
+        35.672957
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "55 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:11;overlays:11;rides:0;budgetDrops:0;vertices:4644;camera:16.02;lod:14.87;backbones:0;networkStations:20;distance:3086.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.669050;centerLon:139.718229;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3538.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.669050;centerLon:139.718229;distance:3086.9;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0"
+}

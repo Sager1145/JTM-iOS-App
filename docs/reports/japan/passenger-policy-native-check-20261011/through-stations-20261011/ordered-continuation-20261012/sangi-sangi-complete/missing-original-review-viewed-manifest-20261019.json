@@ -1,0 +1,1725 @@
+{
+  "format": "jtm-scoped-original-pixel-review-v1",
+  "reviewDate": "2026-10-19",
+  "lineID": "jp-三岐鉄道-三岐線",
+  "queueOrdinal": 80,
+  "session": "/private/tmp/jtm-sangi-sangi-missing-20261019",
+  "captureIndex": "/private/tmp/jtm-sangi-sangi-missing-20261019/capture-index.json",
+  "captureResult": {
+    "capturedCount": 16,
+    "failedCount": 0,
+    "processID": 20655
+  },
+  "selectedIntervals": [
+    2,
+    5,
+    13
+  ],
+  "plannedPairs": 16,
+  "actuallyViewedPairs": 16,
+  "actuallyViewedOriginalPNGs": 32,
+  "unviewedPairsInSelectedScope": 0,
+  "existingRetainedPairsReopened": 0,
+  "otherOwnIntervalsNotViewedHere": 82,
+  "identityComparisonScope": "Only new selected intervals 2/5/13; actual receipt-named immutable plan source/display IEEE-754 coordinates and own station IDs compared directly with current compact decode. No full-line identity audit repeated.",
+  "identityComparisons": [
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "005882",
+        "平津"
+      ],
+      "toStation": [
+        "005872",
+        "暁学園前"
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "matchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 36,
+      "displayControlCount": 36,
+      "currentCoordinates": [
+        [
+          136.61843,
+          35.02844
+        ],
+        [
+          136.61806,
+          35.02857
+        ],
+        [
+          136.61788,
+          35.02863
+        ],
+        [
+          136.61748,
+          35.02878
+        ],
+        [
+          136.61713,
+          35.0289
+        ],
+        [
+          136.61702,
+          35.02895
+        ],
+        [
+          136.6165,
+          35.02913
+        ],
+        [
+          136.6157,
+          35.0294
+        ],
+        [
+          136.61503,
+          35.02963
+        ],
+        [
+          136.61487,
+          35.02969
+        ],
+        [
+          136.61402,
+          35.02997
+        ],
+        [
+          136.61383,
+          35.03004
+        ],
+        [
+          136.61376,
+          35.03007
+        ],
+        [
+          136.6136,
+          35.03013
+        ],
+        [
+          136.6134,
+          35.03019
+        ],
+        [
+          136.61315,
+          35.03028
+        ],
+        [
+          136.61296,
+          35.03036
+        ],
+        [
+          136.61266,
+          35.03047
+        ],
+        [
+          136.61247,
+          35.03054
+        ],
+        [
+          136.61211,
+          35.03066
+        ],
+        [
+          136.6118,
+          35.03077
+        ],
+        [
+          136.61125,
+          35.03095
+        ],
+        [
+          136.61027,
+          35.03128
+        ],
+        [
+          136.60946,
+          35.03158
+        ],
+        [
+          136.60892,
+          35.03178
+        ],
+        [
+          136.60876,
+          35.03184
+        ],
+        [
+          136.60862,
+          35.0319
+        ],
+        [
+          136.60845,
+          35.03196
+        ],
+        [
+          136.60829,
+          35.03201
+        ],
+        [
+          136.60786,
+          35.03218
+        ],
+        [
+          136.60764,
+          35.03224
+        ],
+        [
+          136.60731,
+          35.03236
+        ],
+        [
+          136.60716,
+          35.03241
+        ],
+        [
+          136.60651,
+          35.03263
+        ],
+        [
+          136.60633,
+          35.0327
+        ],
+        [
+          136.605955,
+          35.03282
+        ]
+      ],
+      "currentHasDisplayIntervalOverride": false
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "005841",
+        "保々"
+      ],
+      "toStation": [
+        "005799",
+        "北勢中央公園口"
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "matchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 51,
+      "displayControlCount": 51,
+      "currentCoordinates": [
+        [
+          136.56592,
+          35.046775
+        ],
+        [
+          136.56558,
+          35.04697
+        ],
+        [
+          136.56484,
+          35.04742
+        ],
+        [
+          136.56451,
+          35.04768
+        ],
+        [
+          136.56425,
+          35.0479
+        ],
+        [
+          136.56386,
+          35.04834
+        ],
+        [
+          136.56359,
+          35.04877
+        ],
+        [
+          136.56345,
+          35.04903
+        ],
+        [
+          136.56326,
+          35.04959
+        ],
+        [
+          136.56321,
+          35.04983
+        ],
+        [
+          136.56313,
+          35.05018
+        ],
+        [
+          136.56315,
+          35.05079
+        ],
+        [
+          136.56327,
+          35.05125
+        ],
+        [
+          136.56341,
+          35.05156
+        ],
+        [
+          136.5637,
+          35.05204
+        ],
+        [
+          136.56376,
+          35.05215
+        ],
+        [
+          136.56379,
+          35.05219
+        ],
+        [
+          136.56383,
+          35.05225
+        ],
+        [
+          136.56385,
+          35.05227
+        ],
+        [
+          136.56429,
+          35.05294
+        ],
+        [
+          136.56435,
+          35.05304
+        ],
+        [
+          136.56456,
+          35.05336
+        ],
+        [
+          136.56461,
+          35.05343
+        ],
+        [
+          136.56472,
+          35.0536
+        ],
+        [
+          136.56478,
+          35.05371
+        ],
+        [
+          136.56522,
+          35.05434
+        ],
+        [
+          136.56526,
+          35.05441
+        ],
+        [
+          136.56534,
+          35.0545
+        ],
+        [
+          136.5656,
+          35.05487
+        ],
+        [
+          136.56564,
+          35.05493
+        ],
+        [
+          136.56586,
+          35.05525
+        ],
+        [
+          136.56616,
+          35.05571
+        ],
+        [
+          136.56624,
+          35.05584
+        ],
+        [
+          136.5663,
+          35.05594
+        ],
+        [
+          136.56643,
+          35.05618
+        ],
+        [
+          136.56654,
+          35.05645
+        ],
+        [
+          136.56659,
+          35.0568
+        ],
+        [
+          136.56661,
+          35.05702
+        ],
+        [
+          136.56663,
+          35.05731
+        ],
+        [
+          136.56662,
+          35.0577
+        ],
+        [
+          136.5666,
+          35.05783
+        ],
+        [
+          136.56652,
+          35.05844
+        ],
+        [
+          136.56651,
+          35.05845
+        ],
+        [
+          136.56649,
+          35.05858
+        ],
+        [
+          136.56643,
+          35.05884
+        ],
+        [
+          136.56629,
+          35.05951
+        ],
+        [
+          136.56628,
+          35.05953
+        ],
+        [
+          136.56614,
+          35.06016
+        ],
+        [
+          136.56612,
+          35.06023
+        ],
+        [
+          136.56611,
+          35.06027
+        ],
+        [
+          136.566045,
+          35.060605
+        ]
+      ],
+      "currentHasDisplayIntervalOverride": false
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "005481",
+        "西野尻"
+      ],
+      "toStation": [
+        "005458",
+        "西藤原"
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "matchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 24,
+      "displayControlCount": 24,
+      "currentCoordinates": [
+        [
+          136.48793,
+          35.16404
+        ],
+        [
+          136.48761,
+          35.16426
+        ],
+        [
+          136.48709,
+          35.16461
+        ],
+        [
+          136.48649,
+          35.16502
+        ],
+        [
+          136.48591,
+          35.16541
+        ],
+        [
+          136.48516,
+          35.16593
+        ],
+        [
+          136.48472,
+          35.16622
+        ],
+        [
+          136.48422,
+          35.16656
+        ],
+        [
+          136.48388,
+          35.16679
+        ],
+        [
+          136.48341,
+          35.16706
+        ],
+        [
+          136.48307,
+          35.16722
+        ],
+        [
+          136.48279,
+          35.16734
+        ],
+        [
+          136.48252,
+          35.16742
+        ],
+        [
+          136.48181,
+          35.16761
+        ],
+        [
+          136.48146,
+          35.16772
+        ],
+        [
+          136.48121,
+          35.16781
+        ],
+        [
+          136.48098,
+          35.16791
+        ],
+        [
+          136.48057,
+          35.16813
+        ],
+        [
+          136.48042,
+          35.16823
+        ],
+        [
+          136.47973,
+          35.16881
+        ],
+        [
+          136.47923,
+          35.16924
+        ],
+        [
+          136.47845,
+          35.16989
+        ],
+        [
+          136.47839,
+          35.16994
+        ],
+        [
+          136.47813,
+          35.170195
+        ]
+      ],
+      "currentHasDisplayIntervalOverride": false
+    }
+  ],
+  "newGeometryCandidate": null,
+  "platformCentreWGS84": null,
+  "findings": "No confirmed isolated false V/right angle/wrong branch or curve-flattening defect across these 16 originals. #13 sustained side difference and #5 station/depot passenger-platform binding remain concrete source research leads, not a pass of all geometry.",
+  "sourceResearchLeads": [
+    {
+      "leadID": "sangi13-own-compound-curve",
+      "intervalIndex": 13,
+      "viewpointOrdinals": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "status": "Own-source research lead; no repair candidate or acceptance",
+      "strongestViews": [
+        1,
+        2
+      ],
+      "easternTangentCurrentControls": {
+        "decodedIndices": [
+          1,
+          8
+        ],
+        "first": [
+          136.48761,
+          35.16426
+        ],
+        "last": [
+          136.48388,
+          35.16679
+        ]
+      },
+      "compoundTurnCurrentControls": {
+        "decodedIndices": [
+          8,
+          19
+        ],
+        "first": [
+          136.48388,
+          35.16679
+        ],
+        "last": [
+          136.47973,
+          35.16881
+        ]
+      },
+      "terminalGuard": {
+        "decodedIndex": 23,
+        "coordinate": [
+          136.47813,
+          35.170195
+        ],
+        "stationID": "005458"
+      },
+      "observation": "Red/blue side difference persists northeast along eastern tangent; it changes to southwest around the western curve lobe. True compound turn exists and must remain. No nearest-rail or uniform-offset candidate is justified.",
+      "nextEvidence": "Explicit own passenger train route and connected ways from 西野尻 through the compound bend to 西藤原, plus official/own station track diagram or clearly bound rail/platform controls. Identify passenger main route separately from sidings/freight. Preserve source station controls until full own caps established."
+    },
+    {
+      "leadID": "hobo-passenger-platform-binding",
+      "intervalIndex": 5,
+      "viewpointOrdinals": [
+        0,
+        1
+      ],
+      "status": "Exact passenger rail/platform identity unresolved in broad depot/station glyph",
+      "fromStation": [
+        "005841",
+        "保々"
+      ],
+      "guard": [
+        136.56592,
+        35.046775
+      ],
+      "broadCurveCurrentControls": {
+        "decodedIndices": [
+          1,
+          13
+        ],
+        "first": [
+          136.56558,
+          35.04697
+        ],
+        "last": [
+          136.56341,
+          35.05156
+        ]
+      },
+      "nextEvidence": "Own operator station/depot track diagram or explicit passenger-route-member ways and platform relation at 保々; do not select the nearest siding from merged cartographic fill."
+    }
+  ],
+  "limits": [
+    "No current Main lanes/follows/joins/family-collapse pixel acceptance; captures are isolated own-line centreline.",
+    "No Kintetsu terminal/freight-only branch was selected or reviewed as a substitute for own passenger alignment. These three intervals do not cover the Kintetsu-Tomida terminal or every freight junction.",
+    "Cartographic multi-track station fill does not resolve exact usable platform caps or survey-grade own rail centre.",
+    "No PNGs among the prior 82 retained viewpoints reopened; no whole-line visual acceptance.",
+    "No native/app/capture/build/test/owner/production operation by this worker."
+  ],
+  "views": [
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-三岐鉄道-三岐線#2#point-0",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "平津 own departure continues west-northwest on the labelled Sangi corridor through the highway crossing, south of 朝明川. No hook or transfer to road/river corridor; exact platform caps unresolved.",
+      "captureTimestamp": "2026-10-19T08:54:16Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/basemap.png",
+          "recordedByteCount": 799956,
+          "actualByteCount": 799956
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 26844,
+          "actualByteCount": 26844
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/distance-samples.json",
+          "recordedByteCount": 67372,
+          "actualByteCount": 67372
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/smooth.png",
+          "recordedByteCount": 887959,
+          "actualByteCount": 887959
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000000/view.json",
+          "recordedByteCount": 168643,
+          "actualByteCount": 168643
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-三岐鉄道-三岐線#2#point-1",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own west-northwest straight body stays continuous across the expressway. No isolated V, right angle, disconnected fragment or apparent short cut.",
+      "captureTimestamp": "2026-10-19T08:54:17Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/basemap.png",
+          "recordedByteCount": 806118,
+          "actualByteCount": 806118
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 27840,
+          "actualByteCount": 27840
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/distance-samples.json",
+          "recordedByteCount": 81451,
+          "actualByteCount": 81451
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/smooth.png",
+          "recordedByteCount": 895051,
+          "actualByteCount": 895051
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000001/view.json",
+          "recordedByteCount": 197997,
+          "actualByteCount": 197997
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-三岐鉄道-三岐線#2#point-2",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own straight approach toward 暁学園前 remains continuous. The northern river/roads are distinct; no borrowed direction from another railway is visible.",
+      "captureTimestamp": "2026-10-19T08:54:17Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/basemap.png",
+          "recordedByteCount": 765371,
+          "actualByteCount": 765371
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 28192,
+          "actualByteCount": 28192
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/distance-samples.json",
+          "recordedByteCount": 89281,
+          "actualByteCount": 89281
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/smooth.png",
+          "recordedByteCount": 853454,
+          "actualByteCount": 853454
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000002/view.json",
+          "recordedByteCount": 213887,
+          "actualByteCount": 213887
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 3,
+      "viewpointID": "jp-三岐鉄道-三岐線#2#point-3",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "暁学園前 approach remains on the own diagonal corridor. Small side separation from the cartographic stroke, no short station connector. Broad curve visible farther west extends into the adjacent interval and is not accepted here.",
+      "captureTimestamp": "2026-10-19T08:54:17Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/basemap.png",
+          "recordedByteCount": 721749,
+          "actualByteCount": 721749
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 29078,
+          "actualByteCount": 29078
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/distance-samples.json",
+          "recordedByteCount": 92232,
+          "actualByteCount": 92232
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/smooth.png",
+          "recordedByteCount": 806161,
+          "actualByteCount": 806161
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000003/view.json",
+          "recordedByteCount": 220379,
+          "actualByteCount": 220379
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 4,
+      "viewpointID": "jp-三岐鉄道-三岐線#2#point-4",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "暁学園前 shared endpoint is continuous without a hook. Broad station-area fill does not resolve usable platform caps. West-of-station curve has some south-side separation, but belongs to the neighbouring interval and is not a new complete review scope.",
+      "captureTimestamp": "2026-10-19T08:54:18Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/basemap.png",
+          "recordedByteCount": 669342,
+          "actualByteCount": 669342
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 28999,
+          "actualByteCount": 28999
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/distance-samples.json",
+          "recordedByteCount": 93908,
+          "actualByteCount": 93908
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/smooth.png",
+          "recordedByteCount": 748534,
+          "actualByteCount": 748534
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000001/000004/view.json",
+          "recordedByteCount": 223733,
+          "actualByteCount": 223733
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-0",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "保々 departure uses the west/north continuation of the labelled Sangi corridor. Station/depot area is multi-track cartographic fill; no diversion into an independent yard spur is apparent, but exact passenger rail/platform identity cannot be surveyed from the fill.",
+      "captureTimestamp": "2026-10-19T08:54:18Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/basemap.png",
+          "recordedByteCount": 776886,
+          "actualByteCount": 776886
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 25971,
+          "actualByteCount": 25971
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/distance-samples.json",
+          "recordedByteCount": 70887,
+          "actualByteCount": 70887
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/smooth.png",
+          "recordedByteCount": 864163,
+          "actualByteCount": 864163
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000000/view.json",
+          "recordedByteCount": 173411,
+          "actualByteCount": 173411
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-1",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Broad west-bowing own curve north of 保々 is retained, continuous and rounded. Red lies a few pixels west of thin blue cartography on part of the bow; no isolated V or sharp shoulder.",
+      "captureTimestamp": "2026-10-19T08:54:18Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/basemap.png",
+          "recordedByteCount": 733815,
+          "actualByteCount": 733815
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 25053,
+          "actualByteCount": 25053
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/distance-samples.json",
+          "recordedByteCount": 75829,
+          "actualByteCount": 75829
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/smooth.png",
+          "recordedByteCount": 816787,
+          "actualByteCount": 816787
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000001/view.json",
+          "recordedByteCount": 182100,
+          "actualByteCount": 182100
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-2",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own north-northeast straight bridge across 朝明川 remains continuous. Broad south curve is retained; no chord across the river bend or road-direction substitution.",
+      "captureTimestamp": "2026-10-19T08:54:19Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/basemap.png",
+          "recordedByteCount": 724132,
+          "actualByteCount": 724132
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 22253,
+          "actualByteCount": 22253
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/distance-samples.json",
+          "recordedByteCount": 73060,
+          "actualByteCount": 73060
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/smooth.png",
+          "recordedByteCount": 806049,
+          "actualByteCount": 806049
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000002/view.json",
+          "recordedByteCount": 174850,
+          "actualByteCount": 174850
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 3,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-3",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "North side of the river crossing and gradual change toward northward direction remain continuous. No sharp apex or right-angle join; slight west-side cartographic difference persists in part of the broad curve.",
+      "captureTimestamp": "2026-10-19T08:54:19Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/basemap.png",
+          "recordedByteCount": 765603,
+          "actualByteCount": 765603
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 20860,
+          "actualByteCount": 20860
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/distance-samples.json",
+          "recordedByteCount": 73476,
+          "actualByteCount": 73476
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/smooth.png",
+          "recordedByteCount": 846413,
+          "actualByteCount": 846413
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000003/view.json",
+          "recordedByteCount": 173645,
+          "actualByteCount": 173645
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 4,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-4",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "北勢中央公園口 southern approach preserves the real broad reverse curve. Red stays on the named Sangi corridor with small side separation, not a station-specific short connector.",
+      "captureTimestamp": "2026-10-19T08:54:19Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/basemap.png",
+          "recordedByteCount": 818406,
+          "actualByteCount": 818406
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 20527,
+          "actualByteCount": 20527
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/distance-samples.json",
+          "recordedByteCount": 59644,
+          "actualByteCount": 59644
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/smooth.png",
+          "recordedByteCount": 900180,
+          "actualByteCount": 900180
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000004/view.json",
+          "recordedByteCount": 147090,
+          "actualByteCount": 147090
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 5,
+      "viewpointID": "jp-三岐鉄道-三岐線#5#point-5",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "北勢中央公園口 endpoint and northward continuation are smooth, with no V or hook. Road/rail station glyph does not establish full platform caps or an exact passenger track centre.",
+      "captureTimestamp": "2026-10-19T08:54:19Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/basemap.png",
+          "recordedByteCount": 750094,
+          "actualByteCount": 750094
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/display-stage-distance-samples.json",
+          "recordedByteCount": 18634,
+          "actualByteCount": 18634
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/distance-samples.json",
+          "recordedByteCount": 43058,
+          "actualByteCount": 43058
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/smooth.png",
+          "recordedByteCount": 826744,
+          "actualByteCount": 826744
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000002/000005/view.json",
+          "recordedByteCount": 111267,
+          "actualByteCount": 111267
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 13,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-三岐鉄道-三岐線#13#point-0",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "西野尻 own northwest departure has no isolated V or hook. Red departs slightly southwest of the blue station band, then lies northeast of the blue own-line stroke farther northwest. This sustained shape/side difference is an own-source lead, not a confirmed wrong line.",
+      "captureTimestamp": "2026-10-19T08:54:12Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 480160,
+          "actualByteCount": 480160
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 25904,
+          "actualByteCount": 25904
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/distance-samples.json",
+          "recordedByteCount": 42632,
+          "actualByteCount": 42632
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 556896,
+          "actualByteCount": 556896
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/view.json",
+          "recordedByteCount": 120236,
+          "actualByteCount": 120236
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 13,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-三岐鉄道-三岐線#13#point-1",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own northwest body and compound bend remain present. Eastern tangent red is northeast of blue; around the western lobe red moves southwest of blue. Do not flatten the compound turn or apply a uniform nearest-blue translation.",
+      "captureTimestamp": "2026-10-19T08:54:12Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 506899,
+          "actualByteCount": 506899
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 25035,
+          "actualByteCount": 25035
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/distance-samples.json",
+          "recordedByteCount": 43797,
+          "actualByteCount": 43797
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 583617,
+          "actualByteCount": 583617
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/view.json",
+          "recordedByteCount": 121545,
+          "actualByteCount": 121545
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 13,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-三岐鉄道-三岐線#13#point-2",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Both lobes of the own compound bend are preserved without an isolated sharp V. Sustained cartographic separation is visible on the eastern tangent and changes side across the bend. Exact own passenger way chain is needed before a candidate.",
+      "captureTimestamp": "2026-10-19T08:54:12Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 475316,
+          "actualByteCount": 475316
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 21427,
+          "actualByteCount": 21427
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/distance-samples.json",
+          "recordedByteCount": 35249,
+          "actualByteCount": 35249
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 547642,
+          "actualByteCount": 547642
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/view.json",
+          "recordedByteCount": 100088,
+          "actualByteCount": 100088
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 13,
+      "pointOrdinal": 3,
+      "viewpointID": "jp-三岐鉄道-三岐線#13#point-3",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "西藤原 southeast approach and terminal corridor remain continuous; no long terminal tail or turn onto Route614. The eastern compound bend retains the side-difference lead seen in p1/p2.",
+      "captureTimestamp": "2026-10-19T08:54:13Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 471376,
+          "actualByteCount": 471376
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 16633,
+          "actualByteCount": 16633
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/distance-samples.json",
+          "recordedByteCount": 29789,
+          "actualByteCount": 29789
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 536846,
+          "actualByteCount": 536846
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000003/view.json",
+          "recordedByteCount": 83429,
+          "actualByteCount": 83429
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    },
+    {
+      "intervalIndex": 13,
+      "pointOrdinal": 4,
+      "viewpointID": "jp-三岐鉄道-三岐線#13#point-4",
+      "directory": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004",
+      "basemap": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/view.json",
+      "captureState": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "西藤原 terminal endpoint stays inside the cartographic station band, without a short hook or extra continuation. Complete usable own platform caps/buffer position are not independently resolved; no endpoint alias or centre inferred.",
+      "captureTimestamp": "2026-10-19T08:54:13Z",
+      "captureStateStatus": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/identity-plan-d5e15d0392815740216451c430899d0e2232514d5edac845a9644a2976ce7cea.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 484446,
+          "actualByteCount": 484446
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 15318,
+          "actualByteCount": 15318
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/distance-samples.json",
+          "recordedByteCount": 28474,
+          "actualByteCount": 28474
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 550449,
+          "actualByteCount": 550449
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000004/view.json",
+          "recordedByteCount": 79301,
+          "actualByteCount": 79301
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "81e1b8fb00e688724f889a6cc9e995dcd46861abc8f5da0fdca42039a99cf548"
+    }
+  ]
+}

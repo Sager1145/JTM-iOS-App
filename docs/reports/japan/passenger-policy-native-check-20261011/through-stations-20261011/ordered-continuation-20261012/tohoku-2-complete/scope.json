@@ -1,0 +1,11 @@
+{
+  "ordinal": 30,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "stationCount": 13,
+  "intervalCount": 12,
+  "status": "complete-baseline-analysis-repairs-and-platforms-open",
+  "productionChanges": false,
+  "rootOnly": true,
+  "nextOrdinal": 31,
+  "nextLineID": "jp-東日本旅客鉄道-東海道線"
+}

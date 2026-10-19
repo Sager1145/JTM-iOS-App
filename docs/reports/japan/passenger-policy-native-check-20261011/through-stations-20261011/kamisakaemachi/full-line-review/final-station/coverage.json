@@ -1,0 +1,142 @@
+[
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 0,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000000",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 34.99431,
+        "longitude": 135.853165
+      },
+      "distanceMetres": 0,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 0
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 1,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000001",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 34.99488295696735,
+        "longitude": 135.85670833040385
+      },
+      "distanceMetres": 350,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 1
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 2,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000002",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 34.9972578717091,
+        "longitude": 135.85775690335143
+      },
+      "distanceMetres": 700,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 2
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 3,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000003",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.000223301687086,
+        "longitude": 135.8588112971861
+      },
+      "distanceMetres": 1050,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 3
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 4,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000004",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.00307966846541,
+        "longitude": 135.85966153771426
+      },
+      "distanceMetres": 1400,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 4
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#4",
+    "ordinal": 5,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001474/000005",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.005199183147624,
+        "longitude": 135.8601033764409
+      },
+      "distanceMetres": 1642.7068347023412,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "pointOrdinal": 5
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#5",
+    "ordinal": 0,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001475/000000",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.005199183147624,
+        "longitude": 135.8601033764409
+      },
+      "distanceMetres": 0,
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "pointOrdinal": 0
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#5",
+    "ordinal": 1,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001475/000001",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.007759651696226,
+        "longitude": 135.86202779353172
+      },
+      "distanceMetres": 350,
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "pointOrdinal": 1
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#5",
+    "ordinal": 2,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001475/000002",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.010803027385705,
+        "longitude": 135.863001516637
+      },
+      "distanceMetres": 700,
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "pointOrdinal": 2
+    }
+  },
+  {
+    "itemID": "jp-京阪電気鉄道-京津線#5",
+    "ordinal": 3,
+    "directory": "/private/tmp/jtm-keishin-kamisakaemachi-final-evidence/captures/001475/000003",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.011295,
+        "longitude": 135.86401
+      },
+      "distanceMetres": 849.3647164069481,
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "pointOrdinal": 3
+    }
+  }
+]

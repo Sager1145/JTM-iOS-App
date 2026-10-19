@@ -1,0 +1,326 @@
+{
+  "scope": "Own Sanriku Rias #1 decoded v5..v8 only; source research, no repair candidate",
+  "reviewDate": "2026-10-19",
+  "lineID": "jp-三陸鉄道-リアス線",
+  "intervalIndex": 1,
+  "stations": [
+    [
+      "000819",
+      "磯鶏",
+      141.960935,
+      39.63041
+    ],
+    [
+      "000826",
+      "八木沢・宮古短大",
+      141.946367,
+      39.619299
+    ]
+  ],
+  "displayOverridePresent": false,
+  "currentSourceControlCount": 56,
+  "rawN02Source": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/data/rail-sections.json",
+  "rawN02FeatureIndex": 21711,
+  "rawN02Properties": {
+    "N02_001": "12",
+    "N02_002": "5",
+    "N02_003": "リアス線",
+    "N02_004": "三陸鉄道"
+  },
+  "rawN02CoordinateCount": 54,
+  "rawControlWindow": [
+    {
+      "decodedIndex": 5,
+      "coordinate": [
+        141.96059,
+        39.62858
+      ],
+      "N02FeatureIndex": 21711,
+      "N02VertexIndex": 49,
+      "exactEqual": true
+    },
+    {
+      "decodedIndex": 6,
+      "coordinate": [
+        141.96055,
+        39.62841
+      ],
+      "N02FeatureIndex": 21711,
+      "N02VertexIndex": 48,
+      "exactEqual": true
+    },
+    {
+      "decodedIndex": 7,
+      "coordinate": [
+        141.96054,
+        39.6284
+      ],
+      "N02FeatureIndex": 21711,
+      "N02VertexIndex": 47,
+      "exactEqual": true
+    },
+    {
+      "decodedIndex": 8,
+      "coordinate": [
+        141.96036,
+        39.62803
+      ],
+      "N02FeatureIndex": 21711,
+      "N02VertexIndex": 46,
+      "exactEqual": true
+    }
+  ],
+  "rawEdge6to7Metres": 1.4035284375596104,
+  "OSMMicroEdgeMetres": 1.3266991086226354,
+  "roundedOSMToN02Proof": [
+    {
+      "decodedIndex": 6,
+      "nodeID": 264237431,
+      "osmCoordinate": [
+        141.960547,
+        39.628413
+      ],
+      "roundedFiveDecimalCoordinate": [
+        141.96055,
+        39.62841
+      ],
+      "exactN02EqualsRoundedOSM": true
+    },
+    {
+      "decodedIndex": 7,
+      "nodeID": 264237430,
+      "osmCoordinate": [
+        141.960541,
+        39.628402
+      ],
+      "roundedFiveDecimalCoordinate": [
+        141.96054,
+        39.6284
+      ],
+      "exactN02EqualsRoundedOSM": true
+    }
+  ],
+  "cachePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/railway-sources/local/osm/degree-cells/E141N39.json",
+  "cacheResolvedPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/railway-sources/local/osm/degree-cells/E141N39.json",
+  "cacheFetchedAt": "2026-08-18T10:46:38.007Z",
+  "cacheEndpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+  "localOwnNodeProof": [
+    {
+      "wayNodeIndex": 156,
+      "nodeID": 264237333,
+      "longitude": 141.960358,
+      "latitude": 39.62803,
+      "version": 2,
+      "timestamp": "2015-05-25T01:57:09Z",
+      "cachedGeometryIdentical": true
+    },
+    {
+      "wayNodeIndex": 157,
+      "nodeID": 264237430,
+      "longitude": 141.960541,
+      "latitude": 39.628402,
+      "version": 2,
+      "timestamp": "2015-05-25T01:57:10Z",
+      "cachedGeometryIdentical": true
+    },
+    {
+      "wayNodeIndex": 158,
+      "nodeID": 264237431,
+      "longitude": 141.960547,
+      "latitude": 39.628413,
+      "version": 2,
+      "timestamp": "2015-05-25T01:57:10Z",
+      "cachedGeometryIdentical": true
+    },
+    {
+      "wayNodeIndex": 159,
+      "nodeID": 264237428,
+      "longitude": 141.9606033,
+      "latitude": 39.6285472,
+      "version": 3,
+      "timestamp": "2019-01-22T02:56:56Z",
+      "cachedGeometryIdentical": true
+    },
+    {
+      "wayNodeIndex": 160,
+      "nodeID": 264237429,
+      "longitude": 141.9606897,
+      "latitude": 39.6288263,
+      "version": 3,
+      "timestamp": "2019-01-22T02:56:56Z",
+      "cachedGeometryIdentical": true
+    },
+    {
+      "wayNodeIndex": 161,
+      "nodeID": 6611619582,
+      "longitude": 141.9607114,
+      "latitude": 39.6289222,
+      "version": 3,
+      "timestamp": "2019-11-21T16:21:53Z",
+      "cachedGeometryIdentical": true
+    }
+  ],
+  "ownWay": {
+    "type": "way",
+    "id": 24357701,
+    "timestamp": "2020-10-21T12:46:18Z",
+    "version": 15,
+    "changeset": 92834313,
+    "tags": {
+      "electrified": "no",
+      "gauge": "1067",
+      "KSJ2:LIN": "山田線",
+      "name": "三陸鉄道リアス線",
+      "name:en": "Sanriku Railway Riasu Line",
+      "name:ja": "三陸鉄道リアス線",
+      "name:ja_rm": "Sanriku Tetsudō Riasu-sen",
+      "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+      "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+      "operator": "三陸鉄道",
+      "operator:ja": "三陸鉄道",
+      "passenger_lines": "1",
+      "railway": "rail",
+      "source": "KSJ2",
+      "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+      "usage": "branch"
+    }
+  },
+  "connectedStationWay": {
+    "type": "way",
+    "id": 24357718,
+    "timestamp": "2020-10-21T12:46:18Z",
+    "version": 7,
+    "changeset": 92834313,
+    "nodes": [
+      264231696,
+      264231695
+    ],
+    "tags": {
+      "electrified": "no",
+      "gauge": "1067",
+      "KSJ2:LIN": "山田線",
+      "name": "三陸鉄道リアス線",
+      "name:en": "Sanriku Railway Riasu Line",
+      "name:ja": "三陸鉄道リアス線",
+      "name:ja_rm": "Sanriku Tetsudō Riasu-sen",
+      "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+      "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+      "operator": "三陸鉄道",
+      "operator:ja": "三陸鉄道",
+      "passenger_lines": "1",
+      "railway": "rail",
+      "source": "KSJ2",
+      "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+      "usage": "branch"
+    }
+  },
+  "sharedNodeID": 264231696,
+  "passengerRouteMemberships": [
+    {
+      "id": 1934365,
+      "version": 74,
+      "timestamp": "2026-01-05T23:23:50Z",
+      "tags": {
+        "from": "盛",
+        "name": "三陸鉄道リアス線 盛 => 久慈",
+        "name:en": "Sanriku Railway Riasu Line",
+        "name:ja": "三陸鉄道リアス線",
+        "name:ja_rm": "Sanriku Tetsudō Riasu-sen",
+        "operator": "三陸鉄道",
+        "public_transport:version": "2",
+        "ref": "三陸鉄道リアス線",
+        "route": "train",
+        "to": "久慈",
+        "type": "route",
+        "via": "釜石;宮古"
+      },
+      "ownWayMemberPositions": [
+        {
+          "memberIndex": 261,
+          "type": "way",
+          "ref": 24357701,
+          "role": ""
+        },
+        {
+          "memberIndex": 262,
+          "type": "way",
+          "ref": 24357718,
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": 5781540,
+      "version": 91,
+      "timestamp": "2026-01-05T23:23:50Z",
+      "tags": {
+        "from": "久慈",
+        "name": "三陸鉄道リアス線 久慈 => 盛",
+        "name:en": "Sanriku Railway Riasu Line",
+        "name:ja": "三陸鉄道リアス線",
+        "name:ja_rm": "Sanriku Tetsudō Riasu-sen",
+        "operator": "三陸鉄道",
+        "public_transport:version": "2",
+        "ref": "三陸鉄道リアス線",
+        "route": "train",
+        "to": "盛",
+        "type": "route",
+        "via": "宮古;釜石"
+      },
+      "ownWayMemberPositions": [
+        {
+          "memberIndex": 234,
+          "type": "way",
+          "ref": 24357718,
+          "role": ""
+        },
+        {
+          "memberIndex": 235,
+          "type": "way",
+          "ref": 24357701,
+          "role": ""
+        }
+      ]
+    }
+  ],
+  "localOwnGeometryMatchesCache": true,
+  "wholeWayCacheEquality": false,
+  "wholeWayCacheDifferenceLimit": "15 other node positions in this long way differ from retained cache, all outside this v5..v8 window and south of this interval; they are not used or researched further. A way version timestamp alone does not pin all its node geometry.",
+  "independenceLimit": "N02 and OSM micro-edge are correlated MLIT/KSJ sources; matching geometry and passenger membership do not prove an independently surveyed sharp step.",
+  "conclusion": "Both points are distinct original source controls, not a newly introduced alias or an exact duplicate. The short edge survives in explicitly own passenger-route OSM source and rounds to the N02 coordinates. Numerical angle amplification through short-edge/coordinate precision is plausible, but neither duplicate/error nor actual sharp physical kink is proved. Preserve source and display; no candidate.",
+  "candidate": null,
+  "optionalCloserView": {
+    "status": "Optional proposed evidence only; no request run or native operation",
+    "centre": [
+      141.960545,
+      39.628405
+    ],
+    "zoom": 19,
+    "styles": [
+      "standard",
+      "imagery"
+    ],
+    "ownLocalContextBounds": [
+      141.96015,
+      39.62785,
+      141.96085,
+      39.62868
+    ],
+    "purpose": "Look at actual own track/tangent continuity through v5..v8 and compare the same centre in both modes; do not infer platform-centre/buffer coordinates or treat glyph smoothness as survey."
+  },
+  "sources": [
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/24357701/full.json",
+      "localFile": "osm-way24357701-full.json"
+    },
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/24357718/full.json",
+      "localFile": "osm-way24357718-full.json"
+    },
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/24357701/relations.json",
+      "localFile": "osm-way24357701-relations.json"
+    }
+  ],
+  "attribution": "© OpenStreetMap contributors, Open Database License (ODbL) 1.0. N02 source properties retained unchanged; current raw feature from repository rail-sections.json."
+}

@@ -1,0 +1,794 @@
+{
+  "schema": "cn-shannan-topology-review/1",
+  "reviewedAt": "2026-10-19",
+  "scope": "C881; original source and reviewed station identity only. No production writes, no native execution, no national generation.",
+  "inputs": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "sourceURL": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "cases": "docs/reports/sources/china-real-train-paths-20261018/inputs/cases.json",
+    "officialRawStops": "railway-sources/local/china/evidence/real-train-paths-20261018/highspeed-raw/stops-C881.json",
+    "nativeRouteReport": "railway-sources/local/china/comparisons/real-trains-20261018/native-source-anchor-final-session/route-report.json"
+  },
+  "observedCase": {
+    "id": "CN-REAL-C881-20261018",
+    "trainNumber": "C881",
+    "trainNo": "880000C88103",
+    "serviceDate": "2026-10-18",
+    "completeness": "full",
+    "sourceURLs": [
+      "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+      "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code="
+    ],
+    "from": "LSO",
+    "to": "LZO",
+    "knownStops": [
+      "LSO",
+      "SAO",
+      "JIO",
+      "LIO",
+      "MIO",
+      "LZO"
+    ],
+    "observedStops": [
+      {
+        "name": "拉萨",
+        "code": "LSO"
+      },
+      {
+        "name": "山南",
+        "code": "SAO"
+      },
+      {
+        "name": "加查",
+        "code": "JIO"
+      },
+      {
+        "name": "朗县",
+        "code": "LIO"
+      },
+      {
+        "name": "米林",
+        "code": "MIO"
+      },
+      {
+        "name": "林芝",
+        "code": "LZO"
+      }
+    ]
+  },
+  "observedNativeResult": {
+    "endpointOnlyResolvedSectionCount": 0,
+    "endpointOnlyExpectedSectionCount": 1,
+    "forcedKnownStopsResolvedSectionCount": 0,
+    "forcedKnownStopsExpectedSectionCount": 5
+  },
+  "rootCause": {
+    "mechanism": "The unique-name official identity fallback maps two distinct Shannan markers to SAO; the global >3000m ambiguity guard removes the complete Tibet source lines containing SAO. The Gaoyi marker can enter identity_markers before its absence of a valid own-route anchor is established. Both station names and geometry remain true source observations; only the official identity inference requires scoping.",
+    "conflictingMarkers": [
+      {
+        "id": 4022925840,
+        "coordinate": [
+          115.5860948,
+          39.361247
+        ],
+        "tags": {
+          "name": "山南",
+          "railway": "station"
+        },
+        "version": 1
+      },
+      {
+        "id": 9087403304,
+        "coordinate": [
+          91.7556747,
+          29.2499495
+        ],
+        "tags": {
+          "alt_name": "山南站;Shannan Railway Station",
+          "name": "山南",
+          "name:bo": "ལྷོ་ཁ་འབབ་ཚུགས་",
+          "name:en": "Shannan",
+          "name:zh": "山南",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q107996678",
+          "wikipedia": "zh:山南站"
+        },
+        "version": 5
+      }
+    ],
+    "explicitOriginalMemberships": [
+      {
+        "id": 6002511,
+        "version": 7,
+        "tags": {
+          "name": "高易线",
+          "operator": "河北易县地方铁路管理局",
+          "ref": "8304",
+          "route": "railway",
+          "start_date": "1902",
+          "type": "route"
+        },
+        "markerNodeIds": [
+          4022925840
+        ]
+      },
+      {
+        "id": 7963957,
+        "version": 62,
+        "tags": {
+          "from": "协荣",
+          "name": "川藏铁路拉林段",
+          "name:en": "Lhasa–Nyingchi Railway",
+          "name:ja": "ラサ・ニンティ鉄道",
+          "name:zh": "拉林铁路",
+          "name:zh-Hant": "拉林鐵路",
+          "operator": "中国铁路青藏集团有限公司",
+          "route": "railway",
+          "to": "林芝",
+          "type": "route",
+          "wikidata": "Q17499814",
+          "wikipedia": "zh:拉林铁路"
+        },
+        "markerNodeIds": [
+          9087403304
+        ]
+      },
+      {
+        "id": 12149467,
+        "version": 213,
+        "tags": {
+          "check_date": "2026-07-17",
+          "from": "天府",
+          "name": "川藏铁路",
+          "name:en": "Sichuan–Tibet Railway",
+          "name:zh": "川藏铁路",
+          "name:zh-Hans": "川藏铁路",
+          "name:zh-Hant": "川藏鐵路",
+          "operator": "中国铁路",
+          "operator:en": "China Railway",
+          "operator:wikidata": "Q1073489",
+          "operator:zh": "中国铁路",
+          "route": "railway",
+          "to": "协荣",
+          "type": "route",
+          "via": "成都西;温江;羊马;崇州;大邑;邛崃;西来;蒲江;朝阳湖;名山;雅安;天全;大渔溪;泸定;康定;火夹仲;新都桥;雅江;红龙;理塘;毛垭坝;巴塘;白玉;罗麦;则巴;贡觉;扩达;昌都;邦达;夏里;洛隆;波密;通麦;鲁朗;林芝;岗嘎;米林;康萨;甲竹;下却;热米;朗县;热当;加查;巴玉;沃卡;桑日;山南;扎其;扎囊;贡嘎",
+          "wikidata": "Q11055705",
+          "wikipedia": "zh:川藏铁路"
+        },
+        "markerNodeIds": [
+          9087403304
+        ]
+      }
+    ],
+    "withheldCandidateLineIds": [
+      "cn-osm-relation-7963957",
+      "cn-osm-relation-12149467"
+    ],
+    "unaffectedPublishedBranch": "cn-osm-relation-12149467-branch-2",
+    "gaoyiPublishedLine": "cn-osm-relation-6002511",
+    "noFreightOrClosureInference": "No evidence here changes the Gaoyi station operational status or asserts freight-only service. It keeps its original OSM identity rather than gaining Tibet telecodeSAO by name."
+  },
+  "primaryEvidence": [
+    {
+      "url": "https://www.mot.gov.cn/xinwen/jiaotongyaowen/202606/t20260626_4208256.html",
+      "publisher": "Ministry of Transport",
+      "publishedAt": "2026-06-26",
+      "access": "Direct page read",
+      "supports": "Describes the active Lhasa-Nyingchi passenger railway and direct Lhasa-Shannan and Lhasa-Nyingchi passenger journeys."
+    },
+    {
+      "url": "https://www.lasa.gov.cn/lasa/shwx/202606/24dfcfafab6b409f92747ff583f91eb2.shtml",
+      "publisher": "Lhasa Municipal Government",
+      "publishedAt": "2026-06-29",
+      "access": "Direct page read",
+      "supports": "Names the Shannan station master in an account of current Lhasa-Nyingchi railway passenger travel and Shannan-Lhasa travel times."
+    }
+  ],
+  "manifestReadyStationBinding": {
+    "markerNodeId": 9087403304,
+    "markerVersion": 5,
+    "officialTelecode": "SAO",
+    "sourceRelations": [
+      {
+        "id": 7963957,
+        "version": 62
+      },
+      {
+        "id": 12149467,
+        "version": 213
+      }
+    ],
+    "evidence": [
+      "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+      "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code=",
+      "https://www.openstreetmap.org/node/9087403304",
+      "https://www.openstreetmap.org/relation/7963957",
+      "https://www.openstreetmap.org/relation/12149467",
+      "https://www.mot.gov.cn/xinwen/jiaotongyaowen/202606/t20260626_4208256.html",
+      "https://www.lasa.gov.cn/lasa/shwx/202606/24dfcfafab6b409f92747ff583f91eb2.shtml"
+    ],
+    "decision": "Bind the observed C881 Lhasa-Shannan-Jiacha-Langxian-Milin-Nyingchi passenger identity to original Shannan marker9087403304, an explicit member of both Lhasa-Nyingchi and Sichuan-Tibet infrastructure relations. Preserve the distinct Gaoyi railway Shannan marker4022925840 as cn-osm-node-4022925840; no geographic join or operational status change is inferred.",
+    "excludedHomonym": {
+      "markerNodeId": 4022925840,
+      "markerVersion": 1,
+      "sourceRelationId": 6002511,
+      "sourceRelationVersion": 7
+    },
+    "coordinateEvidence": "Original station marker [91.7556747,29.2499495] and exact own-route anchor11833278312 v1 only. The official timetable supplies stop identity and order, not coordinates. No nearest-station identity match or global name merge."
+  },
+  "targetedCompile": {
+    "candidateManifest": "/private/tmp/cn-guangdong-repair/shannan-reviewed-stations-candidate.json",
+    "candidateLinesBeforeReview": "/private/tmp/cn-guangdong-repair/shannan-candidate-lines.json",
+    "results": [
+      {
+        "lineId": "cn-osm-relation-6002511",
+        "sourceRelationId": 6002511,
+        "sourceRelationVersion": 7,
+        "stationCount": 2,
+        "intervalCount": 1,
+        "hasReviewedSAO": false,
+        "previouslyPublished": true,
+        "relevantStations": [],
+        "intervalGeometryIdenticalBeforeAndAfterReviewedBinding": true
+      },
+      {
+        "lineId": "cn-osm-relation-7963957",
+        "sourceRelationId": 7963957,
+        "sourceRelationVersion": 62,
+        "stationCount": 34,
+        "intervalCount": 33,
+        "hasReviewedSAO": true,
+        "previouslyPublished": false,
+        "relevantStations": [
+          {
+            "groupId": "cn-official-12306-lzo",
+            "stationCode": "CN-12306-LZO",
+            "markerNodeId": 7329138457,
+            "markerVersion": 7,
+            "markerCoordinate": [
+              94.4363308,
+              29.5297406
+            ],
+            "markerTags": {
+              "alt_name": "林芝站",
+              "alt_name:en": "Linzhi Station",
+              "alt_name:zh": "林芝站",
+              "alt_name:zh-Hans": "林芝站",
+              "alt_name:zh-Hant": "林芝站",
+              "loc_name": "Linzhi",
+              "loc_name:en": "Linzhi",
+              "name": "林芝",
+              "name:en": "Nyingchi",
+              "name:zh": "林芝",
+              "name:zh-Hans": "林芝",
+              "name:zh-Hant": "林芝",
+              "official_name": "林芝火车站",
+              "official_name:en": "Linzhi Railway Station",
+              "official_name:zh": "林芝火车站",
+              "official_name:zh-Hans": "林芝火车站",
+              "official_name:zh-Hant": "林芝火車站",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q86730393",
+              "wikipedia": "zh:林芝站"
+            },
+            "anchorNodeId": 10112843741,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              10112843741,
+              10112843745
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329138457,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "LZO",
+            "officialPinyin": "linzhi",
+            "nameTraditional": "",
+            "nameEnglish": "Nyingchi",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329138457"
+          },
+          {
+            "groupId": "cn-official-12306-mio",
+            "stationCode": "CN-12306-MIO",
+            "markerNodeId": 7329138461,
+            "markerVersion": 6,
+            "markerCoordinate": [
+              94.2117695,
+              29.2315295
+            ],
+            "markerTags": {
+              "alt_name": "米林站;米林火车站;Milin Railway Station",
+              "name": "米林",
+              "name:en": "Milin",
+              "name:zh": "米林",
+              "name:zh-Hans": "米林",
+              "name:zh-Hant": "米林",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes"
+            },
+            "anchorNodeId": 11396206384,
+            "anchorVersion": 2,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11396206384
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329138461,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "MIO",
+            "officialPinyin": "milin",
+            "nameTraditional": "",
+            "nameEnglish": "Milin",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329138461"
+          },
+          {
+            "groupId": "cn-official-12306-lio",
+            "stationCode": "CN-12306-LIO",
+            "markerNodeId": 7329144909,
+            "markerVersion": 5,
+            "markerCoordinate": [
+              93.0350705,
+              29.0478206
+            ],
+            "markerTags": {
+              "alt_name": "朗县站;朗县火车站;Langxian Railway Station",
+              "name": "朗县",
+              "name:en": "Langxian",
+              "name:zh": "朗县",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes"
+            },
+            "anchorNodeId": 5438047194,
+            "anchorVersion": 3,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              5438047194
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329144909,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "LIO",
+            "officialPinyin": "langxian",
+            "nameTraditional": "",
+            "nameEnglish": "Langxian",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329144909"
+          },
+          {
+            "groupId": "cn-official-12306-jio",
+            "stationCode": "CN-12306-JIO",
+            "markerNodeId": 7329144913,
+            "markerVersion": 7,
+            "markerCoordinate": [
+              92.5678327,
+              29.1435915
+            ],
+            "markerTags": {
+              "alt_name": "加查站;加查火车站;Jiacha Railway Station",
+              "name": "加查",
+              "name:en": "Jiacha",
+              "name:zh": "加查",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q107996683"
+            },
+            "anchorNodeId": 11834913205,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11834913205
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329144913,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "JIO",
+            "officialPinyin": "jiacha",
+            "nameTraditional": "",
+            "nameEnglish": "Jiacha",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329144913"
+          },
+          {
+            "groupId": "cn-official-12306-sao",
+            "stationCode": "CN-12306-SAO",
+            "markerNodeId": 9087403304,
+            "markerVersion": 5,
+            "markerCoordinate": [
+              91.7556747,
+              29.2499495
+            ],
+            "markerTags": {
+              "alt_name": "山南站;Shannan Railway Station",
+              "name": "山南",
+              "name:bo": "ལྷོ་ཁ་འབབ་ཚུགས་",
+              "name:en": "Shannan",
+              "name:zh": "山南",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q107996678",
+              "wikipedia": "zh:山南站"
+            },
+            "anchorNodeId": 11833278312,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11833278312
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 9087403304,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "SAO",
+            "officialPinyin": "shannan",
+            "nameTraditional": "",
+            "nameEnglish": "Shannan",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/9087403304",
+            "reviewedStationBinding": {
+              "markerNodeId": 9087403304,
+              "markerVersion": 5,
+              "officialTelecode": "SAO",
+              "sourceRelations": [
+                {
+                  "id": 7963957,
+                  "version": 62
+                },
+                {
+                  "id": 12149467,
+                  "version": 213
+                }
+              ],
+              "evidence": [
+                "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+                "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code=",
+                "https://www.openstreetmap.org/node/9087403304",
+                "https://www.openstreetmap.org/relation/7963957",
+                "https://www.openstreetmap.org/relation/12149467",
+                "https://www.mot.gov.cn/xinwen/jiaotongyaowen/202606/t20260626_4208256.html",
+                "https://www.lasa.gov.cn/lasa/shwx/202606/24dfcfafab6b409f92747ff583f91eb2.shtml"
+              ],
+              "decision": "Bind the observed C881 Lhasa-Shannan-Jiacha-Langxian-Milin-Nyingchi passenger identity to original Shannan marker9087403304, an explicit member of both Lhasa-Nyingchi and Sichuan-Tibet infrastructure relations. Preserve the distinct Gaoyi railway Shannan marker4022925840 as cn-osm-node-4022925840; no geographic join or operational status change is inferred.",
+              "excludedHomonym": {
+                "markerNodeId": 4022925840,
+                "markerVersion": 1,
+                "sourceRelationId": 6002511,
+                "sourceRelationVersion": 7
+              },
+              "coordinateEvidence": "Original station marker [91.7556747,29.2499495] and exact own-route anchor11833278312 v1 only. The official timetable supplies stop identity and order, not coordinates. No nearest-station identity match or global name merge."
+            }
+          }
+        ],
+        "intervalGeometryIdenticalBeforeAndAfterReviewedBinding": true
+      },
+      {
+        "lineId": "cn-osm-relation-12149467",
+        "sourceRelationId": 12149467,
+        "sourceRelationVersion": 213,
+        "stationCount": 29,
+        "intervalCount": 28,
+        "hasReviewedSAO": true,
+        "previouslyPublished": false,
+        "relevantStations": [
+          {
+            "groupId": "cn-official-12306-lzo",
+            "stationCode": "CN-12306-LZO",
+            "markerNodeId": 7329138457,
+            "markerVersion": 7,
+            "markerCoordinate": [
+              94.4363308,
+              29.5297406
+            ],
+            "markerTags": {
+              "alt_name": "林芝站",
+              "alt_name:en": "Linzhi Station",
+              "alt_name:zh": "林芝站",
+              "alt_name:zh-Hans": "林芝站",
+              "alt_name:zh-Hant": "林芝站",
+              "loc_name": "Linzhi",
+              "loc_name:en": "Linzhi",
+              "name": "林芝",
+              "name:en": "Nyingchi",
+              "name:zh": "林芝",
+              "name:zh-Hans": "林芝",
+              "name:zh-Hant": "林芝",
+              "official_name": "林芝火车站",
+              "official_name:en": "Linzhi Railway Station",
+              "official_name:zh": "林芝火车站",
+              "official_name:zh-Hans": "林芝火车站",
+              "official_name:zh-Hant": "林芝火車站",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q86730393",
+              "wikipedia": "zh:林芝站"
+            },
+            "anchorNodeId": 10112843741,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              10112843741,
+              10112843745
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329138457,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "LZO",
+            "officialPinyin": "linzhi",
+            "nameTraditional": "",
+            "nameEnglish": "Nyingchi",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329138457"
+          },
+          {
+            "groupId": "cn-official-12306-mio",
+            "stationCode": "CN-12306-MIO",
+            "markerNodeId": 7329138461,
+            "markerVersion": 6,
+            "markerCoordinate": [
+              94.2117695,
+              29.2315295
+            ],
+            "markerTags": {
+              "alt_name": "米林站;米林火车站;Milin Railway Station",
+              "name": "米林",
+              "name:en": "Milin",
+              "name:zh": "米林",
+              "name:zh-Hans": "米林",
+              "name:zh-Hant": "米林",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes"
+            },
+            "anchorNodeId": 11396206384,
+            "anchorVersion": 2,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11396206384
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329138461,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "MIO",
+            "officialPinyin": "milin",
+            "nameTraditional": "",
+            "nameEnglish": "Milin",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329138461"
+          },
+          {
+            "groupId": "cn-official-12306-jio",
+            "stationCode": "CN-12306-JIO",
+            "markerNodeId": 7329144913,
+            "markerVersion": 7,
+            "markerCoordinate": [
+              92.5678327,
+              29.1435915
+            ],
+            "markerTags": {
+              "alt_name": "加查站;加查火车站;Jiacha Railway Station",
+              "name": "加查",
+              "name:en": "Jiacha",
+              "name:zh": "加查",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q107996683"
+            },
+            "anchorNodeId": 11834913205,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11834913205
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 7329144913,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "JIO",
+            "officialPinyin": "jiacha",
+            "nameTraditional": "",
+            "nameEnglish": "Jiacha",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/7329144913"
+          },
+          {
+            "groupId": "cn-official-12306-sao",
+            "stationCode": "CN-12306-SAO",
+            "markerNodeId": 9087403304,
+            "markerVersion": 5,
+            "markerCoordinate": [
+              91.7556747,
+              29.2499495
+            ],
+            "markerTags": {
+              "alt_name": "山南站;Shannan Railway Station",
+              "name": "山南",
+              "name:bo": "ལྷོ་ཁ་འབབ་ཚུགས་",
+              "name:en": "Shannan",
+              "name:zh": "山南",
+              "public_transport": "station",
+              "railway": "station",
+              "train": "yes",
+              "wikidata": "Q107996678",
+              "wikipedia": "zh:山南站"
+            },
+            "anchorNodeId": 11833278312,
+            "anchorVersion": 1,
+            "membershipEvidence": "explicit-route-member",
+            "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+            "anchorSelection": "joint-ordered-original-source-path",
+            "anchorCandidates": [
+              11833278312
+            ],
+            "bindingEvidence": [
+              {
+                "method": "explicit-route-member",
+                "markerNodeId": 9087403304,
+                "anchorNodeIds": [],
+                "stopAreaIds": []
+              }
+            ],
+            "stopAreaIds": [],
+            "officialTelecode": "SAO",
+            "officialPinyin": "shannan",
+            "nameTraditional": "",
+            "nameEnglish": "Shannan",
+            "englishSourceType": "original-OSM",
+            "englishSource": "https://www.openstreetmap.org/node/9087403304",
+            "reviewedStationBinding": {
+              "markerNodeId": 9087403304,
+              "markerVersion": 5,
+              "officialTelecode": "SAO",
+              "sourceRelations": [
+                {
+                  "id": 7963957,
+                  "version": 62
+                },
+                {
+                  "id": 12149467,
+                  "version": 213
+                }
+              ],
+              "evidence": [
+                "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+                "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code=",
+                "https://www.openstreetmap.org/node/9087403304",
+                "https://www.openstreetmap.org/relation/7963957",
+                "https://www.openstreetmap.org/relation/12149467",
+                "https://www.mot.gov.cn/xinwen/jiaotongyaowen/202606/t20260626_4208256.html",
+                "https://www.lasa.gov.cn/lasa/shwx/202606/24dfcfafab6b409f92747ff583f91eb2.shtml"
+              ],
+              "decision": "Bind the observed C881 Lhasa-Shannan-Jiacha-Langxian-Milin-Nyingchi passenger identity to original Shannan marker9087403304, an explicit member of both Lhasa-Nyingchi and Sichuan-Tibet infrastructure relations. Preserve the distinct Gaoyi railway Shannan marker4022925840 as cn-osm-node-4022925840; no geographic join or operational status change is inferred.",
+              "excludedHomonym": {
+                "markerNodeId": 4022925840,
+                "markerVersion": 1,
+                "sourceRelationId": 6002511,
+                "sourceRelationVersion": 7
+              },
+              "coordinateEvidence": "Original station marker [91.7556747,29.2499495] and exact own-route anchor11833278312 v1 only. The official timetable supplies stop identity and order, not coordinates. No nearest-station identity match or global name merge."
+            }
+          }
+        ],
+        "intervalGeometryIdenticalBeforeAndAfterReviewedBinding": true
+      },
+      {
+        "lineId": "cn-osm-relation-12149467-branch-2",
+        "sourceRelationId": 12149467,
+        "sourceRelationVersion": 213,
+        "stationCount": 8,
+        "intervalCount": 7,
+        "hasReviewedSAO": false,
+        "previouslyPublished": true,
+        "relevantStations": [],
+        "intervalGeometryIdenticalBeforeAndAfterReviewedBinding": true
+      }
+    ],
+    "officialIdentityMarkersAfterReview": {
+      "cn-official-12306-sao": {
+        "9087403304": [
+          91.7556747,
+          29.2499495
+        ]
+      }
+    },
+    "geometryChanged": false,
+    "sourceNodeOrWayAdded": false,
+    "globalGuardBypassed": false,
+    "limits": "Only affected relations were compiled, and all resulting sourceIntervals/segments were compared before and after the reviewed identity binding. This supports correct station ownership and eligibility, not end-to-end native C881 routing. No national ambiguity pass or global package generation was run."
+  },
+  "sourceAnchorEvidence": {
+    "anchorNode": {
+      "id": 11833278312,
+      "coordinate": [
+        91.7508005,
+        29.2481676
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 1
+    },
+    "wayId": 846682393,
+    "wayVersion": 11,
+    "adjacentNodeIds": [
+      11833278313,
+      11833278312,
+      11833278310
+    ],
+    "membership": "Original mainline member way in source relations7963957 and12149467; source anchor selection retained unchanged."
+  },
+  "decision": "SAO binding is supported by official C881 station order, primary Lhasa-Nyingchi passenger corridor evidence, and exact original marker memberships/version. Parent may add this one manifest record and refresh only affected infrastructure lines; no artificial connection is authorized."
+}

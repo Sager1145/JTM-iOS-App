@@ -1,0 +1,158 @@
+{
+  "status": "Source-only tiny display proposal; not applied or newly rendered",
+  "lineID": "jp-しなの鉄道-北しなの線",
+  "intervalIndex": 0,
+  "stationDirection": {
+    "from": [
+      "001746",
+      "妙高高原",
+      138.212185,
+      36.872305,
+      "Myōkō-Kōgen",
+      1
+    ],
+    "to": [
+      "001788",
+      "黒姫",
+      138.19711,
+      36.80732,
+      "Kurohime",
+      1
+    ]
+  },
+  "oldWindow": {
+    "start": 67,
+    "end": 70,
+    "coordinates": [
+      [
+        138.18863,
+        36.83697
+      ],
+      [
+        138.18858,
+        36.8364
+      ],
+      [
+        138.18864,
+        36.83637
+      ],
+      [
+        138.18854,
+        36.83439
+      ]
+    ]
+  },
+  "proposedWindow": {
+    "retainedOldIndices": [
+      67,
+      68,
+      70
+    ],
+    "coordinates": [
+      [
+        138.18863,
+        36.83697
+      ],
+      [
+        138.18858,
+        36.8364
+      ],
+      [
+        138.18854,
+        36.83439
+      ]
+    ],
+    "removedOldIndex": 69
+  },
+  "retainedBefore": {
+    "index": 66,
+    "coordinate": [
+      138.18861,
+      36.838
+    ]
+  },
+  "retainedAfter": {
+    "index": 71,
+    "coordinate": [
+      138.18852,
+      36.83422
+    ]
+  },
+  "reason": "Visible Apple own labelled conventional corridor stays near N-S through old68; no matching transverse blue step is visible while red68→69 steps east. Remove only the extra display vertex69; preserve broad true curve, all other controls and physical topology/stations. Do not move corridor70m to OSM tunnel pair.",
+  "originalViewMetadata": {
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000186/000014/view.json",
+    "contract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 36.8372318481404,
+      "longitude": 138.18862491562115,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9528838358570649,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 237254539.06454927,
+      "rectY": 104631887.25589006,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "projectedOwnVertices": [
+      {
+        "index": 67,
+        "coordinate": [
+          138.18863,
+          36.83697
+        ],
+        "pixelX": 512.4738984517753,
+        "pixelY": 414.4944330062717
+      },
+      {
+        "index": 68,
+        "coordinate": [
+          138.18858,
+          36.8364
+        ],
+        "pixelX": 507.81356067582965,
+        "pixelY": 480.8753982037306
+      },
+      {
+        "index": 69,
+        "coordinate": [
+          138.18864,
+          36.83637
+        ],
+        "pixelX": 513.4059660062194,
+        "pixelY": 484.36911951191723
+      },
+      {
+        "index": 70,
+        "coordinate": [
+          138.18854,
+          36.83439
+        ],
+        "pixelX": 504.08529045060277,
+        "pixelY": 714.9516961239278
+      }
+    ]
+  },
+  "sourceCalculations": {
+    "newTurnAtRetained68Degrees": 3.1034351263262936,
+    "newTurnAtRetained70Degrees": 4.466670550947526,
+    "old69DistanceToProposed68to70": {
+      "distanceM": 5.392152871996722,
+      "insertIndex": 0,
+      "point": [
+        138.18857941835353,
+        36.83637077226429
+      ]
+    }
+  },
+  "limits": [
+    "This is Apple cartographic display evidence, not physical tunnel-centre/switch survey proof.",
+    "Blue labels partly overlay the thin corridor; no matching transverse step is visible, not a claim of subpixel measurement.",
+    "Fresh candidate native rendering remains required; original fixed-z17-v2 is historical.",
+    "No OSM coordinate is used by this proposal; both station rows and all outside controls remain exact."
+  ]
+}

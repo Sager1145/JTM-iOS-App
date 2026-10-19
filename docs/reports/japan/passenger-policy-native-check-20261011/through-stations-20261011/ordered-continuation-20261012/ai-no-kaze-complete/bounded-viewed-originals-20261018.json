@@ -1,0 +1,523 @@
+{
+  "reviewDate": "2026-10-18",
+  "lineID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線",
+  "scope": "Bounded selection only, 15 of 317 retained completed viewpoints; no all-line visual verdict",
+  "actualViewpointCount": 15,
+  "actualOriginalPNGCount": 30,
+  "newCaptureCount": 0,
+  "riskInputs": [
+    "ios/refactor-parallel/alignment-final-risk-recheck-20261010.json",
+    "ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json",
+    "BatchEvidence/plan.json",
+    "existing-evidence-20261018.json"
+  ],
+  "riskSelectionExplanation": "Risk ledgers retain pending image verdicts and contain no per-vertex angle ranking; selection uses exact own current controls and named-plan viewpoints to localize the highest-angle supports, plus known dense station/branch/operator-boundary contexts. Deduplicated selected viewpoint directories; adjacent interval endpoints at same station remain separate original receipts.",
+  "microSupportContext": [
+    {
+      "intervalIndex": 8,
+      "decodedVertexIndex": 11,
+      "coordinate": [
+        137.17672,
+        36.71919
+      ],
+      "previous": [
+        137.17671,
+        36.71919
+      ],
+      "next": [
+        137.17766,
+        36.71885
+      ],
+      "incomingApproxMetres": 0.8913118054481304,
+      "outgoingApproxMetres": 91.91855896868853
+    },
+    {
+      "intervalIndex": 9,
+      "decodedVertexIndex": 54,
+      "coordinate": [
+        137.2387000000001,
+        36.71523000000002
+      ],
+      "previous": [
+        137.23869000000013,
+        36.715220000000045
+      ],
+      "next": [
+        137.23891000000003,
+        36.71578000000005
+      ],
+      "incomingApproxMetres": 1.4251145357301296,
+      "outgoingApproxMetres": 63.9576964449371
+    }
+  ],
+  "confirmedRepairCandidates": [],
+  "views": [
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.71925270730785,
+          "longitude": 137.17645685253575
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#8",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": {
+        "interval": 8,
+        "vertex": 10,
+        "coordinate": [
+          137.17671,
+          36.71919
+        ],
+        "angle": 17.172428658629208
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000003/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "呉羽 east: conventional Ai-no-Kaze and Hokuriku Shinkansen parallel corridors; red remains on own conventional curve. No visible V at the highest-angle tiny support pair."
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000010",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.714788074638584,
+          "longitude": 137.23852156637363
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#9",
+        "pointOrdinal": 10
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": {
+        "interval": 9,
+        "vertex": 53,
+        "coordinate": [
+          137.23869000000013,
+          36.715220000000045
+        ],
+        "angle": 16.874921925842862
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000010/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000010/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "上冨居 freight-yard side: red follows west passenger-side through corridor, does not enter fanned yard tracks or separate eastern railway. No isolated V at selected tiny support pair; exact own passenger track not attributed by pixels."
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000010",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7073520718607,
+          "longitude": 137.19897673403727
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#8",
+        "pointOrdinal": 10
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": {
+        "interval": 8,
+        "vertex": 38,
+        "coordinate": [
+          137.19796,
+          36.70775
+        ],
+        "angle": 15.683231011931673
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000010/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000010/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "高山線 junction near Takariya: red retains northwest→southeast own through arm; southwest Takayama branch distinct. Real broad merging curve, no 90-degree turn or wrong branch seen."
+    },
+    {
+      "intervalIndex": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000067/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.95267572124603,
+          "longitude": 137.56376293810325
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#20",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": {
+        "interval": 20,
+        "vertex": 6,
+        "coordinate": [
+          137.56472,
+          36.95309
+        ],
+        "angle": 13.323829645618634
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000067/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000067/000002/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "泊 east/Numaho: red follows genuine broad northeast curve; modest inner/southeast offset but no isolated V or false right angle. Preserve actual curve."
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000070/000008",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7412,
+          "longitude": 137.014724
+        },
+        "distanceMetres": 2592.9559492711055,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#4",
+        "pointOrdinal": 8
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 高岡",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000070/000008/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000070/000008/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "高岡 platform group: red through route remains broadly east-west, does not turn onto southwest branch. Dense unlabelled tracks and Himi label mean exact own platform track/caps unresolved."
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000071/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7412,
+          "longitude": 137.014724
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 高岡",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000071/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000071/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "Same 高岡 station from adjacent own interval endpoint: same through alignment, no seam hook visible. Exact platform track/caps not inferred from broad blue fill."
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000015",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.70169,
+          "longitude": 137.21321
+        },
+        "distanceMetres": 4916.549261434275,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#8",
+        "pointOrdinal": 15
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 富山",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000015/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000074/000015/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "富山 platform group: red northwest→southeast through corridor; tram north/south and Toyama Chitetsu south/east corridor distinct. Conventional versus Shinkansen platform attribution not proven by broad overlapping fill."
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.70169,
+          "longitude": 137.21321
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#9",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 富山",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000075/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "Same 富山 station from adjacent own interval start: no endpoint seam V seen. Broad shared station fill does not identify a surveyed conventional centre or exact passenger face."
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000060/000015",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.82647,
+          "longitude": 137.405705
+        },
+        "distanceMetres": 5103.6555401809965,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#14",
+        "pointOrdinal": 15
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 魚津",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000060/000015/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000060/000015/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "魚津 station: red follows eastern Ai-no-Kaze corridor, separate from western Toyama Chitetsu corridor; no wrong-line jump or station hook seen. Exact platform cap unresolved."
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.82647,
+          "longitude": 137.405705
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#15",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 魚津",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "Same 魚津 station adjacent own interval start: same east-side through alignment, no seam hook. Neighboring Chitetsu west corridor not selected."
+    },
+    {
+      "intervalIndex": 21,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000068/000014",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.980445,
+          "longitude": 137.650485
+        },
+        "distanceMetres": 4591.043954997704,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#21",
+        "pointOrdinal": 14
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "station / dense adjacent lines: 市振",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000068/000014/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000068/000014/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "市振 operator boundary: red arrives from west into straight station corridor, own overlay ends at station as scoped. Nihonkai Hisui label east is onward operator context; no hooked cap seen. Exact cap/through continuity beyond own line not proven."
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000058/000016",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.76946,
+          "longitude": 137.34889
+        },
+        "distanceMetres": 5572.238746432154,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#12",
+        "pointOrdinal": 16
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "滑川 adjacent Toyama Chitetsu conventional platform group",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000058/000016/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000058/000016/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "滑川 station: red on northwest Ai-no-Kaze side, separate southeast Chitetsu side; no sudden cross-line jump or endpoint V. Exact platform centre/caps unresolved."
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000018",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.86954,
+          "longitude": 137.434405
+        },
+        "distanceMetres": 6231.51672316771,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#15",
+        "pointOrdinal": 18
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "黒部 station conventional platform group",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000018/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000061/000018/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "黒部 station: red through conventional track group and genuine slight north/south curve; no isolated platform hook or right angle seen. Exact face/caps unresolved."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000054/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.67248,
+          "longitude": 136.791604
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "倶利伽羅 operator-boundary station",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000054/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000054/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "倶利伽羅 operator boundary: red starts on eastward conventional corridor, west IR Ishikawa continuation distinct only by operator label. No start hook seen; broad fill cannot prove cap or physical ownership boundary."
+    },
+    {
+      "intervalIndex": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000065/000015",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.95192,
+          "longitude": 137.55601
+        },
+        "distanceMetres": 5241.908528830945,
+        "itemID": "jp-あいの風とやま鉄道-あいの風とやま鉄道線#19",
+        "pointOrdinal": 15
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "eeaccb57ad35a5046f47a9d6aacb3c4cc43d10062c0666c5b4ff7738ac2c38a5",
+      "selectionReason": "泊 station passenger group and approaches",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000065/000015/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000065/000015/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image: each retained original PNG separately, no pixel editing/compositing",
+      "observation": "泊 station: red traverses broad east-west passenger group with no isolated V or terminal hook. Exact platform face and cap not established from cartographic fill."
+    }
+  ]
+}

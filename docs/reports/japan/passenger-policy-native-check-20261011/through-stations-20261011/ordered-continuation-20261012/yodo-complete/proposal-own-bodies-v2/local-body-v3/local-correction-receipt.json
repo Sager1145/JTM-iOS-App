@@ -1,0 +1,301 @@
+{
+  "status": "candidate-only-all11local-reprojections-actually-opened",
+  "intervals": [
+    {
+      "intervalIndex": 1,
+      "removed": [
+        {
+          "previousIndex": 105,
+          "coordinate": [
+            133.0516224388491,
+            33.16963121781798
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002694/000007/view.json",
+          "oldPixel": [
+            460.0000000037253,
+            263.0
+          ],
+          "adjacentOldCoordinates": [
+            [
+              133.05165345715687,
+              33.16939327776374
+            ],
+            [
+              133.05144280785447,
+              33.16980770587648
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo01-removed-105.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        }
+      ],
+      "maximumTurnAfterLocalDeletionDegrees": 20.594483771623757
+    },
+    {
+      "intervalIndex": 3,
+      "removed": [
+        {
+          "previousIndex": 328,
+          "coordinate": [
+            132.9022041546919,
+            33.21705411270957
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002705/000023/view.json",
+          "oldPixel": [
+            343.60030107200146,
+            358.90519816428423
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.90248739273375,
+              33.21708916481672
+            ],
+            [
+              132.90195804291142,
+              33.217178644357865
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo03-removed-328.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        }
+      ],
+      "maximumTurnAfterLocalDeletionDegrees": 21.245455921699982
+    },
+    {
+      "intervalIndex": 5,
+      "removed": [
+        {
+          "previousIndex": 10,
+          "coordinate": [
+            132.85309146246385,
+            33.234216567123845
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000001/view.json",
+          "oldPixel": [
+            584.1468805484474,
+            365.72798991948366
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.8533366498359,
+              33.234339761980245
+            ],
+            [
+              132.852810936869,
+              33.234214126106096
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo05-removed-010.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 200,
+          "coordinate": [
+            132.81182355116852,
+            33.218275554410894
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000014/view.json",
+          "oldPixel": [
+            450.01999431475997,
+            508.08702411688864
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.81187698083306,
+              33.218509701647776
+            ],
+            [
+              132.81160875993157,
+              33.21811477396871
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo05-removed-200.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 277,
+          "coordinate": [
+            132.79878578933062,
+            33.20710145832722
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000020/view.json",
+          "oldPixel": [
+            539.9567155316472,
+            370.57676639966667
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.79899010160773,
+              33.20727719445506
+            ],
+            [
+              132.79848584631293,
+              33.20709765905268
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo05-removed-277.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 295,
+          "coordinate": [
+            132.79523296372935,
+            33.204392091594904
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000021/view.json",
+          "oldPixel": [
+            464.17315024510026,
+            435.77844661846757
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.79534912322538,
+              33.20461452883449
+            ],
+            [
+              132.79498434279935,
+              33.204273400879046
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo05-removed-295.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        }
+      ],
+      "maximumTurnAfterLocalDeletionDegrees": 23.57194183754638
+    },
+    {
+      "intervalIndex": 6,
+      "removed": [
+        {
+          "previousIndex": 134,
+          "coordinate": [
+            132.7882476156812,
+            33.17735527377219
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002708/000010/view.json",
+          "oldPixel": [
+            626.5877898931503,
+            371.32475332170725
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.78847734377314,
+              33.17748390750268
+            ],
+            [
+              132.78797308847834,
+              33.177349210172785
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo06-removed-134.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        }
+      ],
+      "maximumTurnAfterLocalDeletionDegrees": 28.308064712750646
+    },
+    {
+      "intervalIndex": 7,
+      "removed": [
+        {
+          "previousIndex": 83,
+          "coordinate": [
+            132.76550134375833,
+            33.18159318229707
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000006/view.json",
+          "oldPixel": [
+            516.1787927374244,
+            403.1396275088191
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.76545651017614,
+              33.18136097151618
+            ],
+            [
+              132.76539213715978,
+              33.18180994125502
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo07-removed-083.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 100,
+          "coordinate": [
+            132.76619669380887,
+            33.18531780605966
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000007/view.json",
+          "oldPixel": [
+            523.0,
+            329.0
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.7661941378783,
+              33.1850898929754
+            ],
+            [
+              132.76637210341306,
+              33.18551537776384
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo07-removed-100.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 101,
+          "coordinate": [
+            132.76637210341306,
+            33.18551537776384
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000007/view.json",
+          "oldPixel": [
+            539.349360100925,
+            306.99625155702233
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.76619669380887,
+              33.18531780605966
+            ],
+            [
+              132.76637908402188,
+              33.18574879758779
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo07-removed-101.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        },
+        {
+          "previousIndex": 107,
+          "coordinate": [
+            132.76690600001706,
+            33.1867918197301
+          ],
+          "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000008/view.json",
+          "oldPixel": [
+            488.325485676527,
+            457.3035882283002
+          ],
+          "adjacentOldCoordinates": [
+            [
+              132.7667308465576,
+              33.186605989324825
+            ],
+            [
+              132.76691055456178,
+              33.18703248509722
+            ]
+          ],
+          "reprojection": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo07-removed-107.png",
+          "reason": "Concrete local zigzag away from continuous ownblue band. Removed that vertex only; neighboring controls retained; shortspan is not surveyproof."
+        }
+      ],
+      "maximumTurnAfterLocalDeletionDegrees": 18.306457461160765
+    }
+  ],
+  "limits": "No new coordinates created; exact stationaliases retained. Local deletion only, no automatic smoothing. Neighbor ownband witnesses and native smoothing/Main require review. Owner should filter exact listed badcoordinates into lateststationintegration toavoid overwriting new8 join.",
+  "stationEndpointReview": "All18 first/last owner1–9 reprojected frames actuallyopened; no oldguardhooks. Station8 outgoing highzoom Rootownerfix pending."
+}

@@ -1,0 +1,110 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-京阪電気鉄道-京津線#4\/lineOffset",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-京阪電気鉄道-京津線#4\/stationApproach",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-京阪電気鉄道-京津線#4\/disconnectedParts",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-京阪電気鉄道-京津線\/station\/006037",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006037"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-京阪電気鉄道-京津線\/station\/005987",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "005987"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-京阪電気鉄道-京津線#3\/seam",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#3",
+      "jp-京阪電気鉄道-京津線#4"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006037"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-京阪電気鉄道-京津線#4\/seam",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#4",
+      "jp-京阪電気鉄道-京津線#5"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "005987"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-京阪電気鉄道-京津線#5\/lineOffset",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#5"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-京阪電気鉄道-京津線#5\/stationApproach",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#5"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-京阪電気鉄道-京津線#5\/disconnectedParts",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#5"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-京阪電気鉄道-京津線\/station\/005954",
+    "itemIDs" : [
+      "jp-京阪電気鉄道-京津線#5"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "005954"
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "intervalIndexes": [
+    16,
+    19,
+    20
+  ],
+  "candidateVertexCounts": {
+    "16": 22,
+    "19": 16,
+    "20": 12
+  },
+  "futatsuiriExactSharedBoundary": true,
+  "nishibiwajimaRootBoundary": [
+    136.86536851289753,
+    35.195131029593654
+  ],
+  "sourceArraysLiteralFromOriginalViews": true,
+  "stationAliasesWithinOwnIntervals": true,
+  "latestReprojectionsOpened": 10,
+  "nativeAccepted": false
+}

@@ -1,0 +1,240 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 300.5021455870102,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 34.994309999999999,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85316499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 34.994686345411878,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85622081930018,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 34.996388576483646,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85797503349684,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 34.999020230573656,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85812118109024,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 35.00151920380636,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85875631674847,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 35.003988199561576,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.85977432796173,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-京阪電気鉄道-京津線#4",
+      "latitude" : 35.005199183147624,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.86010337644089,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#4#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-京阪電気鉄道-京津線#5",
+      "latitude" : 35.005199183147624,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.86010337644089,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#5#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-京阪電気鉄道-京津線#5",
+      "latitude" : 35.00732651572892,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.86190241212083,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#5#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-京阪電気鉄道-京津線#5",
+      "latitude" : 35.009949482238547,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.86269607623134,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#5#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/keishin-current-complete\/unified-session\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-京阪電気鉄道-京津線#5",
+      "latitude" : 35.011294999999997,
+      "lineDependency" : "ae3f1d646583fe74865951afac40b8f0d399cbeb3a6b3a78af2665b372f8de14",
+      "longitude" : 135.86401000000001,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-京阪電気鉄道-京津線#5#point-3"
+    }
+  ]
+}

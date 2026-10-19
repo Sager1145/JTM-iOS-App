@@ -1,0 +1,445 @@
+{
+  "format": "jtm-viewed-native-originals-v1",
+  "reviewedAt": "2026-10-18",
+  "scope": "Final interval8-only Miyafuku Gujo candidate; withdrawn interval0 excluded",
+  "requestPath": "/private/tmp/jtm-miyafuku-gujo-final-request.json",
+  "resultPath": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/result.json",
+  "captureIndexPath": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/capture-index.json",
+  "processID": 61534,
+  "invocationID": "9332CF0B-707B-4D54-9B66-80BA27AA25CC",
+  "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "captureCounts": {
+    "captured": 11,
+    "failed": 0,
+    "pending": 0
+  },
+  "viewedPairCount": 11,
+  "viewedOriginalCount": 22,
+  "viewingMethod": "Each original basemap.png and smooth.png actually opened with view_image; no contact sheet or generated overlay.",
+  "capturedDisplayEqualsFrozenCandidate": true,
+  "window": {
+    "oldStartIndex": 4,
+    "oldEndIndexInclusive": 32,
+    "retainedBefore": {
+      "oldIndex": 3,
+      "coordinate": [
+        135.12774,
+        35.3711
+      ]
+    },
+    "retainedAfter": {
+      "oldIndex": 33,
+      "coordinate": [
+        135.11655,
+        35.36721
+      ]
+    }
+  },
+  "verdict": "Northern own curve and seam continuity supported; full4..32 native physical-alignment acceptance unresolved because tunnel32055924 tail visibly differs from Apple fine railway symbol.",
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.37187,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.129255,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-0",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000000/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000000/smooth.png"
+        }
+      ],
+      "observation": "Gujo station: interval8 south/west departure continuous; broad blue station fill does not prove own platform centre. Far northeast context has an eastward red/blue difference, outside the replaced window."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.3707766440351,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.12705552681433,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-1",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000001/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000001/smooth.png"
+        }
+      ],
+      "observation": "Entry near projected old4: no hook or shoulder; southwest departure transitions into gentle west-going bend. Red sits somewhat south of fine blue rail symbols at shallow curve, not a measured residual."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36998230922625,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.12469719949064,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-2",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000002/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000002/smooth.png"
+        }
+      ],
+      "observation": "Own northern bend/bridge reach: continuous true S/reverse curve replaces extra northern raw bulge; no false sharp corner or road175 alias."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.37009852192236,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.12212967886018,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-3",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000003/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000003/smooth.png"
+        }
+      ],
+      "observation": "Bridge and start of southwest tunnel: broad S remains continuous, but southwestern red tail is visibly northwest of blue fine rail symbol after the portal region."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36951409573542,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11971126389773,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-4",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000004/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000004/smooth.png"
+        }
+      ],
+      "observation": "Tunnel32055924: red southwest diagonal differs visibly northwest from blue rail-symbol path between portal markers; hidden physical centre is unresolved. No sharp seam hook."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.368140524499324,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11776362775163,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-5",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000005/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000005/smooth.png"
+        }
+      ],
+      "observation": "Tunnel tail/exit: same northwest red/blue discrepancy along long candidate segment; lines converge near southwest portal and continue through exit without abrupt shoulder."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000006",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.3667246902765,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11586056578645,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-6",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000006/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000006/smooth.png"
+        }
+      ],
+      "observation": "Exit/retained Oecho Hito approach: red comes continuously from the northwest-offset candidate tail into near-symbol retained reach; visible separate retained southern tunnel difference remains."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000007",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36507716386565,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11428280955943,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-7",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000007/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000007/smooth.png"
+        }
+      ],
+      "observation": "Retained Oecho Hito bend and tunnel: continuous long curve, red east of blue symbol at southern portal-marked section; outside active replacement and unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000008",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36314039163319,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11329485625862,
+      "pointOrdinal": 8,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-8",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000008/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000008/smooth.png"
+        }
+      ],
+      "observation": "Retained road176/stream/tunnel reach: red visibly east of blue fine rail symbol between markers; not acceptance of hidden tunnel path."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000009",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.361175955758384,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.11238297782106,
+      "pointOrdinal": 9,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-9",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000009/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000009/smooth.png"
+        }
+      ],
+      "observation": "Retained Shimo-Amazu approach: long red path remains continuous, small red/blue disagreement; broad station fill cannot locate exact own platform face."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000010",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.359304,
+      "lineDependency": "455cfcba829095f3d0a0833a3b884a67c0d0b4751cfef49fc45c194795b4ef6a",
+      "longitude": 135.111552,
+      "pointOrdinal": 10,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-10",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000010/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyafuku-gujo-final-native-20261018/alignment/captures/000000/000010/smooth.png"
+        }
+      ],
+      "observation": "Shimo-Amazu endpoint: unchanged approach/endpoint within blue station area; no acute end hook, exact own face/cap remains unproved."
+    }
+  ],
+  "additionalHistoricalOriginals": {
+    "purpose": "Raw/old N02 tunnel-symbol comparison; actual historical point3 pair opened again, z17 rather than candidate z18",
+    "paths": [
+      "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/basemap.png",
+      "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/smooth.png"
+    ],
+    "viewedPairCount": 1,
+    "viewedOriginalCount": 2
+  },
+  "shortWindowSourceWitnesses": [
+    {
+      "start": 4,
+      "end": 22,
+      "oldEnd": [
+        135.12095,
+        35.36999
+      ],
+      "projectedEnd": {
+        "distanceM": 1.565092689536633,
+        "insertIndex": 17,
+        "point": [
+          135.1209462342716,
+          35.370003736157706
+        ]
+      },
+      "sourcePrevious": [
+        135.1211534,
+        35.3700415
+      ],
+      "retainedNext": [
+        135.12056,
+        35.36986
+      ],
+      "returnTurnDegrees": 11.929896652579437,
+      "retainedNextTurnDegrees": 3.194282890999901
+    },
+    {
+      "start": 4,
+      "end": 23,
+      "oldEnd": [
+        135.12056,
+        35.36986
+      ],
+      "projectedEnd": {
+        "distanceM": 5.391576083834051,
+        "insertIndex": 18,
+        "point": [
+          135.12054215771238,
+          35.369906253249276
+        ]
+      },
+      "sourcePrevious": [
+        135.1208632,
+        35.3699886
+      ],
+      "retainedNext": [
+        135.12021,
+        35.36971
+      ],
+      "returnTurnDegrees": 18.465012395762717,
+      "retainedNextTurnDegrees": 0.0030186382822241643
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "format": "jtm-minami-native-display-reference-v1",
+  "reviewedAt": "2026-10-11",
+  "stationID": "003761",
+  "source": "../before-geobinding-main-detail-basemap.png",
+  "overlay": "../before-geobinding-main-detail-overlay.png",
+  "camera": {
+    "center": [
+      139.995886,
+      35.681665
+    ],
+    "distanceM": 438.9,
+    "heading": 0,
+    "pitch": 0
+  },
+  "size": [
+    1211,
+    865
+  ],
+  "projection": {
+    "calibrationCoordinate": [
+      139.9957,
+      35.681665
+    ],
+    "calibrationPixel": [
+      765,
+      439
+    ],
+    "lonPerPixel": 3.017341040462428e-06,
+    "latPerPixel": 2.4508670520231215e-06,
+    "check": {
+      "coordinate": [
+        139.99497,
+        35.68202
+      ],
+      "predictedPixel": [
+        523.06,
+        294.15
+      ],
+      "observedRedStrokePixel": [
+        523,
+        293
+      ],
+      "interpretation": "about one pixel local difference; rounded AX extents and stroke raster cannot establish survey precision"
+    }
+  },
+  "numberedTrackPixelsAtX765": {
+    "1": [
+      765,
+      277
+    ],
+    "2": [
+      765,
+      333
+    ],
+    "3": [
+      765,
+      350.5
+    ],
+    "4": [
+      765,
+      403
+    ]
+  },
+  "representativeLongitudinalCenterPixelApprox": [
+    800,
+    362
+  ],
+  "candidateCoordinate": [
+    139.995806,
+    35.68186196884773
+  ],
+  "candidatePredictedPixel": [
+    800.1303,
+    358.633
+  ],
+  "identityEvidence": "minami-platform-geobinding-20261011.md",
+  "policy": "Same company/same level four passenger faces confirmed before deriving normal outer-track pair centre; inner2/3 passenger tracks corroborate centre. Display representative only; physical station, routing and mileage remain original. Small native pixel discrepancy does not establish survey-grade WGS84 or exact 2026 switches."
+}

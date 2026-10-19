@@ -1,0 +1,303 @@
+{
+  "format": "jtm-hikifune-source-notch-display-proposal-v1",
+  "status": "candidate-only-needs-parent-current-native-review",
+  "lineID": "jp-東武鉄道-伊勢崎線-2",
+  "intervalIndex": 0,
+  "purpose": "Remove only the unsupported crosswise display control; retain own source station boundary and all later display supports. This is not a full own-rail fit or surveyed-track claim.",
+  "operation": {
+    "removeDisplayVertexIndex": 2,
+    "removedCoordinate": [
+      139.81651,
+      35.71726
+    ],
+    "retainedStationBoundary": [
+      139.81658,
+      35.71726
+    ],
+    "retainedNextGuard": [
+      139.81643,
+      35.71575
+    ]
+  },
+  "beforeDeflectionsDegrees": [
+    87.48588765307892,
+    87.5369417026281
+  ],
+  "afterLocalDeflectionDegrees": 2.096987916956436,
+  "physicalChanged": false,
+  "preserved": {
+    "stations": [
+      [
+        "003479",
+        "曳舟",
+        139.816637,
+        35.718314,
+        "Hikifune",
+        1
+      ],
+      [
+        "003526",
+        "押上",
+        139.813731,
+        35.70847,
+        "Oshiage 'SKYTREE'",
+        1
+      ]
+    ],
+    "segments": [
+      [
+        1.184,
+        0,
+        [
+          [
+            139.816637,
+            35.718314
+          ],
+          [
+            139.81658,
+            35.71726
+          ],
+          [
+            139.81651,
+            35.71726
+          ],
+          [
+            139.81643,
+            35.71575
+          ],
+          [
+            139.8164,
+            35.71511
+          ],
+          [
+            139.8163,
+            35.71439
+          ],
+          [
+            139.81622,
+            35.71404
+          ],
+          [
+            139.81594,
+            35.71341
+          ],
+          [
+            139.81576,
+            35.71315
+          ],
+          [
+            139.81556,
+            35.71285
+          ],
+          [
+            139.81527,
+            35.71248
+          ],
+          [
+            139.81478,
+            35.71211
+          ],
+          [
+            139.81469,
+            35.71204
+          ],
+          [
+            139.81437,
+            35.71184
+          ],
+          [
+            139.81378,
+            35.71096
+          ],
+          [
+            139.81336,
+            35.71012
+          ],
+          [
+            139.81359,
+            35.70908
+          ],
+          [
+            139.813731,
+            35.70847
+          ]
+        ]
+      ]
+    ],
+    "displayStationCoordinates": {
+      "003526": [
+        139.81345102105016,
+        35.70970842655579
+      ]
+    },
+    "stationCircleOwnerByCode": {
+      "003479": "jp-東武鉄道-伊勢崎線"
+    },
+    "stationLaneByCode": {
+      "003526": 0
+    },
+    "OshiageDisplayCut": [
+      139.81345102105016,
+      35.70970842655579
+    ],
+    "allOtherDisplayControlsExact": true
+  },
+  "evidence": [
+    "n02-own-hikifune-fragments.json",
+    "osm-own-branch-identity.json",
+    "tobu-hikifune-official-layout.gif"
+  ],
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [
+        139.816637,
+        35.718314
+      ],
+      [
+        139.81658,
+        35.71726
+      ],
+      [
+        139.81643,
+        35.71575
+      ],
+      [
+        139.8164,
+        35.71511
+      ],
+      [
+        139.8163,
+        35.71439
+      ],
+      [
+        139.81622,
+        35.71404
+      ],
+      [
+        139.81594,
+        35.71341
+      ],
+      [
+        139.81576,
+        35.71315
+      ],
+      [
+        139.81556,
+        35.71285
+      ],
+      [
+        139.81527,
+        35.71248
+      ],
+      [
+        139.81478,
+        35.71211
+      ],
+      [
+        139.81469,
+        35.71204
+      ],
+      [
+        139.81437,
+        35.71184
+      ],
+      [
+        139.81378,
+        35.71096
+      ],
+      [
+        139.81344806289354,
+        35.71029612578711
+      ],
+      [
+        139.81343890691053,
+        35.71027695864513
+      ],
+      [
+        139.8134304940598,
+        35.710257568253425
+      ],
+      [
+        139.81342283258084,
+        35.71023797360286
+      ],
+      [
+        139.81341592997734,
+        35.710218193884366
+      ],
+      [
+        139.81340979300964,
+        35.71019824847014
+      ],
+      [
+        139.81340442768828,
+        35.71017815689465
+      ],
+      [
+        139.81339983926804,
+        35.71015793883551
+      ],
+      [
+        139.8133960322428,
+        35.710137614094215
+      ],
+      [
+        139.81339301034112,
+        35.71011720257675
+      ],
+      [
+        139.81339077652268,
+        35.710096724274074
+      ],
+      [
+        139.81338933297525,
+        35.71007619924258
+      ],
+      [
+        139.81338868111266,
+        35.710055647584404
+      ],
+      [
+        139.8133888215733,
+        35.71003508942777
+      ],
+      [
+        139.81338975421966,
+        35.71001454490726
+      ],
+      [
+        139.81339147813827,
+        35.70999403414412
+      ],
+      [
+        139.8133939916407,
+        35.70997357722649
+      ],
+      [
+        139.81339729226534,
+        35.709953194189836
+      ],
+      [
+        139.81340137677944,
+        35.70993290499721
+      ],
+      [
+        139.81341191359522,
+        35.709885260265025
+      ],
+      [
+        139.81345102105016,
+        35.70970842655579
+      ]
+    ]
+  },
+  "limits": [
+    "The retained source body is not certified pixel-aligned; short own lateral displacement remains possible.",
+    "OSM named route members identify the Oshiage through passenger corridor; KSJ2 ancestry prevents independent survey claims.",
+    "Actual crossover rails south of the old station-boundary notch remain outside this deletion proposal.",
+    "Oshiage B3 common cut and physical through junction are unchanged."
+  ],
+  "comparison": "hikifune-own-track-comparison.json",
+  "scopeNote": "Original N02 notch, not an introduced display alias. Candidate is a single display-control deletion pending parent visual review."
+}

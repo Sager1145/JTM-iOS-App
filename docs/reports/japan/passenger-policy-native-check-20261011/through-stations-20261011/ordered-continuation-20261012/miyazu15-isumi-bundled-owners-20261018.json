@@ -1,0 +1,33 @@
+[
+  {
+    "lineID": "jp-WILLER　TRAINS-宮津線",
+    "bundledPackageEqualsProduction": true,
+    "serviceStatus": null,
+    "physicalStationsUnchanged": true,
+    "physicalSegmentsUnchanged": true,
+    "chunkOffset": 27775,
+    "chunkLength": 40010,
+    "actualChunkLines": 1,
+    "actualChunkParts": 18,
+    "actualChunkVertices": 1585,
+    "mainPixelReview": "pending locked desktop",
+    "exactRepeatedIntervalBoundaries": 17,
+    "interfaceVerticesAfterExactBoundaryDeduplication": 1568
+  },
+  {
+    "lineID": "jp-いすみ鉄道-いすみ線",
+    "bundledPackageEqualsProduction": true,
+    "serviceStatus": "substitute_bus",
+    "physicalStationsUnchanged": true,
+    "physicalSegmentsUnchanged": true,
+    "chunkOffset": 116916,
+    "chunkLength": 17628,
+    "actualChunkLines": 1,
+    "actualChunkParts": 13,
+    "actualChunkVertices": 604,
+    "mainPixelReview": "pending locked desktop",
+    "path": "existing non-continuous interval lane path; continuous-stroke exclusion retained",
+    "exactRepeatedIntervalBoundaries": 12,
+    "interfaceVerticesAfterExactBoundaryDeduplication": 592
+  }
+]

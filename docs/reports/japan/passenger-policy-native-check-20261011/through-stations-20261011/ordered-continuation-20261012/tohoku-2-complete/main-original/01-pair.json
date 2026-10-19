@@ -1,0 +1,134 @@
+{
+  "caseIndex": 1,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 1,
+  "source": {
+    "caseIndex": 1,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 1,
+    "fromStationID": "003210",
+    "toStationID": "003236",
+    "camera": [
+      35.7580805,
+      139.732461,
+      0.026590409999997035
+    ],
+    "effectiveCoordinates": [
+      [
+        139.726712,
+        35.763836
+      ],
+      [
+        139.72684,
+        35.76366
+      ],
+      [
+        139.72748,
+        35.76284
+      ],
+      [
+        139.72786,
+        35.76246
+      ],
+      [
+        139.72829,
+        35.76207
+      ],
+      [
+        139.72906,
+        35.76152
+      ],
+      [
+        139.72963,
+        35.76113
+      ],
+      [
+        139.73,
+        35.76086
+      ],
+      [
+        139.73053,
+        35.76049
+      ],
+      [
+        139.73119,
+        35.76001
+      ],
+      [
+        139.73186,
+        35.75955
+      ],
+      [
+        139.73236,
+        35.75918
+      ],
+      [
+        139.73276,
+        35.75886
+      ],
+      [
+        139.73325,
+        35.75844
+      ],
+      [
+        139.73349,
+        35.75828
+      ],
+      [
+        139.73378,
+        35.75803
+      ],
+      [
+        139.73401,
+        35.75781
+      ],
+      [
+        139.73426,
+        35.75746
+      ],
+      [
+        139.73471,
+        35.75684
+      ],
+      [
+        139.73537,
+        35.75589
+      ],
+      [
+        139.73595,
+        35.75511
+      ],
+      [
+        139.73639,
+        35.75454
+      ],
+      [
+        139.73685,
+        35.75388
+      ],
+      [
+        139.73736,
+        35.75323
+      ],
+      [
+        139.73751,
+        35.75302
+      ],
+      [
+        139.73821,
+        35.752325
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t100 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:14;overlays:11;rides:0;budgetDrops:0;vertices:5206;camera:15.09;lod:13.95;backbones:1;networkStations:45;distance:5836.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.758080;centerLon:139.732461;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:9665.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:13;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.758080;centerLon:139.732461;distance:5836.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-01.jpg",
+  "observation": "東十条至王子连续弧形及石神井川处走势保留；局部西/南侧偏移候选，王子本线站台与南北线/都电独立。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

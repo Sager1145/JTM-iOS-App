@@ -1,0 +1,2827 @@
+{
+  "queueOrdinal": 49,
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "operatorSpaceCodePoint": "U+3000",
+  "identityChecks": [
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#0",
+      "interval": 0,
+      "stationIDs": [
+        "004705",
+        "004689"
+      ],
+      "stationNames": [
+        "西舞鶴",
+        "四所"
+      ],
+      "sourceControlCount": 71,
+      "plannedViewCount": 17,
+      "completedViewCount": 17,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#1",
+      "interval": 1,
+      "stationIDs": [
+        "004689",
+        "004606"
+      ],
+      "stationNames": [
+        "四所",
+        "東雲"
+      ],
+      "sourceControlCount": 62,
+      "plannedViewCount": 12,
+      "completedViewCount": 12,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#2",
+      "interval": 2,
+      "stationIDs": [
+        "004606",
+        "004507"
+      ],
+      "stationNames": [
+        "東雲",
+        "丹後神崎"
+      ],
+      "sourceControlCount": 50,
+      "plannedViewCount": 12,
+      "completedViewCount": 12,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "interval": 3,
+      "stationIDs": [
+        "004507",
+        "004469"
+      ],
+      "stationNames": [
+        "丹後神崎",
+        "丹後由良"
+      ],
+      "sourceControlCount": 43,
+      "plannedViewCount": 6,
+      "completedViewCount": 0,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#4",
+      "interval": 4,
+      "stationIDs": [
+        "004469",
+        "004389"
+      ],
+      "stationNames": [
+        "丹後由良",
+        "栗田"
+      ],
+      "sourceControlCount": 135,
+      "plannedViewCount": 18,
+      "completedViewCount": 18,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#5",
+      "interval": 5,
+      "stationIDs": [
+        "004389",
+        "004419"
+      ],
+      "stationNames": [
+        "栗田",
+        "宮津"
+      ],
+      "sourceControlCount": 93,
+      "plannedViewCount": 14,
+      "completedViewCount": 14,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "interval": 6,
+      "stationIDs": [
+        "004419",
+        "004343"
+      ],
+      "stationNames": [
+        "宮津",
+        "天橋立"
+      ],
+      "sourceControlCount": 176,
+      "plannedViewCount": 14,
+      "completedViewCount": 0,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#7",
+      "interval": 7,
+      "stationIDs": [
+        "004343",
+        "004363"
+      ],
+      "stationNames": [
+        "天橋立",
+        "岩滝口"
+      ],
+      "sourceControlCount": 75,
+      "plannedViewCount": 12,
+      "completedViewCount": 12,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#8",
+      "interval": 8,
+      "stationIDs": [
+        "004363",
+        "004390"
+      ],
+      "stationNames": [
+        "岩滝口",
+        "与謝野"
+      ],
+      "sourceControlCount": 49,
+      "plannedViewCount": 10,
+      "completedViewCount": 10,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#9",
+      "interval": 9,
+      "stationIDs": [
+        "004390",
+        "004291"
+      ],
+      "stationNames": [
+        "与謝野",
+        "京丹後大宮"
+      ],
+      "sourceControlCount": 137,
+      "plannedViewCount": 22,
+      "completedViewCount": 22,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#10",
+      "interval": 10,
+      "stationIDs": [
+        "004291",
+        "004111"
+      ],
+      "stationNames": [
+        "京丹後大宮",
+        "峰山"
+      ],
+      "sourceControlCount": 38,
+      "plannedViewCount": 17,
+      "completedViewCount": 17,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#11",
+      "interval": 11,
+      "stationIDs": [
+        "004111",
+        "003865"
+      ],
+      "stationNames": [
+        "峰山",
+        "網野"
+      ],
+      "sourceControlCount": 115,
+      "plannedViewCount": 22,
+      "completedViewCount": 22,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#12",
+      "interval": 12,
+      "stationIDs": [
+        "003865",
+        "003974"
+      ],
+      "stationNames": [
+        "網野",
+        "夕日ヶ浦木津温泉"
+      ],
+      "sourceControlCount": 126,
+      "plannedViewCount": 18,
+      "completedViewCount": 18,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#13",
+      "interval": 13,
+      "stationIDs": [
+        "003974",
+        "004088"
+      ],
+      "stationNames": [
+        "夕日ヶ浦木津温泉",
+        "小天橋"
+      ],
+      "sourceControlCount": 83,
+      "plannedViewCount": 17,
+      "completedViewCount": 17,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#14",
+      "interval": 14,
+      "stationIDs": [
+        "004088",
+        "004208"
+      ],
+      "stationNames": [
+        "小天橋",
+        "かぶと山"
+      ],
+      "sourceControlCount": 70,
+      "plannedViewCount": 10,
+      "completedViewCount": 10,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "interval": 15,
+      "stationIDs": [
+        "004208",
+        "004231"
+      ],
+      "stationNames": [
+        "かぶと山",
+        "久美浜"
+      ],
+      "sourceControlCount": 51,
+      "plannedViewCount": 8,
+      "completedViewCount": 0,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#16",
+      "interval": 16,
+      "stationIDs": [
+        "004231",
+        "004355"
+      ],
+      "stationNames": [
+        "久美浜",
+        "コウノトリの郷"
+      ],
+      "sourceControlCount": 139,
+      "plannedViewCount": 26,
+      "completedViewCount": 26,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮津線#17",
+      "interval": 17,
+      "stationIDs": [
+        "004355",
+        "004383"
+      ],
+      "stationNames": [
+        "コウノトリの郷",
+        "豊岡"
+      ],
+      "sourceControlCount": 69,
+      "plannedViewCount": 10,
+      "completedViewCount": 10,
+      "currentPlanIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    }
+  ],
+  "missingItems": [
+    {
+      "geometryStatus": "available",
+      "identity": {
+        "display": [
+          {
+            "latitudeBits": 4630208027502495001,
+            "longitudeBits": 4638951089407637691
+          },
+          {
+            "latitudeBits": 4630208021872995467,
+            "longitudeBits": 4638951073046904669
+          },
+          {
+            "latitudeBits": 4630208020465620584,
+            "longitudeBits": 4638951063547124205
+          },
+          {
+            "latitudeBits": 4630208014836121049,
+            "longitudeBits": 4638951050880750254
+          },
+          {
+            "latitudeBits": 4630208012021371282,
+            "longitudeBits": 4638951044899406998
+          },
+          {
+            "latitudeBits": 4630208004984496865,
+            "longitudeBits": 4638951036455157697
+          },
+          {
+            "latitudeBits": 4630207995132872680,
+            "longitudeBits": 4638951028010908396
+          },
+          {
+            "latitudeBits": 4630207978244374077,
+            "longitudeBits": 4638951018511127932
+          },
+          {
+            "latitudeBits": 4630207945874751755,
+            "longitudeBits": 4638951000918941887
+          },
+          {
+            "latitudeBits": 4630207913505129434,
+            "longitudeBits": 4638950984734130727
+          },
+          {
+            "latitudeBits": 4630207895209255947,
+            "longitudeBits": 4638950976993568867
+          },
+          {
+            "latitudeBits": 4630207869876508044,
+            "longitudeBits": 4638950960105070264
+          },
+          {
+            "latitudeBits": 4630207850173259674,
+            "longitudeBits": 4638950945327633987
+          },
+          {
+            "latitudeBits": 4630207838914260605,
+            "longitudeBits": 4638950936179697244
+          },
+          {
+            "latitudeBits": 4630207803729888517,
+            "longitudeBits": 4638950901347168876
+          },
+          {
+            "latitudeBits": 4630207781211890380,
+            "longitudeBits": 4638950880236545623
+          },
+          {
+            "latitudeBits": 4630207771360266195,
+            "longitudeBits": 4638950870384921438
+          },
+          {
+            "latitudeBits": 4630207757286517359,
+            "longitudeBits": 4638950851737204231
+          },
+          {
+            "latitudeBits": 4630207738990643873,
+            "longitudeBits": 4638950829219206094
+          },
+          {
+            "latitudeBits": 4630207723509520154,
+            "longitudeBits": 4638950804941989353
+          },
+          {
+            "latitudeBits": 4630207705213646668,
+            "longitudeBits": 4638950773627898194
+          },
+          {
+            "latitudeBits": 4630207696769397366,
+            "longitudeBits": 4638950749702525173
+          },
+          {
+            "latitudeBits": 4630207699584147134,
+            "longitudeBits": 4638950736332463779
+          },
+          {
+            "latitudeBits": 4630207708028396435,
+            "longitudeBits": 4638950708888653550
+          },
+          {
+            "latitudeBits": 4630207710843146202,
+            "longitudeBits": 4638950702203622853
+          },
+          {
+            "latitudeBits": 4630207715065270853,
+            "longitudeBits": 4638950686370655413
+          },
+          {
+            "latitudeBits": 4630207726324269921,
+            "longitudeBits": 4638950659630532626
+          },
+          {
+            "latitudeBits": 4630207729139019688,
+            "longitudeBits": 4638950649778908441
+          },
+          {
+            "latitudeBits": 4630207726324269921,
+            "longitudeBits": 4638950640630971698
+          },
+          {
+            "latitudeBits": 4630207716472645736,
+            "longitudeBits": 4638950618112973561
+          },
+          {
+            "latitudeBits": 4630207709435771318,
+            "longitudeBits": 4638950612483474027
+          },
+          {
+            "latitudeBits": 4630207688325148065,
+            "longitudeBits": 4638950595594975424
+          },
+          {
+            "latitudeBits": 4630207658770275511,
+            "longitudeBits": 4638950570614071241
+          },
+          {
+            "latitudeBits": 4630207648918651326,
+            "longitudeBits": 4638950561817978219
+          },
+          {
+            "latitudeBits": 4630207632030152723,
+            "longitudeBits": 4638950548447916825
+          },
+          {
+            "latitudeBits": 4630207609512154586,
+            "longitudeBits": 4638950526281762409
+          },
+          {
+            "latitudeBits": 4630207599660530401,
+            "longitudeBits": 4638950516430138224
+          },
+          {
+            "latitudeBits": 4630207588401531333,
+            "longitudeBits": 4638950493208452646
+          },
+          {
+            "latitudeBits": 4630207586994156449,
+            "longitudeBits": 4638950487227109390
+          },
+          {
+            "latitudeBits": 4630207579957282032,
+            "longitudeBits": 4638950456616705673
+          },
+          {
+            "latitudeBits": 4630207571513032730,
+            "longitudeBits": 4638950436561613582
+          },
+          {
+            "latitudeBits": 4630207570105657847,
+            "longitudeBits": 4638950433043176374
+          },
+          {
+            "latitudeBits": 4630207565883533196,
+            "longitudeBits": 4638950422136021026
+          },
+          {
+            "latitudeBits": 4630207563068783429,
+            "longitudeBits": 4638950415099146608
+          },
+          {
+            "latitudeBits": 4630207546180284826,
+            "longitudeBits": 4638950390118242425
+          },
+          {
+            "latitudeBits": 4630207532106535991,
+            "longitudeBits": 4638950371470525218
+          },
+          {
+            "latitudeBits": 4630207516625412272,
+            "longitudeBits": 4638950352822808011
+          },
+          {
+            "latitudeBits": 4630207478626290416,
+            "longitudeBits": 4638950311305248946
+          },
+          {
+            "latitudeBits": 4630207446256668094,
+            "longitudeBits": 4638950273657970811
+          },
+          {
+            "latitudeBits": 4630207419516545306,
+            "longitudeBits": 4638950244103098257
+          },
+          {
+            "latitudeBits": 4630207395450434798,
+            "longitudeBits": 4638950216377813051
+          }
+        ],
+        "fromStationID": "004208",
+        "itemID": "jp-WILLER　TRAINS-宮津線#15",
+        "source": [
+          {
+            "latitudeBits": 4630208027502495001,
+            "longitudeBits": 4638951089407637691
+          },
+          {
+            "latitudeBits": 4630208021872995467,
+            "longitudeBits": 4638951073046904669
+          },
+          {
+            "latitudeBits": 4630208020465620584,
+            "longitudeBits": 4638951063547124205
+          },
+          {
+            "latitudeBits": 4630208014836121049,
+            "longitudeBits": 4638951050880750254
+          },
+          {
+            "latitudeBits": 4630208012021371282,
+            "longitudeBits": 4638951044899406998
+          },
+          {
+            "latitudeBits": 4630208004984496865,
+            "longitudeBits": 4638951036455157697
+          },
+          {
+            "latitudeBits": 4630207995132872680,
+            "longitudeBits": 4638951028010908396
+          },
+          {
+            "latitudeBits": 4630207978244374077,
+            "longitudeBits": 4638951018511127932
+          },
+          {
+            "latitudeBits": 4630207945874751755,
+            "longitudeBits": 4638951000918941887
+          },
+          {
+            "latitudeBits": 4630207913505129434,
+            "longitudeBits": 4638950984734130727
+          },
+          {
+            "latitudeBits": 4630207895209255947,
+            "longitudeBits": 4638950976993568867
+          },
+          {
+            "latitudeBits": 4630207869876508044,
+            "longitudeBits": 4638950960105070264
+          },
+          {
+            "latitudeBits": 4630207850173259674,
+            "longitudeBits": 4638950945327633987
+          },
+          {
+            "latitudeBits": 4630207838914260605,
+            "longitudeBits": 4638950936179697244
+          },
+          {
+            "latitudeBits": 4630207803729888517,
+            "longitudeBits": 4638950901347168876
+          },
+          {
+            "latitudeBits": 4630207781211890380,
+            "longitudeBits": 4638950880236545623
+          },
+          {
+            "latitudeBits": 4630207771360266195,
+            "longitudeBits": 4638950870384921438
+          },
+          {
+            "latitudeBits": 4630207757286517359,
+            "longitudeBits": 4638950851737204231
+          },
+          {
+            "latitudeBits": 4630207738990643873,
+            "longitudeBits": 4638950829219206094
+          },
+          {
+            "latitudeBits": 4630207723509520154,
+            "longitudeBits": 4638950804941989353
+          },
+          {
+            "latitudeBits": 4630207705213646668,
+            "longitudeBits": 4638950773627898194
+          },
+          {
+            "latitudeBits": 4630207696769397366,
+            "longitudeBits": 4638950749702525173
+          },
+          {
+            "latitudeBits": 4630207699584147134,
+            "longitudeBits": 4638950736332463779
+          },
+          {
+            "latitudeBits": 4630207708028396435,
+            "longitudeBits": 4638950708888653550
+          },
+          {
+            "latitudeBits": 4630207710843146202,
+            "longitudeBits": 4638950702203622853
+          },
+          {
+            "latitudeBits": 4630207715065270853,
+            "longitudeBits": 4638950686370655413
+          },
+          {
+            "latitudeBits": 4630207726324269921,
+            "longitudeBits": 4638950659630532626
+          },
+          {
+            "latitudeBits": 4630207729139019688,
+            "longitudeBits": 4638950649778908441
+          },
+          {
+            "latitudeBits": 4630207726324269921,
+            "longitudeBits": 4638950640630971698
+          },
+          {
+            "latitudeBits": 4630207716472645736,
+            "longitudeBits": 4638950618112973561
+          },
+          {
+            "latitudeBits": 4630207709435771318,
+            "longitudeBits": 4638950612483474027
+          },
+          {
+            "latitudeBits": 4630207688325148065,
+            "longitudeBits": 4638950595594975424
+          },
+          {
+            "latitudeBits": 4630207658770275511,
+            "longitudeBits": 4638950570614071241
+          },
+          {
+            "latitudeBits": 4630207648918651326,
+            "longitudeBits": 4638950561817978219
+          },
+          {
+            "latitudeBits": 4630207632030152723,
+            "longitudeBits": 4638950548447916825
+          },
+          {
+            "latitudeBits": 4630207609512154586,
+            "longitudeBits": 4638950526281762409
+          },
+          {
+            "latitudeBits": 4630207599660530401,
+            "longitudeBits": 4638950516430138224
+          },
+          {
+            "latitudeBits": 4630207588401531333,
+            "longitudeBits": 4638950493208452646
+          },
+          {
+            "latitudeBits": 4630207586994156449,
+            "longitudeBits": 4638950487227109390
+          },
+          {
+            "latitudeBits": 4630207579957282032,
+            "longitudeBits": 4638950456616705673
+          },
+          {
+            "latitudeBits": 4630207571513032730,
+            "longitudeBits": 4638950436561613582
+          },
+          {
+            "latitudeBits": 4630207570105657847,
+            "longitudeBits": 4638950433043176374
+          },
+          {
+            "latitudeBits": 4630207565883533196,
+            "longitudeBits": 4638950422136021026
+          },
+          {
+            "latitudeBits": 4630207563068783429,
+            "longitudeBits": 4638950415099146608
+          },
+          {
+            "latitudeBits": 4630207546180284826,
+            "longitudeBits": 4638950390118242425
+          },
+          {
+            "latitudeBits": 4630207532106535991,
+            "longitudeBits": 4638950371470525218
+          },
+          {
+            "latitudeBits": 4630207516625412272,
+            "longitudeBits": 4638950352822808011
+          },
+          {
+            "latitudeBits": 4630207478626290416,
+            "longitudeBits": 4638950311305248946
+          },
+          {
+            "latitudeBits": 4630207446256668094,
+            "longitudeBits": 4638950273657970811
+          },
+          {
+            "latitudeBits": 4630207419516545306,
+            "longitudeBits": 4638950244103098257
+          },
+          {
+            "latitudeBits": 4630207395450434798,
+            "longitudeBits": 4638950216377813051
+          }
+        ],
+        "toStationID": "004231"
+      },
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "viewpoints": [
+        {
+          "coordinate": {
+            "latitude": 35.60679,
+            "longitude": 134.919925
+          },
+          "distanceMetres": 0,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 0
+        },
+        {
+          "coordinate": {
+            "latitude": 35.60571326548644,
+            "longitude": 134.91636537396997
+          },
+          "distanceMetres": 350,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 1
+        },
+        {
+          "coordinate": {
+            "latitude": 35.60477003062752,
+            "longitude": 134.91267784142494
+          },
+          "distanceMetres": 700,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 2
+        },
+        {
+          "coordinate": {
+            "latitude": 35.604544765710685,
+            "longitude": 134.9088485160388
+          },
+          "distanceMetres": 1050,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 3
+        },
+        {
+          "coordinate": {
+            "latitude": 35.60414457100866,
+            "longitude": 134.90508918190991
+          },
+          "distanceMetres": 1400,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 4
+        },
+        {
+          "coordinate": {
+            "latitude": 35.60354427510982,
+            "longitude": 134.901312750994
+          },
+          "distanceMetres": 1750,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 5
+        },
+        {
+          "coordinate": {
+            "latitude": 35.60283338645186,
+            "longitude": 134.89754661927503
+          },
+          "distanceMetres": 2100,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 6
+        },
+        {
+          "coordinate": {
+            "latitude": 35.602299,
+            "longitude": 134.895112
+          },
+          "distanceMetres": 2327.9968647965297,
+          "itemID": "jp-WILLER　TRAINS-宮津線#15",
+          "pointOrdinal": 7
+        }
+      ]
+    },
+    {
+      "geometryStatus": "available",
+      "identity": {
+        "display": [
+          {
+            "latitudeBits": 4630193917161912496,
+            "longitudeBits": 4638964239566705892
+          },
+          {
+            "latitudeBits": 4630193976271657606,
+            "longitudeBits": 4638964240094471473
+          },
+          {
+            "latitudeBits": 4630194010048654811,
+            "longitudeBits": 4638964240446315194
+          },
+          {
+            "latitudeBits": 4630194036788777598,
+            "longitudeBits": 4638964240094471473
+          },
+          {
+            "latitudeBits": 4630194083232148756,
+            "longitudeBits": 4638964237983409148
+          },
+          {
+            "latitudeBits": 4630194114194396194,
+            "longitudeBits": 4638964235520503102
+          },
+          {
+            "latitudeBits": 4630194153600892933,
+            "longitudeBits": 4638964230594691009
+          },
+          {
+            "latitudeBits": 4630194187377890139,
+            "longitudeBits": 4638964225668878917
+          },
+          {
+            "latitudeBits": 4630194204266388741,
+            "longitudeBits": 4638964222150441708
+          },
+          {
+            "latitudeBits": 4630194249302385015,
+            "longitudeBits": 4638964211595130081
+          },
+          {
+            "latitudeBits": 4630194264783508734,
+            "longitudeBits": 4638964206317474268
+          },
+          {
+            "latitudeBits": 4630194283079382220,
+            "longitudeBits": 4638964199984287292
+          },
+          {
+            "latitudeBits": 4630194305597380357,
+            "longitudeBits": 4638964190836350549
+          },
+          {
+            "latitudeBits": 4630194333744878028,
+            "longitudeBits": 4638964175707070551
+          },
+          {
+            "latitudeBits": 4630194357670251048,
+            "longitudeBits": 4638964160577790552
+          },
+          {
+            "latitudeBits": 4630194394261998021,
+            "longitudeBits": 4638964134893198927
+          },
+          {
+            "latitudeBits": 4630194406928371973,
+            "longitudeBits": 4638964126448949626
+          },
+          {
+            "latitudeBits": 4630194411150496623,
+            "longitudeBits": 4638964123634199859
+          },
+          {
+            "latitudeBits": 4630194449149618479,
+            "longitudeBits": 4638964099005139397
+          },
+          {
+            "latitudeBits": 4630194482926615685,
+            "longitudeBits": 4638964074024235214
+          },
+          {
+            "latitudeBits": 4630194519518362657,
+            "longitudeBits": 4638964049395174752
+          },
+          {
+            "latitudeBits": 4630194537814236143,
+            "longitudeBits": 4638964037784331962
+          },
+          {
+            "latitudeBits": 4630194564554358931,
+            "longitudeBits": 4638964019488458476
+          },
+          {
+            "latitudeBits": 4630194606775605437,
+            "longitudeBits": 4638963990989117084
+          },
+          {
+            "latitudeBits": 4630194654626351478,
+            "longitudeBits": 4638963958267651042
+          },
+          {
+            "latitudeBits": 4630194677144349615,
+            "longitudeBits": 4638963942786527322
+          },
+          {
+            "latitudeBits": 4630194695440223101,
+            "longitudeBits": 4638963930120153370
+          },
+          {
+            "latitudeBits": 4630194706699222170,
+            "longitudeBits": 4638963922379591511
+          },
+          {
+            "latitudeBits": 4630194710921346820,
+            "longitudeBits": 4638963918861154302
+          },
+          {
+            "latitudeBits": 4630194716550846355,
+            "longitudeBits": 4638963916046404535
+          },
+          {
+            "latitudeBits": 4630194727809845423,
+            "longitudeBits": 4638963908305842675
+          },
+          {
+            "latitudeBits": 4630194736254094724,
+            "longitudeBits": 4638963902324499420
+          },
+          {
+            "latitudeBits": 4630194746105718909,
+            "longitudeBits": 4638963897046843607
+          },
+          {
+            "latitudeBits": 4630194765808967279,
+            "longitudeBits": 4638963887547063143
+          },
+          {
+            "latitudeBits": 4630194791141715183,
+            "longitudeBits": 4638963876991751516
+          },
+          {
+            "latitudeBits": 4630194851658835176,
+            "longitudeBits": 4638963857288503147
+          },
+          {
+            "latitudeBits": 4630194913583330052,
+            "longitudeBits": 4638963837937098498
+          },
+          {
+            "latitudeBits": 4630194951582451908,
+            "longitudeBits": 4638963825270724546
+          },
+          {
+            "latitudeBits": 4630195019136446319,
+            "longitudeBits": 4638963803104570130
+          },
+          {
+            "latitudeBits": 4630195069801942126,
+            "longitudeBits": 4638963786919758969
+          },
+          {
+            "latitudeBits": 4630195109208438866,
+            "longitudeBits": 4638963774253385017
+          },
+          {
+            "latitudeBits": 4630195127504312352,
+            "longitudeBits": 4638963768623885483
+          },
+          {
+            "latitudeBits": 4630195217998517365,
+            "longitudeBits": 4638963741707840835
+          }
+        ],
+        "fromStationID": "004507",
+        "itemID": "jp-WILLER　TRAINS-宮津線#3",
+        "source": [
+          {
+            "latitudeBits": 4630193917161912496,
+            "longitudeBits": 4638964239566705892
+          },
+          {
+            "latitudeBits": 4630193976271657606,
+            "longitudeBits": 4638964240094471473
+          },
+          {
+            "latitudeBits": 4630194010048654811,
+            "longitudeBits": 4638964240446315194
+          },
+          {
+            "latitudeBits": 4630194036788777598,
+            "longitudeBits": 4638964240094471473
+          },
+          {
+            "latitudeBits": 4630194083232148756,
+            "longitudeBits": 4638964237983409148
+          },
+          {
+            "latitudeBits": 4630194114194396194,
+            "longitudeBits": 4638964235520503102
+          },
+          {
+            "latitudeBits": 4630194153600892933,
+            "longitudeBits": 4638964230594691009
+          },
+          {
+            "latitudeBits": 4630194187377890139,
+            "longitudeBits": 4638964225668878917
+          },
+          {
+            "latitudeBits": 4630194204266388741,
+            "longitudeBits": 4638964222150441708
+          },
+          {
+            "latitudeBits": 4630194249302385015,
+            "longitudeBits": 4638964211595130081
+          },
+          {
+            "latitudeBits": 4630194264783508734,
+            "longitudeBits": 4638964206317474268
+          },
+          {
+            "latitudeBits": 4630194283079382220,
+            "longitudeBits": 4638964199984287292
+          },
+          {
+            "latitudeBits": 4630194305597380357,
+            "longitudeBits": 4638964190836350549
+          },
+          {
+            "latitudeBits": 4630194333744878028,
+            "longitudeBits": 4638964175707070551
+          },
+          {
+            "latitudeBits": 4630194357670251048,
+            "longitudeBits": 4638964160577790552
+          },
+          {
+            "latitudeBits": 4630194394261998021,
+            "longitudeBits": 4638964134893198927
+          },
+          {
+            "latitudeBits": 4630194406928371973,
+            "longitudeBits": 4638964126448949626
+          },
+          {
+            "latitudeBits": 4630194411150496623,
+            "longitudeBits": 4638964123634199859
+          },
+          {
+            "latitudeBits": 4630194449149618479,
+            "longitudeBits": 4638964099005139397
+          },
+          {
+            "latitudeBits": 4630194482926615685,
+            "longitudeBits": 4638964074024235214
+          },
+          {
+            "latitudeBits": 4630194519518362657,
+            "longitudeBits": 4638964049395174752
+          },
+          {
+            "latitudeBits": 4630194537814236143,
+            "longitudeBits": 4638964037784331962
+          },
+          {
+            "latitudeBits": 4630194564554358931,
+            "longitudeBits": 4638964019488458476
+          },
+          {
+            "latitudeBits": 4630194606775605437,
+            "longitudeBits": 4638963990989117084
+          },
+          {
+            "latitudeBits": 4630194654626351478,
+            "longitudeBits": 4638963958267651042
+          },
+          {
+            "latitudeBits": 4630194677144349615,
+            "longitudeBits": 4638963942786527322
+          },
+          {
+            "latitudeBits": 4630194695440223101,
+            "longitudeBits": 4638963930120153370
+          },
+          {
+            "latitudeBits": 4630194706699222170,
+            "longitudeBits": 4638963922379591511
+          },
+          {
+            "latitudeBits": 4630194710921346820,
+            "longitudeBits": 4638963918861154302
+          },
+          {
+            "latitudeBits": 4630194716550846355,
+            "longitudeBits": 4638963916046404535
+          },
+          {
+            "latitudeBits": 4630194727809845423,
+            "longitudeBits": 4638963908305842675
+          },
+          {
+            "latitudeBits": 4630194736254094724,
+            "longitudeBits": 4638963902324499420
+          },
+          {
+            "latitudeBits": 4630194746105718909,
+            "longitudeBits": 4638963897046843607
+          },
+          {
+            "latitudeBits": 4630194765808967279,
+            "longitudeBits": 4638963887547063143
+          },
+          {
+            "latitudeBits": 4630194791141715183,
+            "longitudeBits": 4638963876991751516
+          },
+          {
+            "latitudeBits": 4630194851658835176,
+            "longitudeBits": 4638963857288503147
+          },
+          {
+            "latitudeBits": 4630194913583330052,
+            "longitudeBits": 4638963837937098498
+          },
+          {
+            "latitudeBits": 4630194951582451908,
+            "longitudeBits": 4638963825270724546
+          },
+          {
+            "latitudeBits": 4630195019136446319,
+            "longitudeBits": 4638963803104570130
+          },
+          {
+            "latitudeBits": 4630195069801942126,
+            "longitudeBits": 4638963786919758969
+          },
+          {
+            "latitudeBits": 4630195109208438866,
+            "longitudeBits": 4638963774253385017
+          },
+          {
+            "latitudeBits": 4630195127504312352,
+            "longitudeBits": 4638963768623885483
+          },
+          {
+            "latitudeBits": 4630195217998517365,
+            "longitudeBits": 4638963741707840835
+          }
+        ],
+        "toStationID": "004469"
+      },
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "viewpoints": [
+        {
+          "coordinate": {
+            "latitude": 35.50653,
+            "longitude": 135.293675
+          },
+          "distanceMetres": 0,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 0
+        },
+        {
+          "coordinate": {
+            "latitude": 35.50928710539614,
+            "longitude": 135.29229470374852
+          },
+          "distanceMetres": 350,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 1
+        },
+        {
+          "coordinate": {
+            "latitude": 35.51061592141504,
+            "longitude": 135.28879252072645
+          },
+          "distanceMetres": 700,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 2
+        },
+        {
+          "coordinate": {
+            "latitude": 35.511918246902994,
+            "longitude": 135.28527232122596
+          },
+          "distanceMetres": 1050,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 3
+        },
+        {
+          "coordinate": {
+            "latitude": 35.513700061051395,
+            "longitude": 135.28213991902575
+          },
+          "distanceMetres": 1400,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 4
+        },
+        {
+          "coordinate": {
+            "latitude": 35.515773,
+            "longitude": 135.279525
+          },
+          "distanceMetres": 1730.4451179998018,
+          "itemID": "jp-WILLER　TRAINS-宮津線#3",
+          "pointOrdinal": 5
+        }
+      ]
+    },
+    {
+      "geometryStatus": "available",
+      "identity": {
+        "display": [
+          {
+            "latitudeBits": 4630197845145212493,
+            "longitudeBits": 4638960942791041168
+          },
+          {
+            "latitudeBits": 4630197786035467384,
+            "longitudeBits": 4638960920800808613
+          },
+          {
+            "latitudeBits": 4630197763517469247,
+            "longitudeBits": 4638960912356559311
+          },
+          {
+            "latitudeBits": 4630197748036345528,
+            "longitudeBits": 4638960906375216056
+          },
+          {
+            "latitudeBits": 4630197729740472042,
+            "longitudeBits": 4638960899690185359
+          },
+          {
+            "latitudeBits": 4630197686111850652,
+            "longitudeBits": 4638960882097999315
+          },
+          {
+            "latitudeBits": 4630197650927478563,
+            "longitudeBits": 4638960868727937921
+          },
+          {
+            "latitudeBits": 4630197614335731591,
+            "longitudeBits": 4638960854654189086
+          },
+          {
+            "latitudeBits": 4630197587595608803,
+            "longitudeBits": 4638960845154408622
+          },
+          {
+            "latitudeBits": 4630197570707110201,
+            "longitudeBits": 4638960838821221646
+          },
+          {
+            "latitudeBits": 4630197548189112064,
+            "longitudeBits": 4638960830728816065
+          },
+          {
+            "latitudeBits": 4630197529893238578,
+            "longitudeBits": 4638960825099316531
+          },
+          {
+            "latitudeBits": 4630197513004739975,
+            "longitudeBits": 4638960819117973276
+          },
+          {
+            "latitudeBits": 4630197491894116722,
+            "longitudeBits": 4638960812081098858
+          },
+          {
+            "latitudeBits": 4630197455302369749,
+            "longitudeBits": 4638960801525787232
+          },
+          {
+            "latitudeBits": 4630197428562246962,
+            "longitudeBits": 4638960792729694209
+          },
+          {
+            "latitudeBits": 4630197387748375339,
+            "longitudeBits": 4638960781118851420
+          },
+          {
+            "latitudeBits": 4630197338490254414,
+            "longitudeBits": 4638960767748790026
+          },
+          {
+            "latitudeBits": 4630197325823880462,
+            "longitudeBits": 4638960763174821655
+          },
+          {
+            "latitudeBits": 4630197296269007908,
+            "longitudeBits": 4638960754378728632
+          },
+          {
+            "latitudeBits": 4630197270936260004,
+            "longitudeBits": 4638960745230791889
+          },
+          {
+            "latitudeBits": 4630197255455136285,
+            "longitudeBits": 4638960739249448634
+          },
+          {
+            "latitudeBits": 4630197244196137216,
+            "longitudeBits": 4638960732916261658
+          },
+          {
+            "latitudeBits": 4630197231529763264,
+            "longitudeBits": 4638960725879387241
+          },
+          {
+            "latitudeBits": 4630197214641264662,
+            "longitudeBits": 4638960715675919335
+          },
+          {
+            "latitudeBits": 4630197200567515826,
+            "longitudeBits": 4638960705472451429
+          },
+          {
+            "latitudeBits": 4630197190715891641,
+            "longitudeBits": 4638960694213452361
+          },
+          {
+            "latitudeBits": 4630197187901141874,
+            "longitudeBits": 4638960687880265385
+          },
+          {
+            "latitudeBits": 4630197186493766991,
+            "longitudeBits": 4638960681898922129
+          },
+          {
+            "latitudeBits": 4630197182271642340,
+            "longitudeBits": 4638960669936235619
+          },
+          {
+            "latitudeBits": 4630197183679017223,
+            "longitudeBits": 4638960649529299808
+          },
+          {
+            "latitudeBits": 4630197186493766991,
+            "longitudeBits": 4638960644955331436
+          },
+          {
+            "latitudeBits": 4630197189308516758,
+            "longitudeBits": 4638960640381363065
+          },
+          {
+            "latitudeBits": 4630197193530641408,
+            "longitudeBits": 4638960636511082135
+          },
+          {
+            "latitudeBits": 4630197201974890710,
+            "longitudeBits": 4638960629826051438
+          },
+          {
+            "latitudeBits": 4630197213233889778,
+            "longitudeBits": 4638960622437333299
+          },
+          {
+            "latitudeBits": 4630197227307638614,
+            "longitudeBits": 4638960613993083998
+          },
+          {
+            "latitudeBits": 4630197251233011634,
+            "longitudeBits": 4638960601678553767
+          },
+          {
+            "latitudeBits": 4630197262492010702,
+            "longitudeBits": 4638960597808272837
+          },
+          {
+            "latitudeBits": 4630197273751009771,
+            "longitudeBits": 4638960593586148187
+          },
+          {
+            "latitudeBits": 4630197283602633956,
+            "longitudeBits": 4638960589715867257
+          },
+          {
+            "latitudeBits": 4630197296269007908,
+            "longitudeBits": 4638960586197430048
+          },
+          {
+            "latitudeBits": 4630197307528006976,
+            "longitudeBits": 4638960583382680281
+          },
+          {
+            "latitudeBits": 4630197314564881394,
+            "longitudeBits": 4638960581623461676
+          },
+          {
+            "latitudeBits": 4630197325823880462,
+            "longitudeBits": 4638960578456868188
+          },
+          {
+            "latitudeBits": 4630197335675504647,
+            "longitudeBits": 4638960575993962142
+          },
+          {
+            "latitudeBits": 4630197359600877668,
+            "longitudeBits": 4638960571068150050
+          },
+          {
+            "latitudeBits": 4630197375082001387,
+            "longitudeBits": 4638960568605244003
+          },
+          {
+            "latitudeBits": 4630197410266373476,
+            "longitudeBits": 4638960563327588190
+          },
+          {
+            "latitudeBits": 4630197422932747428,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630197439821246030,
+            "longitudeBits": 4638960560864682144
+          },
+          {
+            "latitudeBits": 4630197453894994866,
+            "longitudeBits": 4638960560512838423
+          },
+          {
+            "latitudeBits": 4630197470783493468,
+            "longitudeBits": 4638960559457307260
+          },
+          {
+            "latitudeBits": 4630197483449867420,
+            "longitudeBits": 4638960558753619819
+          },
+          {
+            "latitudeBits": 4630197493301491605,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630197510189990208,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197520041614393,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197535522738112,
+            "longitudeBits": 4638960557698088656
+          },
+          {
+            "latitudeBits": 4630197562262860899,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197583373484153,
+            "longitudeBits": 4638960557698088656
+          },
+          {
+            "latitudeBits": 4630197646705353912,
+            "longitudeBits": 4638960556642557493
+          },
+          {
+            "latitudeBits": 4630197665001227399,
+            "longitudeBits": 4638960556290713772
+          },
+          {
+            "latitudeBits": 4630197715666723207,
+            "longitudeBits": 4638960555587026331
+          },
+          {
+            "latitudeBits": 4630197762110094364,
+            "longitudeBits": 4638960553475964005
+          },
+          {
+            "latitudeBits": 4630197770554343665,
+            "longitudeBits": 4638960553124120284
+          },
+          {
+            "latitudeBits": 4630197818405089706,
+            "longitudeBits": 4638960550661214238
+          },
+          {
+            "latitudeBits": 4630197898625458069,
+            "longitudeBits": 4638960546087245867
+          },
+          {
+            "latitudeBits": 4630197953513078527,
+            "longitudeBits": 4638960542920652379
+          },
+          {
+            "latitudeBits": 4630197990104825499,
+            "longitudeBits": 4638960540809590053
+          },
+          {
+            "latitudeBits": 4630198005585949219,
+            "longitudeBits": 4638960540457746332
+          },
+          {
+            "latitudeBits": 4630198052029320376,
+            "longitudeBits": 4638960541513277495
+          },
+          {
+            "latitudeBits": 4630198066103069211,
+            "longitudeBits": 4638960541865121216
+          },
+          {
+            "latitudeBits": 4630198094250566882,
+            "longitudeBits": 4638960542568808658
+          },
+          {
+            "latitudeBits": 4630198118175939903,
+            "longitudeBits": 4638960543272496099
+          },
+          {
+            "latitudeBits": 4630198151952937108,
+            "longitudeBits": 4638960544679870983
+          },
+          {
+            "latitudeBits": 4630198202618432916,
+            "longitudeBits": 4638960546790933308
+          },
+          {
+            "latitudeBits": 4630198229358555704,
+            "longitudeBits": 4638960547494620750
+          },
+          {
+            "latitudeBits": 4630198291283050580,
+            "longitudeBits": 4638960550661214238
+          },
+          {
+            "latitudeBits": 4630198320837923135,
+            "longitudeBits": 4638960552420432843
+          },
+          {
+            "latitudeBits": 4630198341948546388,
+            "longitudeBits": 4638960553475964005
+          },
+          {
+            "latitudeBits": 4630198360244419874,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198374318168710,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198385577167778,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198434835288702,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198467204911024,
+            "longitudeBits": 4638960554531495168
+          },
+          {
+            "latitudeBits": 4630198531944155667,
+            "longitudeBits": 4638960555235182610
+          },
+          {
+            "latitudeBits": 4630198572758027291,
+            "longitudeBits": 4638960555938870051
+          },
+          {
+            "latitudeBits": 4630198636089897050,
+            "longitudeBits": 4638960555938870051
+          },
+          {
+            "latitudeBits": 4630198695199642160,
+            "longitudeBits": 4638960556642557493
+          },
+          {
+            "latitudeBits": 4630198758531511920,
+            "longitudeBits": 4638960557346244935
+          },
+          {
+            "latitudeBits": 4630198859862503535,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198902083750042,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198924601748179,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198940082871898,
+            "longitudeBits": 4638960559105463539
+          },
+          {
+            "latitudeBits": 4630198954156620733,
+            "longitudeBits": 4638960559457307260
+          },
+          {
+            "latitudeBits": 4630198976674618870,
+            "longitudeBits": 4638960560160994702
+          },
+          {
+            "latitudeBits": 4630199018895865377,
+            "longitudeBits": 4638960560864682144
+          },
+          {
+            "latitudeBits": 4630199054080237466,
+            "longitudeBits": 4638960561568369586
+          },
+          {
+            "latitudeBits": 4630199118819482109,
+            "longitudeBits": 4638960561920213307
+          },
+          {
+            "latitudeBits": 4630199142744855130,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630199196225100705,
+            "longitudeBits": 4638960562623900748
+          },
+          {
+            "latitudeBits": 4630199228594723026,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630199251112721163,
+            "longitudeBits": 4638960560512838423
+          },
+          {
+            "latitudeBits": 4630199329925714642,
+            "longitudeBits": 4638960542568808658
+          },
+          {
+            "latitudeBits": 4630199345406838361,
+            "longitudeBits": 4638960539402215170
+          },
+          {
+            "latitudeBits": 4630199352443712779,
+            "longitudeBits": 4638960537642996565
+          },
+          {
+            "latitudeBits": 4630199370739586265,
+            "longitudeBits": 4638960532717184473
+          },
+          {
+            "latitudeBits": 4630199393257584402,
+            "longitudeBits": 4638960526032153776
+          },
+          {
+            "latitudeBits": 4630199412960832772,
+            "longitudeBits": 4638960519698966800
+          },
+          {
+            "latitudeBits": 4630199453774704395,
+            "longitudeBits": 4638960508088124011
+          },
+          {
+            "latitudeBits": 4630199517106574155,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630199546661446709,
+            "longitudeBits": 4638960485570125874
+          },
+          {
+            "latitudeBits": 4630199566364695079,
+            "longitudeBits": 4638960483107219828
+          },
+          {
+            "latitudeBits": 4630199588882693216,
+            "longitudeBits": 4638960480292470060
+          },
+          {
+            "latitudeBits": 4630199607178566702,
+            "longitudeBits": 4638960479236938898
+          },
+          {
+            "latitudeBits": 4630199639548189024,
+            "longitudeBits": 4638960476774032852
+          },
+          {
+            "latitudeBits": 4630199684584185298,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630199697250559250,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630199747916055058,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630199763397178777,
+            "longitudeBits": 4638960475718501689
+          },
+          {
+            "latitudeBits": 4630199788729926681,
+            "longitudeBits": 4638960476774032852
+          },
+          {
+            "latitudeBits": 4630199821099549002,
+            "longitudeBits": 4638960478533251456
+          },
+          {
+            "latitudeBits": 4630199867542920160,
+            "longitudeBits": 4638960482051688665
+          },
+          {
+            "latitudeBits": 4630199892875668064,
+            "longitudeBits": 4638960485570125874
+          },
+          {
+            "latitudeBits": 4630199912578916433,
+            "longitudeBits": 4638960488384875641
+          },
+          {
+            "latitudeBits": 4630199922430540618,
+            "longitudeBits": 4638960490144094245
+          },
+          {
+            "latitudeBits": 4630199933689539687,
+            "longitudeBits": 4638960491199625408
+          },
+          {
+            "latitudeBits": 4630199956207537823,
+            "longitudeBits": 4638960492255156571
+          },
+          {
+            "latitudeBits": 4630199968873911775,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630199981540285727,
+            "longitudeBits": 4638960493310687733
+          },
+          {
+            "latitudeBits": 4630199995614034563,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630200011095158282,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630200030798406652,
+            "longitudeBits": 4638960492607000292
+          },
+          {
+            "latitudeBits": 4630200047686905254,
+            "longitudeBits": 4638960492255156571
+          },
+          {
+            "latitudeBits": 4630200057538529439,
+            "longitudeBits": 4638960491551469129
+          },
+          {
+            "latitudeBits": 4630200067390153624,
+            "longitudeBits": 4638960491551469129
+          },
+          {
+            "latitudeBits": 4630200082871277343,
+            "longitudeBits": 4638960490144094245
+          },
+          {
+            "latitudeBits": 4630200099759775946,
+            "longitudeBits": 4638960489088563083
+          },
+          {
+            "latitudeBits": 4630200126499898733,
+            "longitudeBits": 4638960486273813316
+          },
+          {
+            "latitudeBits": 4630200243312014068,
+            "longitudeBits": 4638960476422189131
+          },
+          {
+            "latitudeBits": 4630200288348010342,
+            "longitudeBits": 4638960472903751922
+          },
+          {
+            "latitudeBits": 4630200308051258712,
+            "longitudeBits": 4638960471496377038
+          },
+          {
+            "latitudeBits": 4630200320717632664,
+            "longitudeBits": 4638960470792689596
+          },
+          {
+            "latitudeBits": 4630200336198756383,
+            "longitudeBits": 4638960470089002155
+          },
+          {
+            "latitudeBits": 4630200351679880102,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200372790503355,
+            "longitudeBits": 4638960469385314713
+          },
+          {
+            "latitudeBits": 4630200392493751725,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200403752750793,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200415011749862,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200431900248464,
+            "longitudeBits": 4638960470792689596
+          },
+          {
+            "latitudeBits": 4630200441751872649,
+            "longitudeBits": 4638960471144533317
+          },
+          {
+            "latitudeBits": 4630200462862495903,
+            "longitudeBits": 4638960472200064480
+          },
+          {
+            "latitudeBits": 4630200493824743341,
+            "longitudeBits": 4638960473959283084
+          },
+          {
+            "latitudeBits": 4630200545897614032,
+            "longitudeBits": 4638960475014814247
+          },
+          {
+            "latitudeBits": 4630200569822987053,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630200586711485655,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200597970484724,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200614858983326,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200635969606580,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630200648635980532,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630200657080229833,
+            "longitudeBits": 4638960473959283084
+          },
+          {
+            "latitudeBits": 4630200672561353552,
+            "longitudeBits": 4638960472903751922
+          },
+          {
+            "latitudeBits": 4630200695079351689,
+            "longitudeBits": 4638960470440845876
+          },
+          {
+            "latitudeBits": 4630200706338350757,
+            "longitudeBits": 4638960468329783550
+          },
+          {
+            "latitudeBits": 4630200717597349826,
+            "longitudeBits": 4638960466218721225
+          },
+          {
+            "latitudeBits": 4630200730263723778,
+            "longitudeBits": 4638960463403971458
+          },
+          {
+            "latitudeBits": 4630200741522722846,
+            "longitudeBits": 4638960460941065412
+          },
+          {
+            "latitudeBits": 4630200752781721915,
+            "longitudeBits": 4638960458126315645
+          },
+          {
+            "latitudeBits": 4630200773892345168,
+            "longitudeBits": 4638960452496816110
+          },
+          {
+            "latitudeBits": 4630200804854592606,
+            "longitudeBits": 4638960442997035646
+          },
+          {
+            "latitudeBits": 4630200851297963763,
+            "longitudeBits": 4638960427515911927
+          },
+          {
+            "latitudeBits": 4630200889297085619,
+            "longitudeBits": 4638960414145850533
+          },
+          {
+            "latitudeBits": 4630200937147831660,
+            "longitudeBits": 4638960397257351931
+          },
+          {
+            "latitudeBits": 4630200976554328400,
+            "longitudeBits": 4638960380720697049
+          },
+          {
+            "latitudeBits": 4630201011738700488,
+            "longitudeBits": 4638960365591417051
+          },
+          {
+            "latitudeBits": 4630201072959507923,
+            "longitudeBits": 4638960341138278449
+          }
+        ],
+        "fromStationID": "004419",
+        "itemID": "jp-WILLER　TRAINS-宮津線#6",
+        "source": [
+          {
+            "latitudeBits": 4630197845145212493,
+            "longitudeBits": 4638960942791041168
+          },
+          {
+            "latitudeBits": 4630197786035467384,
+            "longitudeBits": 4638960920800808613
+          },
+          {
+            "latitudeBits": 4630197763517469247,
+            "longitudeBits": 4638960912356559311
+          },
+          {
+            "latitudeBits": 4630197748036345528,
+            "longitudeBits": 4638960906375216056
+          },
+          {
+            "latitudeBits": 4630197729740472042,
+            "longitudeBits": 4638960899690185359
+          },
+          {
+            "latitudeBits": 4630197686111850652,
+            "longitudeBits": 4638960882097999315
+          },
+          {
+            "latitudeBits": 4630197650927478563,
+            "longitudeBits": 4638960868727937921
+          },
+          {
+            "latitudeBits": 4630197614335731591,
+            "longitudeBits": 4638960854654189086
+          },
+          {
+            "latitudeBits": 4630197587595608803,
+            "longitudeBits": 4638960845154408622
+          },
+          {
+            "latitudeBits": 4630197570707110201,
+            "longitudeBits": 4638960838821221646
+          },
+          {
+            "latitudeBits": 4630197548189112064,
+            "longitudeBits": 4638960830728816065
+          },
+          {
+            "latitudeBits": 4630197529893238578,
+            "longitudeBits": 4638960825099316531
+          },
+          {
+            "latitudeBits": 4630197513004739975,
+            "longitudeBits": 4638960819117973276
+          },
+          {
+            "latitudeBits": 4630197491894116722,
+            "longitudeBits": 4638960812081098858
+          },
+          {
+            "latitudeBits": 4630197455302369749,
+            "longitudeBits": 4638960801525787232
+          },
+          {
+            "latitudeBits": 4630197428562246962,
+            "longitudeBits": 4638960792729694209
+          },
+          {
+            "latitudeBits": 4630197387748375339,
+            "longitudeBits": 4638960781118851420
+          },
+          {
+            "latitudeBits": 4630197338490254414,
+            "longitudeBits": 4638960767748790026
+          },
+          {
+            "latitudeBits": 4630197325823880462,
+            "longitudeBits": 4638960763174821655
+          },
+          {
+            "latitudeBits": 4630197296269007908,
+            "longitudeBits": 4638960754378728632
+          },
+          {
+            "latitudeBits": 4630197270936260004,
+            "longitudeBits": 4638960745230791889
+          },
+          {
+            "latitudeBits": 4630197255455136285,
+            "longitudeBits": 4638960739249448634
+          },
+          {
+            "latitudeBits": 4630197244196137216,
+            "longitudeBits": 4638960732916261658
+          },
+          {
+            "latitudeBits": 4630197231529763264,
+            "longitudeBits": 4638960725879387241
+          },
+          {
+            "latitudeBits": 4630197214641264662,
+            "longitudeBits": 4638960715675919335
+          },
+          {
+            "latitudeBits": 4630197200567515826,
+            "longitudeBits": 4638960705472451429
+          },
+          {
+            "latitudeBits": 4630197190715891641,
+            "longitudeBits": 4638960694213452361
+          },
+          {
+            "latitudeBits": 4630197187901141874,
+            "longitudeBits": 4638960687880265385
+          },
+          {
+            "latitudeBits": 4630197186493766991,
+            "longitudeBits": 4638960681898922129
+          },
+          {
+            "latitudeBits": 4630197182271642340,
+            "longitudeBits": 4638960669936235619
+          },
+          {
+            "latitudeBits": 4630197183679017223,
+            "longitudeBits": 4638960649529299808
+          },
+          {
+            "latitudeBits": 4630197186493766991,
+            "longitudeBits": 4638960644955331436
+          },
+          {
+            "latitudeBits": 4630197189308516758,
+            "longitudeBits": 4638960640381363065
+          },
+          {
+            "latitudeBits": 4630197193530641408,
+            "longitudeBits": 4638960636511082135
+          },
+          {
+            "latitudeBits": 4630197201974890710,
+            "longitudeBits": 4638960629826051438
+          },
+          {
+            "latitudeBits": 4630197213233889778,
+            "longitudeBits": 4638960622437333299
+          },
+          {
+            "latitudeBits": 4630197227307638614,
+            "longitudeBits": 4638960613993083998
+          },
+          {
+            "latitudeBits": 4630197251233011634,
+            "longitudeBits": 4638960601678553767
+          },
+          {
+            "latitudeBits": 4630197262492010702,
+            "longitudeBits": 4638960597808272837
+          },
+          {
+            "latitudeBits": 4630197273751009771,
+            "longitudeBits": 4638960593586148187
+          },
+          {
+            "latitudeBits": 4630197283602633956,
+            "longitudeBits": 4638960589715867257
+          },
+          {
+            "latitudeBits": 4630197296269007908,
+            "longitudeBits": 4638960586197430048
+          },
+          {
+            "latitudeBits": 4630197307528006976,
+            "longitudeBits": 4638960583382680281
+          },
+          {
+            "latitudeBits": 4630197314564881394,
+            "longitudeBits": 4638960581623461676
+          },
+          {
+            "latitudeBits": 4630197325823880462,
+            "longitudeBits": 4638960578456868188
+          },
+          {
+            "latitudeBits": 4630197335675504647,
+            "longitudeBits": 4638960575993962142
+          },
+          {
+            "latitudeBits": 4630197359600877668,
+            "longitudeBits": 4638960571068150050
+          },
+          {
+            "latitudeBits": 4630197375082001387,
+            "longitudeBits": 4638960568605244003
+          },
+          {
+            "latitudeBits": 4630197410266373476,
+            "longitudeBits": 4638960563327588190
+          },
+          {
+            "latitudeBits": 4630197422932747428,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630197439821246030,
+            "longitudeBits": 4638960560864682144
+          },
+          {
+            "latitudeBits": 4630197453894994866,
+            "longitudeBits": 4638960560512838423
+          },
+          {
+            "latitudeBits": 4630197470783493468,
+            "longitudeBits": 4638960559457307260
+          },
+          {
+            "latitudeBits": 4630197483449867420,
+            "longitudeBits": 4638960558753619819
+          },
+          {
+            "latitudeBits": 4630197493301491605,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630197510189990208,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197520041614393,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197535522738112,
+            "longitudeBits": 4638960557698088656
+          },
+          {
+            "latitudeBits": 4630197562262860899,
+            "longitudeBits": 4638960558049932377
+          },
+          {
+            "latitudeBits": 4630197583373484153,
+            "longitudeBits": 4638960557698088656
+          },
+          {
+            "latitudeBits": 4630197646705353912,
+            "longitudeBits": 4638960556642557493
+          },
+          {
+            "latitudeBits": 4630197665001227399,
+            "longitudeBits": 4638960556290713772
+          },
+          {
+            "latitudeBits": 4630197715666723207,
+            "longitudeBits": 4638960555587026331
+          },
+          {
+            "latitudeBits": 4630197762110094364,
+            "longitudeBits": 4638960553475964005
+          },
+          {
+            "latitudeBits": 4630197770554343665,
+            "longitudeBits": 4638960553124120284
+          },
+          {
+            "latitudeBits": 4630197818405089706,
+            "longitudeBits": 4638960550661214238
+          },
+          {
+            "latitudeBits": 4630197898625458069,
+            "longitudeBits": 4638960546087245867
+          },
+          {
+            "latitudeBits": 4630197953513078527,
+            "longitudeBits": 4638960542920652379
+          },
+          {
+            "latitudeBits": 4630197990104825499,
+            "longitudeBits": 4638960540809590053
+          },
+          {
+            "latitudeBits": 4630198005585949219,
+            "longitudeBits": 4638960540457746332
+          },
+          {
+            "latitudeBits": 4630198052029320376,
+            "longitudeBits": 4638960541513277495
+          },
+          {
+            "latitudeBits": 4630198066103069211,
+            "longitudeBits": 4638960541865121216
+          },
+          {
+            "latitudeBits": 4630198094250566882,
+            "longitudeBits": 4638960542568808658
+          },
+          {
+            "latitudeBits": 4630198118175939903,
+            "longitudeBits": 4638960543272496099
+          },
+          {
+            "latitudeBits": 4630198151952937108,
+            "longitudeBits": 4638960544679870983
+          },
+          {
+            "latitudeBits": 4630198202618432916,
+            "longitudeBits": 4638960546790933308
+          },
+          {
+            "latitudeBits": 4630198229358555704,
+            "longitudeBits": 4638960547494620750
+          },
+          {
+            "latitudeBits": 4630198291283050580,
+            "longitudeBits": 4638960550661214238
+          },
+          {
+            "latitudeBits": 4630198320837923135,
+            "longitudeBits": 4638960552420432843
+          },
+          {
+            "latitudeBits": 4630198341948546388,
+            "longitudeBits": 4638960553475964005
+          },
+          {
+            "latitudeBits": 4630198360244419874,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198374318168710,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198385577167778,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198434835288702,
+            "longitudeBits": 4638960554179651447
+          },
+          {
+            "latitudeBits": 4630198467204911024,
+            "longitudeBits": 4638960554531495168
+          },
+          {
+            "latitudeBits": 4630198531944155667,
+            "longitudeBits": 4638960555235182610
+          },
+          {
+            "latitudeBits": 4630198572758027291,
+            "longitudeBits": 4638960555938870051
+          },
+          {
+            "latitudeBits": 4630198636089897050,
+            "longitudeBits": 4638960555938870051
+          },
+          {
+            "latitudeBits": 4630198695199642160,
+            "longitudeBits": 4638960556642557493
+          },
+          {
+            "latitudeBits": 4630198758531511920,
+            "longitudeBits": 4638960557346244935
+          },
+          {
+            "latitudeBits": 4630198859862503535,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198902083750042,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198924601748179,
+            "longitudeBits": 4638960558401776098
+          },
+          {
+            "latitudeBits": 4630198940082871898,
+            "longitudeBits": 4638960559105463539
+          },
+          {
+            "latitudeBits": 4630198954156620733,
+            "longitudeBits": 4638960559457307260
+          },
+          {
+            "latitudeBits": 4630198976674618870,
+            "longitudeBits": 4638960560160994702
+          },
+          {
+            "latitudeBits": 4630199018895865377,
+            "longitudeBits": 4638960560864682144
+          },
+          {
+            "latitudeBits": 4630199054080237466,
+            "longitudeBits": 4638960561568369586
+          },
+          {
+            "latitudeBits": 4630199118819482109,
+            "longitudeBits": 4638960561920213307
+          },
+          {
+            "latitudeBits": 4630199142744855130,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630199196225100705,
+            "longitudeBits": 4638960562623900748
+          },
+          {
+            "latitudeBits": 4630199228594723026,
+            "longitudeBits": 4638960562272057027
+          },
+          {
+            "latitudeBits": 4630199251112721163,
+            "longitudeBits": 4638960560512838423
+          },
+          {
+            "latitudeBits": 4630199329925714642,
+            "longitudeBits": 4638960542568808658
+          },
+          {
+            "latitudeBits": 4630199345406838361,
+            "longitudeBits": 4638960539402215170
+          },
+          {
+            "latitudeBits": 4630199352443712779,
+            "longitudeBits": 4638960537642996565
+          },
+          {
+            "latitudeBits": 4630199370739586265,
+            "longitudeBits": 4638960532717184473
+          },
+          {
+            "latitudeBits": 4630199393257584402,
+            "longitudeBits": 4638960526032153776
+          },
+          {
+            "latitudeBits": 4630199412960832772,
+            "longitudeBits": 4638960519698966800
+          },
+          {
+            "latitudeBits": 4630199453774704395,
+            "longitudeBits": 4638960508088124011
+          },
+          {
+            "latitudeBits": 4630199517106574155,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630199546661446709,
+            "longitudeBits": 4638960485570125874
+          },
+          {
+            "latitudeBits": 4630199566364695079,
+            "longitudeBits": 4638960483107219828
+          },
+          {
+            "latitudeBits": 4630199588882693216,
+            "longitudeBits": 4638960480292470060
+          },
+          {
+            "latitudeBits": 4630199607178566702,
+            "longitudeBits": 4638960479236938898
+          },
+          {
+            "latitudeBits": 4630199639548189024,
+            "longitudeBits": 4638960476774032852
+          },
+          {
+            "latitudeBits": 4630199684584185298,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630199697250559250,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630199747916055058,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630199763397178777,
+            "longitudeBits": 4638960475718501689
+          },
+          {
+            "latitudeBits": 4630199788729926681,
+            "longitudeBits": 4638960476774032852
+          },
+          {
+            "latitudeBits": 4630199821099549002,
+            "longitudeBits": 4638960478533251456
+          },
+          {
+            "latitudeBits": 4630199867542920160,
+            "longitudeBits": 4638960482051688665
+          },
+          {
+            "latitudeBits": 4630199892875668064,
+            "longitudeBits": 4638960485570125874
+          },
+          {
+            "latitudeBits": 4630199912578916433,
+            "longitudeBits": 4638960488384875641
+          },
+          {
+            "latitudeBits": 4630199922430540618,
+            "longitudeBits": 4638960490144094245
+          },
+          {
+            "latitudeBits": 4630199933689539687,
+            "longitudeBits": 4638960491199625408
+          },
+          {
+            "latitudeBits": 4630199956207537823,
+            "longitudeBits": 4638960492255156571
+          },
+          {
+            "latitudeBits": 4630199968873911775,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630199981540285727,
+            "longitudeBits": 4638960493310687733
+          },
+          {
+            "latitudeBits": 4630199995614034563,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630200011095158282,
+            "longitudeBits": 4638960492958844012
+          },
+          {
+            "latitudeBits": 4630200030798406652,
+            "longitudeBits": 4638960492607000292
+          },
+          {
+            "latitudeBits": 4630200047686905254,
+            "longitudeBits": 4638960492255156571
+          },
+          {
+            "latitudeBits": 4630200057538529439,
+            "longitudeBits": 4638960491551469129
+          },
+          {
+            "latitudeBits": 4630200067390153624,
+            "longitudeBits": 4638960491551469129
+          },
+          {
+            "latitudeBits": 4630200082871277343,
+            "longitudeBits": 4638960490144094245
+          },
+          {
+            "latitudeBits": 4630200099759775946,
+            "longitudeBits": 4638960489088563083
+          },
+          {
+            "latitudeBits": 4630200126499898733,
+            "longitudeBits": 4638960486273813316
+          },
+          {
+            "latitudeBits": 4630200243312014068,
+            "longitudeBits": 4638960476422189131
+          },
+          {
+            "latitudeBits": 4630200288348010342,
+            "longitudeBits": 4638960472903751922
+          },
+          {
+            "latitudeBits": 4630200308051258712,
+            "longitudeBits": 4638960471496377038
+          },
+          {
+            "latitudeBits": 4630200320717632664,
+            "longitudeBits": 4638960470792689596
+          },
+          {
+            "latitudeBits": 4630200336198756383,
+            "longitudeBits": 4638960470089002155
+          },
+          {
+            "latitudeBits": 4630200351679880102,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200372790503355,
+            "longitudeBits": 4638960469385314713
+          },
+          {
+            "latitudeBits": 4630200392493751725,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200403752750793,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200415011749862,
+            "longitudeBits": 4638960469737158434
+          },
+          {
+            "latitudeBits": 4630200431900248464,
+            "longitudeBits": 4638960470792689596
+          },
+          {
+            "latitudeBits": 4630200441751872649,
+            "longitudeBits": 4638960471144533317
+          },
+          {
+            "latitudeBits": 4630200462862495903,
+            "longitudeBits": 4638960472200064480
+          },
+          {
+            "latitudeBits": 4630200493824743341,
+            "longitudeBits": 4638960473959283084
+          },
+          {
+            "latitudeBits": 4630200545897614032,
+            "longitudeBits": 4638960475014814247
+          },
+          {
+            "latitudeBits": 4630200569822987053,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630200586711485655,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200597970484724,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200614858983326,
+            "longitudeBits": 4638960476070345410
+          },
+          {
+            "latitudeBits": 4630200635969606580,
+            "longitudeBits": 4638960475366657968
+          },
+          {
+            "latitudeBits": 4630200648635980532,
+            "longitudeBits": 4638960474662970526
+          },
+          {
+            "latitudeBits": 4630200657080229833,
+            "longitudeBits": 4638960473959283084
+          },
+          {
+            "latitudeBits": 4630200672561353552,
+            "longitudeBits": 4638960472903751922
+          },
+          {
+            "latitudeBits": 4630200695079351689,
+            "longitudeBits": 4638960470440845876
+          },
+          {
+            "latitudeBits": 4630200706338350757,
+            "longitudeBits": 4638960468329783550
+          },
+          {
+            "latitudeBits": 4630200717597349826,
+            "longitudeBits": 4638960466218721225
+          },
+          {
+            "latitudeBits": 4630200730263723778,
+            "longitudeBits": 4638960463403971458
+          },
+          {
+            "latitudeBits": 4630200741522722846,
+            "longitudeBits": 4638960460941065412
+          },
+          {
+            "latitudeBits": 4630200752781721915,
+            "longitudeBits": 4638960458126315645
+          },
+          {
+            "latitudeBits": 4630200773892345168,
+            "longitudeBits": 4638960452496816110
+          },
+          {
+            "latitudeBits": 4630200804854592606,
+            "longitudeBits": 4638960442997035646
+          },
+          {
+            "latitudeBits": 4630200851297963763,
+            "longitudeBits": 4638960427515911927
+          },
+          {
+            "latitudeBits": 4630200889297085619,
+            "longitudeBits": 4638960414145850533
+          },
+          {
+            "latitudeBits": 4630200937147831660,
+            "longitudeBits": 4638960397257351931
+          },
+          {
+            "latitudeBits": 4630200976554328400,
+            "longitudeBits": 4638960380720697049
+          },
+          {
+            "latitudeBits": 4630201011738700488,
+            "longitudeBits": 4638960365591417051
+          },
+          {
+            "latitudeBits": 4630201072959507923,
+            "longitudeBits": 4638960341138278449
+          }
+        ],
+        "toStationID": "004343"
+      },
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "viewpoints": [
+        {
+          "coordinate": {
+            "latitude": 35.53444,
+            "longitude": 135.199975
+          },
+          "distanceMetres": 0,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 0
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53245674912643,
+            "longitude": 135.19697220174203
+          },
+          "distanceMetres": 350,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 1
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53026186580654,
+            "longitude": 135.19420833802445
+          },
+          "distanceMetres": 700,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 2
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53008289877116,
+            "longitude": 135.19056226751405
+          },
+          "distanceMetres": 1050,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 3
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53276222768923,
+            "longitude": 135.189017851528
+          },
+          "distanceMetres": 1400,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 4
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53587774216392,
+            "longitude": 135.18856706745854
+          },
+          "distanceMetres": 1750,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 5
+        },
+        {
+          "coordinate": {
+            "latitude": 35.53900413687262,
+            "longitude": 135.18894626679585
+          },
+          "distanceMetres": 2100,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 6
+        },
+        {
+          "coordinate": {
+            "latitude": 35.54214964963432,
+            "longitude": 135.18905720901805
+          },
+          "distanceMetres": 2450,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 7
+        },
+        {
+          "coordinate": {
+            "latitude": 35.545123000388756,
+            "longitude": 135.18848699962152
+          },
+          "distanceMetres": 2800,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 8
+        },
+        {
+          "coordinate": {
+            "latitude": 35.54777194966534,
+            "longitude": 135.18667955273676
+          },
+          "distanceMetres": 3150,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 9
+        },
+        {
+          "coordinate": {
+            "latitude": 35.5508265262625,
+            "longitude": 135.18694044947534
+          },
+          "distanceMetres": 3500,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 10
+        },
+        {
+          "coordinate": {
+            "latitude": 35.553921926908544,
+            "longitude": 135.18671
+          },
+          "distanceMetres": 3850,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 11
+        },
+        {
+          "coordinate": {
+            "latitude": 35.55636936420645,
+            "longitude": 135.18452736853467
+          },
+          "distanceMetres": 4200,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 12
+        },
+        {
+          "coordinate": {
+            "latitude": 35.557375,
+            "longitude": 135.182875
+          },
+          "distanceMetres": 4386.713987219627,
+          "itemID": "jp-WILLER　TRAINS-宮津線#6",
+          "pointOrdinal": 13
+        }
+      ]
+    }
+  ],
+  "originalImagesViewedThisPass": 0
+}

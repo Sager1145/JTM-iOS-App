@@ -1,0 +1,29 @@
+{
+  "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+  "applied": true,
+  "owningLineEqualsRenderedCandidate": true,
+  "nativeParts": [
+    [
+      "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+      0,
+      -1,
+      -1,
+      646,
+      64396.1
+    ]
+  ],
+  "nativeLanes": [
+    [
+      "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+      0,
+      0,
+      64396.1,
+      0.5
+    ]
+  ],
+  "physicalTopologyChanged": false,
+  "mainFinalCheck": {
+    "state": "bounded repair composition observed",
+    "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/four-repair-main-batch-20261018.md"
+  }
+}

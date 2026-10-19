@@ -1,0 +1,944 @@
+{
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "003766",
+        "東京"
+      ],
+      "toStation": [
+        "003795",
+        "有楽町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "00"
+        ]
+      },
+      "observation": "東京南侧连续弯入有楽町，宽站场红线偏西；本线站台身份及纵向中点未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/00-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "003795",
+        "有楽町"
+      ],
+      "toStation": [
+        "003872",
+        "新橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "01",
+          "02"
+        ]
+      },
+      "observation": "有楽町—新橋连续弯线，邻近平行乘客线路及地铁分离；局部横向偏移保留。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/01-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "003872",
+        "新橋"
+      ],
+      "toStation": [
+        "003949",
+        "浜松町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "02",
+          "03"
+        ]
+      },
+      "observation": "新橋—浜松町长走廊连续；新干线、地下线、单轨独立，不以整个站场中心接受站点。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/02-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "003949",
+        "浜松町"
+      ],
+      "toStation": [
+        "004000",
+        "田町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "03",
+          "04"
+        ]
+      },
+      "observation": "浜松町—田町西/西北偏移与弯线连续，宽铁路带内本线站台待辨。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/03-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "004000",
+        "田町"
+      ],
+      "toStation": [
+        "004061",
+        "高輪ゲートウェイ"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "05",
+          "06"
+        ]
+      },
+      "observation": "田町—高輪ゲートウェイ宽旧车场/旅客走廊与时代身份待辨，禁止整线平移。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/04-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "004061",
+        "高輪ゲートウェイ"
+      ],
+      "toStation": [
+        "004095",
+        "品川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "06",
+          "07"
+        ]
+      },
+      "observation": "高輪ゲートウェイ—品川宽站场内局部西偏，独立本线完整站台未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/05-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "004095",
+        "品川"
+      ],
+      "toStation": [
+        "004197",
+        "大井町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "07",
+          "08",
+          "09"
+        ]
+      },
+      "observation": "品川—大井町既有54点显示修复连续，无旧锐钩；大崎/横須賀西岔独立保留。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/06-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "004197",
+        "大井町"
+      ],
+      "toStation": [
+        "004264",
+        "大森"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "09",
+          "10",
+          "11"
+        ]
+      },
+      "observation": "大井町—大森长直线连续，红线偏底图西侧；臨海/東急不代替JR站台。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/07-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "004264",
+        "大森"
+      ],
+      "toStation": [
+        "004330",
+        "蒲田"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "11",
+          "12",
+          "13"
+        ]
+      },
+      "observation": "大森—蒲田入新井及内川走廊连续，西偏幅度变化；蒲田東急终到站分离。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/08-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "004330",
+        "蒲田"
+      ],
+      "toStation": [
+        "004432",
+        "川崎"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 13,
+        "sheets": [
+          "13",
+          "14",
+          "15",
+          "16"
+        ]
+      },
+      "observation": "蒲田—川崎多摩川JR跨桥连续，京急桥独立；第三套原失败保留并以13张成功补采替换有效索引。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/09-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "004432",
+        "川崎"
+      ],
+      "toStation": [
+        "004496",
+        "鶴見"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "17",
+          "18",
+          "19"
+        ]
+      },
+      "observation": "川崎—鶴見南武北岔、鶴見川跨桥与转弯连续，局部东南偏移候选保留。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/10-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "004496",
+        "鶴見"
+      ],
+      "toStation": [
+        "004562",
+        "新子安"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "19",
+          "20",
+          "21",
+          "22"
+        ]
+      },
+      "observation": "鶴見—新子安货运西岔与京急分离，红线在宽旅客走廊内局部东南偏移。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/11-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "004562",
+        "新子安"
+      ],
+      "toStation": [
+        "004596",
+        "東神奈川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "22",
+          "23",
+          "24"
+        ]
+      },
+      "observation": "新子安—東神奈川横浜线北岔独立，连续宽旅客带内自身站台开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/12-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "004596",
+        "東神奈川"
+      ],
+      "toStation": [
+        "004633",
+        "横浜"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "24",
+          "25"
+        ]
+      },
+      "observation": "東神奈川—横浜JR、京急、東横多线并行；自身平台及局部偏移未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/13-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 14,
+      "fromStation": [
+        "004633",
+        "横浜"
+      ],
+      "toStation": [
+        "004685",
+        "保土ヶ谷"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "26",
+          "27",
+          "28"
+        ]
+      },
+      "observation": "横浜—保土ヶ谷西南曲线连续，相鉄西/北岔独立；Apple相鉄文字不可作为JR本线身份。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/14-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 15,
+      "fromStation": [
+        "004685",
+        "保土ヶ谷"
+      ],
+      "toStation": [
+        "004741",
+        "東戸塚"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 16,
+        "sheets": [
+          "28",
+          "29",
+          "30",
+          "31",
+          "32"
+        ]
+      },
+      "observation": "保土ヶ谷—東戸塚坂木处红线走东南隧道、底图横須賀曲线偏西北；身份未解决前不可按错线平移。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/15-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 16,
+      "fromStation": [
+        "004741",
+        "東戸塚"
+      ],
+      "toStation": [
+        "004818",
+        "戸塚"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "32",
+          "33",
+          "34",
+          "35"
+        ]
+      },
+      "observation": "東戸塚—戸塚柏尾川弯线连续，局部东/东南偏移变化；戸塚自身平台开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/16-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 17,
+      "fromStation": [
+        "004818",
+        "戸塚"
+      ],
+      "toStation": [
+        "004961",
+        "大船"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "36",
+          "37",
+          "38",
+          "39",
+          "40"
+        ]
+      },
+      "observation": "戸塚—大船沿柏尾川东岸连续，根岸线东接入独立，站场共享中心不能代替本线平台。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/17-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 18,
+      "fromStation": [
+        "004961",
+        "大船"
+      ],
+      "toStation": [
+        "004997",
+        "藤沢"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 15,
+        "sheets": [
+          "40",
+          "41",
+          "42",
+          "43"
+        ]
+      },
+      "observation": "大船—藤沢西转、柏尾川及境川跨越连续；横須賀南岔、单轨、小田急及江之电分离。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/18-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 19,
+      "fromStation": [
+        "004997",
+        "藤沢"
+      ],
+      "toStation": [
+        "005004",
+        "辻堂"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 12,
+        "sheets": [
+          "44",
+          "45",
+          "46"
+        ]
+      },
+      "observation": "藤沢—辻堂引地川跨桥连续，局部南偏；自身站台中点未验收。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/19-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 20,
+      "fromStation": [
+        "005004",
+        "辻堂"
+      ],
+      "toStation": [
+        "005023",
+        "茅ヶ崎"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 12,
+        "sheets": [
+          "47",
+          "48",
+          "49"
+        ]
+      },
+      "observation": "辻堂—茅ヶ崎直线/缓弯连续，茅ヶ崎车场相模线北岔独立；南偏候选。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/20-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 21,
+      "fromStation": [
+        "005023",
+        "茅ヶ崎"
+      ],
+      "toStation": [
+        "005034",
+        "平塚"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "50",
+          "51",
+          "52",
+          "53",
+          "54"
+        ]
+      },
+      "observation": "茅ヶ崎—平塚相模川桥和两端接入红线明显南于底图蓝线，保留局部候选而非全线翻译。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/21-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 22,
+      "fromStation": [
+        "005034",
+        "平塚"
+      ],
+      "toStation": [
+        "005085",
+        "大磯"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 12,
+        "sheets": [
+          "54",
+          "55",
+          "56",
+          "57"
+        ]
+      },
+      "observation": "平塚—大磯花水川桥及大磯接入红线反而偏北/西北，偏移符号变化禁止整体平移。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/22-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 23,
+      "fromStation": [
+        "005085",
+        "大磯"
+      ],
+      "toStation": [
+        "005120",
+        "二宮"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "57",
+          "58",
+          "59",
+          "60",
+          "61"
+        ]
+      },
+      "observation": "大磯—二宮长直线和不动川跨越红线偏北，自身站台纵向中心开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/23-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 24,
+      "fromStation": [
+        "005120",
+        "二宮"
+      ],
+      "toStation": [
+        "005157",
+        "国府津"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "61",
+          "62",
+          "63",
+          "64"
+        ]
+      },
+      "observation": "二宮—国府津海岸直线从偏北到近中心/南侧宽站场，中村川跨桥连续。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/24-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 25,
+      "fromStation": [
+        "005157",
+        "国府津"
+      ],
+      "toStation": [
+        "005170",
+        "鴨宮"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "65",
+          "66",
+          "67"
+        ]
+      },
+      "observation": "国府津—鴨宮长直线和酒匂堰水路连续，御殿場线北岔独立，鴨宮自身平台开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/25-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 26,
+      "fromStation": [
+        "005170",
+        "鴨宮"
+      ],
+      "toStation": [
+        "005215",
+        "小田原"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "67",
+          "68",
+          "69",
+          "70"
+        ]
+      },
+      "observation": "鴨宮—小田原酒匂川跨桥与西南弯线连续，新干线西北、小田急及大雄山分离。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/26-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 27,
+      "fromStation": [
+        "005215",
+        "小田原"
+      ],
+      "toStation": [
+        "005261",
+        "早川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "70",
+          "71",
+          "72"
+        ]
+      },
+      "observation": "小田原—早川城西直线与早川跨桥连续，箱根登山西岔及新干线独立；自身平台开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/27-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 28,
+      "fromStation": [
+        "005261",
+        "早川"
+      ],
+      "toStation": [
+        "005342",
+        "根府川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 14,
+        "sheets": [
+          "72",
+          "73",
+          "74",
+          "75"
+        ]
+      },
+      "observation": "早川—根府川石橋/米神海岸弯线连续；白糸川北侧#28p8–10山体/隧道入口红线分离后重交，身份证据待补。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/28-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 29,
+      "fromStation": [
+        "005342",
+        "根府川"
+      ],
+      "toStation": [
+        "005510",
+        "真鶴"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 17,
+        "sheets": [
+          "76",
+          "77",
+          "78",
+          "79",
+          "80"
+        ]
+      },
+      "observation": "根府川—真鶴#29p7–11岩川北红线向西切山体再回底图曲线，保留隧道/旅客线身份限制；不跟随西侧新干线。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/29-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 30,
+      "fromStation": [
+        "005510",
+        "真鶴"
+      ],
+      "toStation": [
+        "005541",
+        "湯河原"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "80",
+          "81",
+          "82"
+        ]
+      },
+      "observation": "真鶴—湯河原福浦/吉浜及新崎川弯线连续，局部内侧/南偏；本线站台开放。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/30-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 31,
+      "fromStation": [
+        "005541",
+        "湯河原"
+      ],
+      "toStation": [
+        "005685",
+        "熱海"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 16,
+        "sheets": [
+          "83",
+          "84",
+          "85",
+          "86"
+        ]
+      },
+      "observation": "湯河原—熱海千歳川后#31p3–10隧道红线偏西，p13–15热海北曲线内切；底图隧道不能单独作为修复依据。",
+      "geographicAcceptance": false,
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/31-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    }
+  ]
+}

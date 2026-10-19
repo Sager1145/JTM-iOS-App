@@ -1,0 +1,544 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-一畑電車-北松江線",
+  "intervalIndex": 12,
+  "stations": [
+    [
+      "004678",
+      "布崎",
+      132.855005,
+      35.450235,
+      "Nunozaki",
+      1
+    ],
+    [
+      "004727",
+      "雲州平田",
+      132.82368,
+      35.43231,
+      "Unshu-Hirata",
+      1
+    ]
+  ],
+  "actualViewpointCount": 12,
+  "actualOriginalPNGCount": 24,
+  "reviewMethod": "functions.view_image separately opened every original basemap/smooth PNG; no cropping/compositing/pixel alteration",
+  "allNamedCurrentIdentitiesMatch": true,
+  "receiptFilesActualSizeChecked": 84,
+  "sourceControlCount": 65,
+  "displayControlCount": 65,
+  "capsOrStationCentreEstablished": false,
+  "proposedCoordinates": null,
+  "officialIdentitySupplementRead": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ichibata-kitamatsue-complete/interval-11-own-source-20261019/official-platform-review.md",
+  "limits": [
+    "Official single own platform face strengthens identity only; no georeferenced full usable caps.",
+    "Legacy z17 Nunozaki view does not yield exact platform endpoint WGS84 controls.",
+    "Unshu-Hirata yard passenger track/face and native guard need own attribution, not broad station fill."
+  ],
+  "views": [
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000000/basemap.png",
+          "actualByteCount": 308993,
+          "recordedByteCount": 308993,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000000/smooth.png",
+          "actualByteCount": 348353,
+          "recordedByteCount": 348353,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.450235,
+        "longitude": 132.855005,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696590242643913,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233277503.80293688,
+        "rectY": 105912656.14980583,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "布崎西口向SW跨平田船川真实弯连续；站东大S鼓包与本站南偏仍可见。平台符小且宽，不能定usable caps。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000001/basemap.png",
+          "actualByteCount": 310668,
+          "recordedByteCount": 310668,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000001/smooth.png",
+          "actualByteCount": 349951,
+          "recordedByteCount": 349951,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.44823740705112,
+        "longitude": 132.85210420657702,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9696827738641047,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233275340.81458893,
+        "rectY": 105914484.60421114,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "平田船川铁路桥从布崎西弯沿自身SW长走向跨河，独立于西北侧道路桥；红线略偏SE，未见孤立V。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000002/basemap.png",
+          "actualByteCount": 312382,
+          "recordedByteCount": 312382,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000002/smooth.png",
+          "actualByteCount": 351993,
+          "recordedByteCount": 351993,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.44601483491505,
+        "longitude": 132.849368790844,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697091968709758,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233273301.14078438,
+        "rectY": 105916518.93521285,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "桥后SW长直段跨湯谷川，再沿真实缓弯转WSW；红线略在自身蓝线NW侧，无回头或跨邻线。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000003/basemap.png",
+          "actualByteCount": 272987,
+          "recordedByteCount": 272987,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000003/smooth.png",
+          "actualByteCount": 309505,
+          "recordedByteCount": 309505,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.444007701372655,
+        "longitude": 132.84642957870923,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697330573776688,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233271109.50536865,
+        "rectY": 105918356.02595793,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "桥后向WSW真实长曲线连续；局部小肩与北侧偏移可见，未确权单点修复。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000004",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000004/basemap.png",
+          "actualByteCount": 250671,
+          "recordedByteCount": 250671,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000004/smooth.png",
+          "actualByteCount": 289069,
+          "recordedByteCount": 289069,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.44282335773514,
+        "longitude": 132.84285229260672,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697471361175097,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233268442.08751816,
+        "rectY": 105919440.01143058,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "田野内长WSW直段及东北端真曲线连续；红线偏自身走廊北侧，未见孤立V。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000005",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000005/basemap.png",
+          "actualByteCount": 237902,
+          "recordedByteCount": 237902,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000005/smooth.png",
+          "actualByteCount": 275942,
+          "recordedByteCount": 275942,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.44163799289216,
+        "longitude": 132.83927330956902,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697612265790769,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233265773.40434107,
+        "rectY": 105920524.91560507,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "长WSW直段在湯谷川与三ノ川之间，铁路同两河/道路可区分；红线略偏北，未见跳接。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000006",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000006/basemap.png",
+          "actualByteCount": 261234,
+          "recordedByteCount": 261234,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000006/smooth.png",
+          "actualByteCount": 302000,
+          "recordedByteCount": 302000,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.44045193230711,
+        "longitude": 132.83569464925287,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697753248926112,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233263104.96180266,
+        "rectY": 105921610.4405675,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "长直段向雲州平田前弯接近，红线偏北并有弦化；不是已证伪的真曲线。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000007",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000007/basemap.png",
+          "actualByteCount": 320134,
+          "recordedByteCount": 320134,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000007/smooth.png",
+          "actualByteCount": 366163,
+          "recordedByteCount": 366163,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4392792110556,
+        "longitude": 132.83210968478437,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9697892642344825,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233260431.81854752,
+        "rectY": 105922683.74117164,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "雲州平田东北真实大SW弯，红线在自身蓝线北/西侧；并未跳到北侧道路或河道。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000008",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000008/basemap.png",
+          "actualByteCount": 367406,
+          "recordedByteCount": 367406,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000008/smooth.png",
+          "actualByteCount": 416315,
+          "recordedByteCount": 416315,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.437699899074175,
+        "longitude": 132.82882373782925,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9698080357980906,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233257981.6389106,
+        "rectY": 105924129.13796103,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "东北进站前真弯连续，红线仍偏北/西；没有孤立V/回头，不以侧移自动改线。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000009",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000009/basemap.png",
+          "actualByteCount": 410671,
+          "recordedByteCount": 410671,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000009/smooth.png",
+          "actualByteCount": 465357,
+          "recordedByteCount": 465357,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.43522133825026,
+        "longitude": 132.82644272668264,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.969837494258606,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233256206.2283193,
+        "rectY": 105926397.47608519,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "雲州平田东北直入站场，红线走站场西侧延伸；多股轨与宽填充不能识别乘客face或本站精确guard。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000010",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000010/basemap.png",
+          "actualByteCount": 450550,
+          "recordedByteCount": 450550,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000010/smooth.png",
+          "actualByteCount": 507191,
+          "recordedByteCount": 507191,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.432733716311425,
+        "longitude": 132.8240760215965,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9698670585758085,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233254441.4850998,
+        "rectY": 105928674.03658505,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "完整雲州平田站场及两端主走廊可见，红线沿西侧近直贯通；无法从z17认定具体乘客轨道和平台caps。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#12",
+      "pointOrdinal": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000011",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000011/basemap.png",
+          "actualByteCount": 452170,
+          "recordedByteCount": 452170,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000370/000011/smooth.png",
+          "actualByteCount": 508156,
+          "recordedByteCount": 508156,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.43231,
+        "longitude": 132.82368,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9698720940785122,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233254146.18999466,
+        "rectY": 105929061.79582003,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "雲州平田终端视点重复站场，两端连续但多股轨归属未证；保留本站guard，不推算新的站点中心。"
+    }
+  ]
+}

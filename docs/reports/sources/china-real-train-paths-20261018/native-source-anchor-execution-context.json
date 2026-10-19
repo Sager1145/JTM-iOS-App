@@ -1,0 +1,41 @@
+{
+  "schema": "cn-source-anchor-native/1",
+  "sourceApp": "/private/tmp/jtm-rail-diagnostics/Build/Products/Release-maccatalyst/RailDiagnostics.app",
+  "isolatedApp": "/private/tmp/railmap-cn-source-anchor-20261018/ChinaRailComparison.app",
+  "bundleIdentifier": "com.JRM.RailDiagnostics.ChinaComparison.SourceAnchor",
+  "sameCNRuntimeInputHashes": {
+    "cn-2025.json": "0cfaa782f70bdca95dcba50c04fdb029b93cfc5f5b0a5687621526372194d61e",
+    "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
+    "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
+    "rail-sections-cn.json": "523ce1096955deeccc88fb23edcc29d38e3e3176de44cfa89152d00c28c4fa0d",
+    "station-names-cn.json": "52a366ea06c7ae3e18b35d061910e7a70fb9dc5cea13b998828e009706944264",
+    "station-readings-cn.json": "21ddcac3b92f24170c12e933cc4f557037a4aa1ae14a9598527d94182dd688c2",
+    "stations-cn.json": "f3480bbd96c16429ca481789fd0b37ae881c4585592d4f5a39c850abba694c39"
+  },
+  "additionalIdenticalCNDependencies": {
+    "physical-rail-junctions.json": "225a44d677ebc1214cdbd2801acba0c02ced1b6d19ab2b6b15668fd0ba95303d",
+    "rail-display-network/cn.display.bin": "9c885d2ed17e814a039a74a2c4c0d9954071ce208394552c34f1c5507ea58fb6",
+    "rail-display-network/cn.stations.json": "b0e05e0daf6a9d69163d9ce070e8964c46dfae0fd27fedc3677c82bc8f4bd716"
+  },
+  "sameCNJunctionRows": 3655,
+  "previousCNRevision": "b649bfad5dbccf4f2d36abee345c03cef91988a46988d8d200c32c5c3e40ab6e",
+  "currentCNRevision": "5b2ec16da0c1236c70769dd804c4ec2fb92ba7aa8f3998dee7f3fe6c5c224135",
+  "revisionChangeReason": "Shared display-input/manifest hashes changed with concurrent JP display updates; CN runtime source bytes, CN display bytes, filtered CN manifest lines/region/package identity and physical junction bytes remain identical. No CN data changed in this source-anchor rerun.",
+  "graphCacheMode": "standard",
+  "shippingDefaultUnchanged": "bounded100000",
+  "builtExecutableSHA256": "0fe59d17c5d47a40779dc00959cac8fb7b17b211ed9c6af05f9f538761f7c55d",
+  "resignedExecutableSHA256": "14d169ab244813fe3d84295b3fcea0451418cec7f339ec6f9a4a94ec3d917a73",
+  "executableBytesIdenticalBeforeResign": true,
+  "compiledUUIDs": [
+    "UUID: 3CDE2723-D411-394E-AF0A-310BB03005F5 (arm64)"
+  ],
+  "compiledUUIDsMatchBuiltApp": true,
+  "isolationEdits": [
+    "CFBundleIdentifier/CFBundleDisplayName/CFBundleName",
+    "ad-hoc outer signature preserving existing entitlements and flags"
+  ],
+  "sourceAnchorCachePolicy": "CN-only source-anchor:1",
+  "focusedSwiftTests": 36,
+  "focusedWebTests": 19,
+  "buildLog": "/private/tmp/railmap-cn-source-anchor-release-build.log"
+}

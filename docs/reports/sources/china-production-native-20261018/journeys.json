@@ -1,0 +1,229 @@
+{
+  "schema_version": "1.3",
+  "trains": [
+    {
+      "id": "CN-INTEGRATION-complete",
+      "region": "cn",
+      "date": "2026-10-18",
+      "number": "数据接入检查",
+      "train_type": "高铁",
+      "company": "中国铁路／港铁",
+      "origin": "广州南",
+      "destination": "香港西九龙",
+      "direction": "down",
+      "visible": true,
+      "style": {
+        "color": "#D2232A"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "1"
+        ],
+        "preferred_line_names": [
+          "广深港高速铁路"
+        ],
+        "institution_filter_mode": "hard"
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "CN-12306-IZQ",
+          "to_n02_station_code": "CN-12306-QSQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-QSQ",
+          "to_n02_station_code": "CN-12306-IUQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-IUQ",
+          "to_n02_station_code": "CN-12306-IMQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-IMQ",
+          "to_n02_station_code": "CN-12306-IOQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-IOQ",
+          "to_n02_station_code": "CN-12306-NZQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-NZQ",
+          "to_n02_station_code": "CN-12306-XJA",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "广州南",
+          "n02_station_code": "CN-12306-IZQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "南沙北",
+          "n02_station_code": "CN-12306-QSQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "虎门",
+          "n02_station_code": "CN-12306-IUQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "光明城",
+          "n02_station_code": "CN-12306-IMQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "深圳北",
+          "n02_station_code": "CN-12306-IOQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "福田",
+          "n02_station_code": "CN-12306-NZQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "香港西九龙",
+          "n02_station_code": "CN-12306-XJA",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    },
+    {
+      "id": "CN-INTEGRATION-shenzhen-west-kowloon",
+      "region": "cn",
+      "date": "2026-10-18",
+      "number": "数据接入检查",
+      "train_type": "高铁",
+      "company": "中国铁路／港铁",
+      "origin": "深圳北",
+      "destination": "香港西九龙",
+      "direction": "down",
+      "visible": true,
+      "style": {
+        "color": "#D2232A"
+      },
+      "route_policy": {
+        "mode": "single_primary_route",
+        "jr_only": false,
+        "allow_alternatives": false,
+        "allow_browser_straight_line_fallback": false,
+        "allowed_institution_type_codes": [
+          "1"
+        ],
+        "preferred_line_names": [
+          "广深港高速铁路"
+        ],
+        "institution_filter_mode": "hard"
+      },
+      "route_sections": [
+        {
+          "from_n02_station_code": "CN-12306-IOQ",
+          "to_n02_station_code": "CN-12306-NZQ",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        },
+        {
+          "from_n02_station_code": "CN-12306-NZQ",
+          "to_n02_station_code": "CN-12306-XJA",
+          "line_names": [
+            "广深港高速铁路"
+          ],
+          "line_ids": [
+            "cn-guangshengan-hsr"
+          ]
+        }
+      ],
+      "stops": [
+        {
+          "name": "深圳北",
+          "n02_station_code": "CN-12306-IOQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "福田",
+          "n02_station_code": "CN-12306-NZQ",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "passenger_stop",
+          "ride_segment": true
+        },
+        {
+          "name": "香港西九龙",
+          "n02_station_code": "CN-12306-XJA",
+          "arrival": null,
+          "departure": null,
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    }
+  ]
+}

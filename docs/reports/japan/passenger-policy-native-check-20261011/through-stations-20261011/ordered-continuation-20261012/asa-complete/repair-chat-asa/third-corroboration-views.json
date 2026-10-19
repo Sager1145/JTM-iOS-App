@@ -1,0 +1,86 @@
+[
+  {
+    "inspector": "third",
+    "intervalIndex": 0,
+    "viewOrdinal": 0,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native/third/captures/002984/000000/basemap.png",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.57918,
+      "longitude": 133.645135,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.991380643299407,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 233866667.4330738,
+      "rectY": 107605997.09140146,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "mapRect": {
+      "height": 6144,
+      "width": 8192,
+      "x": 233866667.4330738,
+      "y": 107605997.09140146
+    }
+  },
+  {
+    "inspector": "third",
+    "intervalIndex": 19,
+    "viewOrdinal": 4,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native/third/captures/002995/000004/basemap.png",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.425235,
+      "longitude": 134.01825,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9931208323389674,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 234144882.14186665,
+      "rectY": 107743657.06961502,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "mapRect": {
+      "height": 6144,
+      "width": 8192,
+      "x": 234144882.14186665,
+      "y": 107743657.06961502
+    }
+  },
+  {
+    "inspector": "third",
+    "intervalIndex": 10,
+    "viewOrdinal": 4,
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native/third/captures/002986/000004/basemap.png",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.512633543878984,
+      "longitude": 133.83913899550413,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9921337649516387,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 234011327.29695982,
+      "rectY": 107665534.00010028,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "mapRect": {
+      "height": 6144,
+      "width": 8192,
+      "x": 234011327.29695982,
+      "y": 107665534.00010028
+    }
+  }
+]

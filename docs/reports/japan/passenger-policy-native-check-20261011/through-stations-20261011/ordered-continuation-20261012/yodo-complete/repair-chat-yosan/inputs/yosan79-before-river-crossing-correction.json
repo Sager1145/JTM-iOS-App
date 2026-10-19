@@ -1,0 +1,2783 @@
+{
+  "status": "candidate-only-Yawatahama-placement-warning-nativepending",
+  "lineID": "jp-\u56db\u56fd\u65c5\u5ba2\u9244\u9053-\u4e88\u8b83\u7dda",
+  "intervalIndex": 79,
+  "fromStationID": "009272",
+  "toStationID": "009291",
+  "coordinates": [
+    [
+      132.43618,
+      33.45803
+    ],
+    [
+      132.43586,
+      33.45781
+    ],
+    [
+      132.43485,
+      33.45712
+    ],
+    [
+      132.43431,
+      33.45676
+    ],
+    [
+      132.43405703055544,
+      33.45659082826568
+    ],
+    [
+      132.433831473,
+      33.45639456679502
+    ],
+    [
+      132.43362098749213,
+      33.456188923854974
+    ],
+    [
+      132.43344718439118,
+      33.45595967432067
+    ],
+    [
+      132.4332456664642,
+      33.45574912264607
+    ],
+    [
+      132.43310913900643,
+      33.455504967426904
+    ],
+    [
+      132.43297852785264,
+      33.45526802622916
+    ],
+    [
+      132.4328929774457,
+      33.455007857627386
+    ],
+    [
+      132.4328228271038,
+      33.45475297600203
+    ],
+    [
+      132.43278543465544,
+      33.45449262739312
+    ],
+    [
+      132.43277364418032,
+      33.45422510437832
+    ],
+    [
+      132.4327952807505,
+      33.45396040502654
+    ],
+    [
+      132.4328420180259,
+      33.45370297317076
+    ],
+    [
+      132.43291655919808,
+      33.45344064346869
+    ],
+    [
+      132.43300731640142,
+      33.45320589314662
+    ],
+    [
+      132.43311462757538,
+      33.45295355031375
+    ],
+    [
+      132.433251923328,
+      33.45270831754168
+    ],
+    [
+      132.43339039156973,
+      33.45246451559371
+    ],
+    [
+      132.43352885981147,
+      33.45222071296035
+    ],
+    [
+      132.43367205540028,
+      33.451979025198646
+    ],
+    [
+      132.433829754037,
+      33.451743891958586
+    ],
+    [
+      132.4339891226673,
+      33.451509526884394
+    ],
+    [
+      132.4341484912976,
+      33.45127516117686
+    ],
+    [
+      132.4343078599279,
+      33.45104079483597
+    ],
+    [
+      132.43447997246676,
+      33.45081315774692
+    ],
+    [
+      132.4346778197028,
+      33.45060033512089
+    ],
+    [
+      132.43491511087592,
+      33.45042115251114
+    ],
+    [
+      132.43518421396743,
+      33.45027211544799
+    ],
+    [
+      132.43546074350303,
+      33.45013284769293
+    ],
+    [
+      132.43574621422692,
+      33.45000977474687
+    ],
+    [
+      132.4360372628688,
+      33.44989290440061
+    ],
+    [
+      132.43633296099182,
+      33.44978291226693
+    ],
+    [
+      132.43662411414124,
+      33.4496659657308
+    ],
+    [
+      132.43691115198106,
+      33.449539444570846
+    ],
+    [
+      132.43718894804113,
+      33.44940044842639
+    ],
+    [
+      132.4374515603451,
+      33.44923951219677
+    ],
+    [
+      132.43770019258017,
+      33.44906730429312
+    ],
+    [
+      132.43794590710365,
+      33.44889225954423
+    ],
+    [
+      132.4381865733003,
+      33.44871274137881
+    ],
+    [
+      132.43840832904715,
+      33.44851697363489
+    ],
+    [
+      132.43860262397482,
+      33.44830220711956
+    ],
+    [
+      132.43877176252232,
+      33.44807276532585
+    ],
+    [
+      132.43892877139047,
+      33.44783746515795
+    ],
+    [
+      132.4390754766436,
+      33.447597401871
+    ],
+    [
+      132.43922179315922,
+      33.447357204756
+    ],
+    [
+      132.43937840034647,
+      33.44712153544248
+    ],
+    [
+      132.43953500753366,
+      33.446885865488646
+    ],
+    [
+      132.4396916147209,
+      33.446650194894495
+    ],
+    [
+      132.43984822190816,
+      33.44641452366003
+    ],
+    [
+      132.44000482909541,
+      33.446178851785255
+    ],
+    [
+      132.44016143628266,
+      33.44594317927017
+    ],
+    [
+      132.44031652951986,
+      33.44570681350886
+    ],
+    [
+      132.44047044377066,
+      33.44546990773623
+    ],
+    [
+      132.44062435802152,
+      33.44523300131658
+    ],
+    [
+      132.4407829882984,
+      33.444998227495844
+    ],
+    [
+      132.44093218652324,
+      33.44475918653626
+    ],
+    [
+      132.4410861007741,
+      33.444522278175576
+    ],
+    [
+      132.44124001502496,
+      33.44428536916789
+    ],
+    [
+      132.44138960030762,
+      33.4440465862597
+    ],
+    [
+      132.44154863626335,
+      33.44381204575604
+    ],
+    [
+      132.44170563479742,
+      33.443576548170164
+    ],
+    [
+      132.44186243095749,
+      33.443340956987015
+    ],
+    [
+      132.44201691452412,
+      33.443104302899854
+    ],
+    [
+      132.44217139809075,
+      33.44286764816711
+    ],
+    [
+      132.44232588165738,
+      33.44263099278878
+    ],
+    [
+      132.44248036522401,
+      33.44239433676488
+    ],
+    [
+      132.44263484879065,
+      33.442157680095384
+    ],
+    [
+      132.44278933235728,
+      33.44192102278033
+    ],
+    [
+      132.44294753643936,
+      33.441686082602004
+    ],
+    [
+      132.4431291393949,
+      33.44146211432427
+    ],
+    [
+      132.44331537868794,
+      33.44124949658128
+    ],
+    [
+      132.44354715695636,
+      33.441065377400854
+    ],
+    [
+      132.4438065199842,
+      33.44090474883695
+    ],
+    [
+      132.44406483415213,
+      33.44074357640283
+    ],
+    [
+      132.44430957356042,
+      33.44056781989025
+    ],
+    [
+      132.4445401026166,
+      33.44037989742841
+    ],
+    [
+      132.44474303527437,
+      33.44017032517375
+    ],
+    [
+      132.44490653316637,
+      33.43993904800387
+    ],
+    [
+      132.44502918866476,
+      33.43969024713881
+    ],
+    [
+      132.4451355557689,
+      33.439435774598046
+    ],
+    [
+      132.44524353192725,
+      33.43918174703844
+    ],
+    [
+      132.44533625342325,
+      33.43892344022787
+    ],
+    [
+      132.4454448766561,
+      33.43866961518317
+    ],
+    [
+      132.44554406163326,
+      33.43841310137557
+    ],
+    [
+      132.44566863249628,
+      33.438163812727375
+    ],
+    [
+      132.44578304900483,
+      33.437911632987614
+    ],
+    [
+      132.44589238833635,
+      33.437658007323016
+    ],
+    [
+      132.44599631144973,
+      33.43740230430101
+    ],
+    [
+      132.44610579368202,
+      33.437148601569326
+    ],
+    [
+      132.4462254438543,
+      33.43690690256906
+    ],
+    [
+      132.4463808842729,
+      33.43667218572628
+    ],
+    [
+      132.44658036518086,
+      33.436460237337805
+    ],
+    [
+      132.44677828495014,
+      33.43624730716719
+    ],
+    [
+      132.44696733174823,
+      33.43602879929352
+    ],
+    [
+      132.44716507716572,
+      33.43581553178785
+    ],
+    [
+      132.4473758705122,
+      33.43561012515412
+    ],
+    [
+      132.44758649574158,
+      33.435405238454294
+    ],
+    [
+      132.44779526559404,
+      33.43519883313246
+    ],
+    [
+      132.4479997157394,
+      33.434989772954935
+    ],
+    [
+      132.44820683739772,
+      33.434789888873944
+    ],
+    [
+      132.44841203159086,
+      33.43458917360793
+    ],
+    [
+      132.44862625813943,
+      33.43438729240198
+    ],
+    [
+      132.44884048468793,
+      33.43418541072634
+    ],
+    [
+      132.44903843842513,
+      33.43396961447021
+    ],
+    [
+      132.44926775208012,
+      33.43377936070997
+    ],
+    [
+      132.4494772318319,
+      33.43357403784713
+    ],
+    [
+      132.44969464514486,
+      33.43337474198729
+    ],
+    [
+      132.44990877024088,
+      33.4331765959453
+    ],
+    [
+      132.4501233452608,
+      33.432973928352276
+    ],
+    [
+      132.45033442293027,
+      33.432768472498104
+    ],
+    [
+      132.45055506769023,
+      33.43257146011402
+    ],
+    [
+      132.45078859991213,
+      33.43238721260734
+    ],
+    [
+      132.45104111150135,
+      33.43222937609505
+    ],
+    [
+      132.4513135500872,
+      33.43208464311638
+    ],
+    [
+      132.45160075226977,
+      33.43196699904541
+    ],
+    [
+      132.45190300679383,
+      33.43186833076107
+    ],
+    [
+      132.4521964934948,
+      33.431765854874584
+    ],
+    [
+      132.4524891821889,
+      33.431651584211586
+    ],
+    [
+      132.45279664478045,
+      33.43156612397613
+    ],
+    [
+      132.45309510510515,
+      33.431464596478875
+    ],
+    [
+      132.45338670512444,
+      33.43134797268433
+    ],
+    [
+      132.45367125514173,
+      33.43120124662094
+    ],
+    [
+      132.45394384306354,
+      33.43104807066569
+    ],
+    [
+      132.4541954668219,
+      33.43087843114813
+    ],
+    [
+      132.45441729155948,
+      33.43067533063334
+    ],
+    [
+      132.45463286221712,
+      33.43047064387751
+    ],
+    [
+      132.45482833940605,
+      33.43024957300679
+    ],
+    [
+      132.45499941975714,
+      33.4300205771587
+    ],
+    [
+      132.45514062288822,
+      33.429772765227646
+    ],
+    [
+      132.45525715419052,
+      33.429507373281886
+    ],
+    [
+      132.45533971286505,
+      33.42924570060734
+    ],
+    [
+      132.45541043725996,
+      33.42898256213101
+    ],
+    [
+      132.45546535030627,
+      33.428716919964266
+    ],
+    [
+      132.45552243867434,
+      33.42845529437087
+    ],
+    [
+      132.4555501876568,
+      33.428184307916354
+    ],
+    [
+      132.45560000499404,
+      33.42791665084401
+    ],
+    [
+      132.45570713367272,
+      33.427662928358366
+    ],
+    [
+      132.45585279881266,
+      33.42742421949444
+    ],
+    [
+      132.4561744755825,
+      33.42731308031892
+    ],
+    [
+      132.45637998411866,
+      33.42710898104009
+    ],
+    [
+      132.45659191553858,
+      33.42690487140625
+    ],
+    [
+      132.45680015814577,
+      33.42668875248202
+    ],
+    [
+      132.45698093861483,
+      33.42646209491627
+    ],
+    [
+      132.45714639435636,
+      33.42622639667636
+    ],
+    [
+      132.45726803691105,
+      33.42597670931736
+    ],
+    [
+      132.4573722980477,
+      33.42571956871401
+    ],
+    [
+      132.45751180852898,
+      33.42543459259822
+    ],
+    [
+      132.4575869103814,
+      33.42525550594963
+    ],
+    [
+      132.45766469444283,
+      33.42507641893158
+    ],
+    [
+      132.45773711408623,
+      33.424897331544095
+    ],
+    [
+      132.4577693005944,
+      33.424807787711806
+    ],
+    [
+      132.45784664285196,
+      33.424626519353936
+    ]
+  ],
+  "headAlias": [
+    132.43618,
+    33.45803
+  ],
+  "tailAlias": [
+    132.45784664285196,
+    33.424626519353936
+  ],
+  "retainedStationHead": {
+    "coordinates": [
+      [
+        132.43618,
+        33.45803
+      ],
+      [
+        132.43586,
+        33.45781
+      ],
+      [
+        132.43485,
+        33.45712
+      ],
+      [
+        132.43431,
+        33.45676
+      ]
+    ],
+    "sourceAlongMetres": 223.98961567690571,
+    "reason": "Currentlabelledsource-orientedpassengerthroatretainedthroughtoyardconvergence; ownNWfacecaps/groupallocationunresolved. No coloursnappinginsidefan,noheadplacementacceptance."
+  },
+  "bodyPixelControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        572.9230250915466,
+        308.4394410316247
+      ],
+      "coordinate": [
+        132.43405703055544,
+        33.45659082826568
+      ],
+      "sourceAlongMetres": 253.98961567690571,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        551.8995371572131,
+        330.36535740632263
+      ],
+      "coordinate": [
+        132.433831473,
+        33.45639456679502
+      ],
+      "sourceAlongMetres": 283.9896156769057,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        532.2808658775656,
+        353.33929845402986
+      ],
+      "coordinate": [
+        132.43362098749213,
+        33.456188923854974
+      ],
+      "sourceAlongMetres": 313.98961567690577,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        516.0812427289784,
+        378.95044794119895
+      ],
+      "coordinate": [
+        132.43344718439118,
+        33.45595967432067
+      ],
+      "sourceAlongMetres": 343.98961567690577,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        497.2984105683863,
+        402.4726625159383
+      ],
+      "coordinate": [
+        132.4332456664642,
+        33.45574912264607
+      ],
+      "sourceAlongMetres": 373.98961567690577,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        484.57312918838295,
+        429.7488948581076
+      ],
+      "coordinate": [
+        132.43310913900643,
+        33.455504967426904
+      ],
+      "sourceAlongMetres": 403.9896156769058,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        472.39928730019864,
+        456.21912659982024
+      ],
+      "coordinate": [
+        132.43297852785264,
+        33.45526802622916
+      ],
+      "sourceAlongMetres": 433.9896156769058,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        464.425411435484,
+        485.28415837198236
+      ],
+      "coordinate": [
+        132.4328929774457,
+        33.455007857627386
+      ],
+      "sourceAlongMetres": 463.9896156769058,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000001/view.json",
+      "pixel": [
+        457.8869256651863,
+        513.7584649843817
+      ],
+      "coordinate": [
+        132.4328228271038,
+        33.45475297600203
+      ],
+      "sourceAlongMetres": 493.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        488.06230016116234,
+        211.84660209190255
+      ],
+      "coordinate": [
+        132.43278543465544,
+        33.45449262739312
+      ],
+      "sourceAlongMetres": 523.9896156769058,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        486.9633482284844,
+        241.73297197930515
+      ],
+      "coordinate": [
+        132.43277364418032,
+        33.45422510437832
+      ],
+      "sourceAlongMetres": 553.9896156769058,
+      "hitSamples": 5,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        488.98002273724,
+        271.3038052214418
+      ],
+      "coordinate": [
+        132.4327952807505,
+        33.45396040502654
+      ],
+      "sourceAlongMetres": 583.9896156769058,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        493.3362525364421,
+        300.0626650705161
+      ],
+      "coordinate": [
+        132.4328420180259,
+        33.45370297317076
+      ],
+      "sourceAlongMetres": 613.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        500.2839933557258,
+        329.36859733267437
+      ],
+      "coordinate": [
+        132.43291655919808,
+        33.45344064346869
+      ],
+      "sourceAlongMetres": 643.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        508.74317782053856,
+        355.5934482169742
+      ],
+      "coordinate": [
+        132.43300731640142,
+        33.45320589314662
+      ],
+      "sourceAlongMetres": 673.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        518.7453041797575,
+        383.7835461864155
+      ],
+      "coordinate": [
+        132.43311462757538,
+        33.45295355031375
+      ],
+      "sourceAlongMetres": 703.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        531.5421958347534,
+        411.1792758745142
+      ],
+      "coordinate": [
+        132.433251923328,
+        33.45270831754168
+      ],
+      "sourceAlongMetres": 733.9896156769059,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        544.4483713916115,
+        438.41508687316673
+      ],
+      "coordinate": [
+        132.43339039156973,
+        33.45246451559371
+      ],
+      "sourceAlongMetres": 763.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        557.3545469521948,
+        465.6508978699567
+      ],
+      "coordinate": [
+        132.43352885981147,
+        33.45222071296035
+      ],
+      "sourceAlongMetres": 793.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        570.7013431973755,
+        492.65037561021745
+      ],
+      "coordinate": [
+        132.43367205540028,
+        33.451979025198646
+      ],
+      "sourceAlongMetres": 823.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000002/view.json",
+      "pixel": [
+        585.3999214805663,
+        518.9175609387457
+      ],
+      "coordinate": [
+        132.433829754037,
+        33.451743891958586
+      ],
+      "sourceAlongMetres": 853.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        411.30486872419715,
+        252.5854675155133
+      ],
+      "coordinate": [
+        132.4339891226673,
+        33.451509526884394
+      ],
+      "sourceAlongMetres": 883.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        426.159101691097,
+        278.76676869019866
+      ],
+      "coordinate": [
+        132.4341484912976,
+        33.45127516117686
+      ],
+      "sourceAlongMetres": 913.989615676906,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        441.0133346579969,
+        304.948069864884
+      ],
+      "coordinate": [
+        132.4343078599279,
+        33.45104079483597
+      ],
+      "sourceAlongMetres": 943.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        457.05538599938154,
+        330.37757177092135
+      ],
+      "coordinate": [
+        132.43447997246676,
+        33.45081315774692
+      ],
+      "sourceAlongMetres": 973.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        475.4960849672771,
+        354.1520790525973
+      ],
+      "coordinate": [
+        132.4346778197028,
+        33.45060033512089
+      ],
+      "sourceAlongMetres": 1003.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        497.61322533054016,
+        374.16860038007746
+      ],
+      "coordinate": [
+        132.43491511087592,
+        33.45042115251114
+      ],
+      "sourceAlongMetres": 1033.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        522.6954514011741,
+        390.81752580963075
+      ],
+      "coordinate": [
+        132.43518421396743,
+        33.45027211544799
+      ],
+      "sourceAlongMetres": 1063.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        548.4698722271354,
+        406.3750962944118
+      ],
+      "coordinate": [
+        132.43546074350303,
+        33.45013284769293
+      ],
+      "sourceAlongMetres": 1093.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        575.0776722097064,
+        420.12352741330943
+      ],
+      "coordinate": [
+        132.43574621422692,
+        33.45000977474687
+      ],
+      "sourceAlongMetres": 1123.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        602.205371826945,
+        433.17905044838824
+      ],
+      "coordinate": [
+        132.4360372628688,
+        33.44989290440061
+      ],
+      "sourceAlongMetres": 1153.9896156769062,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        629.7664345030613,
+        445.46619601809937
+      ],
+      "coordinate": [
+        132.43633296099182,
+        33.44978291226693
+      ],
+      "sourceAlongMetres": 1183.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000003/view.json",
+      "pixel": [
+        656.9038749262135,
+        458.5301960056865
+      ],
+      "coordinate": [
+        132.43662411414124,
+        33.4496659657308
+      ],
+      "sourceAlongMetres": 1213.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        387.5223972575508,
+        286.20026385828345
+      ],
+      "coordinate": [
+        132.43691115198106,
+        33.449539444570846
+      ],
+      "sourceAlongMetres": 1243.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        413.4148667240117,
+        301.7273616366352
+      ],
+      "coordinate": [
+        132.43718894804113,
+        33.44940044842639
+      ],
+      "sourceAlongMetres": 1273.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        437.89210754243635,
+        319.70532974872935
+      ],
+      "coordinate": [
+        132.4374515603451,
+        33.44923951219677
+      ],
+      "sourceAlongMetres": 1303.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        461.06631150215236,
+        338.94240434248064
+      ],
+      "coordinate": [
+        132.43770019258017,
+        33.44906730429312
+      ],
+      "sourceAlongMetres": 1333.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        483.9685650281608,
+        358.4963393229991
+      ],
+      "coordinate": [
+        132.43794590710365,
+        33.44889225954423
+      ],
+      "sourceAlongMetres": 1363.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        506.4002803899348,
+        378.5499506518245
+      ],
+      "coordinate": [
+        132.4381865733003,
+        33.44871274137881
+      ],
+      "sourceAlongMetres": 1393.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        527.0694140829146,
+        400.41872223094106
+      ],
+      "coordinate": [
+        132.43840832904715,
+        33.44851697363489
+      ],
+      "sourceAlongMetres": 1423.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        545.1790139116347,
+        424.40974678471684
+      ],
+      "coordinate": [
+        132.43860262397482,
+        33.44830220711956
+      ],
+      "sourceAlongMetres": 1453.9896156769064,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        560.9438691623509,
+        450.0400439593941
+      ],
+      "coordinate": [
+        132.43877176252232,
+        33.44807276532585
+      ],
+      "sourceAlongMetres": 1483.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        575.5781563520432,
+        476.324693210423
+      ],
+      "coordinate": [
+        132.43892877139047,
+        33.44783746515795
+      ],
+      "sourceAlongMetres": 1513.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000004/view.json",
+      "pixel": [
+        589.2520770207047,
+        503.1413421779871
+      ],
+      "coordinate": [
+        132.4390754766436,
+        33.447597401871
+      ],
+      "sourceAlongMetres": 1543.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        425.2895255982876,
+        227.6162974499166
+      ],
+      "coordinate": [
+        132.43922179315922,
+        33.447357204756
+      ],
+      "sourceAlongMetres": 1573.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        439.8863734193146,
+        253.94196557067335
+      ],
+      "coordinate": [
+        132.43937840034647,
+        33.44712153544248
+      ],
+      "sourceAlongMetres": 1603.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        454.4832212366164,
+        280.2676336914301
+      ],
+      "coordinate": [
+        132.43953500753366,
+        33.446885865488646
+      ],
+      "sourceAlongMetres": 1633.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        469.0800690576434,
+        306.59330181218684
+      ],
+      "coordinate": [
+        132.4396916147209,
+        33.446650194894495
+      ],
+      "sourceAlongMetres": 1663.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        483.67691687494516,
+        332.9189699329436
+      ],
+      "coordinate": [
+        132.43984822190816,
+        33.44641452366003
+      ],
+      "sourceAlongMetres": 1693.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        498.2737646959722,
+        359.2446380537003
+      ],
+      "coordinate": [
+        132.44000482909541,
+        33.446178851785255
+      ],
+      "sourceAlongMetres": 1723.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        512.8706125169992,
+        385.5703061744571
+      ],
+      "coordinate": [
+        132.44016143628266,
+        33.44594317927017
+      ],
+      "sourceAlongMetres": 1753.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        527.3263499625027,
+        411.97334113903344
+      ],
+      "coordinate": [
+        132.44031652951986,
+        33.44570681350886
+      ],
+      "sourceAlongMetres": 1783.9896156769066,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        541.6721979156137,
+        438.4366254154593
+      ],
+      "coordinate": [
+        132.44047044377066,
+        33.44546990773623
+      ],
+      "sourceAlongMetres": 1813.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        556.0180458724499,
+        464.8999096918851
+      ],
+      "coordinate": [
+        132.44062435802152,
+        33.44523300131658
+      ],
+      "sourceAlongMetres": 1843.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        570.8034593102313,
+        491.1249038343118
+      ],
+      "coordinate": [
+        132.4407829882984,
+        33.444998227495844
+      ],
+      "sourceAlongMetres": 1873.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000005/view.json",
+      "pixel": [
+        584.709741782397,
+        517.8264782447368
+      ],
+      "coordinate": [
+        132.44093218652324,
+        33.44475918653626
+      ],
+      "sourceAlongMetres": 1903.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        430.7034788094461,
+        235.63690799102187
+      ],
+      "coordinate": [
+        132.4410861007741,
+        33.444522278175576
+      ],
+      "sourceAlongMetres": 1933.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        445.0493267662823,
+        262.1001922674477
+      ],
+      "coordinate": [
+        132.44124001502496,
+        33.44428536916789
+      ],
+      "sourceAlongMetres": 1963.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        458.99168564379215,
+        288.7727224342525
+      ],
+      "coordinate": [
+        132.44138960030762,
+        33.4440465862597
+      ],
+      "sourceAlongMetres": 1993.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        473.81491108983755,
+        314.9712960254401
+      ],
+      "coordinate": [
+        132.44154863626335,
+        33.44381204575604
+      ],
+      "sourceAlongMetres": 2023.9896156769069,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        488.4482350796461,
+        341.27670606411994
+      ],
+      "coordinate": [
+        132.44170563479742,
+        33.443576548170164
+      ],
+      "sourceAlongMetres": 2053.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        503.0626964457333,
+        367.5924995969981
+      ],
+      "coordinate": [
+        132.44186243095749,
+        33.443340956987015
+      ],
+      "sourceAlongMetres": 2083.989615676907,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        517.4616084769368,
+        394.0269487220794
+      ],
+      "coordinate": [
+        132.44201691452412,
+        33.443104302899854
+      ],
+      "sourceAlongMetres": 2113.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        531.8605205081403,
+        420.4613978471607
+      ],
+      "coordinate": [
+        132.44217139809075,
+        33.44286764816711
+      ],
+      "sourceAlongMetres": 2143.989615676907,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        546.2594325430691,
+        446.895846972242
+      ],
+      "coordinate": [
+        132.44232588165738,
+        33.44263099278878
+      ],
+      "sourceAlongMetres": 2173.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        560.6583445742726,
+        473.3302960973233
+      ],
+      "coordinate": [
+        132.44248036522401,
+        33.44239433676488
+      ],
+      "sourceAlongMetres": 2203.989615676907,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        575.0572566054761,
+        499.76474522426724
+      ],
+      "coordinate": [
+        132.44263484879065,
+        33.442157680095384
+      ],
+      "sourceAlongMetres": 2233.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000006/view.json",
+      "pixel": [
+        589.4561686366796,
+        526.1991943493485
+      ],
+      "coordinate": [
+        132.44278933235728,
+        33.44192102278033
+      ],
+      "sourceAlongMetres": 2263.989615676907,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        400.89509120956063,
+        272.94505728408694
+      ],
+      "coordinate": [
+        132.44294753643936,
+        33.441686082602004
+      ],
+      "sourceAlongMetres": 2293.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        417.82171349783965,
+        297.9620160532834
+      ],
+      "coordinate": [
+        132.4431291393949,
+        33.44146211432427
+      ],
+      "sourceAlongMetres": 2323.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        435.1804737549155,
+        321.71107543026017
+      ],
+      "coordinate": [
+        132.44331537868794,
+        33.44124949658128
+      ],
+      "sourceAlongMetres": 2353.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        456.7837741677752,
+        342.27684425608993
+      ],
+      "coordinate": [
+        132.44354715695636,
+        33.441065377400854
+      ],
+      "sourceAlongMetres": 2383.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        480.95816050469875,
+        360.2187194097787
+      ],
+      "coordinate": [
+        132.4438065199842,
+        33.44090474883695
+      ],
+      "sourceAlongMetres": 2413.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        505.0347860082984,
+        378.22131034359336
+      ],
+      "coordinate": [
+        132.44406483415213,
+        33.44074357640283
+      ],
+      "sourceAlongMetres": 2443.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        527.8461522124708,
+        397.8528712466359
+      ],
+      "coordinate": [
+        132.44430957356042,
+        33.44056781989025
+      ],
+      "sourceAlongMetres": 2473.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        549.3330175988376,
+        418.84329412318766
+      ],
+      "coordinate": [
+        132.4445401026166,
+        33.44037989742841
+      ],
+      "sourceAlongMetres": 2503.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        568.2477122284472,
+        442.25188577361405
+      ],
+      "coordinate": [
+        132.44474303527437,
+        33.44017032517375
+      ],
+      "sourceAlongMetres": 2533.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        583.4868202805519,
+        468.0847856607288
+      ],
+      "coordinate": [
+        132.44490653316637,
+        33.43993904800387
+      ],
+      "sourceAlongMetres": 2563.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000007/view.json",
+      "pixel": [
+        594.9191413335502,
+        495.874947829172
+      ],
+      "coordinate": [
+        132.44502918866476,
+        33.43969024713881
+      ],
+      "sourceAlongMetres": 2593.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        454.6800390693394,
+        213.3540769536432
+      ],
+      "coordinate": [
+        132.4451355557689,
+        33.439435774598046
+      ],
+      "sourceAlongMetres": 2623.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        464.74414646756605,
+        241.72787667446065
+      ],
+      "coordinate": [
+        132.44524353192725,
+        33.43918174703844
+      ],
+      "sourceAlongMetres": 2653.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        473.3864162787795,
+        270.5795653741807
+      ],
+      "coordinate": [
+        132.44533625342325,
+        33.43892344022787
+      ],
+      "sourceAlongMetres": 2683.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        483.5108353957253,
+        298.9305776634353
+      ],
+      "coordinate": [
+        132.4454448766561,
+        33.43866961518317
+      ],
+      "sourceAlongMetres": 2713.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        492.7555453106761,
+        327.58182731829584
+      ],
+      "coordinate": [
+        132.44554406163326,
+        33.43841310137557
+      ],
+      "sourceAlongMetres": 2743.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        504.3663912883767,
+        355.42598332915713
+      ],
+      "coordinate": [
+        132.44566863249628,
+        33.438163812727375
+      ],
+      "sourceAlongMetres": 2773.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        515.0307828387422,
+        383.5929767976181
+      ],
+      "coordinate": [
+        132.44578304900483,
+        33.437911632987614
+      ],
+      "sourceAlongMetres": 2803.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        525.2219471810281,
+        411.9213889967416
+      ],
+      "coordinate": [
+        132.44589238833635,
+        33.437658007323016
+      ],
+      "sourceAlongMetres": 2833.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        534.9082834063283,
+        440.48174529827315
+      ],
+      "coordinate": [
+        132.44599631144973,
+        33.43740230430101
+      ],
+      "sourceAlongMetres": 2863.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        545.112767069039,
+        468.81859906595747
+      ],
+      "coordinate": [
+        132.44610579368202,
+        33.437148601569326
+      ],
+      "sourceAlongMetres": 2893.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        556.2649714275738,
+        495.8146413610275
+      ],
+      "coordinate": [
+        132.4462254438543,
+        33.43690690256906
+      ],
+      "sourceAlongMetres": 2923.9896156769073,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000008/view.json",
+      "pixel": [
+        570.7530685290694,
+        522.0307548455894
+      ],
+      "coordinate": [
+        132.4463808842729,
+        33.43667218572628
+      ],
+      "sourceAlongMetres": 2953.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        411.28160060942173,
+        246.62115009129047
+      ],
+      "coordinate": [
+        132.44658036518086,
+        33.436460237337805
+      ],
+      "sourceAlongMetres": 2983.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        429.7290601618588,
+        270.403736025095
+      ],
+      "coordinate": [
+        132.44677828495014,
+        33.43624730716719
+      ],
+      "sourceAlongMetres": 3013.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        447.349498860538,
+        294.80924581736326
+      ],
+      "coordinate": [
+        132.44696733174823,
+        33.43602879929352
+      ],
+      "sourceAlongMetres": 3043.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        465.7807076501129,
+        318.62939088267143
+      ],
+      "coordinate": [
+        132.44716507716572,
+        33.43581553178785
+      ],
+      "sourceAlongMetres": 3073.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        485.4280715704433,
+        341.5714888528828
+      ],
+      "coordinate": [
+        132.4473758705122,
+        33.43561012515412
+      ],
+      "sourceAlongMetres": 3103.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        505.05976583944744,
+        364.4554607227696
+      ],
+      "coordinate": [
+        132.44758649574158,
+        33.435405238454294
+      ],
+      "sourceAlongMetres": 3133.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        524.5185264441634,
+        387.508994159881
+      ],
+      "coordinate": [
+        132.44779526559404,
+        33.43519883313246
+      ],
+      "sourceAlongMetres": 3163.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        543.5746611620425,
+        410.85899411509064
+      ],
+      "coordinate": [
+        132.4479997157394,
+        33.434989772954935
+      ],
+      "sourceAlongMetres": 3193.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        562.8797989420797,
+        433.18406022789355
+      ],
+      "coordinate": [
+        132.44820683739772,
+        33.434789888873944
+      ],
+      "sourceAlongMetres": 3223.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        582.0052839455636,
+        455.6019097038387
+      ],
+      "coordinate": [
+        132.44841203159086,
+        33.43458917360793
+      ],
+      "sourceAlongMetres": 3253.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        601.9726454905237,
+        478.1499304869365
+      ],
+      "coordinate": [
+        132.44862625813943,
+        33.43438729240198
+      ],
+      "sourceAlongMetres": 3283.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000009/view.json",
+      "pixel": [
+        621.9400070317586,
+        500.69795127189695
+      ],
+      "coordinate": [
+        132.44884048468793,
+        33.43418541072634
+      ],
+      "sourceAlongMetres": 3313.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        405.06519262478844,
+        264.18027525193526
+      ],
+      "coordinate": [
+        132.44903843842513,
+        33.43396961447021
+      ],
+      "sourceAlongMetres": 3343.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        426.43877441045106,
+        285.4294815880991
+      ],
+      "coordinate": [
+        132.44926775208012,
+        33.43377936070997
+      ],
+      "sourceAlongMetres": 3373.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        445.9637024239654,
+        308.3616850219201
+      ],
+      "coordinate": [
+        132.4494772318319,
+        33.43357403784713
+      ],
+      "sourceAlongMetres": 3403.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        466.2280919426138,
+        330.62068961667825
+      ],
+      "coordinate": [
+        132.44969464514486,
+        33.43337474198729
+      ],
+      "sourceAlongMetres": 3433.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        486.1859974256806,
+        352.7512223991638
+      ],
+      "coordinate": [
+        132.44990877024088,
+        33.4331765959453
+      ],
+      "sourceAlongMetres": 3463.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        506.18583885409504,
+        375.3867058499394
+      ],
+      "coordinate": [
+        132.4501233452608,
+        33.432973928352276
+      ],
+      "sourceAlongMetres": 3493.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        525.8597035950279,
+        398.33354990159313
+      ],
+      "coordinate": [
+        132.45033442293027,
+        33.432768472498104
+      ],
+      "sourceAlongMetres": 3523.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        546.42528580171,
+        420.3373131411739
+      ],
+      "coordinate": [
+        132.45055506769023,
+        33.43257146011402
+      ],
+      "sourceAlongMetres": 3553.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        568.1920665229409,
+        440.91535765486265
+      ],
+      "coordinate": [
+        132.45078859991213,
+        33.43238721260734
+      ],
+      "sourceAlongMetres": 3583.9896156769078,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        591.7278524927931,
+        458.543603664322
+      ],
+      "coordinate": [
+        132.45104111150135,
+        33.43222937609505
+      ],
+      "sourceAlongMetres": 3613.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        617.1209691681104,
+        474.7083305027915
+      ],
+      "coordinate": [
+        132.4513135500872,
+        33.43208464311638
+      ],
+      "sourceAlongMetres": 3643.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000010/view.json",
+      "pixel": [
+        643.8901527967839,
+        487.8475708771861
+      ],
+      "coordinate": [
+        132.45160075226977,
+        33.43196699904541
+      ],
+      "sourceAlongMetres": 3673.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        376.13519502744447,
+        318.76790405295105
+      ],
+      "coordinate": [
+        132.45190300679383,
+        33.43186833076107
+      ],
+      "sourceAlongMetres": 3703.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        403.49013822562824,
+        330.2130372890944
+      ],
+      "coordinate": [
+        132.4521964934948,
+        33.431765854874584
+      ],
+      "sourceAlongMetres": 3733.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        430.77070178921593,
+        342.975467309919
+      ],
+      "coordinate": [
+        132.4524891821889,
+        33.431651584211586
+      ],
+      "sourceAlongMetres": 3763.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        459.4282924026497,
+        352.52016575496964
+      ],
+      "coordinate": [
+        132.45279664478045,
+        33.43156612397613
+      ],
+      "sourceAlongMetres": 3793.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        487.2468109303272,
+        363.8593376643333
+      ],
+      "coordinate": [
+        132.45309510510515,
+        33.431464596478875
+      ],
+      "sourceAlongMetres": 3823.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        514.4259026455015,
+        376.8845340801505
+      ],
+      "coordinate": [
+        132.45338670512444,
+        33.43134797268433
+      ],
+      "sourceAlongMetres": 3853.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        540.9478865538138,
+        393.27169505876344
+      ],
+      "coordinate": [
+        132.45367125514173,
+        33.43120124662094
+      ],
+      "sourceAlongMetres": 3883.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        566.3549223511666,
+        410.3791853178735
+      ],
+      "coordinate": [
+        132.45394384306354,
+        33.43104807066569
+      ],
+      "sourceAlongMetres": 3913.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        589.8079564815326,
+        429.32537691828304
+      ],
+      "coordinate": [
+        132.4541954668219,
+        33.43087843114813
+      ],
+      "sourceAlongMetres": 3943.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        610.4835205780004,
+        452.00861169857615
+      ],
+      "coordinate": [
+        132.45441729155948,
+        33.43067533063334
+      ],
+      "sourceAlongMetres": 3973.9896156769087,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000011/view.json",
+      "pixel": [
+        630.5761621707464,
+        474.868951742797
+      ],
+      "coordinate": [
+        132.45463286221712,
+        33.43047064387751
+      ],
+      "sourceAlongMetres": 4003.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        463.66795082006996,
+        220.06355381884384
+      ],
+      "coordinate": [
+        132.45482833940605,
+        33.43024957300679
+      ],
+      "sourceAlongMetres": 4033.9896156769087,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        479.6137952847867,
+        245.63871388712695
+      ],
+      "coordinate": [
+        132.45499941975714,
+        33.4300205771587
+      ],
+      "sourceAlongMetres": 4063.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        492.7748810070111,
+        273.3152523371853
+      ],
+      "coordinate": [
+        132.45514062288822,
+        33.429772765227646
+      ],
+      "sourceAlongMetres": 4093.9896156769087,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        503.6363856161727,
+        302.9551031921173
+      ],
+      "coordinate": [
+        132.45525715419052,
+        33.429507373281886
+      ],
+      "sourceAlongMetres": 4123.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        511.3314118138999,
+        332.1794847949813
+      ],
+      "coordinate": [
+        132.45533971286505,
+        33.42924570060734
+      ],
+      "sourceAlongMetres": 4153.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        517.9234031951593,
+        361.56748264939364
+      ],
+      "coordinate": [
+        132.45541043725996,
+        33.42898256213101
+      ],
+      "sourceAlongMetres": 4183.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        523.0416700805583,
+        391.2350088749974
+      ],
+      "coordinate": [
+        132.45546535030627,
+        33.428716919964266
+      ],
+      "sourceAlongMetres": 4213.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        528.3626916536113,
+        420.4538662329063
+      ],
+      "coordinate": [
+        132.45552243867434,
+        33.42845529437087
+      ],
+      "sourceAlongMetres": 4243.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        530.9490842751077,
+        450.71806999250526
+      ],
+      "coordinate": [
+        132.4555501876568,
+        33.428184307916354
+      ],
+      "sourceAlongMetres": 4273.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        535.5923966504633,
+        480.6103502418846
+      ],
+      "coordinate": [
+        132.45560000499404,
+        33.42791665084401
+      ],
+      "sourceAlongMetres": 4303.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        545.5775132186578,
+        508.9463131270999
+      ],
+      "coordinate": [
+        132.45570713367272,
+        33.427662928358366
+      ],
+      "sourceAlongMetres": 4333.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000012/view.json",
+      "pixel": [
+        559.1544883102179,
+        535.605465175584
+      ],
+      "coordinate": [
+        132.45585279881266,
+        33.42742421949444
+      ],
+      "sourceAlongMetres": 4363.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        420.4178554787699,
+        250.90567654520157
+      ],
+      "coordinate": [
+        132.4561744755825,
+        33.42731308031892
+      ],
+      "sourceAlongMetres": 4393.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        439.57263937250184,
+        273.69952162003614
+      ],
+      "coordinate": [
+        132.45637998411866,
+        33.42710898104009
+      ],
+      "sourceAlongMetres": 4423.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        459.32607942480007,
+        296.49446954519044
+      ],
+      "coordinate": [
+        132.45659191553858,
+        33.42690487140625
+      ],
+      "sourceAlongMetres": 4453.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        478.7356972106416,
+        320.63055566026316
+      ],
+      "coordinate": [
+        132.45680015814577,
+        33.42668875248202
+      ],
+      "sourceAlongMetres": 4483.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        495.5856581974182,
+        345.9435290259338
+      ],
+      "coordinate": [
+        132.45698093861483,
+        33.42646209491627
+      ],
+      "sourceAlongMetres": 4513.989615676908,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        511.0072510535504,
+        372.26608905497517
+      ],
+      "coordinate": [
+        132.45714639435636,
+        33.42622639667636
+      ],
+      "sourceAlongMetres": 4543.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        522.3451589117433,
+        400.15086292217995
+      ],
+      "coordinate": [
+        132.45726803691105,
+        33.42597670931736
+      ],
+      "sourceAlongMetres": 4573.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002789/000013/view.json",
+      "pixel": [
+        532.063001189884,
+        428.86792202256925
+      ],
+      "coordinate": [
+        132.4573722980477,
+        33.42571956871401
+      ],
+      "sourceAlongMetres": 4603.989615676909,
+      "hitSamples": 7,
+      "basis": "Alreadyidentifiedunique labelledblueYosanrailwayafterstationfanconverges; greyroads/cyanGotanogawaexcluded. No RGBselection insideambiguousstationyard."
+    }
+  ],
+  "preciseTailControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        429,
+        60
+      ],
+      "coordinate": [
+        132.45751180852898,
+        33.42543459259822
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        443,
+        100
+      ],
+      "coordinate": [
+        132.4575869103814,
+        33.42525550594963
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        457.5,
+        140
+      ],
+      "coordinate": [
+        132.45766469444283,
+        33.42507641893158
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        471,
+        180
+      ],
+      "coordinate": [
+        132.45773711408623,
+        33.424897331544095
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        477,
+        200
+      ],
+      "coordinate": [
+        132.4577693005944,
+        33.424807787711806
+      ]
+    }
+  ],
+  "warnings": [
+    "YawatahamaNWfacecaps/ownpassengergroup unresolved. ExistingaliasretainedWARNING, noforcednewpoint/no78moveinferred.",
+    "Singleidentifiedbluebodycartographyonly; tunnelstraightnessnotundergroundsurvey.",
+    "Allfreshnative/Maincandidateacceptancepending."
+  ],
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true,
+  "nativeAcceptance": false,
+  "turnsOver30": [
+    {
+      "index": 141,
+      "degrees": 40.52269591720941,
+      "coordinate": [
+        132.45585279881266,
+        33.42742421949444
+      ]
+    }
+  ]
+}

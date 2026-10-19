@@ -1,0 +1,520 @@
+{
+  "status": "candidate-only-native-seven-interval-review-required",
+  "all14RawBasemapsActuallyReviewed": true,
+  "all14FinalReprojectionsActuallyReviewed": true,
+  "focusedFinalOriginals": [
+    2,
+    6,
+    9,
+    12,
+    13
+  ],
+  "highZoomKainaSeamReprojectionActuallyReviewed": true,
+  "kainaExactSharedAlias": [
+    133.11620790669843,
+    33.13299655596097
+  ],
+  "physicalPackageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+  "coordinateCounts": {
+    "interval1": 360,
+    "interval2": 157
+  },
+  "coordinateSha256": {
+    "1": "a9de65cf387edc7ace66b831ba9976bb4518e31ae49451c4ac9195167285a5ac",
+    "2": "c2c75b8ee0297e4c26c324804d7cd7ab949a7281b6dc554c2084ee3d8b890351"
+  },
+  "maximumTurns": {
+    "interval1": [
+      145,
+      14.673070075669084
+    ],
+    "interval2": [
+      27,
+      23.49856567595208
+    ]
+  },
+  "turnsAbove30": {
+    "interval1": [],
+    "interval2": []
+  },
+  "literalIyokiGuardPreserved": true,
+  "acceptedBodyNormalOffsetsPixelsRange": [
+    -5,
+    10
+  ],
+  "unsupportedSampleCount": 17,
+  "neighbourWitnessGaps": [
+    {
+      "before": "T004",
+      "after": "T006",
+      "sourceChainageMetres": 50.000000000000036
+    },
+    {
+      "before": "T022",
+      "after": "T024",
+      "sourceChainageMetres": 49.99999999999992
+    },
+    {
+      "before": "T073",
+      "after": "T075",
+      "sourceChainageMetres": 50.00000000000015
+    },
+    {
+      "before": "T086",
+      "after": "T089",
+      "sourceChainageMetres": 74.99999999999955
+    },
+    {
+      "before": "T091",
+      "after": "T093",
+      "sourceChainageMetres": 49.9999999999997
+    },
+    {
+      "before": "T112",
+      "after": "T114",
+      "sourceChainageMetres": 49.9999999999997
+    },
+    {
+      "before": "T121",
+      "after": "T124",
+      "sourceChainageMetres": 74.99999999999955
+    },
+    {
+      "before": "T126",
+      "after": "T131",
+      "sourceChainageMetres": 124.99999999999925
+    },
+    {
+      "before": "T156",
+      "after": "T158",
+      "sourceChainageMetres": 50.00000000000015
+    },
+    {
+      "before": "T159",
+      "after": "T161",
+      "sourceChainageMetres": 50.000000000000604
+    }
+  ],
+  "actualRawFrameMetadata": [
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000000",
+      "pointOrdinal": 0,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.13303,
+        "longitude": 133.11607,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9964040949956288,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233472167.9760498,
+        "rectY": 108004281.93390128,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233472167.9760498,
+        "y": 108004281.93390128
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000001",
+      "pointOrdinal": 1,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.12995955012734,
+        "longitude": 133.11663866197335,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9964384570742484,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233472592.00115016,
+        "rectY": 108007015.92368898,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233472592.00115016,
+        "y": 108007015.92368898
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000002",
+      "pointOrdinal": 2,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.126848842892585,
+        "longitude": 133.1165155785653,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9964732667523999,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233472500.22350913,
+        "rectY": 108009785.66192771,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233472500.22350913,
+        "y": 108009785.66192771
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000003",
+      "pointOrdinal": 3,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.12445122963304,
+        "longitude": 133.11891079575432,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9965000946986838,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233474286.22689345,
+        "rectY": 108011920.40246078,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233474286.22689345,
+        "y": 108011920.40246078
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000004",
+      "pointOrdinal": 4,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.12154864146199,
+        "longitude": 133.11824679898766,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9965325706866793,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233473791.1150189,
+        "rectY": 108014504.67479703,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233473791.1150189,
+        "y": 108014504.67479703
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000005",
+      "pointOrdinal": 5,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.11922100189098,
+        "longitude": 133.11572269285207,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9965586119320226,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233471909.00507027,
+        "rectY": 108016576.98925388,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233471909.00507027,
+        "y": 108016576.98925388
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000006",
+      "pointOrdinal": 6,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.116825156804055,
+        "longitude": 133.11331074900065,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9965854145249862,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233470110.52938253,
+        "rectY": 108018709.97021982,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233470110.52938253,
+        "y": 108018709.97021982
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000007",
+      "pointOrdinal": 7,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.11402781936567,
+        "longitude": 133.11164475140347,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9966167064452478,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233468868.27153608,
+        "rectY": 108021200.31951675,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233468868.27153608,
+        "y": 108021200.31951675
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000008",
+      "pointOrdinal": 8,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.11142868509316,
+        "longitude": 133.10991510875883,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9966457790635636,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233467578.5565027,
+        "rectY": 108023514.14598064,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233467578.5565027,
+        "y": 108023514.14598064
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000009",
+      "pointOrdinal": 9,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.11059770285169,
+        "longitude": 133.1063071647247,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9966550735816831,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233464888.27844155,
+        "rectY": 108024253.89659126,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233464888.27844155,
+        "y": 108024253.89659126
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000010",
+      "pointOrdinal": 10,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.11007112811651,
+        "longitude": 133.10263439212335,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9966609631996034,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233462149.66069698,
+        "rectY": 108024722.65627456,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233462149.66069698,
+        "y": 108024722.65627456
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000011",
+      "pointOrdinal": 11,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.108655183683865,
+        "longitude": 133.09932799539925,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9966767997949213,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233459684.23260713,
+        "rectY": 108025983.12374866,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233459684.23260713,
+        "y": 108025983.12374866
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000012",
+      "pointOrdinal": 12,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.10572150363318,
+        "longitude": 133.09836692119598,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9967096095220283,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233458967.60374045,
+        "rectY": 108028594.60812002,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233458967.60374045,
+        "y": 108028594.60812002
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    },
+    {
+      "rawPath": "/private/tmp/jtm-yodo-complete-primary-v1/captures/002969/000013",
+      "pointOrdinal": 13,
+      "itemID": "jp-土佐くろしお鉄道-中村線#2",
+      "fromStationID": "009571",
+      "toStationID": "009579",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.105009,
+        "longitude": 133.098333,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9967175776330405,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233458942.31026348,
+        "rectY": 108029228.84684606,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 233458942.31026348,
+        "y": 108029228.84684606
+      },
+      "wholeLineRenderDependency": "f0ef205599fb3215b9ea0e7342ac57b968010e30692809519f3e096190e07752"
+    }
+  ]
+}

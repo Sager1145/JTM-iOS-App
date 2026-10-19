@@ -1,0 +1,336 @@
+{
+  "format": "jtm-focused-passenger-native-visual-review-v1",
+  "date": "2026-10-10",
+  "status": "completed_with_remaining_findings",
+  "scope": "All 123 fresh viewpoints of nine repaired high-risk passenger intervals. Not national geographic coverage.",
+  "counts": {
+    "intervals": 9,
+    "captured": 123,
+    "visuallyReviewed": 123,
+    "captureFailures": 0,
+    "nativeSavedViewportReviews": 9,
+    "nativeDetailCertifiedIntervals": 0
+  },
+  "items": [
+    {
+      "riskPriority": 1,
+      "itemID": "jp-九州旅客鉄道-肥薩線#15",
+      "fromStationID": "009925",
+      "toStationID": "009928",
+      "viewpointCount": 28,
+      "status": "needs_repair",
+      "capturedCount": 28,
+      "visuallyReviewedCount": 28,
+      "failedCount": 0,
+      "nativeViewportVerdict": "needsRepair",
+      "nativeViewportPointOrdinal": 23,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000947",
+      "ranges": [
+        {
+          "views": [
+            0,
+            6
+          ],
+          "result": "Protected reversal legs remain visible; local neighboring bend separation remains."
+        },
+        {
+          "views": [
+            7,
+            12
+          ],
+          "result": "Local curve offsets."
+        },
+        {
+          "views": [
+            13,
+            27
+          ],
+          "result": "Persistent eastward offset, strongest at 17–24; station dots inside do not certify intervening track."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/000947-000023",
+      "nativeReviewNote": "当前肥萨线视点显示线持续在苹果蓝色铁路东侧；28张快照中13–27仍偏移，17–24最明显。0–6确认大畑折返两条腿保留；大畑、矢岳站点均在蓝色站区内。停运范围保持，不引入货物支线。证据：/private/tmp/jtm-passenger-risk-final-recheck/captures/000947。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "fromStationID": "005694",
+      "toStationID": "005725",
+      "viewpointCount": 20,
+      "status": "needs_repair",
+      "capturedCount": 20,
+      "visuallyReviewedCount": 20,
+      "failedCount": 0,
+      "nativeViewportVerdict": "needsRepair",
+      "nativeViewportPointOrdinal": 18,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/008040",
+      "ranges": [
+        {
+          "views": [
+            0,
+            5
+          ],
+          "result": "Protected reversal retained; some smoothing cuts visible bends."
+        },
+        {
+          "views": [
+            6,
+            16
+          ],
+          "result": "Broad mapped corridor followed; forest/tunnel geometry not independently proven."
+        },
+        {
+          "views": [
+            17,
+            19
+          ],
+          "result": "East/southeast station approach displacement; Miinohara dot outside blue station footprint."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/008040-000018",
+      "nativeReviewNote": "当前三井野原站前视点显示/平滑线偏向建筑侧，包内站点坐标在蓝色站区外；Apple Miinohara Station POI 在站区内，尚未应用修复。20张快照确认折返尾保留；17–19仍偏移。证据：station-footprint-review-20261010.json 与 /private/tmp/jtm-passenger-risk-final-recheck/captures/008040。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "fromStationID": "005260",
+      "toStationID": "005254",
+      "viewpointCount": 7,
+      "status": "needs_repair",
+      "capturedCount": 7,
+      "visuallyReviewedCount": 7,
+      "failedCount": 0,
+      "nativeViewportVerdict": "needsRepair",
+      "nativeViewportPointOrdinal": 0,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/003419",
+      "ranges": [
+        {
+          "views": [
+            0,
+            6
+          ],
+          "result": "Protected fold tail retained; broader source curves differ from blue railway. Ohiradai dot lies on road north of station footprint."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/003419-000000",
+      "nativeReviewNote": "当前大平台站点位于 Apple 蓝色站区之外的北侧道路附近；独立 MKLocalSearch 公共交通 POI Ohiradai Station 位于蓝色站区内，作为参考而非已应用修复。7张快照确认真实折返保留，周边源几何仍有位置差异。证据：station-footprint-review-20261010.json 与 /private/tmp/jtm-passenger-risk-final-recheck/captures/003419。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-京阪電気鉄道-京津線#4",
+      "fromStationID": "006037",
+      "toStationID": "005987",
+      "viewpointCount": 6,
+      "status": "insufficient_basemap_for_exact_track",
+      "capturedCount": 6,
+      "visuallyReviewedCount": 6,
+      "failedCount": 0,
+      "nativeViewportVerdict": "insufficientBasemap",
+      "nativeViewportPointOrdinal": 3,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/001474",
+      "ranges": [
+        {
+          "views": [
+            0,
+            5
+          ],
+          "result": "Corrected display curve follows blue corridor around former bad apex; broader road/tunnel and exact track agreement not certified. Kamisakaemachi dot boundary unresolved."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/001474-000003",
+      "nativeReviewNote": "6张快照中修复显示曲线跟随蓝色铁路走廊，原错误顶点已绕开；精确平行轨道及隧道位置仍不能由底图证明。大谷站点在蓝色站区内，上荣町站点靠近边界暂不能确认。本结论针对当前视点，不作整段通过。证据：captures/001474 与 station-footprint-review-20261010.json。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-東日本旅客鉄道-京葉線-2#0",
+      "fromStationID": "003547",
+      "toStationID": "003761",
+      "viewpointCount": 17,
+      "status": "needs_repair",
+      "capturedCount": 17,
+      "visuallyReviewedCount": 17,
+      "failedCount": 0,
+      "nativeViewportVerdict": "needsRepair",
+      "nativeViewportPointOrdinal": 9,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/004530",
+      "ranges": [
+        {
+          "views": [
+            0,
+            3
+          ],
+          "result": "Broad corridor followed; exact parallel track unresolved."
+        },
+        {
+          "views": [
+            4,
+            6
+          ],
+          "result": "Merge follows intended arm, but south-edge separation at 5."
+        },
+        {
+          "views": [
+            7,
+            13
+          ],
+          "result": "Clear southward displacement, strongest at 8–12."
+        },
+        {
+          "views": [
+            14,
+            16
+          ],
+          "result": "Corrected bounded tail follows mapped blue corridor; exact track remains unproved."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/004530-000009",
+      "nativeReviewNote": "当前详细视点可见显示/平滑线位于 Apple 铁路走廊南侧。已审阅本区间17张快照：7–13仍偏移，14–16修复末端回到铁路走廊；不认证精确平行轨道。站点坐标在蓝色站区内。证据：/private/tmp/jtm-passenger-risk-final-recheck/captures/004530。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-東日本旅客鉄道-京葉線-3#0",
+      "fromStationID": "003547",
+      "toStationID": "003870",
+      "viewpointCount": 18,
+      "status": "needs_repair",
+      "capturedCount": 18,
+      "visuallyReviewedCount": 18,
+      "failedCount": 0,
+      "nativeViewportVerdict": "needsRepair",
+      "nativeViewportPointOrdinal": 4,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/004531",
+      "ranges": [
+        {
+          "views": [
+            0,
+            2
+          ],
+          "result": "Broad corridor followed."
+        },
+        {
+          "views": [
+            3,
+            4
+          ],
+          "result": "Northern branch throat bows east toward buildings."
+        },
+        {
+          "views": [
+            5,
+            14
+          ],
+          "result": "Intended western arm and straight river section followed; no comparable large offset."
+        },
+        {
+          "views": [
+            15,
+            17
+          ],
+          "result": "Corrected bounded tail follows blue corridor and station approach."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/004531-000004",
+      "nativeReviewNote": "当前北侧分岔视点可见显示/平滑线偏向铁路之外的建筑侧。已审阅18张快照：3–4仍偏移，15–17修复末端回到蓝色铁路/站区。未认证精确平行轨道；西船橋、市川塩浜包内显示点位于蓝色站区内。证据：/private/tmp/jtm-passenger-risk-final-recheck/captures/004531。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-九州旅客鉄道-日豊線-p1#0",
+      "fromStationID": "009241",
+      "toStationID": "009262",
+      "viewpointCount": 18,
+      "status": "mapped_corridor_aligned_exact_track_unproven",
+      "capturedCount": 18,
+      "visuallyReviewedCount": 18,
+      "failedCount": 0,
+      "nativeViewportVerdict": "aligned",
+      "nativeViewportPointOrdinal": 0,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/000876",
+      "ranges": [
+        {
+          "views": [
+            0,
+            17
+          ],
+          "result": "Correct south passenger arm ends inside Tateishi blue station area; former wrong east-fork diagonal removed. Separate northern tunnel track not added."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/000876-000000",
+      "nativeReviewNote": "当前首个详细视点：西屋敷包内显示坐标落在 Apple 蓝色站区内，显示/平滑线沿铁路走廊。全区间18张同视点图已审阅，立石末端错误斜接未再出现。仅记录当前视点；未认证主程序多线或所有平行轨道。证据：/private/tmp/jtm-passenger-risk-final-recheck/captures/000876。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-東日本旅客鉄道-鶴見線-2#0",
+      "fromStationID": "004531",
+      "toStationID": "004547",
+      "viewpointCount": 4,
+      "status": "insufficient_basemap_for_exact_switch",
+      "capturedCount": 4,
+      "visuallyReviewedCount": 4,
+      "failedCount": 0,
+      "nativeViewportVerdict": "insufficientBasemap",
+      "nativeViewportPointOrdinal": 0,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006018",
+      "ranges": [
+        {
+          "views": [
+            0,
+            3
+          ],
+          "result": "Mapped corridor followed and false Asano diagonal removed; both station dots inside. Exact parallel track and switch connection not independently resolved."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/006018-000000",
+      "nativeReviewNote": "4张快照显示曲线沿蓝色铁路走廊，原浅野86.5米错误斜接已移除；浅野、新芝浦点均在蓝色站区内。底图不足以确认每条平行轨道和道岔的精确接法，因此当前视点不记整段通过，不引入货物线路。证据：captures/006018 与 station-footprint-review-20261010.json。"
+    },
+    {
+      "riskPriority": 1,
+      "itemID": "jp-東日本旅客鉄道-鶴見線-3#0",
+      "fromStationID": "004522",
+      "toStationID": "004540",
+      "viewpointCount": 5,
+      "status": "insufficient_basemap_for_exact_switch",
+      "capturedCount": 5,
+      "visuallyReviewedCount": 5,
+      "failedCount": 0,
+      "nativeViewportVerdict": "insufficientBasemap",
+      "nativeViewportPointOrdinal": 1,
+      "detailedCoverageCertified": false,
+      "viewOrdinalConvention": "zero-based; inclusive ranges",
+      "captureDirectory": "/private/tmp/jtm-passenger-risk-final-recheck/captures/006020",
+      "ranges": [
+        {
+          "views": [
+            0,
+            4
+          ],
+          "result": "Passenger branch curve follows mapped corridor, both station dots inside and wrong Musashi-Shiraishi binding removed. Exact switch detail unresolved."
+        }
+      ],
+      "selectedEvidencePrefix": "docs/reports/japan/passenger-native-risk-evidence-20261010/006020-000001",
+      "nativeReviewNote": "5张快照显示大川客运支线沿蓝色铁路弯曲，安善、大川站点在蓝色站区内，原武藏白石错误绑定已去除。平行轨道与道岔细节底图未能独立证明；仅记录当前视点，不能记整段通过，不延伸货物线路。证据：captures/006020 与 station-footprint-review-20261010.json。"
+    }
+  ],
+  "stationReview": "docs/reports/japan/station-footprint-review-20261010.json",
+  "limits": [
+    "Qualitative Apple blue corridor/footprint review; no Apple pixel residual or exact switch survey.",
+    "Native saved verdict covers one viewport per interval; full 123-view qualitative range notes are recorded here.",
+    "Inspector smoothing excludes production shared-corridor, multi-line offsets, connections and folding.",
+    "No production coordinates or geometry changed by this follow-up."
+  ]
+}

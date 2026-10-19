@@ -1,0 +1,107 @@
+{
+  "product": "Main T10 Catalyst",
+  "scope": "Two selected final production contexts only; no whole-line acceptance",
+  "cases": [
+    {
+      "stationID": "004633",
+      "captured": true,
+      "entries": {
+        "on": {
+          "image": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004633-on.png",
+          "pixelDimensions": [
+            4718592,
+            4292935744
+          ],
+          "AXDiff": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004633-on.txt",
+          "observedStatus": {
+            "network": "rendered",
+            "lines": 7,
+            "overlays": 7,
+            "vertices": 1726,
+            "centerLat": 35.464424,
+            "centerLon": 139.620466,
+            "distance": 987.6,
+            "viewportWidth": 1211,
+            "viewportHeight": 864,
+            "basemapMuted": 0
+          },
+          "statusSource": "Actual CUA getApp / toggle AX observations retained in this chat. Saved AX text is a diff and may not repeat unchanged status; this structured note transcribes the observed values."
+        },
+        "off": {
+          "image": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004633-off.png",
+          "pixelDimensions": [
+            4718592,
+            4292935744
+          ],
+          "AXDiff": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004633-off.txt",
+          "observedStatus": {
+            "network": "off",
+            "lines": 0,
+            "overlays": 0,
+            "vertices": null,
+            "centerLat": 35.464424,
+            "centerLon": 139.620466,
+            "distance": 987.6,
+            "viewportWidth": 1211,
+            "viewportHeight": 864,
+            "basemapMuted": 0
+          },
+          "statusSource": "Actual CUA getApp / toggle AX observations retained in this chat. Saved AX text is a diff and may not repeat unchanged status; this structured note transcribes the observed values."
+        }
+      }
+    },
+    {
+      "stationID": "004594",
+      "captured": true,
+      "entries": {
+        "on": {
+          "image": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004594-on.png",
+          "pixelDimensions": [
+            4718592,
+            4292935744
+          ],
+          "AXDiff": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004594-on.txt",
+          "observedStatus": {
+            "network": "rendered",
+            "lines": 4,
+            "overlays": 3,
+            "vertices": 563,
+            "centerLat": 35.478065,
+            "centerLon": 139.565521,
+            "distance": 987.6,
+            "viewportWidth": 1211,
+            "viewportHeight": 864,
+            "basemapMuted": 0
+          },
+          "statusSource": "Actual CUA getApp / toggle AX observations retained in this chat. Saved AX text is a diff and may not repeat unchanged status; this structured note transcribes the observed values."
+        },
+        "off": {
+          "image": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004594-off.png",
+          "pixelDimensions": [
+            4718592,
+            4292935744
+          ],
+          "AXDiff": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/final-production-20261017/004594-off.txt",
+          "observedStatus": {
+            "network": "off",
+            "lines": 0,
+            "overlays": 0,
+            "vertices": null,
+            "centerLat": 35.478065,
+            "centerLon": 139.565521,
+            "distance": 987.6,
+            "viewportWidth": 1211,
+            "viewportHeight": 864,
+            "basemapMuted": 0
+          },
+          "statusSource": "Actual CUA getApp / toggle AX observations retained in this chat. Saved AX text is a diff and may not repeat unchanged status; this structured note transcribes the observed values."
+        }
+      }
+    }
+  ],
+  "remainingPlannedStationIDs": [
+    "004642",
+    "004617",
+    "004672"
+  ]
+}

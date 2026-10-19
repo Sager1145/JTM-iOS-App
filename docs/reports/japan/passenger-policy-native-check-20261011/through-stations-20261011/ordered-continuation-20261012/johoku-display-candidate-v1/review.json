@@ -1,0 +1,31 @@
+{
+  "format": "jtm-johoku-display-candidate-review-v1",
+  "verdict": "draft-for-root-full-raw-review",
+  "actualRawAssociationsReviewed": 19,
+  "actualRawAssociationCounts": [
+    2,
+    2,
+    3,
+    3,
+    2,
+    2,
+    2,
+    3
+  ],
+  "finiteCoordinates": true,
+  "zeroLengthEdges": 0,
+  "endpointContinuity": true,
+  "stationWarnings": [
+    "008734 Red Cross body edges weak",
+    "008730 Shimizu no defensible body",
+    "008719 H6 outline interrupted by label",
+    "008725 Kaya no separate body"
+  ],
+  "pending": [
+    "Root raw-cartographic acceptance",
+    "owner schema normalization",
+    "native Inspectors and Main acceptance"
+  ],
+  "productionSourceModified": false,
+  "physicalTopologyChanged": false
+}

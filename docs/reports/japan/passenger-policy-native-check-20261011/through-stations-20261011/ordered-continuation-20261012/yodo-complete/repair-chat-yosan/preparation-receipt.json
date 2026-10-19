@@ -1,0 +1,580 @@
+{
+  "stationControls": {
+    "shimouwa": [
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          474,
+          250
+        ],
+        "coordinate": [
+          132.5309482073405,
+          33.35012504090033
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          490.5,
+          300
+        ],
+        "coordinate": [
+          132.53103672023798,
+          33.3499009885233
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          511.5,
+          360
+        ],
+        "coordinate": [
+          132.53114937301655,
+          33.349632124909725
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          525,
+          400
+        ],
+        "coordinate": [
+          132.53122179265995,
+          33.349452882039394
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          543,
+          450
+        ],
+        "coordinate": [
+          132.53131835218448,
+          33.34922882793252
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          561,
+          500
+        ],
+        "coordinate": [
+          132.53141491170902,
+          33.349004773249035
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          579.5,
+          550
+        ],
+        "coordinate": [
+          132.53151415344257,
+          33.34878071798895
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-shimouwa-009352/view.json",
+        "pixel": [
+          597,
+          600
+        ],
+        "coordinate": [
+          132.5316080307581,
+          33.348556662152255
+        ]
+      }
+    ],
+    "tachima": [
+      {
+        "pixel": [
+          430,
+          150
+        ],
+        "coordinate": [
+          132.53909217294466,
+          33.297518626940345
+        ]
+      },
+      {
+        "pixel": [
+          456.5,
+          200
+        ],
+        "coordinate": [
+          132.53923433002234,
+          33.297294439271205
+        ]
+      },
+      {
+        "pixel": [
+          479,
+          250
+        ],
+        "coordinate": [
+          132.5393550294279,
+          33.297070251025914
+        ]
+      },
+      {
+        "pixel": [
+          487.5,
+          270
+        ],
+        "coordinate": [
+          132.5394006269811,
+          33.296980575566494
+        ]
+      },
+      {
+        "pixel": [
+          495.97612088800446,
+          294.80815869659847
+        ],
+        "coordinate": [
+          132.5394460964368,
+          33.296869341286936
+        ]
+      },
+      {
+        "pixel": [
+          508,
+          330
+        ],
+        "coordinate": [
+          132.5395105975506,
+          33.29671154863505
+        ]
+      },
+      {
+        "pixel": [
+          516.5,
+          350
+        ],
+        "coordinate": [
+          132.53955619510378,
+          33.296621872806895
+        ]
+      },
+      {
+        "pixel": [
+          530.5,
+          400
+        ],
+        "coordinate": [
+          132.5396312969562,
+          33.29639768283314
+        ]
+      },
+      {
+        "pixel": [
+          544.5,
+          450
+        ],
+        "coordinate": [
+          132.5397063988085,
+          33.29617349228323
+        ]
+      },
+      {
+        "pixel": [
+          559,
+          500
+        ],
+        "coordinate": [
+          132.53978418286988,
+          33.2959493011572
+        ]
+      },
+      {
+        "pixel": [
+          571,
+          550
+        ],
+        "coordinate": [
+          132.53984855588618,
+          33.29572510945502
+        ]
+      },
+      {
+        "pixel": [
+          583,
+          600
+        ],
+        "coordinate": [
+          132.53991292890248,
+          33.295500917176675
+        ]
+      }
+    ],
+    "iyoyoshida": [
+      {
+        "pixel": [
+          536,
+          100
+        ],
+        "coordinate": [
+          132.5445108012554,
+          33.2744280859793
+        ],
+        "side": "north",
+        "warning": "singleapproachglyph"
+      },
+      {
+        "pixel": [
+          521.5,
+          225
+        ],
+        "coordinate": [
+          132.54443301719402,
+          33.273867467416075
+        ],
+        "side": "north",
+        "warning": "multipleownblackpixels518/523/525; pairedgroupcentre"
+      },
+      {
+        "pixel": [
+          519,
+          240
+        ],
+        "coordinate": [
+          132.54441960614895,
+          33.273800192946595
+        ],
+        "side": "north",
+        "warning": "pairedblackpixels516/521/522;groupcentre"
+      },
+      {
+        "pixel": [
+          512,
+          300
+        ],
+        "coordinate": [
+          132.5443820552228,
+          33.273531094550286
+        ],
+        "side": "south",
+        "warning": "owncentralblack"
+      },
+      {
+        "pixel": [
+          508,
+          320
+        ],
+        "coordinate": [
+          132.54436059755068,
+          33.273441394900544
+        ],
+        "side": "south",
+        "warning": "ownblack507/509"
+      },
+      {
+        "pixel": [
+          506,
+          330
+        ],
+        "coordinate": [
+          132.54434986871468,
+          33.27339654504111
+        ],
+        "side": "south",
+        "warning": "ownblack505/507"
+      },
+      {
+        "pixel": [
+          503.5,
+          340
+        ],
+        "coordinate": [
+          132.5443364576696,
+          33.27335169515865
+        ],
+        "side": "south",
+        "warning": "ownblack502/505"
+      },
+      {
+        "pixel": [
+          501,
+          350
+        ],
+        "coordinate": [
+          132.54432304662453,
+          33.27330684525315
+        ],
+        "side": "south",
+        "warning": "pairedblack499/503"
+      },
+      {
+        "pixel": [
+          490.5,
+          370
+        ],
+        "coordinate": [
+          132.54426672023527,
+          33.273217145373025
+        ],
+        "side": "south",
+        "warning": "pairedblack489/492"
+      },
+      {
+        "pixel": [
+          484,
+          400
+        ],
+        "coordinate": [
+          132.54423185151813,
+          33.27308259538006
+        ],
+        "side": "south",
+        "warning": "pairedblack479/489;downstreamturnoutgroup widens"
+      },
+      {
+        "pixel": [
+          473.5,
+          430
+        ],
+        "coordinate": [
+          132.54417552512882,
+          33.27294804517977
+        ],
+        "side": "south",
+        "warning": "multipleownblack468/469/472/474/479;groupcentreprecision±2px"
+      }
+    ],
+    "takamitsu": [
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          459,
+          100
+        ],
+        "coordinate": [
+          132.57328774106986,
+          33.25699828917213
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          482,
+          200
+        ],
+        "coordinate": [
+          132.57341112268455,
+          33.256549705096276
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          494,
+          240
+        ],
+        "coordinate": [
+          132.5734754957009,
+          33.25637027082104
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          512,
+          310
+        ],
+        "coordinate": [
+          132.57357205522544,
+          33.25605625995263
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          524.5,
+          360
+        ],
+        "coordinate": [
+          132.5736391104508,
+          33.25583196578425
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          536,
+          410
+        ],
+        "coordinate": [
+          132.57370080125816,
+          33.25560767104007
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          548,
+          460
+        ],
+        "coordinate": [
+          132.5737651742745,
+          33.255383375720086
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          560,
+          510
+        ],
+        "coordinate": [
+          132.57382954729087,
+          33.25515907982432
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          572.5,
+          560
+        ],
+        "coordinate": [
+          132.57389660251624,
+          33.25493478335275
+        ]
+      },
+      {
+        "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json",
+        "pixel": [
+          585,
+          610
+        ],
+        "coordinate": [
+          132.57396365774161,
+          33.254710486305406
+        ]
+      }
+    ]
+  },
+  "inventory": [
+    {
+      "interval": 83,
+      "points": 143,
+      "reprojectionCount": 9,
+      "turnsOver30": [
+        {
+          "index": 86,
+          "degrees": 45.00000000000001,
+          "coordinate": [
+            132.5242421069617,
+            33.35555445449219
+          ]
+        },
+        {
+          "index": 87,
+          "degrees": 39.93638314696992,
+          "coordinate": [
+            132.52425283579777,
+            33.35553653144118
+          ]
+        },
+        {
+          "index": 92,
+          "degrees": 68.68208772095718,
+          "coordinate": [
+            132.5251755156989,
+            33.355070530819276
+          ]
+        },
+        {
+          "index": 93,
+          "degrees": 70.5599651718238,
+          "coordinate": [
+            132.52520770220707,
+            33.355088453966246
+          ]
+        },
+        {
+          "index": 100,
+          "degrees": 31.464143649641517,
+          "coordinate": [
+            132.52616256861637,
+            33.35429087035379
+          ]
+        },
+        {
+          "index": 101,
+          "degrees": 40.135485580885806,
+          "coordinate": [
+            132.52622694163273,
+            33.35427294704259
+          ]
+        },
+        {
+          "index": 105,
+          "degrees": 31.328692867804165,
+          "coordinate": [
+            132.52681437978788,
+            33.35362611941737
+          ]
+        }
+      ],
+      "status": "not-yet-image-reviewed"
+    },
+    {
+      "interval": 84,
+      "points": 81,
+      "reprojectionCount": 21,
+      "turnsOver30": [],
+      "status": "not-yet-image-reviewed"
+    },
+    {
+      "interval": 85,
+      "points": 143,
+      "reprojectionCount": 9,
+      "turnsOver30": [
+        {
+          "index": 138,
+          "degrees": 44.14167078605452,
+          "coordinate": [
+            132.54441702618846,
+            33.27457880757912
+          ]
+        },
+        {
+          "index": 139,
+          "degrees": 34.09881799938445,
+          "coordinate": [
+            132.5445108012554,
+            33.2744280859793
+          ]
+        }
+      ],
+      "status": "not-yet-image-reviewed"
+    },
+    {
+      "interval": 86,
+      "points": 127,
+      "reprojectionCount": 15,
+      "turnsOver30": [],
+      "status": "not-yet-image-reviewed"
+    },
+    {
+      "interval": 87,
+      "points": 38,
+      "reprojectionCount": 7,
+      "turnsOver30": [],
+      "status": "not-yet-image-reviewed"
+    },
+    {
+      "interval": 88,
+      "points": 26,
+      "reprojectionCount": 6,
+      "turnsOver30": [],
+      "status": "not-yet-image-reviewed"
+    }
+  ]
+}

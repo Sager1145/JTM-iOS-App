@@ -1,0 +1,618 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#0\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#0\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006778",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006778"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006774",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006774"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#0\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#0",
+      "jp-豊橋鉄道-東田本線#1"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006774"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#1\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#1"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#1\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#1"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#1\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#1"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006771",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#1"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006771"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#1\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#1",
+      "jp-豊橋鉄道-東田本線#2"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006771"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#2\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#2"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#2\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#2"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#2\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#2"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006767",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#2"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006767"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#2\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#2",
+      "jp-豊橋鉄道-東田本線#3"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006767"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#3\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#3"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#3\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#3"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#3\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#3"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006766",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#3"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006766"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#3\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#3",
+      "jp-豊橋鉄道-東田本線#4"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006766"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#4\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#4"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#4\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#4"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#4\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#4"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006765",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#4"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006765"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#4\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#4",
+      "jp-豊橋鉄道-東田本線#5"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006765"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#5\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#5"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#5\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#5"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#5\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#5"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006764",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#5"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006764"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#5\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#5",
+      "jp-豊橋鉄道-東田本線#6"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006764"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#6\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#6"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#6\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#6"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#6\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#6"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006762",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#6"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006762"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#6\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#6",
+      "jp-豊橋鉄道-東田本線#7"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006762"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#7\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#7"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#7\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#7"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#7\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#7"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006757",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#7"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006757"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#7\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#7",
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006757"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#8\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#8\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#8\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 34.76768,
+        "longitude" : 137.39063
+      },
+      "displayVertexIndex" : 7,
+      "incomingMetres" : 5.59226730954876,
+      "outgoingMetres" : 7.058324120781456,
+      "turnDegrees" : 27.59218199725577
+    },
+    "id" : "jp-豊橋鉄道-東田本線#8\/displayVertex\/7\/sharpTurn",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Sharp-turn candidate for jp-豊橋鉄道-東田本線#8 at own display vertex 7, [137.39063, 34.76768]: 27.59218199725577°; incoming 5.59226730954876 m; outgoing 7.058324120781456 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 34.76764,
+        "longitude" : 137.39057
+      },
+      "displayVertexIndex" : 8,
+      "incomingMetres" : 7.058324120781456,
+      "outgoingMetres" : 9.02464465756535,
+      "turnDegrees" : 20.535946621648705
+    },
+    "id" : "jp-豊橋鉄道-東田本線#8\/displayVertex\/8\/sharpTurn",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Sharp-turn candidate for jp-豊橋鉄道-東田本線#8 at own display vertex 8, [137.39057, 34.76764]: 20.535946621648705°; incoming 7.058324120781456 m; outgoing 9.02464465756535 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006773",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006773"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#8\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#8",
+      "jp-豊橋鉄道-東田本線#9"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006773"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#10\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#10\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#10\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006782",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006782"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006780",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006780"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#9\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#9",
+      "jp-豊橋鉄道-東田本線#10"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006782"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-豊橋鉄道-東田本線#10\/seam",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#10",
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "006780"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-豊橋鉄道-東田本線#11\/lineOffset",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-豊橋鉄道-東田本線#11\/stationApproach",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-豊橋鉄道-東田本線#11\/disconnectedParts",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "sharpTurn",
+    "corner" : {
+      "coordinate" : {
+        "latitude" : 34.76326,
+        "longitude" : 137.3834
+      },
+      "displayVertexIndex" : 5,
+      "incomingMetres" : 9.724866608071236,
+      "outgoingMetres" : 9.24119045748517,
+      "turnDegrees" : 26.15473360317298
+    },
+    "id" : "jp-豊橋鉄道-東田本線#11\/displayVertex\/5\/sharpTurn",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "note" : "Sharp-turn candidate for jp-豊橋鉄道-東田本線#11 at own display vertex 5, [137.3834, 34.76326]: 26.15473360317298°; incoming 9.724866608071236 m; outgoing 9.24119045748517 m. This is a review candidate, not a finding of wrong geometry or physical proof. Compare the owning passenger corridor and retained native evidence before deciding.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-豊橋鉄道-東田本線\/station\/006777",
+    "itemIDs" : [
+      "jp-豊橋鉄道-東田本線#11"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "006777"
+  }
+]

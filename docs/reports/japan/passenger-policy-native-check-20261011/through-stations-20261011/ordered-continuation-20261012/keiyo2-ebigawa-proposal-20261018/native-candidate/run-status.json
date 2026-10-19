@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "C0A0F6BA-09E1-44CC-A837-8CA37A4AD62A",
+  "message" : "20\/20 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "keiyo-ebigawa-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:38:21Z"
+}

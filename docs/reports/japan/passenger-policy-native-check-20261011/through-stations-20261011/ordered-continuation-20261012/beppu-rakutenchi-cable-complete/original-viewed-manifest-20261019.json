@@ -1,0 +1,32 @@
+{
+  "lineID": "jp-ラクテンチ-別府ラクテンチケーブル線",
+  "reviewer": "parent Codex",
+  "pairsViewed": 2,
+  "originalPNGsViewed": 4,
+  "views": [
+    {
+      "pointOrdinal": 0,
+      "intervalIndex": 0,
+      "originalPaths": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000365/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000365/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "pointOrdinal": 1,
+      "intervalIndex": 0,
+      "originalPaths": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000365/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000365/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    }
+  ],
+  "limits": [
+    "Historical isolated zero-lane rendering; no Main acceptance.",
+    "Own cable railway glyph and usable platform caps are not resolved in these basemap images."
+  ]
+}

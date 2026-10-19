@@ -1,0 +1,91 @@
+{
+  "caseIndex": 1,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 1,
+  "source": {
+    "caseIndex": 1,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 1,
+    "fromStationID": "003431",
+    "toStationID": "003484",
+    "camera": [
+      35.7216645,
+      139.733125,
+      0.016072200000003534
+    ],
+    "effectiveCoordinates": [
+      [
+        139.729355,
+        35.726129
+      ],
+      [
+        139.72951,
+        35.72602
+      ],
+      [
+        139.72991,
+        35.72574
+      ],
+      [
+        139.73065,
+        35.72524
+      ],
+      [
+        139.7316,
+        35.7246
+      ],
+      [
+        139.73218,
+        35.72418
+      ],
+      [
+        139.73227,
+        35.72411
+      ],
+      [
+        139.73276,
+        35.72362
+      ],
+      [
+        139.73327,
+        35.72294
+      ],
+      [
+        139.73371,
+        35.72217
+      ],
+      [
+        139.73418,
+        35.72124
+      ],
+      [
+        139.73479,
+        35.71964
+      ],
+      [
+        139.73496,
+        35.71926
+      ],
+      [
+        139.73521,
+        35.71888
+      ],
+      [
+        139.73561,
+        35.7185
+      ],
+      [
+        139.73649,
+        35.71758
+      ],
+      [
+        139.736895,
+        35.7172
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "64 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:12;rides:0;budgetDrops:0;vertices:4470;camera:15.82;lod:14.67;backbones:0;networkStations:22;distance:3527.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.721665;centerLon:139.733125;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3366.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:20;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.721665;centerLon:139.733125;distance:3527.4;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

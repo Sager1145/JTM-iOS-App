@@ -1,0 +1,14 @@
+{
+  "pid": 46271,
+  "resumeSignal": "SIGCONT",
+  "beforeCapturedCount": 73834,
+  "checkpointPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/checkpoint.json",
+  "checkpoint": {
+    "capturedCount": 73939,
+    "failedCount": 6,
+    "format": "jtm-native-batch-capture-v1",
+    "pendingCount": 18271,
+    "planDigest": "1e616b862b86493543065ce15a1a7c0961f8dbc481124be66005108c9997587a",
+    "unavailableIntervalCount": 0
+  }
+}

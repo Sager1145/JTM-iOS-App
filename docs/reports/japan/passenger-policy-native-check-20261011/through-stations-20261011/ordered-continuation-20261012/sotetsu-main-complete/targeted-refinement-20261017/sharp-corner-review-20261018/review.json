@@ -1,0 +1,105 @@
+{
+  "status": "rejected-not-applied",
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "intervalIndex": 0,
+  "stationID": "004633",
+  "A": [
+    139.620466,
+    35.464424
+  ],
+  "B": [
+    139.62052,
+    35.46423
+  ],
+  "C": [
+    139.61993,
+    35.46359
+  ],
+  "sourceTurnDegrees": 49.67455960101167,
+  "sourceLegMetres": [
+    22.14411676210678,
+    89.09213406344996
+  ],
+  "provenance": {
+    "currentPackage": "app/public/rail/jp-2025.json",
+    "rawRailSource": "app/data/rail-sections.json",
+    "rawRailFeatureIndex": 10162,
+    "rawRailIdentity": {
+      "N02_001": "12",
+      "N02_002": "4",
+      "N02_003": "相鉄本線",
+      "N02_004": "相模鉄道"
+    },
+    "rawStationSource": "app/data/stations.json",
+    "rawStationFeatureIndex": 4897,
+    "rawStationDisplayPoint": [
+      139.62205,
+      35.4657567
+    ],
+    "canonicalAnchorPresentSince": "45b5dda5",
+    "commitsRead": [
+      "d911647b",
+      "fc8b85d9",
+      "c6004b9a",
+      "4b1fdd92",
+      "45b5dda5"
+    ],
+    "currentSotetsuDisplayStationAlias": null,
+    "currentSotetsuDisplayIntervalOverride": null,
+    "finding": "Inherited canonical anchor present unchanged in earliest local seed. No Sotetsu manualOverride or anchor-specific repair evidence found in scoped source review; not an accepted Apple platform midpoint."
+  },
+  "deletionCandidate": {
+    "status": "rejected-not-applied",
+    "operation": "Delete only B from display interval0",
+    "distanceBToNewChordMetres": 14.353072494144824,
+    "originalFrame": "alignment/captures/000000/000000/view.json",
+    "pixelA": [
+      800,
+      600
+    ],
+    "pixelB": [
+      820.1326591968536,
+      688.8035513088107
+    ],
+    "pixelC": [
+      600.1647160947323,
+      981.762201718986
+    ],
+    "newChordAtOriginalBHeight": [
+      753.5153485283479,
+      688.8035513088107
+    ],
+    "westwardPixelShiftAtBHeight": 66.61731066850575,
+    "failure": "Moves the approach farther west near B instead of demonstrating alignment with the identified own Sotetsu band. A disappearing corner alone is insufficient."
+  },
+  "taperCandidate": {
+    "status": "rejected-not-applied",
+    "file": "rejected-own-tangent-taper.json",
+    "normalOffsetMetres": 16.785959132485146,
+    "supportLengthMetres": 103.53489983654055,
+    "maximumCandidateInteriorTurnDegrees": 1.0186330817976663,
+    "failure": "Own-source tangent continuity is achieved, but inherited anchor is unproven and westward band separation remains. No current pixel acceptance."
+  },
+  "rendererFinding": {
+    "introducedCorner": false,
+    "reason": "The raw/display source already has49.67deg. Both Swift and JS classify localized >=30deg corners as surveyed hard corners and pass them to final fillet hardCorners. The renderer intentionally preserves this corner rather than creating a new90deg bend.",
+    "swiftSource": "ios/RailKit/Sources/RailCore/Rendering/ContinuousStroke.swift",
+    "javascriptSource": "app/public/rail-stroke.js",
+    "recommendation": "No global guard relaxation or station-specific renderer exception based on this case."
+  },
+  "reviewedOriginalPairs": [
+    "alignment/captures/000000/000000/basemap.png",
+    "alignment/captures/000000/000000/smooth.png",
+    "alignment/captures/000000/000001/basemap.png",
+    "alignment/captures/000000/000001/smooth.png"
+  ],
+  "evidenceRoot": "../unified-session",
+  "archivedExperimentalTest": {
+    "from": "app/scripts/railway/tests/sotetsu-yokohama-tip-display.test.mjs",
+    "to": "proposed-deletion-test.mjs.txt",
+    "reason": "New unimplemented deletion experiment created in this turn; preserved as evidence outside active tests. Existing working tests untouched."
+  },
+  "productionModified": false,
+  "nativeOrBuildOrTestsRun": false,
+  "remainingStatus": "Original Yokohama terminal-hook needsRepair observation remains open. No accepted platform relocation, source correction, or geographic pass."
+}

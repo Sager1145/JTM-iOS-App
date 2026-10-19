@@ -1,0 +1,357 @@
+{
+  "reviewDate": "2026-10-18",
+  "lineID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1",
+  "actualViewpointCount": 7,
+  "actualOriginalPNGCount": 14,
+  "availableRetainedViewpointCount": 17,
+  "unviewedRetainedViewpointCount": 10,
+  "confirmedRepairCandidates": [],
+  "selection": "Exact own control-turn leads localized using own named-plan viewpoints; selected station/approach and paired-alignment contexts. No all-line image campaign.",
+  "topOwnControlTurnLeads": [
+    {
+      "interval": 0,
+      "vertex": 13,
+      "coordinate": [
+        137.78151,
+        37.02097
+      ],
+      "angle": 9.85731235495466
+    },
+    {
+      "interval": 0,
+      "vertex": 36,
+      "coordinate": [
+        137.74565,
+        37.00792
+      ],
+      "angle": 8.123674327021508
+    },
+    {
+      "interval": 0,
+      "vertex": 43,
+      "coordinate": [
+        137.74063,
+        37.00748
+      ],
+      "angle": 7.565913724806697
+    },
+    {
+      "interval": 0,
+      "vertex": 6,
+      "coordinate": [
+        137.78809,
+        37.02239
+      ],
+      "angle": 6.306723440871765
+    },
+    {
+      "interval": 0,
+      "vertex": 8,
+      "coordinate": [
+        137.78701,
+        37.02226
+      ],
+      "angle": 5.911458792135791
+    },
+    {
+      "interval": 0,
+      "vertex": 47,
+      "coordinate": [
+        137.73913,
+        37.00717
+      ],
+      "angle": 4.301356187237093
+    },
+    {
+      "interval": 0,
+      "vertex": 15,
+      "coordinate": [
+        137.78072,
+        37.02066
+      ],
+      "angle": 3.3083592437446727
+    },
+    {
+      "interval": 0,
+      "vertex": 9,
+      "coordinate": [
+        137.78658,
+        37.02217
+      ],
+      "angle": 2.956017548291394
+    },
+    {
+      "interval": 0,
+      "vertex": 42,
+      "coordinate": [
+        137.74074,
+        37.00749
+      ],
+      "angle": 2.8574944960873077
+    },
+    {
+      "interval": 0,
+      "vertex": 23,
+      "coordinate": [
+        137.77063,
+        37.01659
+      ],
+      "angle": 2.6738750390177723
+    },
+    {
+      "interval": 0,
+      "vertex": 39,
+      "coordinate": [
+        137.74395,
+        37.00768
+      ],
+      "angle": 2.5902451073369837
+    },
+    {
+      "interval": 0,
+      "vertex": 35,
+      "coordinate": [
+        137.74606,
+        37.00804
+      ],
+      "angle": 2.527995675699073
+    }
+  ],
+  "views": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.02052568603544,
+          "longitude": 137.7804276692619
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": {
+        "interval": 0,
+        "vertex": 13,
+        "coordinate": [
+          137.78151,
+          37.02097
+        ],
+        "angle": 9.85731235495466
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000004/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "p1 east/highest own turn lead: red takes inland/southwestern approach and converges with coastal corridor toward east. Strong separation from coastal main glyph at west, but source declares a paired alignment; no isolated V, nearest-glyph replacement unsupported."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000014",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.00774077273342,
+          "longitude": 137.74446222585397
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 14
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": {
+        "interval": 0,
+        "vertex": 36,
+        "coordinate": [
+          137.74565,
+          37.00792
+        ],
+        "angle": 8.123674327021508
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000014/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000014/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "p1 west tunnel context: red inland/south of coastal line symbol, broad genuine curve toward 親不知. Own paired-track attribution/underground route must be established before moving it; no isolated V/right angle."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000015",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.00746177999199,
+          "longitude": 137.7405388997258
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 15
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": {
+        "interval": 0,
+        "vertex": 43,
+        "coordinate": [
+          137.74063,
+          37.00748
+        ],
+        "angle": 7.565913724806697
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000015/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000015/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "親不知 eastern approach: red converges on station corridor below expressway; broad approach bend, no isolated hooked corner. Road/tunnel glyphs not railway authority."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.022372106916634,
+          "longitude": 137.78793343436337
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": {
+        "interval": 0,
+        "vertex": 8,
+        "coordinate": [
+          137.78701,
+          37.02226
+        ],
+        "angle": 5.911458792135791
+      },
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000002/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "青海 western bridge/approach: red follows own overall westward curve with modest south offset; no isolated V or cross-line jump seen."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.0225,
+          "longitude": 137.795815
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": "青海 own p1 endpoint",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "青海 station/yard: p1 starts westward at own station corridor, stays clear of southern yard fan. No endpoint hook; exact passenger face/caps unresolved."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000016",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.00685,
+          "longitude": 137.73803
+        },
+        "distanceMetres": 5483.208927603764,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 16
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": "親不知 own p1 endpoint",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000016/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000016/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "親不知 station endpoint: red converges through railway station corridor; eastern trace remains inland of coast glyph. No endpoint V; exact cap/track face unresolved."
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000008",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 37.01508551960888,
+          "longitude": 137.7662187485386
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-えちごトキめき鉄道-日本海ひすいライン-p1#0",
+        "pointOrdinal": 8
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "24a5ce6f04872e62e98482979a839ad23cffa459ebd5392d8e00a2e8675e4f42",
+      "selectionReason": "p1 own intermediate coast/tunnel context",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000008/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000110/000008/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately; no pixel modifications",
+      "observation": "p1 middle: red straight inland of coastal main glyph; own paired-alignment metadata means this is an unresolved independent conventional path, not proven erroneous chord. Shinkansen separately shown farther southeast."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/candidate-tasks.json",
+  "capturedCount" : 28,
+  "captureIndexPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "dd4143e7619df5d9eafa7b1e5e7d211ccc0f68c96e91fc6e211824c2718e231b",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment",
+    "\/private\/tmp\/jtm-toyohashi-missing-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-豊橋鉄道-東田本線#0",
+    "jp-豊橋鉄道-東田本線#1",
+    "jp-豊橋鉄道-東田本線#2",
+    "jp-豊橋鉄道-東田本線#3",
+    "jp-豊橋鉄道-東田本線#4",
+    "jp-豊橋鉄道-東田本線#5",
+    "jp-豊橋鉄道-東田本線#6",
+    "jp-豊橋鉄道-東田本線#7",
+    "jp-豊橋鉄道-東田本線#8",
+    "jp-豊橋鉄道-東田本線#10",
+    "jp-豊橋鉄道-東田本線#11"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "28\/28 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "toyohashi-missing-own-intervals",
+  "requestPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-toyohashi-missing-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T20:25:30Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

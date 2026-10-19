@@ -1,0 +1,22 @@
+{
+  "status": "two-actual-native-date-boundaries-visually-reviewed",
+  "input": "date-review-input.json",
+  "mode": "existing Selected ride date setting + existing edit draft date field",
+  "source": "https://www.city.toyama.lg.jp/_res/projects/default_project/_page_/001/011/334/romen2026.pdf",
+  "rows": [
+    {
+      "date": "2021-03-20",
+      "station001916": false,
+      "station001921": false,
+      "networkStations": 8
+    },
+    {
+      "date": "2021-03-21",
+      "station001916": true,
+      "station001921": true,
+      "networkStations": 10
+    }
+  ],
+  "geometryStillVisible": true,
+  "noSavedUserJourneyChanged": true
+}

@@ -1,0 +1,39 @@
+{
+  "stationID": "002787",
+  "status": "candidate-pending-corroboration-and-native",
+  "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-supplemental-20261014/08-maruyama-caps-z19/basemap.png",
+  "frameCaps": [
+    [
+      550,
+      214
+    ],
+    [
+      550,
+      414
+    ]
+  ],
+  "frameMidpoint": [
+    550,
+    314
+  ],
+  "ownRail": [
+    [
+      548,
+      0
+    ],
+    [
+      558,
+      654
+    ]
+  ],
+  "normalLanding": [
+    552.8005684686875,
+    313.9571778521608
+  ],
+  "candidateAlias": [
+    139.6246829632654,
+    35.98012830944191
+  ],
+  "uncertaintyPixels": 3,
+  "note": "Complete western passenger frame is north of old physical station anchor. Region aerial retained for owner identity; no source apply."
+}

@@ -1,0 +1,3539 @@
+{
+  "status": "provisional-candidate-only-station-guards-pending",
+  "lineID": "jp-四国旅客鉄道-予土線",
+  "intervalIndex": 9,
+  "coordinates": [
+    [
+      132.74515,
+      33.22409
+    ],
+    [
+      132.7449461521149,
+      33.224323350633156
+    ],
+    [
+      132.74466720237734,
+      33.22433232564507
+    ],
+    [
+      132.74439898147585,
+      33.22435925067531
+    ],
+    [
+      132.7441200317383,
+      33.22438617569726
+    ],
+    [
+      132.7438303531647,
+      33.224350275666154
+    ],
+    [
+      132.74357286109927,
+      33.224350275666154
+    ],
+    [
+      132.74330464019778,
+      33.22434130065608
+    ],
+    [
+      132.7430395026002,
+      33.224280927065166
+    ],
+    [
+      132.74278201053477,
+      33.22422707694819
+    ],
+    [
+      132.74252451846934,
+      33.224164251769814
+    ],
+    [
+      132.74225629756785,
+      33.224128351647636
+    ],
+    [
+      132.74198807666636,
+      33.224101426546326
+    ],
+    [
+      132.74171985576487,
+      33.22408347647418
+    ],
+    [
+      132.74146236369944,
+      33.22407450143673
+    ],
+    [
+      132.7409151930604,
+      33.224065526398356
+    ],
+    [
+      132.7406469721589,
+      33.224065526398356
+    ],
+    [
+      132.74040020892954,
+      33.224164251769814
+    ],
+    [
+      132.7401427168641,
+      33.224218101925466
+    ],
+    [
+      132.7399066824708,
+      33.22432580213732
+    ],
+    [
+      132.7396706480775,
+      33.224433502216584
+    ],
+    [
+      132.73942272306016,
+      33.22453618868147
+    ],
+    [
+      132.73918668866685,
+      33.22464388850169
+    ],
+    [
+      132.7386931622081,
+      33.22483236286803
+    ],
+    [
+      132.73847858548692,
+      33.22495801221997
+    ],
+    [
+      132.7382210934215,
+      33.22504776164658
+    ],
+    [
+      132.73797433019212,
+      33.22511956112156
+    ],
+    [
+      132.73769538045457,
+      33.225164435763496
+    ],
+    [
+      132.73742715955308,
+      33.22517341068912
+    ],
+    [
+      132.73714820981553,
+      33.22517341068912
+    ],
+    [
+      132.7368907177501,
+      33.22514648590949
+    ],
+    [
+      132.73661176801255,
+      33.22511956112156
+    ],
+    [
+      132.73636500478318,
+      33.22502981176862
+    ],
+    [
+      132.73611418384252,
+      33.22493330058625
+    ],
+    [
+      132.73588887828527,
+      33.22481662616104
+    ],
+    [
+      132.73567430156407,
+      33.224690976606006
+    ],
+    [
+      132.73543826717076,
+      33.22455635188248
+    ],
+    [
+      132.73527733462987,
+      33.22436787692144
+    ],
+    [
+      132.73510567325292,
+      33.22419735160679
+    ],
+    [
+      132.7349232830399,
+      33.22403580100206
+    ],
+    [
+      132.73471943515477,
+      33.22388322515698
+    ],
+    [
+      132.73450485843358,
+      33.223748599190316
+    ],
+    [
+      132.73427955287633,
+      33.22362294810118
+    ],
+    [
+      132.73405424731908,
+      33.223497296831546
+    ],
+    [
+      132.73382894176183,
+      33.223380620491014
+    ],
+    [
+      132.73358217853246,
+      33.22328189423516
+    ],
+    [
+      132.7333354153031,
+      33.22320111812477
+    ],
+    [
+      132.7330721372656,
+      33.22315700207118
+    ],
+    [
+      132.73254642429868,
+      33.22309417612429
+    ],
+    [
+      132.73225674572507,
+      33.22307622584547
+    ],
+    [
+      132.73199925365964,
+      33.22313007667089
+    ],
+    [
+      132.73173103275815,
+      33.223148026938674
+    ],
+    [
+      132.73147354069272,
+      33.22321085284688
+    ],
+    [
+      132.73122677746335,
+      33.22329162894828
+    ],
+    [
+      132.73099074307004,
+      33.223390355193146
+    ],
+    [
+      132.73075470867673,
+      33.2235070315207
+    ],
+    [
+      132.73052940311948,
+      33.22363268277634
+    ],
+    [
+      132.73031482639828,
+      33.2237583338515
+    ],
+    [
+      132.73011966270457,
+      33.22391367342108
+    ],
+    [
+      132.7299265436555,
+      33.22407522425135
+    ],
+    [
+      132.7297119669343,
+      33.22420984971534
+    ],
+    [
+      132.72951884788523,
+      33.22436242499073
+    ],
+    [
+      132.729315,
+      33.224515
+    ]
+  ],
+  "controls": [
+    {
+      "coordinate": [
+        132.7449461521149,
+        33.224323350633156
+      ],
+      "pixel": [
+        493,
+        358
+      ],
+      "normalOffsetPixels": 20,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        184,
+        206,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          499,
+          360
+        ],
+        [
+          496,
+          359
+        ],
+        [
+          493,
+          358
+        ],
+        [
+          490,
+          357
+        ],
+        [
+          487,
+          356
+        ]
+      ],
+      "controlID": "yodo09-C0000",
+      "sourceChainageMapPoints": 200.92753837030637,
+      "sourceBracket": [
+        0,
+        1
+      ],
+      "sourcePixelInterpolated": [
+        132.74489023800254,
+        33.22414994508663
+      ]
+    },
+    {
+      "coordinate": [
+        132.74466720237734,
+        33.22433232564507
+      ],
+      "pixel": [
+        467,
+        357
+      ],
+      "normalOffsetPixels": 14,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        152,
+        185,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          473,
+          358
+        ],
+        [
+          470,
+          358
+        ],
+        [
+          467,
+          357
+        ],
+        [
+          464,
+          357
+        ],
+        [
+          462,
+          357
+        ]
+      ],
+      "controlID": "yodo09-C0001",
+      "sourceChainageMapPoints": 401.85507674061273,
+      "sourceBracket": [
+        1,
+        2
+      ],
+      "sourcePixelInterpolated": [
+        132.74463047601455,
+        33.22420989016076
+      ]
+    },
+    {
+      "coordinate": [
+        132.74439898147585,
+        33.22435925067531
+      ],
+      "pixel": [
+        442,
+        354
+      ],
+      "normalOffsetPixels": 10,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        150,
+        184,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          448,
+          355
+        ],
+        [
+          445,
+          355
+        ],
+        [
+          442,
+          354
+        ],
+        [
+          439,
+          354
+        ],
+        [
+          436,
+          353
+        ]
+      ],
+      "controlID": "yodo09-C0002",
+      "sourceChainageMapPoints": 602.7826151109191,
+      "sourceBracket": [
+        1,
+        2
+      ],
+      "sourcePixelInterpolated": [
+        132.74437071403605,
+        33.22426983522252
+      ]
+    },
+    {
+      "coordinate": [
+        132.7441200317383,
+        33.22438617569726
+      ],
+      "pixel": [
+        416,
+        351
+      ],
+      "normalOffsetPixels": 9,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        123,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          422,
+          352
+        ],
+        [
+          419,
+          351
+        ],
+        [
+          416,
+          351
+        ],
+        [
+          413,
+          351
+        ],
+        [
+          410,
+          351
+        ]
+      ],
+      "controlID": "yodo09-C0003",
+      "sourceChainageMapPoints": 803.7101534812255,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourcePixelInterpolated": [
+        132.74410488296638,
+        33.22430670852353
+      ]
+    },
+    {
+      "coordinate": [
+        132.7438303531647,
+        33.224350275666154
+      ],
+      "pixel": [
+        389,
+        355
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        153,
+        187,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          396,
+          355
+        ],
+        [
+          392,
+          355
+        ],
+        [
+          389,
+          355
+        ],
+        [
+          387,
+          355
+        ],
+        [
+          383,
+          354
+        ]
+      ],
+      "controlID": "yodo09-C0004",
+      "sourceChainageMapPoints": 1004.6376918515318,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourcePixelInterpolated": [
+        132.74383903516787,
+        33.22434351821444
+      ]
+    },
+    {
+      "coordinate": [
+        132.74357286109927,
+        33.224350275666154
+      ],
+      "pixel": [
+        365,
+        355
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        138,
+        179,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          370,
+          355
+        ],
+        [
+          368,
+          355
+        ],
+        [
+          365,
+          355
+        ],
+        [
+          362,
+          355
+        ],
+        [
+          359,
+          355
+        ]
+      ],
+      "controlID": "yodo09-C0005",
+      "sourceChainageMapPoints": 1205.5652302218382,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.74357118988985,
+        33.22436
+      ]
+    },
+    {
+      "coordinate": [
+        132.74330464019778,
+        33.22434130065608
+      ],
+      "pixel": [
+        340,
+        356
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 0,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000000/view.json",
+      "rgb": [
+        138,
+        178,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          346,
+          354
+        ],
+        [
+          343,
+          355
+        ],
+        [
+          340,
+          356
+        ],
+        [
+          337,
+          357
+        ],
+        [
+          335,
+          357
+        ]
+      ],
+      "controlID": "yodo09-C0006",
+      "sourceChainageMapPoints": 1406.4927685921446,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.74330414450196,
+        33.22433551380338
+      ]
+    },
+    {
+      "coordinate": [
+        132.7430395026002,
+        33.224280927065166
+      ],
+      "pixel": [
+        659,
+        359
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        120,
+        170,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          665,
+          357
+        ],
+        [
+          662,
+          358
+        ],
+        [
+          659,
+          359
+        ],
+        [
+          656,
+          360
+        ],
+        [
+          654,
+          360
+        ]
+      ],
+      "controlID": "yodo09-C0007",
+      "sourceChainageMapPoints": 1607.420306962451,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.74303833668796,
+        33.224298502593854
+      ]
+    },
+    {
+      "coordinate": [
+        132.74278201053477,
+        33.22422707694819
+      ],
+      "pixel": [
+        635,
+        365
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        129,
+        174,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          641,
+          364
+        ],
+        [
+          638,
+          365
+        ],
+        [
+          635,
+          365
+        ],
+        [
+          632,
+          366
+        ],
+        [
+          629,
+          367
+        ]
+      ],
+      "controlID": "yodo09-C0008",
+      "sourceChainageMapPoints": 1808.3478453327573,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.742772528874,
+        33.224261491368665
+      ]
+    },
+    {
+      "coordinate": [
+        132.74252451846934,
+        33.224164251769814
+      ],
+      "pixel": [
+        611,
+        372
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        147,
+        183,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          617,
+          371
+        ],
+        [
+          614,
+          371
+        ],
+        [
+          611,
+          372
+        ],
+        [
+          608,
+          372
+        ],
+        [
+          605,
+          373
+        ]
+      ],
+      "controlID": "yodo09-C0009",
+      "sourceChainageMapPoints": 2009.2753837030637,
+      "sourceBracket": [
+        5,
+        6
+      ],
+      "sourcePixelInterpolated": [
+        132.7425101345974,
+        33.22421102918305
+      ]
+    },
+    {
+      "coordinate": [
+        132.74225629756785,
+        33.224128351647636
+      ],
+      "pixel": [
+        586,
+        376
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        123,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          592,
+          375
+        ],
+        [
+          589,
+          376
+        ],
+        [
+          586,
+          376
+        ],
+        [
+          583,
+          377
+        ],
+        [
+          580,
+          377
+        ]
+      ],
+      "controlID": "yodo09-C0010",
+      "sourceChainageMapPoints": 2210.2029220733702,
+      "sourceBracket": [
+        5,
+        6
+      ],
+      "sourcePixelInterpolated": [
+        132.74224927740624,
+        33.22415451012353
+      ]
+    },
+    {
+      "coordinate": [
+        132.74198807666636,
+        33.224101426546326
+      ],
+      "pixel": [
+        561,
+        379
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        164,
+        192,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          567,
+          379
+        ],
+        [
+          564,
+          379
+        ],
+        [
+          561,
+          379
+        ],
+        [
+          558,
+          380
+        ],
+        [
+          555,
+          380
+        ]
+      ],
+      "controlID": "yodo09-C0011",
+      "sourceChainageMapPoints": 2411.1304604436764,
+      "sourceBracket": [
+        6,
+        7
+      ],
+      "sourcePixelInterpolated": [
+        132.7419867156268,
+        33.22410450734798
+      ]
+    },
+    {
+      "coordinate": [
+        132.74171985576487,
+        33.22408347647418
+      ],
+      "pixel": [
+        536,
+        381
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        138,
+        178,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          541,
+          381
+        ],
+        [
+          539,
+          381
+        ],
+        [
+          536,
+          381
+        ],
+        [
+          533,
+          381
+        ],
+        [
+          530,
+          381
+        ]
+      ],
+      "controlID": "yodo09-C0012",
+      "sourceChainageMapPoints": 2612.0579988139825,
+      "sourceBracket": [
+        6,
+        7
+      ],
+      "sourcePixelInterpolated": [
+        132.74172148104805,
+        33.22406472215871
+      ]
+    },
+    {
+      "coordinate": [
+        132.74146236369944,
+        33.22407450143673
+      ],
+      "pixel": [
+        512,
+        382
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        176,
+        198,
+        248
+      ],
+      "persistentWitnessPixels": [
+        [
+          517,
+          382
+        ],
+        [
+          514,
+          382
+        ],
+        [
+          512,
+          382
+        ],
+        [
+          509,
+          382
+        ],
+        [
+          505,
+          383
+        ]
+      ],
+      "controlID": "yodo09-C0013",
+      "sourceChainageMapPoints": 2812.9855371842887,
+      "sourceBracket": [
+        7,
+        8
+      ],
+      "sourcePixelInterpolated": [
+        132.74145255725836,
+        33.224056402382836
+      ]
+    },
+    {
+      "coordinate": [
+        132.7409151930604,
+        33.224065526398356
+      ],
+      "pixel": [
+        461,
+        383
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        140,
+        180,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          467,
+          383
+        ],
+        [
+          464,
+          383
+        ],
+        [
+          461,
+          383
+        ],
+        [
+          458,
+          383
+        ],
+        [
+          455,
+          383
+        ]
+      ],
+      "controlID": "yodo09-C0014",
+      "sourceChainageMapPoints": 3214.840613924901,
+      "sourceBracket": [
+        8,
+        9
+      ],
+      "sourcePixelInterpolated": [
+        132.74091389414184,
+        33.22405566370086
+      ]
+    },
+    {
+      "coordinate": [
+        132.7406469721589,
+        33.224065526398356
+      ],
+      "pixel": [
+        436,
+        383
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        122,
+        171,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          442,
+          383
+        ],
+        [
+          440,
+          383
+        ],
+        [
+          436,
+          383
+        ],
+        [
+          433,
+          382
+        ],
+        [
+          430,
+          382
+        ]
+      ],
+      "controlID": "yodo09-C0015",
+      "sourceChainageMapPoints": 3415.768152295207,
+      "sourceBracket": [
+        8,
+        9
+      ],
+      "sourcePixelInterpolated": [
+        132.74064488628795,
+        33.22406878603486
+      ]
+    },
+    {
+      "coordinate": [
+        132.74040020892954,
+        33.224164251769814
+      ],
+      "pixel": [
+        413,
+        372
+      ],
+      "normalOffsetPixels": 4,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        131,
+        175,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          419,
+          374
+        ],
+        [
+          416,
+          373
+        ],
+        [
+          413,
+          372
+        ],
+        [
+          409,
+          371
+        ],
+        [
+          407,
+          370
+        ]
+      ],
+      "controlID": "yodo09-C0016",
+      "sourceChainageMapPoints": 3616.695690665513,
+      "sourceBracket": [
+        9,
+        10
+      ],
+      "sourcePixelInterpolated": [
+        132.74038632999935,
+        33.22413030194246
+      ]
+    },
+    {
+      "coordinate": [
+        132.7401427168641,
+        33.224218101925466
+      ],
+      "pixel": [
+        389,
+        366
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        155,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          394,
+          368
+        ],
+        [
+          392,
+          367
+        ],
+        [
+          389,
+          366
+        ],
+        [
+          386,
+          364
+        ],
+        [
+          384,
+          363
+        ]
+      ],
+      "controlID": "yodo09-C0017",
+      "sourceChainageMapPoints": 3817.6232290358193,
+      "sourceBracket": [
+        10,
+        11
+      ],
+      "sourcePixelInterpolated": [
+        132.74013726322693,
+        33.22421535988797
+      ]
+    },
+    {
+      "coordinate": [
+        132.7399066824708,
+        33.22432580213732
+      ],
+      "pixel": [
+        367,
+        354
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        133,
+        176,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          372,
+          357
+        ],
+        [
+          369,
+          355
+        ],
+        [
+          367,
+          354
+        ],
+        [
+          364,
+          352
+        ],
+        [
+          361,
+          351
+        ]
+      ],
+      "controlID": "yodo09-C0018",
+      "sourceChainageMapPoints": 4018.5507674061255,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.7398932303284,
+        33.22431078652299
+      ]
+    },
+    {
+      "coordinate": [
+        132.7396706480775,
+        33.224433502216584
+      ],
+      "pixel": [
+        345,
+        342
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 1,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000001/view.json",
+      "rgb": [
+        159,
+        189,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          350,
+          345
+        ],
+        [
+          347,
+          343
+        ],
+        [
+          345,
+          342
+        ],
+        [
+          342,
+          341
+        ],
+        [
+          339,
+          339
+        ]
+      ],
+      "controlID": "yodo09-C0019",
+      "sourceChainageMapPoints": 4219.478305776432,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.7396553953351,
+        33.22441675161758
+      ]
+    },
+    {
+      "coordinate": [
+        132.73942272306016,
+        33.22453618868147
+      ],
+      "pixel": [
+        647,
+        446
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        123,
+        188,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          653,
+          449
+        ],
+        [
+          650,
+          447
+        ],
+        [
+          647,
+          446
+        ],
+        [
+          645,
+          444
+        ],
+        [
+          642,
+          443
+        ]
+      ],
+      "controlID": "yodo09-C0020",
+      "sourceChainageMapPoints": 4420.405844146738,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.73941758904294,
+        33.22452276170625
+      ]
+    },
+    {
+      "coordinate": [
+        132.73918668866685,
+        33.22464388850169
+      ],
+      "pixel": [
+        625,
+        434
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        115,
+        172,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          631,
+          437
+        ],
+        [
+          628,
+          435
+        ],
+        [
+          625,
+          434
+        ],
+        [
+          623,
+          433
+        ],
+        [
+          620,
+          431
+        ]
+      ],
+      "controlID": "yodo09-C0021",
+      "sourceChainageMapPoints": 4621.333382517044,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.7391797827508,
+        33.224628771666445
+      ]
+    },
+    {
+      "coordinate": [
+        132.7386931622081,
+        33.22483236286803
+      ],
+      "pixel": [
+        579,
+        413
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        119,
+        170,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          585,
+          416
+        ],
+        [
+          582,
+          415
+        ],
+        [
+          579,
+          413
+        ],
+        [
+          577,
+          412
+        ],
+        [
+          574,
+          411
+        ]
+      ],
+      "controlID": "yodo09-C0022",
+      "sourceChainageMapPoints": 5023.188459257656,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.73869761668612,
+        33.22482954231111
+      ]
+    },
+    {
+      "coordinate": [
+        132.73847858548692,
+        33.22495801221997
+      ],
+      "pixel": [
+        559,
+        399
+      ],
+      "normalOffsetPixels": 5,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        168,
+        196,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          564,
+          401
+        ],
+        [
+          561,
+          400
+        ],
+        [
+          559,
+          399
+        ],
+        [
+          556,
+          398
+        ],
+        [
+          553,
+          396
+        ]
+      ],
+      "controlID": "yodo09-C0023",
+      "sourceChainageMapPoints": 5224.115997627962,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.73844922911582,
+        33.22491693794945
+      ]
+    },
+    {
+      "coordinate": [
+        132.7382210934215,
+        33.22504776164658
+      ],
+      "pixel": [
+        535,
+        389
+      ],
+      "normalOffsetPixels": 5,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        152,
+        186,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          541,
+          392
+        ],
+        [
+          538,
+          390
+        ],
+        [
+          535,
+          389
+        ],
+        [
+          533,
+          388
+        ],
+        [
+          530,
+          386
+        ]
+      ],
+      "controlID": "yodo09-C0024",
+      "sourceChainageMapPoints": 5425.043535998268,
+      "sourceBracket": [
+        15,
+        16
+      ],
+      "sourcePixelInterpolated": [
+        132.7382017199135,
+        33.22500601148146
+      ]
+    },
+    {
+      "coordinate": [
+        132.73797433019212,
+        33.22511956112156
+      ],
+      "pixel": [
+        512,
+        381
+      ],
+      "normalOffsetPixels": 3,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        133,
+        176,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          517,
+          382
+        ],
+        [
+          514,
+          381
+        ],
+        [
+          512,
+          381
+        ],
+        [
+          509,
+          380
+        ],
+        [
+          505,
+          379
+        ]
+      ],
+      "controlID": "yodo09-C0025",
+      "sourceChainageMapPoints": 5625.971074368575,
+      "sourceBracket": [
+        15,
+        16
+      ],
+      "sourcePixelInterpolated": [
+        132.73795648706505,
+        33.22509943352672
+      ]
+    },
+    {
+      "coordinate": [
+        132.73769538045457,
+        33.225164435763496
+      ],
+      "pixel": [
+        486,
+        376
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        118,
+        169,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          492,
+          377
+        ],
+        [
+          489,
+          377
+        ],
+        [
+          486,
+          376
+        ],
+        [
+          483,
+          376
+        ],
+        [
+          480,
+          376
+        ]
+      ],
+      "controlID": "yodo09-C0026",
+      "sourceChainageMapPoints": 5826.898612738881,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.73769912015575,
+        33.225158288468236
+      ]
+    },
+    {
+      "coordinate": [
+        132.73742715955308,
+        33.22517341068912
+      ],
+      "pixel": [
+        461,
+        375
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        139,
+        179,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          467,
+          375
+        ],
+        [
+          464,
+          375
+        ],
+        [
+          461,
+          375
+        ],
+        [
+          458,
+          375
+        ],
+        [
+          455,
+          375
+        ]
+      ],
+      "controlID": "yodo09-C0027",
+      "sourceChainageMapPoints": 6027.826151109187,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.73743196172103,
+        33.22517266347729
+      ]
+    },
+    {
+      "coordinate": [
+        132.73714820981553,
+        33.22517341068912
+      ],
+      "pixel": [
+        435,
+        375
+      ],
+      "normalOffsetPixels": 3,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        177,
+        199,
+        248
+      ],
+      "persistentWitnessPixels": [
+        [
+          442,
+          375
+        ],
+        [
+          439,
+          375
+        ],
+        [
+          435,
+          375
+        ],
+        [
+          433,
+          375
+        ],
+        [
+          430,
+          375
+        ]
+      ],
+      "controlID": "yodo09-C0028",
+      "sourceChainageMapPoints": 6228.753689479493,
+      "sourceBracket": [
+        18,
+        19
+      ],
+      "sourcePixelInterpolated": [
+        132.73716410808476,
+        33.22514817429695
+      ]
+    },
+    {
+      "coordinate": [
+        132.7368907177501,
+        33.22514648590949
+      ],
+      "pixel": [
+        411,
+        378
+      ],
+      "normalOffsetPixels": 3,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        155,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          417,
+          377
+        ],
+        [
+          414,
+          378
+        ],
+        [
+          411,
+          378
+        ],
+        [
+          408,
+          378
+        ],
+        [
+          405,
+          379
+        ]
+      ],
+      "controlID": "yodo09-C0029",
+      "sourceChainageMapPoints": 6429.681227849799,
+      "sourceBracket": [
+        18,
+        19
+      ],
+      "sourcePixelInterpolated": [
+        132.736896625922,
+        33.22512088019856
+      ]
+    },
+    {
+      "coordinate": [
+        132.73661176801255,
+        33.22511956112156
+      ],
+      "pixel": [
+        385,
+        381
+      ],
+      "normalOffsetPixels": 6,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        165,
+        192,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          392,
+          380
+        ],
+        [
+          388,
+          381
+        ],
+        [
+          385,
+          381
+        ],
+        [
+          383,
+          382
+        ],
+        [
+          380,
+          383
+        ]
+      ],
+      "controlID": "yodo09-C0030",
+      "sourceChainageMapPoints": 6630.608766220105,
+      "sourceBracket": [
+        19,
+        20
+      ],
+      "sourcePixelInterpolated": [
+        132.7366361035813,
+        33.22506754584405
+      ]
+    },
+    {
+      "coordinate": [
+        132.73636500478318,
+        33.22502981176862
+      ],
+      "pixel": [
+        362,
+        391
+      ],
+      "normalOffsetPixels": 4,
+      "viewOrdinal": 2,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000002/view.json",
+      "rgb": [
+        122,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          367,
+          389
+        ],
+        [
+          364,
+          390
+        ],
+        [
+          362,
+          391
+        ],
+        [
+          359,
+          392
+        ],
+        [
+          357,
+          393
+        ]
+      ],
+      "controlID": "yodo09-C0031",
+      "sourceChainageMapPoints": 6831.536304590411,
+      "sourceBracket": [
+        19,
+        20
+      ],
+      "sourcePixelInterpolated": [
+        132.73638019466097,
+        33.22499695028164
+      ]
+    },
+    {
+      "coordinate": [
+        132.73611418384252,
+        33.22493330058625
+      ],
+      "pixel": [
+        641,
+        270
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        146,
+        182,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          647,
+          267
+        ],
+        [
+          644,
+          268
+        ],
+        [
+          641,
+          270
+        ],
+        [
+          639,
+          271
+        ],
+        [
+          636,
+          273
+        ]
+      ],
+      "controlID": "yodo09-C0032",
+      "sourceChainageMapPoints": 7032.463842960718,
+      "sourceBracket": [
+        20,
+        21
+      ],
+      "sourcePixelInterpolated": [
+        132.7361288569511,
+        33.224916941735366
+      ]
+    },
+    {
+      "coordinate": [
+        132.73588887828527,
+        33.22481662616104
+      ],
+      "pixel": [
+        620,
+        283
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        142,
+        180,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          625,
+          280
+        ],
+        [
+          623,
+          282
+        ],
+        [
+          620,
+          283
+        ],
+        [
+          617,
+          285
+        ],
+        [
+          615,
+          287
+        ]
+      ],
+      "controlID": "yodo09-C0033",
+      "sourceChainageMapPoints": 7233.391381331024,
+      "sourceBracket": [
+        21,
+        22
+      ],
+      "sourcePixelInterpolated": [
+        132.7358919264147,
+        33.22481081248956
+      ]
+    },
+    {
+      "coordinate": [
+        132.73567430156407,
+        33.224690976606006
+      ],
+      "pixel": [
+        600,
+        297
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        130,
+        175,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          605,
+          293
+        ],
+        [
+          602,
+          295
+        ],
+        [
+          600,
+          297
+        ],
+        [
+          596,
+          300
+        ],
+        [
+          595,
+          301
+        ]
+      ],
+      "controlID": "yodo09-C0034",
+      "sourceChainageMapPoints": 7434.31891970133,
+      "sourceBracket": [
+        21,
+        22
+      ],
+      "sourcePixelInterpolated": [
+        132.73567384670872,
+        33.22467840693805
+      ]
+    },
+    {
+      "coordinate": [
+        132.73543826717076,
+        33.22455635188248
+      ],
+      "pixel": [
+        578,
+        312
+      ],
+      "normalOffsetPixels": 4,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        159,
+        190,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          583,
+          308
+        ],
+        [
+          581,
+          310
+        ],
+        [
+          578,
+          312
+        ],
+        [
+          576,
+          314
+        ],
+        [
+          575,
+          315
+        ]
+      ],
+      "controlID": "yodo09-C0035",
+      "sourceChainageMapPoints": 7635.246458071636,
+      "sourceBracket": [
+        22,
+        23
+      ],
+      "sourcePixelInterpolated": [
+        132.73547285785673,
+        33.224528379030666
+      ]
+    },
+    {
+      "coordinate": [
+        132.73527733462987,
+        33.22436787692144
+      ],
+      "pixel": [
+        563,
+        333
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        113,
+        167,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          568,
+          328
+        ],
+        [
+          565,
+          331
+        ],
+        [
+          563,
+          333
+        ],
+        [
+          561,
+          335
+        ],
+        [
+          559,
+          337
+        ]
+      ],
+      "controlID": "yodo09-C0036",
+      "sourceChainageMapPoints": 7836.173996441942,
+      "sourceBracket": [
+        23,
+        24
+      ],
+      "sourcePixelInterpolated": [
+        132.73527358264215,
+        33.224376660915595
+      ]
+    },
+    {
+      "coordinate": [
+        132.73510567325292,
+        33.22419735160679
+      ],
+      "pixel": [
+        547,
+        352
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        128,
+        173,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          551,
+          348
+        ],
+        [
+          549,
+          350
+        ],
+        [
+          547,
+          352
+        ],
+        [
+          545,
+          354
+        ],
+        [
+          543,
+          357
+        ]
+      ],
+      "controlID": "yodo09-C0037",
+      "sourceChainageMapPoints": 8037.101534812248,
+      "sourceBracket": [
+        23,
+        24
+      ],
+      "sourcePixelInterpolated": [
+        132.73508028589583,
+        33.22421960737764
+      ]
+    },
+    {
+      "coordinate": [
+        132.7349232830399,
+        33.22403580100206
+      ],
+      "pixel": [
+        530,
+        370
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        122,
+        173,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          534,
+          366
+        ],
+        [
+          532,
+          368
+        ],
+        [
+          530,
+          370
+        ],
+        [
+          528,
+          372
+        ],
+        [
+          526,
+          374
+        ]
+      ],
+      "controlID": "yodo09-C0038",
+      "sourceChainageMapPoints": 8238.029073182555,
+      "sourceBracket": [
+        24,
+        25
+      ],
+      "sourcePixelInterpolated": [
+        132.7348919942886,
+        33.22405849482524
+      ]
+    },
+    {
+      "coordinate": [
+        132.73471943515477,
+        33.22388322515698
+      ],
+      "pixel": [
+        511,
+        387
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        115,
+        168,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          516,
+          383
+        ],
+        [
+          514,
+          385
+        ],
+        [
+          511,
+          387
+        ],
+        [
+          509,
+          389
+        ],
+        [
+          507,
+          391
+        ]
+      ],
+      "controlID": "yodo09-C0039",
+      "sourceChainageMapPoints": 8438.956611552861,
+      "sourceBracket": [
+        25,
+        26
+      ],
+      "sourcePixelInterpolated": [
+        132.73470808224482,
+        33.22389392699824
+      ]
+    },
+    {
+      "coordinate": [
+        132.73450485843358,
+        33.223748599190316
+      ],
+      "pixel": [
+        491,
+        402
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        143,
+        189,
+        230
+      ],
+      "persistentWitnessPixels": [
+        [
+          496,
+          399
+        ],
+        [
+          493,
+          401
+        ],
+        [
+          491,
+          402
+        ],
+        [
+          489,
+          404
+        ],
+        [
+          486,
+          406
+        ]
+      ],
+      "controlID": "yodo09-C0040",
+      "sourceChainageMapPoints": 8639.884149923168,
+      "sourceBracket": [
+        25,
+        26
+      ],
+      "sourcePixelInterpolated": [
+        132.73450545307378,
+        33.22374533230618
+      ]
+    },
+    {
+      "coordinate": [
+        132.73427955287633,
+        33.22362294810118
+      ],
+      "pixel": [
+        470,
+        416
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        118,
+        170,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          475,
+          413
+        ],
+        [
+          473,
+          415
+        ],
+        [
+          470,
+          416
+        ],
+        [
+          468,
+          418
+        ],
+        [
+          465,
+          420
+        ]
+      ],
+      "controlID": "yodo09-C0041",
+      "sourceChainageMapPoints": 8840.811688293474,
+      "sourceBracket": [
+        26,
+        27
+      ],
+      "sourcePixelInterpolated": [
+        132.7342879504145,
+        33.22361321649436
+      ]
+    },
+    {
+      "coordinate": [
+        132.73405424731908,
+        33.223497296831546
+      ],
+      "pixel": [
+        449,
+        430
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        136,
+        183,
+        237
+      ],
+      "persistentWitnessPixels": [
+        [
+          454,
+          427
+        ],
+        [
+          452,
+          428
+        ],
+        [
+          449,
+          430
+        ],
+        [
+          447,
+          432
+        ],
+        [
+          444,
+          433
+        ]
+      ],
+      "controlID": "yodo09-C0042",
+      "sourceChainageMapPoints": 9041.73922666378,
+      "sourceBracket": [
+        26,
+        27
+      ],
+      "sourcePixelInterpolated": [
+        132.73406162337375,
+        33.22349087750033
+      ]
+    },
+    {
+      "coordinate": [
+        132.73382894176183,
+        33.223380620491014
+      ],
+      "pixel": [
+        428,
+        443
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        135,
+        183,
+        238
+      ],
+      "persistentWitnessPixels": [
+        [
+          433,
+          440
+        ],
+        [
+          430,
+          442
+        ],
+        [
+          428,
+          443
+        ],
+        [
+          425,
+          445
+        ],
+        [
+          423,
+          446
+        ]
+      ],
+      "controlID": "yodo09-C0043",
+      "sourceChainageMapPoints": 9242.666765034086,
+      "sourceBracket": [
+        27,
+        28
+      ],
+      "sourcePixelInterpolated": [
+        132.73382853502125,
+        33.22337777458639
+      ]
+    },
+    {
+      "coordinate": [
+        132.73358217853246,
+        33.22328189423516
+      ],
+      "pixel": [
+        405,
+        454
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        129,
+        178,
+        243
+      ],
+      "persistentWitnessPixels": [
+        [
+          410,
+          452
+        ],
+        [
+          408,
+          453
+        ],
+        [
+          405,
+          454
+        ],
+        [
+          403,
+          455
+        ],
+        [
+          400,
+          456
+        ]
+      ],
+      "controlID": "yodo09-C0044",
+      "sourceChainageMapPoints": 9443.594303404392,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.73358294575638,
+        33.223287517684184
+      ]
+    },
+    {
+      "coordinate": [
+        132.7333354153031,
+        33.22320111812477
+      ],
+      "pixel": [
+        382,
+        463
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000003/view.json",
+      "rgb": [
+        119,
+        171,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          388,
+          461
+        ],
+        [
+          385,
+          462
+        ],
+        [
+          382,
+          463
+        ],
+        [
+          379,
+          464
+        ],
+        [
+          376,
+          465
+        ]
+      ],
+      "controlID": "yodo09-C0045",
+      "sourceChainageMapPoints": 9644.521841774698,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.7333282410038,
+        33.223213936299224
+      ]
+    },
+    {
+      "coordinate": [
+        132.7330721372656,
+        33.22315700207118
+      ],
+      "pixel": [
+        681,
+        397
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        127,
+        173,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          686,
+          396
+        ],
+        [
+          684,
+          397
+        ],
+        [
+          681,
+          397
+        ],
+        [
+          678,
+          398
+        ],
+        [
+          674,
+          399
+        ]
+      ],
+      "controlID": "yodo09-C0046",
+      "sourceChainageMapPoints": 9845.449380145004,
+      "sourceBracket": [
+        29,
+        30
+      ],
+      "sourcePixelInterpolated": [
+        132.73306782234113,
+        33.22315660003588
+      ]
+    },
+    {
+      "coordinate": [
+        132.73254642429868,
+        33.22309417612429
+      ],
+      "pixel": [
+        632,
+        404
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        143,
+        181,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          637,
+          404
+        ],
+        [
+          634,
+          404
+        ],
+        [
+          632,
+          404
+        ],
+        [
+          628,
+          405
+        ],
+        [
+          625,
+          405
+        ]
+      ],
+      "controlID": "yodo09-C0047",
+      "sourceChainageMapPoints": 10247.304456885617,
+      "sourceBracket": [
+        30,
+        31
+      ],
+      "sourcePixelInterpolated": [
+        132.73253702396835,
+        33.223085434376586
+      ]
+    },
+    {
+      "coordinate": [
+        132.73225674572507,
+        33.22307622584547
+      ],
+      "pixel": [
+        605,
+        406
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        122,
+        171,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          612,
+          407
+        ],
+        [
+          608,
+          407
+        ],
+        [
+          605,
+          406
+        ],
+        [
+          602,
+          406
+        ],
+        [
+          600,
+          406
+        ]
+      ],
+      "controlID": "yodo09-C0048",
+      "sourceChainageMapPoints": 10448.231995255923,
+      "sourceBracket": [
+        31,
+        32
+      ],
+      "sourcePixelInterpolated": [
+        132.73226827208674,
+        33.22309061725917
+      ]
+    },
+    {
+      "coordinate": [
+        132.73199925365964,
+        33.22313007667089
+      ],
+      "pixel": [
+        581,
+        400
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        162,
+        192,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          588,
+          401
+        ],
+        [
+          584,
+          400
+        ],
+        [
+          581,
+          400
+        ],
+        [
+          578,
+          400
+        ],
+        [
+          576,
+          399
+        ]
+      ],
+      "controlID": "yodo09-C0049",
+      "sourceChainageMapPoints": 10649.159533626229,
+      "sourceBracket": [
+        32,
+        33
+      ],
+      "sourcePixelInterpolated": [
+        132.73200034310526,
+        33.22311222594354
+      ]
+    },
+    {
+      "coordinate": [
+        132.73173103275815,
+        33.223148026938674
+      ],
+      "pixel": [
+        556,
+        398
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        128,
+        173,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          562,
+          399
+        ],
+        [
+          559,
+          399
+        ],
+        [
+          556,
+          398
+        ],
+        [
+          553,
+          397
+        ],
+        [
+          550,
+          397
+        ]
+      ],
+      "controlID": "yodo09-C0050",
+      "sourceChainageMapPoints": 10850.087071996535,
+      "sourceBracket": [
+        32,
+        33
+      ],
+      "sourcePixelInterpolated": [
+        132.73173438855315,
+        33.223148492473214
+      ]
+    },
+    {
+      "coordinate": [
+        132.73147354069272,
+        33.22321085284688
+      ],
+      "pixel": [
+        532,
+        391
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        177,
+        199,
+        248
+      ],
+      "persistentWitnessPixels": [
+        [
+          538,
+          394
+        ],
+        [
+          535,
+          393
+        ],
+        [
+          532,
+          391
+        ],
+        [
+          529,
+          390
+        ],
+        [
+          526,
+          389
+        ]
+      ],
+      "controlID": "yodo09-C0051",
+      "sourceChainageMapPoints": 11051.014610366841,
+      "sourceBracket": [
+        33,
+        34
+      ],
+      "sourcePixelInterpolated": [
+        132.731474883369,
+        33.22320714679142
+      ]
+    },
+    {
+      "coordinate": [
+        132.73122677746335,
+        33.22329162894828
+      ],
+      "pixel": [
+        509,
+        382
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        130,
+        175,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          514,
+          384
+        ],
+        [
+          512,
+          383
+        ],
+        [
+          509,
+          382
+        ],
+        [
+          506,
+          381
+        ],
+        [
+          503,
+          380
+        ]
+      ],
+      "controlID": "yodo09-C0052",
+      "sourceChainageMapPoints": 11251.942148737147,
+      "sourceBracket": [
+        34,
+        35
+      ],
+      "sourcePixelInterpolated": [
+        132.73122251306688,
+        33.22328582897904
+      ]
+    },
+    {
+      "coordinate": [
+        132.73099074307004,
+        33.223390355193146
+      ],
+      "pixel": [
+        487,
+        371
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        121,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          492,
+          374
+        ],
+        [
+          489,
+          372
+        ],
+        [
+          487,
+          371
+        ],
+        [
+          484,
+          369
+        ],
+        [
+          481,
+          368
+        ]
+      ],
+      "controlID": "yodo09-C0053",
+      "sourceChainageMapPoints": 11452.869687107454,
+      "sourceBracket": [
+        35,
+        36
+      ],
+      "sourcePixelInterpolated": [
+        132.73098541369825,
+        33.223392776880395
+      ]
+    },
+    {
+      "coordinate": [
+        132.73075470867673,
+        33.2235070315207
+      ],
+      "pixel": [
+        465,
+        358
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        157,
+        188,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          470,
+          361
+        ],
+        [
+          468,
+          360
+        ],
+        [
+          465,
+          358
+        ],
+        [
+          462,
+          356
+        ],
+        [
+          460,
+          355
+        ]
+      ],
+      "controlID": "yodo09-C0054",
+      "sourceChainageMapPoints": 11653.79722547776,
+      "sourceBracket": [
+        35,
+        36
+      ],
+      "sourcePixelInterpolated": [
+        132.73074901018072,
+        33.22350096151391
+      ]
+    },
+    {
+      "coordinate": [
+        132.73052940311948,
+        33.22363268277634
+      ],
+      "pixel": [
+        444,
+        344
+      ],
+      "normalOffsetPixels": 1,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        133,
+        176,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          449,
+          348
+        ],
+        [
+          446,
+          346
+        ],
+        [
+          444,
+          344
+        ],
+        [
+          441,
+          343
+        ],
+        [
+          439,
+          341
+        ]
+      ],
+      "controlID": "yodo09-C0055",
+      "sourceChainageMapPoints": 11854.724763848066,
+      "sourceBracket": [
+        36,
+        37
+      ],
+      "sourcePixelInterpolated": [
+        132.7305197039704,
+        33.2236187099318
+      ]
+    },
+    {
+      "coordinate": [
+        132.73031482639828,
+        33.2237583338515
+      ],
+      "pixel": [
+        424,
+        330
+      ],
+      "normalOffsetPixels": 2,
+      "viewOrdinal": 4,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000004/view.json",
+      "rgb": [
+        132,
+        175,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          428,
+          333
+        ],
+        [
+          426,
+          331
+        ],
+        [
+          424,
+          330
+        ],
+        [
+          422,
+          328
+        ],
+        [
+          419,
+          326
+        ]
+      ],
+      "controlID": "yodo09-C0056",
+      "sourceChainageMapPoints": 12055.652302218372,
+      "sourceBracket": [
+        36,
+        37
+      ],
+      "sourcePixelInterpolated": [
+        132.73029892366048,
+        33.22374794718145
+      ]
+    },
+    {
+      "coordinate": [
+        132.73011966270457,
+        33.22391367342108
+      ],
+      "pixel": [
+        587,
+        451
+      ],
+      "normalOffsetPixels": 4,
+      "viewOrdinal": 5,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000005/view.json",
+      "rgb": [
+        143,
+        182,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          591,
+          454
+        ],
+        [
+          590,
+          453
+        ],
+        [
+          587,
+          451
+        ],
+        [
+          585,
+          449
+        ],
+        [
+          582,
+          448
+        ]
+      ],
+      "controlID": "yodo09-C0057",
+      "sourceChainageMapPoints": 12256.579840588678,
+      "sourceBracket": [
+        37,
+        38
+      ],
+      "sourcePixelInterpolated": [
+        132.73009017473322,
+        33.22388986899635
+      ]
+    },
+    {
+      "coordinate": [
+        132.7299265436555,
+        33.22407522425135
+      ],
+      "pixel": [
+        569,
+        433
+      ],
+      "normalOffsetPixels": 4,
+      "viewOrdinal": 5,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000005/view.json",
+      "rgb": [
+        123,
+        171,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          573,
+          438
+        ],
+        [
+          571,
+          436
+        ],
+        [
+          569,
+          433
+        ],
+        [
+          566,
+          431
+        ],
+        [
+          565,
+          429
+        ]
+      ],
+      "controlID": "yodo09-C0058",
+      "sourceChainageMapPoints": 12457.507378958984,
+      "sourceBracket": [
+        38,
+        39
+      ],
+      "sourcePixelInterpolated": [
+        132.7298950813684,
+        33.22404514668638
+      ]
+    },
+    {
+      "coordinate": [
+        132.7297119669343,
+        33.22420984971534
+      ],
+      "pixel": [
+        549,
+        418
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 5,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000005/view.json",
+      "rgb": [
+        124,
+        172,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          553,
+          422
+        ],
+        [
+          551,
+          420
+        ],
+        [
+          549,
+          418
+        ],
+        [
+          547,
+          416
+        ],
+        [
+          544,
+          414
+        ]
+      ],
+      "controlID": "yodo09-C0059",
+      "sourceChainageMapPoints": 12658.43491732929,
+      "sourceBracket": [
+        39,
+        40
+      ],
+      "sourcePixelInterpolated": [
+        132.72970781793987,
+        33.22420723098687
+      ]
+    },
+    {
+      "coordinate": [
+        132.72951884788523,
+        33.22436242499073
+      ],
+      "pixel": [
+        531,
+        401
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 5,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002711/000005/view.json",
+      "rgb": [
+        170,
+        195,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          535,
+          405
+        ],
+        [
+          533,
+          403
+        ],
+        [
+          531,
+          401
+        ],
+        [
+          528,
+          399
+        ],
+        [
+          526,
+          397
+        ]
+      ],
+      "controlID": "yodo09-C0060",
+      "sourceChainageMapPoints": 12859.362455699596,
+      "sourceBracket": [
+        40,
+        41
+      ],
+      "sourcePixelInterpolated": [
+        132.72951369028385,
+        33.22436345662679
+      ]
+    }
+  ],
+  "unsupportedSamples": [
+    {
+      "chainageMapPoints": 3013.913075554595,
+      "sourceBracket": [
+        7,
+        8
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.7411831366195,
+        33.22405232025191
+      ]
+    },
+    {
+      "chainageMapPoints": 4822.26092088735,
+      "sourceBracket": [
+        13,
+        14
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.73894131476612,
+        33.22473372225392
+      ]
+    },
+    {
+      "chainageMapPoints": 10046.37691851531,
+      "sourceBracket": [
+        30,
+        31
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.73280523193472,
+        33.22310718096813
+      ]
+    }
+  ],
+  "turnsAbove45": [
+    [
+      1,
+      51.63921640912891
+    ]
+  ],
+  "sourceCoordinates": [
+    [
+      132.74515,
+      33.22409
+    ],
+    [
+      132.74476,
+      33.22418
+    ],
+    [
+      132.74437,
+      33.22427
+    ],
+    [
+      132.74372,
+      33.22436
+    ],
+    [
+      132.74348,
+      33.22436
+    ],
+    [
+      132.74269,
+      33.22425
+    ],
+    [
+      132.74209,
+      33.22412
+    ],
+    [
+      132.74169,
+      33.22406
+    ],
+    [
+      132.74103,
+      33.22405
+    ],
+    [
+      132.74062,
+      33.22407
+    ],
+    [
+      132.74031,
+      33.22415
+    ],
+    [
+      132.73994,
+      33.22429
+    ],
+    [
+      132.73985,
+      33.22433
+    ],
+    [
+      132.73902,
+      33.2247
+    ],
+    [
+      132.73881,
+      33.22479
+    ],
+    [
+      132.73827,
+      33.22498
+    ],
+    [
+      132.73785,
+      33.22514
+    ],
+    [
+      132.73752,
+      33.22518
+    ],
+    [
+      132.73728,
+      33.22516
+    ],
+    [
+      132.73679,
+      33.22511
+    ],
+    [
+      132.73621,
+      33.22495
+    ],
+    [
+      132.73594,
+      33.22484
+    ],
+    [
+      132.73566,
+      33.22467
+    ],
+    [
+      132.73529,
+      33.22439
+    ],
+    [
+      132.73497,
+      33.22413
+    ],
+    [
+      132.73473,
+      33.22391
+    ],
+    [
+      132.73443,
+      33.22369
+    ],
+    [
+      132.73406,
+      33.22349
+    ],
+    [
+      132.73373,
+      33.22333
+    ],
+    [
+      132.73328,
+      33.2232
+    ],
+    [
+      132.73284,
+      33.22311
+    ],
+    [
+      132.73247,
+      33.22308
+    ],
+    [
+      132.73209,
+      33.2231
+    ],
+    [
+      132.73165,
+      33.22316
+    ],
+    [
+      132.73139,
+      33.22323
+    ],
+    [
+      132.73121,
+      33.22329
+    ],
+    [
+      132.73062,
+      33.22356
+    ],
+    [
+      132.73021,
+      33.2238
+    ],
+    [
+      132.72997,
+      33.22398
+    ],
+    [
+      132.72974,
+      33.22418
+    ],
+    [
+      132.72961,
+      33.22429
+    ],
+    [
+      132.729315,
+      33.224515
+    ]
+  ],
+  "endpointGuards": {
+    "start": [
+      132.74515,
+      33.22409
+    ],
+    "end": [
+      132.729315,
+      33.224515
+    ],
+    "warning": "Preserved current guards pending Root highzoom station adjudication. Nakamura Wakai precise last7 retained."
+  },
+  "limits": [
+    "Own thin-blue cartographic fit using exact raw cameras, not physical survey.",
+    "Normalsearch35px; fivepoint colourpersistence; watercyan/roads excluded bypalette plus actualreview.",
+    "Missing cartographic witnesses omitted and disclosed; long unsupported spans or sharpturns require manualadjudication before integration.",
+    "Native smoothing/lane/Main replay pending."
+  ]
+}

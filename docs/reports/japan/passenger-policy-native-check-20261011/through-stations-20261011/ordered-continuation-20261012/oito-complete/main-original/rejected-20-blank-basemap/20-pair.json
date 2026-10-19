@@ -1,0 +1,62 @@
+{
+  "caseIndex": 20,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 20,
+  "source": {
+    "caseIndex": 20,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 20,
+    "fromStationID": "002314",
+    "toStationID": "002332",
+    "camera": [
+      36.3659375,
+      137.8755125,
+      0.027385049999993215
+    ],
+    "effectiveCoordinates": [
+      [
+        137.872775,
+        36.371865
+      ],
+      [
+        137.87308,
+        36.37131
+      ],
+      [
+        137.87588,
+        36.36617
+      ],
+      [
+        137.87598,
+        36.36598
+      ],
+      [
+        137.8763,
+        36.36518
+      ],
+      [
+        137.87671,
+        36.36406
+      ],
+      [
+        137.87714,
+        36.36294
+      ],
+      [
+        137.87722,
+        36.36272
+      ],
+      [
+        137.87797,
+        36.36075
+      ],
+      [
+        137.87825,
+        36.36001
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:15.04;lod:13.89;backbones:0;networkStations:3;distance:6011.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.365938;centerLon:137.875513;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2587.0;rebuilds:3;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:6;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.365938;centerLon:137.875513;distance:6011.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0"
+}

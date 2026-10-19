@@ -1,0 +1,711 @@
+{
+  "reviewDate": "2026-10-18",
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "captureRoot": "/private/tmp/jtm-miyazu-missing-20261018",
+  "scope": "All 28 missing-baseline viewpoints only; not interval-9 repair candidate acceptance",
+  "actualViewpointCount": 28,
+  "actualOriginalPNGCount": 56,
+  "originalPixelsAltered": false,
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000000",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.50653,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.293675,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-0",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      ],
+      "observation": "丹後神崎 through platform corridor; real northwestern river approach retained; no isolated hook seen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000001",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.50928710539614,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.29229470374852,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-1",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      ],
+      "observation": "East-bank railway approach curves onto its own river bridge; no discontinuity or false V seen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000002",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.51061592141504,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.28879252072645,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-2",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000002/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000002/smooth.png"
+      ],
+      "observation": "Straight Yuragawa railway bridge; distinct from the route 178 road bridge; red remains on railway crossing."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000003",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.511918246902994,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.28527232122596,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-3",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000003/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000003/smooth.png"
+      ],
+      "observation": "West-bank railway curve toward 丹後由良; no false apex seen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000004",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.513700061051395,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.28213991902575,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-4",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000004/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000004/smooth.png"
+      ],
+      "observation": "丹後由良 platform group and bridge approach; red remains in broad railway corridor; exact platform faces/caps unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000005",
+      "itemID": "jp-WILLER　TRAINS-宮津線#3",
+      "latitude": 35.515773,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.279525,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#3#point-5",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000005/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000001/000005/smooth.png"
+      ],
+      "observation": "丹後由良 through station and straight approaches; no terminal hook seen; broad fill does not prove track centre/caps."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000000",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53444,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.199975,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-0",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000000/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000000/smooth.png"
+      ],
+      "observation": "宮津 platform group and shared southwest passenger stem; own west/north arm distinct from southward 宮福線. Exact platform face unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000001",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53245674912643,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.19697220174203,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-1",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000001/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000001/smooth.png"
+      ],
+      "observation": "Actual fork fully in frame: own 宮豊 arm turns west then north; 宮福線 continues south. No red wrong-arm connection seen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000002",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53026186580654,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.19420833802445,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-2",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000002/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000002/smooth.png"
+      ],
+      "observation": "Common stem/fork plus genuine broad west bend; own west/north topology retained; turnout surveyed position not established."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000003",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53008289877116,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.19056226751405,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-3",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000003/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000003/smooth.png"
+      ],
+      "observation": "Genuine west-to-north bend near Ryoshi/Kinobe and river crossing; preserve broad curve; modest lateral offset only, no isolated V established."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000004",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53276222768923,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.189017851528,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-4",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000004/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000004/smooth.png"
+      ],
+      "observation": "Own north arm near Ogawa/Kanayadani: red visibly east of curved blue railway band, using straighter shoulder/chord. Own-source alignment lead; distinct from Miyafuku south arm."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000005",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53587774216392,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18856706745854,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-5",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000005/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000005/smooth.png"
+      ],
+      "observation": "Same north arm: eastward red chord against gentle own blue curve reaffirmed; no replacement geometry established."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000006",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.53900413687262,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18894626679585,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-6",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000006/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000006/smooth.png"
+      ],
+      "observation": "North-south own railway near Miyamachi/Nyoganji; generalized supports and modest offset; no isolated false V established."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000007",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.54214964963432,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18905720901805,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-7",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000007/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000007/smooth.png"
+      ],
+      "observation": "Ryoshi/Kawamukai to Suginosue compound coast curve; red straightening/east offset visible; genuine broad bend must remain."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000008",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.545123000388756,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18848699962152,
+      "pointOrdinal": 8,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-8",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000008/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000008/smooth.png"
+      ],
+      "observation": "Suginosue/route 176 crossing: red east/southeast chord departs gentle own blue curve; alignment lead, no junction contamination."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000009",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.54777194966534,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18667955273676,
+      "pointOrdinal": 9,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-9",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000009/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000009/smooth.png"
+      ],
+      "observation": "Suginosue coast: red shows eastward shoulder on southern bend and westward shoulder north of route 176; blue own railway and real compound curve clear. Source-bounded correction unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000010",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.5508265262625,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18694044947534,
+      "pointOrdinal": 10,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-10",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000010/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000010/smooth.png"
+      ],
+      "observation": "Coast north of Suginosue: alternating red lateral shoulders; real gentle coast curvature retained; no isolated V or branch swap established."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000011",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.553921926908544,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18671,
+      "pointOrdinal": 11,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-11",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000011/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000011/smooth.png"
+      ],
+      "observation": "天橋立 southeast approach: red east of own blue approach curve, then through broad station group. Own alignment lead; platform face/caps unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000012",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.55636936420645,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.18452736853467,
+      "pointOrdinal": 12,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-12",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000012/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000012/smooth.png"
+      ],
+      "observation": "天橋立 station southeast approach eastward red shoulder; red through station corridor. Northwest off-centre segment also visible beyond endpoint context; no source attribution/replacement chosen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000013",
+      "itemID": "jp-WILLER　TRAINS-宮津線#6",
+      "latitude": 35.557375,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 135.182875,
+      "pointOrdinal": 13,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#6#point-13",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000013/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000002/000013/smooth.png"
+      ],
+      "observation": "天橋立 station group/approaches: red southeast approach east offset; northwest red south of railway beyond station. Endpoint frame includes adjoining interval context, not assigned wholesale to #6."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60679,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.919925,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-0",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "observation": "かぶと山 through station; east bridge approach broadly follows railway. West of station red clearly bows south into blank field while own blue railway follows route 178. Confirmed image disagreement, not exact source repair."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60571326548644,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.91636537396997,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-1",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "observation": "かぶと山 western approach: large southward red departure from own blue railway repeated; no adjacent railway arm to select. Real coastal curve must be preserved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60477003062752,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.91267784142494,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-2",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "observation": "Western かぶと山 approach: red southward shoulder/chord in field before rejoining blue railway farther west; strongest full-window view. Confirmed image disagreement; authoritative own chain pending."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.604544765710685,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.9088485160388,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-3",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000003/smooth.png"
+      ],
+      "observation": "Kawakamiya river mouth / east of Juraku: same southward red bow clearly visible at east/right; farther west red follows actual railway bend. Preserve genuine bend."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60414457100866,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.90508918190991,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-4",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000004/smooth.png"
+      ],
+      "observation": "Juraku east approach: east/right red bow persists, middle and west red track actual broad own curve with small offset; no false branch seen."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60354427510982,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.901312750994,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-5",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000005/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000005/smooth.png"
+      ],
+      "observation": "久美浜 east approach: red follows own rail corridor with slight south offset; eastern large bow at edge. Station platform group enters southwest frame."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000006",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60283338645186,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.89754661927503,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-6",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000006/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000006/smooth.png"
+      ],
+      "observation": "久美浜 station group/east and southwest approaches; red south of track-group axis but within/near broad corridor, no isolated station hook. Exact face/caps unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000007",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.602299,
+      "lineDependency": "7a24bd5fd71904b7b8bbfb78c37d1872c263eabec5f8efd90f995e784ecd5ff3",
+      "longitude": 134.895112,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-7",
+      "reviewMethod": "functions.view_image; each original PNG separately; no pixel modifications",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000007/basemap.png",
+        "/private/tmp/jtm-miyazu-missing-20261018/alignment/captures/000000/000007/smooth.png"
+      ],
+      "observation": "久美浜 through station and southwest river approach; red modest south offset along real curve. Platform caps/paired centre not established from broad fill."
+    }
+  ]
+}

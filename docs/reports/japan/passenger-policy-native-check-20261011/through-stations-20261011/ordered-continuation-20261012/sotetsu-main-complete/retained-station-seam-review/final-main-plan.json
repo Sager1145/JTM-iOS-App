@@ -1,0 +1,71 @@
+{
+  "scope": "Selected final production questions only; no every-interval matrix",
+  "cameraWarning": "Requested initial camera; actual AX camera/network/base-map readiness and visible scope must be confirmed. Not capture evidence.",
+  "cases": [
+    {
+      "caseID": "station-004633",
+      "stationID": "004633",
+      "stationName": "横浜",
+      "lineID": "jp-相模鉄道-相鉄本線",
+      "camera": [
+        35.464424,
+        139.620466,
+        0.0045
+      ],
+      "question": "Own terminal hook, own platform identity, line/dot endpoint; exclude JR/Keikyu/Tokyu turn directions",
+      "status": "planned-not-captured"
+    },
+    {
+      "caseID": "station-004594",
+      "stationID": "004594",
+      "stationName": "西谷",
+      "lineID": "jp-相模鉄道-相鉄本線",
+      "camera": [
+        35.478065,
+        139.565521,
+        0.0045
+      ],
+      "question": "Main east-west path, Shin-Yokohama branch and Shinkansen crossing stay distinct",
+      "status": "planned-not-captured"
+    },
+    {
+      "caseID": "station-004642",
+      "stationID": "004642",
+      "stationName": "二俣川",
+      "lineID": "jp-相模鉄道-相鉄本線",
+      "camera": [
+        35.46339,
+        139.53237,
+        0.0045
+      ],
+      "question": "Own Main NE-west path and Izumino south branch without false turn pairs",
+      "status": "planned-not-captured"
+    },
+    {
+      "caseID": "station-004617",
+      "stationID": "004617",
+      "stationName": "大和",
+      "lineID": "jp-相模鉄道-相鉄本線",
+      "camera": [
+        35.46993,
+        139.461,
+        0.0045
+      ],
+      "question": "Sotetsu east-west station path remains independent of Odakyu NS crossing",
+      "status": "planned-not-captured"
+    },
+    {
+      "caseID": "station-004672",
+      "stationID": "004672",
+      "stationName": "海老名",
+      "lineID": "jp-相模鉄道-相鉄本線",
+      "camera": [
+        35.45344,
+        139.392235,
+        0.0045
+      ],
+      "question": "Own Sotetsu terminal endpoint/dot, no continuation onto Odakyu or JR",
+      "status": "planned-not-captured"
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "caseIndex": 20,
+  "intervalIndex": 20,
+  "source": {
+    "intervalIndex": 20,
+    "fromStationID": "003363",
+    "toStationID": "003260",
+    "camera": [
+      35.741108499999996,
+      139.8021865,
+      0.03167460000000375
+    ],
+    "effectiveCoordinates": [
+      [
+        139.79878,
+        35.73231
+      ],
+      [
+        139.79924,
+        35.73288
+      ],
+      [
+        139.79931,
+        35.73297
+      ],
+      [
+        139.80001,
+        35.73396
+      ],
+      [
+        139.80037,
+        35.73466
+      ],
+      [
+        139.80083,
+        35.73568
+      ],
+      [
+        139.80106,
+        35.7362
+      ],
+      [
+        139.80127,
+        35.73679
+      ],
+      [
+        139.80145,
+        35.73743
+      ],
+      [
+        139.80166,
+        35.73859
+      ],
+      [
+        139.80175,
+        35.73913
+      ],
+      [
+        139.8018,
+        35.73936
+      ],
+      [
+        139.80224,
+        35.74097
+      ],
+      [
+        139.80229,
+        35.74112
+      ],
+      [
+        139.80235,
+        35.74133
+      ],
+      [
+        139.8029,
+        35.74314
+      ],
+      [
+        139.80301,
+        35.74351
+      ],
+      [
+        139.80303,
+        35.7436
+      ],
+      [
+        139.80323,
+        35.74424
+      ],
+      [
+        139.80326,
+        35.74434
+      ],
+      [
+        139.80333,
+        35.74456
+      ],
+      [
+        139.80338,
+        35.7447
+      ],
+      [
+        139.80363,
+        35.74545
+      ],
+      [
+        139.80371,
+        35.74563
+      ],
+      [
+        139.80418,
+        35.7466
+      ],
+      [
+        139.80481,
+        35.74763
+      ],
+      [
+        139.80499,
+        35.74797
+      ],
+      [
+        139.80516,
+        35.74849
+      ],
+      [
+        139.80518,
+        35.74855
+      ],
+      [
+        139.80529,
+        35.7489
+      ],
+      [
+        139.805593,
+        35.749907
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; geographic-and-platform-acceptance-pending",
+  "actualOnStatus": "83 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:18;overlays:16;rides:0;budgetDrops:0;vertices:7702;camera:14.84;lod:13.69;backbones:1;networkStations:71;distance:6951.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.741108;centerLon:139.802186;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4199.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:22;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:11;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:2;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:71;markerPhases:setup=1,endpointSpecsClaims=0,endpointLayout=0,selectedNames=0,ridesDigest=0,records=0,connections=1,hiddenRides=0,rideDotLoop=0,rideLabels=0,networkStations=5,annotationDiff=0,annotationApply=0,rideStationOverlayInstall=2,annotationRestyle=0,endpointsAdd=0,other=2,drawnCount=0,stationsCount=1723,culled=0,annAdded=71,annRemoved=0,annRetained=0,annCoordChanged=0,restyledViews=0",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.741108;centerLon:139.802186;distance:6951.6;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

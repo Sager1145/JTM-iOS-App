@@ -1,0 +1,214 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 0,
+    "fromStationID": "002407",
+    "toStationID": "002349",
+    "camera": [
+      36.331642,
+      139.7960325,
+      0.0640464000000069
+    ],
+    "effectiveCoordinates": [
+      [
+        139.806403,
+        36.312234
+      ],
+      [
+        139.80675,
+        36.31285
+      ],
+      [
+        139.80689,
+        36.31309
+      ],
+      [
+        139.80745,
+        36.31407
+      ],
+      [
+        139.80782,
+        36.31478
+      ],
+      [
+        139.80797,
+        36.31515
+      ],
+      [
+        139.80805,
+        36.31538
+      ],
+      [
+        139.80808,
+        36.31547
+      ],
+      [
+        139.80817,
+        36.31581
+      ],
+      [
+        139.8082,
+        36.31594
+      ],
+      [
+        139.80826,
+        36.31613
+      ],
+      [
+        139.8084,
+        36.3165
+      ],
+      [
+        139.8103,
+        36.31972
+      ],
+      [
+        139.81042,
+        36.32032
+      ],
+      [
+        139.81065,
+        36.32121
+      ],
+      [
+        139.81081,
+        36.32199
+      ],
+      [
+        139.81094,
+        36.32347
+      ],
+      [
+        139.81094,
+        36.32491
+      ],
+      [
+        139.81081,
+        36.32613
+      ],
+      [
+        139.81042,
+        36.32705
+      ],
+      [
+        139.81013,
+        36.32761
+      ],
+      [
+        139.80953,
+        36.32846
+      ],
+      [
+        139.80662,
+        36.33261
+      ],
+      [
+        139.8054,
+        36.33438
+      ],
+      [
+        139.80426,
+        36.33594
+      ],
+      [
+        139.80386,
+        36.33649
+      ],
+      [
+        139.80321,
+        36.33748
+      ],
+      [
+        139.80298,
+        36.33785
+      ],
+      [
+        139.80222,
+        36.3389
+      ],
+      [
+        139.80162,
+        36.33976
+      ],
+      [
+        139.80104,
+        36.34047
+      ],
+      [
+        139.80056,
+        36.34096
+      ],
+      [
+        139.80031,
+        36.34118
+      ],
+      [
+        139.80004,
+        36.34142
+      ],
+      [
+        139.79968,
+        36.34162
+      ],
+      [
+        139.79925,
+        36.34185
+      ],
+      [
+        139.79886,
+        36.34205
+      ],
+      [
+        139.79724,
+        36.34288
+      ],
+      [
+        139.79445,
+        36.34429
+      ],
+      [
+        139.79137,
+        36.34585
+      ],
+      [
+        139.79128,
+        36.3459
+      ],
+      [
+        139.78935,
+        36.34687
+      ],
+      [
+        139.78587,
+        36.34865
+      ],
+      [
+        139.78319,
+        36.34999
+      ],
+      [
+        139.78187,
+        36.35068
+      ],
+      [
+        139.781125,
+        36.35105
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t42 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:6;rides:0;budgetDrops:0;vertices:1741;camera:13.82;lod:12.67;backbones:1;networkStations:12;distance:14058.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.331642;centerLon:139.796033;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3578.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.331642;centerLon:139.796033;distance:14058.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-00.jpg",
+  "observation": "Oyama own Ryomo anchor lies on east edge of broad station band; Omoigawa River bend has changing local offset. Own platform identity and midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

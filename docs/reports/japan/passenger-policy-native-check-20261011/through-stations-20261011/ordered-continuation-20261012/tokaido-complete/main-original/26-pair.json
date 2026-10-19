@@ -1,0 +1,188 @@
+{
+  "caseIndex": 26,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 26,
+  "source": {
+    "caseIndex": 26,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 26,
+    "fromStationID": "005170",
+    "toStationID": "005215",
+    "camera": [
+      35.265914,
+      139.167961,
+      0.045326819999995965
+    ],
+    "effectiveCoordinates": [
+      [
+        139.180165,
+        35.275725
+      ],
+      [
+        139.17941,
+        35.2756
+      ],
+      [
+        139.17833,
+        35.27543
+      ],
+      [
+        139.1782,
+        35.27541
+      ],
+      [
+        139.17803,
+        35.27538
+      ],
+      [
+        139.17786,
+        35.27535
+      ],
+      [
+        139.17701,
+        35.27521
+      ],
+      [
+        139.17636,
+        35.2751
+      ],
+      [
+        139.17552,
+        35.27488
+      ],
+      [
+        139.17449,
+        35.27449
+      ],
+      [
+        139.17392,
+        35.27418
+      ],
+      [
+        139.17341,
+        35.27388
+      ],
+      [
+        139.17299,
+        35.27358
+      ],
+      [
+        139.17236,
+        35.27311
+      ],
+      [
+        139.17147,
+        35.27231
+      ],
+      [
+        139.17104,
+        35.27189
+      ],
+      [
+        139.16812,
+        35.26904
+      ],
+      [
+        139.16664,
+        35.2676
+      ],
+      [
+        139.16648,
+        35.26745
+      ],
+      [
+        139.16316,
+        35.2642
+      ],
+      [
+        139.16291,
+        35.26397
+      ],
+      [
+        139.1617,
+        35.26279
+      ],
+      [
+        139.16137,
+        35.26246
+      ],
+      [
+        139.16043,
+        35.26155
+      ],
+      [
+        139.15995,
+        35.26108
+      ],
+      [
+        139.15959,
+        35.26072
+      ],
+      [
+        139.15927,
+        35.26042
+      ],
+      [
+        139.15868,
+        35.25984
+      ],
+      [
+        139.15855,
+        35.25972
+      ],
+      [
+        139.15849,
+        35.25966
+      ],
+      [
+        139.1582,
+        35.25929
+      ],
+      [
+        139.15665,
+        35.25733
+      ],
+      [
+        139.15653,
+        35.25717
+      ],
+      [
+        139.155757,
+        35.256103
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t68 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:6;rides:0;budgetDrops:0;vertices:2359;camera:14.33;lod:13.19;backbones:1;networkStations:25;distance:9947.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.265914;centerLon:139.167961;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2130.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.265914;centerLon:139.167961;distance:9947.8;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.265914",
+      "35.265914"
+    ],
+    "centerLon": [
+      "139.167961",
+      "139.167961"
+    ],
+    "distance": [
+      "9947.8",
+      "9947.8"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false
+}

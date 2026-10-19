@@ -1,0 +1,68 @@
+{
+  "lineID": "jp-一畑電車-北松江線",
+  "reviewer": "parent Codex",
+  "pairsViewed": 6,
+  "originalPNGsViewed": 12,
+  "views": [
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019",
+      "pointOrdinal": 0,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019",
+      "pointOrdinal": 1,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019",
+      "pointOrdinal": 2,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000002/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019",
+      "pointOrdinal": 3,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000003/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019",
+      "pointOrdinal": 4,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-native-20261019/alignment/captures/000000/000004/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-ichibata-kitamatsue-step-detail-native-20261019",
+      "pointOrdinal": 3,
+      "originalPaths": [
+        "/private/tmp/jtm-ichibata-kitamatsue-step-detail-native-20261019/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-step-detail-native-20261019/alignment/captures/000000/000003/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    }
+  ]
+}

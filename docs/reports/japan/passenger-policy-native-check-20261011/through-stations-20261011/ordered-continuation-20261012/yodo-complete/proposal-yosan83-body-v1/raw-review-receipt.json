@@ -1,0 +1,239 @@
+{
+  "status": "partial-stopped-by-Root",
+  "actualRawMetadataRecords": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.35507053081927,
+        "longitude": 132.5251218715185,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9939115811351986,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233031525.11399072,
+        "rectY": 107806318.18558784,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 5,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.35848885216197,
+        "longitude": 132.5146230981199,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9938730915608647,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233023696.66114432,
+        "rectY": 107803266.58923906,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 2,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.35727221856699,
+        "longitude": 132.5180979332163,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9938867910046689,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233026287.68598768,
+        "rectY": 107804352.71345694,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 3,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.356060285817726,
+        "longitude": 132.52157533411545,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9939004370689324,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233028880.62403235,
+        "rectY": 107805434.62599844,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 4,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000008/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.34978,
+        "longitude": 132.531085,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9939711443877809,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233035971.54486045,
+        "rectY": 107811040.90042193,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 8,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.360578036695,
+        "longitude": 132.51190423209408,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9938495660364798,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233021669.32769585,
+        "rectY": 107801401.4779822,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 1,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.352828522405645,
+        "longitude": 132.52773705968903,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9939368237459997,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233033475.139627,
+        "rectY": 107808319.60135472,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 6,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.35090544748384,
+        "longitude": 132.53057172659388,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9939584742900139,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233035588.82046923,
+        "rectY": 107810036.26770067,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 7,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.363175,
+        "longitude": 132.509775,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9938203207556742,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233020081.65717334,
+        "rectY": 107799082.98680438,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "itemID": "jp-四国旅客鉄道-予讃線#83",
+      "viewOrdinal": 0,
+      "fromStationID": "009339",
+      "toStationID": "009352"
+    }
+  ],
+  "actualOpenedBaselineViews": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "actualOpenedPanels": 18,
+  "candidateReprojectionsOpened": 0,
+  "unreviewedBaselineViews": [
+    6,
+    7,
+    8
+  ],
+  "candidateViewsUnreviewed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "formalAcceptance": false
+}

@@ -1,0 +1,64 @@
+{
+  "status": "WARNING-own-group-and-NWfacecaps-unresolved-retain-existing-alias-without-placement-acceptance",
+  "stationID": "009272",
+  "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-yawatahama-009272/view.json",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.45802999999997,
+    "longitude": 132.43618000000006,
+    "mapPointsPerPoint": 4.000000007450581,
+    "metresPerPoint": 0.4963753618925941,
+    "pitch": 0,
+    "rectHeight": 2552.000000014901,
+    "rectWidth": 3996,
+    "rectX": 232967303.24777249,
+    "rectY": 107716147.78604883,
+    "viewportHeightPoints": 638,
+    "viewportWidthPoints": 999,
+    "zoom256": 17.99999999731277
+  },
+  "rawDimensions": [
+    999,
+    638
+  ],
+  "identifiedSEIslandNarrowFace": [
+    [
+      444,
+      366
+    ],
+    [
+      698,
+      165
+    ]
+  ],
+  "identifiedIslandMidpoint": [
+    571,
+    265.5
+  ],
+  "retainedDisplayAlias": [
+    132.43618,
+    33.45803
+  ],
+  "retainedAliasPixel": [
+    499.5,
+    319
+  ],
+  "candidateAliasMove": null,
+  "uncertainty": {
+    "islandCapPixels": 4,
+    "NWFaceCaps": "unresolved attachedstationbuilding/corners",
+    "passengerRailGroup": "unresolved amongparallelrail/yardfan",
+    "surveyedPrecision": false
+  },
+  "excluded": [
+    "NWlargeattachedbuildingnotpromotedtofacecaps",
+    "OuterSEyard/sidingrailwaynotassignedtopassengergroup",
+    "Islandsinglemidpointcomparisonalonecannotestablishwholegroupstationrepresentative"
+  ],
+  "independentSavedImageReview": "GPT-6.1Solmedium confirmedSEislandcaps; independentlydeclinednewalias becauseNWfacecaps/intendedpassengergroupunresolved.",
+  "scopeDecision": "No concrete supported009272aliasmove, therefore no factual78dependency yet. RetainingoriginalaliasisWARNING,notstationplacementPASS; guardcannotbecalledaligned.",
+  "rootEvidenceGap": "Need regional/clearstationcartography toresolveownpassengergroup/NWfacecaps if exactguardacceptance required; thischatdoesnotoperateUI.",
+  "formalAcceptance": false,
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true
+}

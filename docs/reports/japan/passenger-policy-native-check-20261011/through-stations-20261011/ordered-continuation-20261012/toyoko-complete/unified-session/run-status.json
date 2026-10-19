@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "A460816D-95DE-4DF5-88C2-886DAB0E78F2",
+  "message" : "6\/6 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "ordered-38-toyoko-missing16-20261017",
+  "resultPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:51:14Z"
+}

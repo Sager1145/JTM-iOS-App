@@ -1,0 +1,155 @@
+{
+  "format": "jtm-jounan-group-display-proposal-delta-v3",
+  "status": "candidate-only",
+  "supersedesRejectedV2": {
+    "candidateSha256": "77c40476e70a1744668d8401874cbb42f4e3e193cb32e953f7233073a76951ae",
+    "reason": "City Hall curve followed the northwest moat/road curb rather than the tied black rail."
+  },
+  "baseCandidate": {
+    "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v1/candidate.json",
+    "sha256": "6453e121524c38948cbfc64d919ab0621b3f3c4e35667268368b2c6a4b7e8d1e"
+  },
+  "scope": {
+    "leadInLineID": "jp-伊予鉄道-花園線",
+    "jounanCorrectedIntervalIndex": 2,
+    "physicalTopologyChanged": false,
+    "scheduledThroughRunningClaimed": false
+  },
+  "leadIn": {
+    "stationID": "008768",
+    "coordinates": [
+      [
+        132.76179275,
+        33.83907901
+      ],
+      [
+        132.76179812,
+        33.83934635
+      ]
+    ],
+    "stationToJunctionMetres": 29.764430562428323,
+    "incomingBearingDegrees": 0.14888642292896748,
+    "leadBearingDegrees": 0.9558427837851582,
+    "incomingDeflectionDegrees": 0.8069563608561907
+  },
+  "jounanInterval2": {
+    "oldPointCount": 56,
+    "candidatePointCount": 19,
+    "literalJunctionPointIndex": 1,
+    "unchangedEndpoints": [
+      [
+        132.76120672,
+        33.83934643
+      ],
+      [
+        132.76486012,
+        33.83983411
+      ]
+    ],
+    "candidateCoordinates": [
+      [
+        132.76120672,
+        33.83934643
+      ],
+      [
+        132.76179812,
+        33.83934635
+      ],
+      [
+        132.761936508,
+        33.839337297
+      ],
+      [
+        132.76247295,
+        33.839341753
+      ],
+      [
+        132.763277613,
+        33.839332841
+      ],
+      [
+        132.764082276,
+        33.83932393
+      ],
+      [
+        132.764350496,
+        33.839328386
+      ],
+      [
+        132.764457785,
+        33.839341753
+      ],
+      [
+        132.7645007,
+        33.83935512
+      ],
+      [
+        132.764618717,
+        33.839408588
+      ],
+      [
+        132.76468309,
+        33.839453145
+      ],
+      [
+        132.764742099,
+        33.839497702
+      ],
+      [
+        132.764774285,
+        33.839542259
+      ],
+      [
+        132.764806472,
+        33.839586816
+      ],
+      [
+        132.764822565,
+        33.839631373
+      ],
+      [
+        132.764844023,
+        33.839675929
+      ],
+      [
+        132.764860116,
+        33.839720486
+      ],
+      [
+        132.764865481,
+        33.839787321
+      ],
+      [
+        132.76486012,
+        33.83983411
+      ]
+    ],
+    "controlReceipt": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-complete-native-before/raw-head-review.md",
+    "representation": "Centre of the thin black rail glyph with visible ties; road/moat curb excluded."
+  },
+  "unchanged": {
+    "changedIntervalIDs": [
+      "jp-伊予鉄道-城南線#2"
+    ],
+    "unchangedIntervalCount": 28,
+    "stationAliasesSha256V1": "6ae4c5ecfdbc48c7dd10a62a2c5aba8da08932b7bfbba4f57f5b7734cb8ceec5",
+    "stationAliasesSha256V3": "6ae4c5ecfdbc48c7dd10a62a2c5aba8da08932b7bfbba4f57f5b7734cb8ceec5",
+    "stationAliasCount": 35
+  },
+  "evidence": {
+    "rawReprojections": [
+      "raw-reprojections/hanazono-interval0-view0.png",
+      "raw-reprojections/hanazono-interval0-view1.png",
+      "raw-reprojections/hanazono-interval0-view2.png",
+      "raw-reprojections/jounan-interval2-view0.png",
+      "raw-reprojections/jounan-interval2-view1.png",
+      "raw-reprojections/jounan-interval2-view2.png"
+    ]
+  },
+  "acceptance": {
+    "rawProposal": "pending Root freeze",
+    "nativeAllThreeInspectors": "pending",
+    "mainAffectedCameras": "pending",
+    "productionApply": false
+  }
+}

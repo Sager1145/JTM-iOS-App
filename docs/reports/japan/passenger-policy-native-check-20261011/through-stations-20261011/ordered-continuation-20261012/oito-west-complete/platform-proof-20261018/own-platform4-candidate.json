@@ -1,0 +1,268 @@
+{
+  "retrieved": "2026-10-18",
+  "purpose": "candidate geographic evidence for own-line native alignment; no production mutation",
+  "projection": "GSI domestic datum JGD2011; XYZ Mercator. OSM WGS84. Sub-metre equivalence not asserted.",
+  "platform4_face_endpoints": [
+    [
+      137.8606376,
+      37.0431901
+    ],
+    [
+      137.8617923,
+      37.0435123
+    ]
+  ],
+  "platform4_face_midpoint": [
+    137.86121494999998,
+    37.04335120017094
+  ],
+  "bay_rail_projection_of_face_midpoint": [
+    137.86120633114302,
+    37.043370483849635
+  ],
+  "candidate_guard_to_midpoint": [
+    [
+      137.8562777,
+      37.0418574
+    ],
+    [
+      137.856586,
+      37.0419884
+    ],
+    [
+      137.8570944,
+      37.0421668
+    ],
+    [
+      137.8573344,
+      37.0422358
+    ],
+    [
+      137.8579772,
+      37.0424066
+    ],
+    [
+      137.8585082,
+      37.0425822
+    ],
+    [
+      137.8594393,
+      37.042816
+    ],
+    [
+      137.8594954,
+      37.0428295
+    ],
+    [
+      137.8600415,
+      37.0430098
+    ],
+    [
+      137.8606034,
+      37.0431988
+    ],
+    [
+      137.86120633114302,
+      37.043370483849635
+    ]
+  ],
+  "candidate_path_sourceWayIDs": [
+    "24603555",
+    "1262851194",
+    "651661538",
+    "651661534",
+    "633881900"
+  ],
+  "middle_throat_warning": "way651661538 is named Hisui, sourced KSJ2; this database connection is not operational switch proof. Do not derive a physical graph edge, shared renderer span or co-track ownership from it. Confirm against own Apple rail and other physical evidence.",
+  "observed_metadata": {
+    "24603555": {
+      "id": "24603555",
+      "version": "13",
+      "timestamp": "2024-03-15T09:34:03Z",
+      "electrified": "no",
+      "gauge": "1067",
+      "name": "JR大糸線",
+      "name:en": "JR Oito Line",
+      "operator": "西日本旅客鉄道",
+      "operator:en": "West Japan Railway Company",
+      "passenger_lines": "1",
+      "railway": "rail",
+      "source": "GSImaps/ort",
+      "usage": "main"
+    },
+    "1262851194": {
+      "id": "1262851194",
+      "version": "2",
+      "timestamp": "2025-03-07T06:37:08Z",
+      "electrified": "no",
+      "gauge": "1067",
+      "name": "JR大糸線",
+      "name:en": "JR Oito Line",
+      "operator": "西日本旅客鉄道",
+      "operator:en": "West Japan Railway Company",
+      "passenger_lines": "1",
+      "railway": "rail",
+      "source": "GSImaps/ort",
+      "usage": "main"
+    },
+    "651661538": {
+      "id": "651661538",
+      "version": "2",
+      "timestamp": "2023-05-18T01:18:20Z",
+      "electrified": "contact_line",
+      "frequency": "60",
+      "gauge": "1067",
+      "maxspeed": "110",
+      "name": "日本海ひすいライン",
+      "name:ja": "日本海ひすいライン",
+      "operator": "えちごトキめき鉄道",
+      "operator:en": "Echigo Tokimeki Railway",
+      "operator:ja": "えちごトキめき鉄道",
+      "railway": "rail",
+      "source": "KSJ2",
+      "usage": "main",
+      "voltage": "20000"
+    },
+    "651661534": {
+      "id": "651661534",
+      "version": "2",
+      "timestamp": "2024-03-15T09:34:03Z",
+      "electrified": "contact_line",
+      "frequency": "60",
+      "gauge": "1067",
+      "name": "JR大糸線",
+      "name:en": "JR Oito Line",
+      "operator": "西日本旅客鉄道",
+      "operator:en": "West Japan Railway Company",
+      "railway": "rail",
+      "service": "siding",
+      "source": "GSImaps/ort",
+      "voltage": "20000"
+    },
+    "633881900": {
+      "id": "633881900",
+      "version": "3",
+      "timestamp": "2024-03-15T09:34:03Z",
+      "electrified": "contact_line",
+      "frequency": "60",
+      "gauge": "1067",
+      "name": "JR大糸線",
+      "name:en": "JR Oito Line",
+      "operator": "西日本旅客鉄道",
+      "operator:en": "West Japan Railway Company",
+      "railway": "rail",
+      "service": "siding",
+      "source": "GSImaps/ort",
+      "voltage": "20000"
+    },
+    "651661532": {
+      "id": "651661532",
+      "version": "2",
+      "timestamp": "2024-03-15T09:34:03Z",
+      "electrified": "contact_line",
+      "frequency": "60",
+      "gauge": "1067",
+      "name": "JR大糸線",
+      "name:en": "JR Oito Line",
+      "operator": "西日本旅客鉄道",
+      "operator:en": "West Japan Railway Company",
+      "railway": "rail",
+      "service": "siding",
+      "source": "GSImaps/ort",
+      "voltage": "20000"
+    },
+    "1262851197": {
+      "id": "1262851197",
+      "version": "2",
+      "timestamp": "2025-03-07T06:37:08Z",
+      "area": "yes",
+      "departures_board": "realtime",
+      "public_transport": "platform",
+      "railway": "platform",
+      "ref": "2;3;4"
+    }
+  },
+  "cap_semantic_limit": "The 108.57m edge is an exact OSM polygon cut-edge extraction, not official proof of the current usable passenger stopping-face extent. If the independently identified Apple own4 frame is shorter/different, use its actual cap midpoint on the supported own rail band.",
+  "recommended_old_source_splice_guard": {
+    "intervalIndex": 7,
+    "expandedCoordinateIndex": 32,
+    "coordinate": [
+      137.85539,
+      37.04126
+    ],
+    "reason": "Apple view23 still identifies own Oito curve before progressively north-displaced source33-41",
+    "preserveThroughGuard": true,
+    "replaceFromExpandedIndex": 33
+  },
+  "own_candidate_guard_to_midpoint": [
+    [
+      137.85539,
+      37.04126
+    ],
+    [
+      137.8555616,
+      37.0414025
+    ],
+    [
+      137.8555875,
+      37.0414267
+    ],
+    [
+      137.855758,
+      37.0415604
+    ],
+    [
+      137.8558825,
+      37.0416479
+    ],
+    [
+      137.8560229,
+      37.0417284
+    ],
+    [
+      137.8562777,
+      37.0418574
+    ],
+    [
+      137.856586,
+      37.0419884
+    ],
+    [
+      137.8570944,
+      37.0421668
+    ],
+    [
+      137.8573344,
+      37.0422358
+    ],
+    [
+      137.8579772,
+      37.0424066
+    ],
+    [
+      137.8585082,
+      37.0425822
+    ],
+    [
+      137.8594393,
+      37.042816
+    ],
+    [
+      137.8594954,
+      37.0428295
+    ],
+    [
+      137.8600415,
+      37.0430098
+    ],
+    [
+      137.8606034,
+      37.0431988
+    ],
+    [
+      137.86120633114302,
+      37.043370483849635
+    ]
+  ],
+  "native_review_note": "Candidate projects at Apple view28 pixel834.05,480.20 in own bay trench. West cap622.01,564.45 matches cut onset; east cap1052.52,413.96 is partly obscured by footbridge/roof. Entire active usable face extent not independently measured."
+}

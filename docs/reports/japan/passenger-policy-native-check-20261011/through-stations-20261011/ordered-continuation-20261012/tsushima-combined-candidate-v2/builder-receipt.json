@@ -1,0 +1,47 @@
+{
+  "status": "candidate-only",
+  "physicalOwnerLinesExact": true,
+  "decodedPhysicalIntervalsExact": true,
+  "frozenOverridesAndAliasesExact": true,
+  "actualNativeHashesExact": true,
+  "productionCASAfterGenerationExact": true,
+  "geojsonFeatures": 15,
+  "outputs": [
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/display-lanes.json",
+      "bytes": 6479640,
+      "sha256": "734b9587c3ea9aa26334500680ff0684d4c5fb63be25b8ed599ec36bcc21525b"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/jp-2025.json",
+      "bytes": 9993236,
+      "sha256": "ffac0a7c0da3d864eb2c4fd6a8a7bb15d25db40fd3664648f2f7bb5c4b81fa4f"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/jp-kana-evidence.json",
+      "bytes": 6234917,
+      "sha256": "89bea0b93ad73f5d46151735b2946ef7c04e1a6ae4dd6c28a53a23d113203692"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/station-english-verified-jp-east.json",
+      "bytes": 3359298,
+      "sha256": "9c27ac7093d01efcb5ebb98c8d50702d7e95177f6de1c470ae9250b738f59317"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/station-english.json",
+      "bytes": 32381841,
+      "sha256": "9471e9a575c928bf239e71d88609a78c2be24b6af846970707e1844efc3b221c"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/station-names-coverage.json",
+      "bytes": 5966311,
+      "sha256": "fbd48db18d2ad035af540813035da9fda893ede30cb6b3ecadbd88ef11db46d4"
+    },
+    {
+      "file": "/private/tmp/jtm-tsushima-combined-candidate-v2/tsushima-sukaguchi-display.geojson",
+      "bytes": 64502,
+      "sha256": "449257f55062cd3f8ab092b23b1c252b2703e6bb85ade9fe88044f307743fb87"
+    }
+  ],
+  "nativeAccepted": false
+}

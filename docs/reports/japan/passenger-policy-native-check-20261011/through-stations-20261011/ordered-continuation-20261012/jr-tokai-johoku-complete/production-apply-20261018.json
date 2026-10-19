@@ -1,0 +1,21 @@
+{
+  "lineID": "jp-JR東海交通事業-城北線",
+  "applied": true,
+  "owningLineEqualsRenderedCandidate": true,
+  "nativeParts": [
+    [
+      "jp-JR東海交通事業-城北線",
+      0,
+      -1,
+      -1,
+      149,
+      11267.7
+    ]
+  ],
+  "nativeLanes": [],
+  "physicalTopologyChanged": false,
+  "mainFinalCheck": {
+    "state": "bounded repair composition observed",
+    "report": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/four-repair-main-batch-20261018.md"
+  }
+}

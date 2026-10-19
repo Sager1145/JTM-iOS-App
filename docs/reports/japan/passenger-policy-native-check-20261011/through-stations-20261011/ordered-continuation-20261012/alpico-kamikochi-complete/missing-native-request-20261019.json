@@ -1,0 +1,23 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    1
+  ],
+  "lineID": "jp-アルピコ交通-上高地線",
+  "requestID": "alpico-kamikochi-missing-own-intervals",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-alpico-kamikochi-missing-20261019",
+  "workspace": "alignment"
+}

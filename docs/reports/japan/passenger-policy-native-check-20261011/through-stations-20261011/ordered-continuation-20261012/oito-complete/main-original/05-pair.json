@@ -1,0 +1,98 @@
+{
+  "caseIndex": 5,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 5,
+  "source": {
+    "caseIndex": 5,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 5,
+    "fromStationID": "001992",
+    "toStationID": "002009",
+    "camera": [
+      36.664431,
+      137.8483865,
+      0.02852388000000673
+    ],
+    "effectiveCoordinates": [
+      [
+        137.85016,
+        36.670605
+      ],
+      [
+        137.84996,
+        36.67031
+      ],
+      [
+        137.8496,
+        36.66974
+      ],
+      [
+        137.84921,
+        36.66875
+      ],
+      [
+        137.84873,
+        36.66787
+      ],
+      [
+        137.84769,
+        36.66608
+      ],
+      [
+        137.84763,
+        36.66592
+      ],
+      [
+        137.84751,
+        36.66553
+      ],
+      [
+        137.84745,
+        36.66529
+      ],
+      [
+        137.84726,
+        36.66405
+      ],
+      [
+        137.84721,
+        36.66369
+      ],
+      [
+        137.84712,
+        36.66248
+      ],
+      [
+        137.84703,
+        36.66166
+      ],
+      [
+        137.84697,
+        36.66109
+      ],
+      [
+        137.84684,
+        36.65981
+      ],
+      [
+        137.8467,
+        36.65904
+      ],
+      [
+        137.846613,
+        36.658257
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:14.98;lod:13.83;backbones:0;networkStations:3;distance:6261.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.664431;centerLon:137.848387;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1449.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.664431;centerLon:137.848387;distance:6261.5;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-05.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Iimori to Kamishiro gradual bend and straight retained; own frame caps and midpoint unresolved."
+}

@@ -1,0 +1,24 @@
+{
+  "format": "jtm-keikyu-airport-terminal-display-candidate-manifest-v1",
+  "status": "candidate-only",
+  "files": [
+    {
+      "path": "candidate.json",
+      "sha256": "05a7faf2195f4aaa967d6e1865cd6783846a528e55cf1777488955a14e2d9d87"
+    },
+    {
+      "path": "interval-5.geojson",
+      "sha256": "8d9c870ebc3befa39455ecb9c8bbf38f42f3722337ec7970cb0f9efb6d5c5722"
+    },
+    {
+      "path": "frame-reprojection.png",
+      "sha256": "dcfcf932712a3c52588cf5db1656204fefc396d4b0a2629b1b2179db014e0fa7"
+    },
+    {
+      "path": "evidence-note.md",
+      "sha256": "4aa683815f8b90d6e5075a0476abf6678617fd39160e56f5934ba65bcf26db57"
+    }
+  ],
+  "rawFrameCount": 1,
+  "finalReprojectionFrameCount": 1
+}

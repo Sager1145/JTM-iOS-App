@@ -1,0 +1,5 @@
+# Queue39 Den-en-toshi continuation - 2026-10-18
+
+27stations/26intervals.120 historical native views match current own geometry and station identities in named immutable plans; old renderer contract differs, so these remain historical isolated-centreline evidence. Three missing intervals7/9/12 now have13/13 actual current captures,0failed (old plan had12; current overlapping spacing differs).133 actual retained views cover26intervals; capture completion is not acceptance.
+
+Independent original-image reviews opened14 historical images,13 new smooth images and4new basemaps. No gross hook/break in new views; lateral differences near Takatsu/Mizonokuchi need own-track identity. Interval3 has a29.58deg southward V candidate, underground engineering evidence under research. Futako-tamagawa throat and Chuo-rinkan own platform extent remain unresolved. No production change on this railway; only existing sourced Shibuya physical connection is used. Exact paths/limits in preparation and new-view-review.

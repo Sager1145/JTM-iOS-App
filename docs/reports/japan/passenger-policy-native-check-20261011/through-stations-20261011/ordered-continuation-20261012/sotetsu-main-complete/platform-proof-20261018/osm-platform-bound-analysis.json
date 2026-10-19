@@ -1,0 +1,236 @@
+{
+  "method": "Local equirectangular metres at [139.6204,35.4644]; axis is SW-to-NE chord of explicitly tagged Sotetsu track2 way396805196; polygon396805192. Bounds/axes are analysis of OSM geometry, not a new survey or Apple frame.",
+  "axisBearingDegrees": 28.150849088709446,
+  "track2ChordLengthM": 205.18617535302874,
+  "platformAxisMinMFromTrack2SW": -0.31067639683923165,
+  "platformAxisMaxMFromTrack2SW": 217.2865100899905,
+  "platformLongitudinalEnvelopeLengthM": 217.5971864868297,
+  "platformAxisSWCapOnTrack2Chord": [
+    139.6198534815576,
+    35.46357643652752
+  ],
+  "platformAxisNECapOnTrack2Chord": [
+    139.62098703566883,
+    35.46530184820208
+  ],
+  "platformLongitudinalMidpointOnTrack2Chord": [
+    139.62042025861322,
+    35.464439142364796
+  ],
+  "platformPolygonVertices": [
+    {
+      "index": 0,
+      "node": 3996454566,
+      "coordinate": [
+        139.6199296,
+        35.4635433
+      ],
+      "longitudinalM": -0.30701492917760254,
+      "rightNormalM": 7.816637630981187
+    },
+    {
+      "index": 1,
+      "node": 3996454563,
+      "coordinate": [
+        139.6199481,
+        35.4635352
+      ],
+      "longitudinalM": -0.31067639683923165,
+      "rightNormalM": 9.718846475508059
+    },
+    {
+      "index": 2,
+      "node": 3996454585,
+      "coordinate": [
+        139.6210803,
+        35.465261
+      ],
+      "longitudinalM": 217.2667231138679,
+      "rightNormalM": 9.590345161078403
+    },
+    {
+      "index": 3,
+      "node": 3996454586,
+      "coordinate": [
+        139.6208933,
+        35.4653427
+      ],
+      "longitudinalM": 217.2865100899905,
+      "rightNormalM": -9.628171336763856
+    },
+    {
+      "index": 4,
+      "node": 3996454575,
+      "coordinate": [
+        139.6197647,
+        35.4636225
+      ],
+      "longitudinalM": 0.4119661388061888,
+      "rightNormalM": -9.505983629046378
+    },
+    {
+      "index": 5,
+      "node": 3996454574,
+      "coordinate": [
+        139.6197843,
+        35.4636139
+      ],
+      "longitudinalM": 0.40628511605573836,
+      "rightNormalM": -7.489706320416261
+    },
+    {
+      "index": 6,
+      "node": 3996454584,
+      "coordinate": [
+        139.6208527,
+        35.4652429
+      ],
+      "longitudinalM": 205.76717955188545,
+      "rightNormalM": -7.634555083412138
+    },
+    {
+      "index": 7,
+      "node": 3996454583,
+      "coordinate": [
+        139.6208694,
+        35.4652356
+      ],
+      "longitudinalM": 205.7650402362235,
+      "rightNormalM": -5.918049879874474
+    },
+    {
+      "index": 8,
+      "node": 3996454572,
+      "coordinate": [
+        139.6197992,
+        35.4636039
+      ],
+      "longitudinalM": 0.06252218491487671,
+      "rightNormalM": -5.775290438215325
+    },
+    {
+      "index": 9,
+      "node": 3996454571,
+      "coordinate": [
+        139.6198483,
+        35.4635824
+      ],
+      "longitudinalM": 0.05259247098380787,
+      "rightNormalM": -0.7266119073684874
+    },
+    {
+      "index": 10,
+      "node": 3996454581,
+      "coordinate": [
+        139.6209195,
+        35.4652155
+      ],
+      "longitudinalM": 205.93509725516293,
+      "rightNormalM": -0.8629644921879134
+    },
+    {
+      "index": 11,
+      "node": 3996454580,
+      "coordinate": [
+        139.620936,
+        35.4652083
+      ],
+      "longitudinalM": 205.9342164185006,
+      "rightNormalM": 0.832324069248628
+    },
+    {
+      "index": 12,
+      "node": 3996454569,
+      "coordinate": [
+        139.6198631,
+        35.4635725
+      ],
+      "longitudinalM": -0.2856391383018099,
+      "rightNormalM": 0.9745725935104026
+    },
+    {
+      "index": 13,
+      "node": 3996454567,
+      "coordinate": [
+        139.6199133,
+        35.4635506
+      ],
+      "longitudinalM": -0.28778424294976457,
+      "rightNormalM": 6.132073462260139
+    },
+    {
+      "index": 14,
+      "node": 3996454578,
+      "coordinate": [
+        139.6209882,
+        35.4651894
+      ],
+      "longitudinalM": 206.3116531086765,
+      "rightNormalM": 5.992146404934502
+    },
+    {
+      "index": 15,
+      "node": 3996454577,
+      "coordinate": [
+        139.6210046,
+        35.4651823
+      ],
+      "longitudinalM": 206.316303594566,
+      "rightNormalM": 7.674203584676235
+    },
+    {
+      "index": 16,
+      "node": 3996454566,
+      "coordinate": [
+        139.6199296,
+        35.4635433
+      ],
+      "longitudinalM": -0.30701492917760254,
+      "rightNormalM": 7.816637630981187
+    }
+  ],
+  "points": {
+    "A": {
+      "coordinate": [
+        139.620466,
+        35.464424
+      ],
+      "longitudinalM": 108.95779190644572,
+      "rightNormalM": 4.4469551825931575,
+      "distanceFromLongitudinalMidpointM": 0.46987505987009115,
+      "insidePlatformFillPolygon": true,
+      "distanceToPlatformFillPolygonM": 0,
+      "insideConvexHullOfOwnPlatformPolygon": true,
+      "distanceToOwnPlatformHullM": 0,
+      "distanceToTrack2ChordM": 4.4469551825931495
+    },
+    "B": {
+      "coordinate": [
+        139.62052,
+        35.46423
+      ],
+      "longitudinalM": 92.24504724227114,
+      "rightNormalM": 18.936474416589803,
+      "distanceFromLongitudinalMidpointM": -16.242869604304488,
+      "insidePlatformFillPolygon": false,
+      "distanceToPlatformFillPolygonM": 9.272289777843005,
+      "insideConvexHullOfOwnPlatformPolygon": false,
+      "distanceToOwnPlatformHullM": 9.272289777843005,
+      "distanceToTrack2ChordM": 18.9364744165898
+    },
+    "C": {
+      "coordinate": [
+        139.61993,
+        35.46359
+      ],
+      "longitudinalM": 4.288621391948856,
+      "rightNormalM": 5.3986389925235105,
+      "distanceFromLongitudinalMidpointM": -104.19929545462678,
+      "insidePlatformFillPolygon": true,
+      "distanceToPlatformFillPolygonM": 0,
+      "insideConvexHullOfOwnPlatformPolygon": true,
+      "distanceToOwnPlatformHullM": 0,
+      "distanceToTrack2ChordM": 5.398638992523515
+    }
+  }
+}

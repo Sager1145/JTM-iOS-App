@@ -1,0 +1,133 @@
+{
+  "caseIndex": 9,
+  "intervalIndex": 9,
+  "source": {
+    "intervalIndex": 9,
+    "fromStationID": "003753",
+    "toStationID": "003754",
+    "camera": [
+      35.6806655,
+      139.79251,
+      0.02228320690373028
+    ],
+    "effectiveCoordinates": [
+      [
+        139.785175,
+        35.683001
+      ],
+      [
+        139.78534,
+        35.68281
+      ],
+      [
+        139.78576,
+        35.68231
+      ],
+      [
+        139.78616,
+        35.68184
+      ],
+      [
+        139.78727,
+        35.68072
+      ],
+      [
+        139.78788,
+        35.68015
+      ],
+      [
+        139.78861,
+        35.67967
+      ],
+      [
+        139.78924,
+        35.67935
+      ],
+      [
+        139.7897,
+        35.67911
+      ],
+      [
+        139.79098,
+        35.67856
+      ],
+      [
+        139.79175,
+        35.67835
+      ],
+      [
+        139.79212,
+        35.67833
+      ],
+      [
+        139.79254,
+        35.67844
+      ],
+      [
+        139.79305,
+        35.67874
+      ],
+      [
+        139.79378,
+        35.67942
+      ],
+      [
+        139.79431,
+        35.68011
+      ],
+      [
+        139.79521,
+        35.68135
+      ],
+      [
+        139.79553,
+        35.68163
+      ],
+      [
+        139.79598,
+        35.68183
+      ],
+      [
+        139.79665,
+        35.68195
+      ],
+      [
+        139.797,
+        35.68197
+      ],
+      [
+        139.79793,
+        35.68202
+      ],
+      [
+        139.79827,
+        35.68204
+      ],
+      [
+        139.79876,
+        35.68207
+      ],
+      [
+        139.79926,
+        35.68209
+      ],
+      [
+        139.79979,
+        35.68211
+      ],
+      [
+        139.799845,
+        35.682113
+      ]
+    ],
+    "initialCamera": [
+      35.6806655,
+      139.79251,
+      0.013107768766900165
+    ],
+    "framingReason": "Root pixel review: eastern endpoint or curve cropped/obscured in initial camera; widen and recapture whole interval."
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "86 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:19;overlays:18;rides:0;budgetDrops:0;vertices:7353;camera:15.35;lod:14.20;backbones:2;networkStations:63;distance:4890.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.680665;centerLon:139.792510;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3545.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:20;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:12;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:1;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:63;markerPhases:setup=1,endpointSpecsClaims=0,endpointLayout=0,selectedNames=0,ridesDigest=0,records=0,connections=2,hiddenRides=0,rideDotLoop=0,rideLabels=0,networkStations=5,annotationDiff=0,annotationApply=0,rideStationOverlayInstall=2,annotationRestyle=0,endpointsAdd=0,other=1,drawnCount=0,stationsCount=3628,culled=0,annAdded=63,annRemoved=0,annRetained=0,annCoordChanged=0,restyledViews=0",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.680665;centerLon:139.792510;distance:4890.5;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0"
+}

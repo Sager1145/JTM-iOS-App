@@ -1,0 +1,69 @@
+{
+  "schema": "china-real-train-pre-fix-review/1",
+  "scope": "176 actual completed native journeys;88 public train numbers; two modes",
+  "nativeSession": "railway-sources/local/china/comparisons/real-trains-20261018/native-final-session/",
+  "metadataFailures": {
+    "6245": 20,
+    "6246": 19,
+    "5619": 16,
+    "5620": 16
+  },
+  "wrongUrbanTrack": [
+    {
+      "train": "D271",
+      "mode": "forced-known-stops",
+      "sectionIndex": 10
+    },
+    {
+      "train": "C293",
+      "mode": "forced-known-stops",
+      "sectionIndex": 0
+    }
+  ],
+  "wrongUrbanTrackSharedEvidence": {
+    "from": "CN-12306-KMM",
+    "to": "CN-12306-KOM",
+    "selectedLineID": "cn-osm-relation-7909742",
+    "originalRelationVersion": 17,
+    "sourcePoints": 294,
+    "sourceEdges": 293,
+    "availableKm": 24.870442,
+    "originalWays": 11,
+    "railway": "subway",
+    "officialCodesAssignedToMetro": false
+  },
+  "selectedDistinctLinesByKind": {
+    "highspeed": 54,
+    "conventional": 37,
+    "metro": 1
+  },
+  "aliasAgreement": {
+    "numbers": [
+      "G383",
+      "G386"
+    ],
+    "trainNo": "6x0000G38603",
+    "bothModeSummariesEqual": true,
+    "nativeSourceCoordinatesAndSelectionsEqual": true
+  },
+  "hongKongRelatedPreFix": {
+    "publicNumbers": 10,
+    "uniqueServices": 9,
+    "nativeEndpointComplete": 0,
+    "nativeForcedComplete": 0,
+    "nativeForcedReportedResolved": 41,
+    "forcedExpected": 97,
+    "selectedRegion": "CN",
+    "HKorMOSelected": false,
+    "note": "partial CN HSR returned; this is not full inland train connectivity"
+  },
+  "D69OriginalForced": {
+    "stop": "TAR",
+    "stopIndex": 13,
+    "distanceFromCandidateMeters": 13290.2,
+    "snapshotToOSMMarkerMeters": 318.7,
+    "snapOffsetMeters": 14351.0,
+    "farSnapWarningPresent": true
+  },
+  "status": "Observed failures retained; source-anchor and endpoint-metadata repair verification pending."
+}

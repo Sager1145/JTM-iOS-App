@@ -1,0 +1,8967 @@
+{
+  "controls": [
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        592,
+        378
+      ],
+      "rgb": [
+        104,
+        128,
+        178
+      ],
+      "coordinate": [
+        136.84625120866804,
+        35.198706437899155
+      ],
+      "mapPoint": [
+        236257688.68080378,
+        106145604.0239674
+      ],
+      "kind": "occluded-station-midpoint-normal-candidate"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        555,
+        351
+      ],
+      "rgb": [
+        20,
+        28,
+        42
+      ],
+      "coordinate": [
+        136.84605272520093,
+        35.198824794382126
+      ],
+      "mapPoint": [
+        236257540.68080375,
+        106145496.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        410,
+        251
+      ],
+      "rgb": [
+        36,
+        49,
+        66
+      ],
+      "coordinate": [
+        136.84527488458656,
+        35.199263150224255
+      ],
+      "mapPoint": [
+        236256960.68080372,
+        106145096.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        390,
+        237
+      ],
+      "rgb": [
+        43,
+        58,
+        77
+      ],
+      "coordinate": [
+        136.84516759622596,
+        35.19932451985337
+      ],
+      "mapPoint": [
+        236256880.68080372,
+        106145040.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        380,
+        232
+      ],
+      "rgb": [
+        46,
+        63,
+        83
+      ],
+      "coordinate": [
+        136.84511395204566,
+        35.19934643756682
+      ],
+      "mapPoint": [
+        236256840.68080372,
+        106145020.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        370,
+        228
+      ],
+      "rgb": [
+        41,
+        55,
+        74
+      ],
+      "coordinate": [
+        136.84506030786537,
+        35.19936397173332
+      ],
+      "mapPoint": [
+        236256800.68080372,
+        106145004.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        360,
+        223
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.84500666368507,
+        35.199385889436115
+      ],
+      "mapPoint": [
+        236256760.68080372,
+        106144984.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        350,
+        219
+      ],
+      "rgb": [
+        38,
+        52,
+        70
+      ],
+      "coordinate": [
+        136.84495301950477,
+        35.19940342359409
+      ],
+      "mapPoint": [
+        236256720.68080372,
+        106144968.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        340,
+        214
+      ],
+      "rgb": [
+        41,
+        55,
+        74
+      ],
+      "coordinate": [
+        136.84489937532447,
+        35.19942534128625
+      ],
+      "mapPoint": [
+        236256680.68080372,
+        106144948.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        320,
+        206
+      ],
+      "rgb": [
+        40,
+        55,
+        73
+      ],
+      "coordinate": [
+        136.84479208696388,
+        35.19946040958139
+      ],
+      "mapPoint": [
+        236256600.68080372,
+        106144916.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        300,
+        197
+      ],
+      "rgb": [
+        43,
+        59,
+        78
+      ],
+      "coordinate": [
+        136.84468479860328,
+        35.19949986139533
+      ],
+      "mapPoint": [
+        236256520.68080372,
+        106144880.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        275,
+        185
+      ],
+      "rgb": [
+        45,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.84455068815254,
+        35.19955246378411
+      ],
+      "mapPoint": [
+        236256420.68080372,
+        106144832.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        200,
+        159
+      ],
+      "rgb": [
+        36,
+        50,
+        67
+      ],
+      "coordinate": [
+        136.8441483568003,
+        35.199666435509585
+      ],
+      "mapPoint": [
+        236256120.68080372,
+        106144728.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        100,
+        140
+      ],
+      "rgb": [
+        35,
+        48,
+        64
+      ],
+      "coordinate": [
+        136.84361191499733,
+        35.199749722438604
+      ],
+      "mapPoint": [
+        236255720.68080372,
+        106144652.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        550,
+        280
+      ],
+      "rgb": [
+        27,
+        38,
+        52
+      ],
+      "coordinate": [
+        136.84249547560455,
+        35.19952692623531
+      ],
+      "mapPoint": [
+        236254888.20325512,
+        106144855.32714003
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        800,
+        233
+      ],
+      "rgb": [
+        34,
+        47,
+        63
+      ],
+      "coordinate": [
+        136.843836580112,
+        35.19973295199479
+      ],
+      "mapPoint": [
+        236255888.20325512,
+        106144667.32714003
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        100,
+        569
+      ],
+      "rgb": [
+        34,
+        47,
+        63
+      ],
+      "coordinate": [
+        136.83685600403078,
+        35.196540106656485
+      ],
+      "mapPoint": [
+        236250683.1084676,
+        106147580.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        150,
+        543
+      ],
+      "rgb": [
+        38,
+        52,
+        70
+      ],
+      "coordinate": [
+        136.83712422493227,
+        35.19665408260874
+      ],
+      "mapPoint": [
+        236250883.1084676,
+        106147476.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        200,
+        514
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.83739244583376,
+        35.19678120944373
+      ],
+      "mapPoint": [
+        236251083.1084676,
+        106147360.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        250,
+        481
+      ],
+      "rgb": [
+        17,
+        24,
+        34
+      ],
+      "coordinate": [
+        136.83766066673525,
+        35.196925870772574
+      ],
+      "mapPoint": [
+        236251283.1084676,
+        106147228.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        400,
+        380
+      ],
+      "rgb": [
+        40,
+        54,
+        72
+      ],
+      "coordinate": [
+        136.8384653294397,
+        35.19736862051154
+      ],
+      "mapPoint": [
+        236251883.1084676,
+        106146824.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        500,
+        313
+      ],
+      "rgb": [
+        17,
+        25,
+        35
+      ],
+      "coordinate": [
+        136.8390017712427,
+        35.197662324452516
+      ],
+      "mapPoint": [
+        236252283.1084676,
+        106146556.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        800,
+        115
+      ],
+      "rgb": [
+        19,
+        27,
+        38
+      ],
+      "coordinate": [
+        136.84061109665163,
+        35.19853027914633
+      ],
+      "mapPoint": [
+        236253483.1084676,
+        106145764.76810524
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        400,
+        316
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83505973847747,
+        35.1962066398228
+      ],
+      "mapPoint": [
+        236249343.7157929,
+        106147885.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        450,
+        313
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.83532795937896,
+        35.196219790956356
+      ],
+      "mapPoint": [
+        236249543.7157929,
+        106147873.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        500,
+        306
+      ],
+      "rgb": [
+        44,
+        60,
+        80
+      ],
+      "coordinate": [
+        136.8355961802804,
+        35.19625047692639
+      ],
+      "mapPoint": [
+        236249743.71579286,
+        106147845.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        520,
+        303
+      ],
+      "rgb": [
+        18,
+        25,
+        36
+      ],
+      "coordinate": [
+        136.835703468641,
+        35.196263628052854
+      ],
+      "mapPoint": [
+        236249823.71579286,
+        106147833.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        530,
+        301
+      ],
+      "rgb": [
+        29,
+        41,
+        55
+      ],
+      "coordinate": [
+        136.83575711282128,
+        35.19627239546931
+      ],
+      "mapPoint": [
+        236249863.71579286,
+        106147825.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        540,
+        299
+      ],
+      "rgb": [
+        37,
+        50,
+        68
+      ],
+      "coordinate": [
+        136.83581075700158,
+        35.19628116288482
+      ],
+      "mapPoint": [
+        236249903.71579286,
+        106147817.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        680,
+        261
+      ],
+      "rgb": [
+        45,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.83656177552575,
+        35.19644774359979
+      ],
+      "mapPoint": [
+        236250463.71579286,
+        106147665.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        690,
+        258
+      ],
+      "rgb": [
+        34,
+        47,
+        64
+      ],
+      "coordinate": [
+        136.83661541970605,
+        35.19646089469432
+      ],
+      "mapPoint": [
+        236250503.71579286,
+        106147653.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        700,
+        254
+      ],
+      "rgb": [
+        19,
+        26,
+        37
+      ],
+      "coordinate": [
+        136.83666906388635,
+        35.196478429483705
+      ],
+      "mapPoint": [
+        236250543.71579286,
+        106147637.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        750,
+        233
+      ],
+      "rgb": [
+        43,
+        58,
+        77
+      ],
+      "coordinate": [
+        136.83693728478784,
+        35.196570487065905
+      ],
+      "mapPoint": [
+        236250743.71579286,
+        106147553.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        800,
+        207
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83720550568933,
+        35.19668446297553
+      ],
+      "mapPoint": [
+        236250943.71579286,
+        106147449.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        850,
+        175
+      ],
+      "rgb": [
+        22,
+        35,
+        46
+      ],
+      "coordinate": [
+        136.83747372659082,
+        35.1968247407986
+      ],
+      "mapPoint": [
+        236251143.71579286,
+        106147321.0468106
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        200,
+        310
+      ],
+      "rgb": [
+        30,
+        42,
+        57
+      ],
+      "coordinate": [
+        136.83014191891095,
+        35.19610839058907
+      ],
+      "mapPoint": [
+        236245676.7237433,
+        106147974.69611657
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        500,
+        303
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.8317512443199,
+        35.19613907660117
+      ],
+      "mapPoint": [
+        236246876.72374326,
+        106147946.69611657
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        350,
+        316
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.82709553796042,
+        35.1960236959313
+      ],
+      "mapPoint": [
+        236243405.1774666,
+        106148051.97721535
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        900,
+        297
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.8300459678768,
+        35.196106986595474
+      ],
+      "mapPoint": [
+        236245605.17746657,
+        106147975.97721535
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        700,
+        312
+      ],
+      "rgb": [
+        38,
+        52,
+        69
+      ],
+      "coordinate": [
+        136.8269305658152,
+        35.196020755850206
+      ],
+      "mapPoint": [
+        236243282.1653193,
+        106148054.65994152
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        490,
+        315
+      ],
+      "rgb": [
+        61,
+        80,
+        113
+      ],
+      "coordinate": [
+        136.82580403802893,
+        35.19600760468442
+      ],
+      "mapPoint": [
+        236242442.16531926,
+        106148066.65994152
+      ],
+      "kind": "root-supplied-own-frame-normal-alias"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-marunouchi-z18-before",
+      "pixel": [
+        471,
+        231
+      ],
+      "rgb": [
+        46,
+        61,
+        89
+      ],
+      "coordinate": [
+        136.84198711408624,
+        35.204625793777495
+      ],
+      "mapPoint": [
+        236254509.14143294,
+        106140202.43337008
+      ],
+      "kind": "label-masked-station-normal-candidate"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        418,
+        100
+      ],
+      "rgb": [
+        23,
+        32,
+        44
+      ],
+      "coordinate": [
+        136.8430008436618,
+        35.202236581477834
+      ],
+      "mapPoint": [
+        236255265.03299096,
+        106142382.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        480,
+        280
+      ],
+      "rgb": [
+        29,
+        40,
+        55
+      ],
+      "coordinate": [
+        136.84333343757964,
+        35.2014475681445
+      ],
+      "mapPoint": [
+        236255513.03299096,
+        106143102.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        487,
+        300
+      ],
+      "rgb": [
+        18,
+        25,
+        35
+      ],
+      "coordinate": [
+        136.84337098850585,
+        35.20135989952319
+      ],
+      "mapPoint": [
+        236255541.03299096,
+        106143182.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        504,
+        350
+      ],
+      "rgb": [
+        23,
+        32,
+        44
+      ],
+      "coordinate": [
+        136.84346218361236,
+        35.20114072755591
+      ],
+      "mapPoint": [
+        236255609.03299093,
+        106143382.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        521,
+        400
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.84355337871887,
+        35.20092155499717
+      ],
+      "mapPoint": [
+        236255677.03299093,
+        106143582.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        534,
+        440
+      ],
+      "rgb": [
+        25,
+        35,
+        48
+      ],
+      "coordinate": [
+        136.84362311615325,
+        35.200746216524344
+      ],
+      "mapPoint": [
+        236255729.03299093,
+        106143742.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        542,
+        460
+      ],
+      "rgb": [
+        27,
+        38,
+        52
+      ],
+      "coordinate": [
+        136.8436660314975,
+        35.20065854714597
+      ],
+      "mapPoint": [
+        236255761.03299093,
+        106143822.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        553,
+        480
+      ],
+      "rgb": [
+        20,
+        29,
+        40
+      ],
+      "coordinate": [
+        136.84372504009582,
+        35.20057087767298
+      ],
+      "mapPoint": [
+        236255805.03299093,
+        106143902.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        562,
+        500
+      ],
+      "rgb": [
+        18,
+        26,
+        37
+      ],
+      "coordinate": [
+        136.8437733198581,
+        35.20048320810536
+      ],
+      "mapPoint": [
+        236255841.03299093,
+        106143982.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        572,
+        520
+      ],
+      "rgb": [
+        30,
+        42,
+        57
+      ],
+      "coordinate": [
+        136.84382696403839,
+        35.20039553844311
+      ],
+      "mapPoint": [
+        236255881.03299093,
+        106144062.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        586,
+        540
+      ],
+      "rgb": [
+        42,
+        57,
+        75
+      ],
+      "coordinate": [
+        136.8439020658908,
+        35.200307868686224
+      ],
+      "mapPoint": [
+        236255937.03299093,
+        106144142.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        593,
+        550
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.843939616817,
+        35.20026403377229
+      ],
+      "mapPoint": [
+        236255965.03299093,
+        106144182.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        600,
+        560
+      ],
+      "rgb": [
+        43,
+        58,
+        77
+      ],
+      "coordinate": [
+        136.84397716774322,
+        35.20022019883471
+      ],
+      "mapPoint": [
+        236255993.03299093,
+        106144222.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "meitetsu-main-17-view1-z18-before",
+      "pixel": [
+        607,
+        570
+      ],
+      "rgb": [
+        43,
+        58,
+        78
+      ],
+      "coordinate": [
+        136.84401471866943,
+        35.20017636387347
+      ],
+      "mapPoint": [
+        236256021.03299093,
+        106144262.7089667
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        151,
+        10
+      ],
+      "rgb": [
+        24,
+        33,
+        46
+      ],
+      "coordinate": [
+        136.84388550031684,
+        35.200319578082826
+      ],
+      "mapPoint": [
+        236255924.68080372,
+        106144132.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        159,
+        20
+      ],
+      "rgb": [
+        32,
+        45,
+        60
+      ],
+      "coordinate": [
+        136.84392841566108,
+        35.20027574317521
+      ],
+      "mapPoint": [
+        236255956.68080372,
+        106144172.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        166,
+        30
+      ],
+      "rgb": [
+        33,
+        45,
+        61
+      ],
+      "coordinate": [
+        136.8439659665873,
+        35.20023190824394
+      ],
+      "mapPoint": [
+        236255984.68080372,
+        106144212.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        173,
+        40
+      ],
+      "rgb": [
+        34,
+        46,
+        62
+      ],
+      "coordinate": [
+        136.8440035175135,
+        35.20018807328902
+      ],
+      "mapPoint": [
+        236256012.68080372,
+        106144252.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        176,
+        45
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.8440196107676,
+        35.20016615580269
+      ],
+      "mapPoint": [
+        236256024.68080372,
+        106144272.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        275,
+        147
+      ],
+      "rgb": [
+        26,
+        37,
+        50
+      ],
+      "coordinate": [
+        136.84455068815254,
+        35.19971903779049
+      ],
+      "mapPoint": [
+        236256420.68080372,
+        106144680.02396742
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        300,
+        168
+      ],
+      "rgb": [
+        32,
+        45,
+        60
+      ],
+      "coordinate": [
+        136.84468479860328,
+        35.19962698377657
+      ],
+      "mapPoint": [
+        236256520.68080372,
+        106144764.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        340,
+        198
+      ],
+      "rgb": [
+        37,
+        51,
+        69
+      ],
+      "coordinate": [
+        136.84489937532447,
+        35.1994954778614
+      ],
+      "mapPoint": [
+        236256680.68080372,
+        106144884.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        360,
+        214
+      ],
+      "rgb": [
+        35,
+        48,
+        64
+      ],
+      "coordinate": [
+        136.84500666368507,
+        35.19942534128625
+      ],
+      "mapPoint": [
+        236256760.68080372,
+        106144948.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        370,
+        221
+      ],
+      "rgb": [
+        37,
+        50,
+        67
+      ],
+      "coordinate": [
+        136.84506030786537,
+        35.19939465651557
+      ],
+      "mapPoint": [
+        236256800.68080372,
+        106144976.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        380,
+        229
+      ],
+      "rgb": [
+        36,
+        49,
+        66
+      ],
+      "coordinate": [
+        136.84511395204566,
+        35.199359588192046
+      ],
+      "mapPoint": [
+        236256840.68080372,
+        106145008.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        410,
+        251
+      ],
+      "rgb": [
+        36,
+        49,
+        66
+      ],
+      "coordinate": [
+        136.84527488458656,
+        35.199263150224255
+      ],
+      "mapPoint": [
+        236256960.68080372,
+        106145096.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        555,
+        351
+      ],
+      "rgb": [
+        20,
+        28,
+        42
+      ],
+      "coordinate": [
+        136.84605272520093,
+        35.198824794382126
+      ],
+      "mapPoint": [
+        236257540.68080375,
+        106145496.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main17",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        592,
+        378
+      ],
+      "rgb": [
+        104,
+        128,
+        178
+      ],
+      "coordinate": [
+        136.84625120866804,
+        35.198706437899155
+      ],
+      "mapPoint": [
+        236257688.68080378,
+        106145604.0239674
+      ],
+      "kind": "occluded-station-midpoint-normal-candidate"
+    },
+    {
+      "item": "main18",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        592,
+        378
+      ],
+      "rgb": [
+        104,
+        128,
+        178
+      ],
+      "coordinate": [
+        136.84625120866804,
+        35.198706437899155
+      ],
+      "mapPoint": [
+        236257688.68080378,
+        106145604.0239674
+      ],
+      "kind": "occluded-station-midpoint-normal-candidate"
+    },
+    {
+      "item": "main18",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        630,
+        404
+      ],
+      "rgb": [
+        26,
+        37,
+        57
+      ],
+      "coordinate": [
+        136.84645505655317,
+        35.19859246482662
+      ],
+      "mapPoint": [
+        236257840.68080375,
+        106145708.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        640,
+        412
+      ],
+      "rgb": [
+        26,
+        37,
+        57
+      ],
+      "coordinate": [
+        136.84650870073347,
+        35.19855739615675
+      ],
+      "mapPoint": [
+        236257880.68080375,
+        106145740.0239674
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        200,
+        122
+      ],
+      "rgb": [
+        18,
+        24,
+        34
+      ],
+      "coordinate": [
+        136.8473601476191,
+        35.19809146464889
+      ],
+      "mapPoint": [
+        236258515.56561765,
+        106146165.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        250,
+        156
+      ],
+      "rgb": [
+        25,
+        34,
+        48
+      ],
+      "coordinate": [
+        136.8476283685206,
+        35.19794242177808
+      ],
+      "mapPoint": [
+        236258715.56561765,
+        106146301.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        350,
+        224
+      ],
+      "rgb": [
+        34,
+        47,
+        64
+      ],
+      "coordinate": [
+        136.84816481032357,
+        35.197644335216026
+      ],
+      "mapPoint": [
+        236259115.56561765,
+        106146573.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        400,
+        257
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.84843303122506,
+        35.19749967516667
+      ],
+      "mapPoint": [
+        236259315.56561765,
+        106146705.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        450,
+        291
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.84870125212655,
+        35.19735063121001
+      ],
+      "mapPoint": [
+        236259515.56561765,
+        106146841.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        620,
+        402
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.84961320319155,
+        35.196864044624164
+      ],
+      "mapPoint": [
+        236260195.56561762,
+        106147285.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        650,
+        419
+      ],
+      "rgb": [
+        29,
+        40,
+        54
+      ],
+      "coordinate": [
+        136.84977413573245,
+        35.19678952209688
+      ],
+      "mapPoint": [
+        236260315.56561762,
+        106147353.18301457
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        250,
+        150
+      ],
+      "rgb": [
+        34,
+        47,
+        64
+      ],
+      "coordinate": [
+        136.85085327022324,
+        35.196247722343124
+      ],
+      "mapPoint": [
+        236261120.2266152,
+        106147847.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        300,
+        182
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.85112149112473,
+        35.196107443523616
+      ],
+      "mapPoint": [
+        236261320.2266152,
+        106147975.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        350,
+        214
+      ],
+      "rgb": [
+        17,
+        25,
+        35
+      ],
+      "coordinate": [
+        136.85138971202622,
+        35.19596716446187
+      ],
+      "mapPoint": [
+        236261520.2266152,
+        106148103.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        400,
+        246
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.8516579329277,
+        35.19582688515787
+      ],
+      "mapPoint": [
+        236261720.2266152,
+        106148231.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        425,
+        263
+      ],
+      "rgb": [
+        27,
+        39,
+        59
+      ],
+      "coordinate": [
+        136.85179204337845,
+        35.1957523616791
+      ],
+      "mapPoint": [
+        236261820.2266152,
+        106148299.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        450,
+        279
+      ],
+      "rgb": [
+        34,
+        48,
+        75
+      ],
+      "coordinate": [
+        136.8519261538292,
+        35.19568222187192
+      ],
+      "mapPoint": [
+        236261920.2266152,
+        106148363.56028318
+      ],
+      "kind": "manually-identified-own-black-glyph"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-shinkawabashi-z18-before",
+      "pixel": [
+        454,
+        280
+      ],
+      "rgb": [
+        85,
+        111,
+        153
+      ],
+      "coordinate": [
+        136.85237591897993,
+        35.195456036607474
+      ],
+      "mapPoint": [
+        236262255.59581888,
+        106148569.94565982
+      ],
+      "kind": "label-masked-station-normal-candidate"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        110,
+        140
+      ],
+      "rgb": [
+        36,
+        49,
+        66
+      ],
+      "coordinate": [
+        136.84366555917762,
+        35.199749722438604
+      ],
+      "mapPoint": [
+        236255760.68080372,
+        106144652.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        130,
+        142
+      ],
+      "rgb": [
+        46,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.84377284753822,
+        35.199740955397466
+      ],
+      "mapPoint": [
+        236255840.68080372,
+        106144660.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        150,
+        146
+      ],
+      "rgb": [
+        46,
+        63,
+        83
+      ],
+      "coordinate": [
+        136.84388013589881,
+        35.19972342131235
+      ],
+      "mapPoint": [
+        236255920.68080372,
+        106144676.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        170,
+        150
+      ],
+      "rgb": [
+        23,
+        32,
+        44
+      ],
+      "coordinate": [
+        136.8439874242594,
+        35.19970588722345
+      ],
+      "mapPoint": [
+        236256000.68080372,
+        106144692.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        190,
+        156
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.84409471262,
+        35.199679586083
+      ],
+      "mapPoint": [
+        236256080.68080372,
+        106144716.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        210,
+        162
+      ],
+      "rgb": [
+        18,
+        25,
+        36
+      ],
+      "coordinate": [
+        136.8442020009806,
+        35.19965328493404
+      ],
+      "mapPoint": [
+        236256160.68080372,
+        106144740.02396742
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        230,
+        169
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.8443092893412,
+        35.19962260024949
+      ],
+      "mapPoint": [
+        236256240.68080372,
+        106144768.0239674
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        270,
+        183
+      ],
+      "rgb": [
+        46,
+        62,
+        82
+      ],
+      "coordinate": [
+        136.8445238660624,
+        35.1995612308456
+      ],
+      "mapPoint": [
+        236256400.68080372,
+        106144824.0239674
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        290,
+        192
+      ],
+      "rgb": [
+        17,
+        24,
+        34
+      ],
+      "coordinate": [
+        136.84463115442298,
+        35.19952177906146
+      ],
+      "mapPoint": [
+        236256480.68080372,
+        106144860.0239674
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        310,
+        201
+      ],
+      "rgb": [
+        23,
+        32,
+        45
+      ],
+      "coordinate": [
+        136.84473844278358,
+        35.199482327258174
+      ],
+      "mapPoint": [
+        236256560.68080372,
+        106144896.0239674
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-z18-before",
+      "pixel": [
+        330,
+        210
+      ],
+      "rgb": [
+        33,
+        44,
+        61
+      ],
+      "coordinate": [
+        136.84484573114418,
+        35.199442875435714
+      ],
+      "mapPoint": [
+        236256640.68080372,
+        106144932.0239674
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        120,
+        559
+      ],
+      "rgb": [
+        22,
+        30,
+        42
+      ],
+      "coordinate": [
+        136.8401887758518,
+        35.198303911500176
+      ],
+      "mapPoint": [
+        236253168.20325515,
+        106145971.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        140,
+        546
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.8402960642124,
+        35.198360898258876
+      ],
+      "mapPoint": [
+        236253248.20325515,
+        106145919.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        160,
+        533
+      ],
+      "rgb": [
+        23,
+        32,
+        44
+      ],
+      "coordinate": [
+        136.840403352573,
+        35.19841788497759
+      ],
+      "mapPoint": [
+        236253328.20325515,
+        106145867.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        180,
+        520
+      ],
+      "rgb": [
+        23,
+        33,
+        45
+      ],
+      "coordinate": [
+        136.8405106409336,
+        35.19847487165633
+      ],
+      "mapPoint": [
+        236253408.20325515,
+        106145815.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        200,
+        507
+      ],
+      "rgb": [
+        24,
+        33,
+        46
+      ],
+      "coordinate": [
+        136.84061792929418,
+        35.19853185829509
+      ],
+      "mapPoint": [
+        236253488.20325515,
+        106145763.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        220,
+        494
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.84072521765478,
+        35.19858884489386
+      ],
+      "mapPoint": [
+        236253568.20325515,
+        106145711.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        240,
+        481
+      ],
+      "rgb": [
+        25,
+        34,
+        48
+      ],
+      "coordinate": [
+        136.84083250601537,
+        35.198645831452666
+      ],
+      "mapPoint": [
+        236253648.20325515,
+        106145659.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        500,
+        310
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.84222725470306,
+        35.19939542015815
+      ],
+      "mapPoint": [
+        236254688.20325512,
+        106144975.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        520,
+        297
+      ],
+      "rgb": [
+        29,
+        41,
+        55
+      ],
+      "coordinate": [
+        136.84233454306366,
+        35.19945240615106
+      ],
+      "mapPoint": [
+        236254768.20325512,
+        106144923.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        540,
+        286
+      ],
+      "rgb": [
+        45,
+        60,
+        80
+      ],
+      "coordinate": [
+        136.84244183142425,
+        35.19950062503691
+      ],
+      "mapPoint": [
+        236254848.20325512,
+        106144879.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        560,
+        275
+      ],
+      "rgb": [
+        20,
+        28,
+        39
+      ],
+      "coordinate": [
+        136.84254911978485,
+        35.19954884389414
+      ],
+      "mapPoint": [
+        236254928.20325512,
+        106144835.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        580,
+        266
+      ],
+      "rgb": [
+        41,
+        55,
+        74
+      ],
+      "coordinate": [
+        136.84265640814544,
+        35.19958829566512
+      ],
+      "mapPoint": [
+        236255008.20325512,
+        106144799.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        790,
+        232
+      ],
+      "rgb": [
+        37,
+        51,
+        68
+      ],
+      "coordinate": [
+        136.8437829359317,
+        35.19973733551592
+      ],
+      "mapPoint": [
+        236255848.20325512,
+        106144663.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        810,
+        235
+      ],
+      "rgb": [
+        18,
+        25,
+        36
+      ],
+      "coordinate": [
+        136.8438902242923,
+        35.19972418495185
+      ],
+      "mapPoint": [
+        236255928.20325512,
+        106144675.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        830,
+        240
+      ],
+      "rgb": [
+        49,
+        66,
+        88
+      ],
+      "coordinate": [
+        136.8439975126529,
+        35.19970226734033
+      ],
+      "mapPoint": [
+        236256008.20325512,
+        106144695.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        850,
+        245
+      ],
+      "rgb": [
+        33,
+        46,
+        62
+      ],
+      "coordinate": [
+        136.8441048010135,
+        35.19968034972291
+      ],
+      "mapPoint": [
+        236256088.20325512,
+        106144715.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        870,
+        252
+      ],
+      "rgb": [
+        31,
+        43,
+        59
+      ],
+      "coordinate": [
+        136.84421208937408,
+        35.19964966504857
+      ],
+      "mapPoint": [
+        236256168.20325512,
+        106144743.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+      "pixel": [
+        890,
+        259
+      ],
+      "rgb": [
+        43,
+        58,
+        78
+      ],
+      "coordinate": [
+        136.84431937773468,
+        35.199618980362644
+      ],
+      "mapPoint": [
+        236256248.20325512,
+        106144771.32714003
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        130,
+        554
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.83701693657167,
+        35.19660586203307
+      ],
+      "mapPoint": [
+        236250803.1084676,
+        106147520.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        150,
+        543
+      ],
+      "rgb": [
+        38,
+        52,
+        70
+      ],
+      "coordinate": [
+        136.83712422493227,
+        35.19665408260874
+      ],
+      "mapPoint": [
+        236250883.1084676,
+        106147476.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        170,
+        532
+      ],
+      "rgb": [
+        34,
+        46,
+        62
+      ],
+      "coordinate": [
+        136.83723151329286,
+        35.19670230315577
+      ],
+      "mapPoint": [
+        236250963.1084676,
+        106147432.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        210,
+        507
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83744609001405,
+        35.19681189520168
+      ],
+      "mapPoint": [
+        236251123.1084676,
+        106147332.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        230,
+        494
+      ],
+      "rgb": [
+        35,
+        48,
+        65
+      ],
+      "coordinate": [
+        136.83755337837465,
+        35.19686888300711
+      ],
+      "mapPoint": [
+        236251203.1084676,
+        106147280.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        400,
+        380
+      ],
+      "rgb": [
+        40,
+        54,
+        72
+      ],
+      "coordinate": [
+        136.8384653294397,
+        35.19736862051154
+      ],
+      "mapPoint": [
+        236251883.1084676,
+        106146824.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        420,
+        367
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.8385726178003,
+        35.197425607926405
+      ],
+      "mapPoint": [
+        236251963.1084676,
+        106146772.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        440,
+        353
+      ],
+      "rgb": [
+        41,
+        56,
+        75
+      ],
+      "coordinate": [
+        136.8386799061609,
+        35.19748697894386
+      ],
+      "mapPoint": [
+        236252043.1084676,
+        106146716.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        460,
+        340
+      ],
+      "rgb": [
+        34,
+        47,
+        64
+      ],
+      "coordinate": [
+        136.8387871945215,
+        35.19754396627569
+      ],
+      "mapPoint": [
+        236252123.1084676,
+        106146664.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        480,
+        326
+      ],
+      "rgb": [
+        43,
+        58,
+        78
+      ],
+      "coordinate": [
+        136.8388944828821,
+        35.19760533720372
+      ],
+      "mapPoint": [
+        236252203.1084676,
+        106146608.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        500,
+        313
+      ],
+      "rgb": [
+        17,
+        25,
+        35
+      ],
+      "coordinate": [
+        136.8390017712427,
+        35.197662324452516
+      ],
+      "mapPoint": [
+        236252283.1084676,
+        106146556.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        520,
+        300
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.8391090596033,
+        35.19771931166133
+      ],
+      "mapPoint": [
+        236252363.1084676,
+        106146504.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        540,
+        286
+      ],
+      "rgb": [
+        21,
+        29,
+        41
+      ],
+      "coordinate": [
+        136.83921634796388,
+        35.19778068245689
+      ],
+      "mapPoint": [
+        236252443.1084676,
+        106146448.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        560,
+        273
+      ],
+      "rgb": [
+        40,
+        55,
+        73
+      ],
+      "coordinate": [
+        136.83932363632448,
+        35.19783766958267
+      ],
+      "mapPoint": [
+        236252523.1084676,
+        106146396.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        580,
+        259
+      ],
+      "rgb": [
+        24,
+        33,
+        46
+      ],
+      "coordinate": [
+        136.83943092468508,
+        35.19789904028879
+      ],
+      "mapPoint": [
+        236252603.1084676,
+        106146340.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        740,
+        155
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.84028923156984,
+        35.1983549355113
+      ],
+      "mapPoint": [
+        236253243.1084676,
+        106145924.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        760,
+        141
+      ],
+      "rgb": [
+        45,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.84039651993044,
+        35.19841630582662
+      ],
+      "mapPoint": [
+        236253323.1084676,
+        106145868.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        780,
+        128
+      ],
+      "rgb": [
+        46,
+        62,
+        82
+      ],
+      "coordinate": [
+        136.84050380829103,
+        35.19847329250646
+      ],
+      "mapPoint": [
+        236253403.1084676,
+        106145816.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+      "pixel": [
+        800,
+        115
+      ],
+      "rgb": [
+        19,
+        27,
+        38
+      ],
+      "coordinate": [
+        136.84061109665163,
+        35.19853027914633
+      ],
+      "mapPoint": [
+        236253483.1084676,
+        106145764.76810524
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        280,
+        320
+      ],
+      "rgb": [
+        28,
+        39,
+        53
+      ],
+      "coordinate": [
+        136.8344160083139,
+        35.19618910497474
+      ],
+      "mapPoint": [
+        236248863.7157929,
+        106147901.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        300,
+        319
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.8345232966745,
+        35.196193488687115
+      ],
+      "mapPoint": [
+        236248943.7157929,
+        106147897.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        320,
+        318
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.8346305850351,
+        35.19619787239924
+      ],
+      "mapPoint": [
+        236249023.7157929,
+        106147893.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        340,
+        318
+      ],
+      "rgb": [
+        30,
+        42,
+        57
+      ],
+      "coordinate": [
+        136.83473787339568,
+        35.19619787239924
+      ],
+      "mapPoint": [
+        236249103.7157929,
+        106147893.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        360,
+        317
+      ],
+      "rgb": [
+        16,
+        23,
+        34
+      ],
+      "coordinate": [
+        136.83484516175628,
+        35.19620225611114
+      ],
+      "mapPoint": [
+        236249183.7157929,
+        106147889.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        380,
+        316
+      ],
+      "rgb": [
+        29,
+        40,
+        55
+      ],
+      "coordinate": [
+        136.83495245011687,
+        35.1962066398228
+      ],
+      "mapPoint": [
+        236249263.7157929,
+        106147885.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        400,
+        316
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83505973847747,
+        35.1962066398228
+      ],
+      "mapPoint": [
+        236249343.7157929,
+        106147885.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        420,
+        315
+      ],
+      "rgb": [
+        45,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.83516702683806,
+        35.196211023534225
+      ],
+      "mapPoint": [
+        236249423.7157929,
+        106147881.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        440,
+        314
+      ],
+      "rgb": [
+        46,
+        63,
+        84
+      ],
+      "coordinate": [
+        136.83527431519866,
+        35.19621540724541
+      ],
+      "mapPoint": [
+        236249503.7157929,
+        106147877.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        460,
+        312
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.83538160355926,
+        35.19622417466707
+      ],
+      "mapPoint": [
+        236249583.7157929,
+        106147869.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        480,
+        309
+      ],
+      "rgb": [
+        40,
+        54,
+        73
+      ],
+      "coordinate": [
+        136.83548889191985,
+        35.196237325797796
+      ],
+      "mapPoint": [
+        236249663.7157929,
+        106147857.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        500,
+        306
+      ],
+      "rgb": [
+        44,
+        60,
+        80
+      ],
+      "coordinate": [
+        136.8355961802804,
+        35.19625047692639
+      ],
+      "mapPoint": [
+        236249743.71579286,
+        106147845.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        520,
+        303
+      ],
+      "rgb": [
+        18,
+        25,
+        36
+      ],
+      "coordinate": [
+        136.835703468641,
+        35.196263628052854
+      ],
+      "mapPoint": [
+        236249823.71579286,
+        106147833.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        700,
+        254
+      ],
+      "rgb": [
+        19,
+        26,
+        37
+      ],
+      "coordinate": [
+        136.83666906388635,
+        35.196478429483705
+      ],
+      "mapPoint": [
+        236250543.71579286,
+        106147637.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        720,
+        246
+      ],
+      "rgb": [
+        41,
+        56,
+        73
+      ],
+      "coordinate": [
+        136.83677635224694,
+        35.19651349905113
+      ],
+      "mapPoint": [
+        236250623.71579286,
+        106147605.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        740,
+        237
+      ],
+      "rgb": [
+        37,
+        51,
+        69
+      ],
+      "coordinate": [
+        136.83688364060754,
+        35.19655295229639
+      ],
+      "mapPoint": [
+        236250703.71579286,
+        106147569.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        760,
+        228
+      ],
+      "rgb": [
+        49,
+        66,
+        87
+      ],
+      "coordinate": [
+        136.83699092896813,
+        35.19659240552249
+      ],
+      "mapPoint": [
+        236250783.71579286,
+        106147533.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        780,
+        217
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.83709821732873,
+        35.19664062610614
+      ],
+      "mapPoint": [
+        236250863.71579286,
+        106147489.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        800,
+        207
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.83720550568933,
+        35.19668446297553
+      ],
+      "mapPoint": [
+        236250943.71579286,
+        106147449.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        820,
+        194
+      ],
+      "rgb": [
+        42,
+        57,
+        75
+      ],
+      "coordinate": [
+        136.83731279404992,
+        35.19674145087037
+      ],
+      "mapPoint": [
+        236251023.71579286,
+        106147397.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+      "pixel": [
+        840,
+        181
+      ],
+      "rgb": [
+        43,
+        66,
+        84
+      ],
+      "coordinate": [
+        136.83742008241052,
+        35.196798438725224
+      ],
+      "mapPoint": [
+        236251103.71579286,
+        106147345.0468106
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        150,
+        311
+      ],
+      "rgb": [
+        19,
+        27,
+        38
+      ],
+      "coordinate": [
+        136.82987369800946,
+        35.196104006872105
+      ],
+      "mapPoint": [
+        236245476.7237433,
+        106147978.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        190,
+        310
+      ],
+      "rgb": [
+        22,
+        30,
+        42
+      ],
+      "coordinate": [
+        136.83008827473066,
+        35.19610839058907
+      ],
+      "mapPoint": [
+        236245636.7237433,
+        106147974.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        210,
+        310
+      ],
+      "rgb": [
+        43,
+        58,
+        77
+      ],
+      "coordinate": [
+        136.83019556309125,
+        35.19610839058907
+      ],
+      "mapPoint": [
+        236245716.7237433,
+        106147974.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        230,
+        309
+      ],
+      "rgb": [
+        28,
+        39,
+        53
+      ],
+      "coordinate": [
+        136.83030285145185,
+        35.19611277430579
+      ],
+      "mapPoint": [
+        236245796.7237433,
+        106147970.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        250,
+        309
+      ],
+      "rgb": [
+        47,
+        64,
+        85
+      ],
+      "coordinate": [
+        136.83041013981244,
+        35.19611277430579
+      ],
+      "mapPoint": [
+        236245876.7237433,
+        106147970.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        270,
+        308
+      ],
+      "rgb": [
+        33,
+        46,
+        62
+      ],
+      "coordinate": [
+        136.83051742817304,
+        35.19611715802228
+      ],
+      "mapPoint": [
+        236245956.7237433,
+        106147966.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        450,
+        304
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.8314830234184,
+        35.19613469288587
+      ],
+      "mapPoint": [
+        236246676.7237433,
+        106147950.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        470,
+        304
+      ],
+      "rgb": [
+        34,
+        46,
+        63
+      ],
+      "coordinate": [
+        136.831590311779,
+        35.19613469288587
+      ],
+      "mapPoint": [
+        236246756.7237433,
+        106147950.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        490,
+        303
+      ],
+      "rgb": [
+        41,
+        56,
+        75
+      ],
+      "coordinate": [
+        136.8316976001396,
+        35.19613907660117
+      ],
+      "mapPoint": [
+        236246836.7237433,
+        106147946.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        510,
+        303
+      ],
+      "rgb": [
+        18,
+        25,
+        36
+      ],
+      "coordinate": [
+        136.8318048885002,
+        35.19613907660117
+      ],
+      "mapPoint": [
+        236246916.72374326,
+        106147946.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        530,
+        303
+      ],
+      "rgb": [
+        49,
+        66,
+        88
+      ],
+      "coordinate": [
+        136.83191217686078,
+        35.19613907660117
+      ],
+      "mapPoint": [
+        236246996.72374326,
+        106147946.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        550,
+        302
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.83201946522138,
+        35.19614346031625
+      ],
+      "mapPoint": [
+        236247076.72374326,
+        106147942.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        570,
+        302
+      ],
+      "rgb": [
+        32,
+        44,
+        59
+      ],
+      "coordinate": [
+        136.83212675358197,
+        35.19614346031625
+      ],
+      "mapPoint": [
+        236247156.72374326,
+        106147942.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        750,
+        298
+      ],
+      "rgb": [
+        36,
+        50,
+        67
+      ],
+      "coordinate": [
+        136.83309234882734,
+        35.196160995174154
+      ],
+      "mapPoint": [
+        236247876.72374326,
+        106147926.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        770,
+        297
+      ],
+      "rgb": [
+        48,
+        66,
+        87
+      ],
+      "coordinate": [
+        136.83319963718793,
+        35.19616537888805
+      ],
+      "mapPoint": [
+        236247956.72374326,
+        106147922.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        790,
+        297
+      ],
+      "rgb": [
+        25,
+        35,
+        48
+      ],
+      "coordinate": [
+        136.83330692554853,
+        35.19616537888805
+      ],
+      "mapPoint": [
+        236248036.72374326,
+        106147922.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+      "pixel": [
+        810,
+        297
+      ],
+      "rgb": [
+        42,
+        57,
+        77
+      ],
+      "coordinate": [
+        136.83341421390912,
+        35.19616537888805
+      ],
+      "mapPoint": [
+        236248116.72374326,
+        106147922.69611657
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        290,
+        318
+      ],
+      "rgb": [
+        29,
+        40,
+        55
+      ],
+      "coordinate": [
+        136.82677367287863,
+        35.196014928488005
+      ],
+      "mapPoint": [
+        236243165.1774666,
+        106148059.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        310,
+        317
+      ],
+      "rgb": [
+        35,
+        48,
+        65
+      ],
+      "coordinate": [
+        136.82688096123923,
+        35.19601931220978
+      ],
+      "mapPoint": [
+        236243245.1774666,
+        106148055.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        330,
+        317
+      ],
+      "rgb": [
+        40,
+        54,
+        73
+      ],
+      "coordinate": [
+        136.82698824959982,
+        35.19601931220978
+      ],
+      "mapPoint": [
+        236243325.1774666,
+        106148055.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        350,
+        316
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.82709553796042,
+        35.1960236959313
+      ],
+      "mapPoint": [
+        236243405.1774666,
+        106148051.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        370,
+        315
+      ],
+      "rgb": [
+        45,
+        61,
+        82
+      ],
+      "coordinate": [
+        136.827202826321,
+        35.1960280796526
+      ],
+      "mapPoint": [
+        236243485.1774666,
+        106148047.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        390,
+        315
+      ],
+      "rgb": [
+        35,
+        48,
+        65
+      ],
+      "coordinate": [
+        136.8273101146816,
+        35.1960280796526
+      ],
+      "mapPoint": [
+        236243565.1774666,
+        106148047.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        570,
+        308
+      ],
+      "rgb": [
+        32,
+        44,
+        59
+      ],
+      "coordinate": [
+        136.82827570992697,
+        35.19605876569505
+      ],
+      "mapPoint": [
+        236244285.17746657,
+        106148019.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        590,
+        307
+      ],
+      "rgb": [
+        20,
+        28,
+        39
+      ],
+      "coordinate": [
+        136.82838299828757,
+        35.19606314941445
+      ],
+      "mapPoint": [
+        236244365.17746657,
+        106148015.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        610,
+        307
+      ],
+      "rgb": [
+        45,
+        60,
+        81
+      ],
+      "coordinate": [
+        136.82849028664816,
+        35.19606314941445
+      ],
+      "mapPoint": [
+        236244445.17746657,
+        106148015.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        630,
+        306
+      ],
+      "rgb": [
+        47,
+        64,
+        85
+      ],
+      "coordinate": [
+        136.82859757500876,
+        35.196067533133615
+      ],
+      "mapPoint": [
+        236244525.17746657,
+        106148011.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        650,
+        305
+      ],
+      "rgb": [
+        37,
+        50,
+        67
+      ],
+      "coordinate": [
+        136.82870486336935,
+        35.196071916852546
+      ],
+      "mapPoint": [
+        236244605.17746657,
+        106148007.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        670,
+        304
+      ],
+      "rgb": [
+        19,
+        27,
+        38
+      ],
+      "coordinate": [
+        136.82881215172995,
+        35.19607630057124
+      ],
+      "mapPoint": [
+        236244685.17746657,
+        106148003.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        860,
+        298
+      ],
+      "rgb": [
+        23,
+        33,
+        45
+      ],
+      "coordinate": [
+        136.8298313911556,
+        35.19610260287844
+      ],
+      "mapPoint": [
+        236245445.17746657,
+        106147979.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        880,
+        297
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.8299386795162,
+        35.196106986595474
+      ],
+      "mapPoint": [
+        236245525.17746657,
+        106147975.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        900,
+        297
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.8300459678768,
+        35.196106986595474
+      ],
+      "mapPoint": [
+        236245605.17746657,
+        106147975.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        920,
+        297
+      ],
+      "rgb": [
+        49,
+        66,
+        87
+      ],
+      "coordinate": [
+        136.8301532562374,
+        35.196106986595474
+      ],
+      "mapPoint": [
+        236245685.17746657,
+        106147975.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        940,
+        296
+      ],
+      "rgb": [
+        16,
+        23,
+        34
+      ],
+      "coordinate": [
+        136.830260544598,
+        35.19611137031227
+      ],
+      "mapPoint": [
+        236245765.17746657,
+        106147971.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+      "pixel": [
+        960,
+        296
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.8303678329586,
+        35.19611137031227
+      ],
+      "mapPoint": [
+        236245845.17746657,
+        106147971.97721535
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        670,
+        313
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.8267696332743,
+        35.19601637212851
+      ],
+      "mapPoint": [
+        236243162.1653193,
+        106148058.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        690,
+        312
+      ],
+      "rgb": [
+        20,
+        28,
+        39
+      ],
+      "coordinate": [
+        136.8268769216349,
+        35.196020755850206
+      ],
+      "mapPoint": [
+        236243242.1653193,
+        106148054.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        710,
+        312
+      ],
+      "rgb": [
+        17,
+        24,
+        34
+      ],
+      "coordinate": [
+        136.8269842099955,
+        35.196020755850206
+      ],
+      "mapPoint": [
+        236243322.1653193,
+        106148054.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        730,
+        311
+      ],
+      "rgb": [
+        43,
+        58,
+        78
+      ],
+      "coordinate": [
+        136.82709149835608,
+        35.19602513957167
+      ],
+      "mapPoint": [
+        236243402.1653193,
+        106148050.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        750,
+        311
+      ],
+      "rgb": [
+        31,
+        43,
+        58
+      ],
+      "coordinate": [
+        136.82719878671668,
+        35.19602513957167
+      ],
+      "mapPoint": [
+        236243482.1653193,
+        106148050.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "tsushima0",
+      "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+      "pixel": [
+        770,
+        310
+      ],
+      "rgb": [
+        37,
+        51,
+        69
+      ],
+      "coordinate": [
+        136.82730607507727,
+        35.19602952329288
+      ],
+      "mapPoint": [
+        236243562.1653193,
+        106148046.65994152
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        220,
+        133
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.8474674359797,
+        35.198043244926495
+      ],
+      "mapPoint": [
+        236258595.56561765,
+        106146209.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        240,
+        149
+      ],
+      "rgb": [
+        48,
+        65,
+        86
+      ],
+      "coordinate": [
+        136.8475747243403,
+        35.19797310709737
+      ],
+      "mapPoint": [
+        236258675.56561765,
+        106146273.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        260,
+        163
+      ],
+      "rgb": [
+        40,
+        54,
+        73
+      ],
+      "coordinate": [
+        136.8476820127009,
+        35.197911736447196
+      ],
+      "mapPoint": [
+        236258755.56561765,
+        106146329.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        280,
+        177
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.84778930106148,
+        35.19785036575066
+      ],
+      "mapPoint": [
+        236258835.56561765,
+        106146385.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        300,
+        191
+      ],
+      "rgb": [
+        27,
+        38,
+        51
+      ],
+      "coordinate": [
+        136.84789658942208,
+        35.19778899500776
+      ],
+      "mapPoint": [
+        236258915.56561765,
+        106146441.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        320,
+        204
+      ],
+      "rgb": [
+        40,
+        54,
+        72
+      ],
+      "coordinate": [
+        136.84800387778267,
+        35.197732007847826
+      ],
+      "mapPoint": [
+        236258995.56561765,
+        106146493.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        340,
+        217
+      ],
+      "rgb": [
+        49,
+        66,
+        87
+      ],
+      "coordinate": [
+        136.84811116614327,
+        35.19767502064792
+      ],
+      "mapPoint": [
+        236259075.56561765,
+        106146545.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        360,
+        231
+      ],
+      "rgb": [
+        25,
+        35,
+        48
+      ],
+      "coordinate": [
+        136.84821845450386,
+        35.19761364977254
+      ],
+      "mapPoint": [
+        236259155.56561765,
+        106146601.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        380,
+        244
+      ],
+      "rgb": [
+        28,
+        39,
+        53
+      ],
+      "coordinate": [
+        136.84832574286446,
+        35.197556662489596
+      ],
+      "mapPoint": [
+        236259235.56561765,
+        106146653.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        400,
+        257
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.84843303122506,
+        35.19749967516667
+      ],
+      "mapPoint": [
+        236259315.56561765,
+        106146705.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        420,
+        271
+      ],
+      "rgb": [
+        16,
+        23,
+        33
+      ],
+      "coordinate": [
+        136.84854031958565,
+        35.19743830415881
+      ],
+      "mapPoint": [
+        236259395.56561765,
+        106146761.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        440,
+        285
+      ],
+      "rgb": [
+        30,
+        41,
+        56
+      ],
+      "coordinate": [
+        136.84864760794625,
+        35.197376933104586
+      ],
+      "mapPoint": [
+        236259475.56561765,
+        106146817.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        600,
+        390
+      ],
+      "rgb": [
+        38,
+        51,
+        69
+      ],
+      "coordinate": [
+        136.84950591483096,
+        35.19691664871992
+      ],
+      "mapPoint": [
+        236260115.56561762,
+        106147237.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        620,
+        402
+      ],
+      "rgb": [
+        42,
+        57,
+        76
+      ],
+      "coordinate": [
+        136.84961320319155,
+        35.196864044624164
+      ],
+      "mapPoint": [
+        236260195.56561762,
+        106147285.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        640,
+        413
+      ],
+      "rgb": [
+        35,
+        48,
+        65
+      ],
+      "coordinate": [
+        136.84972049155215,
+        35.19681582417314
+      ],
+      "mapPoint": [
+        236260275.56561762,
+        106147329.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view1-z18-before",
+      "pixel": [
+        660,
+        425
+      ],
+      "rgb": [
+        20,
+        28,
+        40
+      ],
+      "coordinate": [
+        136.84982777991274,
+        35.1967632200121
+      ],
+      "mapPoint": [
+        236260355.56561762,
+        106147377.18301457
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        260,
+        156
+      ],
+      "rgb": [
+        28,
+        39,
+        53
+      ],
+      "coordinate": [
+        136.85090691440354,
+        35.19622142008293
+      ],
+      "mapPoint": [
+        236261160.2266152,
+        106147871.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        280,
+        169
+      ],
+      "rgb": [
+        22,
+        30,
+        42
+      ],
+      "coordinate": [
+        136.85101420276413,
+        35.19616443182326
+      ],
+      "mapPoint": [
+        236261240.2266152,
+        106147923.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        300,
+        182
+      ],
+      "rgb": [
+        22,
+        31,
+        43
+      ],
+      "coordinate": [
+        136.85112149112473,
+        35.196107443523616
+      ],
+      "mapPoint": [
+        236261320.2266152,
+        106147975.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        320,
+        195
+      ],
+      "rgb": [
+        32,
+        44,
+        60
+      ],
+      "coordinate": [
+        136.85122877948533,
+        35.196050455184
+      ],
+      "mapPoint": [
+        236261400.2266152,
+        106148027.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        340,
+        208
+      ],
+      "rgb": [
+        40,
+        54,
+        72
+      ],
+      "coordinate": [
+        136.85133606784592,
+        35.1959934668044
+      ],
+      "mapPoint": [
+        236261480.2266152,
+        106148079.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        360,
+        220
+      ],
+      "rgb": [
+        41,
+        55,
+        74
+      ],
+      "coordinate": [
+        136.85144335620652,
+        35.195940862110824
+      ],
+      "mapPoint": [
+        236261560.2266152,
+        106148127.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        380,
+        233
+      ],
+      "rgb": [
+        33,
+        46,
+        62
+      ],
+      "coordinate": [
+        136.8515506445671,
+        35.19588387365434
+      ],
+      "mapPoint": [
+        236261640.2266152,
+        106148179.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        400,
+        246
+      ],
+      "rgb": [
+        24,
+        34,
+        47
+      ],
+      "coordinate": [
+        136.8516579329277,
+        35.19582688515787
+      ],
+      "mapPoint": [
+        236261720.2266152,
+        106148231.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        420,
+        259
+      ],
+      "rgb": [
+        20,
+        29,
+        43
+      ],
+      "coordinate": [
+        136.8517652212883,
+        35.19576989662143
+      ],
+      "mapPoint": [
+        236261800.2266152,
+        106148283.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    },
+    {
+      "item": "main18",
+      "capture": "meitetsu-main-18-view2-z18-before",
+      "pixel": [
+        440,
+        272
+      ],
+      "rgb": [
+        25,
+        37,
+        56
+      ],
+      "coordinate": [
+        136.8518725096489,
+        35.19571290804501
+      ],
+      "mapPoint": [
+        236261880.2266152,
+        106148335.56028318
+      ],
+      "kind": "bounded-own-glyph-column-query-after-manual-identity"
+    }
+  ],
+  "fitControls": {
+    "tsushima0": [
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          490,
+          315
+        ],
+        "rgb": [
+          61,
+          80,
+          113
+        ],
+        "coordinate": [
+          136.82580403802893,
+          35.19600760468442
+        ],
+        "mapPoint": [
+          236242442.16531926,
+          106148066.65994152
+        ],
+        "kind": "root-supplied-own-frame-normal-alias"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          670,
+          313
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.8267696332743,
+          35.19601637212851
+        ],
+        "mapPoint": [
+          236243162.1653193,
+          106148058.65994152
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          690,
+          312
+        ],
+        "rgb": [
+          20,
+          28,
+          39
+        ],
+        "coordinate": [
+          136.8268769216349,
+          35.196020755850206
+        ],
+        "mapPoint": [
+          236243242.1653193,
+          106148054.65994152
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          700,
+          312
+        ],
+        "rgb": [
+          38,
+          52,
+          69
+        ],
+        "coordinate": [
+          136.8269305658152,
+          35.196020755850206
+        ],
+        "mapPoint": [
+          236243282.1653193,
+          106148054.65994152
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          710,
+          312
+        ],
+        "rgb": [
+          17,
+          24,
+          34
+        ],
+        "coordinate": [
+          136.8269842099955,
+          35.196020755850206
+        ],
+        "mapPoint": [
+          236243322.1653193,
+          106148054.65994152
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          350,
+          316
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.82709553796042,
+          35.1960236959313
+        ],
+        "mapPoint": [
+          236243405.1774666,
+          106148051.97721535
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          750,
+          311
+        ],
+        "rgb": [
+          31,
+          43,
+          58
+        ],
+        "coordinate": [
+          136.82719878671668,
+          35.19602513957167
+        ],
+        "mapPoint": [
+          236243482.1653193,
+          106148050.65994152
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view6-z18-before",
+        "pixel": [
+          770,
+          310
+        ],
+        "rgb": [
+          37,
+          51,
+          69
+        ],
+        "coordinate": [
+          136.82730607507727,
+          35.19602952329288
+        ],
+        "mapPoint": [
+          236243562.1653193,
+          106148046.65994152
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          570,
+          308
+        ],
+        "rgb": [
+          32,
+          44,
+          59
+        ],
+        "coordinate": [
+          136.82827570992697,
+          35.19605876569505
+        ],
+        "mapPoint": [
+          236244285.17746657,
+          106148019.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          590,
+          307
+        ],
+        "rgb": [
+          20,
+          28,
+          39
+        ],
+        "coordinate": [
+          136.82838299828757,
+          35.19606314941445
+        ],
+        "mapPoint": [
+          236244365.17746657,
+          106148015.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          610,
+          307
+        ],
+        "rgb": [
+          45,
+          60,
+          81
+        ],
+        "coordinate": [
+          136.82849028664816,
+          35.19606314941445
+        ],
+        "mapPoint": [
+          236244445.17746657,
+          106148015.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          630,
+          306
+        ],
+        "rgb": [
+          47,
+          64,
+          85
+        ],
+        "coordinate": [
+          136.82859757500876,
+          35.196067533133615
+        ],
+        "mapPoint": [
+          236244525.17746657,
+          106148011.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          650,
+          305
+        ],
+        "rgb": [
+          37,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.82870486336935,
+          35.196071916852546
+        ],
+        "mapPoint": [
+          236244605.17746657,
+          106148007.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          670,
+          304
+        ],
+        "rgb": [
+          19,
+          27,
+          38
+        ],
+        "coordinate": [
+          136.82881215172995,
+          35.19607630057124
+        ],
+        "mapPoint": [
+          236244685.17746657,
+          106148003.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          860,
+          298
+        ],
+        "rgb": [
+          23,
+          33,
+          45
+        ],
+        "coordinate": [
+          136.8298313911556,
+          35.19610260287844
+        ],
+        "mapPoint": [
+          236245445.17746657,
+          106147979.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          150,
+          311
+        ],
+        "rgb": [
+          19,
+          27,
+          38
+        ],
+        "coordinate": [
+          136.82987369800946,
+          35.196104006872105
+        ],
+        "mapPoint": [
+          236245476.7237433,
+          106147978.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          880,
+          297
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.8299386795162,
+          35.196106986595474
+        ],
+        "mapPoint": [
+          236245525.17746657,
+          106147975.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          900,
+          297
+        ],
+        "rgb": [
+          24,
+          34,
+          47
+        ],
+        "coordinate": [
+          136.8300459678768,
+          35.196106986595474
+        ],
+        "mapPoint": [
+          236245605.17746657,
+          106147975.97721535
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          190,
+          310
+        ],
+        "rgb": [
+          22,
+          30,
+          42
+        ],
+        "coordinate": [
+          136.83008827473066,
+          35.19610839058907
+        ],
+        "mapPoint": [
+          236245636.7237433,
+          106147974.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          200,
+          310
+        ],
+        "rgb": [
+          30,
+          42,
+          57
+        ],
+        "coordinate": [
+          136.83014191891095,
+          35.19610839058907
+        ],
+        "mapPoint": [
+          236245676.7237433,
+          106147974.69611657
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          210,
+          310
+        ],
+        "rgb": [
+          43,
+          58,
+          77
+        ],
+        "coordinate": [
+          136.83019556309125,
+          35.19610839058907
+        ],
+        "mapPoint": [
+          236245716.7237433,
+          106147974.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          940,
+          296
+        ],
+        "rgb": [
+          16,
+          23,
+          34
+        ],
+        "coordinate": [
+          136.830260544598,
+          35.19611137031227
+        ],
+        "mapPoint": [
+          236245765.17746657,
+          106147971.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          230,
+          309
+        ],
+        "rgb": [
+          28,
+          39,
+          53
+        ],
+        "coordinate": [
+          136.83030285145185,
+          35.19611277430579
+        ],
+        "mapPoint": [
+          236245796.7237433,
+          106147970.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view5-z18-before",
+        "pixel": [
+          960,
+          296
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.8303678329586,
+          35.19611137031227
+        ],
+        "mapPoint": [
+          236245845.17746657,
+          106147971.97721535
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          250,
+          309
+        ],
+        "rgb": [
+          47,
+          64,
+          85
+        ],
+        "coordinate": [
+          136.83041013981244,
+          35.19611277430579
+        ],
+        "mapPoint": [
+          236245876.7237433,
+          106147970.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          270,
+          308
+        ],
+        "rgb": [
+          33,
+          46,
+          62
+        ],
+        "coordinate": [
+          136.83051742817304,
+          35.19611715802228
+        ],
+        "mapPoint": [
+          236245956.7237433,
+          106147966.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          450,
+          304
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.8314830234184,
+          35.19613469288587
+        ],
+        "mapPoint": [
+          236246676.7237433,
+          106147950.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          470,
+          304
+        ],
+        "rgb": [
+          34,
+          46,
+          63
+        ],
+        "coordinate": [
+          136.831590311779,
+          35.19613469288587
+        ],
+        "mapPoint": [
+          236246756.7237433,
+          106147950.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          490,
+          303
+        ],
+        "rgb": [
+          41,
+          56,
+          75
+        ],
+        "coordinate": [
+          136.8316976001396,
+          35.19613907660117
+        ],
+        "mapPoint": [
+          236246836.7237433,
+          106147946.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          500,
+          303
+        ],
+        "rgb": [
+          31,
+          43,
+          58
+        ],
+        "coordinate": [
+          136.8317512443199,
+          35.19613907660117
+        ],
+        "mapPoint": [
+          236246876.72374326,
+          106147946.69611657
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          510,
+          303
+        ],
+        "rgb": [
+          18,
+          25,
+          36
+        ],
+        "coordinate": [
+          136.8318048885002,
+          35.19613907660117
+        ],
+        "mapPoint": [
+          236246916.72374326,
+          106147946.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          530,
+          303
+        ],
+        "rgb": [
+          49,
+          66,
+          88
+        ],
+        "coordinate": [
+          136.83191217686078,
+          35.19613907660117
+        ],
+        "mapPoint": [
+          236246996.72374326,
+          106147946.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          550,
+          302
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.83201946522138,
+          35.19614346031625
+        ],
+        "mapPoint": [
+          236247076.72374326,
+          106147942.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          570,
+          302
+        ],
+        "rgb": [
+          32,
+          44,
+          59
+        ],
+        "coordinate": [
+          136.83212675358197,
+          35.19614346031625
+        ],
+        "mapPoint": [
+          236247156.72374326,
+          106147942.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          750,
+          298
+        ],
+        "rgb": [
+          36,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.83309234882734,
+          35.196160995174154
+        ],
+        "mapPoint": [
+          236247876.72374326,
+          106147926.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          770,
+          297
+        ],
+        "rgb": [
+          48,
+          66,
+          87
+        ],
+        "coordinate": [
+          136.83319963718793,
+          35.19616537888805
+        ],
+        "mapPoint": [
+          236247956.72374326,
+          106147922.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          790,
+          297
+        ],
+        "rgb": [
+          25,
+          35,
+          48
+        ],
+        "coordinate": [
+          136.83330692554853,
+          35.19616537888805
+        ],
+        "mapPoint": [
+          236248036.72374326,
+          106147922.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view4-z18-before",
+        "pixel": [
+          810,
+          297
+        ],
+        "rgb": [
+          42,
+          57,
+          77
+        ],
+        "coordinate": [
+          136.83341421390912,
+          35.19616537888805
+        ],
+        "mapPoint": [
+          236248116.72374326,
+          106147922.69611657
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          280,
+          320
+        ],
+        "rgb": [
+          28,
+          39,
+          53
+        ],
+        "coordinate": [
+          136.8344160083139,
+          35.19618910497474
+        ],
+        "mapPoint": [
+          236248863.7157929,
+          106147901.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          300,
+          319
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.8345232966745,
+          35.196193488687115
+        ],
+        "mapPoint": [
+          236248943.7157929,
+          106147897.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          320,
+          318
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.8346305850351,
+          35.19619787239924
+        ],
+        "mapPoint": [
+          236249023.7157929,
+          106147893.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          340,
+          318
+        ],
+        "rgb": [
+          30,
+          42,
+          57
+        ],
+        "coordinate": [
+          136.83473787339568,
+          35.19619787239924
+        ],
+        "mapPoint": [
+          236249103.7157929,
+          106147893.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          360,
+          317
+        ],
+        "rgb": [
+          16,
+          23,
+          34
+        ],
+        "coordinate": [
+          136.83484516175628,
+          35.19620225611114
+        ],
+        "mapPoint": [
+          236249183.7157929,
+          106147889.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          380,
+          316
+        ],
+        "rgb": [
+          29,
+          40,
+          55
+        ],
+        "coordinate": [
+          136.83495245011687,
+          35.1962066398228
+        ],
+        "mapPoint": [
+          236249263.7157929,
+          106147885.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          400,
+          316
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.83505973847747,
+          35.1962066398228
+        ],
+        "mapPoint": [
+          236249343.7157929,
+          106147885.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          420,
+          315
+        ],
+        "rgb": [
+          45,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.83516702683806,
+          35.196211023534225
+        ],
+        "mapPoint": [
+          236249423.7157929,
+          106147881.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          440,
+          314
+        ],
+        "rgb": [
+          46,
+          63,
+          84
+        ],
+        "coordinate": [
+          136.83527431519866,
+          35.19621540724541
+        ],
+        "mapPoint": [
+          236249503.7157929,
+          106147877.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          450,
+          313
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.83532795937896,
+          35.196219790956356
+        ],
+        "mapPoint": [
+          236249543.7157929,
+          106147873.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          460,
+          312
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.83538160355926,
+          35.19622417466707
+        ],
+        "mapPoint": [
+          236249583.7157929,
+          106147869.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          480,
+          309
+        ],
+        "rgb": [
+          40,
+          54,
+          73
+        ],
+        "coordinate": [
+          136.83548889191985,
+          35.196237325797796
+        ],
+        "mapPoint": [
+          236249663.7157929,
+          106147857.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          500,
+          306
+        ],
+        "rgb": [
+          44,
+          60,
+          80
+        ],
+        "coordinate": [
+          136.8355961802804,
+          35.19625047692639
+        ],
+        "mapPoint": [
+          236249743.71579286,
+          106147845.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          520,
+          303
+        ],
+        "rgb": [
+          18,
+          25,
+          36
+        ],
+        "coordinate": [
+          136.835703468641,
+          35.196263628052854
+        ],
+        "mapPoint": [
+          236249823.71579286,
+          106147833.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          530,
+          301
+        ],
+        "rgb": [
+          29,
+          41,
+          55
+        ],
+        "coordinate": [
+          136.83575711282128,
+          35.19627239546931
+        ],
+        "mapPoint": [
+          236249863.71579286,
+          106147825.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          540,
+          299
+        ],
+        "rgb": [
+          37,
+          50,
+          68
+        ],
+        "coordinate": [
+          136.83581075700158,
+          35.19628116288482
+        ],
+        "mapPoint": [
+          236249903.71579286,
+          106147817.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          680,
+          261
+        ],
+        "rgb": [
+          45,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.83656177552575,
+          35.19644774359979
+        ],
+        "mapPoint": [
+          236250463.71579286,
+          106147665.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          690,
+          258
+        ],
+        "rgb": [
+          34,
+          47,
+          64
+        ],
+        "coordinate": [
+          136.83661541970605,
+          35.19646089469432
+        ],
+        "mapPoint": [
+          236250503.71579286,
+          106147653.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          700,
+          254
+        ],
+        "rgb": [
+          19,
+          26,
+          37
+        ],
+        "coordinate": [
+          136.83666906388635,
+          35.196478429483705
+        ],
+        "mapPoint": [
+          236250543.71579286,
+          106147637.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          720,
+          246
+        ],
+        "rgb": [
+          41,
+          56,
+          73
+        ],
+        "coordinate": [
+          136.83677635224694,
+          35.19651349905113
+        ],
+        "mapPoint": [
+          236250623.71579286,
+          106147605.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          100,
+          569
+        ],
+        "rgb": [
+          34,
+          47,
+          63
+        ],
+        "coordinate": [
+          136.83685600403078,
+          35.196540106656485
+        ],
+        "mapPoint": [
+          236250683.1084676,
+          106147580.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          740,
+          237
+        ],
+        "rgb": [
+          37,
+          51,
+          69
+        ],
+        "coordinate": [
+          136.83688364060754,
+          35.19655295229639
+        ],
+        "mapPoint": [
+          236250703.71579286,
+          106147569.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          750,
+          233
+        ],
+        "rgb": [
+          43,
+          58,
+          77
+        ],
+        "coordinate": [
+          136.83693728478784,
+          35.196570487065905
+        ],
+        "mapPoint": [
+          236250743.71579286,
+          106147553.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          760,
+          228
+        ],
+        "rgb": [
+          49,
+          66,
+          87
+        ],
+        "coordinate": [
+          136.83699092896813,
+          35.19659240552249
+        ],
+        "mapPoint": [
+          236250783.71579286,
+          106147533.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          130,
+          554
+        ],
+        "rgb": [
+          31,
+          43,
+          58
+        ],
+        "coordinate": [
+          136.83701693657167,
+          35.19660586203307
+        ],
+        "mapPoint": [
+          236250803.1084676,
+          106147520.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          780,
+          217
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.83709821732873,
+          35.19664062610614
+        ],
+        "mapPoint": [
+          236250863.71579286,
+          106147489.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          150,
+          543
+        ],
+        "rgb": [
+          38,
+          52,
+          70
+        ],
+        "coordinate": [
+          136.83712422493227,
+          35.19665408260874
+        ],
+        "mapPoint": [
+          236250883.1084676,
+          106147476.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          800,
+          207
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.83720550568933,
+          35.19668446297553
+        ],
+        "mapPoint": [
+          236250943.71579286,
+          106147449.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          170,
+          532
+        ],
+        "rgb": [
+          34,
+          46,
+          62
+        ],
+        "coordinate": [
+          136.83723151329286,
+          35.19670230315577
+        ],
+        "mapPoint": [
+          236250963.1084676,
+          106147432.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          820,
+          194
+        ],
+        "rgb": [
+          42,
+          57,
+          75
+        ],
+        "coordinate": [
+          136.83731279404992,
+          35.19674145087037
+        ],
+        "mapPoint": [
+          236251023.71579286,
+          106147397.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          200,
+          514
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.83739244583376,
+          35.19678120944373
+        ],
+        "mapPoint": [
+          236251083.1084676,
+          106147360.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          840,
+          181
+        ],
+        "rgb": [
+          43,
+          66,
+          84
+        ],
+        "coordinate": [
+          136.83742008241052,
+          35.196798438725224
+        ],
+        "mapPoint": [
+          236251103.71579286,
+          106147345.0468106
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          210,
+          507
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.83744609001405,
+          35.19681189520168
+        ],
+        "mapPoint": [
+          236251123.1084676,
+          106147332.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view3-z18-before",
+        "pixel": [
+          850,
+          175
+        ],
+        "rgb": [
+          22,
+          35,
+          46
+        ],
+        "coordinate": [
+          136.83747372659082,
+          35.1968247407986
+        ],
+        "mapPoint": [
+          236251143.71579286,
+          106147321.0468106
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          230,
+          494
+        ],
+        "rgb": [
+          35,
+          48,
+          65
+        ],
+        "coordinate": [
+          136.83755337837465,
+          35.19686888300711
+        ],
+        "mapPoint": [
+          236251203.1084676,
+          106147280.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          250,
+          481
+        ],
+        "rgb": [
+          17,
+          24,
+          34
+        ],
+        "coordinate": [
+          136.83766066673525,
+          35.196925870772574
+        ],
+        "mapPoint": [
+          236251283.1084676,
+          106147228.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          400,
+          380
+        ],
+        "rgb": [
+          40,
+          54,
+          72
+        ],
+        "coordinate": [
+          136.8384653294397,
+          35.19736862051154
+        ],
+        "mapPoint": [
+          236251883.1084676,
+          106146824.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          420,
+          367
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.8385726178003,
+          35.197425607926405
+        ],
+        "mapPoint": [
+          236251963.1084676,
+          106146772.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          440,
+          353
+        ],
+        "rgb": [
+          41,
+          56,
+          75
+        ],
+        "coordinate": [
+          136.8386799061609,
+          35.19748697894386
+        ],
+        "mapPoint": [
+          236252043.1084676,
+          106146716.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          460,
+          340
+        ],
+        "rgb": [
+          34,
+          47,
+          64
+        ],
+        "coordinate": [
+          136.8387871945215,
+          35.19754396627569
+        ],
+        "mapPoint": [
+          236252123.1084676,
+          106146664.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          480,
+          326
+        ],
+        "rgb": [
+          43,
+          58,
+          78
+        ],
+        "coordinate": [
+          136.8388944828821,
+          35.19760533720372
+        ],
+        "mapPoint": [
+          236252203.1084676,
+          106146608.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          500,
+          313
+        ],
+        "rgb": [
+          17,
+          25,
+          35
+        ],
+        "coordinate": [
+          136.8390017712427,
+          35.197662324452516
+        ],
+        "mapPoint": [
+          236252283.1084676,
+          106146556.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          520,
+          300
+        ],
+        "rgb": [
+          42,
+          57,
+          76
+        ],
+        "coordinate": [
+          136.8391090596033,
+          35.19771931166133
+        ],
+        "mapPoint": [
+          236252363.1084676,
+          106146504.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          540,
+          286
+        ],
+        "rgb": [
+          21,
+          29,
+          41
+        ],
+        "coordinate": [
+          136.83921634796388,
+          35.19778068245689
+        ],
+        "mapPoint": [
+          236252443.1084676,
+          106146448.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          560,
+          273
+        ],
+        "rgb": [
+          40,
+          55,
+          73
+        ],
+        "coordinate": [
+          136.83932363632448,
+          35.19783766958267
+        ],
+        "mapPoint": [
+          236252523.1084676,
+          106146396.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          580,
+          259
+        ],
+        "rgb": [
+          24,
+          33,
+          46
+        ],
+        "coordinate": [
+          136.83943092468508,
+          35.19789904028879
+        ],
+        "mapPoint": [
+          236252603.1084676,
+          106146340.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          120,
+          559
+        ],
+        "rgb": [
+          22,
+          30,
+          42
+        ],
+        "coordinate": [
+          136.8401887758518,
+          35.198303911500176
+        ],
+        "mapPoint": [
+          236253168.20325515,
+          106145971.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          740,
+          155
+        ],
+        "rgb": [
+          42,
+          57,
+          76
+        ],
+        "coordinate": [
+          136.84028923156984,
+          35.1983549355113
+        ],
+        "mapPoint": [
+          236253243.1084676,
+          106145924.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          760,
+          141
+        ],
+        "rgb": [
+          45,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.84039651993044,
+          35.19841630582662
+        ],
+        "mapPoint": [
+          236253323.1084676,
+          106145868.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          780,
+          128
+        ],
+        "rgb": [
+          46,
+          62,
+          82
+        ],
+        "coordinate": [
+          136.84050380829103,
+          35.19847329250646
+        ],
+        "mapPoint": [
+          236253403.1084676,
+          106145816.76810524
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view2-z18-before",
+        "pixel": [
+          800,
+          115
+        ],
+        "rgb": [
+          19,
+          27,
+          38
+        ],
+        "coordinate": [
+          136.84061109665163,
+          35.19853027914633
+        ],
+        "mapPoint": [
+          236253483.1084676,
+          106145764.76810524
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          220,
+          494
+        ],
+        "rgb": [
+          24,
+          34,
+          47
+        ],
+        "coordinate": [
+          136.84072521765478,
+          35.19858884489386
+        ],
+        "mapPoint": [
+          236253568.20325515,
+          106145711.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          240,
+          481
+        ],
+        "rgb": [
+          25,
+          34,
+          48
+        ],
+        "coordinate": [
+          136.84083250601537,
+          35.198645831452666
+        ],
+        "mapPoint": [
+          236253648.20325515,
+          106145659.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          500,
+          310
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.84222725470306,
+          35.19939542015815
+        ],
+        "mapPoint": [
+          236254688.20325512,
+          106144975.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          520,
+          297
+        ],
+        "rgb": [
+          29,
+          41,
+          55
+        ],
+        "coordinate": [
+          136.84233454306366,
+          35.19945240615106
+        ],
+        "mapPoint": [
+          236254768.20325512,
+          106144923.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          540,
+          286
+        ],
+        "rgb": [
+          45,
+          60,
+          80
+        ],
+        "coordinate": [
+          136.84244183142425,
+          35.19950062503691
+        ],
+        "mapPoint": [
+          236254848.20325512,
+          106144879.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          550,
+          280
+        ],
+        "rgb": [
+          27,
+          38,
+          52
+        ],
+        "coordinate": [
+          136.84249547560455,
+          35.19952692623531
+        ],
+        "mapPoint": [
+          236254888.20325512,
+          106144855.32714003
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          560,
+          275
+        ],
+        "rgb": [
+          20,
+          28,
+          39
+        ],
+        "coordinate": [
+          136.84254911978485,
+          35.19954884389414
+        ],
+        "mapPoint": [
+          236254928.20325512,
+          106144835.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          580,
+          266
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.84265640814544,
+          35.19958829566512
+        ],
+        "mapPoint": [
+          236255008.20325512,
+          106144799.32714003
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          100,
+          140
+        ],
+        "rgb": [
+          35,
+          48,
+          64
+        ],
+        "coordinate": [
+          136.84361191499733,
+          35.199749722438604
+        ],
+        "mapPoint": [
+          236255720.68080372,
+          106144652.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          110,
+          140
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84366555917762,
+          35.199749722438604
+        ],
+        "mapPoint": [
+          236255760.68080372,
+          106144652.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          130,
+          142
+        ],
+        "rgb": [
+          46,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.84377284753822,
+          35.199740955397466
+        ],
+        "mapPoint": [
+          236255840.68080372,
+          106144660.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-interval0-view1-z18-before",
+        "pixel": [
+          800,
+          233
+        ],
+        "rgb": [
+          34,
+          47,
+          63
+        ],
+        "coordinate": [
+          136.843836580112,
+          35.19973295199479
+        ],
+        "mapPoint": [
+          236255888.20325512,
+          106144667.32714003
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          150,
+          146
+        ],
+        "rgb": [
+          46,
+          63,
+          83
+        ],
+        "coordinate": [
+          136.84388013589881,
+          35.19972342131235
+        ],
+        "mapPoint": [
+          236255920.68080372,
+          106144676.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          170,
+          150
+        ],
+        "rgb": [
+          23,
+          32,
+          44
+        ],
+        "coordinate": [
+          136.8439874242594,
+          35.19970588722345
+        ],
+        "mapPoint": [
+          236256000.68080372,
+          106144692.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          190,
+          156
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.84409471262,
+          35.199679586083
+        ],
+        "mapPoint": [
+          236256080.68080372,
+          106144716.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          200,
+          159
+        ],
+        "rgb": [
+          36,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.8441483568003,
+          35.199666435509585
+        ],
+        "mapPoint": [
+          236256120.68080372,
+          106144728.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          210,
+          162
+        ],
+        "rgb": [
+          18,
+          25,
+          36
+        ],
+        "coordinate": [
+          136.8442020009806,
+          35.19965328493404
+        ],
+        "mapPoint": [
+          236256160.68080372,
+          106144740.02396742
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          230,
+          169
+        ],
+        "rgb": [
+          31,
+          43,
+          58
+        ],
+        "coordinate": [
+          136.8443092893412,
+          35.19962260024949
+        ],
+        "mapPoint": [
+          236256240.68080372,
+          106144768.0239674
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          270,
+          183
+        ],
+        "rgb": [
+          46,
+          62,
+          82
+        ],
+        "coordinate": [
+          136.8445238660624,
+          35.1995612308456
+        ],
+        "mapPoint": [
+          236256400.68080372,
+          106144824.0239674
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          275,
+          185
+        ],
+        "rgb": [
+          45,
+          61,
+          82
+        ],
+        "coordinate": [
+          136.84455068815254,
+          35.19955246378411
+        ],
+        "mapPoint": [
+          236256420.68080372,
+          106144832.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          290,
+          192
+        ],
+        "rgb": [
+          17,
+          24,
+          34
+        ],
+        "coordinate": [
+          136.84463115442298,
+          35.19952177906146
+        ],
+        "mapPoint": [
+          236256480.68080372,
+          106144860.0239674
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          300,
+          197
+        ],
+        "rgb": [
+          43,
+          59,
+          78
+        ],
+        "coordinate": [
+          136.84468479860328,
+          35.19949986139533
+        ],
+        "mapPoint": [
+          236256520.68080372,
+          106144880.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          310,
+          201
+        ],
+        "rgb": [
+          23,
+          32,
+          45
+        ],
+        "coordinate": [
+          136.84473844278358,
+          35.199482327258174
+        ],
+        "mapPoint": [
+          236256560.68080372,
+          106144896.0239674
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          320,
+          206
+        ],
+        "rgb": [
+          40,
+          55,
+          73
+        ],
+        "coordinate": [
+          136.84479208696388,
+          35.19946040958139
+        ],
+        "mapPoint": [
+          236256600.68080372,
+          106144916.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          330,
+          210
+        ],
+        "rgb": [
+          33,
+          44,
+          61
+        ],
+        "coordinate": [
+          136.84484573114418,
+          35.199442875435714
+        ],
+        "mapPoint": [
+          236256640.68080372,
+          106144932.0239674
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          340,
+          214
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.84489937532447,
+          35.19942534128625
+        ],
+        "mapPoint": [
+          236256680.68080372,
+          106144948.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          350,
+          219
+        ],
+        "rgb": [
+          38,
+          52,
+          70
+        ],
+        "coordinate": [
+          136.84495301950477,
+          35.19940342359409
+        ],
+        "mapPoint": [
+          236256720.68080372,
+          106144968.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          360,
+          223
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.84500666368507,
+          35.199385889436115
+        ],
+        "mapPoint": [
+          236256760.68080372,
+          106144984.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          370,
+          228
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.84506030786537,
+          35.19936397173332
+        ],
+        "mapPoint": [
+          236256800.68080372,
+          106145004.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          380,
+          232
+        ],
+        "rgb": [
+          46,
+          63,
+          83
+        ],
+        "coordinate": [
+          136.84511395204566,
+          35.19934643756682
+        ],
+        "mapPoint": [
+          236256840.68080372,
+          106145020.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          390,
+          237
+        ],
+        "rgb": [
+          43,
+          58,
+          77
+        ],
+        "coordinate": [
+          136.84516759622596,
+          35.19932451985337
+        ],
+        "mapPoint": [
+          236256880.68080372,
+          106145040.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "tsushima0",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          410,
+          251
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84527488458656,
+          35.199263150224255
+        ],
+        "mapPoint": [
+          236256960.68080372,
+          106145096.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      }
+    ],
+    "main17": [
+      {
+        "item": "main17",
+        "capture": "meitetsu-marunouchi-z18-before",
+        "pixel": [
+          471,
+          231
+        ],
+        "rgb": [
+          46,
+          61,
+          89
+        ],
+        "coordinate": [
+          136.84198711408624,
+          35.204625793777495
+        ],
+        "mapPoint": [
+          236254509.14143294,
+          106140202.43337008
+        ],
+        "kind": "label-masked-station-normal-candidate"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          418,
+          100
+        ],
+        "rgb": [
+          23,
+          32,
+          44
+        ],
+        "coordinate": [
+          136.8430008436618,
+          35.202236581477834
+        ],
+        "mapPoint": [
+          236255265.03299096,
+          106142382.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          480,
+          280
+        ],
+        "rgb": [
+          29,
+          40,
+          55
+        ],
+        "coordinate": [
+          136.84333343757964,
+          35.2014475681445
+        ],
+        "mapPoint": [
+          236255513.03299096,
+          106143102.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          487,
+          300
+        ],
+        "rgb": [
+          18,
+          25,
+          35
+        ],
+        "coordinate": [
+          136.84337098850585,
+          35.20135989952319
+        ],
+        "mapPoint": [
+          236255541.03299096,
+          106143182.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          504,
+          350
+        ],
+        "rgb": [
+          23,
+          32,
+          44
+        ],
+        "coordinate": [
+          136.84346218361236,
+          35.20114072755591
+        ],
+        "mapPoint": [
+          236255609.03299093,
+          106143382.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          521,
+          400
+        ],
+        "rgb": [
+          24,
+          34,
+          47
+        ],
+        "coordinate": [
+          136.84355337871887,
+          35.20092155499717
+        ],
+        "mapPoint": [
+          236255677.03299093,
+          106143582.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          534,
+          440
+        ],
+        "rgb": [
+          25,
+          35,
+          48
+        ],
+        "coordinate": [
+          136.84362311615325,
+          35.200746216524344
+        ],
+        "mapPoint": [
+          236255729.03299093,
+          106143742.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          542,
+          460
+        ],
+        "rgb": [
+          27,
+          38,
+          52
+        ],
+        "coordinate": [
+          136.8436660314975,
+          35.20065854714597
+        ],
+        "mapPoint": [
+          236255761.03299093,
+          106143822.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          553,
+          480
+        ],
+        "rgb": [
+          20,
+          29,
+          40
+        ],
+        "coordinate": [
+          136.84372504009582,
+          35.20057087767298
+        ],
+        "mapPoint": [
+          236255805.03299093,
+          106143902.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          562,
+          500
+        ],
+        "rgb": [
+          18,
+          26,
+          37
+        ],
+        "coordinate": [
+          136.8437733198581,
+          35.20048320810536
+        ],
+        "mapPoint": [
+          236255841.03299093,
+          106143982.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          572,
+          520
+        ],
+        "rgb": [
+          30,
+          42,
+          57
+        ],
+        "coordinate": [
+          136.84382696403839,
+          35.20039553844311
+        ],
+        "mapPoint": [
+          236255881.03299093,
+          106144062.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          151,
+          10
+        ],
+        "rgb": [
+          24,
+          33,
+          46
+        ],
+        "coordinate": [
+          136.84388550031684,
+          35.200319578082826
+        ],
+        "mapPoint": [
+          236255924.68080372,
+          106144132.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "meitetsu-main-17-view1-z18-before",
+        "pixel": [
+          586,
+          540
+        ],
+        "rgb": [
+          42,
+          57,
+          75
+        ],
+        "coordinate": [
+          136.8439020658908,
+          35.200307868686224
+        ],
+        "mapPoint": [
+          236255937.03299093,
+          106144142.7089667
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          159,
+          20
+        ],
+        "rgb": [
+          32,
+          45,
+          60
+        ],
+        "coordinate": [
+          136.84392841566108,
+          35.20027574317521
+        ],
+        "mapPoint": [
+          236255956.68080372,
+          106144172.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          166,
+          30
+        ],
+        "rgb": [
+          33,
+          45,
+          61
+        ],
+        "coordinate": [
+          136.8439659665873,
+          35.20023190824394
+        ],
+        "mapPoint": [
+          236255984.68080372,
+          106144212.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          173,
+          40
+        ],
+        "rgb": [
+          34,
+          46,
+          62
+        ],
+        "coordinate": [
+          136.8440035175135,
+          35.20018807328902
+        ],
+        "mapPoint": [
+          236256012.68080372,
+          106144252.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          176,
+          45
+        ],
+        "rgb": [
+          31,
+          43,
+          58
+        ],
+        "coordinate": [
+          136.8440196107676,
+          35.20016615580269
+        ],
+        "mapPoint": [
+          236256024.68080372,
+          106144272.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          275,
+          147
+        ],
+        "rgb": [
+          26,
+          37,
+          50
+        ],
+        "coordinate": [
+          136.84455068815254,
+          35.19971903779049
+        ],
+        "mapPoint": [
+          236256420.68080372,
+          106144680.02396742
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          300,
+          168
+        ],
+        "rgb": [
+          32,
+          45,
+          60
+        ],
+        "coordinate": [
+          136.84468479860328,
+          35.19962698377657
+        ],
+        "mapPoint": [
+          236256520.68080372,
+          106144764.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          340,
+          198
+        ],
+        "rgb": [
+          37,
+          51,
+          69
+        ],
+        "coordinate": [
+          136.84489937532447,
+          35.1994954778614
+        ],
+        "mapPoint": [
+          236256680.68080372,
+          106144884.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          360,
+          214
+        ],
+        "rgb": [
+          35,
+          48,
+          64
+        ],
+        "coordinate": [
+          136.84500666368507,
+          35.19942534128625
+        ],
+        "mapPoint": [
+          236256760.68080372,
+          106144948.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          370,
+          221
+        ],
+        "rgb": [
+          37,
+          50,
+          67
+        ],
+        "coordinate": [
+          136.84506030786537,
+          35.19939465651557
+        ],
+        "mapPoint": [
+          236256800.68080372,
+          106144976.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          380,
+          229
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84511395204566,
+          35.199359588192046
+        ],
+        "mapPoint": [
+          236256840.68080372,
+          106145008.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main17",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          410,
+          251
+        ],
+        "rgb": [
+          36,
+          49,
+          66
+        ],
+        "coordinate": [
+          136.84527488458656,
+          35.199263150224255
+        ],
+        "mapPoint": [
+          236256960.68080372,
+          106145096.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      }
+    ],
+    "main18": [
+      {
+        "item": "main18",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          592,
+          378
+        ],
+        "rgb": [
+          104,
+          128,
+          178
+        ],
+        "coordinate": [
+          136.84625120866804,
+          35.198706437899155
+        ],
+        "mapPoint": [
+          236257688.68080378,
+          106145604.0239674
+        ],
+        "kind": "occluded-station-midpoint-normal-candidate"
+      },
+      {
+        "item": "main18",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          630,
+          404
+        ],
+        "rgb": [
+          26,
+          37,
+          57
+        ],
+        "coordinate": [
+          136.84645505655317,
+          35.19859246482662
+        ],
+        "mapPoint": [
+          236257840.68080375,
+          106145708.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "tsushima-sukaguchi-z18-before",
+        "pixel": [
+          640,
+          412
+        ],
+        "rgb": [
+          26,
+          37,
+          57
+        ],
+        "coordinate": [
+          136.84650870073347,
+          35.19855739615675
+        ],
+        "mapPoint": [
+          236257880.68080375,
+          106145740.0239674
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          200,
+          122
+        ],
+        "rgb": [
+          18,
+          24,
+          34
+        ],
+        "coordinate": [
+          136.8473601476191,
+          35.19809146464889
+        ],
+        "mapPoint": [
+          236258515.56561765,
+          106146165.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          220,
+          133
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.8474674359797,
+          35.198043244926495
+        ],
+        "mapPoint": [
+          236258595.56561765,
+          106146209.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          240,
+          149
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.8475747243403,
+          35.19797310709737
+        ],
+        "mapPoint": [
+          236258675.56561765,
+          106146273.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          250,
+          156
+        ],
+        "rgb": [
+          25,
+          34,
+          48
+        ],
+        "coordinate": [
+          136.8476283685206,
+          35.19794242177808
+        ],
+        "mapPoint": [
+          236258715.56561765,
+          106146301.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          260,
+          163
+        ],
+        "rgb": [
+          40,
+          54,
+          73
+        ],
+        "coordinate": [
+          136.8476820127009,
+          35.197911736447196
+        ],
+        "mapPoint": [
+          236258755.56561765,
+          106146329.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          280,
+          177
+        ],
+        "rgb": [
+          24,
+          34,
+          47
+        ],
+        "coordinate": [
+          136.84778930106148,
+          35.19785036575066
+        ],
+        "mapPoint": [
+          236258835.56561765,
+          106146385.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          300,
+          191
+        ],
+        "rgb": [
+          27,
+          38,
+          51
+        ],
+        "coordinate": [
+          136.84789658942208,
+          35.19778899500776
+        ],
+        "mapPoint": [
+          236258915.56561765,
+          106146441.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          320,
+          204
+        ],
+        "rgb": [
+          40,
+          54,
+          72
+        ],
+        "coordinate": [
+          136.84800387778267,
+          35.197732007847826
+        ],
+        "mapPoint": [
+          236258995.56561765,
+          106146493.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          340,
+          217
+        ],
+        "rgb": [
+          49,
+          66,
+          87
+        ],
+        "coordinate": [
+          136.84811116614327,
+          35.19767502064792
+        ],
+        "mapPoint": [
+          236259075.56561765,
+          106146545.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          350,
+          224
+        ],
+        "rgb": [
+          34,
+          47,
+          64
+        ],
+        "coordinate": [
+          136.84816481032357,
+          35.197644335216026
+        ],
+        "mapPoint": [
+          236259115.56561765,
+          106146573.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          360,
+          231
+        ],
+        "rgb": [
+          25,
+          35,
+          48
+        ],
+        "coordinate": [
+          136.84821845450386,
+          35.19761364977254
+        ],
+        "mapPoint": [
+          236259155.56561765,
+          106146601.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          380,
+          244
+        ],
+        "rgb": [
+          28,
+          39,
+          53
+        ],
+        "coordinate": [
+          136.84832574286446,
+          35.197556662489596
+        ],
+        "mapPoint": [
+          236259235.56561765,
+          106146653.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          400,
+          257
+        ],
+        "rgb": [
+          42,
+          57,
+          76
+        ],
+        "coordinate": [
+          136.84843303122506,
+          35.19749967516667
+        ],
+        "mapPoint": [
+          236259315.56561765,
+          106146705.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          420,
+          271
+        ],
+        "rgb": [
+          16,
+          23,
+          33
+        ],
+        "coordinate": [
+          136.84854031958565,
+          35.19743830415881
+        ],
+        "mapPoint": [
+          236259395.56561765,
+          106146761.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          440,
+          285
+        ],
+        "rgb": [
+          30,
+          41,
+          56
+        ],
+        "coordinate": [
+          136.84864760794625,
+          35.197376933104586
+        ],
+        "mapPoint": [
+          236259475.56561765,
+          106146817.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          450,
+          291
+        ],
+        "rgb": [
+          48,
+          65,
+          86
+        ],
+        "coordinate": [
+          136.84870125212655,
+          35.19735063121001
+        ],
+        "mapPoint": [
+          236259515.56561765,
+          106146841.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          600,
+          390
+        ],
+        "rgb": [
+          38,
+          51,
+          69
+        ],
+        "coordinate": [
+          136.84950591483096,
+          35.19691664871992
+        ],
+        "mapPoint": [
+          236260115.56561762,
+          106147237.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          620,
+          402
+        ],
+        "rgb": [
+          42,
+          57,
+          76
+        ],
+        "coordinate": [
+          136.84961320319155,
+          35.196864044624164
+        ],
+        "mapPoint": [
+          236260195.56561762,
+          106147285.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          640,
+          413
+        ],
+        "rgb": [
+          35,
+          48,
+          65
+        ],
+        "coordinate": [
+          136.84972049155215,
+          35.19681582417314
+        ],
+        "mapPoint": [
+          236260275.56561762,
+          106147329.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          650,
+          419
+        ],
+        "rgb": [
+          29,
+          40,
+          54
+        ],
+        "coordinate": [
+          136.84977413573245,
+          35.19678952209688
+        ],
+        "mapPoint": [
+          236260315.56561762,
+          106147353.18301457
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view1-z18-before",
+        "pixel": [
+          660,
+          425
+        ],
+        "rgb": [
+          20,
+          28,
+          40
+        ],
+        "coordinate": [
+          136.84982777991274,
+          35.1967632200121
+        ],
+        "mapPoint": [
+          236260355.56561762,
+          106147377.18301457
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          250,
+          150
+        ],
+        "rgb": [
+          34,
+          47,
+          64
+        ],
+        "coordinate": [
+          136.85085327022324,
+          35.196247722343124
+        ],
+        "mapPoint": [
+          236261120.2266152,
+          106147847.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          260,
+          156
+        ],
+        "rgb": [
+          28,
+          39,
+          53
+        ],
+        "coordinate": [
+          136.85090691440354,
+          35.19622142008293
+        ],
+        "mapPoint": [
+          236261160.2266152,
+          106147871.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          280,
+          169
+        ],
+        "rgb": [
+          22,
+          30,
+          42
+        ],
+        "coordinate": [
+          136.85101420276413,
+          35.19616443182326
+        ],
+        "mapPoint": [
+          236261240.2266152,
+          106147923.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          300,
+          182
+        ],
+        "rgb": [
+          22,
+          31,
+          43
+        ],
+        "coordinate": [
+          136.85112149112473,
+          35.196107443523616
+        ],
+        "mapPoint": [
+          236261320.2266152,
+          106147975.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          320,
+          195
+        ],
+        "rgb": [
+          32,
+          44,
+          60
+        ],
+        "coordinate": [
+          136.85122877948533,
+          35.196050455184
+        ],
+        "mapPoint": [
+          236261400.2266152,
+          106148027.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          340,
+          208
+        ],
+        "rgb": [
+          40,
+          54,
+          72
+        ],
+        "coordinate": [
+          136.85133606784592,
+          35.1959934668044
+        ],
+        "mapPoint": [
+          236261480.2266152,
+          106148079.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          350,
+          214
+        ],
+        "rgb": [
+          17,
+          25,
+          35
+        ],
+        "coordinate": [
+          136.85138971202622,
+          35.19596716446187
+        ],
+        "mapPoint": [
+          236261520.2266152,
+          106148103.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          360,
+          220
+        ],
+        "rgb": [
+          41,
+          55,
+          74
+        ],
+        "coordinate": [
+          136.85144335620652,
+          35.195940862110824
+        ],
+        "mapPoint": [
+          236261560.2266152,
+          106148127.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          380,
+          233
+        ],
+        "rgb": [
+          33,
+          46,
+          62
+        ],
+        "coordinate": [
+          136.8515506445671,
+          35.19588387365434
+        ],
+        "mapPoint": [
+          236261640.2266152,
+          106148179.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          400,
+          246
+        ],
+        "rgb": [
+          24,
+          34,
+          47
+        ],
+        "coordinate": [
+          136.8516579329277,
+          35.19582688515787
+        ],
+        "mapPoint": [
+          236261720.2266152,
+          106148231.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          420,
+          259
+        ],
+        "rgb": [
+          20,
+          29,
+          43
+        ],
+        "coordinate": [
+          136.8517652212883,
+          35.19576989662143
+        ],
+        "mapPoint": [
+          236261800.2266152,
+          106148283.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          425,
+          263
+        ],
+        "rgb": [
+          27,
+          39,
+          59
+        ],
+        "coordinate": [
+          136.85179204337845,
+          35.1957523616791
+        ],
+        "mapPoint": [
+          236261820.2266152,
+          106148299.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          440,
+          272
+        ],
+        "rgb": [
+          25,
+          37,
+          56
+        ],
+        "coordinate": [
+          136.8518725096489,
+          35.19571290804501
+        ],
+        "mapPoint": [
+          236261880.2266152,
+          106148335.56028318
+        ],
+        "kind": "bounded-own-glyph-column-query-after-manual-identity"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-main-18-view2-z18-before",
+        "pixel": [
+          450,
+          279
+        ],
+        "rgb": [
+          34,
+          48,
+          75
+        ],
+        "coordinate": [
+          136.8519261538292,
+          35.19568222187192
+        ],
+        "mapPoint": [
+          236261920.2266152,
+          106148363.56028318
+        ],
+        "kind": "manually-identified-own-black-glyph"
+      },
+      {
+        "item": "main18",
+        "capture": "meitetsu-shinkawabashi-z18-before",
+        "pixel": [
+          454,
+          280
+        ],
+        "rgb": [
+          85,
+          111,
+          153
+        ],
+        "coordinate": [
+          136.85237591897993,
+          35.195456036607474
+        ],
+        "mapPoint": [
+          236262255.59581888,
+          106148569.94565982
+        ],
+        "kind": "label-masked-station-normal-candidate"
+      }
+    ]
+  },
+  "interpolation": "Monotone piecewise cubic Hermite in mapPoints, maximum support sampling roughly20viewportpixels; shared station stem stays exactly three reverse-equal controls."
+}

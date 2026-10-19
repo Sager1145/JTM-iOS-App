@@ -1,0 +1,5129 @@
+{
+  "camera" : {
+    "displayScale" : 1,
+    "heading" : 0,
+    "latitude" : 35.091440713225367,
+    "longitude" : 133.11670270584179,
+    "mapPointsPerPoint" : 8,
+    "metresPerPoint" : 0.97390570625233874,
+    "pitch" : 0,
+    "rectHeight" : 6144,
+    "rectWidth" : 8192,
+    "rectX" : 233472639.75571969,
+    "rectY" : 106240347.14761794,
+    "viewportHeightPoints" : 768,
+    "viewportWidthPoints" : 1024,
+    "zoom256" : 17
+  },
+  "coverageScope" : "This viewport only; overlapping viewpoints are separate records, never summed as reviewed coverage.",
+  "displayDistanceSample" : {
+    "candidateCount" : 496,
+    "cap" : 1000,
+    "capReducedSampling" : false,
+    "maximumMetres" : 0.71224484498073459,
+    "requestedSpacingMetres" : 10,
+    "sampleCount" : 496,
+    "samples" : [
+      {
+        "latitude" : 35.094604294498332,
+        "longitude" : 133.12219586990435,
+        "nearestMetres" : 0.48028419618615925,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094604649577093,
+        "longitude" : 133.12218528720999,
+        "nearestMetres" : 0.46243796132892345,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094604649577093,
+        "longitude" : 133.12218528720999,
+        "nearestMetres" : 0.46243796132892345,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094605453544645,
+        "longitude" : 133.12215821481701,
+        "nearestMetres" : 0.40522411517165002,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094605453544645,
+        "longitude" : 133.12215821481701,
+        "nearestMetres" : 0.40522411517165002,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094606196947097,
+        "longitude" : 133.12213075221933,
+        "nearestMetres" : 0.33919519876742882,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094606196947097,
+        "longitude" : 133.12213075221933,
+        "nearestMetres" : 0.33919519876742882,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094606908199218,
+        "longitude" : 133.12210296838387,
+        "nearestMetres" : 0.26787050935254947,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094606908199218,
+        "longitude" : 133.12210296838387,
+        "nearestMetres" : 0.26787050935254947,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094607615715823,
+        "longitude" : 133.1220749322772,
+        "nearestMetres" : 0.19476934963484172,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094607615715823,
+        "longitude" : 133.1220749322772,
+        "nearestMetres" : 0.19476934963484172,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09460834791161,
+        "longitude" : 133.12204671286659,
+        "nearestMetres" : 0.12341100967140091,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09460834791161,
+        "longitude" : 133.12204671286659,
+        "nearestMetres" : 0.12341100967140091,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094609133201423,
+        "longitude" : 133.12201837911851,
+        "nearestMetres" : 0.05731479509057108,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094609133201423,
+        "longitude" : 133.12201837911851,
+        "nearestMetres" : 0.05731479509057108,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094610000000017,
+        "longitude" : 133.12199000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094610000000017,
+        "longitude" : 133.12199000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094612383238143,
+        "longitude" : 133.12191684278812,
+        "nearestMetres" : 0.13554393301995013,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094612383238143,
+        "longitude" : 133.12191684278812,
+        "nearestMetres" : 0.13554393301995013,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094614852885258,
+        "longitude" : 133.12183900097548,
+        "nearestMetres" : 0.2724244626000939,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094614852885258,
+        "longitude" : 133.12183900097548,
+        "nearestMetres" : 0.2724244626000939,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094617203845701,
+        "longitude" : 133.12175801789274,
+        "nearestMetres" : 0.39060986931418762,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094617203845701,
+        "longitude" : 133.12175801789274,
+        "nearestMetres" : 0.39060986931418762,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619231023813,
+        "longitude" : 133.12167543687056,
+        "nearestMetres" : 0.47006843903256634,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619231023813,
+        "longitude" : 133.12167543687056,
+        "nearestMetres" : 0.47006843903256634,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094620729323914,
+        "longitude" : 133.12159280123959,
+        "nearestMetres" : 0.49076845051023837,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094620729323914,
+        "longitude" : 133.12159280123959,
+        "nearestMetres" : 0.49076845051023837,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094621493650379,
+        "longitude" : 133.12151165433042,
+        "nearestMetres" : 0.43267819142094593,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094621493650379,
+        "longitude" : 133.12151165433042,
+        "nearestMetres" : 0.43267819142094593,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094621318907663,
+        "longitude" : 133.12143353947368,
+        "nearestMetres" : 0.27576595323606928,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094621318907663,
+        "longitude" : 133.12143353947368,
+        "nearestMetres" : 0.27576595323606928,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619999999999,
+        "longitude" : 133.12136000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619999999999,
+        "longitude" : 133.12136000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619143901312,
+        "longitude" : 133.12133102107151,
+        "nearestMetres" : 0.13415083660308477,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619143901312,
+        "longitude" : 133.12133102107151,
+        "nearestMetres" : 0.13415083660308477,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0946181750069,
+        "longitude" : 133.12130200294709,
+        "nearestMetres" : 0.25614501120787564,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0946181750069,
+        "longitude" : 133.12130200294709,
+        "nearestMetres" : 0.25614501120787564,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094617088375799,
+        "longitude" : 133.1212730319954,
+        "nearestMetres" : 0.36475463962860238,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094617088375799,
+        "longitude" : 133.1212730319954,
+        "nearestMetres" : 0.36475463962860238,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094615879067128,
+        "longitude" : 133.12124419458459,
+        "nearestMetres" : 0.45875185098415966,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094615879067128,
+        "longitude" : 133.12124419458459,
+        "nearestMetres" : 0.45875185098415966,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094614542139816,
+        "longitude" : 133.12121557708352,
+        "nearestMetres" : 0.53690875015339035,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094614542139816,
+        "longitude" : 133.12121557708352,
+        "nearestMetres" : 0.53690875015339035,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094613072653004,
+        "longitude" : 133.1211872658607,
+        "nearestMetres" : 0.59799746240821483,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094613072653004,
+        "longitude" : 133.1211872658607,
+        "nearestMetres" : 0.59799746240821483,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094611465665714,
+        "longitude" : 133.12115934728428,
+        "nearestMetres" : 0.64079010722466057,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094611465665714,
+        "longitude" : 133.12115934728428,
+        "nearestMetres" : 0.64079010722466057,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094609716236967,
+        "longitude" : 133.12113190772311,
+        "nearestMetres" : 0.66405879633055842,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094609716236967,
+        "longitude" : 133.12113190772311,
+        "nearestMetres" : 0.66405879633055842,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094607819425825,
+        "longitude" : 133.12110503354563,
+        "nearestMetres" : 0.6665756512279053,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094607819425825,
+        "longitude" : 133.12110503354563,
+        "nearestMetres" : 0.6665756512279053,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094605770291324,
+        "longitude" : 133.12107881112027,
+        "nearestMetres" : 0.64711278617837786,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094605770291324,
+        "longitude" : 133.12107881112027,
+        "nearestMetres" : 0.64711278617837786,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09460356389252,
+        "longitude" : 133.1210533268156,
+        "nearestMetres" : 0.60444231955592576,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09460356389252,
+        "longitude" : 133.1210533268156,
+        "nearestMetres" : 0.60444231955592576,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094601195288405,
+        "longitude" : 133.12102866700013,
+        "nearestMetres" : 0.53733636422971687,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094601195288405,
+        "longitude" : 133.12102866700013,
+        "nearestMetres" : 0.53733636422971687,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094598659538079,
+        "longitude" : 133.12100491804233,
+        "nearestMetres" : 0.44456704198298796,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094598659538079,
+        "longitude" : 133.12100491804233,
+        "nearestMetres" : 0.44456704198298796,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094595951700555,
+        "longitude" : 133.12098216631068,
+        "nearestMetres" : 0.32490646508708354,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094595951700555,
+        "longitude" : 133.12098216631068,
+        "nearestMetres" : 0.32490646508708354,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094593066834832,
+        "longitude" : 133.12096049817379,
+        "nearestMetres" : 0.17712674403395787,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094593066834832,
+        "longitude" : 133.12096049817379,
+        "nearestMetres" : 0.17712674403395787,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094589999999997,
+        "longitude" : 133.12094000000002,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094589999999997,
+        "longitude" : 133.12094000000002,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094587940069196,
+        "longitude" : 133.12092772414354,
+        "nearestMetres" : 0.10705573776456838,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094587940069196,
+        "longitude" : 133.12092772414354,
+        "nearestMetres" : 0.10705573776456838,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094585750925368,
+        "longitude" : 133.12091592406355,
+        "nearestMetres" : 0.18778266088092119,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094585750925368,
+        "longitude" : 133.12091592406355,
+        "nearestMetres" : 0.18778266088092119,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094583447683618,
+        "longitude" : 133.12090456283252,
+        "nearestMetres" : 0.2447639204851455,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094583447683618,
+        "longitude" : 133.12090456283252,
+        "nearestMetres" : 0.2447639204851455,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094581045459073,
+        "longitude" : 133.12089360352257,
+        "nearestMetres" : 0.28058267796195424,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094581045459073,
+        "longitude" : 133.12089360352257,
+        "nearestMetres" : 0.28058267796195424,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094578559366752,
+        "longitude" : 133.12088300920644,
+        "nearestMetres" : 0.29782207128747773,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094578559366752,
+        "longitude" : 133.12088300920644,
+        "nearestMetres" : 0.29782207128747773,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094576004521812,
+        "longitude" : 133.12087274295601,
+        "nearestMetres" : 0.29906526916112924,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094576004521812,
+        "longitude" : 133.12087274295601,
+        "nearestMetres" : 0.29906526916112924,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094573396039344,
+        "longitude" : 133.12086276784407,
+        "nearestMetres" : 0.28689541583777578,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094573396039344,
+        "longitude" : 133.12086276784407,
+        "nearestMetres" : 0.28689541583777578,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094570749034432,
+        "longitude" : 133.12085304694278,
+        "nearestMetres" : 0.26389566721802271,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094570749034432,
+        "longitude" : 133.12085304694278,
+        "nearestMetres" : 0.26389566721802271,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094568078622181,
+        "longitude" : 133.12084354332455,
+        "nearestMetres" : 0.23264917594680043,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094568078622181,
+        "longitude" : 133.12084354332455,
+        "nearestMetres" : 0.23264917594680043,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094565399917713,
+        "longitude" : 133.12083422006182,
+        "nearestMetres" : 0.19573909703034476,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094565399917713,
+        "longitude" : 133.12083422006182,
+        "nearestMetres" : 0.19573909703034476,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094562728036074,
+        "longitude" : 133.12082504022658,
+        "nearestMetres" : 0.15574858852799534,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094562728036074,
+        "longitude" : 133.12082504022658,
+        "nearestMetres" : 0.15574858852799534,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094560078092471,
+        "longitude" : 133.1208159668916,
+        "nearestMetres" : 0.11526080462230624,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094560078092471,
+        "longitude" : 133.1208159668916,
+        "nearestMetres" : 0.11526080462230624,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094557465201937,
+        "longitude" : 133.1208069631291,
+        "nearestMetres" : 0.076858896002195545,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094557465201937,
+        "longitude" : 133.1208069631291,
+        "nearestMetres" : 0.076858896002195545,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094554904479587,
+        "longitude" : 133.12079799201143,
+        "nearestMetres" : 0.043126019876156899,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094554904479587,
+        "longitude" : 133.12079799201143,
+        "nearestMetres" : 0.043126019876156899,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094552411040567,
+        "longitude" : 133.12078901661096,
+        "nearestMetres" : 0.016645335133190647,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094552411040567,
+        "longitude" : 133.12078901661096,
+        "nearestMetres" : 0.016645335133190647,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094549999999998,
+        "longitude" : 133.12078,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094549999999998,
+        "longitude" : 133.12078,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094535000001379,
+        "longitude" : 133.12072500000002,
+        "nearestMetres" : 5.736144199437028e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094520000000003,
+        "longitude" : 133.12067000000005,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094520000000003,
+        "longitude" : 133.12067000000005,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09451771783592,
+        "longitude" : 133.12066098590029,
+        "nearestMetres" : 0.0030385948665087805,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09451771783592,
+        "longitude" : 133.12066098590029,
+        "nearestMetres" : 0.0030385948665087805,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09451557665907,
+        "longitude" : 133.12065201736348,
+        "nearestMetres" : 0.007672669706471652,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09451557665907,
+        "longitude" : 133.12065201736348,
+        "nearestMetres" : 0.007672669706471652,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094513540034086,
+        "longitude" : 133.12064305645757,
+        "nearestMetres" : 0.029274218046255636,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094513540034086,
+        "longitude" : 133.12064305645757,
+        "nearestMetres" : 0.029274218046255636,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094511571525437,
+        "longitude" : 133.12063406525047,
+        "nearestMetres" : 0.058906459870510776,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094511571525437,
+        "longitude" : 133.12063406525047,
+        "nearestMetres" : 0.058906459870510776,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094509634697822,
+        "longitude" : 133.1206250058101,
+        "nearestMetres" : 0.093709824090948343,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094509634697822,
+        "longitude" : 133.1206250058101,
+        "nearestMetres" : 0.093709824090948343,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094507693115702,
+        "longitude" : 133.12061584020429,
+        "nearestMetres" : 0.1308247241636768,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094507693115702,
+        "longitude" : 133.12061584020429,
+        "nearestMetres" : 0.1308247241636768,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094505710343668,
+        "longitude" : 133.12060653050131,
+        "nearestMetres" : 0.1673915731456532,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094505710343668,
+        "longitude" : 133.12060653050131,
+        "nearestMetres" : 0.1673915731456532,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094503649946283,
+        "longitude" : 133.12059703876869,
+        "nearestMetres" : 0.2005507980501694,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094503649946283,
+        "longitude" : 133.12059703876869,
+        "nearestMetres" : 0.2005507980501694,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094501475488094,
+        "longitude" : 133.12058732707473,
+        "nearestMetres" : 0.22744280627897853,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094501475488094,
+        "longitude" : 133.12058732707473,
+        "nearestMetres" : 0.22744280627897853,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094499150533707,
+        "longitude" : 133.12057735748706,
+        "nearestMetres" : 0.24520803018991011,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094499150533707,
+        "longitude" : 133.12057735748706,
+        "nearestMetres" : 0.24520803018991011,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094496638647563,
+        "longitude" : 133.12056709207366,
+        "nearestMetres" : 0.2509868742027288,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094496638647563,
+        "longitude" : 133.12056709207366,
+        "nearestMetres" : 0.2509868742027288,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094493903394259,
+        "longitude" : 133.12055649290275,
+        "nearestMetres" : 0.24191975324534573,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094493903394259,
+        "longitude" : 133.12055649290275,
+        "nearestMetres" : 0.24191975324534573,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094490908338358,
+        "longitude" : 133.12054552204188,
+        "nearestMetres" : 0.21514709618892874,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094490908338358,
+        "longitude" : 133.12054552204188,
+        "nearestMetres" : 0.21514709618892874,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094487617044337,
+        "longitude" : 133.1205341415592,
+        "nearestMetres" : 0.16780930829896709,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094487617044337,
+        "longitude" : 133.1205341415592,
+        "nearestMetres" : 0.16780930829896709,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094483993076693,
+        "longitude" : 133.1205223135226,
+        "nearestMetres" : 0.097046803051485886,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094483993076693,
+        "longitude" : 133.1205223135226,
+        "nearestMetres" : 0.097046803051485886,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094479999999997,
+        "longitude" : 133.12051,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094479999999997,
+        "longitude" : 133.12051,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094471414982955,
+        "longitude" : 133.12048511997432,
+        "nearestMetres" : 0.19128896969133588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094471414982955,
+        "longitude" : 133.12048511997432,
+        "nearestMetres" : 0.19128896969133588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094461435417287,
+        "longitude" : 133.12045771747387,
+        "nearestMetres" : 0.35031948496332221,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094461435417287,
+        "longitude" : 133.12045771747387,
+        "nearestMetres" : 0.35031948496332221,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094450212563657,
+        "longitude" : 133.12042811531518,
+        "nearestMetres" : 0.4785386855160752,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094450212563657,
+        "longitude" : 133.12042811531518,
+        "nearestMetres" : 0.4785386855160752,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094437897682866,
+        "longitude" : 133.12039663631515,
+        "nearestMetres" : 0.57739369934748996,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094437897682866,
+        "longitude" : 133.12039663631515,
+        "nearestMetres" : 0.57739369934748996,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094424642035719,
+        "longitude" : 133.1203636032906,
+        "nearestMetres" : 0.64833165055909758,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094424642035719,
+        "longitude" : 133.1203636032906,
+        "nearestMetres" : 0.64833165055909758,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094410596882909,
+        "longitude" : 133.12032933905826,
+        "nearestMetres" : 0.69279965372297059,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094410596882909,
+        "longitude" : 133.12032933905826,
+        "nearestMetres" : 0.69279965372297059,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094395913485506,
+        "longitude" : 133.12029416643489,
+        "nearestMetres" : 0.71224484498073459,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094395913485506,
+        "longitude" : 133.12029416643489,
+        "nearestMetres" : 0.71224484498073459,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094380743104374,
+        "longitude" : 133.12025840823728,
+        "nearestMetres" : 0.70811433419033176,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094380743104374,
+        "longitude" : 133.12025840823728,
+        "nearestMetres" : 0.70811433419033176,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094365237000744,
+        "longitude" : 133.12022238728241,
+        "nearestMetres" : 0.68185524725332847,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094365237000744,
+        "longitude" : 133.12022238728241,
+        "nearestMetres" : 0.68185524725332847,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094349546435765,
+        "longitude" : 133.12018642638668,
+        "nearestMetres" : 0.6349147163716905,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094349546435765,
+        "longitude" : 133.12018642638668,
+        "nearestMetres" : 0.6349147163716905,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094333822670727,
+        "longitude" : 133.1201508483673,
+        "nearestMetres" : 0.56873984299975477,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094333822670727,
+        "longitude" : 133.1201508483673,
+        "nearestMetres" : 0.56873984299975477,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09431821696716,
+        "longitude" : 133.12011597604078,
+        "nearestMetres" : 0.484777773049275,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09431821696716,
+        "longitude" : 133.12011597604078,
+        "nearestMetres" : 0.484777773049275,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094302880586561,
+        "longitude" : 133.1200821322241,
+        "nearestMetres" : 0.38447561795143992,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094302880586561,
+        "longitude" : 133.1200821322241,
+        "nearestMetres" : 0.38447561795143992,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094287964790645,
+        "longitude" : 133.12004963973379,
+        "nearestMetres" : 0.26928052098379635,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094287964790645,
+        "longitude" : 133.12004963973379,
+        "nearestMetres" : 0.26928052098379635,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094273620841165,
+        "longitude" : 133.12001882138694,
+        "nearestMetres" : 0.14063960116998919,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094273620841165,
+        "longitude" : 133.12001882138694,
+        "nearestMetres" : 0.14063960116998919,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094259999999991,
+        "longitude" : 133.11999000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094259999999991,
+        "longitude" : 133.11999000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094239199784802,
+        "longitude" : 133.11994694834246,
+        "nearestMetres" : 0.20080789035908886,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094239199784802,
+        "longitude" : 133.11994694834246,
+        "nearestMetres" : 0.20080789035908886,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09421824948349,
+        "longitude" : 133.11990474649704,
+        "nearestMetres" : 0.34554470502781526,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09421824948349,
+        "longitude" : 133.11990474649704,
+        "nearestMetres" : 0.34554470502781526,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09419733845538,
+        "longitude" : 133.11986376265159,
+        "nearestMetres" : 0.43355914701145176,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09419733845538,
+        "longitude" : 133.11986376265159,
+        "nearestMetres" : 0.43355914701145176,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094176656059858,
+        "longitude" : 133.11982436499409,
+        "nearestMetres" : 0.4641998991918222,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094176656059858,
+        "longitude" : 133.11982436499409,
+        "nearestMetres" : 0.4641998991918222,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094156391656639,
+        "longitude" : 133.11978692171226,
+        "nearestMetres" : 0.43681566825067963,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094156391656639,
+        "longitude" : 133.11978692171226,
+        "nearestMetres" : 0.43681566825067963,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094136734605556,
+        "longitude" : 133.11975180099412,
+        "nearestMetres" : 0.35075513852621554,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094136734605556,
+        "longitude" : 133.11975180099412,
+        "nearestMetres" : 0.35075513852621554,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094117874266601,
+        "longitude" : 133.11971937102737,
+        "nearestMetres" : 0.20536701618708406,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094117874266601,
+        "longitude" : 133.11971937102737,
+        "nearestMetres" : 0.20536701618708406,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094099999999997,
+        "longitude" : 133.11968999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094099999999997,
+        "longitude" : 133.11968999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094089682492161,
+        "longitude" : 133.1196737393997,
+        "nearestMetres" : 0.12507236417183687,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094089682492161,
+        "longitude" : 133.1196737393997,
+        "nearestMetres" : 0.12507236417183687,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094080564696391,
+        "longitude" : 133.11965992197204,
+        "nearestMetres" : 0.20228929219242203,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094080564696391,
+        "longitude" : 133.11965992197204,
+        "nearestMetres" : 0.20228929219242203,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094072092115248,
+        "longitude" : 133.11964768478799,
+        "nearestMetres" : 0.23771101529112307,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094072092115248,
+        "longitude" : 133.11964768478799,
+        "nearestMetres" : 0.23771101529112307,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094063710251021,
+        "longitude" : 133.11963616491838,
+        "nearestMetres" : 0.23739777052600392,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094063710251021,
+        "longitude" : 133.11963616491838,
+        "nearestMetres" : 0.23739777052600392,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09405486460571,
+        "longitude" : 133.11962449943408,
+        "nearestMetres" : 0.20740979279134683,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09405486460571,
+        "longitude" : 133.11962449943408,
+        "nearestMetres" : 0.20740979279134683,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094045000681177,
+        "longitude" : 133.11961182540557,
+        "nearestMetres" : 0.15380735177658791,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094045000681177,
+        "longitude" : 133.11961182540557,
+        "nearestMetres" : 0.15380735177658791,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094033563978904,
+        "longitude" : 133.11959727990404,
+        "nearestMetres" : 0.082650668321323756,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094033563978904,
+        "longitude" : 133.11959727990404,
+        "nearestMetres" : 0.082650668321323756,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094020000000008,
+        "longitude" : 133.11958000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094020000000008,
+        "longitude" : 133.11958000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093971720175169,
+        "longitude" : 133.11952006550032,
+        "nearestMetres" : 0.16561223176925091,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093923440321767,
+        "longitude" : 133.11946013100061,
+        "nearestMetres" : 0.33122465828908182,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093923440321767,
+        "longitude" : 133.11946013100061,
+        "nearestMetres" : 0.33122465828908182,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093879542431132,
+        "longitude" : 133.11940731528824,
+        "nearestMetres" : 0.37255187025407965,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093835644516879,
+        "longitude" : 133.11935449957585,
+        "nearestMetres" : 0.41387912998478382,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093791746578979,
+        "longitude" : 133.11930168386348,
+        "nearestMetres" : 0.45520642975015951,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093791746578979,
+        "longitude" : 133.11930168386348,
+        "nearestMetres" : 0.45520642975015951,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093741724257264,
+        "longitude" : 133.11924275417388,
+        "nearestMetres" : 0.42066602790853602,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093691701904838,
+        "longitude" : 133.11918382448422,
+        "nearestMetres" : 0.38612558559256627,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093641679521745,
+        "longitude" : 133.11912489479462,
+        "nearestMetres" : 0.35158510013026256,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093641679521745,
+        "longitude" : 133.11912489479462,
+        "nearestMetres" : 0.35158510013026256,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093591119712514,
+        "longitude" : 133.11906659652976,
+        "nearestMetres" : 0.23439021055889492,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093540559871926,
+        "longitude" : 133.1190082982649,
+        "nearestMetres" : 0.11719517633893381,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093489999999996,
+        "longitude" : 133.11895000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093489999999996,
+        "longitude" : 133.11895000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0934300281452,
+        "longitude" : 133.11888314446159,
+        "nearestMetres" : 0.10171527179400215,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0933700562463,
+        "longitude" : 133.11881628892311,
+        "nearestMetres" : 0.2034306924052984,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09331008430329,
+        "longitude" : 133.11874943338466,
+        "nearestMetres" : 0.30514625941924112,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09331008430329,
+        "longitude" : 133.11874943338466,
+        "nearestMetres" : 0.30514625941924112,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093246680315673,
+        "longitude" : 133.11868065841426,
+        "nearestMetres" : 0.28351552881404662,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093183276278779,
+        "longitude" : 133.11861188344386,
+        "nearestMetres" : 0.26188476622862006,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09311987219256,
+        "longitude" : 133.11854310847346,
+        "nearestMetres" : 0.24025396924849449,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09311987219256,
+        "longitude" : 133.11854310847346,
+        "nearestMetres" : 0.24025396924849449,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093053156178144,
+        "longitude" : 133.11847131542416,
+        "nearestMetres" : 0.17858078763755411,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092986440109158,
+        "longitude" : 133.11839952237489,
+        "nearestMetres" : 0.11690750375416088,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092919723985588,
+        "longitude" : 133.11832772932559,
+        "nearestMetres" : 0.055234123014257459,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092919723985588,
+        "longitude" : 133.11832772932559,
+        "nearestMetres" : 0.055234123014257459,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09286729303976,
+        "longitude" : 133.11827079699418,
+        "nearestMetres" : 0.041425620194931095,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092814862060209,
+        "longitude" : 133.11821386466281,
+        "nearestMetres" : 0.027617095941458353,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092762431046964,
+        "longitude" : 133.11815693233143,
+        "nearestMetres" : 0.013808555376261779,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092709999999997,
+        "longitude" : 133.11810000000003,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092709999999997,
+        "longitude" : 133.11810000000003,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092645000440399,
+        "longitude" : 133.11802833333334,
+        "nearestMetres" : 9.5079958433436753e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092580000828974,
+        "longitude" : 133.11795666666669,
+        "nearestMetres" : 7.9221283149124347e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092515001165737,
+        "longitude" : 133.11788500000003,
+        "nearestMetres" : 1.5858524479219856e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092450001450679,
+        "longitude" : 133.11781333333334,
+        "nearestMetres" : 1.0572589734768126e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09238500168383,
+        "longitude" : 133.11774166666666,
+        "nearestMetres" : 8.4507383719532254e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092320001865176,
+        "longitude" : 133.11767,
+        "nearestMetres" : 8.9794101007207003e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092255001994701,
+        "longitude" : 133.11759833333332,
+        "nearestMetres" : 5.2861914547696096e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092190002072414,
+        "longitude" : 133.11752666666666,
+        "nearestMetres" : 1.0036663345962137e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092125002098307,
+        "longitude" : 133.11745499999998,
+        "nearestMetres" : 7.3935199744135102e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092060002072401,
+        "longitude" : 133.11738333333332,
+        "nearestMetres" : 1.0036684158970321e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091995001994682,
+        "longitude" : 133.11731166666664,
+        "nearestMetres" : 5.285644196462659e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091930001865165,
+        "longitude" : 133.11723999999998,
+        "nearestMetres" : 8.9794574966370205e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091865001683836,
+        "longitude" : 133.11716833333332,
+        "nearestMetres" : 8.4508892716172641e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091800001450686,
+        "longitude" : 133.11709666666664,
+        "nearestMetres" : 1.0572441108537681e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091735001165738,
+        "longitude" : 133.11702499999996,
+        "nearestMetres" : 1.056539244762715e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091670000828962,
+        "longitude" : 133.11695333333327,
+        "nearestMetres" : 7.9222299153229342e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091605000440374,
+        "longitude" : 133.11688166666664,
+        "nearestMetres" : 9.5081725162324515e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091539999999995,
+        "longitude" : 133.11680999999996,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091539999999995,
+        "longitude" : 133.11680999999996,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091478000094277,
+        "longitude" : 133.11674299999999,
+        "nearestMetres" : 5.4358986332590586e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091416000141407,
+        "longitude" : 133.11667599999998,
+        "nearestMetres" : 1.0871805421310926e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091354000141408,
+        "longitude" : 133.11660900000004,
+        "nearestMetres" : 1.0871787655643665e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091292000094278,
+        "longitude" : 133.11654200000004,
+        "nearestMetres" : 5.4359063642484582e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091230000000003,
+        "longitude" : 133.11647500000007,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091230000000003,
+        "longitude" : 133.11647500000007,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091191168285185,
+        "longitude" : 133.11643343289106,
+        "nearestMetres" : 0.026947318760347158,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091152336551879,
+        "longitude" : 133.11639186578211,
+        "nearestMetres" : 0.053894665557736005,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091152336551879,
+        "longitude" : 133.11639186578211,
+        "nearestMetres" : 0.053894665557736005,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091113450333488,
+        "longitude" : 133.11635050391155,
+        "nearestMetres" : 0.098801525226265202,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09107456409658,
+        "longitude" : 133.11630914204093,
+        "nearestMetres" : 0.14370842322771235,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09107456409658,
+        "longitude" : 133.11630914204093,
+        "nearestMetres" : 0.14370842322771235,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091035786853816,
+        "longitude" : 133.11626736966011,
+        "nearestMetres" : 0.15268824316441579,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09099700959262,
+        "longitude" : 133.11622559727925,
+        "nearestMetres" : 0.16166807152636872,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09099700959262,
+        "longitude" : 133.11622559727925,
+        "nearestMetres" : 0.16166807152636872,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090958504805393,
+        "longitude" : 133.11618279863964,
+        "nearestMetres" : 0.080834074777068401,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090919999999983,
+        "longitude" : 133.11613999999997,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090919999999983,
+        "longitude" : 133.11613999999997,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090878915115908,
+        "longitude" : 133.11609274974745,
+        "nearestMetres" : 0.11602831040326718,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09083783021115,
+        "longitude" : 133.11604549949493,
+        "nearestMetres" : 0.23205673488090639,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09083783021115,
+        "longitude" : 133.11604549949493,
+        "nearestMetres" : 0.23205673488090639,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09079564519773,
+        "longitude" : 133.11599586300753,
+        "nearestMetres" : 0.27838698540239887,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090753460162496,
+        "longitude" : 133.11594622652009,
+        "nearestMetres" : 0.3247172806172996,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090753460162496,
+        "longitude" : 133.11594622652009,
+        "nearestMetres" : 0.3247172806172996,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090714160103317,
+        "longitude" : 133.11589878340257,
+        "nearestMetres" : 0.28986824628189634,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090674860025175,
+        "longitude" : 133.11585134028508,
+        "nearestMetres" : 0.25501918007604368,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090674860025175,
+        "longitude" : 133.11585134028508,
+        "nearestMetres" : 0.25501918007604368,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090642430019024,
+        "longitude" : 133.11581067014254,
+        "nearestMetres" : 0.12750964006418544,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090609999999991,
+        "longitude" : 133.11577,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090609999999991,
+        "longitude" : 133.11577,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090594831644367,
+        "longitude" : 133.11574999418704,
+        "nearestMetres" : 0.07342063328054578,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090594831644367,
+        "longitude" : 133.11574999418704,
+        "nearestMetres" : 0.07342063328054578,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090581685603702,
+        "longitude" : 133.11573193202676,
+        "nearestMetres" : 0.093854982020507599,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090581685603702,
+        "longitude" : 133.11573193202676,
+        "nearestMetres" : 0.093854982020507599,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090569931914693,
+        "longitude" : 133.115715199666,
+        "nearestMetres" : 0.077307508224089938,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090569931914693,
+        "longitude" : 133.115715199666,
+        "nearestMetres" : 0.077307508224089938,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090558940613569,
+        "longitude" : 133.11569918325191,
+        "nearestMetres" : 0.03978270087482734,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090558940613569,
+        "longitude" : 133.11569918325191,
+        "nearestMetres" : 0.03978270087482734,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090548081736195,
+        "longitude" : 133.11568326893126,
+        "nearestMetres" : 0.0027149563183948683,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090548081736195,
+        "longitude" : 133.11568326893126,
+        "nearestMetres" : 0.0027149563183948683,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09053672531811,
+        "longitude" : 133.11566684285117,
+        "nearestMetres" : 0.034180961203024787,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09053672531811,
+        "longitude" : 133.11566684285117,
+        "nearestMetres" : 0.034180961203024787,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090524241394476,
+        "longitude" : 133.11564929115843,
+        "nearestMetres" : 0.038610816805344089,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090524241394476,
+        "longitude" : 133.11564929115843,
+        "nearestMetres" : 0.038610816805344089,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090509999999981,
+        "longitude" : 133.11563000000004,
+        "nearestMetres" : 1.3025915127631839e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090509999999981,
+        "longitude" : 133.11563000000004,
+        "nearestMetres" : 1.3025915127631839e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090485418146066,
+        "longitude" : 133.11559803230875,
+        "nearestMetres" : 0.061481889314497967,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090485418146066,
+        "longitude" : 133.11559803230875,
+        "nearestMetres" : 0.061481889314497967,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09045756500074,
+        "longitude" : 133.11556284108514,
+        "nearestMetres" : 0.066031256609389202,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09045756500074,
+        "longitude" : 133.11556284108514,
+        "nearestMetres" : 0.066031256609389202,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090427480758493,
+        "longitude" : 133.11552542633703,
+        "nearestMetres" : 0.033331197292888588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090427480758493,
+        "longitude" : 133.11552542633703,
+        "nearestMetres" : 0.033331197292888588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090396205615129,
+        "longitude" : 133.11548678807202,
+        "nearestMetres" : 0.016935149870071105,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090396205615129,
+        "longitude" : 133.11548678807202,
+        "nearestMetres" : 0.016935149870071105,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090364779767967,
+        "longitude" : 133.11544792629809,
+        "nearestMetres" : 0.065084647119950434,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090364779767967,
+        "longitude" : 133.11544792629809,
+        "nearestMetres" : 0.065084647119950434,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090334243415853,
+        "longitude" : 133.11540984102297,
+        "nearestMetres" : 0.091434104710615957,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090334243415853,
+        "longitude" : 133.11540984102297,
+        "nearestMetres" : 0.091434104710615957,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090305636759275,
+        "longitude" : 133.1153735322543,
+        "nearestMetres" : 0.076300296901925663,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090305636759275,
+        "longitude" : 133.1153735322543,
+        "nearestMetres" : 0.076300296901925663,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090279999999993,
+        "longitude" : 133.11534000000009,
+        "nearestMetres" : 2.5251384778533485e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090279999999993,
+        "longitude" : 133.11534000000009,
+        "nearestMetres" : 2.5251384778533485e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090246199632993,
+        "longitude" : 133.11529448654218,
+        "nearestMetres" : 0.14055432092191125,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090246199632993,
+        "longitude" : 133.11529448654218,
+        "nearestMetres" : 0.14055432092191125,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090215363601779,
+        "longitude" : 133.11525189988103,
+        "nearestMetres" : 0.20564393767635353,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090215363601779,
+        "longitude" : 133.11525189988103,
+        "nearestMetres" : 0.20564393767635353,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090186845769971,
+        "longitude" : 133.1152108632794,
+        "nearestMetres" : 0.16791159065122838,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090186845769971,
+        "longitude" : 133.1152108632794,
+        "nearestMetres" : 0.16791159065122838,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090159999999997,
+        "longitude" : 133.11517000000015,
+        "nearestMetres" : 4.7398220098702947e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090159999999997,
+        "longitude" : 133.11517000000015,
+        "nearestMetres" : 4.7398220098702947e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090139505307953,
+        "longitude" : 133.1151366056703,
+        "nearestMetres" : 0.12844937762259256,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090139505307953,
+        "longitude" : 133.1151366056703,
+        "nearestMetres" : 0.12844937762259256,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090121551880252,
+        "longitude" : 133.1151052435014,
+        "nearestMetres" : 0.13137731679503292,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090121551880252,
+        "longitude" : 133.1151052435014,
+        "nearestMetres" : 0.13137731679503292,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090102822513245,
+        "longitude" : 133.11507125958178,
+        "nearestMetres" : 0.068616581949175998,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090102822513245,
+        "longitude" : 133.11507125958178,
+        "nearestMetres" : 0.068616581949175998,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090080000000007,
+        "longitude" : 133.11503000000005,
+        "nearestMetres" : 2.0773179032518606e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090080000000007,
+        "longitude" : 133.11503000000005,
+        "nearestMetres" : 2.0773179032518606e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090050032968492,
+        "longitude" : 133.11497508904921,
+        "nearestMetres" : 0.0072425332596102697,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090020065925977,
+        "longitude" : 133.11492017809843,
+        "nearestMetres" : 0.01448507327843492,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090020065925977,
+        "longitude" : 133.11492017809843,
+        "nearestMetres" : 0.01448507327843492,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089983133127291,
+        "longitude" : 133.11485145297144,
+        "nearestMetres" : 0.076409633158566054,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08994620031185,
+        "longitude" : 133.1147827278445,
+        "nearestMetres" : 0.13833424484910611,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08994620031185,
+        "longitude" : 133.1147827278445,
+        "nearestMetres" : 0.13833424484910611,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08990646743284,
+        "longitude" : 133.1147095707565,
+        "nearestMetres" : 0.1656753377316664,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089866734534475,
+        "longitude" : 133.11463641366848,
+        "nearestMetres" : 0.19301645891488417,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089866734534475,
+        "longitude" : 133.11463641366848,
+        "nearestMetres" : 0.19301645891488417,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089828367276247,
+        "longitude" : 133.11456820683426,
+        "nearestMetres" : 0.096508273497396033,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089789999999986,
+        "longitude" : 133.11450000000005,
+        "nearestMetres" : 1.4513073572202484e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089789999999986,
+        "longitude" : 133.11450000000005,
+        "nearestMetres" : 1.4513073572202484e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08975577612545,
+        "longitude" : 133.11444118472107,
+        "nearestMetres" : 0.16572806221043049,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08975577612545,
+        "longitude" : 133.11444118472107,
+        "nearestMetres" : 0.16572806221043049,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089720815915186,
+        "longitude" : 133.11438163625607,
+        "nearestMetres" : 0.30603595227040964,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089720815915186,
+        "longitude" : 133.11438163625607,
+        "nearestMetres" : 0.30603595227040964,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089685555232521,
+        "longitude" : 133.11432226623813,
+        "nearestMetres" : 0.40995833414538557,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089685555232521,
+        "longitude" : 133.11432226623813,
+        "nearestMetres" : 0.40995833414538557,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089650429941429,
+        "longitude" : 133.11426398629976,
+        "nearestMetres" : 0.4665298702332546,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089650429941429,
+        "longitude" : 133.11426398629976,
+        "nearestMetres" : 0.4665298702332546,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089615875906809,
+        "longitude" : 133.11420770807391,
+        "nearestMetres" : 0.46478519952035091,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089615875906809,
+        "longitude" : 133.11420770807391,
+        "nearestMetres" : 0.46478519952035091,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089582328994098,
+        "longitude" : 133.11415434319349,
+        "nearestMetres" : 0.39375892341908386,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089582328994098,
+        "longitude" : 133.11415434319349,
+        "nearestMetres" : 0.39375892341908386,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089550225069566,
+        "longitude" : 133.11410480329121,
+        "nearestMetres" : 0.24248566169792568,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089550225069566,
+        "longitude" : 133.11410480329121,
+        "nearestMetres" : 0.24248566169792568,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08952,
+        "longitude" : 133.11405999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08952,
+        "longitude" : 133.11405999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089482383291923,
+        "longitude" : 133.11400747235029,
+        "nearestMetres" : 0.26037494377771281,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089482383291923,
+        "longitude" : 133.11400747235029,
+        "nearestMetres" : 0.26037494377771281,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089447185059846,
+        "longitude" : 133.11396154803765,
+        "nearestMetres" : 0.30224205764235318,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089447185059846,
+        "longitude" : 133.11396154803765,
+        "nearestMetres" : 0.30224205764235318,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089413394298319,
+        "longitude" : 133.11391984970612,
+        "nearestMetres" : 0.19298811800650828,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089413394298319,
+        "longitude" : 133.11391984970612,
+        "nearestMetres" : 0.19298811800650828,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089379999999984,
+        "longitude" : 133.11387999999997,
+        "nearestMetres" : 1.2080492115200306e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089379999999984,
+        "longitude" : 133.11387999999997,
+        "nearestMetres" : 1.2080492115200306e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089365539280742,
+        "longitude" : 133.11386326597952,
+        "nearestMetres" : 0.064922904980754245,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089365539280742,
+        "longitude" : 133.11386326597952,
+        "nearestMetres" : 0.064922904980754245,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089350861567127,
+        "longitude" : 133.11384692938236,
+        "nearestMetres" : 0.08690107564750664,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089350861567127,
+        "longitude" : 133.11384692938236,
+        "nearestMetres" : 0.08690107564750664,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0893361768875,
+        "longitude" : 133.11383103921403,
+        "nearestMetres" : 0.078132172497511337,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0893361768875,
+        "longitude" : 133.11383103921403,
+        "nearestMetres" : 0.078132172497511337,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089321695270293,
+        "longitude" : 133.11381564448018,
+        "nearestMetres" : 0.050813848889778468,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089321695270293,
+        "longitude" : 133.11381564448018,
+        "nearestMetres" : 0.050813848889778468,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089307626744109,
+        "longitude" : 133.11380079418623,
+        "nearestMetres" : 0.017143788548424885,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089307626744109,
+        "longitude" : 133.11380079418623,
+        "nearestMetres" : 0.017143788548424885,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089294181337721,
+        "longitude" : 133.11378653733789,
+        "nearestMetres" : 0.010680337591883665,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089294181337721,
+        "longitude" : 133.11378653733789,
+        "nearestMetres" : 0.010680337591883665,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089281569080029,
+        "longitude" : 133.1137729229406,
+        "nearestMetres" : 0.020460829127732481,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089281569080029,
+        "longitude" : 133.1137729229406,
+        "nearestMetres" : 0.020460829127732481,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089269999999978,
+        "longitude" : 133.11376000000007,
+        "nearestMetres" : 3.9147304970352829e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089269999999978,
+        "longitude" : 133.11376000000007,
+        "nearestMetres" : 3.9147304970352829e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089262997664591,
+        "longitude" : 133.11375169808133,
+        "nearestMetres" : 0.006534611306205339,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089262997664591,
+        "longitude" : 133.11375169808133,
+        "nearestMetres" : 0.006534611306205339,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089256896982533,
+        "longitude" : 133.11374398931483,
+        "nearestMetres" : 0.018593565710585076,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089256896982533,
+        "longitude" : 133.11374398931483,
+        "nearestMetres" : 0.018593565710585076,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08925135460381,
+        "longitude" : 133.1137366916843,
+        "nearestMetres" : 0.06048665757461847,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08925135460381,
+        "longitude" : 133.1137366916843,
+        "nearestMetres" : 0.06048665757461847,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089246027178213,
+        "longitude" : 133.1137296231733,
+        "nearestMetres" : 0.10424679163839048,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089246027178213,
+        "longitude" : 133.1137296231733,
+        "nearestMetres" : 0.10424679163839048,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089240571355411,
+        "longitude" : 133.11372260176577,
+        "nearestMetres" : 0.13497607250234869,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089240571355411,
+        "longitude" : 133.11372260176577,
+        "nearestMetres" : 0.13497607250234869,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089234643785126,
+        "longitude" : 133.11371544544519,
+        "nearestMetres" : 0.13777663217910041,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089234643785126,
+        "longitude" : 133.11371544544519,
+        "nearestMetres" : 0.13777663217910041,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089227901116836,
+        "longitude" : 133.11370797219539,
+        "nearestMetres" : 0.097750572028953667,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089227901116836,
+        "longitude" : 133.11370797219539,
+        "nearestMetres" : 0.097750572028953667,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08921999999999,
+        "longitude" : 133.11369999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08921999999999,
+        "longitude" : 133.11369999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089212328295083,
+        "longitude" : 133.11369277564637,
+        "nearestMetres" : 0.10448375962830732,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089212328295083,
+        "longitude" : 133.11369277564637,
+        "nearestMetres" : 0.10448375962830732,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089203904097445,
+        "longitude" : 133.11368515337821,
+        "nearestMetres" : 0.19530665227523836,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089203904097445,
+        "longitude" : 133.11368515337821,
+        "nearestMetres" : 0.19530665227523836,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089194804275529,
+        "longitude" : 133.11367719272985,
+        "nearestMetres" : 0.27241078649033007,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089194804275529,
+        "longitude" : 133.11367719272985,
+        "nearestMetres" : 0.27241078649033007,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089185105697844,
+        "longitude" : 133.11366895323627,
+        "nearestMetres" : 0.33573821022445732,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089185105697844,
+        "longitude" : 133.11366895323627,
+        "nearestMetres" : 0.33573821022445732,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089174885232971,
+        "longitude" : 133.11366049443203,
+        "nearestMetres" : 0.3852310145642116,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089174885232971,
+        "longitude" : 133.11366049443203,
+        "nearestMetres" : 0.3852310145642116,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089164219749449,
+        "longitude" : 133.11365187585173,
+        "nearestMetres" : 0.42083127464495979,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089164219749449,
+        "longitude" : 133.11365187585173,
+        "nearestMetres" : 0.42083127464495979,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089153186115873,
+        "longitude" : 133.11364315703017,
+        "nearestMetres" : 0.44248105958793049,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089153186115873,
+        "longitude" : 133.11364315703017,
+        "nearestMetres" : 0.44248105958793049,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089141861200922,
+        "longitude" : 133.11363439750204,
+        "nearestMetres" : 0.45012244530731715,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089141861200922,
+        "longitude" : 133.11363439750204,
+        "nearestMetres" : 0.45012244530731715,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089130321873206,
+        "longitude" : 133.11362565680204,
+        "nearestMetres" : 0.44369749925957552,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089130321873206,
+        "longitude" : 133.11362565680204,
+        "nearestMetres" : 0.44369749925957552,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089118645001477,
+        "longitude" : 133.11361699446454,
+        "nearestMetres" : 0.42314831825373272,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089118645001477,
+        "longitude" : 133.11361699446454,
+        "nearestMetres" : 0.42314831825373272,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089106907454479,
+        "longitude" : 133.1136084700247,
+        "nearestMetres" : 0.38841694149980971,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089106907454479,
+        "longitude" : 133.1136084700247,
+        "nearestMetres" : 0.38841694149980971,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089095186100991,
+        "longitude" : 133.11360014301684,
+        "nearestMetres" : 0.33944546991805791,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089095186100991,
+        "longitude" : 133.11360014301684,
+        "nearestMetres" : 0.33944546991805791,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0890835578099,
+        "longitude" : 133.11359207297576,
+        "nearestMetres" : 0.27617596439559916,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0890835578099,
+        "longitude" : 133.11359207297576,
+        "nearestMetres" : 0.27617596439559916,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089072099450078,
+        "longitude" : 133.11358431943623,
+        "nearestMetres" : 0.19855049531931993,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089072099450078,
+        "longitude" : 133.11358431943623,
+        "nearestMetres" : 0.19855049531931993,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089060887890426,
+        "longitude" : 133.11357694193273,
+        "nearestMetres" : 0.1065111480880112,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089060887890426,
+        "longitude" : 133.11357694193273,
+        "nearestMetres" : 0.1065111480880112,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08905,
+        "longitude" : 133.11356999999998,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08905,
+        "longitude" : 133.11356999999998,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089030154156148,
+        "longitude" : 133.11355798402278,
+        "nearestMetres" : 0.17585243075365586,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089030154156148,
+        "longitude" : 133.11355798402278,
+        "nearestMetres" : 0.17585243075365586,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089010333454716,
+        "longitude" : 133.11354676220003,
+        "nearestMetres" : 0.28603850987151003,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089010333454716,
+        "longitude" : 133.11354676220003,
+        "nearestMetres" : 0.28603850987151003,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088990503302185,
+        "longitude" : 133.11353622545167,
+        "nearestMetres" : 0.33826959100863047,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088990503302185,
+        "longitude" : 133.11353622545167,
+        "nearestMetres" : 0.33826959100863047,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088970629105113,
+        "longitude" : 133.11352626469662,
+        "nearestMetres" : 0.34025712675039127,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088970629105113,
+        "longitude" : 133.11352626469662,
+        "nearestMetres" : 0.34025712675039127,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088950676269953,
+        "longitude" : 133.11351677085455,
+        "nearestMetres" : 0.29971250776009889,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088950676269953,
+        "longitude" : 133.11351677085455,
+        "nearestMetres" : 0.29971250776009889,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0889306102031,
+        "longitude" : 133.11350763484478,
+        "nearestMetres" : 0.22434716139826588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.0889306102031,
+        "longitude" : 133.11350763484478,
+        "nearestMetres" : 0.22434716139826588,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088910396310993,
+        "longitude" : 133.11349874758685,
+        "nearestMetres" : 0.12187251005691636,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088910396310993,
+        "longitude" : 133.11349874758685,
+        "nearestMetres" : 0.12187251005691636,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088889999999985,
+        "longitude" : 133.11349000000007,
+        "nearestMetres" : 3.3580176832733505e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088889999999985,
+        "longitude" : 133.11349000000007,
+        "nearestMetres" : 3.3580176832733505e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088846852304798,
+        "longitude" : 133.11347264167605,
+        "nearestMetres" : 0.18573932409140423,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088846852304798,
+        "longitude" : 133.11347264167605,
+        "nearestMetres" : 0.18573932409140423,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088802251181981,
+        "longitude" : 133.1134563435198,
+        "nearestMetres" : 0.23428059237409934,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088802251181981,
+        "longitude" : 133.1134563435198,
+        "nearestMetres" : 0.23428059237409934,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088759024466697,
+        "longitude" : 133.11344187360362,
+        "nearestMetres" : 0.16568155375892235,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088759024466697,
+        "longitude" : 133.11344187360362,
+        "nearestMetres" : 0.16568155375892235,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088720000000002,
+        "longitude" : 133.11342999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088720000000002,
+        "longitude" : 133.11342999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088696338299741,
+        "longitude" : 133.11342366398404,
+        "nearestMetres" : 0.096266824442717738,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088696338299741,
+        "longitude" : 133.11342366398404,
+        "nearestMetres" : 0.096266824442717738,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088675272381039,
+        "longitude" : 133.11341885698576,
+        "nearestMetres" : 0.10749193248173836,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088675272381039,
+        "longitude" : 133.11341885698576,
+        "nearestMetres" : 0.10749193248173836,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088654070272504,
+        "longitude" : 133.11341462149471,
+        "nearestMetres" : 0.064971054972482581,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088654070272504,
+        "longitude" : 133.11341462149471,
+        "nearestMetres" : 0.064971054972482581,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088629999999974,
+        "longitude" : 133.11341000000004,
+        "nearestMetres" : 3.8400617392918573e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088629999999974,
+        "longitude" : 133.11341000000004,
+        "nearestMetres" : 3.8400617392918573e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088610731540641,
+        "longitude" : 133.11340621733223,
+        "nearestMetres" : 0.051381572310684742,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088610731540641,
+        "longitude" : 133.11340621733223,
+        "nearestMetres" : 0.051381572310684742,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088590248298836,
+        "longitude" : 133.1134021889053,
+        "nearestMetres" : 0.10665744055083455,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088590248298836,
+        "longitude" : 133.1134021889053,
+        "nearestMetres" : 0.10665744055083455,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088568696017056,
+        "longitude" : 133.11339804226557,
+        "nearestMetres" : 0.15654024671967232,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088568696017056,
+        "longitude" : 133.11339804226557,
+        "nearestMetres" : 0.15654024671967232,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088546220437728,
+        "longitude" : 133.11339390495939,
+        "nearestMetres" : 0.19174263045787654,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088546220437728,
+        "longitude" : 133.11339390495939,
+        "nearestMetres" : 0.19174263045787654,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088522967303518,
+        "longitude" : 133.11338990453348,
+        "nearestMetres" : 0.20297718316926353,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088522967303518,
+        "longitude" : 133.11338990453348,
+        "nearestMetres" : 0.20297718316926353,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08849908235721,
+        "longitude" : 133.11338616853382,
+        "nearestMetres" : 0.18095655157701715,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08849908235721,
+        "longitude" : 133.11338616853382,
+        "nearestMetres" : 0.18095655157701715,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088474711341647,
+        "longitude" : 133.11338282450726,
+        "nearestMetres" : 0.11639329102474007,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088474711341647,
+        "longitude" : 133.11338282450726,
+        "nearestMetres" : 0.11639329102474007,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088449999999987,
+        "longitude" : 133.11338000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088449999999987,
+        "longitude" : 133.11338000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088418966216949,
+        "longitude" : 133.11337702725936,
+        "nearestMetres" : 0.16544299816684788,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088418966216949,
+        "longitude" : 133.11337702725936,
+        "nearestMetres" : 0.16544299816684788,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088386609406129,
+        "longitude" : 133.11337433185065,
+        "nearestMetres" : 0.30127591857317298,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088386609406129,
+        "longitude" : 133.11337433185065,
+        "nearestMetres" : 0.30127591857317298,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088353203049891,
+        "longitude" : 133.11337202121402,
+        "nearestMetres" : 0.39866908419191954,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088353203049891,
+        "longitude" : 133.11337202121402,
+        "nearestMetres" : 0.39866908419191954,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088319020630991,
+        "longitude" : 133.11337020278913,
+        "nearestMetres" : 0.44879283574531564,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088319020630991,
+        "longitude" : 133.11337020278913,
+        "nearestMetres" : 0.44879283574531564,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088284335632672,
+        "longitude" : 133.11336898401544,
+        "nearestMetres" : 0.44281751786144041,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088284335632672,
+        "longitude" : 133.11336898401544,
+        "nearestMetres" : 0.44281751786144041,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088249421538542,
+        "longitude" : 133.11336847233295,
+        "nearestMetres" : 0.37191341081197088,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088249421538542,
+        "longitude" : 133.11336847233295,
+        "nearestMetres" : 0.37191341081197088,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088214551832799,
+        "longitude" : 133.11336877518119,
+        "nearestMetres" : 0.22725081976531478,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088214551832799,
+        "longitude" : 133.11336877518119,
+        "nearestMetres" : 0.22725081976531478,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088179999999994,
+        "longitude" : 133.11337000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088179999999994,
+        "longitude" : 133.11337000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088144233073358,
+        "longitude" : 133.11337241481829,
+        "nearestMetres" : 0.22718781626763621,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088144233073358,
+        "longitude" : 133.11337241481829,
+        "nearestMetres" : 0.22718781626763621,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08810826210938,
+        "longitude" : 133.11337595229458,
+        "nearestMetres" : 0.35564433596384543,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08810826210938,
+        "longitude" : 133.11337595229458,
+        "nearestMetres" : 0.35564433596384543,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088072120116109,
+        "longitude" : 133.11338042041169,
+        "nearestMetres" : 0.4022797574102851,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088072120116109,
+        "longitude" : 133.11338042041169,
+        "nearestMetres" : 0.4022797574102851,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08806961672861,
+        "longitude" : 133.11338077968642,
+        "nearestMetres" : 0.40101871816039392,
+        "originalPartIndex" : 2
+      }
+    ],
+    "scope" : "One-sided smooth→display nearest-polyline distance, within this viewport. Not Apple pixel residual or an alignment verdict.",
+    "spacingUpperBoundMetres" : 9.8842934728802518
+  },
+  "displayStageDistanceSample" : {
+    "candidateCount" : 162,
+    "cap" : 1000,
+    "capReducedSampling" : false,
+    "maximumMetres" : 4.951268017173393e-09,
+    "requestedSpacingMetres" : 10,
+    "sampleCount" : 162,
+    "samples" : [
+      {
+        "latitude" : 35.094599957566253,
+        "longitude" : 133.12219586990435,
+        "nearestMetres" : 5.1941879262081989e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094604978783281,
+        "longitude" : 133.12209293495218,
+        "nearestMetres" : 2.5970948108078666e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094610000000017,
+        "longitude" : 133.12199000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094610000000017,
+        "longitude" : 133.12199000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094611666666765,
+        "longitude" : 133.12188499999999,
+        "nearestMetres" : 5.8108720537276642e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09461333333347,
+        "longitude" : 133.12178000000003,
+        "nearestMetres" : 5.810872272103346e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094615000000154,
+        "longitude" : 133.12167500000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094616666666809,
+        "longitude" : 133.12156999999999,
+        "nearestMetres" : 5.810871497235147e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094618333333415,
+        "longitude" : 133.12146500000003,
+        "nearestMetres" : 5.8108711191384691e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619999999999,
+        "longitude" : 133.12136000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094619999999999,
+        "longitude" : 133.12136000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094612500001027,
+        "longitude" : 133.12125499999999,
+        "nearestMetres" : 1.5775830380262603e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094605000001373,
+        "longitude" : 133.12115000000003,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094597500001022,
+        "longitude" : 133.12104500000004,
+        "nearestMetres" : 1.5775813924297699e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094589999999997,
+        "longitude" : 133.12094000000002,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094589999999997,
+        "longitude" : 133.12094000000002,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094570000002456,
+        "longitude" : 133.12085999999999,
+        "nearestMetres" : 8.6739946771978249e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094549999999998,
+        "longitude" : 133.12078,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094549999999998,
+        "longitude" : 133.12078,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094535000001379,
+        "longitude" : 133.12072500000002,
+        "nearestMetres" : 5.736144199437028e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094520000000003,
+        "longitude" : 133.12067000000005,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094520000000003,
+        "longitude" : 133.12067000000005,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094500000002448,
+        "longitude" : 133.12059000000002,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094479999999997,
+        "longitude" : 133.12051,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094479999999997,
+        "longitude" : 133.12051,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094443333374556,
+        "longitude" : 133.12042333333335,
+        "nearestMetres" : 2.8689780582685016e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094406666732624,
+        "longitude" : 133.12033666666665,
+        "nearestMetres" : 1.0925535638317445e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094370000074179,
+        "longitude" : 133.12025000000003,
+        "nearestMetres" : 8.0565678272798222e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09433333339927,
+        "longitude" : 133.12016333333338,
+        "nearestMetres" : 1.0925530490748101e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094296666707884,
+        "longitude" : 133.12007666666668,
+        "nearestMetres" : 2.8689752037917e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094259999999991,
+        "longitude" : 133.11999000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094259999999991,
+        "longitude" : 133.11999000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094220000029424,
+        "longitude" : 133.11991500000005,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094180000039238,
+        "longitude" : 133.11984000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094140000029419,
+        "longitude" : 133.119765,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094099999999997,
+        "longitude" : 133.11968999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094099999999997,
+        "longitude" : 133.11968999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094060000009812,
+        "longitude" : 133.11963500000002,
+        "nearestMetres" : 1.8830263728565343e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094020000000008,
+        "longitude" : 133.11958000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.094020000000008,
+        "longitude" : 133.11958000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093961111281232,
+        "longitude" : 133.11951000000005,
+        "nearestMetres" : 4.2949940618993421e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093902222519922,
+        "longitude" : 133.11944000000005,
+        "nearestMetres" : 8.5899942442805057e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093843333716087,
+        "longitude" : 133.11937000000006,
+        "nearestMetres" : 1.2884981605166528e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093784444869733,
+        "longitude" : 133.11930000000007,
+        "nearestMetres" : 1.7180012970460184e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093725555980846,
+        "longitude" : 133.11923000000004,
+        "nearestMetres" : 1.7180000408565774e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093666667049426,
+        "longitude" : 133.11916000000002,
+        "nearestMetres" : 1.2885059432870328e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09360777807548,
+        "longitude" : 133.11909000000003,
+        "nearestMetres" : 8.5900627312297681e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093548889059008,
+        "longitude" : 133.11902000000003,
+        "nearestMetres" : 4.2950089429863829e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093489999999996,
+        "longitude" : 133.11895000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093489999999996,
+        "longitude" : 133.11895000000004,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093425000284974,
+        "longitude" : 133.11887916666672,
+        "nearestMetres" : 8.2647379634829808e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093360000518111,
+        "longitude" : 133.11880833333336,
+        "nearestMetres" : 1.5230635076402203e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093295000699463,
+        "longitude" : 133.11873750000004,
+        "nearestMetres" : 9.7878414925229706e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093230000828996,
+        "longitude" : 133.11866666666668,
+        "nearestMetres" : 9.0262953110719913e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.093165000906723,
+        "longitude" : 133.11859583333336,
+        "nearestMetres" : 7.6153424993744598e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09310000093263,
+        "longitude" : 133.11852500000001,
+        "nearestMetres" : 1.9575683117292988e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09303500090671,
+        "longitude" : 133.11845416666671,
+        "nearestMetres" : 7.6153544772580702e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092970000828991,
+        "longitude" : 133.11838333333338,
+        "nearestMetres" : 9.0263439332928536e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092905000699474,
+        "longitude" : 133.11831250000003,
+        "nearestMetres" : 9.787898871841674e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092840000518116,
+        "longitude" : 133.11824166666671,
+        "nearestMetres" : 1.0549380970190188e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092775000284966,
+        "longitude" : 133.11817083333335,
+        "nearestMetres" : 8.2647757366251913e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092709999999997,
+        "longitude" : 133.11810000000003,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092709999999997,
+        "longitude" : 133.11810000000003,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092645000440399,
+        "longitude" : 133.11802833333334,
+        "nearestMetres" : 9.5079958433436753e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092580000828974,
+        "longitude" : 133.11795666666669,
+        "nearestMetres" : 7.9221283149124347e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092515001165737,
+        "longitude" : 133.11788500000003,
+        "nearestMetres" : 1.5858524479219856e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092450001450679,
+        "longitude" : 133.11781333333334,
+        "nearestMetres" : 1.0572589734768126e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09238500168383,
+        "longitude" : 133.11774166666666,
+        "nearestMetres" : 8.4507383719532254e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092320001865176,
+        "longitude" : 133.11767,
+        "nearestMetres" : 8.9794101007207003e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092255001994701,
+        "longitude" : 133.11759833333332,
+        "nearestMetres" : 5.2861914547696096e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092190002072414,
+        "longitude" : 133.11752666666666,
+        "nearestMetres" : 1.0036663345962137e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092125002098307,
+        "longitude" : 133.11745499999998,
+        "nearestMetres" : 7.3935199744135102e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.092060002072401,
+        "longitude" : 133.11738333333332,
+        "nearestMetres" : 1.0036684158970321e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091995001994682,
+        "longitude" : 133.11731166666664,
+        "nearestMetres" : 5.285644196462659e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091930001865165,
+        "longitude" : 133.11723999999998,
+        "nearestMetres" : 8.9794574966370205e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091865001683836,
+        "longitude" : 133.11716833333332,
+        "nearestMetres" : 8.4508892716172641e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091800001450686,
+        "longitude" : 133.11709666666664,
+        "nearestMetres" : 1.0572441108537681e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091735001165738,
+        "longitude" : 133.11702499999996,
+        "nearestMetres" : 1.056539244762715e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091670000828962,
+        "longitude" : 133.11695333333327,
+        "nearestMetres" : 7.9222299153229342e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091605000440374,
+        "longitude" : 133.11688166666664,
+        "nearestMetres" : 9.5081725162324515e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091539999999995,
+        "longitude" : 133.11680999999996,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091539999999995,
+        "longitude" : 133.11680999999996,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091478000094277,
+        "longitude" : 133.11674299999999,
+        "nearestMetres" : 5.4358986332590586e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091416000141407,
+        "longitude" : 133.11667599999998,
+        "nearestMetres" : 1.0871805421310926e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091354000141408,
+        "longitude" : 133.11660900000004,
+        "nearestMetres" : 1.0871787655643665e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091292000094278,
+        "longitude" : 133.11654200000004,
+        "nearestMetres" : 5.4359063642484582e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091230000000003,
+        "longitude" : 133.11647500000007,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091230000000003,
+        "longitude" : 133.11647500000007,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091168000094271,
+        "longitude" : 133.11640800000004,
+        "nearestMetres" : 5.435910289378783e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091106000141409,
+        "longitude" : 133.11634100000001,
+        "nearestMetres" : 1.0871828733473327e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.091044000141409,
+        "longitude" : 133.116274,
+        "nearestMetres" : 1.0871828429286447e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090982000094264,
+        "longitude" : 133.11620699999997,
+        "nearestMetres" : 5.4359297517644982e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090919999999983,
+        "longitude" : 133.11613999999997,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090919999999983,
+        "longitude" : 133.11613999999997,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090858000094258,
+        "longitude" : 133.11606599999996,
+        "nearestMetres" : 5.3126769766128688e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090796000141395,
+        "longitude" : 133.11599199999998,
+        "nearestMetres" : 2.6563404807450101e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090734000141389,
+        "longitude" : 133.11591799999997,
+        "nearestMetres" : 2.6563548501616184e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090672000094266,
+        "longitude" : 133.11584400000001,
+        "nearestMetres" : 5.3126889312343594e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090609999999991,
+        "longitude" : 133.11577,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090609999999991,
+        "longitude" : 133.11577,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090560000015309,
+        "longitude" : 133.1157,
+        "nearestMetres" : 5.0967441873237653e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090509999999981,
+        "longitude" : 133.11563000000004,
+        "nearestMetres" : 1.3025915127631839e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090509999999981,
+        "longitude" : 133.11563000000004,
+        "nearestMetres" : 1.3025915127631839e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090452500060792,
+        "longitude" : 133.11555750000005,
+        "nearestMetres" : 1.3025921454492584e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09039500008106,
+        "longitude" : 133.11548500000004,
+        "nearestMetres" : 1.3025929752266099e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090337500060805,
+        "longitude" : 133.11541250000008,
+        "nearestMetres" : 2.525136721326019e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090279999999993,
+        "longitude" : 133.11534000000009,
+        "nearestMetres" : 2.5251384778533485e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090279999999993,
+        "longitude" : 133.11534000000009,
+        "nearestMetres" : 2.5251384778533485e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090240000019612,
+        "longitude" : 133.11528333333342,
+        "nearestMetres" : 2.7020171625671132e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090200000019614,
+        "longitude" : 133.11522666666676,
+        "nearestMetres" : 2.0377992812389745e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090159999999997,
+        "longitude" : 133.11517000000012,
+        "nearestMetres" : 2.3699097849296623e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090159999999997,
+        "longitude" : 133.11517000000012,
+        "nearestMetres" : 2.3699097849296623e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090120000009819,
+        "longitude" : 133.11510000000007,
+        "nearestMetres" : 2.0773171119558315e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090080000000007,
+        "longitude" : 133.11503000000005,
+        "nearestMetres" : 2.0773179032518606e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.090080000000007,
+        "longitude" : 133.11503000000005,
+        "nearestMetres" : 2.0773179032518606e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.09003166673827,
+        "longitude" : 133.11494166666671,
+        "nearestMetres" : 2.2681195661294347e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089983333447918,
+        "longitude" : 133.1148533333334,
+        "nearestMetres" : 2.5194507320351151e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089935000128889,
+        "longitude" : 133.11476500000003,
+        "nearestMetres" : 7.5398900711231003e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089886666781233,
+        "longitude" : 133.1146766666667,
+        "nearestMetres" : 1.0053205344716334e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089838333404934,
+        "longitude" : 133.11458833333336,
+        "nearestMetres" : 1.2566504499859358e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089789999999986,
+        "longitude" : 133.11450000000005,
+        "nearestMetres" : 1.4513073572202484e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089789999999986,
+        "longitude" : 133.11450000000005,
+        "nearestMetres" : 1.4513073572202484e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089745000062067,
+        "longitude" : 133.1144266666667,
+        "nearestMetres" : 1.935014121523357e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089700000099306,
+        "longitude" : 133.11435333333336,
+        "nearestMetres" : 2.4194893144098256e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089655000111726,
+        "longitude" : 133.11428000000001,
+        "nearestMetres" : 7.2565550082471062e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089610000099313,
+        "longitude" : 133.11420666666669,
+        "nearestMetres" : 1.2093619050015948e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08956500006208,
+        "longitude" : 133.11413333333334,
+        "nearestMetres" : 4.8370765618456893e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08952,
+        "longitude" : 133.11405999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08952,
+        "longitude" : 133.11405999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089473333360033,
+        "longitude" : 133.114,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089426666693342,
+        "longitude" : 133.11393999999999,
+        "nearestMetres" : 1.3148610988270642e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089379999999984,
+        "longitude" : 133.11387999999997,
+        "nearestMetres" : 1.2080492115200306e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089379999999984,
+        "longitude" : 133.11387999999997,
+        "nearestMetres" : 1.2080492115200306e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089325000018519,
+        "longitude" : 133.11382,
+        "nearestMetres" : 1.2080497953331234e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089269999999978,
+        "longitude" : 133.11376000000007,
+        "nearestMetres" : 3.9147304970352829e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089269999999978,
+        "longitude" : 133.11376000000007,
+        "nearestMetres" : 3.9147304970352829e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08921999999999,
+        "longitude" : 133.11369999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08921999999999,
+        "longitude" : 133.11369999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089163333372696,
+        "longitude" : 133.11365666666666,
+        "nearestMetres" : 1.0252285694993541e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.089106666706044,
+        "longitude" : 133.11361333333332,
+        "nearestMetres" : 1.0252294566917506e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08905,
+        "longitude" : 133.11356999999998,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08905,
+        "longitude" : 133.11356999999998,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088970000039225,
+        "longitude" : 133.11353000000003,
+        "nearestMetres" : 1.6790072167535647e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088889999999985,
+        "longitude" : 133.11349000000007,
+        "nearestMetres" : 3.3580176832733505e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088889999999985,
+        "longitude" : 133.11349000000007,
+        "nearestMetres" : 3.3580176832733505e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088805000044289,
+        "longitude" : 133.11346000000003,
+        "nearestMetres" : 1.7428721928073809e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088720000000002,
+        "longitude" : 133.11342999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088720000000002,
+        "longitude" : 133.11342999999999,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088675000012408,
+        "longitude" : 133.11342000000002,
+        "nearestMetres" : 1.6227386171700468e-10,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088629999999974,
+        "longitude" : 133.11341000000004,
+        "nearestMetres" : 3.8400617392918573e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088629999999974,
+        "longitude" : 133.11341000000004,
+        "nearestMetres" : 3.8400617392918573e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088570000044129,
+        "longitude" : 133.11340000000004,
+        "nearestMetres" : 1.3617327150251544e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088510000044117,
+        "longitude" : 133.11339000000004,
+        "nearestMetres" : 2.4783335678883221e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088449999999987,
+        "longitude" : 133.11338000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088449999999987,
+        "longitude" : 133.11338000000001,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088382500083782,
+        "longitude" : 133.11337750000001,
+        "nearestMetres" : 1.7995369698938578e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088315000111713,
+        "longitude" : 133.11337500000005,
+        "nearestMetres" : 2.7476756237990913e-11,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088247500083796,
+        "longitude" : 133.11337250000008,
+        "nearestMetres" : 1.7995398562457781e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088179999999994,
+        "longitude" : 133.11337000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088179999999994,
+        "longitude" : 133.11337000000006,
+        "nearestMetres" : 0,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.088124808382972,
+        "longitude" : 133.11337761264781,
+        "nearestMetres" : 2.5773612428946284e-09,
+        "originalPartIndex" : 2
+      },
+      {
+        "latitude" : 35.08806961672861,
+        "longitude" : 133.11338522529556,
+        "nearestMetres" : 4.951268017173393e-09,
+        "originalPartIndex" : 2
+      }
+    ],
+    "scope" : "One-sided DisplayParts→complete decoded display intervals nearest-polyline distance, within this viewport. Includes grooming\/anchor changes; not Apple pixel residual or alignment verdict.",
+    "spacingUpperBoundMetres" : 9.8378277847270734
+  },
+  "distanceMetres" : 6300,
+  "distanceScope" : "One-sided sampled smooth→display nearest polyline. Full display line is distance target. Reference has independently scoped input identity. Not Apple pixel residual.",
+  "evidenceLineWidthPoints" : 1.5,
+  "evidenceOpacity" : 1,
+  "format" : "jtm-rail-view-v1",
+  "fromStationID" : "005694",
+  "geometryScope" : "Complete line DisplayParts smoothed with retained station\/end anchors at z17, then clipped to this immutable viewport. Isolated centreline; no lanes\/follows\/joins\/family collapse.",
+  "intervalIdentityPlan" : "identity-plan-1f3b99c7eaa90c119e7f5960f77bd4c340982f87c6391dd7a5bd91791c91ff1e.json",
+  "intervalIndex" : 14,
+  "itemID" : "jp-西日本旅客鉄道-木次線#14",
+  "lineID" : "jp-西日本旅客鉄道-木次線",
+  "mapRect" : {
+    "height" : 6144,
+    "width" : 8192,
+    "x" : 233472639.75571969,
+    "y" : 106240347.14761794
+  },
+  "mode" : "compare",
+  "opacity" : 1,
+  "originalDisplayPartIndices" : [
+    2
+  ],
+  "originalReferencePartIndices" : [
+
+  ],
+  "originalSmoothPartIndices" : [
+    2
+  ],
+  "packageVersion" : "2025.5.2",
+  "pointOrdinal" : 18,
+  "referenceCoordinates" : [
+
+  ],
+  "referenceDependency" : "Apple-only",
+  "referenceIntervalIndex" : null,
+  "referenceLabel" : "",
+  "referenceLineID" : "",
+  "region" : "jp",
+  "renderContract" : "inspector-centreline-v4-exact-physical-forks;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+  "renderedDisplay" : [
+    [
+      [
+        133.12219586990435,
+        35.094599957566253
+      ],
+      [
+        133.12199000000001,
+        35.094610000000017
+      ],
+      [
+        133.12136000000001,
+        35.094619999999999
+      ],
+      [
+        133.12094000000002,
+        35.094589999999997
+      ],
+      [
+        133.12078,
+        35.094549999999998
+      ],
+      [
+        133.12067000000005,
+        35.094520000000003
+      ],
+      [
+        133.12051,
+        35.094479999999997
+      ],
+      [
+        133.11999000000006,
+        35.094259999999991
+      ],
+      [
+        133.11968999999999,
+        35.094099999999997
+      ],
+      [
+        133.11958000000004,
+        35.094020000000008
+      ],
+      [
+        133.11895000000004,
+        35.093489999999996
+      ],
+      [
+        133.11810000000003,
+        35.092709999999997
+      ],
+      [
+        133.11680999999996,
+        35.091539999999995
+      ],
+      [
+        133.11647500000007,
+        35.091230000000003
+      ],
+      [
+        133.11613999999997,
+        35.090919999999983
+      ],
+      [
+        133.11577,
+        35.090609999999991
+      ],
+      [
+        133.11563000000004,
+        35.090509999999995
+      ],
+      [
+        133.11534000000003,
+        35.090279999999993
+      ],
+      [
+        133.11517000000009,
+        35.090159999999997
+      ],
+      [
+        133.11503000000002,
+        35.090080000000007
+      ],
+      [
+        133.11450000000005,
+        35.089789999999994
+      ],
+      [
+        133.11405999999999,
+        35.08952
+      ],
+      [
+        133.11387999999997,
+        35.089379999999991
+      ],
+      [
+        133.11376000000004,
+        35.089269999999985
+      ],
+      [
+        133.11369999999999,
+        35.08921999999999
+      ],
+      [
+        133.11356999999998,
+        35.08905
+      ],
+      [
+        133.11349000000004,
+        35.088889999999985
+      ],
+      [
+        133.11342999999999,
+        35.088720000000002
+      ],
+      [
+        133.11341000000002,
+        35.088629999999995
+      ],
+      [
+        133.11338000000001,
+        35.088449999999987
+      ],
+      [
+        133.11337000000006,
+        35.088179999999994
+      ],
+      [
+        133.11338522529562,
+        35.08806961672861
+      ]
+    ]
+  ],
+  "renderedSmooth" : [
+    [
+      [
+        133.12219586990435,
+        35.094604294498332
+      ],
+      [
+        133.12218528720993,
+        35.094604649577093
+      ],
+      [
+        133.12215821481701,
+        35.094605453544645
+      ],
+      [
+        133.12213075221933,
+        35.094606196947097
+      ],
+      [
+        133.12210296838387,
+        35.094606908199218
+      ],
+      [
+        133.1220749322772,
+        35.094607615715823
+      ],
+      [
+        133.12204671286659,
+        35.09460834791161
+      ],
+      [
+        133.12201837911851,
+        35.094609133201423
+      ],
+      [
+        133.12199000000001,
+        35.094610000000017
+      ],
+      [
+        133.1219168427881,
+        35.094612383238143
+      ],
+      [
+        133.12183900097548,
+        35.094614852885258
+      ],
+      [
+        133.12175801789269,
+        35.094617203845701
+      ],
+      [
+        133.12167543687056,
+        35.094619231023813
+      ],
+      [
+        133.12159280123959,
+        35.094620729323914
+      ],
+      [
+        133.12151165433042,
+        35.094621493650386
+      ],
+      [
+        133.12143353947368,
+        35.094621318907663
+      ],
+      [
+        133.12136000000001,
+        35.094619999999999
+      ],
+      [
+        133.12133102107151,
+        35.094619143901312
+      ],
+      [
+        133.12130200294709,
+        35.0946181750069
+      ],
+      [
+        133.12127303199537,
+        35.094617088375799
+      ],
+      [
+        133.12124419458459,
+        35.094615879067128
+      ],
+      [
+        133.12121557708352,
+        35.094614542139816
+      ],
+      [
+        133.12118726586067,
+        35.094613072653004
+      ],
+      [
+        133.12115934728428,
+        35.094611465665714
+      ],
+      [
+        133.12113190772311,
+        35.094609716236967
+      ],
+      [
+        133.12110503354563,
+        35.094607819425825
+      ],
+      [
+        133.12107881112027,
+        35.094605770291324
+      ],
+      [
+        133.1210533268156,
+        35.09460356389252
+      ],
+      [
+        133.12102866700013,
+        35.094601195288405
+      ],
+      [
+        133.12100491804233,
+        35.094598659538079
+      ],
+      [
+        133.12098216631068,
+        35.094595951700555
+      ],
+      [
+        133.12096049817379,
+        35.094593066834832
+      ],
+      [
+        133.12094000000002,
+        35.094589999999997
+      ],
+      [
+        133.12092772414354,
+        35.094587940069196
+      ],
+      [
+        133.12091592406355,
+        35.094585750925368
+      ],
+      [
+        133.12090456283246,
+        35.094583447683618
+      ],
+      [
+        133.12089360352257,
+        35.094581045459073
+      ],
+      [
+        133.12088300920638,
+        35.094578559366752
+      ],
+      [
+        133.12087274295601,
+        35.094576004521812
+      ],
+      [
+        133.12086276784407,
+        35.094573396039344
+      ],
+      [
+        133.12085304694278,
+        35.094570749034432
+      ],
+      [
+        133.12084354332455,
+        35.094568078622181
+      ],
+      [
+        133.12083422006179,
+        35.094565399917713
+      ],
+      [
+        133.12082504022658,
+        35.094562728036074
+      ],
+      [
+        133.1208159668916,
+        35.094560078092471
+      ],
+      [
+        133.1208069631291,
+        35.094557465201937
+      ],
+      [
+        133.12079799201143,
+        35.094554904479587
+      ],
+      [
+        133.12078901661096,
+        35.094552411040567
+      ],
+      [
+        133.12078,
+        35.094549999999998
+      ],
+      [
+        133.12067000000005,
+        35.094520000000003
+      ],
+      [
+        133.12066098590029,
+        35.09451771783592
+      ],
+      [
+        133.12065201736348,
+        35.09451557665907
+      ],
+      [
+        133.12064305645757,
+        35.094513540034086
+      ],
+      [
+        133.12063406525047,
+        35.094511571525437
+      ],
+      [
+        133.1206250058101,
+        35.094509634697822
+      ],
+      [
+        133.12061584020429,
+        35.094507693115702
+      ],
+      [
+        133.12060653050131,
+        35.094505710343668
+      ],
+      [
+        133.12059703876869,
+        35.094503649946283
+      ],
+      [
+        133.1205873270747,
+        35.094501475488094
+      ],
+      [
+        133.12057735748706,
+        35.094499150533707
+      ],
+      [
+        133.12056709207366,
+        35.094496638647563
+      ],
+      [
+        133.12055649290272,
+        35.094493903394259
+      ],
+      [
+        133.12054552204185,
+        35.094490908338358
+      ],
+      [
+        133.12053414155918,
+        35.094487617044337
+      ],
+      [
+        133.1205223135226,
+        35.094483993076693
+      ],
+      [
+        133.12051,
+        35.094479999999997
+      ],
+      [
+        133.12048511997432,
+        35.094471414982955
+      ],
+      [
+        133.12045771747387,
+        35.094461435417287
+      ],
+      [
+        133.12042811531518,
+        35.094450212563657
+      ],
+      [
+        133.12039663631515,
+        35.094437897682866
+      ],
+      [
+        133.1203636032906,
+        35.094424642035719
+      ],
+      [
+        133.12032933905826,
+        35.094410596882909
+      ],
+      [
+        133.12029416643489,
+        35.094395913485506
+      ],
+      [
+        133.12025840823728,
+        35.094380743104381
+      ],
+      [
+        133.12022238728238,
+        35.094365237000744
+      ],
+      [
+        133.12018642638668,
+        35.094349546435765
+      ],
+      [
+        133.12015084836727,
+        35.094333822670727
+      ],
+      [
+        133.12011597604078,
+        35.09431821696716
+      ],
+      [
+        133.12008213222407,
+        35.094302880586561
+      ],
+      [
+        133.12004963973379,
+        35.094287964790645
+      ],
+      [
+        133.12001882138694,
+        35.094273620841165
+      ],
+      [
+        133.11999000000006,
+        35.094259999999991
+      ],
+      [
+        133.11994694834246,
+        35.094239199784802
+      ],
+      [
+        133.11990474649704,
+        35.09421824948349
+      ],
+      [
+        133.11986376265159,
+        35.09419733845538
+      ],
+      [
+        133.11982436499409,
+        35.094176656059858
+      ],
+      [
+        133.11978692171226,
+        35.094156391656639
+      ],
+      [
+        133.11975180099412,
+        35.094136734605556
+      ],
+      [
+        133.11971937102737,
+        35.094117874266601
+      ],
+      [
+        133.11968999999999,
+        35.094099999999997
+      ],
+      [
+        133.11967373939964,
+        35.094089682492161
+      ],
+      [
+        133.11965992197204,
+        35.094080564696391
+      ],
+      [
+        133.11964768478799,
+        35.094072092115248
+      ],
+      [
+        133.11963616491838,
+        35.094063710251021
+      ],
+      [
+        133.11962449943402,
+        35.09405486460571
+      ],
+      [
+        133.11961182540557,
+        35.094045000681177
+      ],
+      [
+        133.11959727990404,
+        35.094033563978904
+      ],
+      [
+        133.11958000000004,
+        35.094020000000008
+      ],
+      [
+        133.11946013100061,
+        35.093923440321767
+      ],
+      [
+        133.11930168386348,
+        35.093791746578979
+      ],
+      [
+        133.11912489479457,
+        35.093641679521745
+      ],
+      [
+        133.11895000000004,
+        35.093489999999996
+      ],
+      [
+        133.11874943338466,
+        35.09331008430329
+      ],
+      [
+        133.11854310847346,
+        35.09311987219256
+      ],
+      [
+        133.1183277293255,
+        35.092919723985588
+      ],
+      [
+        133.11810000000003,
+        35.092709999999997
+      ],
+      [
+        133.11680999999996,
+        35.091539999999995
+      ],
+      [
+        133.11647500000007,
+        35.091230000000003
+      ],
+      [
+        133.11639186578211,
+        35.091152336551879
+      ],
+      [
+        133.1163091420409,
+        35.09107456409658
+      ],
+      [
+        133.11622559727925,
+        35.090997009592641
+      ],
+      [
+        133.11613999999997,
+        35.090919999999983
+      ],
+      [
+        133.11604549949493,
+        35.09083783021115
+      ],
+      [
+        133.11594622652007,
+        35.090753460162496
+      ],
+      [
+        133.11585134028508,
+        35.090674860025175
+      ],
+      [
+        133.11577,
+        35.090609999999991
+      ],
+      [
+        133.11574999418704,
+        35.090594831644367
+      ],
+      [
+        133.1157319320267,
+        35.090581685603702
+      ],
+      [
+        133.115715199666,
+        35.090569931914693
+      ],
+      [
+        133.11569918325191,
+        35.090558940613569
+      ],
+      [
+        133.11568326893126,
+        35.090548081736195
+      ],
+      [
+        133.11566684285117,
+        35.09053672531811
+      ],
+      [
+        133.11564929115843,
+        35.090524241394476
+      ],
+      [
+        133.11563000000004,
+        35.090509999999981
+      ],
+      [
+        133.11559803230875,
+        35.090485418146066
+      ],
+      [
+        133.11556284108514,
+        35.09045756500074
+      ],
+      [
+        133.115525426337,
+        35.090427480758493
+      ],
+      [
+        133.11548678807202,
+        35.090396205615129
+      ],
+      [
+        133.11544792629809,
+        35.090364779767967
+      ],
+      [
+        133.11540984102297,
+        35.090334243415853
+      ],
+      [
+        133.1153735322543,
+        35.090305636759275
+      ],
+      [
+        133.11534000000009,
+        35.090279999999993
+      ],
+      [
+        133.11529448654218,
+        35.090246199632993
+      ],
+      [
+        133.11525189988103,
+        35.090215363601779
+      ],
+      [
+        133.1152108632794,
+        35.090186845769971
+      ],
+      [
+        133.11517000000012,
+        35.090159999999997
+      ],
+      [
+        133.1151366056703,
+        35.090139505307953
+      ],
+      [
+        133.1151052435014,
+        35.090121551880252
+      ],
+      [
+        133.11507125958178,
+        35.090102822513245
+      ],
+      [
+        133.11503000000005,
+        35.090080000000007
+      ],
+      [
+        133.11492017809843,
+        35.090020065925977
+      ],
+      [
+        133.1147827278445,
+        35.08994620031185
+      ],
+      [
+        133.11463641366848,
+        35.089866734534475
+      ],
+      [
+        133.11450000000005,
+        35.089789999999986
+      ],
+      [
+        133.11444118472107,
+        35.08975577612545
+      ],
+      [
+        133.11438163625607,
+        35.089720815915186
+      ],
+      [
+        133.11432226623813,
+        35.089685555232521
+      ],
+      [
+        133.11426398629973,
+        35.089650429941429
+      ],
+      [
+        133.11420770807391,
+        35.089615875906809
+      ],
+      [
+        133.11415434319346,
+        35.089582328994098
+      ],
+      [
+        133.11410480329121,
+        35.089550225069566
+      ],
+      [
+        133.11405999999999,
+        35.08952
+      ],
+      [
+        133.11400747235029,
+        35.089482383291923
+      ],
+      [
+        133.11396154803765,
+        35.089447185059846
+      ],
+      [
+        133.11391984970615,
+        35.089413394298319
+      ],
+      [
+        133.11387999999997,
+        35.089379999999984
+      ],
+      [
+        133.11386326597952,
+        35.089365539280742
+      ],
+      [
+        133.11384692938236,
+        35.089350861567127
+      ],
+      [
+        133.11383103921403,
+        35.0893361768875
+      ],
+      [
+        133.11381564448018,
+        35.089321695270293
+      ],
+      [
+        133.11380079418623,
+        35.089307626744109
+      ],
+      [
+        133.11378653733789,
+        35.089294181337721
+      ],
+      [
+        133.1137729229406,
+        35.089281569080029
+      ],
+      [
+        133.11376000000007,
+        35.089269999999978
+      ],
+      [
+        133.11375169808133,
+        35.089262997664591
+      ],
+      [
+        133.11374398931483,
+        35.089256896982533
+      ],
+      [
+        133.1137366916843,
+        35.08925135460381
+      ],
+      [
+        133.1137296231733,
+        35.089246027178213
+      ],
+      [
+        133.11372260176577,
+        35.089240571355411
+      ],
+      [
+        133.11371544544519,
+        35.089234643785126
+      ],
+      [
+        133.11370797219539,
+        35.089227901116836
+      ],
+      [
+        133.11369999999999,
+        35.08921999999999
+      ],
+      [
+        133.11369277564637,
+        35.089212328295083
+      ],
+      [
+        133.11368515337819,
+        35.089203904097445
+      ],
+      [
+        133.11367719272985,
+        35.089194804275529
+      ],
+      [
+        133.11366895323627,
+        35.089185105697844
+      ],
+      [
+        133.11366049443197,
+        35.089174885232971
+      ],
+      [
+        133.11365187585173,
+        35.089164219749449
+      ],
+      [
+        133.11364315703017,
+        35.089153186115873
+      ],
+      [
+        133.11363439750204,
+        35.089141861200922
+      ],
+      [
+        133.11362565680199,
+        35.089130321873206
+      ],
+      [
+        133.11361699446454,
+        35.089118645001477
+      ],
+      [
+        133.1136084700247,
+        35.089106907454479
+      ],
+      [
+        133.11360014301684,
+        35.089095186100991
+      ],
+      [
+        133.11359207297576,
+        35.0890835578099
+      ],
+      [
+        133.11358431943623,
+        35.089072099450078
+      ],
+      [
+        133.11357694193273,
+        35.089060887890426
+      ],
+      [
+        133.11356999999998,
+        35.08905
+      ],
+      [
+        133.11355798402275,
+        35.089030154156148
+      ],
+      [
+        133.11354676220003,
+        35.089010333454716
+      ],
+      [
+        133.11353622545164,
+        35.088990503302185
+      ],
+      [
+        133.11352626469662,
+        35.088970629105113
+      ],
+      [
+        133.11351677085455,
+        35.088950676269953
+      ],
+      [
+        133.11350763484478,
+        35.0889306102031
+      ],
+      [
+        133.11349874758685,
+        35.088910396310993
+      ],
+      [
+        133.11349000000007,
+        35.088889999999985
+      ],
+      [
+        133.11347264167605,
+        35.088846852304798
+      ],
+      [
+        133.11345634351977,
+        35.088802251181981
+      ],
+      [
+        133.11344187360362,
+        35.088759024466697
+      ],
+      [
+        133.11342999999999,
+        35.088720000000002
+      ],
+      [
+        133.11342366398401,
+        35.088696338299741
+      ],
+      [
+        133.11341885698576,
+        35.088675272381039
+      ],
+      [
+        133.11341462149468,
+        35.088654070272504
+      ],
+      [
+        133.11341000000004,
+        35.088629999999974
+      ],
+      [
+        133.11340621733223,
+        35.088610731540641
+      ],
+      [
+        133.1134021889053,
+        35.088590248298836
+      ],
+      [
+        133.11339804226557,
+        35.088568696017056
+      ],
+      [
+        133.11339390495939,
+        35.088546220437728
+      ],
+      [
+        133.11338990453345,
+        35.088522967303518
+      ],
+      [
+        133.11338616853382,
+        35.08849908235721
+      ],
+      [
+        133.11338282450726,
+        35.088474711341647
+      ],
+      [
+        133.11338000000001,
+        35.088449999999987
+      ],
+      [
+        133.11337702725933,
+        35.088418966216949
+      ],
+      [
+        133.11337433185065,
+        35.088386609406129
+      ],
+      [
+        133.11337202121402,
+        35.088353203049891
+      ],
+      [
+        133.1133702027891,
+        35.088319020630991
+      ],
+      [
+        133.11336898401544,
+        35.088284335632672
+      ],
+      [
+        133.11336847233295,
+        35.088249421538542
+      ],
+      [
+        133.11336877518119,
+        35.088214551832799
+      ],
+      [
+        133.11337000000006,
+        35.088179999999994
+      ],
+      [
+        133.11337241481829,
+        35.088144233073358
+      ],
+      [
+        133.11337595229458,
+        35.08810826210938
+      ],
+      [
+        133.11338042041163,
+        35.088072120116109
+      ],
+      [
+        133.11338077968637,
+        35.08806961672861
+      ]
+    ]
+  ],
+  "result" : "pending",
+  "reviewFresh" : false,
+  "reviewTitle" : "待复核",
+  "sourceCoordinates" : [
+    [
+      [
+        133.12219586990435,
+        35.094599957566253
+      ],
+      [
+        133.12199000000001,
+        35.094610000000017
+      ],
+      [
+        133.12136000000001,
+        35.094619999999999
+      ],
+      [
+        133.12094000000002,
+        35.094589999999997
+      ],
+      [
+        133.12078,
+        35.094549999999998
+      ],
+      [
+        133.12067000000005,
+        35.094520000000003
+      ],
+      [
+        133.12051,
+        35.094479999999997
+      ],
+      [
+        133.11999000000006,
+        35.094259999999991
+      ],
+      [
+        133.11968999999999,
+        35.094099999999997
+      ],
+      [
+        133.11958000000004,
+        35.094020000000008
+      ],
+      [
+        133.11895000000004,
+        35.093489999999996
+      ],
+      [
+        133.11810000000003,
+        35.092709999999997
+      ],
+      [
+        133.11680999999996,
+        35.091539999999995
+      ],
+      [
+        133.11647500000007,
+        35.091230000000003
+      ]
+    ]
+  ],
+  "timestamp" : "2026-10-11T01:57:05Z",
+  "toStationID" : "005725",
+  "viewpointID" : "jp-西日本旅客鉄道-木次線#14#point-18",
+  "wholeLineRenderDependency" : "e96315d3a6a238885aaad920cd31be04c37828427e0612b6589806b30995b825"
+}

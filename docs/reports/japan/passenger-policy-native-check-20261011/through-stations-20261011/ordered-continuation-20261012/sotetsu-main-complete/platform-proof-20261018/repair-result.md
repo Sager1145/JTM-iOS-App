@@ -1,0 +1,11 @@
+# Own-platform display repair - 2026-10-18
+
+Applied app/scripts/railway/repair-yokohama-itoigawa-own-platform-display.mjs from frozen own-line evidence. Canonical station coordinates, IDs, mileage, segments and physical connectivity stay unchanged. Display parts, measured lane ranges and dependency references were updated for these owners only; no new follows or shared-family ownership.
+
+Five focused Node regressions passed (0.20s); repeated apply was idempotent. Initial 4/5 failure was a missing format identifier in the test fixture, corrected without weakening actual Web endpoint assertions. Independent read-only review found no blocker; removed an unused temporary field.
+
+Unified diagnostics now accepts captureSettings.basemapStyle=imagery, exposed by the human Basemap picker through the same request and native snapshotter. Standard contract stays unchanged; imagery receipts cannot reuse standard ones. Focused Swift round-trip 1/1 passed; diagnostic incremental build succeeded. Both baseline and candidate scopes completed without capture failure.
+
+Main incremental build succeeded: /private/tmp/jtm-own-platform-main-build.log. Actual same-camera network ON/OFF screenshots and AX are in main-final/. Bundled compact owner rows equal production. Own native chunk is retained there. This verifies the two reviewed display faults, not all hidden rails or whole-line platform acceptance.
+
+Yokohama: official Sotetsu/MLIT plan, own-operator OSM platform/track identities and native imagery establish A inside the own platform and B outside by about9.27m. Delete B only; retain A/C and remaining support points. A-C bearing27.63deg differs from own longitudinal axis by0.52deg. Pin lane0 for the first300m so the actual production stroke reaches A. Earlier standard-glyph-only rejection of delete-B is superseded by this stronger own-platform evidence; historical evidence remains. Baseline7/7 and candidate7/7. Parent inspected original/candidate views0/1; unchanged geometry elsewhere is retained. Main rendered7lines/7overlays,7station annotations,budgetDrops0; native chunk begins A,C with lane0. Official usable210m and mapped envelope217.597m are different quantities. Roof-hidden curvature is not claimed as surveyed.

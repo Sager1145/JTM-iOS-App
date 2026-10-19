@@ -1,0 +1,253 @@
+{
+  "format": "jtm-keikyu-airport-terminal-display-candidate-v1",
+  "status": "candidate-only-ready-for-root-native-main-review",
+  "lineID": "jp-京浜急行電鉄-空港線",
+  "intervalIndex": 5,
+  "stationID": "004368",
+  "sourceCoordinates": [
+    [
+      139.767066,
+      35.54498
+    ],
+    [
+      139.768073,
+      35.544836
+    ],
+    [
+      139.76953,
+      35.54465
+    ],
+    [
+      139.77111,
+      35.54449
+    ],
+    [
+      139.77228,
+      35.54443
+    ],
+    [
+      139.77283,
+      35.54443
+    ],
+    [
+      139.77391,
+      35.54452
+    ],
+    [
+      139.77469,
+      35.54465
+    ],
+    [
+      139.77481,
+      35.54468
+    ],
+    [
+      139.77575,
+      35.54492
+    ],
+    [
+      139.77626,
+      35.54508
+    ],
+    [
+      139.77768,
+      35.54572
+    ],
+    [
+      139.7791,
+      35.54643
+    ],
+    [
+      139.7806,
+      35.54716
+    ],
+    [
+      139.78107,
+      35.54739
+    ],
+    [
+      139.78249,
+      35.54808
+    ],
+    [
+      139.78282,
+      35.54825
+    ],
+    [
+      139.78338,
+      35.54852
+    ],
+    [
+      139.78432,
+      35.54897
+    ],
+    [
+      139.78448,
+      35.54904
+    ],
+    [
+      139.785857,
+      35.549719
+    ]
+  ],
+  "coordinates": [
+    [
+      139.767066,
+      35.54498
+    ],
+    [
+      139.768073,
+      35.544836
+    ],
+    [
+      139.76953,
+      35.54465
+    ],
+    [
+      139.77111,
+      35.54449
+    ],
+    [
+      139.77228,
+      35.54443
+    ],
+    [
+      139.77283,
+      35.54443
+    ],
+    [
+      139.77391,
+      35.54452
+    ],
+    [
+      139.77469,
+      35.54465
+    ],
+    [
+      139.77481,
+      35.54468
+    ],
+    [
+      139.77575,
+      35.54492
+    ],
+    [
+      139.77626,
+      35.54508
+    ],
+    [
+      139.77768,
+      35.54572
+    ],
+    [
+      139.7791,
+      35.54643
+    ],
+    [
+      139.7806,
+      35.54716
+    ],
+    [
+      139.78107,
+      35.54739
+    ],
+    [
+      139.78249,
+      35.54808
+    ],
+    [
+      139.78282,
+      35.54825
+    ],
+    [
+      139.78338,
+      35.54852
+    ],
+    [
+      139.78432,
+      35.54897
+    ],
+    [
+      139.78448,
+      35.54904
+    ],
+    [
+      139.78536347354134,
+      35.54936765286402
+    ]
+  ],
+  "displayStationCoordinates": {
+    "004368": [
+      139.78536347354134,
+      35.54936765286402
+    ]
+  },
+  "retainedThroughIndex": 19,
+  "frameSelection": {
+    "identity": "Apple blue Keikyu Kuko Line terminal frame on the southwest-northeast underground railway; excludes the perpendicular Tokyo Monorail platform boxes",
+    "longitudinalEndsPixels": [
+      [
+        290,
+        468
+      ],
+      [
+        525,
+        347
+      ]
+    ],
+    "midpointPixel": [
+      407.5,
+      407.5
+    ],
+    "midpointCoordinate": [
+      139.78536347354134,
+      35.54936765286402
+    ],
+    "mapImageSize": [
+      999,
+      654
+    ],
+    "mapRect": {
+      "x": 238447619.62818283,
+      "y": 105823302.06785679,
+      "width": 3996,
+      "height": 2616.000000014901
+    },
+    "method": "Manual outer-frame longitudinal ends on the actual z18 Apple basemap; exact arithmetic pixel midpoint converted through the frozen mapRect."
+  },
+  "rejectedExtractorCandidates": [
+    {
+      "midpointPixel": [
+        314.3001333331751,
+        463.3109023707947
+      ],
+      "reason": "perpendicular Tokyo Monorail platform/cartography; unresolved and zero supported parallel rail pixels"
+    },
+    {
+      "midpointPixel": [
+        392.2573561707953,
+        588.0507778389107
+      ],
+      "reason": "perpendicular Tokyo Monorail platform/cartography; unresolved and zero supported parallel rail pixels"
+    }
+  ],
+  "sources": [
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-endpoint-native-20261013/terminal-z18-before/apple-map-extraction/basemap.png",
+      "sha256": "01eb9d3276dc4dbe2963a672f877db9bbbe1cc6aed0b5d0b8e8d464f4e7af60c"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-endpoint-native-20261013/terminal-z18-before/apple-map-extraction/analysis.json",
+      "sha256": "b7ebf0d66373c13f54ef34aef66f6a42f4bf96e73147e1798363cd11dfdc2502"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-endpoint-native-20261013/airport-terminal-main-overlay.png",
+      "sha256": "a69ae80e622d71323bdedb5b073b6557f801881739ff898377b4d0ec43b765f0"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-endpoint-native-20261013/airport-terminal-main-basemap.png",
+      "sha256": "4525b9e6b6902558dc94f88552fc99c67d8269ae47007f1e82a96ce3c5c3017e"
+    }
+  ],
+  "scope": "Display-only terminal tail/alias candidate. Preserve physical stations, IDs, kilometres, interval 5 prefix 0...19, all other intervals and the full Main viewport."
+}

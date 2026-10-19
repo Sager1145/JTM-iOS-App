@@ -1,0 +1,23 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "inputPath" : "\/private\/tmp\/jtm-sobu-nakamagome-candidate-20261018\/jp-2025.json",
+  "intervalIndices" : [
+    3
+  ],
+  "lineID" : "jp-東日本旅客鉄道-総武線-3",
+  "requestID" : "sobu3-nakamagome-own-passenger-candidate",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018",
+  "workspace" : "alignment"
+}

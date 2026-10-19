@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-33-hokuriku-p1-baseline-20261017",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session",
+  "lineID": "jp-西日本旅客鉄道-北陸線-p1",
+  "intervalIndices": [
+    0
+  ],
+  "evidencePaths": [
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/source-line.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/retained-station-seam-review/observations.md"
+  ],
+  "captureSettings": {
+    "zoom": 17,
+    "width": 1024,
+    "height": 768,
+    "appearance": "light",
+    "outputModes": [
+      "basemap",
+      "display",
+      "smooth"
+    ]
+  }
+}

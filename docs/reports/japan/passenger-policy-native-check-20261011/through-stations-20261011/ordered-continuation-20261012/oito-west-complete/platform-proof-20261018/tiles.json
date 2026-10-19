@@ -1,0 +1,819 @@
+{
+  "retrieved": "2026-10-18",
+  "tile_size": 256,
+  "domesticDatum": "JGD2011",
+  "mosaic_origin_tile": {
+    "station": [
+      18,
+      231457,
+      101993
+    ],
+    "station-throat": [
+      18,
+      231452,
+      101993
+    ]
+  },
+  "tiles": [
+    {
+      "file": "seamlessphoto-18-231452-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231452,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231452/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231452-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231452,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231452/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231452-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231452,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231452/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231452-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231452,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231452/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231452-101998.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231452,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231452/101998.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231453-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231453,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231453/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231453-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231453,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231453/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231453-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231453,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231453/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231453-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231453,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231453/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231453-101998.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231453,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231453/101998.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231454-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231454,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231454/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231454-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231454,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231454/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231454-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231454,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231454/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231454-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231454,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231454/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231454-101998.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231454,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231454/101998.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231455-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231455,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231455/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231455-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231455,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231455/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231455-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231455,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231455/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231455-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231455,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231455/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231455-101998.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231455,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231455/101998.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231456-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231456,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231456/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231456-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231456,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231456/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231456-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231456,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231456/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231456-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231456,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231456/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231456-101998.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231456,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231456/101998.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231457-101993.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231457,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231457/101993.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231457-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231457,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231457/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231457-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231457,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231457/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231457-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231457,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231457/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231457-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231457,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231457/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231458-101993.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231458,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231458/101993.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231458-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231458,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231458/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231458-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231458,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231458/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231458-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231458,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231458/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231458-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231458,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231458/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231459-101993.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231459,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231459/101993.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231459-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231459,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231459/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231459-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231459,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231459/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231459-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231459,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231459/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231459-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231459,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231459/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231460-101993.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231460,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231460/101993.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231460-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231460,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231460/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231460-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231460,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231460/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231460-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231460,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231460/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231460-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231460,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231460/101997.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231461-101993.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231461,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231461/101993.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231461-101994.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231461,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231461/101994.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231461-101995.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231461,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231461/101995.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231461-101996.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231461,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231461/101996.jpg"
+    },
+    {
+      "file": "seamlessphoto-18-231461-101997.jpg",
+      "layer": "seamlessphoto",
+      "z": 18,
+      "x": 231461,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/231461/101997.jpg"
+    },
+    {
+      "file": "std-18-231452-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231452,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231452/101994.png"
+    },
+    {
+      "file": "std-18-231452-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231452,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231452/101995.png"
+    },
+    {
+      "file": "std-18-231452-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231452,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231452/101996.png"
+    },
+    {
+      "file": "std-18-231452-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231452,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231452/101997.png"
+    },
+    {
+      "file": "std-18-231452-101998.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231452,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231452/101998.png"
+    },
+    {
+      "file": "std-18-231453-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231453,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231453/101994.png"
+    },
+    {
+      "file": "std-18-231453-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231453,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231453/101995.png"
+    },
+    {
+      "file": "std-18-231453-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231453,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231453/101996.png"
+    },
+    {
+      "file": "std-18-231453-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231453,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231453/101997.png"
+    },
+    {
+      "file": "std-18-231453-101998.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231453,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231453/101998.png"
+    },
+    {
+      "file": "std-18-231454-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231454,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231454/101994.png"
+    },
+    {
+      "file": "std-18-231454-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231454,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231454/101995.png"
+    },
+    {
+      "file": "std-18-231454-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231454,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231454/101996.png"
+    },
+    {
+      "file": "std-18-231454-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231454,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231454/101997.png"
+    },
+    {
+      "file": "std-18-231454-101998.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231454,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231454/101998.png"
+    },
+    {
+      "file": "std-18-231455-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231455,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231455/101994.png"
+    },
+    {
+      "file": "std-18-231455-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231455,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231455/101995.png"
+    },
+    {
+      "file": "std-18-231455-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231455,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231455/101996.png"
+    },
+    {
+      "file": "std-18-231455-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231455,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231455/101997.png"
+    },
+    {
+      "file": "std-18-231455-101998.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231455,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231455/101998.png"
+    },
+    {
+      "file": "std-18-231456-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231456,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231456/101994.png"
+    },
+    {
+      "file": "std-18-231456-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231456,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231456/101995.png"
+    },
+    {
+      "file": "std-18-231456-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231456,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231456/101996.png"
+    },
+    {
+      "file": "std-18-231456-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231456,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231456/101997.png"
+    },
+    {
+      "file": "std-18-231456-101998.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231456,
+      "y": 101998,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231456/101998.png"
+    },
+    {
+      "file": "std-18-231457-101993.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231457,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231457/101993.png"
+    },
+    {
+      "file": "std-18-231457-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231457,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231457/101994.png"
+    },
+    {
+      "file": "std-18-231457-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231457,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231457/101995.png"
+    },
+    {
+      "file": "std-18-231457-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231457,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231457/101996.png"
+    },
+    {
+      "file": "std-18-231457-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231457,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231457/101997.png"
+    },
+    {
+      "file": "std-18-231458-101993.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231458,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231458/101993.png"
+    },
+    {
+      "file": "std-18-231458-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231458,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231458/101994.png"
+    },
+    {
+      "file": "std-18-231458-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231458,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231458/101995.png"
+    },
+    {
+      "file": "std-18-231458-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231458,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231458/101996.png"
+    },
+    {
+      "file": "std-18-231458-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231458,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231458/101997.png"
+    },
+    {
+      "file": "std-18-231459-101993.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231459,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231459/101993.png"
+    },
+    {
+      "file": "std-18-231459-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231459,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231459/101994.png"
+    },
+    {
+      "file": "std-18-231459-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231459,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231459/101995.png"
+    },
+    {
+      "file": "std-18-231459-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231459,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231459/101996.png"
+    },
+    {
+      "file": "std-18-231459-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231459,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231459/101997.png"
+    },
+    {
+      "file": "std-18-231460-101993.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231460,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231460/101993.png"
+    },
+    {
+      "file": "std-18-231460-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231460,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231460/101994.png"
+    },
+    {
+      "file": "std-18-231460-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231460,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231460/101995.png"
+    },
+    {
+      "file": "std-18-231460-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231460,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231460/101996.png"
+    },
+    {
+      "file": "std-18-231460-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231460,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231460/101997.png"
+    },
+    {
+      "file": "std-18-231461-101993.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231461,
+      "y": 101993,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231461/101993.png"
+    },
+    {
+      "file": "std-18-231461-101994.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231461,
+      "y": 101994,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231461/101994.png"
+    },
+    {
+      "file": "std-18-231461-101995.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231461,
+      "y": 101995,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231461/101995.png"
+    },
+    {
+      "file": "std-18-231461-101996.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231461,
+      "y": 101996,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231461/101996.png"
+    },
+    {
+      "file": "std-18-231461-101997.png",
+      "layer": "std",
+      "z": 18,
+      "x": 231461,
+      "y": 101997,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/std/18/231461/101997.png"
+    }
+  ]
+}

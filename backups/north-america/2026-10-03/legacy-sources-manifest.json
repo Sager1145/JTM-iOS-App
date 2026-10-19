@@ -1,0 +1,110 @@
+{
+  "reason": "Pre-retirement shared sources and mixed-region catalogs",
+  "files": [
+    {
+      "path": "app/data/station-english-coverage.json",
+      "bytes": 1960652,
+      "sha256": "2616c80d859d0404e8231ac7ae502c906218cbba5e944f734ad9c8d7b973cb65"
+    },
+    {
+      "path": "app/data/station-english.json",
+      "bytes": 49554296,
+      "sha256": "b51866ec1c7a28a4550d3a2243f519f17a380804a1daa3c88c20256a434ae868"
+    },
+    {
+      "path": "app/package.json",
+      "bytes": 4827,
+      "sha256": "34a403986445f1acd2c6dee454ad7817ee66180e6340fd3cbed482cfb6ce031a"
+    },
+    {
+      "path": "app/public/app-config.js",
+      "bytes": 18799,
+      "sha256": "ef317b007cfa5996ade7fd18f5a16c9bac2ce7a3de3a2d510ec15e0de13838f9"
+    },
+    {
+      "path": "app/public/app-map-init.js",
+      "bytes": 46236,
+      "sha256": "38f549beee72bba23fd6b909abf3babcea847683a6709c4a874f9f54ccbe7a3f"
+    },
+    {
+      "path": "app/public/app-stats.js",
+      "bytes": 55887,
+      "sha256": "bae997c872c60a8fb2edc690d5cd528dd423a89299f6c2bd6ffe0ce70bfed949"
+    },
+    {
+      "path": "app/public/app-store-ops.js",
+      "bytes": 35373,
+      "sha256": "455f5261af9f49c7217b1e389d26b2f7408fb219e5918913e6baebcb68d72d9c"
+    },
+    {
+      "path": "app/public/app-validation.js",
+      "bytes": 12160,
+      "sha256": "38f932a919c049780fc03efc870fceb78db71342b0134cd23dc9375f5474b3ef"
+    },
+    {
+      "path": "app/public/i18n-strings.js",
+      "bytes": 97234,
+      "sha256": "9eef5398f518828754df06a7d2e59914f9b7e2092415e38c229ec5eaf0529ff7"
+    },
+    {
+      "path": "app/public/i18n.js",
+      "bytes": 24150,
+      "sha256": "8db78cd87513b7bb8c6a49d194aa79ee1d229c86939bea6839ce0d1958448f09"
+    },
+    {
+      "path": "app/public/index.html",
+      "bytes": 40119,
+      "sha256": "010cf12a8c2023044eaa8c5fe5363b7fae1b607f647527fd744347f21b046f3a"
+    },
+    {
+      "path": "app/public/rail-network.js",
+      "bytes": 214307,
+      "sha256": "ffa86876b4e2cd31ddc6f5b4162b2f91198c20a01593cbdb357548029407224a"
+    },
+    {
+      "path": "app/scripts/build/precompute-train-parts.mjs",
+      "bytes": 32235,
+      "sha256": "0040a65b57956d86e7c11238328ce9e5810660503f817ce90b6cac5f2985a437"
+    },
+    {
+      "path": "app/scripts/build/rail-database/load.mjs",
+      "bytes": 38994,
+      "sha256": "b53a7d8e22964caf45e87462c7b26914637f8d2605cc2e99ceb80834ba07890e"
+    },
+    {
+      "path": "app/scripts/railway/build-display-network.py",
+      "bytes": 176200,
+      "sha256": "248bc028e2b3966031851d404142aef137142bc76d0bcc46b970e5eacde321e5"
+    },
+    {
+      "path": "app/scripts/railway/build-station-english.py",
+      "bytes": 15129,
+      "sha256": "3f64eee8cc58ea3abd7b5d7cd00042c070a16cb0dd6ee54f69dd40453767dfc9"
+    },
+    {
+      "path": "app/scripts/railway/check-station-english-sources.py",
+      "bytes": 1228,
+      "sha256": "a426dd942c8694d5a9f4a38e68e96e6189e6c826fa3293764915d083c644b2d2"
+    },
+    {
+      "path": "app/tests/precompute-provenance.test.mjs",
+      "bytes": 6570,
+      "sha256": "ab752755741e5a58fde61f3487efb6d491ea41b8e4a04d54e8e2ba6faec25d29"
+    },
+    {
+      "path": "app/tests/precompute-source-hashes.test.mjs",
+      "bytes": 3314,
+      "sha256": "451e8777554cde1ea1b5ff80acfff53ef4f9b79deaef78ff3d05d5d7899c0273"
+    },
+    {
+      "path": "app/tests/region-store-roundtrip.test.mjs",
+      "bytes": 1919,
+      "sha256": "d1a65fd9e0a89a6216d8596cc0af63dcfe07cd6e3b3e8e6cae3770ef0d3be90a"
+    },
+    {
+      "path": "app/tests/station-name-resources.test.mjs",
+      "bytes": 3666,
+      "sha256": "0fac62fd818f741a6161f183b9dcfdf372920edcf0951fdbfe7128c65890bec5"
+    }
+  ]
+}

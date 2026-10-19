@@ -1,0 +1,42 @@
+{
+  "schema": "cn-boundary-d271-source-integration/1",
+  "status": "runtime-integrated-final176-replayed",
+  "source": "china-261017.osm.pbf",
+  "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+  "physicalPaths": 14,
+  "physicalNodeEntries": 2428,
+  "physicalAdjacentEdgeEntries": 2414,
+  "addedPaths": 8,
+  "addedAdjacentEdges": 2042,
+  "rawSectionFeatures": 17608,
+  "rawStationFeatures": 21576,
+  "newRealStationBindings": 3,
+  "CNOriginalSameNodeJunctions": 3719,
+  "retainedReviewedCNConnections": 2,
+  "peerJunctionRowsUnchanged": 203,
+  "compactPassengerRecordsUnchanged": 3991,
+  "compactIntervalsUnchanged": 17594,
+  "oldRawStationFeaturesRetained": 21573,
+  "oldCompactByLineProofsAndRawGeometryRetained": true,
+  "focusedBuilderTests": {
+    "tests": 21,
+    "failures": 0,
+    "seconds": 0.019
+  },
+  "stationBindingContract": "Real original route-member marker with exact official code/name/source, version and WGS84 coordinate, source-qualified original own-path anchor and existing1500m bound; no topology from station group/proximity. CNW is explicit stop_position; PSW and XCE are original rail anchors without explicit stop_position tags.",
+  "unrepairedTargets": {
+    "G6045": "GZS fixed-platform boundary remains withheld; six sidings missing original inventory/agency proof.",
+    "G101": "SBTVII crossover1364948209 lacks originalowner/operator/passenger proof. Expanded ownIII306 path reaches genuine Harbin junction6728392266 at519.930km, then owned704 extends75.223km but onwardway1067140203v3 has zero originalrelationmembership. No newcontract, gaprelocation or unownededge admission."
+  },
+  "D271Limit": "Final176:14/14 geometry,13/14 internalresolved,onePNEboundary; endpoint unavailable. D2396/7geometry5/7internalresolved, samePNEboundary plus Chuxiong-Lijiang missing.",
+  "testsDoNotCertifyActualTrainTrack": true,
+  "newRealRuntimeStationIdentity": "PSW",
+  "newRealRuntimeStationIdentities": 1,
+  "additionalBindingsForExistingStationIdentities": 2,
+  "newRawOfficialStationCodeCount": 2716,
+  "compactOfficialStationCodeCountUnchanged": 2715,
+  "runtimeCNRevision": "cn:0f6ce85ec6d41ecc9db431a31d8ae04ac907bf89cefb2c5ac86943f9455ce2d6",
+  "JSActualSourceIdentityQuery": "All3newrawstationmemberships match actualphysicalRailIdentityKey and originalanchor membership; Swift counterpart uses sameidentity fields; no runtime code changed.",
+  "completedAt": "2026-10-19T08:50:40Z",
+  "fullReplayResult": "boundary-d271-result-review.json"
+}

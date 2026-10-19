@@ -1,0 +1,457 @@
+{
+  "path": "railway-sources/local/osm/degree-cells/E136N36.json",
+  "fetchedAt": "2026-08-18T10:31:59.026Z",
+  "endpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+  "elements": [
+    {
+      "id": 24373397,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0898072,
+          "lon": 136.2757935
+        },
+        {
+          "lat": 36.0897493,
+          "lon": 136.2754817
+        },
+        {
+          "lat": 36.089704,
+          "lon": 136.2753224
+        },
+        {
+          "lat": 36.0895362,
+          "lon": 136.2748656
+        },
+        {
+          "lat": 36.0893354,
+          "lon": 136.2745057
+        },
+        {
+          "lat": 36.0890697,
+          "lon": 136.2740758
+        },
+        {
+          "lat": 36.0885962,
+          "lon": 136.2733176
+        },
+        {
+          "lat": 36.0882626,
+          "lon": 136.2727835
+        },
+        {
+          "lat": 36.0877792,
+          "lon": 136.2720208
+        },
+        {
+          "lat": 36.0875201,
+          "lon": 136.2716108
+        },
+        {
+          "lat": 36.0874607,
+          "lon": 136.2715153
+        },
+        {
+          "lat": 36.0871505,
+          "lon": 136.2710166
+        },
+        {
+          "lat": 36.0867916,
+          "lon": 136.2703227
+        },
+        {
+          "lat": 36.0866145,
+          "lon": 136.2698858
+        },
+        {
+          "lat": 36.086473,
+          "lon": 136.26952
+        },
+        {
+          "lat": 36.086439,
+          "lon": 136.269449
+        },
+        {
+          "lat": 36.0863635,
+          "lon": 136.2692367
+        },
+        {
+          "lat": 36.0862438,
+          "lon": 136.2689259
+        },
+        {
+          "lat": 36.0860434,
+          "lon": 136.2684182
+        },
+        {
+          "lat": 36.0854099,
+          "lon": 136.2668275
+        },
+        {
+          "lat": 36.0852225,
+          "lon": 136.2663867
+        }
+      ]
+    },
+    {
+      "id": 332270250,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0903511,
+          "lon": 136.2786825
+        },
+        {
+          "lat": 36.0902197,
+          "lon": 136.2780227
+        }
+      ]
+    },
+    {
+      "id": 424071505,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0937667,
+          "lon": 136.3010837
+        },
+        {
+          "lat": 36.0935109,
+          "lon": 136.299992
+        },
+        {
+          "lat": 36.0932798,
+          "lon": 136.2990648
+        },
+        {
+          "lat": 36.0932157,
+          "lon": 136.2987881
+        },
+        {
+          "lat": 36.0931693,
+          "lon": 136.2985083
+        },
+        {
+          "lat": 36.0931296,
+          "lon": 136.2981815
+        },
+        {
+          "lat": 36.0931128,
+          "lon": 136.2980174
+        },
+        {
+          "lat": 36.0931032,
+          "lon": 136.2978313
+        },
+        {
+          "lat": 36.0930562,
+          "lon": 136.297168
+        },
+        {
+          "lat": 36.0930243,
+          "lon": 136.2966792
+        },
+        {
+          "lat": 36.0929996,
+          "lon": 136.2963503
+        },
+        {
+          "lat": 36.0929625,
+          "lon": 136.2960695
+        },
+        {
+          "lat": 36.0929133,
+          "lon": 136.2957784
+        },
+        {
+          "lat": 36.0928595,
+          "lon": 136.295529
+        },
+        {
+          "lat": 36.0927791,
+          "lon": 136.2952308
+        },
+        {
+          "lat": 36.092598,
+          "lon": 136.2947148
+        },
+        {
+          "lat": 36.0922425,
+          "lon": 136.2937392
+        },
+        {
+          "lat": 36.0919279,
+          "lon": 136.292863
+        },
+        {
+          "lat": 36.0918279,
+          "lon": 136.2925444
+        },
+        {
+          "lat": 36.0917935,
+          "lon": 136.2923991
+        },
+        {
+          "lat": 36.0917638,
+          "lon": 136.2922344
+        },
+        {
+          "lat": 36.09174,
+          "lon": 136.2919984
+        },
+        {
+          "lat": 36.0917395,
+          "lon": 136.2914939
+        },
+        {
+          "lat": 36.091747,
+          "lon": 136.290321
+        },
+        {
+          "lat": 36.0917593,
+          "lon": 136.2900808
+        },
+        {
+          "lat": 36.0917635,
+          "lon": 136.2892976
+        },
+        {
+          "lat": 36.0918257,
+          "lon": 136.2841587
+        },
+        {
+          "lat": 36.091821,
+          "lon": 136.2836548
+        },
+        {
+          "lat": 36.0918094,
+          "lon": 136.2833773
+        },
+        {
+          "lat": 36.0917832,
+          "lon": 136.2831159
+        },
+        {
+          "lat": 36.0917509,
+          "lon": 136.282895
+        },
+        {
+          "lat": 36.0917033,
+          "lon": 136.2826704
+        },
+        {
+          "lat": 36.0916537,
+          "lon": 136.2824691
+        },
+        {
+          "lat": 36.0915869,
+          "lon": 136.2822392
+        },
+        {
+          "lat": 36.0914111,
+          "lon": 136.2817149
+        },
+        {
+          "lat": 36.0908687,
+          "lon": 136.2802422
+        },
+        {
+          "lat": 36.0905856,
+          "lon": 136.2794595
+        },
+        {
+          "lat": 36.0904552,
+          "lon": 136.279056
+        },
+        {
+          "lat": 36.0903511,
+          "lon": 136.2786825
+        }
+      ]
+    },
+    {
+      "id": 1017340560,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0899453,
+          "lon": 136.27656
+        },
+        {
+          "lat": 36.0900612,
+          "lon": 136.2771814
+        },
+        {
+          "lat": 36.0902197,
+          "lon": 136.2780227
+        }
+      ]
+    },
+    {
+      "id": 1017340561,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "operator": "えちぜん鉄道",
+        "railway": "rail",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0902197,
+          "lon": 136.2780227
+        },
+        {
+          "lat": 36.0901472,
+          "lon": 136.2778334
+        },
+        {
+          "lat": 36.0900964,
+          "lon": 136.2776489
+        },
+        {
+          "lat": 36.0899672,
+          "lon": 136.2769672
+        },
+        {
+          "lat": 36.0899526,
+          "lon": 136.2767778
+        },
+        {
+          "lat": 36.0899453,
+          "lon": 136.27656
+        }
+      ]
+    },
+    {
+      "id": 1412418312,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.0899453,
+          "lon": 136.27656
+        },
+        {
+          "lat": 36.089851,
+          "lon": 136.2760376
+        }
+      ]
+    },
+    {
+      "id": 1412418313,
+      "tags": {
+        "KSJ2:LIN": "勝山永平寺線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "geometry": [
+        {
+          "lat": 36.089851,
+          "lon": 136.2760376
+        },
+        {
+          "lat": 36.0898072,
+          "lon": 136.2757935
+        }
+      ]
+    }
+  ]
+}

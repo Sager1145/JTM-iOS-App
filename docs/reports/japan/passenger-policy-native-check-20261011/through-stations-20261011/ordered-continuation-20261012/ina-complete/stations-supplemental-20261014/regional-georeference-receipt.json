@@ -1,0 +1,93 @@
+{
+  "cases": [
+    {
+      "name": "maruyama-georeferenced-loaded",
+      "requested": [
+        139.62454,
+        35.9801
+      ],
+      "actualCentre": [
+        139.6245414018631,
+        35.98009857074372
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    },
+    {
+      "name": "shiku-georeferenced-stable",
+      "requested": [
+        139.6222,
+        35.991025
+      ],
+      "actualCentre": [
+        139.6222025156021,
+        35.99102411212555
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    },
+    {
+      "name": "ina-chuo-georeferenced-stable",
+      "requested": [
+        139.61703,
+        35.999455
+      ],
+      "actualCentre": [
+        139.6170312166214,
+        35.99945705709265
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    },
+    {
+      "name": "hanuki-georeferenced-stable",
+      "requested": [
+        139.60852,
+        36.00716
+      ],
+      "actualCentre": [
+        139.60851788520813,
+        36.0071600658772
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    },
+    {
+      "name": "uchijuku-georeferenced-stable",
+      "requested": [
+        139.59998,
+        36.013805
+      ],
+      "actualCentre": [
+        139.5999777317047,
+        36.01380357770861
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    },
+    {
+      "name": "omiya-regional-aerial-z20-url",
+      "requested": [
+        139.6219,
+        35.90774
+      ],
+      "actualCentre": [
+        139.62190210819244,
+        35.90774003207196
+      ],
+      "actualWorldSize": 67108864,
+      "worldPixelsPerScreenPixel": 1.0,
+      "status": "tile-camera-matched-manual-owner-review-pending"
+    }
+  ],
+  "excluded": [
+    "shiku-georeferenced (previous Maruyama pixels)",
+    "maruyama-georeferenced (photo fade not complete)"
+  ],
+  "urlZoomIsNotCalibration": true
+}

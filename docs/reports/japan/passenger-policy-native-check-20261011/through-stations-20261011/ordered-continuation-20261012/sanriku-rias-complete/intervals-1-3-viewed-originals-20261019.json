@@ -1,0 +1,1506 @@
+{
+  "format": "jtm-scoped-original-pixel-review-v1",
+  "reviewDate": "2026-10-19",
+  "lineID": "jp-三陸鉄道-リアス線",
+  "session": "/private/tmp/jtm-sanriku-rias-missing-20261019",
+  "captureIndex": "/private/tmp/jtm-sanriku-rias-missing-20261019/capture-index.json",
+  "captureResult": {
+    "capturedCount": 44,
+    "failedCount": 0,
+    "processID": 20655
+  },
+  "selectedIntervals": [
+    1,
+    3
+  ],
+  "plannedPairsInWorkerScope": 14,
+  "actuallyViewedPairs": 14,
+  "actuallyViewedOriginalPNGs": 28,
+  "unviewedPairsInWorkerScope": 0,
+  "otherNewSessionPairsNotViewedByThisWorker": 30,
+  "legacyRetainedPairsReopened": 0,
+  "legacyRetainedPairsNotViewedHere": 135,
+  "identityComparisonScope": "Only new interval #1 and #3 complete source/display IEEE-754 arrays and own station IDs, versus the actual immutable plan named by each receipt. No #2/#4 input/pixel review repeated.",
+  "identityComparisons": [
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "000819",
+        "磯鶏",
+        141.960935,
+        39.63041
+      ],
+      "toStation": [
+        "000826",
+        "八木沢・宮古短大",
+        141.946367,
+        39.619299
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "matchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 56,
+      "displayControlCount": 56,
+      "currentCoordinates": [
+        [
+          141.960935,
+          39.63041
+        ],
+        [
+          141.96083,
+          39.62996
+        ],
+        [
+          141.96075,
+          39.62948
+        ],
+        [
+          141.9607,
+          39.62915
+        ],
+        [
+          141.96066,
+          39.62886
+        ],
+        [
+          141.96059,
+          39.62858
+        ],
+        [
+          141.96055,
+          39.62841
+        ],
+        [
+          141.96054,
+          39.6284
+        ],
+        [
+          141.96036,
+          39.62803
+        ],
+        [
+          141.96019,
+          39.62776
+        ],
+        [
+          141.96002,
+          39.6275
+        ],
+        [
+          141.95974,
+          39.6272
+        ],
+        [
+          141.95951,
+          39.62698
+        ],
+        [
+          141.95923,
+          39.62673
+        ],
+        [
+          141.95891,
+          39.62652
+        ],
+        [
+          141.95862,
+          39.62637
+        ],
+        [
+          141.95844,
+          39.62629
+        ],
+        [
+          141.958,
+          39.6261
+        ],
+        [
+          141.95785,
+          39.62607
+        ],
+        [
+          141.95773,
+          39.62604
+        ],
+        [
+          141.95726,
+          39.62592
+        ],
+        [
+          141.95687,
+          39.62581
+        ],
+        [
+          141.95644,
+          39.62568
+        ],
+        [
+          141.95617,
+          39.6256
+        ],
+        [
+          141.95597,
+          39.62554
+        ],
+        [
+          141.95547,
+          39.62542
+        ],
+        [
+          141.95512,
+          39.62534
+        ],
+        [
+          141.95483,
+          39.62527
+        ],
+        [
+          141.95445,
+          39.6252
+        ],
+        [
+          141.95421,
+          39.62512
+        ],
+        [
+          141.95398,
+          39.62502
+        ],
+        [
+          141.95378,
+          39.62492
+        ],
+        [
+          141.95355,
+          39.6248
+        ],
+        [
+          141.95335,
+          39.62468
+        ],
+        [
+          141.95317,
+          39.62455
+        ],
+        [
+          141.95301,
+          39.62443
+        ],
+        [
+          141.95288,
+          39.62433
+        ],
+        [
+          141.95267,
+          39.62415
+        ],
+        [
+          141.95231,
+          39.62385
+        ],
+        [
+          141.95188,
+          39.62347
+        ],
+        [
+          141.95169,
+          39.6233
+        ],
+        [
+          141.95139,
+          39.62303
+        ],
+        [
+          141.95105,
+          39.62276
+        ],
+        [
+          141.9506,
+          39.62237
+        ],
+        [
+          141.95035,
+          39.62217
+        ],
+        [
+          141.95028,
+          39.62211
+        ],
+        [
+          141.95009,
+          39.62193
+        ],
+        [
+          141.94984,
+          39.62171
+        ],
+        [
+          141.94947,
+          39.6214
+        ],
+        [
+          141.94907,
+          39.62107
+        ],
+        [
+          141.94862,
+          39.62076
+        ],
+        [
+          141.94816,
+          39.62046
+        ],
+        [
+          141.94779,
+          39.6202
+        ],
+        [
+          141.94742,
+          39.61996
+        ],
+        [
+          141.94671338692913,
+          39.6195195767846
+        ],
+        [
+          141.946367,
+          39.619299
+        ]
+      ],
+      "currentHasDisplayIntervalOverride": false
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "000835",
+        "津軽石",
+        141.937785,
+        39.5815
+      ],
+      "toStation": [
+        "000839",
+        "払川",
+        141.932824,
+        39.564397
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "matchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 52,
+      "displayControlCount": 52,
+      "currentCoordinates": [
+        [
+          141.937785,
+          39.5815
+        ],
+        [
+          141.9375,
+          39.58105
+        ],
+        [
+          141.93746,
+          39.58096
+        ],
+        [
+          141.93735,
+          39.58072
+        ],
+        [
+          141.93723,
+          39.58049
+        ],
+        [
+          141.93707,
+          39.58024
+        ],
+        [
+          141.93692,
+          39.57994
+        ],
+        [
+          141.93675,
+          39.57965
+        ],
+        [
+          141.93657,
+          39.57937
+        ],
+        [
+          141.93641,
+          39.57913
+        ],
+        [
+          141.93622,
+          39.57894
+        ],
+        [
+          141.93585,
+          39.57864
+        ],
+        [
+          141.9358,
+          39.57858
+        ],
+        [
+          141.93566,
+          39.57844
+        ],
+        [
+          141.93546,
+          39.5782
+        ],
+        [
+          141.9353,
+          39.57796
+        ],
+        [
+          141.93512,
+          39.57765
+        ],
+        [
+          141.93498,
+          39.57729
+        ],
+        [
+          141.93488,
+          39.57696
+        ],
+        [
+          141.93473,
+          39.57655
+        ],
+        [
+          141.93471,
+          39.5765
+        ],
+        [
+          141.93454,
+          39.57607
+        ],
+        [
+          141.93433,
+          39.57556
+        ],
+        [
+          141.93412,
+          39.57501
+        ],
+        [
+          141.93397,
+          39.57464
+        ],
+        [
+          141.93372,
+          39.57404
+        ],
+        [
+          141.9337,
+          39.57396
+        ],
+        [
+          141.93358,
+          39.57366
+        ],
+        [
+          141.93344,
+          39.57329
+        ],
+        [
+          141.9333,
+          39.57291
+        ],
+        [
+          141.93315,
+          39.57255
+        ],
+        [
+          141.93295,
+          39.57204
+        ],
+        [
+          141.93279,
+          39.57169
+        ],
+        [
+          141.93255,
+          39.57107
+        ],
+        [
+          141.9323,
+          39.57046
+        ],
+        [
+          141.93216,
+          39.57005
+        ],
+        [
+          141.93196,
+          39.56956
+        ],
+        [
+          141.9318,
+          39.56918
+        ],
+        [
+          141.93168,
+          39.56881
+        ],
+        [
+          141.93149,
+          39.56822
+        ],
+        [
+          141.93139,
+          39.56767
+        ],
+        [
+          141.93137,
+          39.56731
+        ],
+        [
+          141.93142,
+          39.56682
+        ],
+        [
+          141.93147,
+          39.5666
+        ],
+        [
+          141.93154,
+          39.56632
+        ],
+        [
+          141.9317,
+          39.56593
+        ],
+        [
+          141.93178,
+          39.56576
+        ],
+        [
+          141.93193,
+          39.56548
+        ],
+        [
+          141.93218,
+          39.56514
+        ],
+        [
+          141.93243,
+          39.56481
+        ],
+        [
+          141.93256926312495,
+          39.56466425952041
+        ],
+        [
+          141.932824,
+          39.564397
+        ]
+      ],
+      "currentHasDisplayIntervalOverride": false
+    }
+  ],
+  "angleLead": {
+    "intervalIndex": 1,
+    "decodedVertex": 6,
+    "coordinate": [
+      141.96055,
+      39.62841
+    ],
+    "nextVertex": {
+      "decodedIndex": 7,
+      "coordinate": [
+        141.96054,
+        39.6284
+      ]
+    },
+    "edge6to7SphericalMetres": 1.4035284375596104,
+    "comparisonGuardCoordinates": {
+      "v5": [
+        141.96059,
+        39.62858
+      ],
+      "v8": [
+        141.96036,
+        39.62803
+      ]
+    },
+    "strongestOriginalPoints": [
+      0,
+      1
+    ],
+    "status": "Angle lead only; preserve current geometry pending attributable own source. No candidate implementation or deletion approved by this review.",
+    "pixelFinding": "No independently resolved isolated false V in the actual smooth originals at v6/v7. A true gradual south-to-southwest railway turn surrounds it.",
+    "nextEvidence": "Trace exact current v5..v8 origin/control precision and explicit own passenger way chain through the 磯鶏 south curve. Resolve whether the 1.4m micro-edge is source precision or real local alignment; preserve the larger turn and station anchors. No nearest-blue snapping."
+  },
+  "newGeometryCandidate": null,
+  "platformCentreWGS84": null,
+  "findings": "Own broad curves and station joins remain continuous; no confirmed false V, right-angle connector or wrong-corridor transfer. Small cartographic side differences remain unmeasured and do not justify alignment changes.",
+  "limits": [
+    "Only 14 selected viewpoints reviewed; no whole 44-view session or whole-line/Main acceptance.",
+    "Map text prints Yamada Line; current own identity comes from the receipt-named plan and current own source, not a nearest adjacent railway or the text label alone.",
+    "Platform glyphs do not establish full own usable caps or precise survey rail centres.",
+    "No app/native/capture/build/tests/owner/production changes by this worker."
+  ],
+  "views": [
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-0",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "磯鶏 own departure goes south on the rail corridor west of Route45, continuous through the station. No short hook; complete own platform caps unresolved. v6/v7 area lies south of the station within a genuine gradual curve, with no clearly resolved false V.",
+      "captureTimestamp": "2026-10-19T08:58:59Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 570320,
+          "actualByteCount": 570320
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 23058,
+          "actualByteCount": 23058
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/distance-samples.json",
+          "recordedByteCount": 69817,
+          "actualByteCount": 69817
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 644762,
+          "actualByteCount": 644762
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000000/view.json",
+          "recordedByteCount": 169583,
+          "actualByteCount": 169583
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-1",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own south-to-southwest curve is continuous. Around v6/v7 the smooth image shows no independently resolved isolated apex. True broad curve must remain; the angle candidate alone does not justify deletion.",
+      "captureTimestamp": "2026-10-19T08:59:00Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 619233,
+          "actualByteCount": 619233
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 25231,
+          "actualByteCount": 25231
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/distance-samples.json",
+          "recordedByteCount": 69828,
+          "actualByteCount": 69828
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 698960,
+          "actualByteCount": 698960
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000001/view.json",
+          "recordedByteCount": 173898,
+          "actualByteCount": 173898
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-2",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own compound turn from southward to west-southwest stays continuous through the neighbourhood. Red has mild north/west-side separation from thin blue on portions of the broad turn, without a shortcut or sharp V.",
+      "captureTimestamp": "2026-10-19T08:59:00Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 654192,
+          "actualByteCount": 654192
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 27421,
+          "actualByteCount": 27421
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/distance-samples.json",
+          "recordedByteCount": 73967,
+          "actualByteCount": 73967
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 738838,
+          "actualByteCount": 738838
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000002/view.json",
+          "recordedByteCount": 185845,
+          "actualByteCount": 185845
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-3",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own southwest curve into the diagonal tangent remains rounded and continuous. Red bows slightly north of blue near the transition; no uniform lateral snap or flattening is justified.",
+      "captureTimestamp": "2026-10-19T08:59:01Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 588214,
+          "actualByteCount": 588214
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 28670,
+          "actualByteCount": 28670
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/distance-samples.json",
+          "recordedByteCount": 75464,
+          "actualByteCount": 75464
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 667889,
+          "actualByteCount": 667889
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000003/view.json",
+          "recordedByteCount": 190694,
+          "actualByteCount": 190694
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 4,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-4",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Long own southwest tangent remains continuous and separate from the river/Route277 corridor farther southeast. No right-angle join, station connector or turn into the road tunnel.",
+      "captureTimestamp": "2026-10-19T08:59:01Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 609239,
+          "actualByteCount": 609239
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 28417,
+          "actualByteCount": 28417
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/distance-samples.json",
+          "recordedByteCount": 60189,
+          "actualByteCount": 60189
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 686192,
+          "actualByteCount": 686192
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000004/view.json",
+          "recordedByteCount": 160313,
+          "actualByteCount": 160313
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 5,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-5",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "八木沢・宮古短大 approach remains on the own diagonal railway corridor, with no short hook or gap. Broad station band does not resolve full usable platform caps.",
+      "captureTimestamp": "2026-10-19T08:59:01Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/basemap.png",
+          "recordedByteCount": 561964,
+          "actualByteCount": 561964
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/display-stage-distance-samples.json",
+          "recordedByteCount": 25963,
+          "actualByteCount": 25963
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/distance-samples.json",
+          "recordedByteCount": 43781,
+          "actualByteCount": 43781
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/smooth.png",
+          "recordedByteCount": 635904,
+          "actualByteCount": 635904
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000005/view.json",
+          "recordedByteCount": 125143,
+          "actualByteCount": 125143
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 6,
+      "viewpointID": "jp-三陸鉄道-リアス線#1#point-6",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "八木沢・宮古短大 endpoint and visible continuation remain continuous, without an isolated station-end jog. Own platform caps/precise rail centre not established.",
+      "captureTimestamp": "2026-10-19T08:59:02Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/basemap.png",
+          "recordedByteCount": 540655,
+          "actualByteCount": 540655
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/display-stage-distance-samples.json",
+          "recordedByteCount": 25432,
+          "actualByteCount": 25432
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/distance-samples.json",
+          "recordedByteCount": 43003,
+          "actualByteCount": 43003
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/smooth.png",
+          "recordedByteCount": 612570,
+          "actualByteCount": 612570
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000000/000006/view.json",
+          "recordedByteCount": 122415,
+          "actualByteCount": 122415
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-0",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "津軽石 own south departure remains on the rail corridor west of Route45 and the river; it does not follow the separate E45 roadway farther west. No station hook; multiple-track station glyph does not identify a precise platform centre.",
+      "captureTimestamp": "2026-10-19T08:59:06Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/basemap.png",
+          "recordedByteCount": 636298,
+          "actualByteCount": 636298
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 24696,
+          "actualByteCount": 24696
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/distance-samples.json",
+          "recordedByteCount": 98530,
+          "actualByteCount": 98530
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/smooth.png",
+          "recordedByteCount": 716706,
+          "actualByteCount": 716706
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000000/view.json",
+          "recordedByteCount": 224506,
+          "actualByteCount": 224506
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-1",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own gentle reverse bend south of 津軽石 remains rounded and continuous, distinct from the river and highway. No isolated V or right angle.",
+      "captureTimestamp": "2026-10-19T08:59:06Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/basemap.png",
+          "recordedByteCount": 627468,
+          "actualByteCount": 627468
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 23347,
+          "actualByteCount": 23347
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/distance-samples.json",
+          "recordedByteCount": 91114,
+          "actualByteCount": 91114
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/smooth.png",
+          "recordedByteCount": 707688,
+          "actualByteCount": 707688
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000001/view.json",
+          "recordedByteCount": 208676,
+          "actualByteCount": 208676
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-2",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own south-southwest body remains continuous across a tributary. Small side difference from blue is visible; no wrong-corridor transfer or short shoulder.",
+      "captureTimestamp": "2026-10-19T08:59:07Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/basemap.png",
+          "recordedByteCount": 558220,
+          "actualByteCount": 558220
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 19422,
+          "actualByteCount": 19422
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/distance-samples.json",
+          "recordedByteCount": 53452,
+          "actualByteCount": 53452
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/smooth.png",
+          "recordedByteCount": 629752,
+          "actualByteCount": 629752
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000002/view.json",
+          "recordedByteCount": 133095,
+          "actualByteCount": 133095
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 3,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-3",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own long south-southwest tangent remains distinct from the riverbank and parallel Route45. No chord across a genuine turn or isolated angular kink.",
+      "captureTimestamp": "2026-10-19T08:59:07Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/basemap.png",
+          "recordedByteCount": 520034,
+          "actualByteCount": 520034
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 17927,
+          "actualByteCount": 17927
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/distance-samples.json",
+          "recordedByteCount": 34667,
+          "actualByteCount": 34667
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/smooth.png",
+          "recordedByteCount": 589207,
+          "actualByteCount": 589207
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000003/view.json",
+          "recordedByteCount": 95126,
+          "actualByteCount": 95126
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 4,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-4",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Gradual change toward south/southeast approaching 払川 is preserved. Red stays on the own corridor, with no road-ramp shortcut or abrupt tangent join.",
+      "captureTimestamp": "2026-10-19T08:59:07Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/basemap.png",
+          "recordedByteCount": 521525,
+          "actualByteCount": 521525
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 18264,
+          "actualByteCount": 18264
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/distance-samples.json",
+          "recordedByteCount": 40329,
+          "actualByteCount": 40329
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/smooth.png",
+          "recordedByteCount": 588934,
+          "actualByteCount": 588934
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000004/view.json",
+          "recordedByteCount": 106677,
+          "actualByteCount": 106677
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 5,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-5",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "Own broad approach curve into 払川 is rounded and continuous. No false V; standard station glyph and nearby stream do not independently determine own platform caps.",
+      "captureTimestamp": "2026-10-19T08:59:08Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/basemap.png",
+          "recordedByteCount": 504762,
+          "actualByteCount": 504762
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/display-stage-distance-samples.json",
+          "recordedByteCount": 19520,
+          "actualByteCount": 19520
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/distance-samples.json",
+          "recordedByteCount": 34286,
+          "actualByteCount": 34286
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/smooth.png",
+          "recordedByteCount": 570005,
+          "actualByteCount": 570005
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000005/view.json",
+          "recordedByteCount": 97146,
+          "actualByteCount": 97146
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 6,
+      "viewpointID": "jp-三陸鉄道-リアス線#3#point-6",
+      "directory": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006",
+      "basemap": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/basemap.png",
+      "smooth": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/smooth.png",
+      "viewJSON": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/view.json",
+      "captureState": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/capture-state.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "finding": "払川 endpoint has no hook or disconnected join; red is slightly southwest of the thin blue line on the southeast continuation. Exact platform/rail-pair centre remains unresolved.",
+      "captureTimestamp": "2026-10-19T08:59:08Z",
+      "status": "captured",
+      "namedIdentityPlan": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/identity-plan-4dee9f3d72b7755d341cf249f1ccca48641467a85e04d1b9aa6210be321e9c7f.json",
+      "identityMatchesCurrent": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "stateViewpointMatchesNamedPlan": true,
+      "receiptFileSizesMatch": true,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/README.txt",
+          "recordedByteCount": 339,
+          "actualByteCount": 339
+        },
+        {
+          "name": "basemap.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/basemap.png",
+          "recordedByteCount": 554468,
+          "actualByteCount": 554468
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/display-stage-distance-samples.json",
+          "recordedByteCount": 20929,
+          "actualByteCount": 20929
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/distance-samples.json",
+          "recordedByteCount": 38090,
+          "actualByteCount": 38090
+        },
+        {
+          "name": "smooth.png",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/smooth.png",
+          "recordedByteCount": 622596,
+          "actualByteCount": 622596
+        },
+        {
+          "name": "view.json",
+          "path": "/private/tmp/jtm-sanriku-rias-missing-20261019/alignment/captures/000002/000006/view.json",
+          "recordedByteCount": 106414,
+          "actualByteCount": 106414
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "wholeLineRenderDependency": "9eede978c3b20d9336f8aecd1bcd6b371b95837abc18ff02f570d334205dc0d7"
+    }
+  ]
+}

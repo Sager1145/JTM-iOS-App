@@ -1,0 +1,2777 @@
+{
+  "queueOrdinal": 55,
+  "lineID": "jp-えちぜん鉄道-三国芦原線",
+  "packageVersion": "2025.5.2",
+  "stations": [
+    [
+      "002677",
+      "福井口",
+      136.232904,
+      36.070148,
+      "Fukuiguchi",
+      1
+    ],
+    [
+      "002662",
+      "まつもと町屋",
+      136.228862,
+      36.076965,
+      "Matsumoto-Machiya",
+      1
+    ],
+    [
+      "002668",
+      "西別院",
+      136.22299,
+      36.075255,
+      "Nishi-Betsuin",
+      1
+    ],
+    [
+      "002669",
+      "田原町",
+      136.21764,
+      36.07499,
+      "Tawaramachi",
+      1
+    ],
+    [
+      "002671",
+      "福大前西福井",
+      136.21013,
+      36.074405,
+      "Fukudaimae-Nishi-Fukui",
+      1
+    ],
+    [
+      "002657",
+      "日華化学前",
+      136.206479,
+      36.080783,
+      "Nikkakagaku-Mae",
+      1
+    ],
+    [
+      "002651",
+      "八ツ島",
+      136.205885,
+      36.08619,
+      "Yatsushima",
+      1
+    ],
+    [
+      "002638",
+      "新田塚",
+      136.20528,
+      36.092575,
+      "Nittazuka",
+      1
+    ],
+    [
+      "002630",
+      "中角",
+      136.204445,
+      36.10112,
+      "Nakatsuno",
+      1
+    ],
+    [
+      "002609",
+      "鷲塚針原",
+      136.20481,
+      36.12024,
+      "Washizuka-Haribara",
+      1
+    ],
+    [
+      "002599",
+      "太郎丸エンゼルランド",
+      136.20569,
+      36.131335,
+      "Taromaru Angelland",
+      1
+    ],
+    [
+      "002591",
+      "西春江ハートピア",
+      136.20622,
+      36.1389,
+      "Nishiharue Heartpia",
+      1
+    ],
+    [
+      "002575",
+      "西長田ゆりの里",
+      136.206495,
+      36.153585,
+      "Nishinagata-Yurinosato",
+      1
+    ],
+    [
+      "002567",
+      "下兵庫こうふく",
+      136.2026,
+      36.17012,
+      "Shimohyogo-Kofuku",
+      1
+    ],
+    [
+      "002556",
+      "大関",
+      136.20378,
+      36.18663,
+      "Ozeki",
+      1
+    ],
+    [
+      "002542",
+      "本荘",
+      136.20316,
+      36.204625,
+      "Honjyo",
+      1
+    ],
+    [
+      "002533",
+      "番田",
+      136.20252,
+      36.21253,
+      "Banden",
+      1
+    ],
+    [
+      "002519",
+      "あわら湯のまち",
+      136.1938,
+      36.22296,
+      "Awara-Yunomachi",
+      1
+    ],
+    [
+      "002524",
+      "水居",
+      136.172305,
+      36.21921,
+      "Mizui",
+      1
+    ],
+    [
+      "002530",
+      "三国神社",
+      136.158335,
+      36.214885,
+      "Mikuni-Jinja",
+      1
+    ],
+    [
+      "002526",
+      "三国",
+      136.14995,
+      36.21692,
+      "Mikuni",
+      1
+    ],
+    [
+      "002522",
+      "三国港",
+      136.140355,
+      36.220095,
+      "Mikuni-Minato",
+      1
+    ]
+  ],
+  "intervalCount": 21,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 21,
+  "plannedViewCount": 103,
+  "actualCompletedViewCount": 95,
+  "matchingCompleteViewCount": 95,
+  "missingViewCount": 8,
+  "ownCaptureStates": {
+    "captured": 95
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "002677",
+        "福井口"
+      ],
+      "toStation": [
+        "002662",
+        "まつもと町屋"
+      ],
+      "legacySortedSlot": 111,
+      "plannedViewCount": 5,
+      "completedViewCount": 0,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 5,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 38,
+      "displayControlCount": 38
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "002662",
+        "まつもと町屋"
+      ],
+      "toStation": [
+        "002668",
+        "西別院"
+      ],
+      "legacySortedSlot": 112,
+      "plannedViewCount": 3,
+      "completedViewCount": 0,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 3,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 12,
+      "displayControlCount": 12
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "002668",
+        "西別院"
+      ],
+      "toStation": [
+        "002669",
+        "田原町"
+      ],
+      "legacySortedSlot": 123,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 6,
+      "displayControlCount": 6
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "002669",
+        "田原町"
+      ],
+      "toStation": [
+        "002671",
+        "福大前西福井"
+      ],
+      "legacySortedSlot": 125,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 11,
+      "displayControlCount": 11
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "002671",
+        "福大前西福井"
+      ],
+      "toStation": [
+        "002657",
+        "日華化学前"
+      ],
+      "legacySortedSlot": 126,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 15,
+      "displayControlCount": 15
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "002657",
+        "日華化学前"
+      ],
+      "toStation": [
+        "002651",
+        "八ツ島"
+      ],
+      "legacySortedSlot": 127,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 7,
+      "displayControlCount": 7
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "002651",
+        "八ツ島"
+      ],
+      "toStation": [
+        "002638",
+        "新田塚"
+      ],
+      "legacySortedSlot": 128,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 8,
+      "displayControlCount": 8
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "002638",
+        "新田塚"
+      ],
+      "toStation": [
+        "002630",
+        "中角"
+      ],
+      "legacySortedSlot": 129,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 13,
+      "displayControlCount": 13
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "002630",
+        "中角"
+      ],
+      "toStation": [
+        "002609",
+        "鷲塚針原"
+      ],
+      "legacySortedSlot": 130,
+      "plannedViewCount": 8,
+      "completedViewCount": 8,
+      "matchingCompleteViewCount": 8,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 14,
+      "displayControlCount": 14
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "002609",
+        "鷲塚針原"
+      ],
+      "toStation": [
+        "002599",
+        "太郎丸エンゼルランド"
+      ],
+      "legacySortedSlot": 131,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 5,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 10,
+      "displayControlCount": 10
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "002599",
+        "太郎丸エンゼルランド"
+      ],
+      "toStation": [
+        "002591",
+        "西春江ハートピア"
+      ],
+      "legacySortedSlot": 113,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 6,
+      "displayControlCount": 6
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "002591",
+        "西春江ハートピア"
+      ],
+      "toStation": [
+        "002575",
+        "西長田ゆりの里"
+      ],
+      "legacySortedSlot": 114,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 15,
+      "displayControlCount": 15
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "002575",
+        "西長田ゆりの里"
+      ],
+      "toStation": [
+        "002567",
+        "下兵庫こうふく"
+      ],
+      "legacySortedSlot": 115,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 17,
+      "displayControlCount": 17
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "002567",
+        "下兵庫こうふく"
+      ],
+      "toStation": [
+        "002556",
+        "大関"
+      ],
+      "legacySortedSlot": 116,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 11,
+      "displayControlCount": 11
+    },
+    {
+      "intervalIndex": 14,
+      "fromStation": [
+        "002556",
+        "大関"
+      ],
+      "toStation": [
+        "002542",
+        "本荘"
+      ],
+      "legacySortedSlot": 117,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 16,
+      "displayControlCount": 16
+    },
+    {
+      "intervalIndex": 15,
+      "fromStation": [
+        "002542",
+        "本荘"
+      ],
+      "toStation": [
+        "002533",
+        "番田"
+      ],
+      "legacySortedSlot": 118,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 8,
+      "displayControlCount": 8
+    },
+    {
+      "intervalIndex": 16,
+      "fromStation": [
+        "002533",
+        "番田"
+      ],
+      "toStation": [
+        "002519",
+        "あわら湯のまち"
+      ],
+      "legacySortedSlot": 119,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 22,
+      "displayControlCount": 22
+    },
+    {
+      "intervalIndex": 17,
+      "fromStation": [
+        "002519",
+        "あわら湯のまち"
+      ],
+      "toStation": [
+        "002524",
+        "水居"
+      ],
+      "legacySortedSlot": 120,
+      "plannedViewCount": 7,
+      "completedViewCount": 7,
+      "matchingCompleteViewCount": 7,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 17,
+      "displayControlCount": 17
+    },
+    {
+      "intervalIndex": 18,
+      "fromStation": [
+        "002524",
+        "水居"
+      ],
+      "toStation": [
+        "002530",
+        "三国神社"
+      ],
+      "legacySortedSlot": 121,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 5,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 10,
+      "displayControlCount": 10
+    },
+    {
+      "intervalIndex": 19,
+      "fromStation": [
+        "002530",
+        "三国神社"
+      ],
+      "toStation": [
+        "002526",
+        "三国"
+      ],
+      "legacySortedSlot": 122,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 12,
+      "displayControlCount": 12
+    },
+    {
+      "intervalIndex": 20,
+      "fromStation": [
+        "002526",
+        "三国"
+      ],
+      "toStation": [
+        "002522",
+        "三国港"
+      ],
+      "legacySortedSlot": 124,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 13,
+      "displayControlCount": 13
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000123/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.07499,
+          "longitude": 136.21764
+        },
+        "distanceMetres": 481.732930030944,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#2",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000123/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.07505661287048,
+          "longitude": 136.21910344325775
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#2",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000123/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.075255,
+          "longitude": 136.22299
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#2",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000125/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.074405,
+          "longitude": 136.21013
+        },
+        "distanceMetres": 696.6643828818161,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#3",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000125/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.074349178421045,
+          "longitude": 136.21384527749413
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#3",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000125/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.07499,
+          "longitude": 136.21764
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#3",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000126/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.079667028320024,
+          "longitude": 136.2065883387175
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#4",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000126/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.080783,
+          "longitude": 136.206479
+        },
+        "distanceMetres": 824.4792371799035,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#4",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000126/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.07663590758576,
+          "longitude": 136.20746606222593
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#4",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000126/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.074405,
+          "longitude": 136.21013
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#4",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000127/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.08619,
+          "longitude": 136.205885
+        },
+        "distanceMetres": 603.613246944654,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#5",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000127/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.08391957966582,
+          "longitude": 136.20615321214976
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#5",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000127/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.080783,
+          "longitude": 136.206479
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000128/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.09246673892047,
+          "longitude": 136.20529219846995
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#6",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000128/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.092575,
+          "longitude": 136.20528
+        },
+        "distanceMetres": 712.0878950455385,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#6",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000128/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.08932739291619,
+          "longitude": 136.2055731963741
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#6",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000128/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.08619,
+          "longitude": 136.205885
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#6",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000129/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.09885029309204,
+          "longitude": 136.20466691924366
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#7",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000129/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.10112,
+          "longitude": 136.204445
+        },
+        "distanceMetres": 953.1875955944943,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#7",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000129/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.09571240508729,
+          "longitude": 136.2049669864068
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#7",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000129/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.092575,
+          "longitude": 136.20528
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#7",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.11682529882853,
+          "longitude": 136.20455977806964
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.10739816933329,
+          "longitude": 136.2038875302142
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.11054073858307,
+          "longitude": 136.20410688318728
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.11368319120272,
+          "longitude": 136.20432926494917
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.10425902398124,
+          "longitude": 136.20415764904246
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.119967606327336,
+          "longitude": 136.20478596524345
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000007",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.12024,
+          "longitude": 136.20481
+        },
+        "distanceMetres": 2130.3656744585674,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 7
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000130/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.10112,
+          "longitude": 136.204445
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#8",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000131/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.12652078039021,
+          "longitude": 136.20531719489264
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#9",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000131/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.12966263544703,
+          "longitude": 136.20555295588034
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#9",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000131/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.131335,
+          "longitude": 136.20569
+        },
+        "distanceMetres": 1236.3698163498204,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#9",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000131/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.12337972411824,
+          "longitude": 136.20506569017581
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#9",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000131/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.12024,
+          "longitude": 136.20481
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#9",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000113/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.13761994944007,
+          "longitude": 136.20613449640464
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#10",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000113/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.1389,
+          "longitude": 136.20622
+        },
+        "distanceMetres": 842.5423538789684,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#10",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000113/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.13447709857641,
+          "longitude": 136.20592002872485
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#10",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000113/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.131335,
+          "longitude": 136.20569
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#10",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.153585,
+          "longitude": 136.206495
+        },
+        "distanceMetres": 1641.2177795817008,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.14518414479393,
+          "longitude": 136.20667476934446
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.14832752806712,
+          "longitude": 136.20687697495467
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.15147119821312,
+          "longitude": 136.20703131087694
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.14204222732437,
+          "longitude": 136.20644059043866
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000114/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.1389,
+          "longitude": 136.20622
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#11",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.168925178418654,
+          "longitude": 136.2025853514699
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.159668936232386,
+          "longitude": 136.20449368882592
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.1627191443918,
+          "longitude": 136.20353144686712
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.16577870747243,
+          "longitude": 136.2026436155134
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.156627921726454,
+          "longitude": 136.20549965156164
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.17012,
+          "longitude": 136.2026
+        },
+        "distanceMetres": 1882.9131537363023,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000115/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.153585,
+          "longitude": 136.206495
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#12",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.185831590965755,
+          "longitude": 136.20370776599222
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.17640323524571,
+          "longitude": 136.2030677319538
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.17954611370086,
+          "longitude": 136.20327930075663
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.18269017517214,
+          "longitude": 136.2034640047203
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.173261230399696,
+          "longitude": 136.20283492660624
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.18663,
+          "longitude": 136.20378
+        },
+        "distanceMetres": 1839.0155307533664,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000116/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.17012,
+          "longitude": 136.2026
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#13",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.20233329708585,
+          "longitude": 136.20334693701056
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.192912283171474,
+          "longitude": 136.204142325115
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.19605267720722,
+          "longitude": 136.2038782843572
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.199192901225494,
+          "longitude": 136.20361103242786
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.189770096398945,
+          "longitude": 136.2040455515304
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.204625,
+          "longitude": 136.20316
+        },
+        "distanceMetres": 2005.3783315032051,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000117/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.18663,
+          "longitude": 136.20378
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#14",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000118/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.2109066393623,
+          "longitude": 136.20265007407286
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#15",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000118/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21253,
+          "longitude": 136.20252
+        },
+        "distanceMetres": 880.8922258851369,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#15",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000118/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.20776633829401,
+          "longitude": 136.20291530566595
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#15",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000118/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.204625,
+          "longitude": 136.20316
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#15",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.22296,
+          "longitude": 136.1938
+        },
+        "distanceMetres": 1719.0319367307925,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.218811901225656,
+          "longitude": 136.2020149588268
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.22173723729202,
+          "longitude": 136.20082276337317
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.222910001343664,
+          "longitude": 136.19735581796488
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21567139143937,
+          "longitude": 136.20227581383384
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000119/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21253,
+          "longitude": 136.20252
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#16",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21996872319241,
+          "longitude": 136.17480166507917
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.222578668232465,
+          "longitude": 136.18602123497834
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.221946494862124,
+          "longitude": 136.1822015835113
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.2210670079702,
+          "longitude": 136.17845786798048
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.22289591935572,
+          "longitude": 136.1899018266209
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000006",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21921,
+          "longitude": 136.172305
+        },
+        "distanceMetres": 1989.3334594192881,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 6
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000120/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.22296,
+          "longitude": 136.1938
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#17",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000121/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21695873787214,
+          "longitude": 136.1650187652333
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#18",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000121/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.215841609823556,
+          "longitude": 136.16137141444938
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#18",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000121/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.214885,
+          "longitude": 136.158335
+        },
+        "distanceMetres": 1342.444982407887,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#18",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000121/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.218107967490205,
+          "longitude": 136.1686508388629
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#18",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000121/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21921,
+          "longitude": 136.172305
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#18",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000122/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21612110282276,
+          "longitude": 136.15123031329605
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#19",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000122/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21692,
+          "longitude": 136.14995
+        },
+        "distanceMetres": 845.2026490889409,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#19",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000122/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21454222260762,
+          "longitude": 136.1545340003058
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#19",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000122/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.214885,
+          "longitude": 136.158335
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#19",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000124/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21977945169583,
+          "longitude": 136.1432740317241
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#20",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000124/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.220095,
+          "longitude": 136.140355
+        },
+        "distanceMetres": 965.3815952211912,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#20",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000124/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.218875353742554,
+          "longitude": 136.14689269072835
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#20",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    },
+    {
+      "intervalIndex": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000124/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.21692,
+          "longitude": 136.14995
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-えちぜん鉄道-三国芦原線#20",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "a1a5870d3b051a63745435a89523420a6802e5c339a14c5eb98a73772fe16f60"
+    }
+  ],
+  "requestPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/mikuni-awara-complete/missing-native-request-20261018.json",
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval."
+  ]
+}

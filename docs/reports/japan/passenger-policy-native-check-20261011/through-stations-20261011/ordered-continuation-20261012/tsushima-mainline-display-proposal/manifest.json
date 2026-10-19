@@ -1,0 +1,107 @@
+{
+  "format": "jtm-proposal-manifest-v1",
+  "status": "proposal-only",
+  "reprojectionCount": 17,
+  "files": [
+    {
+      "path": "candidate.geojson",
+      "sha256": "e82d9f89ab82baa15bec96aeebaa1c3ac65563cab9bcb11e1cf5b0c31c07cf8e"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "d53193bc11dec5e8146e47398160321925b7deb4dc46889e9194f08e20e1b15d"
+    },
+    {
+      "path": "controls.json",
+      "sha256": "63131dc2569d484f93fc43cfbce641391224660a5e67d3bbb3f91eab1ed41d3a"
+    },
+    {
+      "path": "proposal.md",
+      "sha256": "78eccd412ee2a74e69cfb241cdb0755519e0f8c08db938db9cb02638dc979311"
+    },
+    {
+      "path": "reprojections/futatsuiri-station-control.png",
+      "sha256": "3ec3013c3a290aa18d73dbd018667b9d50edc43fa8785ec11fb3d629cc140fd1"
+    },
+    {
+      "path": "reprojections/interval-16-view-000000.png",
+      "sha256": "45aaa760dbe687c72e41f369d62e2769c81ba5a85fa4fb281aefb2f72ebe2db7"
+    },
+    {
+      "path": "reprojections/interval-16-view-000001.png",
+      "sha256": "cd3f8169be9ff070aba3f44b524643ce67c85594e48467a273b49ce6b042aec0"
+    },
+    {
+      "path": "reprojections/interval-16-view-000002.png",
+      "sha256": "417cf60deb363145dd668bd6212b8bc79c734979ef9f4f8f80a833862f4acf0c"
+    },
+    {
+      "path": "reprojections/interval-16-view-000003.png",
+      "sha256": "e2db20d79d9f74b6bdd86bbe885657928ec7f1a4c1d0ee53f5200689eafbf89d"
+    },
+    {
+      "path": "reprojections/interval-17-view-000000.png",
+      "sha256": "7f6a85c15e53538685203e1d609a1a18ad7cf8b38896a3be6c53d3c444f8045d"
+    },
+    {
+      "path": "reprojections/interval-17-view-000001.png",
+      "sha256": "8b8077945fb86dd2e0fddee3a11020c22810f7b45361f8e3505c6679b7a89008"
+    },
+    {
+      "path": "reprojections/interval-17-view-000002.png",
+      "sha256": "3d9e9c8722f8f5e1de9fb77546e10a247052f876c453d9192891d33039600384"
+    },
+    {
+      "path": "reprojections/interval-18-view-000000.png",
+      "sha256": "324589be6b2b43816f1f7a945c11a5c8de060f6136bda62416630d8c52e399fd"
+    },
+    {
+      "path": "reprojections/interval-18-view-000001.png",
+      "sha256": "30c986d8a235005b12821069c72e97bd43a467c2c13fc7daf753caa0ce4cd1a3"
+    },
+    {
+      "path": "reprojections/interval-18-view-000002.png",
+      "sha256": "101f8ce53b3d68d9c9650112aab33dc08198c798c1fbf9cb0ff06108d9c6d422"
+    },
+    {
+      "path": "reprojections/interval-18-view-000003.png",
+      "sha256": "da8799058af2ec1c82e154390602726e47129eace527c5df2e6c988382b8a008"
+    },
+    {
+      "path": "reprojections/interval-19-view-000000.png",
+      "sha256": "9543289ec22a43ae1081f6ba11d08912536051647ee8cc03e1f8c1e99c686266"
+    },
+    {
+      "path": "reprojections/interval-19-view-000001.png",
+      "sha256": "d097a8a447dc36718c46c39f9980bc3b4f2e7aa80a700fa3b918aef2077e243a"
+    },
+    {
+      "path": "reprojections/interval-19-view-000002.png",
+      "sha256": "09ada3d6ff9f3c8c2aeb0f303932c0a2283767989d70089151184e09858f656c"
+    },
+    {
+      "path": "reprojections/interval-20-view-000000.png",
+      "sha256": "7df2cd85ec5ca23a6e058ade7d9de97dac9eaa799027ac843dfe10ff15b74b34"
+    },
+    {
+      "path": "reprojections/interval-20-view-000001.png",
+      "sha256": "76a26709321055c692a31919b84bab228f73b8930267567b652ebf134430f837"
+    },
+    {
+      "path": "reprojections/interval-20-view-000002.png",
+      "sha256": "ef69b81b9cbaaf6a5f05d54b2961df2cd07321b6570f4bb7dd631ad96c61faf9"
+    },
+    {
+      "path": "reprojections/marunouchi-station-control.png",
+      "sha256": "0d81f665eadce221b7ed15656c13e3e48fe2c4f3b75099ae7ebd2023b25d0b30"
+    },
+    {
+      "path": "reprojections/shinkawabashi-station-control.png",
+      "sha256": "4d9ce4813a127363728611c8c4b0073f463f745f6f089a3fca7145a9d0a9bc50"
+    },
+    {
+      "path": "reprojections/shinkiyosu-station-control.png",
+      "sha256": "6cd07c5186c2195c2d4398b42adac98c645ec4a9ab82e45d82b57ee7617b4825"
+    }
+  ]
+}

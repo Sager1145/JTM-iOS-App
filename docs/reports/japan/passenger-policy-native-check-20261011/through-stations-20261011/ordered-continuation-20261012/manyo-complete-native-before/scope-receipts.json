@@ -1,0 +1,194 @@
+[
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 0,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000416",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 1,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000417",
+    "views": 4,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 2,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000418",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 3,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000419",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 4,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000420",
+    "views": 5,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 5,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000421",
+    "views": 4,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-新湊港線",
+    "intervalIndex": 6,
+    "actualCaptureDirectory": "/private/tmp/jtm-sapporo-yamahana-native/captures/000422",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 0,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000423",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 1,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000424",
+    "views": 4,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 2,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000432",
+    "views": 4,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 3,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000433",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 4,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000434",
+    "views": 5,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 5,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000435",
+    "views": 2,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 6,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000436",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 7,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000437",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 8,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000438",
+    "views": 2,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 9,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000439",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 10,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000425",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 11,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000426",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 12,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000427",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 13,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000428",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 14,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000429",
+    "views": 2,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 15,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000430",
+    "views": 2,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  },
+  {
+    "lineID": "jp-万葉線-高岡軌道線",
+    "intervalIndex": 16,
+    "actualCaptureDirectory": "/private/tmp/jtm-onoda-west-curve-native-after/captures/000431",
+    "views": 3,
+    "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+    "wholeLineRenderDependency": "550a3feca7964c5f72cd9be514c1b1f70e59a8acc5e98bcd10caa18ed68931fb"
+  }
+]

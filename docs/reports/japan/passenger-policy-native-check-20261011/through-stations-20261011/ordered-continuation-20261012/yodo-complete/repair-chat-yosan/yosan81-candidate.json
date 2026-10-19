@@ -1,0 +1,1379 @@
+{
+  "status": "candidate-only-80-required-nativepending",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 81,
+  "fromStationID": "009319",
+  "toStationID": "009324",
+  "coordinates": [
+    [
+      132.47312395885416,
+      33.3915364611264
+    ],
+    [
+      132.47332590311055,
+      33.39148250618158
+    ],
+    [
+      132.47359412401204,
+      33.39141084356213
+    ],
+    [
+      132.47386234491353,
+      33.3913391808836
+    ],
+    [
+      132.47413056581502,
+      33.39126751814597
+    ],
+    [
+      132.4743987867165,
+      33.39119585534927
+    ],
+    [
+      132.47498596993432,
+      33.391030048155784
+    ],
+    [
+      132.47539480628745,
+      33.39091780010969
+    ],
+    [
+      132.47580190352278,
+      33.39080131487854
+    ],
+    [
+      132.47620900075822,
+      33.39068482949126
+    ],
+    [
+      132.4766160979936,
+      33.39056834394791
+    ],
+    [
+      132.4770222109119,
+      33.39044955484996
+    ],
+    [
+      132.47742975608224,
+      33.390334166074894
+    ],
+    [
+      132.47783730125263,
+      33.39021877714669
+    ],
+    [
+      132.47824484642297,
+      33.39010338806529
+    ],
+    [
+      132.4786523915933,
+      33.38998799883072
+    ],
+    [
+      132.4790599367637,
+      33.389872609442996
+    ],
+    [
+      132.47947092741083,
+      33.38976570340816
+    ],
+    [
+      132.4798750271043,
+      33.389641830208
+    ],
+    [
+      132.48028429892491,
+      33.38953062234822
+    ],
+    [
+      132.48069114693845,
+      33.38941352982462
+    ],
+    [
+      132.48110498757865,
+      33.389313375220226
+    ],
+    [
+      132.4815065911223,
+      33.38918357882949
+    ],
+    [
+      132.4819116909793,
+      33.389062251307465
+    ],
+    [
+      132.48232378346273,
+      33.388957861762314
+    ],
+    [
+      132.4827352568846,
+      33.38885142360398
+    ],
+    [
+      132.48314126987475,
+      33.38873232670939
+    ],
+    [
+      132.4835472828649,
+      33.388613229651625
+    ],
+    [
+      132.48395507392235,
+      33.38849835829823
+    ],
+    [
+      132.48435219657551,
+      33.388358131551286
+    ],
+    [
+      132.48476267523552,
+      33.38824784272805
+    ],
+    [
+      132.48516704825084,
+      33.38812483514656
+    ],
+    [
+      132.4855695222863,
+      33.38799763833373
+    ],
+    [
+      132.48597199632184,
+      33.38787044133477
+    ],
+    [
+      132.48636497545795,
+      33.387722298799
+    ],
+    [
+      132.48677502690862,
+      33.387612375941906
+    ],
+    [
+      132.48717860211104,
+      33.38748763455158
+    ],
+    [
+      132.4875834007217,
+      33.38736502295808
+    ],
+    [
+      132.48798588759036,
+      33.38723785334672
+    ],
+    [
+      132.48839027301614,
+      33.387114872782945
+    ],
+    [
+      132.4887927598848,
+      33.38698770280567
+    ],
+    [
+      132.48919524675347,
+      33.38686053264239
+    ],
+    [
+      132.48959583506496,
+      33.38672917304112
+    ],
+    [
+      132.48999642337645,
+      33.386597813241345
+    ],
+    [
+      132.49040273218463,
+      33.38647884135427
+    ],
+    [
+      132.49080295428888,
+      33.38634670522775
+    ],
+    [
+      132.49120699678616,
+      33.38622294007274
+    ],
+    [
+      132.49160912908695,
+      33.38609498914951
+    ],
+    [
+      132.49201126138774,
+      33.385967038037975
+    ],
+    [
+      132.492411483492,
+      33.385834901133585
+    ],
+    [
+      132.49281361579278,
+      33.385706949639264
+    ],
+    [
+      132.49321383789703,
+      33.3855748123396
+    ],
+    [
+      132.49361813157338,
+      33.38545208497373
+    ],
+    [
+      132.4940210940793,
+      33.385325967088434
+    ],
+    [
+      132.494422173771,
+      33.38519565474361
+    ],
+    [
+      132.49482519378813,
+      33.38507002766179
+    ],
+    [
+      132.4952270025061,
+      33.38494129029213
+    ],
+    [
+      132.4956288112242,
+      33.38481255273187
+    ],
+    [
+      132.49603373729053,
+      33.38468815189838
+    ],
+    [
+      132.49643544165139,
+      33.384552991277836
+    ],
+    [
+      132.49683239576353,
+      33.384413069648275
+    ],
+    [
+      132.49722833643915,
+      33.38426039179184
+    ],
+    [
+      132.49760541909723,
+      33.3840960412064
+    ],
+    [
+      132.4979828437559,
+      33.38389803434139
+    ],
+    [
+      132.49833213157353,
+      33.38368808595861
+    ],
+    [
+      132.49868386305474,
+      33.38346491928745
+    ],
+    [
+      132.49900785641142,
+      33.38322229178964
+    ],
+    [
+      132.49931975785398,
+      33.382974674178186
+    ],
+    [
+      132.49961102789638,
+      33.382703679269106
+    ],
+    [
+      132.4998778661107,
+      33.38240426614044
+    ],
+    [
+      132.50013061481548,
+      33.38211343224471
+    ],
+    [
+      132.50037624640765,
+      33.38180387486885
+    ],
+    [
+      132.50057404607782,
+      33.38148461298804
+    ],
+    [
+      132.5009964441109,
+      33.38071307415969
+    ],
+    [
+      132.50111446130757,
+      33.3804891005353
+    ],
+    [
+      132.50123247850422,
+      33.38026512633403
+    ],
+    [
+      132.50126734722141,
+      33.38022033142455
+    ],
+    [
+      132.50131185940495,
+      33.38012344711494
+    ]
+  ],
+  "headAlias": [
+    132.47312395885416,
+    33.3915364611264
+  ],
+  "tailAlias": [
+    132.50131185940495,
+    33.38012344711494
+  ],
+  "preciseHeadControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        550,
+        351
+      ],
+      "coordinate": [
+        132.47332590311055,
+        33.39148250618158
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        600,
+        367
+      ],
+      "coordinate": [
+        132.47359412401204,
+        33.39141084356213
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        650,
+        383
+      ],
+      "coordinate": [
+        132.47386234491353,
+        33.3913391808836
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        700,
+        399
+      ],
+      "coordinate": [
+        132.47413056581502,
+        33.39126751814597
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        750,
+        415
+      ],
+      "coordinate": [
+        132.4743987867165,
+        33.39119585534927
+      ]
+    }
+  ],
+  "bodyPixelControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        359.6700689740856,
+        332.3247257798847
+      ],
+      "coordinate": [
+        132.47498596993432,
+        33.391030048155784
+      ],
+      "sourceAlongMetres": 190.0,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        397.77637900039554,
+        344.8553797211498
+      ],
+      "coordinate": [
+        132.47539480628745,
+        33.39091780010969
+      ],
+      "sourceAlongMetres": 229.99999999999997,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        435.7205915041268,
+        357.85902879200876
+      ],
+      "coordinate": [
+        132.47580190352278,
+        33.39080131487854
+      ],
+      "sourceAlongMetres": 269.99999999999994,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        473.6648040115833,
+        370.86267786473036
+      ],
+      "coordinate": [
+        132.47620900075822,
+        33.39068482949126
+      ],
+      "sourceAlongMetres": 310.0,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        511.60901651903987,
+        383.8663269355893
+      ],
+      "coordinate": [
+        132.4766160979936,
+        33.39056834394791
+      ],
+      "sourceAlongMetres": 349.99999999999994,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        549.4614840261638,
+        397.12711113505065
+      ],
+      "coordinate": [
+        132.4770222109119,
+        33.39044955484996
+      ],
+      "sourceAlongMetres": 389.99999999999994,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        587.4474470950663,
+        410.0082897134125
+      ],
+      "coordinate": [
+        132.47742975608224,
+        33.390334166074894
+      ],
+      "sourceAlongMetres": 429.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        625.4334101676941,
+        422.88946828991175
+      ],
+      "coordinate": [
+        132.47783730125263,
+        33.39021877714669
+      ],
+      "sourceAlongMetres": 469.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000001/view.json",
+      "pixel": [
+        663.4193732365966,
+        435.7706468682736
+      ],
+      "coordinate": [
+        132.47824484642297,
+        33.39010338806529
+      ],
+      "sourceAlongMetres": 509.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        368.7738676778972,
+        335.43162718974054
+      ],
+      "coordinate": [
+        132.4786523915933,
+        33.38998799883072
+      ],
+      "sourceAlongMetres": 549.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        406.759830750525,
+        348.31280576623976
+      ],
+      "coordinate": [
+        132.4790599367637,
+        33.389872609442996
+      ],
+      "sourceAlongMetres": 589.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        445.06693553523604,
+        360.24695319497266
+      ],
+      "coordinate": [
+        132.47947092741083,
+        33.38976570340816
+      ],
+      "sourceAlongMetres": 629.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        482.73175688833,
+        374.0751629229635
+      ],
+      "coordinate": [
+        132.4798750271043,
+        33.389641830208
+      ],
+      "sourceAlongMetres": 669.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        520.8786554246233,
+        386.4894989298379
+      ],
+      "coordinate": [
+        132.48028429892491,
+        33.38953062234822
+      ],
+      "sourceAlongMetres": 709.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        558.799638772665,
+        399.5607335155552
+      ],
+      "coordinate": [
+        132.48069114693845,
+        33.38941352982462
+      ],
+      "sourceAlongMetres": 749.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        597.3723821598219,
+        410.7411458332566
+      ],
+      "coordinate": [
+        132.48110498757865,
+        33.389313375220226
+      ],
+      "sourceAlongMetres": 789.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        634.8045454850466,
+        425.2304971213829
+      ],
+      "coordinate": [
+        132.4815065911223,
+        33.38918357882949
+      ],
+      "sourceAlongMetres": 829.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000002/view.json",
+      "pixel": [
+        672.5625888279662,
+        438.7744372764325
+      ],
+      "coordinate": [
+        132.4819116909793,
+        33.389062251307465
+      ],
+      "sourceAlongMetres": 869.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        379.0420508097948,
+        335.172601352521
+      ],
+      "coordinate": [
+        132.48232378346273,
+        33.388957861762314
+      ],
+      "sourceAlongMetres": 909.9999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        417.39415345935225,
+        347.0543937350303
+      ],
+      "coordinate": [
+        132.4827352568846,
+        33.38885142360398
+      ],
+      "sourceAlongMetres": 949.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        455.2373069844961,
+        360.3492755836487
+      ],
+      "coordinate": [
+        132.48314126987475,
+        33.38873232670939
+      ],
+      "sourceAlongMetres": 989.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        493.0804605059147,
+        373.64415743412974
+      ],
+      "coordinate": [
+        132.4835472828649,
+        33.388613229651625
+      ],
+      "sourceAlongMetres": 1029.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        531.0893419202745,
+        386.4673039061849
+      ],
+      "coordinate": [
+        132.48395507392235,
+        33.38849835829823
+      ],
+      "sourceAlongMetres": 1069.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        568.1038559769869,
+        402.12086263948214
+      ],
+      "coordinate": [
+        132.48435219657551,
+        33.388358131551286
+      ],
+      "sourceAlongMetres": 1109.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        606.36324009875,
+        414.43242317914184
+      ],
+      "coordinate": [
+        132.48476267523552,
+        33.38824784272805
+      ],
+      "sourceAlongMetres": 1149.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000003/view.json",
+      "pixel": [
+        644.0535368912034,
+        428.16376249550865
+      ],
+      "coordinate": [
+        132.48516704825084,
+        33.38812483514656
+      ],
+      "sourceAlongMetres": 1189.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        352.14492249415446,
+        320.1788338633536
+      ],
+      "coordinate": [
+        132.4855695222863,
+        33.38799763833373
+      ],
+      "sourceAlongMetres": 1229.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        389.6582215383761,
+        334.3777967436521
+      ],
+      "coordinate": [
+        132.48597199632184,
+        33.38787044133477
+      ],
+      "sourceAlongMetres": 1269.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        426.28653181908703,
+        350.9148774324332
+      ],
+      "coordinate": [
+        132.48636497545795,
+        33.387722298799
+      ],
+      "sourceAlongMetres": 1309.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        464.5060971444033,
+        363.18549538796003
+      ],
+      "coordinate": [
+        132.48677502690862,
+        33.387612375941906
+      ],
+      "sourceAlongMetres": 1349.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        502.1220323843442,
+        377.1102778988069
+      ],
+      "coordinate": [
+        132.48717860211104,
+        33.38748763455158
+      ],
+      "sourceAlongMetres": 1389.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        539.8519975381735,
+        390.79729340816135
+      ],
+      "coordinate": [
+        132.4875834007217,
+        33.38736502295808
+      ],
+      "sourceAlongMetres": 1429.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        577.3664927172306,
+        404.993095718643
+      ],
+      "coordinate": [
+        132.48798588759036,
+        33.38723785334672
+      ],
+      "sourceAlongMetres": 1469.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        615.0579462537615,
+        418.7212595546803
+      ],
+      "coordinate": [
+        132.48839027301614,
+        33.387114872782945
+      ],
+      "sourceAlongMetres": 1509.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000004/view.json",
+      "pixel": [
+        652.572441436544,
+        432.91706186516194
+      ],
+      "coordinate": [
+        132.4887927598848,
+        33.38698770280567
+      ],
+      "sourceAlongMetres": 1549.9999999999998,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        361.505438957557,
+        322.65170924907534
+      ],
+      "coordinate": [
+        132.48919524675347,
+        33.38686053264239
+      ],
+      "sourceAlongMetres": 1589.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        398.84297578659084,
+        337.31515003027613
+      ],
+      "coordinate": [
+        132.48959583506496,
+        33.38672917304112
+      ],
+      "sourceAlongMetres": 1629.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        436.1805126118995,
+        351.97859081333957
+      ],
+      "coordinate": [
+        132.48999642337645,
+        33.386597813241345
+      ],
+      "sourceAlongMetres": 1669.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        474.0512383777793,
+        365.25917370295997
+      ],
+      "coordinate": [
+        132.49040273218463,
+        33.38647884135427
+      ],
+      "sourceAlongMetres": 1709.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        511.35464221664114,
+        380.0092318034549
+      ],
+      "coordinate": [
+        132.49080295428888,
+        33.38634670522775
+      ],
+      "sourceAlongMetres": 1749.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        549.0141324971016,
+        393.82483688234265
+      ],
+      "coordinate": [
+        132.49120699678616,
+        33.38622294007274
+      ],
+      "sourceAlongMetres": 1789.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        586.4955795567628,
+        408.10766847110267
+      ],
+      "coordinate": [
+        132.49160912908695,
+        33.38609498914951
+      ],
+      "sourceAlongMetres": 1829.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        623.9770266164239,
+        422.39050006172533
+      ],
+      "coordinate": [
+        132.49201126138774,
+        33.385967038037975
+      ],
+      "sourceAlongMetres": 1869.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000005/view.json",
+      "pixel": [
+        661.2804304552857,
+        437.1405581603576
+      ],
+      "coordinate": [
+        132.492411483492,
+        33.385834901133585
+      ],
+      "sourceAlongMetres": 1909.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        370.2520229449157,
+        326.78856579724743
+      ],
+      "coordinate": [
+        132.49281361579278,
+        33.385706949639264
+      ],
+      "sourceAlongMetres": 1949.9999999999993,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        407.5554267837775,
+        341.53862389587965
+      ],
+      "coordinate": [
+        132.49321383789703,
+        33.3855748123396
+      ],
+      "sourceAlongMetres": 1989.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        445.23832865006995,
+        355.2382615297646
+      ],
+      "coordinate": [
+        132.49361813157338,
+        33.38545208497373
+      ],
+      "sourceAlongMetres": 2029.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        482.79715643398237,
+        369.31635114695735
+      ],
+      "coordinate": [
+        132.4940210940793,
+        33.385325967088434
+      ],
+      "sourceAlongMetres": 2069.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        520.1804932165127,
+        383.862631866622
+      ],
+      "coordinate": [
+        132.494422173771,
+        33.38519565474361
+      ],
+      "sourceAlongMetres": 2109.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        557.7446814367067,
+        397.8858935226592
+      ],
+      "coordinate": [
+        132.49482519378813,
+        33.38507002766179
+      ],
+      "sourceAlongMetres": 2149.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        595.1959683976977,
+        412.2563234676994
+      ],
+      "coordinate": [
+        132.4952270025061,
+        33.38494129029213
+      ],
+      "sourceAlongMetres": 2189.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        632.6472553624141,
+        426.6267534127396
+      ],
+      "coordinate": [
+        132.4956288112242,
+        33.38481255273187
+      ],
+      "sourceAlongMetres": 2229.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000006/view.json",
+      "pixel": [
+        670.3891002461611,
+        440.513072654757
+      ],
+      "coordinate": [
+        132.49603373729053,
+        33.38468815189838
+      ],
+      "sourceAlongMetres": 2269.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        387.01145534018576,
+        313.79787648823697
+      ],
+      "coordinate": [
+        132.49643544165139,
+        33.384552991277836
+      ],
+      "sourceAlongMetres": 2309.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        424.0102602357155,
+        329.41666607794235
+      ],
+      "coordinate": [
+        132.49683239576353,
+        33.384413069648275
+      ],
+      "sourceAlongMetres": 2349.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        460.91460600263423,
+        346.4593442499948
+      ],
+      "coordinate": [
+        132.49722833643915,
+        33.38426039179184
+      ],
+      "sourceAlongMetres": 2389.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        496.06125713368016,
+        364.8049583019007
+      ],
+      "coordinate": [
+        132.49760541909723,
+        33.3840960412064
+      ],
+      "sourceAlongMetres": 2429.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        531.2397850388082,
+        386.9074043978294
+      ],
+      "coordinate": [
+        132.4979828437559,
+        33.38389803434139
+      ],
+      "sourceAlongMetres": 2469.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        563.7957692753787,
+        410.34276320282135
+      ],
+      "coordinate": [
+        132.49833213157353,
+        33.38368808595861
+      ],
+      "sourceAlongMetres": 2509.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        596.5795194673374,
+        435.2535432549087
+      ],
+      "coordinate": [
+        132.49868386305474,
+        33.38346491928745
+      ],
+      "sourceAlongMetres": 2549.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000007/view.json",
+      "pixel": [
+        626.7778890672666,
+        462.33654812933725
+      ],
+      "coordinate": [
+        132.49900785641142,
+        33.38322229178964
+      ],
+      "sourceAlongMetres": 2589.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        416.37020684609723,
+        236.67838857183145
+      ],
+      "coordinate": [
+        132.49931975785398,
+        33.382974674178186
+      ],
+      "sourceAlongMetres": 2629.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        443.51854249427026,
+        266.927696385155
+      ],
+      "coordinate": [
+        132.49961102789638,
+        33.382703679269106
+      ],
+      "sourceAlongMetres": 2669.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        468.3896667061598,
+        300.349026016338
+      ],
+      "coordinate": [
+        132.4998778661107,
+        33.38240426614044
+      ],
+      "sourceAlongMetres": 2709.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        491.9475534482152,
+        332.81260752250085
+      ],
+      "coordinate": [
+        132.50013061481548,
+        33.38211343224471
+      ],
+      "sourceAlongMetres": 2749.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        514.842077218019,
+        367.3660297855475
+      ],
+      "coordinate": [
+        132.50037624640765,
+        33.38180387486885
+      ],
+      "sourceAlongMetres": 2789.999999999999,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/secondary/captures/002792/000008/view.json",
+      "pixel": [
+        533.2783427252863,
+        403.0025597238589
+      ],
+      "coordinate": [
+        132.50057404607782,
+        33.38148461298804
+      ],
+      "sourceAlongMetres": 2829.9999999999995,
+      "basis": "Actual manually identified unique labelledblueYosanband in savedfullraw, narrow normal refinement only in this simple onecorridor. No divergent railway in all10 raws.",
+      "hitSamples": 7
+    }
+  ],
+  "preciseTailControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        428,
+        160
+      ],
+      "coordinate": [
+        132.5009964441109,
+        33.38071307415969
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        450,
+        210
+      ],
+      "coordinate": [
+        132.50111446130757,
+        33.3804891005353
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        472,
+        260
+      ],
+      "coordinate": [
+        132.50123247850422,
+        33.38026512633403
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kamiuwa-009324/view.json",
+      "pixel": [
+        478.5,
+        270
+      ],
+      "coordinate": [
+        132.50126734722141,
+        33.38022033142455
+      ]
+    }
+  ],
+  "warnings": [
+    "Iyoiwaki exactownface move requires complete80; cannotfreeze32scope before80 complete.",
+    "Unique blue railwaycartographic fit only; normal/refinement visual reviewpending; no survey claim."
+  ],
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true,
+  "nativeAcceptance": false,
+  "turnsOver30": []
+}

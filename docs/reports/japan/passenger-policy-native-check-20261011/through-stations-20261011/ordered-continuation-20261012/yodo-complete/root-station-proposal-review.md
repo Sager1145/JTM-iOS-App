@@ -1,0 +1,7 @@
+# Root station proposal review
+
+Actual high-zoom original Wakai, Kita-Uwajima and Kaina basemaps were opened, together with Wakai/Kita displayed originals and all three assigned-candidate reprojections. Wakai incoming proposal follows its own black sleeper-marked railway to the narrow platform longitudinal normal. Kaina outgoing controls follow the own black railway, excluding the east road; the label-obscured part retains an explicit precision warning. Kita uses the explicitly selected shared railway-band centre at the narrow island platform longitudinal midpoint, without assigning a specific track to either operator. Both branch directions and final native lane/station-slot consumption still require fresh candidate replay.
+
+Three apps each captured all19 Yodo intervals plus Nakamura0–2 and Yosan87–88:315 actual views/945 panel contents per app, saved permanently. Original Yodo independent reviews rejected the loop alignment; the additional baseline captures are not blanket pixel-accepted. Main actually reviewed all19 Yodo full pairs, four station/fork contexts, and all5 adjacent full pairs. All5 adjacent pairs contain every decoded interval point inside the actual AX corners, render network with zero budget drops, and retain explicit alignment warnings. Main is quit and the three capture apps are idle/quit.
+
+No Yodo production changes, native candidate build or acceptance claimed yet.

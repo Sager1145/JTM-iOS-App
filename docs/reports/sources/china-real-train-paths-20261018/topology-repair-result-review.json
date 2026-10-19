@@ -1,0 +1,819 @@
+{
+  "schema": "cn-topology-repair-result-review/1",
+  "rows": 176,
+  "phase": "completed",
+  "completedAt": "2026-10-19T06:04:24Z",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "fallbackGraphCacheMaximumNodes": "not-applicable",
+    "fallbackGraphCacheMode": "standard",
+    "journeyInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+    "rail/cn": "cn:264ab67d551fa1748c2141194407edb6d11e02a78ef911b7e6e7a1f8138172b3"
+  },
+  "comparisonKey": "case id plus mode; native row id already includes mode",
+  "originalGeometryAndReturnCountsUnchanged": true,
+  "deltas": [
+    {
+      "id": "CN-REAL-G6045-20261018-forced-known-stops",
+      "train": "G6045",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 4,
+        "returnedGeometrySections": 4,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 10,
+        "returnedGeometrySections": 10,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 5,
+          "from": "江门",
+          "to": "台山"
+        },
+        {
+          "index": 6,
+          "from": "台山",
+          "to": "开平南"
+        },
+        {
+          "index": 7,
+          "from": "开平南",
+          "to": "恩平"
+        },
+        {
+          "index": 8,
+          "from": "恩平",
+          "to": "阳江"
+        },
+        {
+          "index": 9,
+          "from": "阳江",
+          "to": "茂名"
+        },
+        {
+          "index": 10,
+          "from": "茂名",
+          "to": "湛江西"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "广州南",
+          "isBoundary": false,
+          "sectionIndex": 4,
+          "to": "江门"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D271-20261018-forced-known-stops",
+      "train": "D271",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 5,
+        "returnedGeometrySections": 5,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 6,
+        "returnedGeometrySections": 6,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 13,
+          "from": "普洱",
+          "to": "西双版纳"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "成都南",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "彭山"
+        },
+        {
+          "from": "彭山",
+          "isBoundary": false,
+          "sectionIndex": 1,
+          "to": "西昌西"
+        },
+        {
+          "from": "西昌西",
+          "isBoundary": false,
+          "sectionIndex": 2,
+          "to": "德昌西"
+        },
+        {
+          "from": "德昌西",
+          "isBoundary": false,
+          "sectionIndex": 3,
+          "to": "米易东"
+        },
+        {
+          "from": "米易东",
+          "isBoundary": false,
+          "sectionIndex": 4,
+          "to": "盐边"
+        },
+        {
+          "from": "盐边",
+          "isBoundary": false,
+          "sectionIndex": 5,
+          "to": "攀枝花南"
+        },
+        {
+          "from": "元谋西",
+          "isBoundary": false,
+          "sectionIndex": 7,
+          "to": "广通北"
+        },
+        {
+          "from": "昆明",
+          "isBoundary": false,
+          "sectionIndex": 10,
+          "to": "昆明南"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C293-20261018-forced-known-stops",
+      "train": "C293",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 3,
+        "returnedGeometrySections": 3,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 4,
+        "returnedGeometrySections": 4,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 4,
+          "from": "普洱",
+          "to": "西双版纳"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "昆明",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "昆明南"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C881-20261018-endpoint-only",
+      "train": "C881",
+      "mode": "endpoint-only",
+      "before": {
+        "complete": false,
+        "resolvedSections": 0,
+        "returnedGeometrySections": 0,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": true,
+        "resolvedSections": 1,
+        "returnedGeometrySections": 1,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 0,
+          "from": "拉萨",
+          "to": "林芝"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": []
+    },
+    {
+      "id": "CN-REAL-C881-20261018-forced-known-stops",
+      "train": "C881",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 0,
+        "returnedGeometrySections": 0,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": true,
+        "resolvedSections": 5,
+        "returnedGeometrySections": 5,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 0,
+          "from": "拉萨",
+          "to": "山南"
+        },
+        {
+          "index": 1,
+          "from": "山南",
+          "to": "加查"
+        },
+        {
+          "index": 2,
+          "from": "加查",
+          "to": "朗县"
+        },
+        {
+          "index": 3,
+          "from": "朗县",
+          "to": "米林"
+        },
+        {
+          "index": 4,
+          "from": "米林",
+          "to": "林芝"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": []
+    },
+    {
+      "id": "CN-REAL-Z385-20261018-forced-known-stops",
+      "train": "Z385",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 9,
+        "returnedGeometrySections": 10,
+        "physicalGapEntries": 1
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 10,
+        "returnedGeometrySections": 11,
+        "physicalGapEntries": 1
+      },
+      "addedGeometrySections": [
+        {
+          "index": 18,
+          "from": "茂名",
+          "to": "湛江西"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "长春",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "四平"
+        },
+        {
+          "from": "四平",
+          "isBoundary": false,
+          "sectionIndex": 1,
+          "to": "沈阳北"
+        },
+        {
+          "from": "沈阳北",
+          "isBoundary": false,
+          "sectionIndex": 2,
+          "to": "锦州南"
+        },
+        {
+          "from": "天津",
+          "isBoundary": false,
+          "sectionIndex": 7,
+          "to": "聊城"
+        },
+        {
+          "from": "阜阳",
+          "isBoundary": false,
+          "sectionIndex": 11,
+          "to": "九江"
+        },
+        {
+          "from": "井冈山",
+          "isBoundary": false,
+          "sectionIndex": 15,
+          "to": "衡阳"
+        },
+        {
+          "from": "衡阳",
+          "isBoundary": false,
+          "sectionIndex": 16,
+          "to": "广州白云"
+        },
+        {
+          "from": "广州白云",
+          "isBoundary": false,
+          "sectionIndex": 17,
+          "to": "茂名"
+        },
+        {
+          "from": "湛江西",
+          "isBoundary": false,
+          "sectionIndex": 19,
+          "to": "海口"
+        },
+        {
+          "from": "秦皇岛",
+          "isBoundary": true,
+          "sectionIndex": 5,
+          "to": "唐山"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z386-20261018-forced-known-stops",
+      "train": "Z386",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 11,
+        "returnedGeometrySections": 12,
+        "physicalGapEntries": 1
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 12,
+        "returnedGeometrySections": 13,
+        "physicalGapEntries": 1
+      },
+      "addedGeometrySections": [
+        {
+          "index": 2,
+          "from": "湛江西",
+          "to": "茂名"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "海口",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "徐闻"
+        },
+        {
+          "from": "徐闻",
+          "isBoundary": false,
+          "sectionIndex": 1,
+          "to": "湛江西"
+        },
+        {
+          "from": "茂名",
+          "isBoundary": false,
+          "sectionIndex": 3,
+          "to": "广州白云"
+        },
+        {
+          "from": "广州白云",
+          "isBoundary": false,
+          "sectionIndex": 4,
+          "to": "衡阳"
+        },
+        {
+          "from": "衡阳",
+          "isBoundary": false,
+          "sectionIndex": 5,
+          "to": "井冈山"
+        },
+        {
+          "from": "九江",
+          "isBoundary": false,
+          "sectionIndex": 9,
+          "to": "阜阳"
+        },
+        {
+          "from": "衡水",
+          "isBoundary": false,
+          "sectionIndex": 15,
+          "to": "任丘"
+        },
+        {
+          "from": "任丘",
+          "isBoundary": false,
+          "sectionIndex": 16,
+          "to": "天津"
+        },
+        {
+          "from": "锦州南",
+          "isBoundary": false,
+          "sectionIndex": 21,
+          "to": "沈阳北"
+        },
+        {
+          "from": "沈阳北",
+          "isBoundary": false,
+          "sectionIndex": 22,
+          "to": "四平"
+        },
+        {
+          "from": "四平",
+          "isBoundary": false,
+          "sectionIndex": 23,
+          "to": "长春"
+        },
+        {
+          "from": "秦皇岛",
+          "isBoundary": true,
+          "sectionIndex": 19,
+          "to": "山海关"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-Z501-20261018-forced-known-stops",
+      "train": "Z501",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 4,
+        "returnedGeometrySections": 4,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 5,
+        "returnedGeometrySections": 5,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 8,
+          "from": "茂名",
+          "to": "湛江西"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "北京西",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "石家庄"
+        },
+        {
+          "from": "石家庄",
+          "isBoundary": false,
+          "sectionIndex": 1,
+          "to": "郑州"
+        },
+        {
+          "from": "郑州",
+          "isBoundary": false,
+          "sectionIndex": 2,
+          "to": "武昌"
+        },
+        {
+          "from": "武昌",
+          "isBoundary": false,
+          "sectionIndex": 3,
+          "to": "长沙"
+        },
+        {
+          "from": "长沙",
+          "isBoundary": false,
+          "sectionIndex": 4,
+          "to": "郴州"
+        },
+        {
+          "from": "韶关东",
+          "isBoundary": false,
+          "sectionIndex": 6,
+          "to": "广州白云"
+        },
+        {
+          "from": "广州白云",
+          "isBoundary": false,
+          "sectionIndex": 7,
+          "to": "茂名"
+        },
+        {
+          "from": "湛江西",
+          "isBoundary": false,
+          "sectionIndex": 9,
+          "to": "海口"
+        }
+      ]
+    }
+  ],
+  "lostRequestedGeometrySections": [],
+  "existingNativePartsWithIdenticalCoordinates": 534,
+  "existingNativePartsWithChangedCoordinates": [],
+  "findingCounts": [
+    {
+      "severity": "review",
+      "code": "physical_intervals_unproven",
+      "count": 489
+    },
+    {
+      "severity": "review",
+      "code": "route_unavailable",
+      "count": 86
+    },
+    {
+      "severity": "review",
+      "code": "route_partial",
+      "count": 64
+    },
+    {
+      "severity": "review",
+      "code": "physical_intervals_unavailable",
+      "count": 62
+    }
+  ],
+  "structuralFailures": 0,
+  "remainingReviewEntries": 701,
+  "selectedDistinctLineIDs": [
+    "cn-guangshengan-hsr",
+    "cn-osm-relation-1022200",
+    "cn-osm-relation-1043244-branch-10",
+    "cn-osm-relation-1043244-branch-11",
+    "cn-osm-relation-1043244-branch-12",
+    "cn-osm-relation-1043244-branch-16",
+    "cn-osm-relation-10627959",
+    "cn-osm-relation-10694395",
+    "cn-osm-relation-10694395-branch-20",
+    "cn-osm-relation-10884548",
+    "cn-osm-relation-11325371",
+    "cn-osm-relation-11350134",
+    "cn-osm-relation-11376068",
+    "cn-osm-relation-11377383",
+    "cn-osm-relation-11584670",
+    "cn-osm-relation-11589056-branch-19",
+    "cn-osm-relation-11589056-branch-2",
+    "cn-osm-relation-11597839",
+    "cn-osm-relation-11631593",
+    "cn-osm-relation-11672654",
+    "cn-osm-relation-11827616",
+    "cn-osm-relation-11846938",
+    "cn-osm-relation-11897482",
+    "cn-osm-relation-12149467",
+    "cn-osm-relation-12265072-branch-11",
+    "cn-osm-relation-12265072-branch-27",
+    "cn-osm-relation-12265072-branch-28",
+    "cn-osm-relation-12265072-branch-29",
+    "cn-osm-relation-12265072-branch-32",
+    "cn-osm-relation-12265072-branch-39",
+    "cn-osm-relation-12265072-branch-8",
+    "cn-osm-relation-12301259",
+    "cn-osm-relation-12939686",
+    "cn-osm-relation-12939686-branch-10",
+    "cn-osm-relation-12939686-branch-11",
+    "cn-osm-relation-12939686-branch-12",
+    "cn-osm-relation-12939686-branch-2",
+    "cn-osm-relation-12939686-branch-3",
+    "cn-osm-relation-12939686-branch-4",
+    "cn-osm-relation-12939686-branch-5",
+    "cn-osm-relation-12939686-branch-6",
+    "cn-osm-relation-12939686-branch-7",
+    "cn-osm-relation-12939686-branch-8",
+    "cn-osm-relation-12939686-branch-9",
+    "cn-osm-relation-13342028",
+    "cn-osm-relation-13345565-branch-2",
+    "cn-osm-relation-13345566",
+    "cn-osm-relation-13460161",
+    "cn-osm-relation-13471015",
+    "cn-osm-relation-14566947",
+    "cn-osm-relation-152884",
+    "cn-osm-relation-15786510",
+    "cn-osm-relation-162982-branch-5",
+    "cn-osm-relation-162982-branch-7",
+    "cn-osm-relation-163022-branch-29",
+    "cn-osm-relation-16339140",
+    "cn-osm-relation-163712-branch-33",
+    "cn-osm-relation-17857656",
+    "cn-osm-relation-1912130-branch-10",
+    "cn-osm-relation-1912130-branch-11",
+    "cn-osm-relation-1912130-branch-28",
+    "cn-osm-relation-1925853",
+    "cn-osm-relation-1925853-branch-4",
+    "cn-osm-relation-193064-branch-26",
+    "cn-osm-relation-193064-branch-34",
+    "cn-osm-relation-198494",
+    "cn-osm-relation-20275043",
+    "cn-osm-relation-2067465",
+    "cn-osm-relation-2067465-branch-2",
+    "cn-osm-relation-2101041",
+    "cn-osm-relation-2237862",
+    "cn-osm-relation-3066901",
+    "cn-osm-relation-3070103",
+    "cn-osm-relation-3184780",
+    "cn-osm-relation-3189831",
+    "cn-osm-relation-3246605",
+    "cn-osm-relation-3420812",
+    "cn-osm-relation-3431754",
+    "cn-osm-relation-356778",
+    "cn-osm-relation-4638419",
+    "cn-osm-relation-5456788",
+    "cn-osm-relation-6651966",
+    "cn-osm-relation-6651966-branch-3",
+    "cn-osm-relation-6824013",
+    "cn-osm-relation-7742408",
+    "cn-osm-relation-7945163",
+    "cn-osm-relation-7963957",
+    "cn-osm-relation-8211195",
+    "cn-osm-relation-8291993",
+    "cn-osm-relation-8347482",
+    "cn-osm-relation-8381929",
+    "cn-osm-relation-8397433",
+    "cn-osm-relation-8415510",
+    "cn-osm-relation-8768448"
+  ],
+  "selectedLineKinds": {
+    "highspeed": 56,
+    "conventional": 38
+  },
+  "fullUniqueSummary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 73,
+        "cases": 86,
+        "resolvedSections": 73,
+        "resolvedSectionsKnownSubtotal": 73,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 73,
+        "returnedGeometrySectionsKnownSubtotal": 73,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 73,
+        "referencedStopObservations": 831,
+        "unreferencedStopObservations": 122,
+        "completeCasesWithStopOver2Km": 44
+      },
+      "railmap": {
+        "complete": 13,
+        "cases": 86,
+        "resolvedSections": 13,
+        "resolvedSectionsKnownSubtotal": 13,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 13,
+        "returnedGeometrySectionsKnownSubtotal": 13,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 13,
+        "referencedStopObservations": 106,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 47,
+        "cases": 86,
+        "resolvedSections": 717,
+        "resolvedSectionsKnownSubtotal": 717,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 717,
+        "returnedGeometrySectionsKnownSubtotal": 717,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 47,
+        "referencedStopObservations": 449,
+        "unreferencedStopObservations": 35,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 13,
+        "cases": 86,
+        "resolvedSections": 481,
+        "resolvedSectionsKnownSubtotal": 481,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 521,
+        "returnedGeometrySectionsKnownSubtotal": 521,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 40,
+        "physicalGapEntriesKnownSubtotal": 40,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 13,
+        "referencedStopObservations": 106,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "all88Summary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 75,
+        "cases": 88,
+        "resolvedSections": 75,
+        "resolvedSectionsKnownSubtotal": 75,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 75,
+        "returnedGeometrySectionsKnownSubtotal": 75,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 75,
+        "referencedStopObservations": 868,
+        "unreferencedStopObservations": 126,
+        "completeCasesWithStopOver2Km": 46
+      },
+      "railmap": {
+        "complete": 13,
+        "cases": 88,
+        "resolvedSections": 13,
+        "resolvedSectionsKnownSubtotal": 13,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 13,
+        "returnedGeometrySectionsKnownSubtotal": 13,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 13,
+        "referencedStopObservations": 106,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 49,
+        "cases": 88,
+        "resolvedSections": 756,
+        "resolvedSectionsKnownSubtotal": 756,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 756,
+        "returnedGeometrySectionsKnownSubtotal": 756,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 49,
+        "referencedStopObservations": 486,
+        "unreferencedStopObservations": 39,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 13,
+        "cases": 88,
+        "resolvedSections": 497,
+        "resolvedSectionsKnownSubtotal": 497,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 538,
+        "returnedGeometrySectionsKnownSubtotal": 538,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 41,
+        "physicalGapEntriesKnownSubtotal": 41,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 13,
+        "referencedStopObservations": 106,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "independentReview": {
+    "C881": "endpoint0/1→1/1 and forced0/5→5/5; no reported gap",
+    "PEMToENM": "Both C293 and D271 match all402 rounded original proof vertices, in the same direction",
+    "G1AndG101": "unchanged coverage; G101 still3/4 forced",
+    "DOP": "separate anchors retained, no new G671 request geometry",
+    "limits": "Some parts have no physicalSelection; others retain matchedGeometry. No unique actual track assignment certified."
+  },
+  "runtimeContractReview": {
+    "web": "app/public/app-route-solver.js recordedStationSourceAnchorKey and getStationCandidateGraphNodes retain track-qualified exact original anchors; osmTrack/endJunction retains identity/attachment checks. No Web runtime replay this round.",
+    "swift": "RouteSolver stationCandidateGraphNodes retains recordedStationSourceAnchorKey exact-node guard. Same compiled UUID; no solver change.",
+    "newIDs": "All selected IDs exist in current CN; new station rows retain source_anchor_node_id and line_id; two reviewed paths use existing osmTrack/endJunction schema."
+  }
+}

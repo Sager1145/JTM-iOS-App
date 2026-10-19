@@ -1,0 +1,44 @@
+[
+  {
+    "source": "kamiyacho-overhead",
+    "target": [
+      132.4576,
+      34.3951
+    ],
+    "actualCentrePixel": [
+      640.2893511131406,
+      380.1250345148146
+    ],
+    "centreErrorPixels": 0.3152105591039436,
+    "photograph": "2023-06",
+    "role": "regional context, not platform cap survey"
+  },
+  {
+    "source": "miyuki-bridge-overhead",
+    "target": [
+      132.4611,
+      34.37515
+    ],
+    "actualCentrePixel": [
+      639.7366399988532,
+      379.5217161476612
+    ],
+    "centreErrorPixels": 0.5459981077000847,
+    "photograph": "2023-06",
+    "role": "regional context, not platform cap survey"
+  },
+  {
+    "source": "hiroshima-port-overhead",
+    "target": [
+      132.45575,
+      34.35265
+    ],
+    "actualCentrePixel": [
+      640.4243555516005,
+      379.6362449750304
+    ],
+    "centreErrorPixels": 0.5589233868472007,
+    "photograph": "2023-06",
+    "role": "regional context, not platform cap survey"
+  }
+]

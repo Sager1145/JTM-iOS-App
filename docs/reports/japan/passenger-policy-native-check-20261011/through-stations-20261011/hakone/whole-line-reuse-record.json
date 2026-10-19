@@ -1,0 +1,151 @@
+{
+  "freshInterval": "jp-小田急箱根-鉄道線#0",
+  "lineDependency": "ff006de1de08a2219cb10f1ff4b7ba5a68c934a59e5768d6ec077d380ff67e05",
+  "reusedViewpoints": [
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000000",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000000"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000001",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000001"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000002",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000002"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000003",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000003"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000004",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000004"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#1",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003414/000005",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003414/000005"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000000",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000000"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000001",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000001"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000002",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000002"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000003",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000003"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000004",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000004"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000005",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000005"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000006",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000006"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000007",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000007"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 8,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000008",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000008"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "ordinal": 9,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003418/000009",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003418/000009"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000000",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000000"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000001",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000001"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000002",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000002"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000003",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000003"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000004",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000004"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000005",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000005"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 6,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000006",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000006"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "ordinal": 7,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/003419/000007",
+      "destination": "docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/captures/003419/000007"
+    }
+  ],
+  "policy": "Exact native line dependency, interval identity and complete viewpoint equality; existing Inspector configure validates receipts. Original and fresh evidence preserved."
+}

@@ -1,0 +1,614 @@
+[
+  {
+    "key": "00:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002984/000000"
+  },
+  {
+    "key": "00:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002984/000001"
+  },
+  {
+    "key": "00:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002984/000002"
+  },
+  {
+    "key": "00:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002984/000003"
+  },
+  {
+    "key": "00:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002984/000004"
+  },
+  {
+    "key": "01:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000000"
+  },
+  {
+    "key": "01:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000001"
+  },
+  {
+    "key": "01:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000002"
+  },
+  {
+    "key": "01:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000003"
+  },
+  {
+    "key": "01:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000004"
+  },
+  {
+    "key": "01:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000005"
+  },
+  {
+    "key": "01:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002985/000006"
+  },
+  {
+    "key": "02:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000000"
+  },
+  {
+    "key": "02:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000001"
+  },
+  {
+    "key": "02:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000002"
+  },
+  {
+    "key": "02:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000003"
+  },
+  {
+    "key": "02:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000004"
+  },
+  {
+    "key": "02:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000005"
+  },
+  {
+    "key": "02:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000006"
+  },
+  {
+    "key": "02:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000007"
+  },
+  {
+    "key": "02:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002996/000008"
+  },
+  {
+    "key": "03:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000000"
+  },
+  {
+    "key": "03:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000001"
+  },
+  {
+    "key": "03:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000002"
+  },
+  {
+    "key": "03:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000003"
+  },
+  {
+    "key": "03:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000004"
+  },
+  {
+    "key": "03:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000005"
+  },
+  {
+    "key": "03:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000006"
+  },
+  {
+    "key": "03:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002997/000007"
+  },
+  {
+    "key": "04:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002998/000000"
+  },
+  {
+    "key": "04:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002998/000001"
+  },
+  {
+    "key": "04:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002998/000002"
+  },
+  {
+    "key": "04:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002998/000003"
+  },
+  {
+    "key": "04:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002998/000004"
+  },
+  {
+    "key": "05:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000000"
+  },
+  {
+    "key": "05:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000001"
+  },
+  {
+    "key": "05:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000002"
+  },
+  {
+    "key": "05:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000003"
+  },
+  {
+    "key": "05:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000004"
+  },
+  {
+    "key": "05:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002999/000005"
+  },
+  {
+    "key": "06:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000000"
+  },
+  {
+    "key": "06:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000001"
+  },
+  {
+    "key": "06:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000002"
+  },
+  {
+    "key": "06:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000003"
+  },
+  {
+    "key": "06:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000004"
+  },
+  {
+    "key": "06:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003000/000005"
+  },
+  {
+    "key": "07:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000000"
+  },
+  {
+    "key": "07:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000001"
+  },
+  {
+    "key": "07:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000002"
+  },
+  {
+    "key": "07:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000003"
+  },
+  {
+    "key": "07:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000004"
+  },
+  {
+    "key": "07:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000005"
+  },
+  {
+    "key": "07:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000006"
+  },
+  {
+    "key": "07:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000007"
+  },
+  {
+    "key": "07:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000008"
+  },
+  {
+    "key": "07:09",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000009"
+  },
+  {
+    "key": "07:10",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000010"
+  },
+  {
+    "key": "07:11",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000011"
+  },
+  {
+    "key": "07:12",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003001/000012"
+  },
+  {
+    "key": "08:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000000"
+  },
+  {
+    "key": "08:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000001"
+  },
+  {
+    "key": "08:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000002"
+  },
+  {
+    "key": "08:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000003"
+  },
+  {
+    "key": "08:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000004"
+  },
+  {
+    "key": "08:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000005"
+  },
+  {
+    "key": "08:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003002/000006"
+  },
+  {
+    "key": "09:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000000"
+  },
+  {
+    "key": "09:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000001"
+  },
+  {
+    "key": "09:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000002"
+  },
+  {
+    "key": "09:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000003"
+  },
+  {
+    "key": "09:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000004"
+  },
+  {
+    "key": "09:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/003003/000005"
+  },
+  {
+    "key": "10:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000000"
+  },
+  {
+    "key": "10:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000001"
+  },
+  {
+    "key": "10:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000002"
+  },
+  {
+    "key": "10:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000003"
+  },
+  {
+    "key": "10:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000004"
+  },
+  {
+    "key": "10:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000005"
+  },
+  {
+    "key": "10:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000006"
+  },
+  {
+    "key": "10:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000007"
+  },
+  {
+    "key": "10:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000008"
+  },
+  {
+    "key": "10:09",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000009"
+  },
+  {
+    "key": "10:10",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000010"
+  },
+  {
+    "key": "10:11",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000011"
+  },
+  {
+    "key": "10:12",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002986/000012"
+  },
+  {
+    "key": "11:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000000"
+  },
+  {
+    "key": "11:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000001"
+  },
+  {
+    "key": "11:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000002"
+  },
+  {
+    "key": "11:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000003"
+  },
+  {
+    "key": "11:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000004"
+  },
+  {
+    "key": "11:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000005"
+  },
+  {
+    "key": "11:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000006"
+  },
+  {
+    "key": "11:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000007"
+  },
+  {
+    "key": "11:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002987/000008"
+  },
+  {
+    "key": "12:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002988/000000"
+  },
+  {
+    "key": "12:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002988/000001"
+  },
+  {
+    "key": "12:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002988/000002"
+  },
+  {
+    "key": "13:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002989/000000"
+  },
+  {
+    "key": "13:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002989/000001"
+  },
+  {
+    "key": "13:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002989/000002"
+  },
+  {
+    "key": "13:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002989/000003"
+  },
+  {
+    "key": "14:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000000"
+  },
+  {
+    "key": "14:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000001"
+  },
+  {
+    "key": "14:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000002"
+  },
+  {
+    "key": "14:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000003"
+  },
+  {
+    "key": "14:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000004"
+  },
+  {
+    "key": "14:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000005"
+  },
+  {
+    "key": "14:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000006"
+  },
+  {
+    "key": "14:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000007"
+  },
+  {
+    "key": "14:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002990/000008"
+  },
+  {
+    "key": "15:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000000"
+  },
+  {
+    "key": "15:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000001"
+  },
+  {
+    "key": "15:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000002"
+  },
+  {
+    "key": "15:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000003"
+  },
+  {
+    "key": "15:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000004"
+  },
+  {
+    "key": "15:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000005"
+  },
+  {
+    "key": "15:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000006"
+  },
+  {
+    "key": "15:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000007"
+  },
+  {
+    "key": "15:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000008"
+  },
+  {
+    "key": "15:09",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000009"
+  },
+  {
+    "key": "15:10",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000010"
+  },
+  {
+    "key": "15:11",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000011"
+  },
+  {
+    "key": "15:12",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000012"
+  },
+  {
+    "key": "15:13",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002991/000013"
+  },
+  {
+    "key": "16:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000000"
+  },
+  {
+    "key": "16:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000001"
+  },
+  {
+    "key": "16:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000002"
+  },
+  {
+    "key": "16:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000003"
+  },
+  {
+    "key": "16:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000004"
+  },
+  {
+    "key": "16:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000005"
+  },
+  {
+    "key": "16:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000006"
+  },
+  {
+    "key": "16:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002992/000007"
+  },
+  {
+    "key": "17:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000000"
+  },
+  {
+    "key": "17:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000001"
+  },
+  {
+    "key": "17:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000002"
+  },
+  {
+    "key": "17:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000003"
+  },
+  {
+    "key": "17:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000004"
+  },
+  {
+    "key": "17:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002993/000005"
+  },
+  {
+    "key": "18:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000000"
+  },
+  {
+    "key": "18:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000001"
+  },
+  {
+    "key": "18:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000002"
+  },
+  {
+    "key": "18:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000003"
+  },
+  {
+    "key": "18:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000004"
+  },
+  {
+    "key": "18:05",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000005"
+  },
+  {
+    "key": "18:06",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000006"
+  },
+  {
+    "key": "18:07",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000007"
+  },
+  {
+    "key": "18:08",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000008"
+  },
+  {
+    "key": "18:09",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002994/000009"
+  },
+  {
+    "key": "19:00",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002995/000000"
+  },
+  {
+    "key": "19:01",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002995/000001"
+  },
+  {
+    "key": "19:02",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002995/000002"
+  },
+  {
+    "key": "19:03",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002995/000003"
+  },
+  {
+    "key": "19:04",
+    "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/native-candidate-v4/third/captures/002995/000004"
+  }
+]

@@ -1,0 +1,1195 @@
+{
+  "lineID": "jp-いすみ鉄道-いすみ線",
+  "requestPath": "/private/tmp/jtm-isumi-missing-20261018/request.json",
+  "resultPath": "/private/tmp/jtm-isumi-missing-20261018/result.json",
+  "processID": 52148,
+  "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+  "invocationID": "FDBC90B0-CA22-46B1-9C66-AF1E0E6711A2",
+  "resultState": "evidenceReady",
+  "capturedCount": 22,
+  "failedCount": 0,
+  "pendingCount": 0,
+  "viewPairsActuallyViewed": 22,
+  "originalImagesActuallyViewed": 44,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+  "scope": "All22 original basemap+smooth pairs for own intervals10/11/12, no crops/redraws. No physical, station-centre or Main acceptance.",
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.25022,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.247665,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-0",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.25022,
+        "longitude": 140.247665,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720311301474858,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238787566.63113955,
+        "rectY": 106093783.1410557,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000000/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000000/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000000/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 415536,
+          "recordedSHA256NotRecomputed": "3f8b074c0645a86c5eef866908e2c81ddb599812768b40e558a4d5f44f9e5303"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000000/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 482761,
+          "recordedSHA256NotRecomputed": "ff61bd79a817526150238ad0a1216610efd925bdf41f40f384de5baa462628e2"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.247290872943445,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.24767762721342,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-1",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.247290872943445,
+        "longitude": 140.24767762721342,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720657800097626,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238787576.0466723,
+        "rectY": 106096457.60930298,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000001/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000001/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000001/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 474062,
+          "recordedSHA256NotRecomputed": "96befe98e71e5a76a869b1598f626f78a4da7a9d8a2d001481c0df859a339ed1"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000001/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 544727,
+          "recordedSHA256NotRecomputed": "687442991a62ec561b9eb6de52bea5d65142e30a0480e6312de60049b30b2904"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24515345182754,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.24488716329185,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-2",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24515345182754,
+        "longitude": 140.24488716329185,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720910628391937,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238785495.32596338,
+        "rectY": 106098409.14168435,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000002/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000002/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000002/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 492023,
+          "recordedSHA256NotRecomputed": "f8709f7cdb866c034b5bcead79cf5585d6e49452b007be6c94a65e0d7e55d449"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000002/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 567177,
+          "recordedSHA256NotRecomputed": "bd89b39cae9a43313deba23ab1224f377196b991845c3159116db8c1523bddbb"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24211082610801,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.2442187552359,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-3",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24211082610801,
+        "longitude": 140.2442187552359,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721270506777638,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238784996.92479306,
+        "rectY": 106101187.06547058,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000003/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000003/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000003/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 536454,
+          "recordedSHA256NotRecomputed": "c2bdc51aaecba15731f7a0763327725172b8c61eea79bce3317f577f0bc1be51"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000003/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 609920,
+          "recordedSHA256NotRecomputed": "0b47d542a6e58250357f1e2f13b8f975d129682325634aed8d5f5327b9ddcc67"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24058010184035,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.24109417516843,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-4",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24058010184035,
+        "longitude": 140.24109417516843,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721451548707464,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238782667.0690286,
+        "rectY": 106102584.58059162,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000004/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000004/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000004/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 519361,
+          "recordedSHA256NotRecomputed": "147e0e3698f8a8273053c890db88a9691da4833ae0a13e4bd3065f268a2fc8b7"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000004/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 587851,
+          "recordedSHA256NotRecomputed": "9eb05b5e8b3c572356b56a1da572c951759958dc6c87a20c54e4828ece68d66d"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-いすみ鉄道-いすみ線#10",
+      "latitude": 35.24057,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.24036,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#10#point-5",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24057,
+        "longitude": 140.24036,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721452743449934,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238782119.62834492,
+        "rectY": 106102593.80324577,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000005/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000005/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000005/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 497954,
+          "recordedSHA256NotRecomputed": "a77588b0f5af0b13375fa64f31327c43b5985277520f6233db8a5c16461d9932"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000000/000005/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 565402,
+          "recordedSHA256NotRecomputed": "436f766988aad7126cb20ea9aa52c53f3b092aa874338e4a1e9aa492d8bf7263"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000000",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.24057,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.24036,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-0",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24057,
+        "longitude": 140.24036,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721452743449934,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238782119.62834492,
+        "rectY": 106102593.80324577,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000000/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000000/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000000/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 497959,
+          "recordedSHA256NotRecomputed": "04fef2ba9777eae3c369780d7562d5b4b24fa6fedf4639cdfbe5c433cb6fa74b"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000000/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 565414,
+          "recordedSHA256NotRecomputed": "43e998c2572744287a48fd2b5d0cac7f1eafb60f23b6ae10a26f0119c8c7931e"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000001",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.24043650083332,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.23650984303234,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-1",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24043650083332,
+        "longitude": 140.23650984303234,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721468532337934,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238779248.7432302,
+        "rectY": 106102715.68356773,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000001/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000001/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000001/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 470923,
+          "recordedSHA256NotRecomputed": "e340e9b173d358865d99920bec1ba46f867867272aaea8003073df58b4bf0f28"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000001/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 542001,
+          "recordedSHA256NotRecomputed": "164318de6e570f47f4cc08bc4552b6797c8b248388fd55a1dc727e24467e31b5"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000002",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.239460521711685,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.23289507210657,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-2",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.239460521711685,
+        "longitude": 140.23289507210657,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721583959345788,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238776553.37466964,
+        "rectY": 106103606.71411787,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000002/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000002/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000002/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 412884,
+          "recordedSHA256NotRecomputed": "80a038c5199c5ac838b8d9bc218ab5f4017d79cb0f265b1aa1397a2a073120aa"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000002/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 475818,
+          "recordedSHA256NotRecomputed": "c81171f215f6fb1b4ddd2343dc5e79931cf4e99995e10ca9531263e8f20394b2"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000003",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.24097576702195,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.23021035209416,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-3",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24097576702195,
+        "longitude": 140.23021035209416,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721404753236442,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238774551.50233424,
+        "rectY": 106102223.3501491,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000003/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000003/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000003/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 435170,
+          "recordedSHA256NotRecomputed": "29ea12f4b1d81815acc4462b1382131911978dd89e36e9e0f3cf3e2eb5f8b026"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000003/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 503031,
+          "recordedSHA256NotRecomputed": "01ea9d4b7b48c7c7e2396cbe8706ec6835e232c44035ea4536abde8ac017ae2f"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000004",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.24321870641323,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.22787256272517,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-4",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24321870641323,
+        "longitude": 140.22787256272517,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9721139471122393,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238772808.32023618,
+        "rectY": 106100175.58045013,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000004/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000004/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000004/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 428736,
+          "recordedSHA256NotRecomputed": "330a70a30ebf463fab0a9fa632369fcbcb4023ef1f30a9ee721f6a81d893e4e6"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000004/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 497543,
+          "recordedSHA256NotRecomputed": "01bf82135898d13f57a3abe393a99b56848d19722198a6530e4b36bbd68ea208"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000005",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.244577671214934,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.22451364950632,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-5",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.244577671214934,
+        "longitude": 140.22451364950632,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720978733199119,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238770303.73300964,
+        "rectY": 106098934.83861057,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000005/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000005/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000005/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 347209,
+          "recordedSHA256NotRecomputed": "9b3152804cd82520c4ef74a1d6b70dd41e789140177e2604c96ac409987daf4e"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000005/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 408562,
+          "recordedSHA256NotRecomputed": "b9e2269e251fb8890627e3bfc62798648d657921b9fbb45f70f8e9d9820e2389"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000006",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.247169125571126,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.22232740343077,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-6",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.247169125571126,
+        "longitude": 140.22232740343077,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720672201546974,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238768673.5497812,
+        "rectY": 106096568.76984638,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000006/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000006/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000006/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 373733,
+          "recordedSHA256NotRecomputed": "19b44fe964db6e13912e8db9d1ec44adaea35bdac78b3156981831e1a19b77e7"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000006/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 439214,
+          "recordedSHA256NotRecomputed": "7dd55dbe2c2f4109d2177dade0b67ce94f2c3fdff4ee8e6e865fd763f922ffce"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000007",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.24958144868841,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.21990659967943,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-7",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24958144868841,
+        "longitude": 140.21990659967943,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720386840545225,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238766868.46767324,
+        "rectY": 106094366.18484281,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000007/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000007/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000007/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 427274,
+          "recordedSHA256NotRecomputed": "b154938f800b0c37ecc1b9c1cdfa5c6f27fb4332e0f544023d39f85ae3f349fb"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000007/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 497038,
+          "recordedSHA256NotRecomputed": "7921226220292a38ce2a2933fd03b3d747f9534c5356f4283907c81534440b34"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000008",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.25070701681567,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.21632386571807,
+      "pointOrdinal": 8,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-8",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.25070701681567,
+        "longitude": 140.21632386571807,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720253687750554,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238764196.9876048,
+        "rectY": 106093338.45619704,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000008/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000008/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000008/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 395000,
+          "recordedSHA256NotRecomputed": "bdd9e01b2cf96098af7140ebf73297fb39b1e7cc4e7538e6e4ce94ed15c3e769"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000008/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 463343,
+          "recordedSHA256NotRecomputed": "e4028d037d37ec9a3e165c2362d49eef51756ec3bbde4dca79cced98801cce0f"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000009",
+      "itemID": "jp-いすみ鉄道-いすみ線#11",
+      "latitude": 35.250528,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.215164,
+      "pointOrdinal": 9,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#11#point-9",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.250528,
+        "longitude": 140.215164,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720274865387654,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238763332.12904102,
+        "rectY": 106093501.9130142,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000009/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000009/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000009/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 373813,
+          "recordedSHA256NotRecomputed": "42f20a71e09f586a358bd38f0659f1b0dc24db2f9c8e812a23f08859e973a1be"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000001/000009/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 441811,
+          "recordedSHA256NotRecomputed": "1df3afc41fd850881f4dd6282983c4ad21d2227714c86752981d11c9157608c7"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000000",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.250528,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.215164,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-0",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.250528,
+        "longitude": 140.215164,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720274865387654,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238763332.12904102,
+        "rectY": 106093501.9130142,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000000/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000000/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000000/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 373945,
+          "recordedSHA256NotRecomputed": "8df7f3fc34d06ffe4d94545b903dc11e84910ed6f637084ff2c790762fe6ad64"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000000/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 441967,
+          "recordedSHA256NotRecomputed": "6e8d8c506d4c0d8c099279f7bb4df9d8e3192d944471c228a135373876ee9000"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000001",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.24812879261091,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.21288278387647,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-1",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24812879261091,
+        "longitude": 140.21288278387647,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720558681706494,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238761631.13101232,
+        "rectY": 106095692.54838207,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000001/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000001/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000001/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 336701,
+          "recordedSHA256NotRecomputed": "67b159e532f11a00986a0aa894b7f335ed57427507e042c74570803c9241b6e3"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000001/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 400479,
+          "recordedSHA256NotRecomputed": "167c4d68d52c50c7b52abb55a332979bef90181ed69cd6e836ae5b795cae64f4"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000002",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.24848324475194,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.20933436166328,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-2",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24848324475194,
+        "longitude": 140.20933436166328,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720516752563406,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238758985.23563766,
+        "rectY": 106095368.91416508,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000002/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000002/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000002/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 339472,
+          "recordedSHA256NotRecomputed": "628f3f128b429a273df989a4c520d70614981b3dc22bb18b9e2c9d7c55ffeb19"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000002/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 402561,
+          "recordedSHA256NotRecomputed": "58225722f855923d8fbc7c967c5138a86ab94e678a984059e71688c902a5aa16"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000003",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.24976379223091,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.2059650285025,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-3",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24976379223091,
+        "longitude": 140.2059650285025,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720365269870804,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238756472.87873927,
+        "rectY": 106094199.69239575,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000003/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000003/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000003/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 346744,
+          "recordedSHA256NotRecomputed": "88988ba66993ed499d6e1617c744b2d5e07423510d96843c4d93f4ca3ab91639"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000003/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 407706,
+          "recordedSHA256NotRecomputed": "678f93f84c553cb824ea4101b558c4843246e32cc6eabebcc21d04bda51e74f4"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000004",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.24901300567433,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.20223174740875,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-4",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.24901300567433,
+        "longitude": 140.20223174740875,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720454084951867,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238753689.14259264,
+        "rectY": 106094885.21079198,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000004/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000004/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000004/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 358741,
+          "recordedSHA256NotRecomputed": "b7551cdff8e2cb5ff583803539876ff3d93cf6ed8f7948e4e41e82d775308a58"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000004/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 416688,
+          "recordedSHA256NotRecomputed": "c7d33de9b01419f335911d6725b363c0b6a792b90769d424f04ced370eca9504"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000005",
+      "itemID": "jp-いすみ鉄道-いすみ線#12",
+      "latitude": 35.25004,
+      "lineDependency": "e5ddef0089fc5733f5e962f6099e63ac6b03c96564ec8b0472266efa671fa982",
+      "longitude": 140.199595,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-いすみ鉄道-いすみ線#12#point-5",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.25004,
+        "longitude": 140.199595,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9720332595160976,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238751723.0412231,
+        "rectY": 106093947.4946113,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000005/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000005/view.json",
+      "imagesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000005/basemap.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 366145,
+          "recordedSHA256NotRecomputed": "5c8e696ddf5be1b96593dacd71a8ff8a709d9e8bb724be7c3bef3cb2b07410f1"
+        },
+        {
+          "path": "/private/tmp/jtm-isumi-missing-20261018/alignment/captures/000002/000005/smooth.png",
+          "actuallyViewedOriginal": true,
+          "detail": "original",
+          "byteCount": 422697,
+          "recordedSHA256NotRecomputed": "cd46dc5704b90f18b505401a3553c14a4b779676cbb6ded958eacbeecbf74ec6"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "caseIndex": 10,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 10,
+  "source": {
+    "caseIndex": 10,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 10,
+    "fromStationID": "002120",
+    "toStationID": "002148",
+    "camera": [
+      36.544875000000005,
+      137.84443,
+      0.04266570000000151
+    ],
+    "effectiveCoordinates": [
+      [
+        137.842615,
+        36.55411
+      ],
+      [
+        137.84261,
+        36.55378
+      ],
+      [
+        137.84261,
+        36.55272
+      ],
+      [
+        137.84261,
+        36.55136
+      ],
+      [
+        137.84261,
+        36.55088
+      ],
+      [
+        137.84261,
+        36.55037
+      ],
+      [
+        137.84261,
+        36.54964
+      ],
+      [
+        137.84263,
+        36.54937
+      ],
+      [
+        137.84268,
+        36.54914
+      ],
+      [
+        137.84276,
+        36.54889
+      ],
+      [
+        137.84293,
+        36.54834
+      ],
+      [
+        137.84324,
+        36.54748
+      ],
+      [
+        137.84341,
+        36.54693
+      ],
+      [
+        137.84362,
+        36.54634
+      ],
+      [
+        137.84371,
+        36.54614
+      ],
+      [
+        137.84391,
+        36.54582
+      ],
+      [
+        137.84398,
+        36.54569
+      ],
+      [
+        137.8441,
+        36.54536
+      ],
+      [
+        137.84416,
+        36.54513
+      ],
+      [
+        137.84419,
+        36.54488
+      ],
+      [
+        137.84421,
+        36.54467
+      ],
+      [
+        137.84421,
+        36.54457
+      ],
+      [
+        137.84417,
+        36.5441
+      ],
+      [
+        137.84412,
+        36.54378
+      ],
+      [
+        137.84402,
+        36.5431
+      ],
+      [
+        137.84396,
+        36.54275
+      ],
+      [
+        137.84395,
+        36.54266
+      ],
+      [
+        137.84395,
+        36.54231
+      ],
+      [
+        137.84398,
+        36.54189
+      ],
+      [
+        137.84402,
+        36.54158
+      ],
+      [
+        137.8441,
+        36.54098
+      ],
+      [
+        137.84418,
+        36.54038
+      ],
+      [
+        137.84426,
+        36.53975
+      ],
+      [
+        137.84432,
+        36.53921
+      ],
+      [
+        137.84437,
+        36.539
+      ],
+      [
+        137.84447,
+        36.53872
+      ],
+      [
+        137.84477,
+        36.53819
+      ],
+      [
+        137.84504,
+        36.53773
+      ],
+      [
+        137.84568,
+        36.53662
+      ],
+      [
+        137.84594,
+        36.53617
+      ],
+      [
+        137.84625,
+        36.53564
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:14.40;lod:13.25;backbones:0;networkStations:4;distance:9365.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.544875;centerLon:137.844430;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1987.0;rebuilds:3;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:8;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.544875;centerLon:137.844430;distance:9365.8;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-10.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Inao to Shinano-Kizaki south-lake curve and Nogu river approach retained; local offsets unresolved."
+}

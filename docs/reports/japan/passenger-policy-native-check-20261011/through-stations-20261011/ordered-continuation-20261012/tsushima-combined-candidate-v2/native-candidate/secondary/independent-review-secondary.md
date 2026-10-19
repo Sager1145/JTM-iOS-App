@@ -1,0 +1,11 @@
+V2 Secondary independent native cartographic review: accepted within the scoped limits below.
+
+Actually opened every basemap, display, and smooth panel for Main16–23: 32 current V2 views, 96 panels. Reopened Main20 viewpoints 1 and 2 in all three original-resolution panels. No clear surface corridor departure, reverse hook, orphan fragment, broken visible join, or display/smooth disagreement was observed. The Main20 tail continues east/northeast through Nishibiwajima into the western passenger branch and onward to the shared Sakō corridor; the separate western JR/yard group remains distinct. All terminal and overlapping tails were included.
+
+Frozen candidate SHA256: `147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26`. Installed package SHA256: `ffac0a7c0da3d864eb2c4fd6a8a7bb15d25db40fd3664648f2f7bb5c4b81fa4f`. Installed package bytes equal owner output. All 15 scoped candidate coordinate arrays equal decoded identity-plan arrays and installed display arrays exactly, with matching station endpoint IDs. Every current view camera and dependency record was inspected and bound in the JSON receipt.
+
+The seven Tsushima intervals reuse this Inspector’s V1 actual 44-view review only after verifying exact equality of the entire installed Tsushima line and frozen candidate line to V1. They were not newly captured or newly viewed for V2. The other unchanged Main intervals were actually re-reviewed because their whole-line dependency changed.
+
+Main20 controls 9→10 now progress east/northeast; their spherical distance is 13.316405m (the root MapKit measure is 13.331m). Maximum renderer smooth/display diagnostic is 2.142111m. These distances do not measure Apple own-rail alignment. The controls remain under the blue station wash, so precise rail-normal pixel residual is unmeasured.
+
+Retained limits: Sukaguchi hidden 4px/exact frame; Shin Kiyosu multiple tracks; Tsushima terminal; Sakō exact 20m own-normal proof; Nagoya underground physical station005457 and source-preserved unsupported span. Underground lines crossing visible surface building footprints do not establish tunnel geometry. Viewport cartographic review is not physical survey proof, Main app acceptance, product acceptance, or national completion.

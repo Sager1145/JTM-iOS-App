@@ -1,0 +1,391 @@
+{
+  "format": "jtm-matsumoto-oito-display-candidate-v1",
+  "status": "candidate-only",
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "stationID": "002506",
+  "intervalIndex": 31,
+  "nativePart": 0,
+  "sourceCoordinates": [
+    [
+      137.961089,
+      36.236923
+    ],
+    [
+      137.96113,
+      36.23687
+    ],
+    [
+      137.96126,
+      36.2367
+    ],
+    [
+      137.96147,
+      36.23639
+    ],
+    [
+      137.9619,
+      36.23561
+    ],
+    [
+      137.9624,
+      36.23464
+    ],
+    [
+      137.9635,
+      36.23249
+    ],
+    [
+      137.96405,
+      36.2314
+    ],
+    [
+      137.963844,
+      36.231165
+    ]
+  ],
+  "coordinates": [
+    [
+      137.961089,
+      36.236923
+    ],
+    [
+      137.96113,
+      36.23687
+    ],
+    [
+      137.96126,
+      36.2367
+    ],
+    [
+      137.96147,
+      36.23639
+    ],
+    [
+      137.9619,
+      36.23561
+    ],
+    [
+      137.9624,
+      36.23464
+    ],
+    [
+      137.9635,
+      36.23249
+    ],
+    [
+      137.96367165960635,
+      36.23167271499838
+    ]
+  ],
+  "intervalCoordinates": [
+    [
+      137.961089,
+      36.236923
+    ],
+    [
+      137.96113,
+      36.23687
+    ],
+    [
+      137.96126,
+      36.2367
+    ],
+    [
+      137.96147,
+      36.23639
+    ],
+    [
+      137.9619,
+      36.23561
+    ],
+    [
+      137.9624,
+      36.23464
+    ],
+    [
+      137.9635,
+      36.23249
+    ],
+    [
+      137.96367165960635,
+      36.23167271499838
+    ]
+  ],
+  "displayAnchor": [
+    137.96367165960635,
+    36.23167271499838
+  ],
+  "displayStationCoordinates": {
+    "002506": [
+      137.96367165960635,
+      36.23167271499838
+    ]
+  },
+  "guard": {
+    "retainedThroughIndex": 6,
+    "coordinate": [
+      137.9635,
+      36.23249
+    ],
+    "maximumAbsoluteTurnDegrees": 13,
+    "description": "Retain the north approach through the final source coordinate already on the reviewed western Oito rail; replace only the physical-junction/cross-platform two-edge tail."
+  },
+  "sourceGuard": {
+    "retainedThroughIndex": 6,
+    "coordinate": [
+      137.9635,
+      36.23249
+    ],
+    "maximumAbsoluteTurnDegrees": 13
+  },
+  "directionEvidence": {
+    "reviewedPlatformOrRailAxisBearingDegrees": 166.37713183529672,
+    "candidateTerminalEdgeBearingDegrees": 170.3841182341639,
+    "acuteAxisDifferenceDegrees": 4.006986398867184,
+    "maximumAcceptedAxisDifferenceDegrees": 30,
+    "physicalJunctionExcludedFromDisplay": true,
+    "physicalDirectionWitnessSeparated": true,
+    "basis": "Manual identity review of the Oito western platform-6 cartography axis in frozen native z18 view3; physical direction remains proven separately at matsumoto-east-56."
+  },
+  "stationFrame": {
+    "evidenceView": "oito-31-view3-z18-before",
+    "nativeMapRect": {
+      "x": 237089028.2657024,
+      "y": 105196090.17332861,
+      "width": 3996.0000000298023,
+      "height": 2616
+    },
+    "viewport": [
+      999,
+      654
+    ],
+    "centreRailPixel": [
+      467.3734221080522,
+      209.6671542349691
+    ],
+    "platformFrameMidpointPixel": [
+      467.3734221080522,
+      209.6671542349691
+    ],
+    "platformAxisPixels": [
+      [
+        463.42658517439924,
+        193.38131355121465
+      ],
+      [
+        471.3202590417051,
+        225.95299491872353
+      ]
+    ],
+    "platformPolygonPixels": [
+      [
+        468.6648430071443,
+        192.11183352351802
+      ],
+      [
+        476.5585168744502,
+        224.6835148910269
+      ],
+      [
+        466.08200120896004,
+        227.22247494642014
+      ],
+      [
+        458.18832734165414,
+        194.65079357891125
+      ],
+      [
+        468.6648430071443,
+        192.11183352351802
+      ]
+    ],
+    "representation": "manually_identity_confirmed_oito_platform_6_cartography_midpoint",
+    "rejectedAlternatives": [
+      {
+        "coordinate": [
+          137.96509258170758,
+          36.23051746785995
+        ],
+        "reason": "eastern unresolved platform candidate is not Oito platform 6"
+      },
+      {
+        "coordinate": [
+          137.964636,
+          36.2302644
+        ],
+        "reason": "nearest Apple station POI is not a platform centre"
+      },
+      {
+        "coordinate": [
+          137.96378,
+          36.231055
+        ],
+        "reason": "Alpico platform 7 is an independent transfer platform"
+      }
+    ]
+  },
+  "manualPixelPicks": {
+    "selectedPlatformCandidateIndex": 0,
+    "selectedAxisPixels": [
+      [
+        463.42658517439924,
+        193.38131355121465
+      ],
+      [
+        471.3202590417051,
+        225.95299491872353
+      ]
+    ],
+    "selectedMidpointPixel": [
+      467.3734221080522,
+      209.6671542349691
+    ],
+    "selectionReason": "Western north-south terminal island aligned with the retained Oito approach and identified as JR platform 6; the adjacent Alpico platform 7 remains separate."
+  },
+  "dependencies": {
+    "packageSha256": "78a7574d26df5b2621753ddd20deb35df842eb86e47c0882fc0562111ee88d0d",
+    "lanesSha256": "831a40ea561a9792a78028baf65577de8456c7c3019217d0f6aa3ef1c09783f3",
+    "junctionRegistrySha256": "07968aaa10fbda0601d829697cab4ad8cebd9c343826b1e50217d63189cf3cd6",
+    "oitoLineSha256": "819efd988ea4086943edf7eb5ac9e43011de778a0aa3d245f01c583936c30414",
+    "shinonoiLineSha256": "d7fb18281296719b9f165811a469d1c2f2344b169153a306766ac8630aa24f2e",
+    "kamikochiLineSha256": "e83c353e9c3d1e485755fc9895a62a7fbe582b4f3ab05aad49a61abff53a4488"
+  },
+  "baseline": {
+    "interval31": [
+      [
+        137.961089,
+        36.236923
+      ],
+      [
+        137.96113,
+        36.23687
+      ],
+      [
+        137.96126,
+        36.2367
+      ],
+      [
+        137.96147,
+        36.23639
+      ],
+      [
+        137.9619,
+        36.23561
+      ],
+      [
+        137.9624,
+        36.23464
+      ],
+      [
+        137.9635,
+        36.23249
+      ],
+      [
+        137.96405,
+        36.2314
+      ],
+      [
+        137.963844,
+        36.231165
+      ]
+    ],
+    "laneRows": [
+      [
+        "jp-東日本旅客鉄道-大糸線",
+        0,
+        0,
+        70301.1,
+        -0.5
+      ],
+      [
+        "jp-東日本旅客鉄道-篠ノ井線",
+        1,
+        13257.1,
+        14975,
+        -0.5
+      ]
+    ],
+    "relatedReferences": {
+      "follows": [],
+      "families": [],
+      "chains": [],
+      "hubs": []
+    }
+  },
+  "sources": [
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view0-z18-before/apple-map-extraction/analysis.json",
+      "sha256": "5e52c9233d3c2163c675399ba102592a3b9d38a5d0dfc57a58a6a38dcb9a084a"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view0-z18-before/apple-map-extraction/basemap.png",
+      "sha256": "5b7299364af52e26878e14ce6fb2d6ed0d420529b0f28f960dda38cc621b14b7"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view0-z18-before/apple-map-extraction/extracted.geojson",
+      "sha256": "1fae3ea7c267519693191926ba71d447cdbe09875522ba1fdb02af7348ae42f6"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view1-z18-before/apple-map-extraction/analysis.json",
+      "sha256": "18697611b04f8ef260172eca6231f684bb785f2ae162b94da53069aac51e506b"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view1-z18-before/apple-map-extraction/basemap.png",
+      "sha256": "d333544583e0fc93dd8fa39754975c4aeee6c904ace0cecc212c3472865536b4"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view1-z18-before/apple-map-extraction/extracted.geojson",
+      "sha256": "edd124eab18190635eb0ab31a0d2cea4bc16d0ebf6c89c194138cf61e0968957"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view2-z18-before/apple-map-extraction/analysis.json",
+      "sha256": "ce46b3309fd210dff2ba2e074c761fdec3539cdf0960036db685f473a9faaf34"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view2-z18-before/apple-map-extraction/basemap.png",
+      "sha256": "e53bd63422cd09562143dfeda3990c72e05109bc94840fafef56ee325e38d5f0"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view2-z18-before/apple-map-extraction/extracted.geojson",
+      "sha256": "f44ec30dc1e1e1f5b3de1faa5b58c8bf36fbbe6427f401819eca7f111861bd22"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view3-z18-before/apple-map-extraction/analysis.json",
+      "sha256": "6cf30ab40cbad0438d90d1b01d584505f66c6bbe53c8881d91cf32017694c494"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view3-z18-before/apple-map-extraction/basemap.png",
+      "sha256": "894a2f2b7a001116aae3ce680f325bdd10fb336e8cbe9b30df6f903edafc9f89"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/oito-31-view3-z18-before/apple-map-extraction/extracted.geojson",
+      "sha256": "dd42d7955c54b820315c205c2dcef689f618f6b163054a7f607adc9ad15c37e3"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/matsumoto-station-regional-aerial-z19-loaded.png",
+      "sha256": "8b5fe8dd4f71df8bf55566877d6bbbe4dfea19ea71b0792bcc0f923a6c0f5777"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/matsumoto-station-short-tail-main-before-basemap.png",
+      "sha256": "17ef6bdd8036e4cb5cc9a1f2115b2da0124706d225621cd41e8a9f133e258eac"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/matsumoto-station-short-tail-main-before-overlay.png",
+      "sha256": "baacebf7fd6555563224ae4c14b5b2ccb7e8550dbce94f245be1be51c000d63a"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/matsumoto-north-real-fork-main-before-basemap.png",
+      "sha256": "5422b2f4f211bf2ac1bc46fa94304783338c4a37e3b7e2f40b2002231189b734"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/matsumoto-north-real-fork-main-before-overlay.png",
+      "sha256": "614069d9f6151129e27fd47881937d2c07aeedea491927fe70d8b7a3cee9d79f"
+    }
+  ],
+  "warnings": [
+    "The native extractor marked the selected platform polygon unresolved because it did not find automatic parallel-rail support at its midpoint; manual identity review resolves it as Oito platform 6 using its western position, alignment with the retained Oito approach, and the current JR East 1F platform plan.",
+    "This candidate changes display cartography only. Physical source, junction registry, route direction, IDs, kilometre data, lanes, follows, family windows, and chain boundaries remain frozen.",
+    "Candidate remains candidate-only until the three Inspectors and Main ON/OFF runtime review accepts the applied temporary resources."
+  ],
+  "acceptance": "candidate-only; pending temporary-resource review in all three Inspectors and Main ON/OFF"
+}

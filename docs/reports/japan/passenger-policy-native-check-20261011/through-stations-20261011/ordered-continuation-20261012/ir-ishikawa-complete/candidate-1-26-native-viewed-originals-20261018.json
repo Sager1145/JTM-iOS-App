@@ -1,0 +1,314 @@
+{
+  "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+  "intervalIndex": 3,
+  "sourceIndex": "/private/tmp/jtm-ir-kanazawa-native-20261018/capture-index.json",
+  "reviewDate": "2026-10-18",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "sourceUnavailableItemIDs": [],
+  "actualPairsViewed": 13,
+  "actualOriginalPNGsViewed": 26,
+  "candidateWindow": "decoded1..26",
+  "candidateNativePartExpectedFromImplementation": {
+    "controls": 646,
+    "roundedMetres": 64396.1
+  },
+  "acceptance": "WITHHELD: passenger identity of selected NW reference must be resolved; rendering continuity is insufficient",
+  "views": [
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-0",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 0,
+      "timestamp": "2026-10-18T21:37:04Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000000",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000000/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000000/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Retained Higashi-Kanazawa station context; continuous departure, exact own face unproven."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-1",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 1,
+      "timestamp": "2026-10-18T21:37:05Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000001",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000001/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000001/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Northern curve continuous inside broad railway yard; lateral red/blue difference remains."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-2",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 2,
+      "timestamp": "2026-10-18T21:37:08Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000002",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000002/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000002/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000002/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Broad northern curve continuous; broad fill cannot establish passenger track."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-3",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 3,
+      "timestamp": "2026-10-18T21:37:09Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000003",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000003/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000003/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Continuous curve/road crossing, separate from SE Shinkansen."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-4",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 4,
+      "timestamp": "2026-10-18T21:37:09Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000004",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000004/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000004/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000004/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Visible displacement from labelled IR glyph; passenger continuation unproven."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-5",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 5,
+      "timestamp": "2026-10-18T21:37:10Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000005",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000005/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000005/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000005/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Continuous middle approach toward former V, changing lateral relation to blue."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-6",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 6,
+      "timestamp": "2026-10-18T21:37:10Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000006",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000006/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000006/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000006/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Former V replaced by continuous heading change; selected NW-side reference unresolved."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-7",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 7,
+      "timestamp": "2026-10-18T21:37:10Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000007",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000007/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000007/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000007/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "CRITICAL HOLD: red NW of labelled IR curve at Asanohommachi; passenger continuation unresolved."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-8",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 8,
+      "timestamp": "2026-10-18T21:37:10Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000008",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000008/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000008/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000008/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "NW displacement continues through river approach; separate from SE Shinkansen."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-9",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 9,
+      "timestamp": "2026-10-18T21:37:11Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000009",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000009/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000009/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000009/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Southern return appears longitudinal/gentle; no short transverse hook; physical passenger seam unproven."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-10",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 10,
+      "timestamp": "2026-10-18T21:37:11Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000010",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000010/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000010/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000010/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Continuous conventional station fan, west/NW of separate Shinkansen band; exact face unaccepted."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-11",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 11,
+      "timestamp": "2026-10-18T21:37:11Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000011",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000011/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000011/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000011/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Kanazawa broad station context continuous; passenger cap/centre unproven."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-12",
+      "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+      "pointOrdinal": 12,
+      "timestamp": "2026-10-18T21:37:12Z",
+      "result": "pending",
+      "reviewFresh": false,
+      "wholeLineRenderDependency": "599dbcbe9900b6eec629c5fccfc3b5d9eb2896c87c5583b26dbd1defe5cd98f0",
+      "referenceDependency": "Apple-only",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "geometryScope": "Complete own-line DisplayParts smoothed with retained station/end anchors at the requested zoom, then clipped to this immutable viewport. Isolated centreline; no lanes/follows/joins/family collapse.",
+      "directory": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000012",
+      "basemap": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000012/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000012/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-kanazawa-native-20261018/alignment/captures/000000/000012/view.json",
+      "originalFilesActuallyViewed": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "captureStatus": "captured",
+      "finding": "Retained endpoint context continuous; no Main station-circle or exact-cap acceptance."
+    }
+  ]
+}

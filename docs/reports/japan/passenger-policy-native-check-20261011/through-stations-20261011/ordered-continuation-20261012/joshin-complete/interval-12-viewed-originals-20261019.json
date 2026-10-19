@@ -1,0 +1,192 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-上信電鉄-上信線",
+  "intervalIndex": 12,
+  "stations": [
+    [
+      "002467",
+      "東富岡"
+    ],
+    [
+      "002468",
+      "上州富岡"
+    ]
+  ],
+  "actualViewpointCount": 4,
+  "actualOriginalPNGCount": 8,
+  "otherAlreadyCompleteViewsNotViewedThisPass": 63,
+  "otherPlannedViewsOutsideReviewedInterval": 120,
+  "reusedIdentityReceiptEvidence": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joshin-complete/existing-evidence-20261019.json",
+  "reviewMethod": "functions.view_image individually opened every original basemap/smooth PNG; no pixel alteration",
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "itemID": "jp-上信電鉄-上信線#12",
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000000/basemap.png",
+          "recordedByteCount": 307700,
+          "actualByteCount": 307700,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000000/smooth.png",
+          "recordedByteCount": 345361,
+          "actualByteCount": 345361,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.26082,
+        "longitude": 138.901685,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9599242314119163,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237786235.2003982,
+        "rectY": 105166908.00082192,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "東富岡西出沿近东西长直段进入上州富岡。四对均连续，红线多数在自身蓝色轨带北侧，没有孤立V/直角或跨道路跳接；上州富岡站场宽填充与多股轨不能证明红线恰好是乘客face或平台轴。现有侧偏未被接受为精确中心。"
+    },
+    {
+      "itemID": "jp-上信電鉄-上信線#12",
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000001/basemap.png",
+          "recordedByteCount": 333978,
+          "actualByteCount": 333978,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000001/smooth.png",
+          "recordedByteCount": 372933,
+          "actualByteCount": 372933,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.26070010718969,
+        "longitude": 138.89778428644675,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9599256856391024,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237783326.617561,
+        "rectY": 105167018.87126714,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "東富岡西出沿近东西长直段进入上州富岡。四对均连续，红线多数在自身蓝色轨带北侧，没有孤立V/直角或跨道路跳接；上州富岡站场宽填充与多股轨不能证明红线恰好是乘客face或平台轴。现有侧偏未被接受为精确中心。"
+    },
+    {
+      "itemID": "jp-上信電鉄-上信線#12",
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000002/basemap.png",
+          "recordedByteCount": 363211,
+          "actualByteCount": 363211,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000002/smooth.png",
+          "recordedByteCount": 402677,
+          "actualByteCount": 402677,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.26056694767076,
+        "longitude": 138.89388427543378,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9599273007784666,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237780418.55857584,
+        "rectY": 105167142.00985396,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "東富岡西出沿近东西长直段进入上州富岡。四对均连续，红线多数在自身蓝色轨带北侧，没有孤立V/直角或跨道路跳接；上州富岡站场宽填充与多股轨不能证明红线恰好是乘客face或平台轴。现有侧偏未被接受为精确中心。"
+    },
+    {
+      "itemID": "jp-上信電鉄-上信線#12",
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000003/basemap.png",
+          "recordedByteCount": 372849,
+          "actualByteCount": 372849,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000510/000003/smooth.png",
+          "recordedByteCount": 412926,
+          "actualByteCount": 412926,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.26051,
+        "longitude": 138.891935,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9599279915155107,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 237778965.0734649,
+        "rectY": 105167194.67185834,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "東富岡西出沿近东西长直段进入上州富岡。四对均连续，红线多数在自身蓝色轨带北侧，没有孤立V/直角或跨道路跳接；上州富岡站场宽填充与多股轨不能证明红线恰好是乘客face或平台轴。现有侧偏未被接受为精确中心。"
+    }
+  ]
+}

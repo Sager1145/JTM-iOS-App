@@ -1,0 +1,25 @@
+# IR Kanazawa northern chord: bounded own-source proposal (2026-10-18)
+
+**Recommend boundary1 for a subsequent reviewable candidate, keeping station0 unchanged. Do not use boundary2.** This report makes no candidate or production edits. Current implemented candidate remains old decoded **5…26**. The separately frozen `kanazawa-candidate-fragment-5-22.json` is an earlier proposal, not the current window. The complete original review report has been corrected accordingly.
+
+Exact owner: `jp-IRいしかわ鉄道-IRいしかわ鉄道線`, interval3 東金沢→金沢. Old originals `captures/000011/000001`, `000002` and `000003` show the northern long red chord northwest of the blue conventional cartographic curve through Otsu yard. Those are a lead only: the blue label line and broad fill do not identify an individual physical passenger track. The independently labelled/ticked Shinkansen remains excluded.
+
+The source basis is the already retained **own main track2, way834273931 v5**, explicitly tagged IR Ishikawa / gauge1067 / usage main / railway rail, with no service siding tag, in railway relation4669038 v26. Its own continuation394894111 v7 remains the existing southern candidate source. No new objects were acquired. Raw2/3/4/5 distances to this identified chain are14.0464 /42.5718 /19.0473 /3.66734m. The raw controls and this attributed source, rather than Apple's label line alone, support investigating extension across the northern chord.
+
+`north-boundary-1-2-comparison-20261018.json` contains exact projections, identified segment node IDs, full proposed source coordinate fragments for comparison only, and join turns/leg lengths. Computation uses existing `jp-manual-corrections/geo.mjs:projectPointOntoPolyline` and `haversineM`; turn angles use local longitude*cos(latitude) vectors. No hard offset cutoff determined the recommendation.
+
+| Proposed old start | Retained northern guard | Exact projected start on own chain | Distance / source segment | Northern continuity |
+|---|---|---|---|---|
+| **1** | station0 `[136.66948,36.59345]` | `[136.66895093184243,36.59294842648297]` |9.95405m / segment13, nodes3977863461→3977860975 | station seam7.80234°; projected-start turn**3.19706°**, legs73.0862m /6.03966m; next own node turn4.02146° |
+| 2 | raw1 `[136.66887,36.59301]` | `[136.6687515130676,36.592759756223764]` |14.04644m / segment14, nodes3977860975→3977860974 | station seam remains0°, but retained raw1 becomes**27.24901°**, legs73.2088m /29.7687m; projected2 becomes**18.62230°**, legs29.7687m /98.2423m |
+| Current5 | raw4 `[136.66344,36.58926]` | `[136.65909660136217,36.58683710652589]` |3.66734m / segment34, nodes3977860932→3977860910 | retained guard4 turn5.34640°; projected5 turn0.06215°, but northern chord remains |
+
+For proposed1, retain raw station0 exactly, connect to projected1, then use the source's ordered nodes beginning3977860975 `[136.6689044,36.592909]`. The first new leg is approximately73.09m, not a tiny perpendicular offset link from old1 to projected1. Within the added own-source span down to current boundary5, the largest measured source-node turn is4.02146°. At station0 the unchanged preceding interval2 guard `[136.67009,36.59389]` gives7.80234°, compared with old0°. This is a modest changed departure, explicitly disclosed; it preserves both station identity/coordinate and the preceding interval. Boundary2 instead introduces a noticeable two-part bend at the retained raw1 and projected2 despite the small displacement. There is no reason to preserve that off-chain raw1 as a new guard.
+
+The proposed fragment reaches the **same current southern projected26** `[136.6505481689217,36.58145972267588]`, source segment61, and leaves raw27/suffix untouched. No southern boundary redesign is included. The current southern transition remains schematic and needs its existing rendering review; it is not converted into a surveyed representative centre by this northern proposal.
+
+This establishes a bounded source-based option that removes the v2→v3→v4 chord while avoiding the new boundary2 bend. It does **not** establish final native smooth behavior, Main lane/station-circle behavior, platform midpoint or pixel acceptance. If adopted, parent should construct the single guarded1…26 candidate through the existing repair authority, update its native ruler dependencies there, and render the northern station departure/chord and unchanged southern transition. No second geometry authority or label-based fit is warranted. Intervals7/8 and other IR legacy views are unaffected.
+
+No production edits, candidate edits, new acquisition, native jobs, builds or tests were run for this follow-up.
+
+The earlier viewpoint feature's successful final focused test run reported13 tests passing and exit0 in terminal session18780. It was not redirected or teed; there is no retained logfile path. `/private/tmp/jtm-diagnostic-tests.log` is an older4-test run and `/private/tmp/jtm-diagnostics-imagery-test.log` an older1-test run, so neither is evidence for the13-test result. No rerun was performed during this source-only task.

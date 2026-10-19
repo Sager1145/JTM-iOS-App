@@ -1,0 +1,168 @@
+{
+  "viewedPairs": 2,
+  "viewedPNGs": 4,
+  "views": [
+    {
+      "pointOrdinal": 3,
+      "actuallyViewed": true,
+      "originalPNGs": [
+        "/private/tmp/jtm-ichibata-kitamatsue-takanomiya-detail-20261019/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-takanomiya-detail-20261019/alignment/captures/000000/000003/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47027456998806,
+        "longitude": 132.92706312831163,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24235517649252802,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 233333730.23774755,
+        "rectY": 105896182.84146185,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "controls": [
+        {
+          "oldIndex": 12,
+          "x": 772.7357893288136,
+          "y": 615.8255880996585
+        },
+        {
+          "oldIndex": 13,
+          "x": 739.1813573390245,
+          "y": 634.1369403973222
+        },
+        {
+          "oldIndex": 14,
+          "x": 694.4421146661043,
+          "y": 657.0261179581285
+        },
+        {
+          "oldIndex": 15,
+          "x": 683.2573039978743,
+          "y": 670.7596176639199
+        },
+        {
+          "oldIndex": 16,
+          "x": 649.7028719931841,
+          "y": 679.9152812883258
+        },
+        {
+          "oldIndex": 17,
+          "x": 645.9746017754078,
+          "y": 693.6487724557519
+        },
+        {
+          "oldIndex": 18,
+          "x": 616.1484399884939,
+          "y": 698.2266017124057
+        },
+        {
+          "oldIndex": 19,
+          "x": 616.1484399884939,
+          "y": 707.3822585046291
+        },
+        {
+          "oldIndex": 20,
+          "x": 481.9307119846344,
+          "y": 780.6274308636785
+        },
+        {
+          "oldIndex": 21,
+          "x": 467.0176311135292,
+          "y": 794.3608844652772
+        },
+        {
+          "oldIndex": 22,
+          "x": 429.73492889106274,
+          "y": 812.6721479594707
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 4,
+      "actuallyViewed": true,
+      "originalPNGs": [
+        "/private/tmp/jtm-ichibata-kitamatsue-takanomiya-detail-20261019/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-ichibata-kitamatsue-takanomiya-detail-20261019/alignment/captures/000000/000004/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46976644142548,
+        "longitude": 132.92597775795204,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.242356687576644,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 233332920.92694923,
+        "rectY": 105896648.06636381,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "controls": [
+        {
+          "oldIndex": 12,
+          "x": 1177.3911884874105,
+          "y": 383.21313712000847
+        },
+        {
+          "oldIndex": 13,
+          "x": 1143.8367564976215,
+          "y": 401.52448941767216
+        },
+        {
+          "oldIndex": 14,
+          "x": 1099.0975138247013,
+          "y": 424.41366697847843
+        },
+        {
+          "oldIndex": 15,
+          "x": 1087.9127031564713,
+          "y": 438.1471666842699
+        },
+        {
+          "oldIndex": 16,
+          "x": 1054.358271151781,
+          "y": 447.30283030867577
+        },
+        {
+          "oldIndex": 17,
+          "x": 1050.6300009340048,
+          "y": 461.0363214761019
+        },
+        {
+          "oldIndex": 18,
+          "x": 1020.8038391470909,
+          "y": 465.61415073275566
+        },
+        {
+          "oldIndex": 19,
+          "x": 1020.8038391470909,
+          "y": 474.7698075249791
+        },
+        {
+          "oldIndex": 20,
+          "x": 886.5861111432314,
+          "y": 548.0149798840284
+        },
+        {
+          "oldIndex": 21,
+          "x": 871.6730302721262,
+          "y": 561.7484334856272
+        },
+        {
+          "oldIndex": 22,
+          "x": 834.3903280496597,
+          "y": 580.0596969798207
+        }
+      ]
+    }
+  ]
+}

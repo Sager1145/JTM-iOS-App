@@ -1,0 +1,42 @@
+{
+  "tsushima0": {
+    "pointCount": 272,
+    "finite": true,
+    "maximumRawTangentChangeDegreesAndVertex": [
+      15.43198525319345,
+      124
+    ],
+    "minimumEdgeMapPoints": 21.54065923407217
+  },
+  "main17": {
+    "pointCount": 87,
+    "finite": true,
+    "maximumRawTangentChangeDegreesAndVertex": [
+      15.308040224090382,
+      61
+    ],
+    "minimumEdgeMapPoints": 16.332352518605923
+  },
+  "main18": {
+    "pointCount": 92,
+    "finite": true,
+    "maximumRawTangentChangeDegreesAndVertex": [
+      8.37379722375735,
+      16
+    ],
+    "minimumEdgeMapPoints": 25.612496949731394
+  },
+  "sourceDirectionAtSukaguchi": {
+    "reverseMain18ToTsushima0Degrees": 2.304215081906839,
+    "Main17ToMain18Degrees": 2.3042150819069978,
+    "interpretation": "Finite direction continuity, no synthetic station reversal. Cartographic candidate calculation, not operational track-number proof."
+  },
+  "exactReverseSharedThree": true,
+  "expectedExactAliasChecks": {
+    "TsushimaSukaguchi": true,
+    "TsushimaJimokuji": true,
+    "Main17Marunouchi": true,
+    "Main18Shinkawabashi": true
+  },
+  "limit": "Focusedcandidatearrayqueriesonly; no build, runtime, smoothing/pixel acceptance or physical mutation."
+}

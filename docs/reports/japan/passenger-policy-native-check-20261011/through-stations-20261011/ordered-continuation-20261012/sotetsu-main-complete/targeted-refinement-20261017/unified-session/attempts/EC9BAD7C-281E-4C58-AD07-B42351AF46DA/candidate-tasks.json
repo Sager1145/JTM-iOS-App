@@ -1,0 +1,169 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-相模鉄道-相鉄本線#0\/lineOffset",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-相模鉄道-相鉄本線#0\/stationApproach",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-相模鉄道-相鉄本線#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-相模鉄道-相鉄本線\/station\/004633",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004633"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-相模鉄道-相鉄本線\/station\/004653",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004653"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-相模鉄道-相鉄本線#0\/seam",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#0",
+      "jp-相模鉄道-相鉄本線#1"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004653"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-相模鉄道-相鉄本線#1\/lineOffset",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#1"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-相模鉄道-相鉄本線#1\/stationApproach",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#1"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-相模鉄道-相鉄本線#1\/disconnectedParts",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#1"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-相模鉄道-相鉄本線\/station\/004669",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#1"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004669"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-相模鉄道-相鉄本線#1\/seam",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#1",
+      "jp-相模鉄道-相鉄本線#2"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004669"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-相模鉄道-相鉄本線#16\/lineOffset",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-相模鉄道-相鉄本線#16\/stationApproach",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-相模鉄道-相鉄本線#16\/disconnectedParts",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-相模鉄道-相鉄本線\/station\/004626",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004626"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-相模鉄道-相鉄本線\/station\/004672",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004672"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-相模鉄道-相鉄本線#15\/seam",
+    "itemIDs" : [
+      "jp-相模鉄道-相鉄本線#15",
+      "jp-相模鉄道-相鉄本線#16"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004626"
+  }
+]

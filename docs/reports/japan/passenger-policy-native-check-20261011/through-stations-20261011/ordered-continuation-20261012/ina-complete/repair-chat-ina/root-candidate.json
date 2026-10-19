@@ -1,0 +1,49 @@
+{
+  "lineID": "jp-埼玉新都市交通-伊奈線",
+  "status": "partial-platform-candidate-complete-diagnostic-body",
+  "platformAliases": {
+    "002914": null,
+    "002881": [
+      139.61757019014368,
+      35.920243278551226
+    ],
+    "002857": [
+      139.61674992757816,
+      35.93572656561451
+    ],
+    "002844": [
+      139.61809357175832,
+      35.94270671528384
+    ],
+    "002835": [
+      139.61943565641405,
+      35.9499659160949
+    ],
+    "002824": [
+      139.6207950294305,
+      35.95721842868368
+    ],
+    "002812": [
+      139.62216622453707,
+      35.9638356581054
+    ],
+    "002802": [
+      139.6235655975533,
+      35.971172610840206
+    ],
+    "002787": null,
+    "002770": null,
+    "002756": null,
+    "002747": null,
+    "002742": null
+  },
+  "platformDetails": "platform-midpoint-candidates.json",
+  "bodyManifest": "diagnostic-interval-manifest.json",
+  "bodyStatus": "All12 diagnostic arrays retain provisional anchors at six unresolved stations; not an apply-ready whole-line candidate. Seven supported platform anchors equal existing diagnostic endpoints; body arrays unchanged this adjudication.",
+  "sourceSnapshot": "source-line.json",
+  "physicalFieldsModified": false,
+  "productionApplied": false,
+  "candidateFrozen": false,
+  "nativeAfterAccepted": false,
+  "mainAccepted": false
+}

@@ -1,0 +1,745 @@
+{
+  "schema": "china-panzhihua-south-continuation/4",
+  "reviewedAt": "2026-10-19",
+  "scope": "One bounded Panzhihua South original railway-way extraction beyond the three prior relation inventories. Read-only pinned SQLite and primary web evidence; no build, solve, tests, national generation, station-anchor changes or production changes.",
+  "outcome": "Exact original active mainline path found between both fixed published anchors. Missing original way742037844v20 is outside all pinned relation memberships and directly identifies Eguang0084/Chengdu operator. Relation-membership-only repair contract still needs parent review; no relation membership is invented.",
+  "source": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "url": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "crs": "WGS84",
+    "sourcePartVersions": {
+      "way/742037843": 14,
+      "way/742037844": 20,
+      "way/1101437978": 9,
+      "relation/10259709": 159,
+      "node/5230059149": 3
+    }
+  },
+  "boundedExtraction": {
+    "bboxWGS84": [
+      101.7,
+      26.44,
+      101.78,
+      26.51
+    ],
+    "nodesInsideBox": 505,
+    "originalWaysWithAnyNodeInsideBox": 94,
+    "distinctOriginalNodesOnThoseWays": 593,
+    "method": "Select nodes inside the station region, then every original way with a member in that selected node set. Preserve complete original ways and fetch each referenced original node by ID. Join graph edges only from consecutive original node IDs; geographic box only limits inventory, never joins tracks. Query original relation memberships for selected local ways and station marker.",
+    "localRelationIds": [
+      10259709
+    ],
+    "rawWayIds": [
+      741973662,
+      741973667,
+      741973669,
+      741973671,
+      741980886,
+      741980889,
+      741980891,
+      742037843,
+      742037844,
+      742037845,
+      742037846,
+      742037847,
+      742042269,
+      742042271,
+      742042272,
+      742042273,
+      778314643,
+      911102046,
+      911102056,
+      989845863,
+      1101437978,
+      1101437979,
+      1101437980,
+      1101437981,
+      1101437982,
+      1101437983,
+      1101437984,
+      1101437985,
+      1101437986,
+      1101437987,
+      1101437988,
+      1101437989,
+      1101437990,
+      1101437992,
+      1101437993,
+      1101437994,
+      1101437995,
+      1101437996,
+      1101437997,
+      1101437998,
+      1101437999,
+      1101438000,
+      1101438001,
+      1101438002,
+      1101438003,
+      1101438004,
+      1101438005,
+      1101438006,
+      1101438007,
+      1204596175,
+      1204596176,
+      1204596177,
+      1204596180,
+      1204596181,
+      1204596182,
+      1204596183,
+      1534478461,
+      1534478462,
+      1534478463,
+      1534478464,
+      1534478465,
+      1534478466,
+      1534478467,
+      1534478468,
+      1534478469,
+      1534478470,
+      1536243171,
+      1536243172,
+      1536243173,
+      1536243174,
+      1536243175,
+      1547235667,
+      1547235668,
+      1547235669,
+      1547235671,
+      1547235672,
+      1547235673,
+      1547235675,
+      1547235676,
+      1547235677,
+      1547235678,
+      1547409035,
+      1547409036,
+      1547409037,
+      1547409038,
+      1547409039,
+      1547409040,
+      1547409042,
+      1547409043,
+      1547409044,
+      1547409045,
+      1547409046,
+      1547409050,
+      1547409053
+    ]
+  },
+  "nativeBefore": {
+    "path": "railway-sources/local/china/comparisons/real-trains-20261018/native-boundary-d271-final-session/route-report.json",
+    "newRuntimeObservation": false,
+    "rows": [
+      {
+        "destination": "香格里拉",
+        "expectedSectionCount": 7,
+        "id": "CN-REAL-D239-20261018-forced-known-stops",
+        "indicesAreAuthoritative": true,
+        "number": "D239",
+        "origin": "成都南",
+        "physicalGaps": [
+          {
+            "isBoundary": true,
+            "segmentIndex": 2
+          }
+        ],
+        "resolvedSectionCount": 5,
+        "status": "部分解析 5/7",
+        "unresolvedSections": [
+          {
+            "from": "楚雄",
+            "isBoundary": false,
+            "sectionIndex": 4,
+            "to": "丽江"
+          },
+          {
+            "from": "攀枝花南",
+            "isBoundary": true,
+            "sectionIndex": 2,
+            "to": "广通北"
+          }
+        ],
+        "affectedParts": [
+          {
+            "from": "西昌西",
+            "partIndex": 0,
+            "sectionIndex": 1,
+            "sourceVertexCount": 685,
+            "temporalKind": "current",
+            "to": "攀枝花南",
+            "firstSourceCoordinate": [
+              102.15893,
+              27.87375
+            ],
+            "lastSourceCoordinate": [
+              101.73583,
+              26.4808
+            ]
+          },
+          {
+            "from": "攀枝花南",
+            "partIndex": 0,
+            "sectionIndex": 2,
+            "sourceVertexCount": 457,
+            "temporalKind": "current",
+            "to": "广通北",
+            "firstSourceCoordinate": [
+              101.7457,
+              26.4708
+            ],
+            "lastSourceCoordinate": [
+              101.75693,
+              25.17101
+            ]
+          }
+        ]
+      },
+      {
+        "destination": "西双版纳",
+        "expectedSectionCount": 14,
+        "id": "CN-REAL-D271-20261018-forced-known-stops",
+        "indicesAreAuthoritative": true,
+        "number": "D271",
+        "origin": "成都南",
+        "physicalGaps": [
+          {
+            "isBoundary": true,
+            "segmentIndex": 6
+          }
+        ],
+        "resolvedSectionCount": 13,
+        "status": "部分解析 13/14",
+        "unresolvedSections": [
+          {
+            "from": "攀枝花南",
+            "isBoundary": true,
+            "sectionIndex": 6,
+            "to": "元谋西"
+          }
+        ],
+        "affectedParts": [
+          {
+            "from": "盐边",
+            "partIndex": 0,
+            "sectionIndex": 5,
+            "sourceVertexCount": 149,
+            "temporalKind": "current",
+            "to": "攀枝花南",
+            "firstSourceCoordinate": [
+              101.85388,
+              26.65826
+            ],
+            "lastSourceCoordinate": [
+              101.73583,
+              26.4808
+            ]
+          },
+          {
+            "from": "攀枝花南",
+            "partIndex": 0,
+            "sectionIndex": 6,
+            "sourceVertexCount": 335,
+            "temporalKind": "current",
+            "to": "元谋西",
+            "firstSourceCoordinate": [
+              101.7457,
+              26.4708
+            ],
+            "lastSourceCoordinate": [
+              101.83731,
+              25.71385
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "fixedAnchors": {
+    "incoming": {
+      "id": 5230617665,
+      "lon": 101.7358267,
+      "lat": 26.4808022,
+      "tags": {},
+      "version": 3
+    },
+    "outgoing": {
+      "id": 14072871990,
+      "lon": 101.745703,
+      "lat": 26.4707994,
+      "tags": {},
+      "version": 1
+    },
+    "outgoingComponentNorthernTerminus": {
+      "id": 5230023398,
+      "lon": 101.7390985,
+      "lat": 26.4778035,
+      "tags": {},
+      "version": 7
+    },
+    "stationMarker": {
+      "id": 5230059149,
+      "coordinate": [
+        101.7464451,
+        26.4713756
+      ],
+      "tags": {
+        "name": "攀枝花南",
+        "name:en": "Panzhihuanan",
+        "public_transport": "station",
+        "railway": "station"
+      },
+      "version": 3
+    },
+    "preserved": true
+  },
+  "exactFixedAnchorPath": {
+    "nodeIds": [
+      5230617665,
+      9147886743,
+      9147883563,
+      9160116433,
+      9147886523,
+      9147883544,
+      9160115812,
+      9147886574,
+      5230023398,
+      10079583404,
+      10079583407,
+      10079583409,
+      10079583411,
+      10079583413,
+      14072871985,
+      14072871990
+    ],
+    "edgeWayIds": [
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978
+    ],
+    "coordinates": [
+      [
+        101.7358267,
+        26.4808022
+      ],
+      [
+        101.7360611,
+        26.4806426
+      ],
+      [
+        101.7363668,
+        26.4804201
+      ],
+      [
+        101.7367637,
+        26.4801105
+      ],
+      [
+        101.7371447,
+        26.4797862
+      ],
+      [
+        101.7375853,
+        26.4793899
+      ],
+      [
+        101.7379582,
+        26.4790446
+      ],
+      [
+        101.73839,
+        26.4785894
+      ],
+      [
+        101.7390985,
+        26.4778035
+      ],
+      [
+        101.7391454,
+        26.4777542
+      ],
+      [
+        101.7403976,
+        26.4764365
+      ],
+      [
+        101.7405026,
+        26.4763259
+      ],
+      [
+        101.7408696,
+        26.4759397
+      ],
+      [
+        101.7416386,
+        26.4751305
+      ],
+      [
+        101.743726,
+        26.4729384
+      ],
+      [
+        101.745703,
+        26.4707994
+      ]
+    ],
+    "nodeVersions": {
+      "5230617665": 3,
+      "9147886743": 2,
+      "9147883563": 3,
+      "9160116433": 2,
+      "9147886523": 3,
+      "9147883544": 3,
+      "9160115812": 2,
+      "9147886574": 2,
+      "5230023398": 7,
+      "10079583404": 2,
+      "10079583407": 2,
+      "10079583409": 2,
+      "10079583411": 2,
+      "10079583413": 2,
+      "14072871985": 1,
+      "14072871990": 1
+    },
+    "wayVersions": {
+      "742037844": 20,
+      "1101437978": 9
+    },
+    "lengthMeters": 1486.709577050765
+  },
+  "minimalOmittedOriginalWayPath": {
+    "nodeIds": [
+      5230617665,
+      9147886743,
+      9147883563,
+      9160116433,
+      9147886523,
+      9147883544,
+      9160115812,
+      9147886574,
+      5230023398
+    ],
+    "edgeWayIds": [
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844
+    ],
+    "coordinates": [
+      [
+        101.7358267,
+        26.4808022
+      ],
+      [
+        101.7360611,
+        26.4806426
+      ],
+      [
+        101.7363668,
+        26.4804201
+      ],
+      [
+        101.7367637,
+        26.4801105
+      ],
+      [
+        101.7371447,
+        26.4797862
+      ],
+      [
+        101.7375853,
+        26.4793899
+      ],
+      [
+        101.7379582,
+        26.4790446
+      ],
+      [
+        101.73839,
+        26.4785894
+      ],
+      [
+        101.7390985,
+        26.4778035
+      ]
+    ],
+    "nodeVersions": {
+      "5230617665": 3,
+      "9147886743": 2,
+      "9147883563": 3,
+      "9160116433": 2,
+      "9147886523": 3,
+      "9147883544": 3,
+      "9160115812": 2,
+      "9147886574": 2,
+      "5230023398": 7
+    },
+    "wayVersions": {
+      "742037844": 20
+    },
+    "lengthMeters": 467.5189031995159
+  },
+  "originalRelevantWayRecords": [
+    {
+      "id": 742037843,
+      "nodes": [
+        5230617665,
+        9147886547,
+        9147886712,
+        9147883548,
+        9147886781
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "radius": "1600",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-05-26",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 14
+    },
+    {
+      "id": 742037844,
+      "nodes": [
+        5230023398,
+        9147886574,
+        9160115812,
+        9147883544,
+        9147886523,
+        9160116433,
+        9147883563,
+        9147886743,
+        5230617665
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "layer": "-1",
+        "length": "466",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "radius": "1600",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-05-26",
+        "tunnel": "yes",
+        "tunnel:name": "观音岩2号隧道",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 20
+    },
+    {
+      "id": 1101437978,
+      "nodes": [
+        5230023396,
+        10079590119,
+        10079590118,
+        10079590117,
+        10079583416,
+        10079583415,
+        10079583414,
+        14072871999,
+        14072871990,
+        14072871985,
+        10079583413,
+        10079583411,
+        10079583409,
+        10079583407,
+        10079583404,
+        5230023398
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "no",
+        "maxspeed": "160",
+        "name": "峨广线",
+        "operator": "中国铁路成都局集团",
+        "railway": "rail",
+        "ref": "0084",
+        "start_date": "2020-01-09",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 9
+    }
+  ],
+  "relationEvidence": {
+    "id": 10259709,
+    "version": 159,
+    "tags": {
+      "alt_name": "峨广铁路",
+      "description:en": "Chengkun Railway double track Yangang to Guangtong North section",
+      "from": "燕岗",
+      "name": "峨广线",
+      "name:en": "Emei-Guangtong Railway",
+      "network": "中国铁路",
+      "operator": "中国铁路",
+      "operator:en": "China Railway",
+      "operator:wikidata": "Q1073489",
+      "operator:zh": "中国铁路",
+      "railway:traffic_mode": "mixed",
+      "ref": "0084",
+      "route": "railway",
+      "to": "广通北",
+      "tracks": "2",
+      "type": "route",
+      "wikidata": "Q109658267",
+      "wikipedia": "zh:峨广铁路"
+    },
+    "relevantOriginalMembers": [
+      [
+        "n",
+        5230059149,
+        ""
+      ],
+      [
+        "w",
+        1101437978,
+        ""
+      ],
+      [
+        "w",
+        742037843,
+        ""
+      ]
+    ],
+    "missingWayMemberships": [],
+    "stationMarkerRelationMemberships": [
+      {
+        "id": 10259709,
+        "version": 159,
+        "role": ""
+      }
+    ],
+    "stationStopAreaMemberships": [],
+    "interpretation": "Original Eguang relation10259709v159 explicitly owns station marker5230059149v3, incoming way742037843v14 and outgoing way1101437978v9, with the missing tunnel way742037844v20 omitted. The missing way has zero pinned relation memberships; its eight original edges cannot honestly be described as original relation-member edges."
+  },
+  "directOwnRouteEvidence": {
+    "kind": "original-way-identity-and-exact-adjacency",
+    "url": "https://www.openstreetmap.org/way/742037844/history/20",
+    "tags": {
+      "electrified": "contact_line",
+      "frequency": "50",
+      "gauge": "1435",
+      "highspeed": "no",
+      "layer": "-1",
+      "length": "466",
+      "maxspeed": "160",
+      "name": "峨广线",
+      "operator": "中国铁路成都局集团",
+      "radius": "1600",
+      "railway": "rail",
+      "ref": "0084",
+      "start_date": "2020-05-26",
+      "tunnel": "yes",
+      "tunnel:name": "观音岩2号隧道",
+      "usage": "main",
+      "voltage": "25000"
+    },
+    "support": "Missing tunnel742037844v20 names 峨广线, ref0084, operator中国铁路成都局集团. Both immediately adjacent already-published ways have the same exact name/ref/operator, active railway=rail and usage=main. Its original end node5230617665 is exactly the incoming anchor on742037843; its original start node5230023398 is exactly the north end of1101437978. Its path to outgoing anchor14072871990 uses the existing mainline way1101437978 only. No crossover, siding, yard, station-name teleport, opposite-platform assumption or coordinate snap is involved.",
+    "legalOwnershipAsserted": false
+  },
+  "sourceClassificationReview": {
+    "activePolicySource": "app/scripts/railway/cn_package.py:active",
+    "exactExistingActivePolicyPasses": true,
+    "missingWayRailway": "rail",
+    "missingWayUsage": "main",
+    "missingWayService": null,
+    "missingWayConstruction": null,
+    "missingWayDisused": null,
+    "missingWayFreightTag": null,
+    "missingWayPassengerNo": false,
+    "missingWayPassengerLines": null,
+    "missingWayExplicitPassengerTag": null,
+    "startDateTag": "2020-05-26",
+    "diagnosis": "The omission is original relation inventory incompleteness. It is not an active-policy construction/freight/service exclusion. No raw closed track or excluded station crossover is needed, and no tag needs to be ignored or reclassified. start_date is infrastructure-opening context; it is not proof passenger service began that same day."
+  },
+  "passengerEvidence": {
+    "kind": "active-original-mainline-identity-plus-primary-published-corridor-passenger-service",
+    "directWayPassengerTagPresent": false,
+    "sources": [
+      {
+        "url": "https://www.thepaper.cn/newsDetail_forward_21310477",
+        "title": "今日开通！这组对比穿越半个世纪",
+        "publisher": "中国铁路 official institutional account; original materials from People Railway Sichuan reporters / Chengdu railway bureau media center",
+        "publishedAt": "2022-12-26",
+        "primary": true,
+        "support": "China Railway itself publishes the opened new Chengdu-Kunming corridor and explicitly enumerates adjacent Miyi East–Panzhihua South and Panzhihua South–Yongren operating sections; it presents the CR200J passenger railway. This is corridor-level operational evidence, not a per-track train dispatch record."
+      },
+      {
+        "url": "https://www.sohu.com/a/441965175_199822",
+        "title": "今天！成昆复线盐边站客运列车正式开通！",
+        "publisher": "盐边县广播电视台 original reporting",
+        "publishedAt": "2021-01-01",
+        "primary": true,
+        "support": "Local broadcaster directly reports passenger service from Panzhihua South to Yanbian, including T8870 departing Yanbian that morning; distinguishes earlier May2020 freight opening from Jan2021 passenger opening. It does not identify OSM ways or specific tunnel track."
+      },
+      {
+        "url": "https://www.ndrc.gov.cn/fggz/zcssfz/dffz/202302/t20230228_1350104.html",
+        "title": "新成昆铁路12月26日全线贯通运营",
+        "publisher": "国家发展和改革委员会基础司, excerpting云南省发展和改革委员会",
+        "publishedAt": "2023-02-28",
+        "primaryInstitutionalPublication": true,
+        "support": "National infrastructure agency states new Chengdu–Kunming railway via Panzhihua is an operating 160km/h double-track electrified national mainline, with passenger travel Chengdu–Panzhihua–Kunming. Broad corroboration only."
+      }
+    ],
+    "inference": "Exact own Eguang name/ref/operator, mainline classification and source-node adjacency place the missing non-service tunnel in the same active route as the two known passenger strands. Primary corridor publications establish passenger use of the route on both sides of PNE. There is no separate direct passenger_lines tag or tunnel-specific official dispatch record; do not represent those as present.",
+    "limits": [
+      "No train-specific dispatch, platform assignment or directionality is established.",
+      "May2020 start_date is not used as passenger-opening date.",
+      "Direct-way identity and physical adjacency are independent of the missing original relation membership."
+    ]
+  },
+  "parentReview": {
+    "productionMutation": false,
+    "requiredDecision": "Whether the reviewed physical-section contract can accept explicit original way name/ref/operator identity plus exact adjacency and primary corridor passenger evidence, retaining required source/version/provenance checks, without falsely asserting relation membership. If not, preserve unresolved boundary pending stronger ownership evidence.",
+    "doNotChange": [
+      "station anchors",
+      "original node adjacency",
+      "passenger exclusion policy",
+      "same-group continuity rules",
+      "historical evidence"
+    ]
+  },
+  "verification": {
+    "onlyFocusedSourceQueries": true,
+    "pathEdgesCheckedAgainstOriginalConsecutiveNodeIds": 15,
+    "originalWayVersionsChecked": true,
+    "nodeVersionsAndCoordinatesIncluded": true,
+    "policyResultComputedFromExistingActiveFunctions": true,
+    "nativeSolveRun": false,
+    "buildRun": false,
+    "testsRun": false,
+    "productionFilesWritten": false
+  }
+}

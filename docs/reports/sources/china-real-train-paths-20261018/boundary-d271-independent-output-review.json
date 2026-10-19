@@ -1,0 +1,396 @@
+{
+  "schema": "cn-final-independent-output-review/1",
+  "reviewedAt": "2026-10-19T08:56:33.216628+00:00",
+  "scope": "Independent read-only final176route/output/reporter comparison. No solver/build/test/replay or source regeneration. Prior focused/source reviews reused only after confirming all actual D271 coordinate parts match focused output.",
+  "inputs": {
+    "finalRoute": "/Users/sager/Documents/GitHub/JTM-iOS-App/railway-sources/local/china/comparisons/real-trains-20261018/native-boundary-d271-final-session/route-report.json",
+    "previousRoute": "/Users/sager/Documents/GitHub/JTM-iOS-App/railway-sources/local/china/comparisons/real-trains-20261018/native-three-connectors-source-display-epoch-final-session/route-report.json",
+    "beforeComparison": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/sources/china-real-train-paths-20261018/comparison-before-boundary-d271.json",
+    "currentComparison": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/sources/china-real-train-paths-20261018/comparison.json",
+    "currentCSV": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/sources/china-real-train-paths-20261018/comparison.csv"
+  },
+  "verdict": "No unexpected source-part loss,identity change,boundary hiding,or reporter mismatch found",
+  "completion": {
+    "rows": 176,
+    "uniqueRows": 176,
+    "phase": "completed",
+    "updatedAt": "2026-10-19T08:50:40Z",
+    "state": "evidenceReady",
+    "failedCount": 0,
+    "reportedPendingReviewCount": 714,
+    "dependencyAndInputChecksPass": true,
+    "dependencies": {
+      "diagnosticContract": "rail-diagnostics-v1",
+      "fallbackGraphCacheMaximumNodes": "not-applicable",
+      "fallbackGraphCacheMode": "standard",
+      "journeyInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+      "rail/cn": "cn:0f6ce85ec6d41ecc9db431a31d8ae04ac907bf89cefb2c5ac86943f9455ce2d6"
+    },
+    "independentlyReadFrozenInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+    "invocationID": "1D8AB45E-B552-4F6E-818D-E71B223327F4",
+    "recordedExecutable": "/private/tmp/cn-boundary-20261019/ChinaRailComparison.app/Contents/MacOS/RailDiagnostics",
+    "manifestPhysicalPathCount": 14,
+    "futureSBTUnownedWay1067140203Present": false
+  },
+  "independentRawMetrics": {
+    "endpoint-only": {
+      "all88": {
+        "cases": 88,
+        "expectedSections": 88,
+        "returnedGeometrySections": 14,
+        "resolvedSections": 14,
+        "physicalGapEntries": 0,
+        "complete": 14
+      },
+      "fullUnique86": {
+        "cases": 86,
+        "expectedSections": 86,
+        "returnedGeometrySections": 14,
+        "resolvedSections": 14,
+        "physicalGapEntries": 0,
+        "complete": 14
+      },
+      "beforeAll88": {
+        "cases": 88,
+        "expectedSections": 88,
+        "returnedGeometrySections": 14,
+        "resolvedSections": 14,
+        "physicalGapEntries": 0,
+        "complete": 14
+      },
+      "beforeFullUnique86": {
+        "cases": 86,
+        "expectedSections": 86,
+        "returnedGeometrySections": 14,
+        "resolvedSections": 14,
+        "physicalGapEntries": 0,
+        "complete": 14
+      }
+    },
+    "forced-known-stops": {
+      "all88": {
+        "cases": 88,
+        "expectedSections": 1010,
+        "returnedGeometrySections": 552,
+        "resolvedSections": 507,
+        "physicalGapEntries": 45,
+        "complete": 14
+      },
+      "fullUnique86": {
+        "cases": 86,
+        "expectedSections": 971,
+        "returnedGeometrySections": 535,
+        "resolvedSections": 491,
+        "physicalGapEntries": 44,
+        "complete": 14
+      },
+      "beforeAll88": {
+        "cases": 88,
+        "expectedSections": 1010,
+        "returnedGeometrySections": 542,
+        "resolvedSections": 499,
+        "physicalGapEntries": 43,
+        "complete": 14
+      },
+      "beforeFullUnique86": {
+        "cases": 86,
+        "expectedSections": 971,
+        "returnedGeometrySections": 525,
+        "resolvedSections": 483,
+        "physicalGapEntries": 42,
+        "complete": 14
+      }
+    }
+  },
+  "mainFullUniqueExclusions": {
+    "endpoint-only": [
+      {
+        "train": "G386",
+        "reason": "duplicate internal service 6x0000G38603"
+      },
+      {
+        "train": "K458",
+        "reason": "partial-observed"
+      }
+    ],
+    "forced-known-stops": [
+      {
+        "train": "G386",
+        "reason": "duplicate internal service 6x0000G38603"
+      },
+      {
+        "train": "K458",
+        "reason": "partial-observed"
+      }
+    ]
+  },
+  "sourcePartComparison": {
+    "oldParts": 556,
+    "newParts": 566,
+    "oldCoordinatePartsUnchanged": 554,
+    "added": [
+      {
+        "key": [
+          "CN-REAL-D239-20261018-forced-known-stops",
+          0,
+          0
+        ],
+        "from": "成都南",
+        "to": "西昌西",
+        "sourceVertexCount": 1677
+      },
+      {
+        "key": [
+          "CN-REAL-D239-20261018-forced-known-stops",
+          1,
+          0
+        ],
+        "from": "西昌西",
+        "to": "攀枝花南",
+        "sourceVertexCount": 685
+      },
+      {
+        "key": [
+          "CN-REAL-D239-20261018-forced-known-stops",
+          2,
+          0
+        ],
+        "from": "攀枝花南",
+        "to": "广通北",
+        "sourceVertexCount": 457
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          0,
+          0
+        ],
+        "from": "成都南",
+        "to": "彭山",
+        "sourceVertexCount": 275
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          1,
+          0
+        ],
+        "from": "彭山",
+        "to": "西昌西",
+        "sourceVertexCount": 1403
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          2,
+          0
+        ],
+        "from": "西昌西",
+        "to": "德昌西",
+        "sourceVertexCount": 253
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          3,
+          0
+        ],
+        "from": "德昌西",
+        "to": "米易东",
+        "sourceVertexCount": 165
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          4,
+          0
+        ],
+        "from": "米易东",
+        "to": "盐边",
+        "sourceVertexCount": 121
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          5,
+          0
+        ],
+        "from": "盐边",
+        "to": "攀枝花南",
+        "sourceVertexCount": 149
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          7,
+          0
+        ],
+        "from": "元谋西",
+        "to": "广通北",
+        "sourceVertexCount": 123
+      }
+    ],
+    "changed": [
+      {
+        "key": [
+          "CN-REAL-D239-20261018-forced-known-stops",
+          3,
+          0
+        ],
+        "oldVertexCount": 102,
+        "newVertexCount": 103,
+        "interpretation": "One repeated starting coordinate; all old source coordinates unchanged.",
+        "sourceChangeExplained": true
+      },
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          8,
+          0
+        ],
+        "oldVertexCount": 94,
+        "newVertexCount": 98,
+        "interpretation": "Four added leading entries comprise duplicated GPM source anchor and the three-edge original prefix; full old source tail retained at index4.",
+        "sourceChangeExplained": true
+      }
+    ],
+    "lost": [],
+    "D239AddedPartSourceComposition": [
+      {
+        "D239sectionIndex": 0,
+        "D271sectionIndices": [
+          0,
+          1
+        ],
+        "exactSourceCoordinateConcatenation": true
+      },
+      {
+        "D239sectionIndex": 1,
+        "D271sectionIndices": [
+          2,
+          3,
+          4,
+          5
+        ],
+        "exactSourceCoordinateConcatenation": true
+      },
+      {
+        "D239sectionIndex": 2,
+        "D271sectionIndices": [
+          6,
+          7
+        ],
+        "exactSourceCoordinateConcatenation": true
+      }
+    ]
+  },
+  "D271": {
+    "old": {
+      "cases": 1,
+      "expectedSections": 14,
+      "returnedGeometrySections": 7,
+      "resolvedSections": 7,
+      "physicalGapEntries": 0,
+      "complete": 0
+    },
+    "new": {
+      "cases": 1,
+      "expectedSections": 14,
+      "returnedGeometrySections": 14,
+      "resolvedSections": 13,
+      "physicalGapEntries": 1,
+      "complete": 0
+    },
+    "unresolvedSections": [
+      {
+        "from": "攀枝花南",
+        "isBoundary": true,
+        "sectionIndex": 6,
+        "to": "元谋西"
+      }
+    ],
+    "physicalGaps": [
+      {
+        "isBoundary": true,
+        "segmentIndex": 6
+      }
+    ],
+    "allFocusedPartCoordinatesPreserved": true
+  },
+  "G101AndG6045Boundaries": [
+    {
+      "trainID": "CN-REAL-G101-20261018-forced-known-stops",
+      "boundaryIndex": 1,
+      "originalBoundaryRetained": true
+    },
+    {
+      "trainID": "CN-REAL-G6045-20261018-forced-known-stops",
+      "boundaryIndex": 4,
+      "originalBoundaryRetained": true
+    }
+  ],
+  "G6045FirstFourPartsEntireObjectsUnchanged": true,
+  "metadataReview": {
+    "selectedIdentityChanges": [],
+    "newSelectionWithdrawals": [],
+    "allSelectionObjectChanges": [
+      {
+        "key": [
+          "CN-REAL-D271-20261018-forced-known-stops",
+          8,
+          0
+        ],
+        "oldSelection": {
+          "fromStationCode": "CN-12306-GPM",
+          "intervals": [],
+          "lines": [
+            {
+              "km": 34.10546818486124,
+              "lineID": "cn-osm-relation-13345566",
+              "name": "广昆线",
+              "operatorName": "中国铁路昆明局集团有限公司"
+            }
+          ],
+          "provenance": "matchedGeometry",
+          "toStationCode": "CN-12306-LQM"
+        },
+        "newSelection": {
+          "fromStationCode": "CN-12306-GPM",
+          "intervals": [],
+          "lines": [
+            {
+              "km": 34.39016400217841,
+              "lineID": "cn-osm-relation-13345566",
+              "name": "广昆线",
+              "operatorName": "中国铁路昆明局集团有限公司"
+            }
+          ],
+          "provenance": "matchedGeometry",
+          "toStationCode": "CN-12306-LQM"
+        }
+      }
+    ],
+    "lineIDsInReporterUnchangedForAllRows": true,
+    "metro7909742Selections": [],
+    "interpretation": "No selection identity was withdrawn or added between the previous epoch-final and current replay. The sole metadata-object change is D271section8 Guangkun selected length34.105468→34.390164km, consistent with its original-source prefix; line ID/name/operator/provenance stay the same. Historical earlier withdrawals are not counted as new here."
+  },
+  "reporterReview": {
+    "jsonRows": 176,
+    "jsonUniqueRows": 176,
+    "csvDataRows": 176,
+    "csvColumns": 21,
+    "csvAllRows21Columns": true,
+    "csvUniqueTrainModeKeys": 176,
+    "csvMetricMismatches": [],
+    "rawToReporterMetricMismatchRows": [],
+    "originalEngineOrSourceRecordChanges": [],
+    "comparisonSourceIdentitiesAndURLsUnchanged": true
+  },
+  "actionableFindings": [],
+  "limits": [
+    "All88 are public train numbers representing87internal services; main86 exclude partial-observedK458 and duplicate internal-service aliasG386 (same service asG383).",
+    "Native geometry/internal resolved counts are distinct; G101,G6045,D271 andD239retain explicit boundaries. Complete count remains14inbothmodes; no complete-route accuracy claim.",
+    "Original engine summaries remain unchanged. This review does not establish exact train track/platform use,physical interval certification,pixels,performance or legal ownership.",
+    "Recorded process completion/status is checked in JSON; no process/binary/toolchain audit is performed."
+  ]
+}

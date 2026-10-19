@@ -1,0 +1,400 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 297.92459592529161,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.707217999999997,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95953,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.704853404817037,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95798050591276,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.702455392475819,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.9565243816937,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.699842760792997,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95580346123592,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.697178833019443,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95560676392856,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.694561662556019,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95628708441623,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.692441397625082,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.95821992907639,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.691645673521549,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.96130991514445,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.691252455040683,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.96454581696705,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.690443124621162,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.96769023106589,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.689672950447594,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.97084977453414,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.688837651886551,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.9739841671894,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.68801752168234,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.97712462742899,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.687186109738661,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.98026054904051,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.686320252255499,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.98338218329442,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.685485785150583,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.98651670562938,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.684639071883794,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.98964598508806,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.68343840486444,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.99258407943285,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-17"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000018",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.682055759295345,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.99540168954843,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-18"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment\/captures\/000000\/000019",
+      "itemID" : "jp-東日本旅客鉄道-京葉線-2#0",
+      "latitude" : 35.681861968847727,
+      "lineDependency" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+      "longitude" : 139.99580599999999,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-京葉線-2#0#point-19"
+    }
+  ]
+}

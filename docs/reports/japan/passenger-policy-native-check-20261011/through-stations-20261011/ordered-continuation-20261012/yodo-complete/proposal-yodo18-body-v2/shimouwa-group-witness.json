@@ -1,0 +1,82 @@
+{
+  "status": "candidate-only-own-platform-group",
+  "stationID": "009352",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.34977999999993,
+    "longitude": 132.53108500000025,
+    "mapPointsPerPoint": 3.9999999925494194,
+    "metresPerPoint": 0.49698557126817433,
+    "pitch": 0,
+    "rectHeight": 2616,
+    "rectWidth": 3995.9999999701977,
+    "rectX": 233038069.54486063,
+    "rectY": 107812804.90042198,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.00000000268723
+  },
+  "ownNarrowLightFace": [
+    [
+      535,
+      329
+    ],
+    [
+      555,
+      398
+    ]
+  ],
+  "ownLongMidpoint": [
+    545.0,
+    363.5
+  ],
+  "literalRailFlanks": {
+    "westOuter": [
+      [
+        506,
+        360
+      ],
+      [
+        521,
+        400
+      ]
+    ],
+    "eastOuter": [
+      [
+        517,
+        360
+      ],
+      [
+        529,
+        400
+      ]
+    ]
+  },
+  "identifiedGroupSpineFlanks": [
+    [
+      511.5,
+      360.0
+    ],
+    [
+      525,
+      400
+    ]
+  ],
+  "normalPixel": [
+    515.9861130593351,
+    373.2921868424744
+  ],
+  "candidateDisplayAlias": [
+    132.5311734384024,
+    33.34957256170761
+  ],
+  "excluded": "North rounded access bulb535320, west broad casing/accessarm, surrounding buildings. Light thin capped strip329..398 determines length.",
+  "qualification": "Identified own passenger paired-sleeper group normal is display choice, no unique individual operator track/platform number. Visible faces and local group supports constrain both chainage and normal; original499327 lies materiallynorthwest.",
+  "uncertainty": {
+    "normalPixels": 2,
+    "chainagePixels": 3
+  },
+  "actualOriginalAndMagnifiedOpened": true,
+  "formalAcceptance": false
+}

@@ -1,0 +1,114 @@
+{
+  "caseIndex": 23,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 23,
+  "source": {
+    "caseIndex": 23,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 23,
+    "fromStationID": "002388",
+    "toStationID": "002428",
+    "camera": [
+      36.3112475,
+      137.89465,
+      0.05187104999998539
+    ],
+    "effectiveCoordinates": [
+      [
+        137.88836,
+        36.322475
+      ],
+      [
+        137.88853,
+        36.32189
+      ],
+      [
+        137.88898,
+        36.32042
+      ],
+      [
+        137.8894,
+        36.31901
+      ],
+      [
+        137.88985,
+        36.31761
+      ],
+      [
+        137.8902,
+        36.31655
+      ],
+      [
+        137.89061,
+        36.31524
+      ],
+      [
+        137.89126,
+        36.31315
+      ],
+      [
+        137.89156,
+        36.3122
+      ],
+      [
+        137.89162,
+        36.31206
+      ],
+      [
+        137.89189,
+        36.31148
+      ],
+      [
+        137.8922,
+        36.31098
+      ],
+      [
+        137.89257,
+        36.31048
+      ],
+      [
+        137.89273,
+        36.31028
+      ],
+      [
+        137.89291,
+        36.31007
+      ],
+      [
+        137.89605,
+        36.30628
+      ],
+      [
+        137.8991,
+        36.30259
+      ],
+      [
+        137.89948,
+        36.30213
+      ],
+      [
+        137.8999,
+        36.3016
+      ],
+      [
+        137.90056,
+        36.3006
+      ],
+      [
+        137.90094,
+        36.30002
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t41 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1032;camera:14.12;lod:12.97;backbones:0;networkStations:9;distance:11386.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.311247;centerLon:137.894650;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2836.0;rebuilds:3;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:6;annotationReuses:18;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.311247;centerLon:137.894650;distance:11386.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-23.jpg",
+  "observation": "Hakuyacho to Toyoshina long corridor and Yabake crossing/curve continuous; local station band offset unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

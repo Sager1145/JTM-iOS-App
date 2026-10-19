@@ -1,0 +1,25 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    0,
+    4,
+    6
+  ],
+  "lineID": "jp-とさでん交通-桟橋線",
+  "requestID": "tosaden-sanbashi-missing-own-intervals",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018",
+  "workspace": "alignment"
+}

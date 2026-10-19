@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-10",
+  "scope": "Hakone passenger corridor, intervals 5 and 6; Ohiradai display station anchor",
+  "stationAcceptance": [
+    "Inside original Apple blue station footprint",
+    "On original Apple passenger railway artwork",
+    "On connected display passenger geometry; retain physical station identity and mileage"
+  ],
+  "station": {
+    "id": "005260",
+    "displayCoordinate": [
+      139.0739182642637,
+      35.238712408645384
+    ],
+    "verdict": "VISUALLY_ALIGNED_AT_Z18",
+    "method": "Native Inspector: hide all overlays, observe original rail/footprint, restore overlay and compare pin tip; prior calibrated daylight snapshot centered exactly on display coordinate",
+    "pixelResidualMeasured": false
+  },
+  "geometry": {
+    "productionEditedThisReview": true,
+    "sourceIntervalDependenciesUnchanged": false,
+    "branchesUnchanged": true,
+    "remainingAppleDisagreement": "UNRESOLVED",
+    "gsiDatasetAsOf": "2026-07-01",
+    "gsiFeatureSurveyDates": "Not established per feature; release date is not individual survey date",
+    "referencePolicy": "Candidate comparison only. Nearest reference line is not proof of passenger identity or correspondence. No GSI line added to production.",
+    "changedDisplayIntervals": [
+      4,
+      5
+    ],
+    "physicalGeometryAndMileageUnchanged": true,
+    "repairScope": "Tonosawa station display anchor and two incident interval endpoints only; retained OSM projection with bounded 3.2m display alias"
+  },
+  "nativeRouteEvidence": {
+    "report": "route-workbench-report.json",
+    "elapsedSeconds": 26.08413803577423,
+    "consistencyFailures": 0,
+    "unprovenPhysicalIntervals": 6,
+    "reused": false
+  },
+  "nativeAlignmentEvidence": {
+    "freshCaptureDirectory": "captures/003418",
+    "freshViewCount": 10,
+    "captureFailures": 0,
+    "manualReview": "All 10 contact-sheet comparisons inspected; original station at z17/z18 and Deyama fork separately inspected",
+    "reusedInterval6Views": "../hakone-switchback-branches-20261010/captures/003419",
+    "reuseLimit": "Interval6 and branches are unchanged; global display part1 changed near Tonosawa so no assertion of complete scene identity"
+  },
+  "sourceURLs": [
+    "https://maps.gsi.go.jp/development/vt.html",
+    "https://raw.githubusercontent.com/gsi-cyberjapan/gsimaps-vector-experiment/master/README.md",
+    "https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html"
+  ],
+  "attribution": "国土地理院ベクトルタイル（https://maps.gsi.go.jp/development/vt.html）を加工。MVT railway layer converted to WGS84 GeoJSON and overlaid for independent comparison. Not a GSI-authored derivative.",
+  "completedAtDate": "2026-10-11",
+  "stationRepairs": [
+    {
+      "id": "005269",
+      "canonicalCoordinate": [
+        139.094025,
+        35.23446
+      ],
+      "displayCoordinate": [
+        139.09405786781113,
+        35.234538053387034
+      ],
+      "movedDisplayMetres": 9.188492326268099,
+      "verdict": "VISUALLY_ALIGNED_AT_Z17_Z18",
+      "comparison": "Original Apple rail independently viewed with overlays hidden; restored station pin tip lies on original station passenger rail inside footprint",
+      "pixelResidualMeasured": false
+    }
+  ],
+  "checks": {
+    "jsRegression": "7/7 passed",
+    "swiftStationApproaches": "3/3 parameter cases passed",
+    "incrementalNativeBuilds": "both succeeded",
+    "bundleSelectedLineMatchesPackage": true,
+    "review": "No remaining actionable blocker after updating existing Swift station-key expectation"
+  },
+  "consultationURL": "https://chatgpt.com/c/6acb0902-0848-83ea-94af-9d97f9bb4cff",
+  "remaining": [
+    "Apple-versus-source disagreements along dense curves are not yet repaired/certified. Current GSI corroborates source locally; nearest-line statistics alone do not establish matched passenger leg.",
+    "Six native physical_intervals_unproven review findings retained.",
+    "Station pass is visual at recorded scales; no subpixel/full-marker containment measurement."
+  ]
+}

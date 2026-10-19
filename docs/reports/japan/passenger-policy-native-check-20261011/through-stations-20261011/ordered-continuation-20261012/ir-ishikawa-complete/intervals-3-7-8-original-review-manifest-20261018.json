@@ -1,0 +1,1359 @@
+{
+  "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+  "date": "2026-10-18",
+  "reviewScope": "Every original basemap.png and smooth.png for intervals 3, 7 and 8 only; no crops or image alteration. Historical native evidence, not candidate or Main acceptance.",
+  "viewCount": 25,
+  "imageCount": 50,
+  "views": [
+    {
+      "interval": 3,
+      "pointOrdinal": 0,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.59345,
+          "longitude": 136.66948
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 0
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.59345,
+        "longitude": 136.66948,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.955873339569735,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236121782.51411915,
+        "rectY": 104858650.81976293,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000000/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000000/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000000/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 425872,
+          "recordedSHA256NotRecomputed": "d5fb2a8593c00e03653caa4b2764029cc033c8485f641aab102b68283cc1217e"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000000/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 480515,
+          "recordedSHA256NotRecomputed": "b902fdc69eb7ada0435cebd3622b79babd3b84c8be544375be938eb308bf636b"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 1,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.5913734674745,
+          "longitude": 136.66653390527904
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 1
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5913734674745,
+        "longitude": 136.66653390527904,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9558987292605359,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236119585.74667513,
+        "rectY": 104860579.30619521,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000001/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000001/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000001/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 396034,
+          "recordedSHA256NotRecomputed": "a14d5ae6f043cd01589ebd047927938bf13280c43e57747b972d87b0a758c9c5"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000001/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 452550,
+          "recordedSHA256NotRecomputed": "f183b0abcc9cf507c24129477215a2b6ac7996370523ffc9a321739be4117225"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 2,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.589333500861734,
+          "longitude": 136.66354856641044
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 2
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.589333500861734,
+        "longitude": 136.66354856641044,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9559236706282465,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236117359.71667373,
+        "rectY": 104862473.78314888,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000002/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000002/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000002/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 338554,
+          "recordedSHA256NotRecomputed": "3cecc04b08e246442c1fe7d09490233d82b33743ef757339b2945462c19f3ad5"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000002/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 392701,
+          "recordedSHA256NotRecomputed": "9382e81638b8cb48dd34520d732afd9c5483e1096e0dacb705656f1f44b142b0"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 3,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.587509875812124,
+          "longitude": 136.66035401071127
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 3
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.587509875812124,
+        "longitude": 136.66035401071127,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9559459658914963,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236114977.6832964,
+        "rectY": 104864167.30554941,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000003/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000003/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000003/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 340412,
+          "recordedSHA256NotRecomputed": "e53a23db9dad76d036fcc07f53b41c986c1a28d4b2213c82a05c1846ff668587"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000003/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 391802,
+          "recordedSHA256NotRecomputed": "7d85aa55825c4bd8041a08022e87067fdb71b88ab6faa54e0a80b700a021fa36"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 4,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.58554146729905,
+          "longitude": 136.6573108740753
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 4
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.58554146729905,
+        "longitude": 136.6573108740753,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9559700301514811,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236112708.556156,
+        "rectY": 104865995.2372418,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000004/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000004/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000004/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 402769,
+          "recordedSHA256NotRecomputed": "7804042a6437397766d6188d955bd78386f2e4d3e2e00c6b8b308c6cb48ce268"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000004/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 458927,
+          "recordedSHA256NotRecomputed": "25d9a06a482f1f7213ee5c18e2feba0c9c360d7ec49a5c1b6cce7e2976cac992"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 5,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.58362813769074,
+          "longitude": 136.6542996800549
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 5
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.58362813769074,
+        "longitude": 136.6542996800549,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9559934199682905,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236110463.2471561,
+        "rectY": 104867771.97609791,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000005/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000005/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000005/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 492475,
+          "recordedSHA256NotRecomputed": "23642cbceb19bbc382ff53b9fc83f3db9edb84a731121cbb72127ae5fb5cca85"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000005/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 557549,
+          "recordedSHA256NotRecomputed": "6cd6e6e9836f3d895ef306fd5db938fa951e4fe38dac14994a33e169e0b1b3aa"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 6,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.58176075357063,
+          "longitude": 136.65116708552006
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 6
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.58176075357063,
+        "longitude": 136.65116708552006,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9560162470801539,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236108127.4153716,
+        "rectY": 104869506.00700614,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000006/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000006/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000006/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 519796,
+          "recordedSHA256NotRecomputed": "37e51e3e42ef47ab8628487d7b534b0a88350e1d6f83a2b1936cc913caf94719"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000006/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 585764,
+          "recordedSHA256NotRecomputed": "5332d8c40216851f1d23394748603423c1b64551a959e7df0c7b53a7082289f0"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 7,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.57935123819702,
+          "longitude": 136.64865322804474
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 7
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.57935123819702,
+        "longitude": 136.64865322804474,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9560456997517434,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236106252.94737795,
+        "rectY": 104871743.39263743,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000007/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000007/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000007/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 476661,
+          "recordedSHA256NotRecomputed": "a96419ed3385ca32b43b79728fe7a4fc533f235bcb36581324c7c24cfc53157e"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000007/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 537587,
+          "recordedSHA256NotRecomputed": "a9755e5966c6335825f5cb9ebaf0876eeea0415234a9a4ca26001005d85248fa"
+        }
+      ]
+    },
+    {
+      "interval": 3,
+      "pointOrdinal": 8,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.578297,
+          "longitude": 136.647771
+        },
+        "distanceMetres": 2591.2442451377865,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3",
+        "pointOrdinal": 8
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.578297,
+        "longitude": 136.647771,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9560585856788323,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236105595.11046833,
+        "rectY": 104872722.29673953,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000008/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000008/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "779b2a2edf61fb3cbf862987b86e38ef79cf5c828add378cf2034a6144e2fd58",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000008/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 480899,
+          "recordedSHA256NotRecomputed": "c46fbf8e23013443c6d3bfa1abedc2215186a231edff3a408edd47af66ab000f"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000011/000008/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 541547,
+          "recordedSHA256NotRecomputed": "7dc852063850598f547d98d3eedce2c5ca2b7f2707c879e808fcee668d92802c"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 0,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.526688,
+          "longitude": 136.566155
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 0
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.526688,
+        "longitude": 136.566155,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9566890020093827,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236044737.80997688,
+        "rectY": 104920627.07481433,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000000/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000000/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000000/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 469071,
+          "recordedSHA256NotRecomputed": "0a6d7bf539bd0da05b0758ca9ca20e92d18647a2d5b84b358f76e11c51b009b3"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000000/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 522946,
+          "recordedSHA256NotRecomputed": "81c9186bbebaab81550ddacbb28fc29d65fb83a24083a0da942c04eedb59c37a"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 1,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.52538493877837,
+          "longitude": 136.5625904814547
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 1
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52538493877837,
+        "longitude": 136.5625904814547,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567049090865881,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236042079.91230708,
+        "rectY": 104921836.19529846,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000001/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000001/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000001/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 449968,
+          "recordedSHA256NotRecomputed": "e9944d389c68883a643f629e232e97ddfaea918cceea16786bf544cec4e6d849"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000001/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 505629,
+          "recordedSHA256NotRecomputed": "018597c03fd1d2f0ab57f78f08aeb81a1a241be4d6c396f9ed413357640c0ba8"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 2,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.5240685011918,
+          "longitude": 136.55903264911254
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 2
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5240685011918,
+        "longitude": 136.55903264911254,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567209789486358,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236039427.0002317,
+        "rectY": 104923057.70713273,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000002/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000002/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000002/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 470101,
+          "recordedSHA256NotRecomputed": "40eeeca384d29914fc0e9407b3dd20d32a6131b3adca4dc666f6a3b8a92490b1"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000002/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 527410,
+          "recordedSHA256NotRecomputed": "985f067a502d9b263d11d357be7bf04c79ae98dda49530684296aa074358199b"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 3,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.52237691218192,
+          "longitude": 136.55575064246455
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 3
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52237691218192,
+        "longitude": 136.55575064246455,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567416275673812,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236036979.75870076,
+        "rectY": 104924627.28843686,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000003/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000003/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000003/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 444967,
+          "recordedSHA256NotRecomputed": "19efdd60ec99274ab01e55299ae2c7c4d2a397e1963b20f73298b20c7583dc86"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000003/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 499680,
+          "recordedSHA256NotRecomputed": "45624e1efc6ae9ad0fdc9643cfe07e3ae7ebaf13553b3ef1aab7897a046409fb"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 4,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.520359684472446,
+          "longitude": 136.55274415947355
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 4
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.520359684472446,
+        "longitude": 136.55274415947355,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567662500412961,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236034737.96249893,
+        "rectY": 104926498.97653106,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000004/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000004/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000004/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 389738,
+          "recordedSHA256NotRecomputed": "de049d50295958ccf350ebfe68a24e982313716bb333dbec7f2145ced48a7e8e"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000004/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 437207,
+          "recordedSHA256NotRecomputed": "24c44cf51496295e7eae0027a69cad6238d2093ddb545e0038bf092fb49bfe60"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 5,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.5182935800695,
+          "longitude": 136.5497895424081
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 5
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5182935800695,
+        "longitude": 136.5497895424081,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567914678691097,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236032534.84033436,
+        "rectY": 104928415.9643622,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000005/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000005/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000005/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 336154,
+          "recordedSHA256NotRecomputed": "b8d8ef7825127315c0fbed85f44ab0dd31d316b61c2e4c231de3bac4b59f093b"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000005/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 377741,
+          "recordedSHA256NotRecomputed": "21441da72083b51a85e0fafeffafdd54d0d57b6aa560b744fd17279f41f521a4"
+        }
+      ]
+    },
+    {
+      "interval": 7,
+      "pointOrdinal": 6,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.517791,
+          "longitude": 136.549058
+        },
+        "distanceMetres": 1836.0053422349533,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#7",
+        "pointOrdinal": 6
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.517791,
+        "longitude": 136.549058,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567976019181343,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236031989.36277902,
+        "rectY": 104928882.26407321,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000006/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000006/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "ba416c9405d1b3ceded62d968170bc5f4ca121ce1bc9cf21b7735cb9f2ec697a",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000006/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 338993,
+          "recordedSHA256NotRecomputed": "579987a69ea7bcb7348d0637aa13d55264d07a0969609c62e517ccd77c69977d"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000015/000006/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 380608,
+          "recordedSHA256NotRecomputed": "5ceae477b34af3ff0028a48017e6af9d8974c3a2343bf663e908b3c60cbc7aec"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 0,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.517791,
+          "longitude": 136.549058
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 0
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.517791,
+        "longitude": 136.549058,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567976019181343,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236031989.36277902,
+        "rectY": 104928882.26407321,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000000/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000000/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000000/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 338874,
+          "recordedSHA256NotRecomputed": "d30531d5a832949cc34413a05fea97886db0af9c39b201c086fff57f6faab02d"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000000/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 380526,
+          "recordedSHA256NotRecomputed": "1257d7422515b9924cd7cb0a21f25e4dbe65f40914af7ea3aaea9993e98f24ff"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 1,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.5157703022468,
+          "longitude": 136.54606015718693
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 1
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5157703022468,
+        "longitude": 136.54606015718693,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9568222640233268,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236029754.00916088,
+        "rectY": 104930757.06069404,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000001/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000001/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000001/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 320762,
+          "recordedSHA256NotRecomputed": "4ce2dc714471b2d245a2b53e81516cbaf944bc01ff2dc633fd90b3d472437695"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000001/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 360902,
+          "recordedSHA256NotRecomputed": "9c65fb3b306999490e4c8d530385d7cb66ee37bff43bbbf35d3da7965e53c9df"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 2,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.5137210403217,
+          "longitude": 136.54308749836107
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 2
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5137210403217,
+        "longitude": 136.54308749836107,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9568472735214052,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236027537.43408456,
+        "rectY": 104932658.30906144,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000002/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000002/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000002/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 265202,
+          "recordedSHA256NotRecomputed": "257bfad56b37736db92b8df29fad00fcca69aaf2e718a6c1781898a59700fba7"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000002/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 302749,
+          "recordedSHA256NotRecomputed": "ea8a4fc1cd3e210f80471ab42f4c6ec53e4fd8e643d13f4609b927ec4ca2d7bf"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 3,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.511667614694936,
+          "longitude": 136.54011944864038
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 3
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.511667614694936,
+        "longitude": 136.54011944864038,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9568723325959005,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236025324.29580626,
+        "rectY": 104934563.36989976,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000003/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000003/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000003/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 305750,
+          "recordedSHA256NotRecomputed": "f36ff01dbe7f39cfe55f46673db6ed1f1888886aa92f91d8f4d59eedd75960f1"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000003/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 346144,
+          "recordedSHA256NotRecomputed": "388ce60f3511599ecd267394dbe2dbdf123539753412261588504d2148514dca"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 4,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.509615099356544,
+          "longitude": 136.53715043739842
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 4
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.509615099356544,
+        "longitude": 136.53715043739842,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9568973793231695,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236023110.44056568,
+        "rectY": 104936467.53571168,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000004/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000004/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000004/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 336872,
+          "recordedSHA256NotRecomputed": "b2ab24ee86b40ed0af22d955cb8744976c69e418540882ed4a15a7c73597d91e"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000004/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 378862,
+          "recordedSHA256NotRecomputed": "29329d03368db64b40ae3c12802087671debcf8a02abb7d3a0539c51d3b08028"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 5,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.50757716403689,
+          "longitude": 136.5341660691643
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 5
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.50757716403689,
+        "longitude": 136.5341660691643,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9569222469062492,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236020885.13432184,
+        "rectY": 104938358.12534854,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000005/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000005/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000005/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 401601,
+          "recordedSHA256NotRecomputed": "4223820241993783fe141d1fe2e1591097582b06bb0849dc1996c7be335fe921"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000005/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 447866,
+          "recordedSHA256NotRecomputed": "192a59dce8491b9b28421f0d57814f216a176dcddef710e6a7c1b9496c287fae"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 6,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.505550137779124,
+          "longitude": 136.53117020618734
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 6
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.505550137779124,
+        "longitude": 136.53117020618734,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956946980162299,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236018651.25697643,
+        "rectY": 104940238.54529107,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000006/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000006/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000006/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 483614,
+          "recordedSHA256NotRecomputed": "25ecbdb3f89e72227c29f1b8a568ecba4ee066cceff3ba2fc24a2bc9cee5ced1"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000006/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 538512,
+          "recordedSHA256NotRecomputed": "ef1d42c33971ddd0b4977a9d9a0c296f73135a80fe9f750312ce43bcfd002d3c"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 7,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.50348342225614,
+          "longitude": 136.52821718952376
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 7
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.50348342225614,
+        "longitude": 136.52821718952376,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9569721964531681,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236016449.32815787,
+        "rectY": 104942155.73324911,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000007/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000007/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000007/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 474580,
+          "recordedSHA256NotRecomputed": "19e53cb03e9ab0abd95d39f63f93512a1f9fc279efbb1aba3c8c4ac12383426d"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000007/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 529851,
+          "recordedSHA256NotRecomputed": "220643c909c1d0acb3dc90c18cbf6c5eef9cc5fe6cb76103050885180ed35c44"
+        }
+      ]
+    },
+    {
+      "interval": 8,
+      "pointOrdinal": 8,
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.502922,
+          "longitude": 136.527386
+        },
+        "distanceMetres": 2547.0475956454193,
+        "itemID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#8",
+        "pointOrdinal": 8
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.502922,
+        "longitude": 136.527386,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9569790462293515,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236015829.54832783,
+        "rectY": 104942676.527576,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "captureStatePath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000008/capture-state.json",
+      "viewMetadataPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000008/view.json",
+      "planDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+      "lineDependency": "65c43a183fc55d27a24678bcdacdc2f1c1c1d1654fae1ed7e1df61a0247cf4d1",
+      "intervalDependency": "d3841d628eb92c9b62853605ec0c5cab7a41f904d82fdc450f3c86affc0dcf29",
+      "referenceDependency": "Apple-only",
+      "retainedIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "files": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000008/basemap.png",
+          "viewedOriginal": true,
+          "byteCount": 454803,
+          "recordedSHA256NotRecomputed": "b185162a220ef88274fa8f290533be4544768b6c2c6ccde65a604b4c7f4bd22a"
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000016/000008/smooth.png",
+          "viewedOriginal": true,
+          "byteCount": 508705,
+          "recordedSHA256NotRecomputed": "0b842bfddcca9aab44fbed6c6231a1db0b2c512939ab4e1bc9691c9e1af4a318"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "date": "2026-10-18",
+  "candidateDirectory": "/private/tmp/jtm-isumi-kurohara-candidate-20261018",
+  "tests": "3/3 focused Node tests passed126.75ms after meaningful initial3/3 failure; external reference guards included in final pass",
+  "nativeDependencies": {
+    "partsByRegion": [],
+    "byRegion": [],
+    "familyWindowsByRegion": [],
+    "strokeExcludedByRegion": [
+      [
+        "jp-いすみ鉄道-いすみ線",
+        "substitute_bus"
+      ]
+    ],
+    "chainBoundariesByRegion": [],
+    "releasedIntervalsByRegion": [],
+    "followsByRegion": [],
+    "loopsByRegion": [],
+    "reversedLoopParts": [],
+    "hubMembers": []
+  },
+  "externalReferences": {
+    "sharedCorridors": [],
+    "displayLandlords": [],
+    "releases": [],
+    "physicalJunctions": []
+  },
+  "interfaceOnlyBaselineRows": [
+    [
+      "jp-いすみ鉄道-いすみ線",
+      0,
+      0,
+      12,
+      588,
+      26944.3,
+      null,
+      null,
+      []
+    ]
+  ],
+  "interfaceOnlyCandidateRows": [
+    [
+      "jp-いすみ鉄道-いすみ線",
+      0,
+      0,
+      12,
+      592,
+      26937.3,
+      null,
+      null,
+      []
+    ]
+  ],
+  "candidatePreservationChecks": {
+    "otherLinesExact": true,
+    "ownPhysicalServiceAndMetadataExact": true,
+    "onlyDisplayOverride": [
+      "10"
+    ],
+    "laneDocumentSemanticExact": true
+  },
+  "counterpartReview": {
+    "javascript": "app/public/rail-network.js896–908 applies displayIntervalCoordinates through displayLineForCoordinates; displayPartsForLine test confirms exact49-control fragment in concatenated part",
+    "nativePython": "app/scripts/railway/build-display-network.py3083 applies display override after preserving source intervals;3152–3185 honors strokeExcludedByRegion and uses non-continuous lane path when own parts absent",
+    "nativeRuntime": "not executed or measured"
+  },
+  "noProductionApply": true,
+  "noNativeBuildCapture": true,
+  "continuousStrokeParts": 0,
+  "mainBuildClarification": "Existing builder retains non-continuous interval geometry; absence of continuous-stroke parts is not absent Main rendering."
+}

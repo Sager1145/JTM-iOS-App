@@ -1,0 +1,56 @@
+[
+  {
+    "wayID": 1442622133,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1442622133/full.json",
+    "bytes": 1718,
+    "fetchedAt": "2026-10-12T04:57:36.308347+00:00"
+  },
+  {
+    "wayID": 1442622132,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1442622132/full.json",
+    "bytes": 10787,
+    "fetchedAt": "2026-10-12T04:57:36.655679+00:00"
+  },
+  {
+    "wayID": 969666261,
+    "url": "https://api.openstreetmap.org/api/0.6/way/969666261/full.json",
+    "bytes": 1365,
+    "fetchedAt": "2026-10-12T04:57:37.001501+00:00"
+  },
+  {
+    "wayID": 1053613195,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1053613195/full.json",
+    "bytes": 1552,
+    "fetchedAt": "2026-10-12T04:57:37.171437+00:00"
+  },
+  {
+    "wayID": 1364934495,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1364934495/full.json",
+    "bytes": 3486,
+    "fetchedAt": "2026-10-12T04:57:37.523981+00:00"
+  },
+  {
+    "wayID": 1364934496,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1364934496/full.json",
+    "bytes": 1377,
+    "fetchedAt": "2026-10-12T04:57:37.874644+00:00"
+  },
+  {
+    "wayID": 1132447256,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1132447256/full.json",
+    "bytes": 3516,
+    "fetchedAt": "2026-10-12T04:57:38.223002+00:00"
+  },
+  {
+    "wayID": 24548956,
+    "url": "https://api.openstreetmap.org/api/0.6/way/24548956/full.json",
+    "bytes": 2410,
+    "fetchedAt": "2026-10-12T04:57:38.571915+00:00"
+  },
+  {
+    "wayID": 1132447258,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1132447258/full.json",
+    "bytes": 5045,
+    "fetchedAt": "2026-10-12T04:57:38.916808+00:00"
+  }
+]

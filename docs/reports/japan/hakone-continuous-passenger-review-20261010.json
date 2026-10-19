@@ -1,0 +1,233 @@
+{
+  "format": "jtm-hakone-continuous-passenger-review-v1",
+  "date": "2026-10-10",
+  "scope": "Hakone-Yumoto to Gora, intervals4..9, continuous passenger corridor",
+  "displayLengthMetres": 8327.44929138073,
+  "sourceWays": 82,
+  "source": {
+    "publisher": "OpenStreetMap contributors",
+    "licence": "ODbL1.0",
+    "crs": "WGS84",
+    "api": "https://overpass-api.de/api/interpreter",
+    "timestamp": "2026-10-11T03:02:35Z",
+    "caveat": "KSJ2 common provenance; node identity proves recorded graph adjacency, not unique timetable platform allocation."
+  },
+  "sourceRepairLayer": "Display-source overrides; canonical physical station IDs/coordinates/intervals/mileage retained. Cached/current route display mappings tested in both directions.",
+  "fixed": [
+    "Full surveyed Deyama/Kami-Ohiradai terminal stems and retraces replace shortened legacy tips.",
+    "Shared Ohiradai fork B uses exact connected passenger nodes; obsolete N02 follow measures removed.",
+    "Long bends on all six intervals replaced by contiguous recorded passenger way vertices; identical survey projections on each neighboring station seam."
+  ],
+  "nativeAlignment": {
+    "captured": 36,
+    "failures": 0,
+    "allSnapshotsVisuallyReviewed": true,
+    "intervalCounts": {
+      "5": 10,
+      "6": 8,
+      "4": 5,
+      "7": 5,
+      "8": 4,
+      "9": 4
+    },
+    "evidenceRoot": "/private/tmp/jtm-hakone-long-final-alignment",
+    "retainedPixels": "All six contact sheets and eight selected full native basemap/display/smooth/view sets in hakone-corridor-evidence-20261010/final/",
+    "applePixelResidualMeasured": false,
+    "mainProductLaneRuntimeCertified": false,
+    "wholeIntervalsPassed": 0,
+    "ohiradaiStationMarker": "Final z18 live marker visually inside Apple blue station footprint.",
+    "manualNotes": [
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.23335340085795,
+          "longitude": 139.0976267817074,
+          "mapPointsPerPoint": 8,
+          "metresPerPoint": 0.9722306171270171,
+          "pitch": 0,
+          "rectHeight": 5520,
+          "rectWidth": 7991.999999970198,
+          "rectX": 237932439.98240405,
+          "rectY": 106111222.03180087,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 17
+        },
+        "evidencePaths": [],
+        "fromStationID": "005271",
+        "itemID": "jp-小田急箱根-鉄道線#4",
+        "note": "All 5 final native captures reviewed along Hakone-Yumoto-Tonosawa. Continuous passenger geometry replaces displaced legacy bends; station seams retain bounded aliases and same surveyed projection. Local Apple track differences remain; departure platform track is representative, not timetable-proven.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:25:24Z",
+        "toStationID": "005269",
+        "verdict": "needsRepair"
+      },
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.232572398179535,
+          "longitude": 139.0858332399307,
+          "mapPointsPerPoint": 8.00000000745058,
+          "metresPerPoint": 0.9722398531612673,
+          "pitch": 0,
+          "rectHeight": 5520,
+          "rectWidth": 7992,
+          "rectX": 237923646.0802799,
+          "rectY": 106111934.99512234,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 16.999999998656385
+        },
+        "evidencePaths": [],
+        "fromStationID": "005269",
+        "itemID": "jp-小田急箱根-鉄道線#5",
+        "note": "Passenger corridor source repair: all 10 final native captures reviewed along Tonosawa-Ohiradai. Deyama reversal now reaches connected terminal stem and retraces; actual bends retained. Apple track depiction still differs locally around the mountain exit curve. No exact operational switch or full geographic pass.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:24:58Z",
+        "toStationID": "005260",
+        "verdict": "needsRepair"
+      },
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.23871240864531,
+          "longitude": 139.0739182642639,
+          "mapPointsPerPoint": 4,
+          "metresPerPoint": 0.48608362175949893,
+          "pitch": 0,
+          "rectHeight": 2760,
+          "rectWidth": 3996.0000000298023,
+          "rectX": 237916759.63048443,
+          "rectY": 106107709.70466259,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 18
+        },
+        "evidencePaths": [],
+        "fromStationID": "005260",
+        "itemID": "jp-小田急箱根-鉄道線#6",
+        "note": "Full corridor repair reviewed across 36 final native snapshots (intervals4..9, passenger only). This z18 viewport confirms Ohiradai marker inside Apple blue station footprint and connected shared fork. Kami-Ohiradai reversal stem restored. Local mountain curve differences and timetable switch/platform allocation remain unaccepted; no whole-interval geographic pass.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:23:53Z",
+        "toStationID": "005254",
+        "verdict": "needsRepair"
+      },
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.2392734497977,
+          "longitude": 139.05509086153884,
+          "mapPointsPerPoint": 8,
+          "metresPerPoint": 0.972160608362532,
+          "pitch": 0,
+          "rectHeight": 5520,
+          "rectWidth": 7992,
+          "rectX": 237900722.90149614,
+          "rectY": 106105817.5021927,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 17
+        },
+        "evidencePaths": [],
+        "fromStationID": "005254",
+        "itemID": "jp-小田急箱根-鉄道線#7",
+        "note": "All 5 final native captures reviewed along Miyanoshita-Kowakudani. Broad displaced valley bend now follows node-connected passenger survey and visually agrees more closely with Apple railway. Local source/basemap differences remain; no measured Apple pixel residual or whole-interval pass.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:25:36Z",
+        "toStationID": "005258",
+        "verdict": "needsRepair"
+      },
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.24470334906658,
+          "longitude": 139.0516285365284,
+          "mapPointsPerPoint": 8,
+          "metresPerPoint": 0.9720963867784983,
+          "pitch": 0,
+          "rectHeight": 5520,
+          "rectWidth": 7992,
+          "rectX": 237898141.20484892,
+          "rectY": 106100860.09303652,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 17
+        },
+        "evidencePaths": [],
+        "fromStationID": "005258",
+        "itemID": "jp-小田急箱根-鉄道線#8",
+        "note": "All 4 final native captures reviewed along Kowakudani-Chokoku-no-Mori. Continuous passenger source replaces displaced long approach and bend; shared station projections are identical on both intervals. Remaining local basemap/source difference is not a pixel-measured acceptance.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:27:22Z",
+        "toStationID": "005246",
+        "verdict": "needsRepair"
+      },
+      {
+        "camera": {
+          "displayScale": 1,
+          "heading": 0,
+          "latitude": 35.25043479223025,
+          "longitude": 139.0484082300822,
+          "mapPointsPerPoint": 7.999999985098839,
+          "metresPerPoint": 0.972028587369671,
+          "pitch": 0,
+          "rectHeight": 5519.9999999552965,
+          "rectWidth": 7992,
+          "rectX": 237895739.97032303,
+          "rectY": 106095627.01909626,
+          "viewportHeightPoints": 690,
+          "viewportWidthPoints": 999,
+          "zoom256": 17.00000000268723
+        },
+        "evidencePaths": [],
+        "fromStationID": "005246",
+        "itemID": "jp-小田急箱根-鉄道線#9",
+        "note": "All 4 final native captures reviewed along Chokoku-no-Mori-Gora. Curve placement visibly improves against Apple railway. Selected connected ref2 passenger terminal track is representative; actual timetable platform allocation and local residual placement remain unproven.",
+        "renderContract": "inspector-centreline-v4-exact-physical-forks;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;1.5;3.5999999999999996;24.0;2.7;[0.3333333333333333, 1.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0, 1.0, 3.0];Apple-only",
+        "reviewedAt": "2026-10-11T03:27:33Z",
+        "toStationID": "005231",
+        "verdict": "needsRepair"
+      }
+    ]
+  },
+  "routeWorkbench": {
+    "report": "ios/refactor-parallel/hakone-corridor-route-recheck-20261010.json",
+    "records": 1,
+    "resolvedSections": 6,
+    "expectedSections": 6,
+    "consistencyFailures": 0,
+    "physicalEvidenceReviewFindings": 6,
+    "routeLoadSeconds": 25.536221981048584,
+    "speedupClaim": false,
+    "launchCaveat": "Documents-path launch remained in reading stage with 0 CPU; temporary-directory input then completed. Exact cause unmeasured."
+  },
+  "focusedVerification": {
+    "javascript": "4 regressions passed; including canonical route display mapping both directions for all six intervals.",
+    "swift": "HakoneSourceReversalTests two tests passed (0.397s); PassengerStationApproachTests two cases passed (0.488s).",
+    "builds": "Final incremental Catalyst builds of both Mac apps succeeded.",
+    "bundledData": "Both bundled affected line objects equal current package. RouteWorkbench native display chunk has744 vertices, no follows and both actual reversal tips; overview retains both tips."
+  },
+  "remainingByRisk": [
+    {
+      "priority": "P1",
+      "finding": "All six canonical physical intervals remain geometry-matched/unproven in RouteWorkbench; no stronger trust was added."
+    },
+    {
+      "priority": "P2",
+      "finding": "Local mountain source/Apple track differences around Deyama exit curves and other selected boundaries remain. OSM common KSJ2 provenance and Apple depiction do not establish an independent survey."
+    },
+    {
+      "priority": "P2",
+      "finding": "Yumoto departure/Gora terminal and exact switch/platform operational allocation remain representative choices. Passenger node adjacency proven for recorded graph only."
+    },
+    {
+      "priority": "P2",
+      "finding": "Inspector centreline evidence does not certify main-product multi-lane offsets, LOD, ridden circle pixels or hidden tunnel alignment."
+    }
+  ]
+}

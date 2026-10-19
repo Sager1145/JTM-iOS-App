@@ -1,0 +1,1775 @@
+{
+  "date": "2026-10-18",
+  "lineID": "jp-のと鉄道-七尾線",
+  "scope": "Complete first three own intervals0,1,2 only; remaining65of105legacyviewpoints not viewed",
+  "actualViewpointCount": 40,
+  "actualOriginalPNGCount": 80,
+  "intervalPairCounts": {
+    "0": 16,
+    "1": 11,
+    "2": 13
+  },
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000000/basemap.png",
+          "recordedByteCount": 441813,
+          "actualByteCount": 441813,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000000/smooth.png",
+          "recordedByteCount": 492955,
+          "actualByteCount": 492955,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.04178,
+        "longitude": 136.96422,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.950362027781433,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236341556.58717868,
+        "rectY": 104441060.32766636,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "七尾自身站场起点及北西出站喉：红线从站场向西北直出，未折入南侧扇形侧线。自身乘客平台、JR共用轨与yard归属不能仅由宽蓝填色证明。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000001/basemap.png",
+          "recordedByteCount": 481983,
+          "actualByteCount": 481983,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000001/smooth.png",
+          "recordedByteCount": 541804,
+          "actualByteCount": 541804,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.04394752004424,
+        "longitude": 136.96136058081288,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9503352396321192,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236339424.44969705,
+        "rectY": 104439035.45878874,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "七尾北西喉与小丸山方向：红线连续向西北，未回头或跳入侧线；红较蓝符西南偏移，源坐标/轨道归属未确权。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000002/basemap.png",
+          "recordedByteCount": 446806,
+          "actualByteCount": 446806,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000002/smooth.png",
+          "recordedByteCount": 501452,
+          "actualByteCount": 501452,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.04611071848654,
+        "longitude": 136.95849699891914,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9503085035247352,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236337289.20827636,
+        "rectY": 104437014.56945157,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "小丸山与御祓川旁真实北西→北向缓弯保留，红较蓝符西南，未见孤立V。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000003/basemap.png",
+          "recordedByteCount": 401217,
+          "actualByteCount": 401217,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000003/smooth.png",
+          "recordedByteCount": 448118,
+          "actualByteCount": 448118,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.04876512134448,
+        "longitude": 136.9564788468529,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.950275694495894,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236335784.36502585,
+        "rectY": 104434534.71158999,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "御祓川旁北向直段接南侧真弯，红连续，无断口或短横接缝。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000004",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000004/basemap.png",
+          "recordedByteCount": 356818,
+          "actualByteCount": 356818,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000004/smooth.png",
+          "recordedByteCount": 395828,
+          "actualByteCount": 395828,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.05172552322331,
+        "longitude": 136.95513897151352,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9502391008212989,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236334785.28156003,
+        "rectY": 104431768.87391682,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "小島町北向直段红与蓝符接近，无独立尖角或错误侧向支线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000005",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000005/basemap.png",
+          "recordedByteCount": 296683,
+          "actualByteCount": 296683,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000005/smooth.png",
+          "recordedByteCount": 334545,
+          "actualByteCount": 334545,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.054680639456286,
+        "longitude": 136.9537808665022,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9502025699298227,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236333772.60506552,
+        "rectY": 104429007.86690089,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "津向町北向→西北大弯是真实廊道；红较蓝符弧内西南偏移，不能直接删掉整个真弯。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000006",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000006/basemap.png",
+          "recordedByteCount": 242341,
+          "actualByteCount": 242341,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000006/smooth.png",
+          "recordedByteCount": 279046,
+          "actualByteCount": 279046,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.056946901222034,
+        "longitude": 136.9513708935559,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9501745528696753,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236331975.59899116,
+        "rectY": 104426890.39353772,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松山/津向町真反弯：红线弧内西南偏移、轻微概化，未形成独立假V；需own source方能修复。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000007",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000007/basemap.png",
+          "recordedByteCount": 224317,
+          "actualByteCount": 224317,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000007/smooth.png",
+          "recordedByteCount": 261294,
+          "actualByteCount": 261294,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.05768512406084,
+        "longitude": 136.94759658209625,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9501654261359482,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236329161.26838624,
+        "rectY": 104426200.6240818,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "打越→松山大弯与直线过渡连续，红偏西南，未见回头/跳线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000008",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000008/basemap.png",
+          "recordedByteCount": 230758,
+          "actualByteCount": 230758,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000008/smooth.png",
+          "recordedByteCount": 269944,
+          "actualByteCount": 269944,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.05986237318537,
+        "longitude": 136.9447581016367,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9501385076279757,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236327044.7439515,
+        "rectY": 104424166.23999208,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松百町直段向北西，红偏西南，无可分离尖角。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000009",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000009/basemap.png",
+          "recordedByteCount": 243855,
+          "actualByteCount": 243855,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000009/smooth.png",
+          "recordedByteCount": 282828,
+          "actualByteCount": 282828,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06210358960793,
+        "longitude": 136.9419885580984,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.950110796811667,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236324979.6226109,
+        "rectY": 104422072.02497993,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "赤浦沼旁北西直段与过水路位置：红平行西南偏移，无突跳；图符不证明桥梁工程中心。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000010",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000010/basemap.png",
+          "recordedByteCount": 254488,
+          "actualByteCount": 254488,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000010/smooth.png",
+          "recordedByteCount": 292149,
+          "actualByteCount": 292149,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06434878606233,
+        "longitude": 136.9392240281748,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500830353145939,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236322918.2396924,
+        "rectY": 104419974.02895102,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "松百町北西直段红持续偏西南，无局部V。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000011",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000011/basemap.png",
+          "recordedByteCount": 273024,
+          "actualByteCount": 273024,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000011/smooth.png",
+          "recordedByteCount": 310214,
+          "actualByteCount": 310214,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06658339864765,
+        "longitude": 136.93644598617598,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500554032236149,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236320846.78144032,
+        "rectY": 104417885.86122881,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "新保町南侧直段红偏西南，未见短折返或错线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000012",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000012/basemap.png",
+          "recordedByteCount": 247723,
+          "actualByteCount": 247723,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000012/smooth.png",
+          "recordedByteCount": 284341,
+          "actualByteCount": 284341,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06887552900139,
+        "longitude": 136.93374625111147,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.950027058381884,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236318833.71307057,
+        "rectY": 104415743.8812374,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "祖浜町长直段和南端缓曲，红连续且略西南偏移，无孤立直角。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000013",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000013/basemap.png",
+          "recordedByteCount": 261007,
+          "actualByteCount": 261007,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000013/smooth.png",
+          "recordedByteCount": 300047,
+          "actualByteCount": 300047,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.071377562595195,
+        "longitude": 136.93135283900145,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499961160924928,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236317049.05565065,
+        "rectY": 104413405.67421839,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "祖浜→石崎口由北西转西北偏西的真实弯；红弧内偏西南，非独立V。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000014",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000014/basemap.png",
+          "recordedByteCount": 273666,
+          "actualByteCount": 273666,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000014/smooth.png",
+          "recordedByteCount": 313349,
+          "actualByteCount": 313349,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07367189345014,
+        "longitude": 136.92869944933156,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499677408262028,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236315070.5449119,
+        "rectY": 104411261.50230622,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "和倉温泉东侧石崎口进站真弯与站场接近：红保留方向，略南于蓝符，未跳入道路/其他铁路。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000015",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000015/basemap.png",
+          "recordedByteCount": 282162,
+          "actualByteCount": 282162,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000268/000015/smooth.png",
+          "recordedByteCount": 322459,
+          "actualByteCount": 322459,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07469,
+        "longitude": 136.925847,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499551488436074,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236312943.6045312,
+        "rectY": 104410310.00782521,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "和倉温泉本线进站及向西出口上下文：红沿站场南侧方向连续，西侧真弯保留；具体乘客站台face、JR/本线轨道归属未证实。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000000/basemap.png",
+          "recordedByteCount": 282150,
+          "actualByteCount": 282150,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000000/smooth.png",
+          "recordedByteCount": 322442,
+          "actualByteCount": 322442,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07469,
+        "longitude": 136.925847,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499551488436074,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236312943.6045312,
+        "rectY": 104410310.00782521,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "和倉温泉同一端点原图独立查看，与#0末端连续，无接缝V；同一地理视野不扩大覆盖。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000001/basemap.png",
+          "recordedByteCount": 293504,
+          "actualByteCount": 293504,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000001/smooth.png",
+          "recordedByteCount": 333120,
+          "actualByteCount": 333120,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.075929002449634,
+        "longitude": 136.92222598649406,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499398244033976,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236310243.5811655,
+        "rectY": 104409152.05285592,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "和倉温泉向西出站真弧：红连续进入西南方向廊道，未折返进站场侧线；宽填色不足以证明具体站台。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000002/basemap.png",
+          "recordedByteCount": 240318,
+          "actualByteCount": 240318,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000002/smooth.png",
+          "recordedByteCount": 277014,
+          "actualByteCount": 277014,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07513015222451,
+        "longitude": 136.91850800758985,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499497049295672,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236307471.2551584,
+        "rectY": 104409898.64966285,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "奥原东北真弧进入西南直段，红较蓝符偏南/东，无独立V或直角。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000003/basemap.png",
+          "recordedByteCount": 257937,
+          "actualByteCount": 257937,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000003/smooth.png",
+          "recordedByteCount": 294941,
+          "actualByteCount": 294941,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07329167675088,
+        "longitude": 136.91538451151666,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499724432839353,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236305142.20767865,
+        "rectY": 104411616.83913755,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "奥原西真反弯向西南，红连续；不能把真实S弯抹直。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000004",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000004/basemap.png",
+          "recordedByteCount": 231545,
+          "actualByteCount": 231545,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000004/smooth.png",
+          "recordedByteCount": 266418,
+          "actualByteCount": 266418,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.070585839368185,
+        "longitude": 136.91341662496416,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.950005907417419,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236303674.84511176,
+        "rectY": 104414145.56583491,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "奥原西→舟尾真弯，红较蓝符偏西北弧内；未见孤立V，侧向位置待own source。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000005",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000005/basemap.png",
+          "recordedByteCount": 205949,
+          "actualByteCount": 205949,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000005/smooth.png",
+          "recordedByteCount": 239394,
+          "actualByteCount": 239394,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06880370410646,
+        "longitude": 136.9102042603773,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500279466030254,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236301279.53246537,
+        "rectY": 104415811.00208828,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "舟尾东北真弯→西行直段，红平行略偏北，无局部断口或错误支线。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000006",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000006/basemap.png",
+          "recordedByteCount": 224338,
+          "actualByteCount": 224338,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000006/smooth.png",
+          "recordedByteCount": 258883,
+          "actualByteCount": 258883,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06751057355803,
+        "longitude": 136.90662221712535,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500439378187536,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236298608.56742716,
+        "rectY": 104417019.43047221,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "舟尾川桥及直缓弯，红稍北于蓝符，未见接缝钩；桥面位置未工程确权。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000007",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000007/basemap.png",
+          "recordedByteCount": 224202,
+          "actualByteCount": 224202,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000007/smooth.png",
+          "recordedByteCount": 256643,
+          "actualByteCount": 256643,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.066983628316365,
+        "longitude": 136.90273448000715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500504540316395,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236295709.66052127,
+        "rectY": 104417511.854031,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "舟尾川过水路到川尻直段，红稍北偏且连续，未见孤立锐角。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000008",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000008/basemap.png",
+          "recordedByteCount": 296632,
+          "actualByteCount": 296632,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000008/smooth.png",
+          "recordedByteCount": 333138,
+          "actualByteCount": 333138,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.066535462699456,
+        "longitude": 136.89882995474449,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500559959906563,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236292798.23546752,
+        "rectY": 104417930.65635045,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "川尻/鷹合川过水路附近自身东西直段，红北偏过渡至南偏，无突然V或错误路线。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000009",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000009/basemap.png",
+          "recordedByteCount": 334657,
+          "actualByteCount": 334657,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000009/smooth.png",
+          "recordedByteCount": 373723,
+          "actualByteCount": 373723,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06611249646348,
+        "longitude": 136.89492111816207,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500612262835467,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236289883.59566075,
+        "rectY": 104418325.90805382,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "田鶴浜东侧进站直段：红平行略南偏，未向邻道路跳接，平台归属未证实。"
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000010",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000010/basemap.png",
+          "recordedByteCount": 346481,
+          "actualByteCount": 346481,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000269/000010/smooth.png",
+          "recordedByteCount": 385257,
+          "actualByteCount": 385257,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06574,
+        "longitude": 136.89147,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500658324368004,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236287310.25544536,
+        "rectY": 104418673.99515195,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "田鶴浜站场及两侧直段，红较蓝符偏南，保持东西向，无帽端钩；具体平台face/站帽不作验收。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000000/basemap.png",
+          "recordedByteCount": 346505,
+          "actualByteCount": 346505,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000000/smooth.png",
+          "recordedByteCount": 385294,
+          "actualByteCount": 385294,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06574,
+        "longitude": 136.89147,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500658324368004,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236287310.25544536,
+        "rectY": 104418673.99515195,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "田鶴浜自身起点重复原图独立查看，无与#1接缝V；平台归属不由蓝色宽填色证明。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000001/basemap.png",
+          "recordedByteCount": 317936,
+          "actualByteCount": 317936,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000001/smooth.png",
+          "recordedByteCount": 355516,
+          "actualByteCount": 355516,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.065397459611,
+        "longitude": 136.88755091396334,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500700681285613,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236284387.97309154,
+        "rectY": 104418994.0876621,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "田鶴浜西出站→沿海真转弯，红连续，未见独立V/回头。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000002/basemap.png",
+          "recordedByteCount": 253523,
+          "actualByteCount": 253523,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000002/smooth.png",
+          "recordedByteCount": 290637,
+          "actualByteCount": 290637,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06556607319678,
+        "longitude": 136.8836677024246,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500679831373219,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236281492.4407023,
+        "rectY": 104418836.52409945,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "田鶴浜西侧向北西再向西的真实S弯保留，红较蓝符偏北/内弧，未形成孤立V。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000003",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000003/basemap.png",
+          "recordedByteCount": 155797,
+          "actualByteCount": 155797,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000003/smooth.png",
+          "recordedByteCount": 187920,
+          "actualByteCount": 187920,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06763686304562,
+        "longitude": 136.88073082801932,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500423761089742,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236279302.54842395,
+        "rectY": 104416901.41406028,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "白浜町真北西→西向弯，红持续北偏，不能直接删真弧。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000004",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000004/basemap.png",
+          "recordedByteCount": 142912,
+          "actualByteCount": 142912,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000004/smooth.png",
+          "recordedByteCount": 173291,
+          "actualByteCount": 173291,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.0685968015017,
+        "longitude": 136.8770484234665,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500305052515964,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236276556.74857587,
+        "rectY": 104416004.3536188,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "白浜町海岸东西向直段与东侧真弯，红稍北偏，无局部跳线。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000005",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000005/basemap.png",
+          "recordedByteCount": 154491,
+          "actualByteCount": 154491,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000005/smooth.png",
+          "recordedByteCount": 185536,
+          "actualByteCount": 185536,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06917234285374,
+        "longitude": 136.8731701123876,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500233878232668,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236273664.87023425,
+        "rectY": 104415466.50600755,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "白浜→深見沿海直段，红持续北偏，无独立角点。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000006",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000006/basemap.png",
+          "recordedByteCount": 195236,
+          "actualByteCount": 195236,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000006/smooth.png",
+          "recordedByteCount": 230252,
+          "actualByteCount": 230252,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.069438168496,
+        "longitude": 136.8692786794358,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500201004595481,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236270763.2075151,
+        "rectY": 104415218.0886189,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "深見川桥及东西缓弯，红平行北偏，未见断口；底图不能精确证明桥面工程位置。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000007",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000007/basemap.png",
+          "recordedByteCount": 180729,
+          "actualByteCount": 180729,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000007/smooth.png",
+          "recordedByteCount": 213730,
+          "actualByteCount": 213730,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06879821523536,
+        "longitude": 136.86541644595368,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500280144809946,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236267883.3174985,
+        "rectY": 104415816.13147289,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "深見真弯入大津大弧，红持续北/内弧偏移，未出现独立V；海岸真曲线必须保留。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000008",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000008/basemap.png",
+          "recordedByteCount": 156068,
+          "actualByteCount": 156068,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000008/smooth.png",
+          "recordedByteCount": 190143,
+          "actualByteCount": 190143,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.06906007211335,
+        "longitude": 136.86155749995334,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9500247762262274,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236265005.87880608,
+        "rectY": 104415571.42415763,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大津从东西向转北向的大弧保留，红较蓝符偏内弧东北；非孤立直角。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000009",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000009/basemap.png",
+          "recordedByteCount": 142112,
+          "actualByteCount": 142112,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000009/smooth.png",
+          "recordedByteCount": 177168,
+          "actualByteCount": 177168,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.07120407264598,
+        "longitude": 136.85886276464538,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499982616767016,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236262996.53852504,
+        "rectY": 104413567.80699131,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "大津大弧北端及沿海北向直段，红东偏，方向连续，没有回头。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000010",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000010/basemap.png",
+          "recordedByteCount": 136337,
+          "actualByteCount": 136337,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000010/smooth.png",
+          "recordedByteCount": 168638,
+          "actualByteCount": 168638,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.074306100092855,
+        "longitude": 136.85819410147926,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499598969685976,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236262497.94713086,
+        "rectY": 104410668.79165828,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "沿海北向直段红东偏，未见局部角点或错线；不借249号道路作轨道。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000011",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000011/basemap.png",
+          "recordedByteCount": 141960,
+          "actualByteCount": 141960,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000011/smooth.png",
+          "recordedByteCount": 172933,
+          "actualByteCount": 172933,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.077415874354344,
+        "longitude": 136.8575934126295,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9499214336303664,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236262050.04106054,
+        "rectY": 104407762.41746059,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "笠師保南侧真缓弯/沿海直段，红东偏，无孤立V，站台面未证实。"
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000012",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000012/basemap.png",
+          "recordedByteCount": 149149,
+          "actualByteCount": 149149,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000270/000012/smooth.png",
+          "recordedByteCount": 180061,
+          "actualByteCount": 180061,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image; each original PNG separately, no pixel modification",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 37.079505,
+        "longitude": 136.85775,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9498955926301104,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 236262166.80106667,
+        "rectY": 104405809.86768416,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "笠師保自身站场及南北进出方向：红连续北行，较蓝符东偏；平台face、caps和精确代表中心未证实。"
+    }
+  ]
+}

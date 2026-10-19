@@ -1,0 +1,26 @@
+{
+  "format": "jtm-renraku-display-candidate-review-v2",
+  "verdict": "draft-for-root-raw-review",
+  "actualRawAssociationsReviewed": 2,
+  "finiteCoordinates": true,
+  "zeroLengthEdges": 0,
+  "endpointFramePixels": {
+    "008736-heiwa-renraku": [
+      326.2448,
+      148.5896
+    ],
+    "008742-kami-renraku-jounan": [
+      500,
+      365
+    ]
+  },
+  "normalProjection": "The diagonal platform body midpoint (320.26,152.36) is off the rail. Its normal projection onto the fitted own black band is (326.24,148.59).",
+  "identityCorrection": "The diagonal frame is Heiwa/Renraku. The north-south frame is Kami and is shared by Renraku and Jounan. The earlier attribution of the diagonal frame to Kami was incorrect.",
+  "pending": [
+    "Root raw-cartographic acceptance",
+    "Johoku Heiwa horizontal frame selection from complete Johoku raws",
+    "Native Inspector and Main acceptance"
+  ],
+  "productionSourceModified": false,
+  "physicalTopologyChanged": false
+}

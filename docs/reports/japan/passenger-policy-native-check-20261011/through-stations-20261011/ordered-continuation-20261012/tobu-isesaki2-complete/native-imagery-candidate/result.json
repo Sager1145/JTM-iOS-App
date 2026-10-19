@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/candidate-tasks.json",
+  "capturedCount" : 2,
+  "captureIndexPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "3fa3768965c818bedd8a2c9db1a1aa68989ad1dd9a8020df1f02b1e286078396",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment",
+    "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東武鉄道-伊勢崎線-2#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "2\/10 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-hikifune-notch-candidate\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 8,
+  "requestID" : "hikifune-delete-c-candidate-imagery",
+  "requestPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-18T20:21:45Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

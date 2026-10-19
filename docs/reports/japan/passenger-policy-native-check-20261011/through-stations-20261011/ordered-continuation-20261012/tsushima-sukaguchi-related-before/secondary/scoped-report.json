@@ -1,0 +1,41 @@
+{
+  "status": "actual captures; manual review pending",
+  "scope": "five complete Nagoya Main adjacent intervals; global unstarted omitted",
+  "intervalCount": 5,
+  "capturedViewCount": 17,
+  "panelCount": 51,
+  "failedCount": 0,
+  "pendingCount": 0,
+  "intervals": [
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#16",
+      "planItemIndex": 2204,
+      "nativeCaptureFolder": "002451",
+      "viewCount": 4
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#17",
+      "planItemIndex": 2205,
+      "nativeCaptureFolder": "002452",
+      "viewCount": 3
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#18",
+      "planItemIndex": 2206,
+      "nativeCaptureFolder": "002453",
+      "viewCount": 4
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#19",
+      "planItemIndex": 2207,
+      "nativeCaptureFolder": "002454",
+      "viewCount": 3
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#20",
+      "planItemIndex": 2209,
+      "nativeCaptureFolder": "002456",
+      "viewCount": 3
+    }
+  ]
+}

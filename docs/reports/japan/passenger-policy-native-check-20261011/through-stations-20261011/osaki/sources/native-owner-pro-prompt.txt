@@ -1,0 +1,21 @@
+You are an advisory reasoning partner to Codex. You cannot see my filesystem, tools, browser state, skills, or earlier Codex messages. Do not claim local inspection, execution, changes, or verification.
+
+TASK: Determine the correct passenger display station representatives and corridor connections at Osaki, using primary railway diagrams. This is display geometry advice, not a physical topology rewrite.
+
+PRIMARY SOURCES TO CONSULT:
+https://www.jreast.co.jp/estation/station/info.aspx?StationCD=319
+https://timetables.jreast.co.jp/timetable/list0319.html
+https://www.jrtt.go.jp/construction/asset/constUtwr-2_03.pdf
+
+CONTEXT: JR platforms 1–4 are believed to be Yamanote electric tracks, and 5–8 the Saikyo/Shonan-Shinjuku/Rinkai passenger group; verify with the actual primary platform diagram. The locally read JRTT PDF page 207 states that Rinkai surfaces about 800 m before Osaki between the two branch tracks, new two-island/four-track platforms were constructed, Saikyo/Rinkai through service operates, and Yamanote is a transfer. Treat these as supplied observations and check the primary diagram/text.
+
+Current branch base Osaki physical point [139.7280338341397,35.61984111600728], paired-track point [139.72778560340058,35.61974827764918]. Old display policy aliases both to Yamanote electric point [139.728245,35.619945], moves approximately 22.34 m and 46.99 m. Native main station circle is west of the visible green through-station corridor; its card contains Osaki Branch, Yamanote, Rinkai, which proves grouped identity, not a geometric rail connection.
+
+Physical north fork: southbound [139.727308,35.6209449], northbound [139.7266308,35.6219452]. Existing northern source lead-ins are not the Yamanote electric tracks.
+Physical south fork: southbound [139.7255211,35.6087882], northbound [139.7255384,35.6088669]. Old display aliases [139.72540829803378,35.60885083099259] / [139.72545888237914,35.60891105045136] shift 8–12 m onto Sobu-3, then an approximately 870 m exact shared tail is rendered with different offsets. Underlying source override records 69 OSM ways dated 2026-08-18.
+
+CONSTRAINTS: Preserve physical paths, genuine switches, passenger company/line identities and direction pairs. Do not infer rail joins from proximity, intersecting screen ink, a grouped card, or nearest Apple track. No wholesale smoothing or invented station coordinate. Blue station roofs obscure exact track center. Avoid joining Yamanote electric to branch long-distance tracks merely for apparent continuity.
+
+YOUR ASSIGNMENT: Decide whether Osaki Branch/Saikyo/Shonan/Rinkai require a distinct representative from Yamanote platforms 1–4; how the south Hebikubo common tail and the north lead-ins should be represented; and which specific primary diagram supports each passenger connection. Distinguish supported conclusions from missing evidence. Provide a compact decision table, precise primary URLs/page/platform references, and only bounded actions supported by these facts. Do not derive new coordinates without an identifiable platform axis.
+
+Return: STATUS READY/NEEDS_CONTEXT/BLOCKED; recommendation; concrete actions for Codex; verification; action-changing open questions. Do not say the work is complete.

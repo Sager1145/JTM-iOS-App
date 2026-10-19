@@ -1,0 +1,159 @@
+{
+  "status": "candidate-only-not-native-accepted",
+  "actualRawBasemapsReviewed": 29,
+  "actualCandidateReprojectionsReviewed": 29,
+  "candidateFocusedOriginals": [
+    11,
+    14,
+    18,
+    21,
+    22,
+    28
+  ],
+  "preciseWakaiOriginalAndReprojectionReviewed": true,
+  "literalSharedPrefixBothOwners": 146,
+  "wakaiAliasExactWitnessMatch": true,
+  "sourcePhysicalPackageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+  "candidateCoordinateSha256": {
+    "yodo-interval-0": "c9f547786dba6e3b984c3ff505a2a453345c81595fb4a980463c2637d9e5632d",
+    "nakamura-interval-1": "531dca5abd2342f6797234b97efb87762a9270e33151137268264a52109add30"
+  },
+  "suffixOffsetRangePixels": [
+    -23,
+    7
+  ],
+  "unsupportedSamples": [
+    {
+      "controlID": "N041",
+      "sourceChainageMapPoints": 39838.15834879455,
+      "sourceBracket": [
+        87,
+        88
+      ]
+    },
+    {
+      "controlID": "N074",
+      "sourceChainageMapPoints": 46464.18679367452,
+      "sourceBracket": [
+        105,
+        106
+      ]
+    },
+    {
+      "controlID": "N075",
+      "sourceChainageMapPoints": 46664.97553442846,
+      "sourceBracket": [
+        106,
+        107
+      ]
+    },
+    {
+      "controlID": "N091",
+      "sourceChainageMapPoints": 49877.59538649147,
+      "sourceBracket": [
+        119,
+        120
+      ]
+    },
+    {
+      "controlID": "N151",
+      "sourceChainageMapPoints": 61924.91983172777,
+      "sourceBracket": [
+        157,
+        158
+      ]
+    },
+    {
+      "controlID": "N156",
+      "sourceChainageMapPoints": 62928.86353549746,
+      "sourceBracket": [
+        163,
+        164
+      ]
+    },
+    {
+      "controlID": "N186",
+      "sourceChainageMapPoints": 68952.52575811562,
+      "sourceBracket": [
+        179,
+        180
+      ]
+    },
+    {
+      "controlID": "N215",
+      "sourceChainageMapPoints": 74775.39923997983,
+      "sourceBracket": [
+        191,
+        192
+      ]
+    },
+    {
+      "controlID": "N216",
+      "sourceChainageMapPoints": 74976.18798073377,
+      "sourceBracket": [
+        192,
+        193
+      ]
+    },
+    {
+      "controlID": "N217",
+      "sourceChainageMapPoints": 75176.9767214877,
+      "sourceBracket": [
+        192,
+        193
+      ]
+    }
+  ],
+  "neighbourGaps": [
+    {
+      "before": "N040",
+      "after": "N042",
+      "sourceChainageMetres": 49.99999999999953
+    },
+    {
+      "before": "N073",
+      "after": "N076",
+      "sourceChainageMetres": 74.9999999999993
+    },
+    {
+      "before": "N090",
+      "after": "N092",
+      "sourceChainageMetres": 49.99999999999953
+    },
+    {
+      "before": "N150",
+      "after": "N152",
+      "sourceChainageMetres": 49.99999999999953
+    },
+    {
+      "before": "N155",
+      "after": "N157",
+      "sourceChainageMetres": 49.99999999999953
+    },
+    {
+      "before": "N185",
+      "after": "N187",
+      "sourceChainageMetres": 49.99999999999953
+    },
+    {
+      "before": "N214",
+      "after": "N218",
+      "sourceChainageMetres": 99.99999999999906
+    }
+  ],
+  "maximumTurn": {
+    "yodo": [
+      16,
+      8.249370104020826
+    ],
+    "nakamura": [
+      356,
+      15.050478662005139
+    ]
+  },
+  "turnsAbove30": {
+    "yodo": [],
+    "nakamura": []
+  },
+  "suffixActualControlWitnesses": 211
+}

@@ -1,0 +1,1892 @@
+{
+  "status": "candidate-only-all19-unreviewed-station-joins",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-wakai-nakamura-v3/yodo-interval-0-coordinates.json",
+      "edits": [
+        {
+          "boundary": "end",
+          "stationIndex": 1,
+          "keepOldBodyThrough": 216,
+          "localControls": [
+            {
+              "pixel": [
+                600,
+                324
+              ],
+              "coordinates": [
+                133.075284124012,
+                33.16142347219167
+              ],
+              "alongMetres": -54.93138923535824
+            },
+            {
+              "pixel": [
+                550,
+                325
+              ],
+              "coordinates": [
+                133.0750159031105,
+                33.161418981461324
+              ],
+              "alongMetres": -29.959398965538714
+            }
+          ]
+        }
+      ],
+      "pointCount": 220,
+      "maxTurnDegrees": 8.249370103730572,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 1,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo01-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 1,
+          "cutOldPrefixAt": 7,
+          "localControls": [
+            {
+              "pixel": [
+                450,
+                326.5
+              ],
+              "coordinates": [
+                133.07447946130753,
+                33.16141224536536
+              ],
+              "alongMetres": 19.97870643396462
+            },
+            {
+              "pixel": [
+                425,
+                327
+              ],
+              "coordinates": [
+                133.0743453508568,
+                33.16140999999994
+              ],
+              "alongMetres": 32.46470156880872
+            },
+            {
+              "pixel": [
+                375,
+                328
+              ],
+              "coordinates": [
+                133.0740771299553,
+                33.161405509268896
+              ],
+              "alongMetres": 57.43669183867202
+            },
+            {
+              "pixel": [
+                350,
+                330
+              ],
+              "coordinates": [
+                133.07394301950455,
+                33.16139652780612
+              ],
+              "alongMetres": 69.94031239440474
+            },
+            {
+              "pixel": [
+                325,
+                332.5
+              ],
+              "coordinates": [
+                133.0738089090538,
+                33.161385300976356
+              ],
+              "alongMetres": 82.44980809040452
+            },
+            {
+              "pixel": [
+                300,
+                334.5
+              ],
+              "coordinates": [
+                133.07367479860307,
+                33.16137631951151
+              ],
+              "alongMetres": 94.95342864613724
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 2,
+          "keepOldBodyThrough": 191,
+          "localControls": [
+            {
+              "pixel": [
+                600,
+                330
+              ],
+              "coordinates": [
+                133.0302841240121,
+                33.175486529971394
+              ],
+              "alongMetres": -50.20410381200606
+            }
+          ]
+        }
+      ],
+      "pointCount": 194,
+      "maxTurnDegrees": 20.58699871664743,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 2,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/yodo02-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 2,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                420,
+                326
+              ],
+              "coordinates": [
+                133.02931852876668,
+                33.17550449000907
+              ],
+              "alongMetres": 39.699693631391185
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 3,
+          "keepOldBodyThrough": 278,
+          "localControls": [
+            {
+              "pixel": [
+                491,
+                350
+              ],
+              "coordinates": [
+                132.97555840244695,
+                33.1946557524276
+              ],
+              "alongMetres": -12.20705516986079
+            }
+          ]
+        }
+      ],
+      "pointCount": 281,
+      "maxTurnDegrees": 19.277473083662432,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 3,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo03-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 3,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                521,
+                250
+              ],
+              "coordinates": [
+                132.97571933498784,
+                33.195104654030224
+              ],
+              "alongMetres": 39.919822935600806
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 4,
+          "keepOldBodyThrough": 348,
+          "localControls": [
+            {
+              "pixel": [
+                550,
+                335
+              ],
+              "coordinates": [
+                132.89758190311045,
+                33.21995809816644
+              ],
+              "alongMetres": -52.71107997236049
+            }
+          ]
+        }
+      ],
+      "pointCount": 351,
+      "maxTurnDegrees": 21.296388029534697,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 4,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/yodo04-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 4,
+          "cutOldPrefixAt": 4,
+          "localControls": [
+            {
+              "pixel": [
+                415,
+                180
+              ],
+              "coordinates": [
+                132.89685770667643,
+                33.22065369356896
+              ],
+              "alongMetres": 46.47801384021137
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 5,
+          "keepOldBodyThrough": 177,
+          "localControls": [
+            {
+              "pixel": [
+                550,
+                302
+              ],
+              "coordinates": [
+                132.85621090311065,
+                33.23501217401641
+              ],
+              "alongMetres": -53.125382923100524
+            }
+          ]
+        }
+      ],
+      "pointCount": 180,
+      "maxTurnDegrees": 26.487816685316453,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 5,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo05-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 5,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                345
+              ],
+              "coordinates": [
+                132.85540624040624,
+                33.23481923461911
+              ],
+              "alongMetres": 24.782886344303428
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 6,
+          "keepOldBodyThrough": 307,
+          "localControls": [
+            {
+              "pixel": [
+                500,
+                310
+              ],
+              "coordinates": [
+                132.79196268220903,
+                33.20186630721735
+              ],
+              "alongMetres": -42.27623415450222
+            }
+          ]
+        }
+      ],
+      "pointCount": 310,
+      "maxTurnDegrees": 23.629850279002405,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 6,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo06-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 6,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                386
+              ],
+              "coordinates": [
+                132.7914262404061,
+                33.20152516855324
+              ],
+              "alongMetres": 20.43059829875234
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 7,
+          "keepOldBodyThrough": 153,
+          "localControls": [
+            {
+              "pixel": [
+                470,
+                311
+              ],
+              "coordinates": [
+                132.78302174966825,
+                33.17828683789194
+              ],
+              "alongMetres": -6.224435061761968
+            }
+          ]
+        }
+      ],
+      "pointCount": 156,
+      "maxTurnDegrees": 28.293367267583882,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 7,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/local-body-v3/yodo07-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 7,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                430,
+                296
+              ],
+              "coordinates": [
+                132.78280717294706,
+                33.17835418586216
+              ],
+              "alongMetres": 15.00845090514551
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 8,
+          "keepOldBodyThrough": 100,
+          "localControls": [
+            {
+              "pixel": [
+                388,
+                600
+              ],
+              "coordinates": [
+                132.76656186738984,
+                33.18622438608411
+              ],
+              "alongMetres": -136.46760068865635
+            },
+            {
+              "pixel": [
+                404,
+                560
+              ],
+              "coordinates": [
+                132.76664769807832,
+                33.1864039642868
+              ],
+              "alongMetres": -115.18077338851052
+            },
+            {
+              "pixel": [
+                414,
+                530
+              ],
+              "coordinates": [
+                132.7667013422586,
+                33.186538647697226
+              ],
+              "alongMetres": -99.44875119534385
+            },
+            {
+              "pixel": [
+                425,
+                500
+              ],
+              "coordinates": [
+                132.76676035085694,
+                33.18667333090059
+              ],
+              "alongMetres": -83.600179859397
+            },
+            {
+              "pixel": [
+                433,
+                480
+              ],
+              "coordinates": [
+                132.76680326620118,
+                33.18676311958779
+              ],
+              "alongMetres": -72.95676621294173
+            },
+            {
+              "pixel": [
+                442,
+                450
+              ],
+              "coordinates": [
+                132.76685154596345,
+                33.18689780244604
+              ],
+              "alongMetres": -57.341293158937575
+            },
+            {
+              "pixel": [
+                451,
+                420
+              ],
+              "coordinates": [
+                132.76689982572572,
+                33.18703248509722
+              ],
+              "alongMetres": -41.725820106742226
+            }
+          ]
+        }
+      ],
+      "pointCount": 109,
+      "maxTurnDegrees": 18.32160420730327,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 8,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/yodo08-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 8,
+          "cutOldPrefixAt": 1,
+          "localControls": [
+            {
+              "pixel": [
+                485,
+                330
+              ],
+              "coordinates": [
+                132.76708221593873,
+                33.18743653180834
+              ],
+              "alongMetres": 5.936443036643169
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 9,
+          "keepOldBodyThrough": 217,
+          "localControls": [
+            {
+              "pixel": [
+                580,
+                319
+              ],
+              "coordinates": [
+                132.74558183565154,
+                33.22412590013791
+              ],
+              "alongMetres": -48.672743109377556
+            }
+          ]
+        }
+      ],
+      "pointCount": 220,
+      "maxTurnDegrees": 27.634291146899677,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 9,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-own-bodies-v2/yodo09-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 9,
+          "cutOldPrefixAt": 3,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                274
+              ],
+              "coordinates": [
+                132.74461624040612,
+                33.22432783813921
+              ],
+              "alongMetres": 43.95076056138473
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 10,
+          "keepOldBodyThrough": 59,
+          "localControls": [
+            {
+              "pixel": [
+                530,
+                357
+              ],
+              "coordinates": [
+                132.72947861475,
+                33.2243803750056
+              ],
+              "alongMetres": -39.90983723196124
+            }
+          ]
+        }
+      ],
+      "pointCount": 62,
+      "maxTurnDegrees": 25.55996516804751,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 10,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo10-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 10,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                420,
+                254
+              ],
+              "coordinates": [
+                132.72888852876667,
+                33.22484258662078
+              ],
+              "alongMetres": 35.224877265624315
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 11,
+          "keepOldBodyThrough": 50,
+          "localControls": [
+            {
+              "pixel": [
+                550,
+                345
+              ],
+              "coordinates": [
+                132.70915590311074,
+                33.2281692284773
+              ],
+              "alongMetres": -56.084511074956325
+            }
+          ]
+        }
+      ],
+      "pointCount": 53,
+      "maxTurnDegrees": 17.71905276560684,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 11,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo11-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 11,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                264
+              ],
+              "coordinates": [
+                132.70835124040622,
+                33.22853269974194
+              ],
+              "alongMetres": 29.03740961076665
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 12,
+          "keepOldBodyThrough": 85,
+          "localControls": [
+            {
+              "pixel": [
+                500,
+                357
+              ],
+              "coordinates": [
+                132.69193768220907,
+                33.25166041700484
+              ],
+              "alongMetres": -37.744522314778415
+            }
+          ]
+        }
+      ],
+      "pointCount": 88,
+      "maxTurnDegrees": 17.66915265030629,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 12,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo12-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 12,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                262
+              ],
+              "coordinates": [
+                132.6914012404061,
+                33.25208659577845
+              ],
+              "alongMetres": 30.922896961933223
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 13,
+          "keepOldBodyThrough": 36,
+          "localControls": [
+            {
+              "pixel": [
+                580,
+                354
+              ],
+              "coordinates": [
+                132.67682183565148,
+                33.25553888067127
+              ],
+              "alongMetres": -25.890166446878958
+            }
+          ]
+        }
+      ],
+      "pointCount": 39,
+      "maxTurnDegrees": 20.82523554610318,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 13,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo13-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 13,
+          "cutOldPrefixAt": 1,
+          "localControls": [
+            {
+              "pixel": [
+                460,
+                307
+              ],
+              "coordinates": [
+                132.6761781054879,
+                33.255749717913034
+              ],
+              "alongMetres": 38.391136261221305
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 14,
+          "keepOldBodyThrough": 43,
+          "localControls": [
+            {
+              "pixel": [
+                500,
+                390
+              ],
+              "coordinates": [
+                132.66039768220912,
+                33.26735242671206
+              ],
+              "alongMetres": -39.864067009803875
+            }
+          ]
+        }
+      ],
+      "pointCount": 46,
+      "maxTurnDegrees": 20.427802693963713,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 14,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo14-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 14,
+          "cutOldPrefixAt": 1,
+          "localControls": [
+            {
+              "pixel": [
+                478,
+                280
+              ],
+              "coordinates": [
+                132.66027966501247,
+                33.26784580804793
+              ],
+              "alongMetres": 16.092365698997174
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 15,
+          "keepOldBodyThrough": 49,
+          "localControls": [
+            {
+              "pixel": [
+                620,
+                468
+              ],
+              "coordinates": [
+                132.64240641237257,
+                33.28668271535474
+              ],
+              "alongMetres": -50.1256522676508
+            }
+          ]
+        }
+      ],
+      "pointCount": 52,
+      "maxTurnDegrees": 17.935466295097445,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 15,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo15-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 15,
+          "cutOldPrefixAt": 0,
+          "localControls": [
+            {
+              "pixel": [
+                520,
+                354
+              ],
+              "coordinates": [
+                132.6418699705696,
+                33.287193924571454
+              ],
+              "alongMetres": 25.55483487056449
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 16,
+          "keepOldBodyThrough": 28,
+          "localControls": [
+            {
+              "pixel": [
+                500,
+                325
+              ],
+              "coordinates": [
+                132.62902768220908,
+                33.291518968112406
+              ],
+              "alongMetres": -28.0889122803999
+            }
+          ]
+        }
+      ],
+      "pointCount": 31,
+      "maxTurnDegrees": 13.910978528450181,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 16,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo16-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 16,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                400,
+                369
+              ],
+              "coordinates": [
+                132.6284912404061,
+                33.29132166942614
+              ],
+              "alongMetres": 26.444148395002667
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 17,
+          "keepOldBodyThrough": 42,
+          "localControls": [
+            {
+              "pixel": [
+                600,
+                257
+              ],
+              "coordinates": [
+                132.60639412401207,
+                33.28911889311708
+              ],
+              "alongMetres": -71.63516281724252
+            },
+            {
+              "pixel": [
+                550,
+                276
+              ],
+              "coordinates": [
+                132.60612590311058,
+                33.28903369366836
+              ],
+              "alongMetres": -46.11429483943003
+            },
+            {
+              "pixel": [
+                520,
+                292
+              ],
+              "coordinates": [
+                132.6059649705697,
+                33.288961946699665
+              ],
+              "alongMetres": -29.388848932841046
+            }
+          ]
+        }
+      ],
+      "pointCount": 47,
+      "maxTurnDegrees": 11.406279419111371,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 17,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo10-17-local-v3/yodo17-coordinates.json",
+      "edits": [
+        {
+          "boundary": "start",
+          "stationIndex": 17,
+          "cutOldPrefixAt": 2,
+          "localControls": [
+            {
+              "pixel": [
+                440,
+                344.5
+              ],
+              "coordinates": [
+                132.60553581712725,
+                33.28872652654428
+              ],
+              "alongMetres": 18.232723556172953
+            },
+            {
+              "pixel": [
+                400,
+                376
+              ],
+              "coordinates": [
+                132.60532124040606,
+                33.28858527414618
+              ],
+              "alongMetres": 43.65608738097578
+            }
+          ]
+        },
+        {
+          "boundary": "end",
+          "stationIndex": 18,
+          "keepOldBodyThrough": 18,
+          "localControls": [
+            {
+              "pixel": [
+                650,
+                284
+              ],
+              "coordinates": [
+                132.60141734491344,
+                33.283052833326956
+              ],
+              "alongMetres": -89.32103445709586
+            },
+            {
+              "pixel": [
+                600,
+                294
+              ],
+              "coordinates": [
+                132.60114912401195,
+                33.28300798840522
+              ],
+              "alongMetres": -63.86205179742828
+            },
+            {
+              "pixel": [
+                550,
+                304.5
+              ],
+              "coordinates": [
+                132.60088090311046,
+                33.28296090121259
+              ],
+              "alongMetres": -38.357620224940966
+            },
+            {
+              "pixel": [
+                500,
+                314
+              ],
+              "coordinates": [
+                132.60061268220898,
+                33.28291829849262
+              ],
+              "alongMetres": -12.944086477077267
+            }
+          ]
+        }
+      ],
+      "pointCount": 24,
+      "maxTurnDegrees": 16.02471926305394,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    },
+    {
+      "intervalIndex": 18,
+      "bodySource": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-yodo18-body-v2/yodo-interval-18-station-integrated-coordinates.json",
+      "edits": [],
+      "pointCount": 120,
+      "maxTurnDegrees": 25.055567763382296,
+      "turnsOver30": [],
+      "status": "candidate-only-unreviewed-station-integration"
+    }
+  ],
+  "localWitnessControls": {
+    "1": {
+      "alias": [
+        133.07469411310052,
+        33.1614135938415
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            600,
+            324
+          ],
+          "coordinates": [
+            133.075284124012,
+            33.16142347219167
+          ],
+          "alongMetres": -54.93138923535824
+        },
+        {
+          "pixel": [
+            550,
+            325
+          ],
+          "coordinates": [
+            133.0750159031105,
+            33.161418981461324
+          ],
+          "alongMetres": -29.959398965538714
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            450,
+            326.5
+          ],
+          "coordinates": [
+            133.07447946130753,
+            33.16141224536536
+          ],
+          "alongMetres": 19.97870643396462
+        },
+        {
+          "pixel": [
+            425,
+            327
+          ],
+          "coordinates": [
+            133.0743453508568,
+            33.16140999999994
+          ],
+          "alongMetres": 32.46470156880872
+        },
+        {
+          "pixel": [
+            375,
+            328
+          ],
+          "coordinates": [
+            133.0740771299553,
+            33.161405509268896
+          ],
+          "alongMetres": 57.43669183867202
+        },
+        {
+          "pixel": [
+            350,
+            330
+          ],
+          "coordinates": [
+            133.07394301950455,
+            33.16139652780612
+          ],
+          "alongMetres": 69.94031239440474
+        },
+        {
+          "pixel": [
+            325,
+            332.5
+          ],
+          "coordinates": [
+            133.0738089090538,
+            33.161385300976356
+          ],
+          "alongMetres": 82.44980809040452
+        },
+        {
+          "pixel": [
+            300,
+            334.5
+          ],
+          "coordinates": [
+            133.07367479860307,
+            33.16137631951151
+          ],
+          "alongMetres": 94.95342864613724
+        }
+      ],
+      "direction": [
+        -0.9997230964302032,
+        0.02353147815176153
+      ]
+    },
+    "2": {
+      "alias": [
+        133.029745,
+        33.1755
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            600,
+            330
+          ],
+          "coordinates": [
+            133.0302841240121,
+            33.175486529971394
+          ],
+          "alongMetres": -50.20410381200606
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            420,
+            326
+          ],
+          "coordinates": [
+            133.02931852876668,
+            33.17550449000907
+          ],
+          "alongMetres": 39.699693631391185
+        }
+      ],
+      "direction": [
+        -0.999791515747086,
+        -0.020418742374211672
+      ]
+    },
+    "3": {
+      "alias": [
+        132.975604,
+        33.194759
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            491,
+            350
+          ],
+          "coordinates": [
+            132.97555840244695,
+            33.1946557524276
+          ],
+          "alongMetres": -12.20705516986079
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            521,
+            250
+          ],
+          "coordinates": [
+            132.97571933498784,
+            33.195104654030224
+          ],
+          "alongMetres": 39.919822935600806
+        }
+      ],
+      "direction": [
+        0.2726998019221895,
+        -0.9620991726592423
+      ]
+    },
+    "4": {
+      "alias": [
+        132.8971970505558,
+        33.220327752246135
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            550,
+            335
+          ],
+          "coordinates": [
+            132.89758190311045,
+            33.21995809816644
+          ],
+          "alongMetres": -52.71107997236049
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            415,
+            180
+          ],
+          "coordinates": [
+            132.89685770667643,
+            33.22065369356896
+          ],
+          "alongMetres": 46.47801384021137
+        }
+      ],
+      "direction": [
+        -0.44083979341162444,
+        -0.8975858045584255
+      ]
+    },
+    "5": {
+      "alias": [
+        132.85566220635872,
+        33.23488060934604
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            550,
+            302
+          ],
+          "coordinates": [
+            132.85621090311065,
+            33.23501217401641
+          ],
+          "alongMetres": -53.125382923100524
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            345
+          ],
+          "coordinates": [
+            132.85540624040624,
+            33.23481923461911
+          ],
+          "alongMetres": 24.782886344303428
+        }
+      ],
+      "direction": [
+        -0.9567313069541405,
+        0.2909728617823698
+      ]
+    },
+    "6": {
+      "alias": [
+        132.79160101923895,
+        33.20163631555099
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            500,
+            310
+          ],
+          "coordinates": [
+            132.79196268220903,
+            33.20186630721735
+          ],
+          "alongMetres": -42.27623415450222
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            386
+          ],
+          "coordinates": [
+            132.7914262404061,
+            33.20152516855324
+          ],
+          "alongMetres": 20.43059829875234
+        }
+      ],
+      "direction": [
+        -0.7842097826458799,
+        0.6204957830658494
+      ]
+    },
+    "7": {
+      "alias": [
+        132.78295884635548,
+        33.1783065810009
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            470,
+            311
+          ],
+          "coordinates": [
+            132.78302174966825,
+            33.17828683789194
+          ],
+          "alongMetres": -6.224435061761968
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            430,
+            296
+          ],
+          "coordinates": [
+            132.78280717294706,
+            33.17835418586216
+          ],
+          "alongMetres": 15.00845090514551
+        }
+      ],
+      "direction": [
+        -0.9657800328009237,
+        -0.25936254209705484
+      ]
+    },
+    "8": {
+      "alias": [
+        132.76706073004522,
+        33.18738595964557
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            388,
+            600
+          ],
+          "coordinates": [
+            132.76656186738984,
+            33.18622438608411
+          ],
+          "alongMetres": -136.46760068865635
+        },
+        {
+          "pixel": [
+            404,
+            560
+          ],
+          "coordinates": [
+            132.76664769807832,
+            33.1864039642868
+          ],
+          "alongMetres": -115.18077338851052
+        },
+        {
+          "pixel": [
+            414,
+            530
+          ],
+          "coordinates": [
+            132.7667013422586,
+            33.186538647697226
+          ],
+          "alongMetres": -99.44875119534385
+        },
+        {
+          "pixel": [
+            425,
+            500
+          ],
+          "coordinates": [
+            132.76676035085694,
+            33.18667333090059
+          ],
+          "alongMetres": -83.600179859397
+        },
+        {
+          "pixel": [
+            433,
+            480
+          ],
+          "coordinates": [
+            132.76680326620118,
+            33.18676311958779
+          ],
+          "alongMetres": -72.95676621294173
+        },
+        {
+          "pixel": [
+            442,
+            450
+          ],
+          "coordinates": [
+            132.76685154596345,
+            33.18689780244604
+          ],
+          "alongMetres": -57.341293158937575
+        },
+        {
+          "pixel": [
+            451,
+            420
+          ],
+          "coordinates": [
+            132.76689982572572,
+            33.18703248509722
+          ],
+          "alongMetres": -41.725820106742226
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            485,
+            330
+          ],
+          "coordinates": [
+            132.76708221593873,
+            33.18743653180834
+          ],
+          "alongMetres": 5.936443036643169
+        }
+      ],
+      "direction": [
+        0.23340494351808783,
+        -0.9723796235736936
+      ]
+    },
+    "9": {
+      "alias": [
+        132.74507442481666,
+        33.22423201663592
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            580,
+            319
+          ],
+          "coordinates": [
+            132.74558183565154,
+            33.22412590013791
+          ],
+          "alongMetres": -48.672743109377556
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            274
+          ],
+          "coordinates": [
+            132.74461624040612,
+            33.22432783813921
+          ],
+          "alongMetres": 43.95076056138473
+        }
+      ],
+      "direction": [
+        -0.9754618665277515,
+        -0.2201684513053471
+      ]
+    },
+    "10": {
+      "alias": [
+        132.72916517460845,
+        33.2246258915195
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            530,
+            357
+          ],
+          "coordinates": [
+            132.72947861475,
+            33.2243803750056
+          ],
+          "alongMetres": -39.90983723196124
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            420,
+            254
+          ],
+          "coordinates": [
+            132.72888852876667,
+            33.22484258662078
+          ],
+          "alongMetres": 35.224877265624315
+        }
+      ],
+      "direction": [
+        -0.6912679277006774,
+        -0.7225985414685052
+      ]
+    },
+    "11": {
+      "alias": [
+        132.70862573280914,
+        33.22840870994638
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            550,
+            345
+          ],
+          "coordinates": [
+            132.70915590311074,
+            33.2281692284773
+          ],
+          "alongMetres": -56.084511074956325
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            264
+          ],
+          "coordinates": [
+            132.70835124040622,
+            33.22853269974194
+          ],
+          "alongMetres": 29.03740961076665
+        }
+      ],
+      "direction": [
+        -0.8762185787429755,
+        -0.48191389507425497
+      ]
+    },
+    "12": {
+      "alias": [
+        132.6916428154467,
+        33.251894675581404
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            500,
+            357
+          ],
+          "coordinates": [
+            132.69193768220907,
+            33.25166041700484
+          ],
+          "alongMetres": -37.744522314778415
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            262
+          ],
+          "coordinates": [
+            132.6914012404061,
+            33.25208659577845
+          ],
+          "alongMetres": 30.922896961933223
+        }
+      ],
+      "direction": [
+        -0.7762429050075913,
+        -0.6304339397790822
+      ]
+    },
+    "13": {
+      "alias": [
+        132.67656256459787,
+        33.25562379829094
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            580,
+            354
+          ],
+          "coordinates": [
+            132.67682183565148,
+            33.25553888067127
+          ],
+          "alongMetres": -25.890166446878958
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            460,
+            307
+          ],
+          "coordinates": [
+            132.6761781054879,
+            33.255749717913034
+          ],
+          "alongMetres": 38.391136261221305
+        }
+      ],
+      "direction": [
+        -0.9128414175883409,
+        -0.40831427397937997
+      ]
+    },
+    "14": {
+      "alias": [
+        132.66031360527268,
+        33.267703918071675
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            500,
+            390
+          ],
+          "coordinates": [
+            132.66039768220912,
+            33.26735242671206
+          ],
+          "alongMetres": -39.864067009803875
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            478,
+            280
+          ],
+          "coordinates": [
+            132.66027966501247,
+            33.26784580804793
+          ],
+          "alongMetres": 16.092365698997174
+        }
+      ],
+      "direction": [
+        -0.24093710565164622,
+        -0.9705407313040537
+      ]
+    },
+    "15": {
+      "alias": [
+        132.64205110948944,
+        33.28702130620883
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            620,
+            468
+          ],
+          "coordinates": [
+            132.64240641237257,
+            33.28668271535474
+          ],
+          "alongMetres": -50.1256522676508
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            520,
+            354
+          ],
+          "coordinates": [
+            132.6418699705696,
+            33.287193924571454
+          ],
+          "alongMetres": 25.55483487056449
+        }
+      ],
+      "direction": [
+        -0.6841223943983871,
+        -0.7293672253965199
+      ]
+    },
+    "16": {
+      "alias": [
+        132.62875137153515,
+        33.291417343476176
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            500,
+            325
+          ],
+          "coordinates": [
+            132.62902768220908,
+            33.291518968112406
+          ],
+          "alongMetres": -28.0889122803999
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            400,
+            369
+          ],
+          "coordinates": [
+            132.6284912404061,
+            33.29132166942614
+          ],
+          "alongMetres": 26.444148395002667
+        }
+      ],
+      "direction": [
+        -0.9261784130535713,
+        0.3770855966402964
+      ]
+    },
+    "17": {
+      "alias": [
+        132.6057001257729,
+        33.28881666120304
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            600,
+            257
+          ],
+          "coordinates": [
+            132.60639412401207,
+            33.28911889311708
+          ],
+          "alongMetres": -71.63516281724252
+        },
+        {
+          "pixel": [
+            550,
+            276
+          ],
+          "coordinates": [
+            132.60612590311058,
+            33.28903369366836
+          ],
+          "alongMetres": -46.11429483943003
+        },
+        {
+          "pixel": [
+            520,
+            292
+          ],
+          "coordinates": [
+            132.6059649705697,
+            33.288961946699665
+          ],
+          "alongMetres": -29.388848932841046
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            440,
+            344.5
+          ],
+          "coordinates": [
+            132.60553581712725,
+            33.28872652654428
+          ],
+          "alongMetres": 18.232723556172953
+        },
+        {
+          "pixel": [
+            400,
+            376
+          ],
+          "coordinates": [
+            132.60532124040606,
+            33.28858527414618
+          ],
+          "alongMetres": 43.65608738097578
+        }
+      ],
+      "direction": [
+        -0.7884308051086879,
+        0.6151234555401592
+      ]
+    },
+    "18": {
+      "alias": [
+        132.60047485675528,
+        33.28290206443831
+      ],
+      "incoming": [
+        {
+          "pixel": [
+            650,
+            284
+          ],
+          "coordinates": [
+            132.60141734491344,
+            33.283052833326956
+          ],
+          "alongMetres": -89.32103445709586
+        },
+        {
+          "pixel": [
+            600,
+            294
+          ],
+          "coordinates": [
+            132.60114912401195,
+            33.28300798840522
+          ],
+          "alongMetres": -63.86205179742828
+        },
+        {
+          "pixel": [
+            550,
+            304.5
+          ],
+          "coordinates": [
+            132.60088090311046,
+            33.28296090121259
+          ],
+          "alongMetres": -38.357620224940966
+        },
+        {
+          "pixel": [
+            500,
+            314
+          ],
+          "coordinates": [
+            132.60061268220898,
+            33.28291829849262
+          ],
+          "alongMetres": -12.944086477077267
+        }
+      ],
+      "outgoing": [
+        {
+          "pixel": [
+            450,
+            322.5
+          ],
+          "coordinates": [
+            132.60034446130754,
+            33.28288018025185
+          ],
+          "alongMetres": 12.37854944385908
+        },
+        {
+          "pixel": [
+            400,
+            330.5
+          ],
+          "coordinates": [
+            132.60007624040605,
+            33.282844304245344
+          ],
+          "alongMetres": 37.655736456988414
+        },
+        {
+          "pixel": [
+            350,
+            340
+          ],
+          "coordinates": [
+            132.59980801950456,
+            33.28280170146845
+          ],
+          "alongMetres": 63.06927020485212
+        }
+      ],
+      "direction": [
+        -0.9832920857554956,
+        0.18203481560022222
+      ]
+    }
+  }
+}

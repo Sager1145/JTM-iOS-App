@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "489B1E97-C163-4E8E-8454-DD6411786503",
+  "message" : "2\/19 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "yamanote-shinagawa-own-platform-imagery",
+  "resultPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-18T19:31:12Z"
+}

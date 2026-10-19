@@ -1,0 +1,653 @@
+{
+  "lineID": "jp-埼玉新都市交通-伊奈線",
+  "selectionConvention": "Use the clearly own western real frame; its longitudinal midpoint lands on the established own Ina guideway. Never average across Shinkansen.",
+  "supportedCount": 7,
+  "unresolvedCount": 6,
+  "stations": [
+    {
+      "stationIndex": 0,
+      "stationID": "002914",
+      "name": "大宮",
+      "physicalCoordinate": [
+        139.622255,
+        35.907795
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/00-002914/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.907794999999986,
+        "longitude": 139.62225500000005,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48209391292403636,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 238325629.1352036,
+        "rectY": 105494397.39632872,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "The own loop is visible, but the passenger platform/frame is obscured by the terminal roof/deck. A loop stub endpoint cannot establish the terminal platform midpoint.",
+      "excludedDiagnosticAlias": [
+        139.62189826620107,
+        35.90774286029489
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    },
+    {
+      "stationIndex": 1,
+      "stationID": "002881",
+      "name": "鉄道博物館",
+      "physicalCoordinate": [
+        139.617825,
+        35.920265
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/01-002881/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.92026500000001,
+        "longitude": 139.6178250000001,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.4820189237071491,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 238322325.88778675,
+        "rectY": 105482916.56094944,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "candidateAlias": [
+        139.61757019014368,
+        35.920243278551226
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          418,
+          263
+        ],
+        [
+          454,
+          408
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        436.0,
+        335.5
+      ],
+      "railLandingPixel": [
+        452,
+        332
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 4,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station01-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 2,
+      "stationID": "002857",
+      "name": "加茂宮",
+      "physicalCoordinate": [
+        139.616935,
+        35.93577
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/02-002857/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.93577,
+        "longitude": 139.61693500000018,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4819256532354976,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 238321662.25568724,
+        "rectY": 105468638.94764715,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "candidateAlias": [
+        139.61674992757816,
+        35.93572656561451
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          450,
+          267
+        ],
+        [
+          431,
+          400
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        440.5,
+        333.5
+      ],
+      "railLandingPixel": [
+        465,
+        337
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 4,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station02-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 3,
+      "stationID": "002844",
+      "name": "東宮原",
+      "physicalCoordinate": [
+        139.618225,
+        35.942685
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/03-002844/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.94268500000001,
+        "longitude": 139.61822500000005,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.4818840436732372,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 238322624.14940447,
+        "rectY": 105462270.44092962,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "candidateAlias": [
+        139.61809357175832,
+        35.94270671528384
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          468,
+          247
+        ],
+        [
+          448,
+          393
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        458.0,
+        320.0
+      ],
+      "railLandingPixel": [
+        475,
+        322
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 3,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station03-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 4,
+      "stationID": "002835",
+      "name": "今羽",
+      "physicalCoordinate": [
+        139.61961,
+        35.950005
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/04-002835/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.950005,
+        "longitude": 139.61961,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.4818399898778121,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3995.9999999403954,
+        "rectX": 238323656.88025603,
+        "rectY": 105455528.33421278,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "candidateAlias": [
+        139.61943565641405,
+        35.9499659160949
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          460,
+          266
+        ],
+        [
+          439,
+          400
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        449.5,
+        333.0
+      ],
+      "railLandingPixel": [
+        467,
+        336
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 3,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station04-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 5,
+      "stationID": "002824",
+      "name": "吉野原",
+      "physicalCoordinate": [
+        139.620905,
+        35.95701
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/05-002824/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.95700999999998,
+        "longitude": 139.62090500000005,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.4817978239710933,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996,
+        "rectX": 238324622.50224364,
+        "rectY": 105449075.77419052,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "candidateAlias": [
+        139.6207950294305,
+        35.95721842868368
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          475,
+          210
+        ],
+        [
+          454,
+          342
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        464.5,
+        276.0
+      ],
+      "railLandingPixel": [
+        479,
+        279
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 3,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station05-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 6,
+      "stationID": "002812",
+      "name": "原市",
+      "physicalCoordinate": [
+        139.622185,
+        35.96384
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/06-002812/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.96383999999997,
+        "longitude": 139.62218500000023,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.4817567049103599,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 238325576.93942058,
+        "rectY": 105442783.86201003,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "candidateAlias": [
+        139.62216622453707,
+        35.9638356581054
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          489,
+          254
+        ],
+        [
+          467,
+          394
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        478.0,
+        324.0
+      ],
+      "railLandingPixel": [
+        496,
+        328
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 3,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station06-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 7,
+      "stationID": "002802",
+      "name": "沼南",
+      "physicalCoordinate": [
+        139.62352,
+        35.971025
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/07-002802/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.971024999999955,
+        "longitude": 139.62352000000004,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.4817134420740359,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 238326572.38756981,
+        "rectY": 105436164.33038941,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "candidateAlias": [
+        139.6235655975533,
+        35.971172610840206
+      ],
+      "status": "screenshot-supported-western-frame-candidate",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "selectedFrame": "Own western pale passenger frame next to the separately labelled Ina guideway; eastern face excluded.",
+      "capPixels": [
+        [
+          500,
+          215
+        ],
+        [
+          479,
+          364
+        ]
+      ],
+      "frameLongitudinalMidpointPixel": [
+        489.5,
+        289.5
+      ],
+      "railLandingPixel": [
+        508,
+        293
+      ],
+      "pickingUncertaintyPixels": {
+        "longitudinal": 3,
+        "transverse": 2
+      },
+      "coordinateMeaning": "Cartographic frame longitudinal midpoint landed on the established own western Ina guideway; not surveyed physical track allocation.",
+      "annotatedEvidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/platform-adjudication/station07-midpoint.png",
+      "annotatedEvidenceActuallyOpened": true,
+      "independentReview": "candidate_inventory re-opened western frames1–7 and full native basemaps; parent inspected all seven marked original-resolution images.",
+      "remainingLimit": "Eastern-face allocation and platform numbers are not established; they do not affect this western-frame-only candidate."
+    },
+    {
+      "stationIndex": 8,
+      "stationID": "002787",
+      "name": "丸山",
+      "physicalCoordinate": [
+        139.62454,
+        35.9796
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/08-002787/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.97959999999997,
+        "longitude": 139.6245400000001,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48166179860854225,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 238327332.95469522,
+        "rectY": 105428263.40486795,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "The southern pale frame cap is visible near y255; the northern cap is covered by the Ina label/nearby station label. The current y327 guideway anchor is physical-chainage projection and cannot establish the platform midpoint.",
+      "excludedDiagnosticAlias": [
+        139.62469288591404,
+        35.97959999999996
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    },
+    {
+      "stationIndex": 9,
+      "stationID": "002770",
+      "name": "志久",
+      "physicalCoordinate": [
+        139.6222,
+        35.991025
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/09-002770/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.99102500000001,
+        "longitude": 139.62220000000002,
+        "mapPointsPerPoint": 4.00000000372529,
+        "metresPerPoint": 0.48159297440033905,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 238325588.12423113,
+        "rectY": 105417735.18175781,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 17.999999998656385
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "The pale western strip bears directional road arrows and continues outside the station footprint. Complete own passenger platform caps cannot be distinguished in these screenshots.",
+      "excludedDiagnosticAlias": [
+        139.62234752149584,
+        35.991024999999986
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    },
+    {
+      "stationIndex": 10,
+      "stationID": "002756",
+      "name": "伊奈中央",
+      "physicalCoordinate": [
+        139.61703,
+        35.999455
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/10-002756/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.999454999999955,
+        "longitude": 139.61703000000009,
+        "mapPointsPerPoint": 3.9999999925494194,
+        "metresPerPoint": 0.48154217802661103,
+        "pitch": 0,
+        "rectHeight": 2616.000000014901,
+        "rectWidth": 3996.0000000298023,
+        "rectX": 238321733.09282142,
+        "rectY": 105409965.89596623,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.00000000268723
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "The long pale western strip has directional road arrows and continues outside the station footprint; it is not an established passenger platform. The provisional own-guideway anchor does not establish a platform midpoint.",
+      "excludedDiagnosticAlias": [
+        139.61714801719677,
+        35.999454999999955
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    },
+    {
+      "stationIndex": 11,
+      "stationID": "002747",
+      "name": "羽貫",
+      "physicalCoordinate": [
+        139.60852,
+        36.00716
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/11-002747/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.00716000000001,
+        "longitude": 139.60851999999997,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.4814957427519738,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 238315387.57690313,
+        "rectY": 105402864.06072316,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "The long pale western strip follows the arrow-bearing road beyond the station footprint. No complete distinct own passenger platform caps can be established.",
+      "excludedDiagnosticAlias": [
+        139.60878017427444,
+        36.007164339511164
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    },
+    {
+      "stationIndex": 12,
+      "stationID": "002742",
+      "name": "内宿",
+      "physicalCoordinate": [
+        139.59998,
+        36.013805
+      ],
+      "rawBasemap": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/12-002742/basemap.png",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.013804999999984,
+        "longitude": 139.59997999999987,
+        "mapPointsPerPoint": 3.9999999962747097,
+        "metresPerPoint": 0.48145568828416674,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3995.9999999701977,
+        "rectX": 238309019.69136354,
+        "rectY": 105396738.68887424,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18.000000001343615
+      },
+      "candidateAlias": null,
+      "status": "insufficient-platform-evidence",
+      "nativeAfterAccepted": false,
+      "productionApplied": false,
+      "evidenceGap": "Separate pale fragments and a terminal guideway stub are visible, but the complete own terminal passenger frame and its two longitudinal caps are not established. Do not substitute the stub end or merge pale fragments.",
+      "excludedDiagnosticAlias": [
+        139.6002401742744,
+        36.01386140887133
+      ],
+      "neededForRoot": "Existing wider/label-free saved own-station view identifying both complete passenger caps, or additional own-platform evidence if saved captures cannot resolve them."
+    }
+  ],
+  "productionApplied": false,
+  "nativeAfterAccepted": false
+}

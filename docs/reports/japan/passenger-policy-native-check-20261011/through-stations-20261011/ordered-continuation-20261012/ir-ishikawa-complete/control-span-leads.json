@@ -1,0 +1,32 @@
+[
+  {
+    "interval": 3,
+    "vertex": 13,
+    "incomingMetres": 21.326350329582468,
+    "outgoingMetres": 39.46195298808002
+  },
+  {
+    "interval": 8,
+    "vertex": 2,
+    "incomingMetres": 5.579695660015639,
+    "outgoingMetres": 2.399428442534851
+  },
+  {
+    "interval": 8,
+    "vertex": 3,
+    "incomingMetres": 2.399428442534851,
+    "outgoingMetres": 45.33379747470831
+  },
+  {
+    "interval": 7,
+    "vertex": 1,
+    "incomingMetres": 140.37136157089813,
+    "outgoingMetres": 0.8945510379799942
+  },
+  {
+    "interval": 7,
+    "vertex": 2,
+    "incomingMetres": 0.8945510379799942,
+    "outgoingMetres": 34.49203188761246
+  }
+]

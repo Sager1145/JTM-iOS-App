@@ -1,0 +1,38 @@
+{
+  "ordinal": 25,
+  "lineID": "jp-東京地下鉄-2号線日比谷線",
+  "stationCount": 22,
+  "intervalCount": 21,
+  "intervalIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
+  ],
+  "status": "complete-baseline-analysis; repair-and-platform-acceptance-pending",
+  "guide": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "rootOnly": true,
+  "carryPending": [
+    "Ujina/Minami repair and related six intervals",
+    "Toyama remaining thirteen whole passenger frames",
+    "Yodo rejected proposal",
+    "Hanzomon geographic/platform acceptance"
+  ]
+}

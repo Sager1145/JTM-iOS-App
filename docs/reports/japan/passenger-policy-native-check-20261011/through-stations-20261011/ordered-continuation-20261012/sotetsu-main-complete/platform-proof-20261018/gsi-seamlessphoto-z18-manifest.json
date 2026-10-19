@@ -1,0 +1,143 @@
+{
+  "source": "国土地理院 (GSI) 全国最新写真（シームレス）",
+  "tileDocumentation": "https://maps.gsi.go.jp/help/use.html",
+  "crsDocumentation": "https://maps.gsi.go.jp/development/siyou.html",
+  "datum": "JGD2011 as documented by GSI; untransformed here",
+  "projection": "XYZ Web Mercator",
+  "z": 18,
+  "tileSize": 256,
+  "captureDate": "2026-10-18",
+  "imageAcquisitionDate": "not established",
+  "tiles": [
+    {
+      "x": 232739,
+      "y": 103418,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232739/103418.jpg",
+      "file": "gsi-seamlessphoto-z18/232739-103418.jpg"
+    },
+    {
+      "x": 232739,
+      "y": 103419,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232739/103419.jpg",
+      "file": "gsi-seamlessphoto-z18/232739-103419.jpg"
+    },
+    {
+      "x": 232739,
+      "y": 103420,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232739/103420.jpg",
+      "file": "gsi-seamlessphoto-z18/232739-103420.jpg"
+    },
+    {
+      "x": 232739,
+      "y": 103421,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232739/103421.jpg",
+      "file": "gsi-seamlessphoto-z18/232739-103421.jpg"
+    },
+    {
+      "x": 232739,
+      "y": 103422,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232739/103422.jpg",
+      "file": "gsi-seamlessphoto-z18/232739-103422.jpg"
+    },
+    {
+      "x": 232740,
+      "y": 103418,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232740/103418.jpg",
+      "file": "gsi-seamlessphoto-z18/232740-103418.jpg"
+    },
+    {
+      "x": 232740,
+      "y": 103419,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232740/103419.jpg",
+      "file": "gsi-seamlessphoto-z18/232740-103419.jpg"
+    },
+    {
+      "x": 232740,
+      "y": 103420,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232740/103420.jpg",
+      "file": "gsi-seamlessphoto-z18/232740-103420.jpg"
+    },
+    {
+      "x": 232740,
+      "y": 103421,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232740/103421.jpg",
+      "file": "gsi-seamlessphoto-z18/232740-103421.jpg"
+    },
+    {
+      "x": 232740,
+      "y": 103422,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232740/103422.jpg",
+      "file": "gsi-seamlessphoto-z18/232740-103422.jpg"
+    },
+    {
+      "x": 232741,
+      "y": 103418,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232741/103418.jpg",
+      "file": "gsi-seamlessphoto-z18/232741-103418.jpg"
+    },
+    {
+      "x": 232741,
+      "y": 103419,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232741/103419.jpg",
+      "file": "gsi-seamlessphoto-z18/232741-103419.jpg"
+    },
+    {
+      "x": 232741,
+      "y": 103420,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232741/103420.jpg",
+      "file": "gsi-seamlessphoto-z18/232741-103420.jpg"
+    },
+    {
+      "x": 232741,
+      "y": 103421,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232741/103421.jpg",
+      "file": "gsi-seamlessphoto-z18/232741-103421.jpg"
+    },
+    {
+      "x": 232741,
+      "y": 103422,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232741/103422.jpg",
+      "file": "gsi-seamlessphoto-z18/232741-103422.jpg"
+    },
+    {
+      "x": 232742,
+      "y": 103418,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232742/103418.jpg",
+      "file": "gsi-seamlessphoto-z18/232742-103418.jpg"
+    },
+    {
+      "x": 232742,
+      "y": 103419,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232742/103419.jpg",
+      "file": "gsi-seamlessphoto-z18/232742-103419.jpg"
+    },
+    {
+      "x": 232742,
+      "y": 103420,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232742/103420.jpg",
+      "file": "gsi-seamlessphoto-z18/232742-103420.jpg"
+    },
+    {
+      "x": 232742,
+      "y": 103421,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232742/103421.jpg",
+      "file": "gsi-seamlessphoto-z18/232742-103421.jpg"
+    },
+    {
+      "x": 232742,
+      "y": 103422,
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/18/232742/103422.jpg",
+      "file": "gsi-seamlessphoto-z18/232742-103422.jpg"
+    }
+  ],
+  "mosaic": {
+    "file": "gsi-seamlessphoto-z18-mosaic.png",
+    "topLeftGlobalPixel": [
+      59581184,
+      26475008
+    ],
+    "width": 1024,
+    "height": 1280,
+    "operations": "tile stitching only; no rescale/rotation/geometric warp/annotation"
+  }
+}

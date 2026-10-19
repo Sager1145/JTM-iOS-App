@@ -1,0 +1,73 @@
+{
+  "status": "candidate-only-body-review-endpoints-pending",
+  "intervals": [
+    {
+      "intervalIndex": 10,
+      "rawViews": 8,
+      "pointCount": 52,
+      "literalSourcePointsRetained": 21,
+      "fileSha256": "d19dfaef5ce99c024e7f86677976f9acf7814e33c7719a501e2089d6faea199a",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 11,
+      "rawViews": 11,
+      "pointCount": 87,
+      "literalSourcePointsRetained": 38,
+      "fileSha256": "4583c6cb7b05e5cfd84ca194746829cba71a97329958078d10fb23231e0a7da8",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 12,
+      "rawViews": 6,
+      "pointCount": 38,
+      "literalSourcePointsRetained": 7,
+      "fileSha256": "cdf7a701ba5daf399ed866a9faee95d58ec6948f2c2fac93589910b665b26bbb",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 13,
+      "rawViews": 8,
+      "pointCount": 44,
+      "literalSourcePointsRetained": 6,
+      "fileSha256": "ed5291fbfb3f05b3c13a5b0870d195cc2a50f2f87f4700761a9273cf05580282",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 14,
+      "rawViews": 10,
+      "pointCount": 51,
+      "literalSourcePointsRetained": 35,
+      "fileSha256": "a50ca80fc5bc64c95756130783a2191fb2dd490df290ef0f241fca7c6964858e",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 15,
+      "rawViews": 5,
+      "pointCount": 28,
+      "literalSourcePointsRetained": 13,
+      "fileSha256": "63726e4fc88f79e7024f1d9c21f5bfd632eefe67dc9c9bc440262fdcd0ed0739",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 16,
+      "rawViews": 8,
+      "pointCount": 45,
+      "literalSourcePointsRetained": 5,
+      "fileSha256": "ce1b775e86ccaaee28c07dfdbc003eabfca1ddb6154d623e8139f4e3700dee2a",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    },
+    {
+      "intervalIndex": 17,
+      "rawViews": 4,
+      "pointCount": 21,
+      "literalSourcePointsRetained": 2,
+      "fileSha256": "a8e839fe1841c652c59fddf485e6841920301694e199f3cb0306f1042e155d06",
+      "unresolved": "Both station aliases and precise local approaches must be integrated before freezing."
+    }
+  ],
+  "rawOriginalBasemapsActuallyOpened": 60,
+  "reprojectionsActuallyOpenedInSheets": 60,
+  "initialFalseControlRejected": "Yodo10 road381 badge at view1 pixel539,498; original diagnostic39px offset excluded, final own-band controls limited to20px region with visual confirmation.",
+  "formalAcceptance": false
+}

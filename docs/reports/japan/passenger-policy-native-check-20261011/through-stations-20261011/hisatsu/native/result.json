@@ -1,0 +1,188 @@
+{
+  "status": "passed_visible_native_date_boundaries",
+  "bundleHistoryRevision": "2026-10-11.1",
+  "bundleHistoryEqualsSource": true,
+  "builderMatches": [
+    {
+      "historyId": "jp.hisatsu.yoshimatsu-hayato.resumption.current.sections",
+      "lineName": "肥薩線",
+      "operator": "九州旅客鉄道",
+      "solvedIntervalHits": 10,
+      "rawDisplayIntervalHits": 9,
+      "displayFragmentHits": 10,
+      "displayFragmentHitsStage": "before chain split",
+      "stationHits": 0,
+      "expectedAffectedLength": null,
+      "actualAffectedLength": null,
+      "unmatchedReason": null,
+      "reviewStatus": "matched"
+    },
+    {
+      "historyId": "jp.hisatsu.yoshimatsu-hayato.resumption.current.stations",
+      "lineName": "肥薩線",
+      "operator": "九州旅客鉄道",
+      "solvedIntervalHits": 0,
+      "rawDisplayIntervalHits": 0,
+      "displayFragmentHits": 0,
+      "displayFragmentHitsStage": "before chain split",
+      "stationHits": 10,
+      "expectedAffectedLength": null,
+      "actualAffectedLength": null,
+      "unmatchedReason": null,
+      "reviewStatus": "matched"
+    },
+    {
+      "historyId": "jp.hisatsu.yatsushiro-yoshimatsu.suspension.current.stations",
+      "lineName": "肥薩線",
+      "operator": "九州旅客鉄道",
+      "solvedIntervalHits": 0,
+      "rawDisplayIntervalHits": 0,
+      "displayFragmentHits": 0,
+      "displayFragmentHitsStage": "before chain split",
+      "stationHits": 18,
+      "expectedAffectedLength": null,
+      "actualAffectedLength": null,
+      "unmatchedReason": null,
+      "reviewStatus": "matched"
+    },
+    {
+      "historyId": "jp.hisatsu.yatsushiro-yoshimatsu.suspension.current.sections",
+      "lineName": "肥薩線",
+      "operator": "九州旅客鉄道",
+      "solvedIntervalHits": 18,
+      "rawDisplayIntervalHits": 18,
+      "displayFragmentHits": 18,
+      "displayFragmentHitsStage": "before chain split",
+      "stationHits": 0,
+      "expectedAffectedLength": null,
+      "actualAffectedLength": null,
+      "unmatchedReason": null,
+      "reviewStatus": "matched"
+    }
+  ],
+  "nativeCamera": {
+    "lat": 32.02,
+    "lon": 130.744,
+    "distance": 52641.3,
+    "viewport": [
+      1211,
+      865
+    ]
+  },
+  "dateInput": "ordinary RideEditorView.rideEditorDateInput; editor draft cancelled without saving",
+  "storageID": "493399B4-217A-443B-9B43-7981F0736B57",
+  "fixtureID": "hisatsu-native-date-probe",
+  "fixturePending": true,
+  "fixtureStops": 0,
+  "realUserStoreTouched": false,
+  "networkModeRestored": "Current",
+  "rows": [
+    {
+      "date": "2020-07-03",
+      "visuallyObservedNorthOverlay": true,
+      "visuallyObservedSouthOverlay": true,
+      "renderer": {
+        "lines": 9,
+        "overlays": 7,
+        "vertices": 4667,
+        "networkStations": 32
+      },
+      "screenshot": "2020-07-03.png",
+      "ax": "2020-07-03.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2020-07-04",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": true,
+      "renderer": {
+        "lines": 8,
+        "overlays": 6,
+        "vertices": 3180,
+        "networkStations": 26
+      },
+      "screenshot": "2020-07-04.png",
+      "ax": "2020-07-04.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2025-08-06",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": true,
+      "renderer": {
+        "lines": 8,
+        "overlays": 6,
+        "vertices": 3180,
+        "networkStations": 26
+      },
+      "screenshot": "2025-08-06.png",
+      "ax": "2025-08-06.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2025-08-07",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": false,
+      "renderer": {
+        "lines": 7,
+        "overlays": 5,
+        "vertices": 2113,
+        "networkStations": 18
+      },
+      "screenshot": "2025-08-07.png",
+      "ax": "2025-08-07.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2026-06-28",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": false,
+      "renderer": {
+        "lines": 7,
+        "overlays": 5,
+        "vertices": 2113,
+        "networkStations": 18
+      },
+      "screenshot": "2026-06-28.png",
+      "ax": "2026-06-28.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2026-07-11",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": false,
+      "renderer": {
+        "lines": 7,
+        "overlays": 5,
+        "vertices": 2113,
+        "networkStations": 18
+      },
+      "screenshot": "2026-07-11.png",
+      "ax": "2026-07-11.ax.txt",
+      "visuallyReviewed": true
+    },
+    {
+      "date": "2026-07-12",
+      "visuallyObservedNorthOverlay": false,
+      "visuallyObservedSouthOverlay": true,
+      "renderer": {
+        "lines": 8,
+        "overlays": 6,
+        "vertices": 3151,
+        "networkStations": 25
+      },
+      "screenshot": "2026-07-12.png",
+      "ax": "2026-07-12.ax.txt",
+      "visuallyReviewed": true
+    }
+  ],
+  "visibilityEvidence": "Root visually inspected every screenshot and checked renderer counts; transition AX can retain previous annotation names, so AX label presence is not used as a pixel visibility assertion.",
+  "limits": "Visible northern 矢岳/真幸→吉松 and southern 吉松→栗野/大隅横川; not full-line geographic alignment or route-solve verdict.",
+  "alignmentBatchResumed": {
+    "pausedAt": 52814,
+    "confirmedRunningAt": 52859,
+    "total": 92216,
+    "failed": 6,
+    "planDigestUnchanged": true
+  }
+}

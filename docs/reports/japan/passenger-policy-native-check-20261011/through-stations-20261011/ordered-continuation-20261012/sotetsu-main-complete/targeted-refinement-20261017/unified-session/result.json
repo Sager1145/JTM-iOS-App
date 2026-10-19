@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/candidate-tasks.json",
+  "capturedCount" : 42,
+  "captureIndexPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 5,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/retained-station-seam-review\/observations.md",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-相模鉄道-相鉄本線#0",
+    "jp-相模鉄道-相鉄本線#1",
+    "jp-相模鉄道-相鉄本線#16"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "42\/42 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "pendingCount" : 0,
+  "requestID" : "ordered-32-sotetsu-targeted-z19-20261017",
+  "requestPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/review-notes.json",
+  "runStatusPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:22:25Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

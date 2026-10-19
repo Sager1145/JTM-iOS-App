@@ -1,0 +1,26 @@
+[
+  {
+    "items" : [
+      {
+        "latitude" : 35.239275300000003,
+        "longitude" : 139.07233959999999,
+        "name" : "Ohiradai",
+        "title" : "Ohiradai, Hakone, Ashigarashimo-Gun, Kanagawa, Japan",
+        "url" : ""
+      }
+    ],
+    "query" : "大平台駅"
+  },
+  {
+    "items" : [
+      {
+        "latitude" : 35.091332299999998,
+        "longitude" : 133.11635989999999,
+        "name" : "Miinohara Station",
+        "title" : "Yakawa, Okuizumo, Nita-Gun, Shimane, Japan",
+        "url" : ""
+      }
+    ],
+    "query" : "三井野原駅"
+  }
+]

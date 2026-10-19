@@ -1,0 +1,142 @@
+{
+  "caseIndex": 3,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 3,
+  "source": {
+    "caseIndex": 3,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 3,
+    "fromStationID": "003277",
+    "toStationID": "003335",
+    "camera": [
+      35.7422785,
+      139.753748,
+      0.02219216999998956
+    ],
+    "effectiveCoordinates": [
+      [
+        139.745921,
+        35.747082
+      ],
+      [
+        139.74614,
+        35.74696
+      ],
+      [
+        139.74666,
+        35.74668
+      ],
+      [
+        139.74677,
+        35.74662
+      ],
+      [
+        139.74711,
+        35.74645
+      ],
+      [
+        139.74755,
+        35.74627
+      ],
+      [
+        139.74827,
+        35.74593
+      ],
+      [
+        139.74865,
+        35.74574
+      ],
+      [
+        139.74934,
+        35.74526
+      ],
+      [
+        139.75007,
+        35.74483
+      ],
+      [
+        139.75067,
+        35.7445
+      ],
+      [
+        139.75165,
+        35.74401
+      ],
+      [
+        139.75264,
+        35.74354
+      ],
+      [
+        139.75371,
+        35.74304
+      ],
+      [
+        139.75415,
+        35.74282
+      ],
+      [
+        139.75461,
+        35.74255
+      ],
+      [
+        139.75467,
+        35.74251
+      ],
+      [
+        139.75487,
+        35.74238
+      ],
+      [
+        139.75522,
+        35.74217
+      ],
+      [
+        139.75658,
+        35.74131
+      ],
+      [
+        139.75791,
+        35.74047
+      ],
+      [
+        139.7585,
+        35.74006
+      ],
+      [
+        139.759,
+        35.73967
+      ],
+      [
+        139.75992,
+        35.7389
+      ],
+      [
+        139.76009,
+        35.73875
+      ],
+      [
+        139.76023,
+        35.73863
+      ],
+      [
+        139.76067,
+        35.73826
+      ],
+      [
+        139.761575,
+        35.737475
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t96 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:11;rides:0;budgetDrops:0;vertices:5696;camera:15.36;lod:14.21;backbones:1;networkStations:48;distance:4870.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.742278;centerLon:139.753748;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3649.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:17;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.742278;centerLon:139.753748;distance:4870.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-03.jpg",
+  "observation": "上中里至田端沿货场南侧客运走廊后转向田端，局部南侧偏移随位置变化。保留山手线汇合曲线，不采用货场或新干线中轴。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

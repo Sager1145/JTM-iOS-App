@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "E3620DBD-4F4A-42CF-9230-51891DDA6154",
+  "message" : "批量处理结束。未确认和无可用路线的记录仍保留。 0 项失败 · 0 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "requestID" : "cn-production-gsh-20261018",
+  "resultPath" : "\/private\/tmp\/railmap-cn-native-20261018\/session\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T20:16:53Z"
+}

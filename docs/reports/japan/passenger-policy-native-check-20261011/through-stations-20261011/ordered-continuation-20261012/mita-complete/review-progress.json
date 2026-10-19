@@ -1,0 +1,96 @@
+{
+  "lineID": "jp-東京都-6号線三田線",
+  "ordinal": 27,
+  "baseline": "complete-analysis-with-unresolved-repair-and-platform-findings",
+  "inspectorReview": {
+    "primary": {
+      "sheets": "00..28",
+      "views": 115,
+      "reviewer": "previous root; handoff evidence"
+    },
+    "secondary": {
+      "sheets": "00..28",
+      "views": 115,
+      "newThisChat": "18..28, 43 views"
+    },
+    "third": {
+      "sheets": "00..28",
+      "views": 115,
+      "newThisChat": 115
+    }
+  },
+  "mainOriginal": {
+    "capturedCases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "rootPixelReviewedCases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "invalidBasemapCases": [],
+    "remainingCasesToCapture": [],
+    "currentRunningCase": null,
+    "recapturePending": [],
+    "rejectedHistoricalCases": {
+      "0": "main-original/rejected-00-blank-basemap"
+    },
+    "validPairs": 26,
+    "validFrames": 52
+  },
+  "productionRepairsThisChat": false,
+  "platformAcceptance": "INCOMPLETE; no complete own-frame validation",
+  "notes": [
+    "Main00 pixels are blank grid despite network:rendered AX. Preserve rejected frames and recapture; counters do not establish loaded basemap.",
+    "Inspector candidates: local bends at Sengoku, Suidobashi river crossing, Otemachi north/south, Hibiya north, Mita east approach, Shirokanetakanawa bend and Meguro NE approach; confirm Main before repair.",
+    "Targeted owner query: aliases match all 27; per-key interval arrays match all 26. displayIntervalCoordinates is a numeric-key dictionary, candidate.intervals is an array, so direct container stringify differs without a geometry difference."
+  ]
+}

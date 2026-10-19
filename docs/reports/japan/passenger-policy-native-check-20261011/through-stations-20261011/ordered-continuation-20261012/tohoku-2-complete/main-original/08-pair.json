@@ -1,0 +1,82 @@
+{
+  "caseIndex": 8,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 8,
+  "source": {
+    "caseIndex": 8,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 8,
+    "fromStationID": "003505",
+    "toStationID": "003555",
+    "camera": [
+      35.710207499999996,
+      139.77527750000002,
+      0.013917750000002442
+    ],
+    "effectiveCoordinates": [
+      [
+        139.775855,
+        35.71322
+      ],
+      [
+        139.77507,
+        35.71205
+      ],
+      [
+        139.77487,
+        35.71163
+      ],
+      [
+        139.77482,
+        35.71152
+      ],
+      [
+        139.77474,
+        35.7112
+      ],
+      [
+        139.7747,
+        35.71095
+      ],
+      [
+        139.77474,
+        35.71056
+      ],
+      [
+        139.77493,
+        35.70911
+      ],
+      [
+        139.77495,
+        35.70897
+      ],
+      [
+        139.77495,
+        35.70874
+      ],
+      [
+        139.77494,
+        35.70854
+      ],
+      [
+        139.77486,
+        35.70807
+      ],
+      [
+        139.774715,
+        35.707195
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t72 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:13;overlays:12;rides:0;budgetDrops:0;vertices:5078;camera:16.03;lod:14.88;backbones:1;networkStations:31;distance:3054.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.710207;centerLon:139.775277;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:4570.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:20;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.710207;centerLon:139.775277;distance:3054.7;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-08.jpg",
+  "observation": "上野至御徒町连续，局部线位在客运铁路带西侧；Main 的银座、日比谷、大江户线路分别可辨，自身站台中心未验收。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

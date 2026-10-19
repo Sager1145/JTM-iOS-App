@@ -1,0 +1,7 @@
+Owner: /root/native_capture_owner
+Task: bounded Pro consultation on Osaki passenger platform representatives and branch joins.
+Skill read: /Users/sager/.codex/skills/chatgpt-web-executor/SKILL.md and references/embedded-chat.md.
+Attempt: CUA getBrowser({id:'iab'}).
+Observed error: Browser is not available: iab.
+No owned browser tab was created; no prompt was sent; no answer, conversation URL, or model selection exists. No fallback browser or lower model was used. Root instructed not to retry because the locally reviewed primary JRTT evidence is sufficient for this bounded repair.
+Prepared unsent prompt: native-owner-pro-prompt.txt.

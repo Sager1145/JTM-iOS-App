@@ -1,0 +1,336 @@
+ [level=4]
+    - 'heading "STATUS: READY" [level=2]'
+    - paragraph:
+      - strong: Proceed with a bounded investigation, conditional display fixes, and native Apple-map recheck. Preserve the OSM–GSI-consistent bends and the verified switchback structure unless a specific defect is demonstrated.
+    - paragraph:
+      - text: A local adjustment toward Apple can be justified as an
+      - strong: Apple-specific presentation adjustment
+      - text: ", particularly to satisfy the station-dot requirement. Its justification is the requested appearance; it does not establish that the surveyed geometry is wrong. Every adjustment must preserve passenger-leg identity, fork/stem connectivity, and the mapping back to unchanged physical coordinates and mileage."
+    - paragraph: This recommendation uses your reported local comparisons. No individual coordinate edit or native verification result is certified here.
+    - heading "1. Interpret the evidence narrowly" [level=2]
+    - paragraph:
+      - text: Your reported agreement between current GSI and OSM
+      - strong: at the discrepant bends
+      - text: supports retaining those curves as the physical reference. Once projection and rendering have been checked, the appropriate finding is
+      - strong: “Apple basemap disagreement; generalization or displacement is plausible.”
+      - text: Calling Apple definitively stale would require evidence of its underlying data vintage.
+    - paragraph: "The published GSI information supports several useful qualifications:"
+    - list:
+      - text: GSI lists experimental_bvmap as updated through
+      - strong: 2026-07-01
+      - text: ", while warning that the latest conditions may not be reflected everywhere. It provides tiles through zoom 16, with the additional detail intended for zoom 17 included in zoom 16 and displayed through overzooming. Use that highest-detail source for these local comparisons."
+      - 'link "GitHub: GitHub - gsi-cyberjapan/gsimaps-vector-experiment: 地理院地図Vector提供実験のソース, https://github.com/gsi-cyberjapan/gsimaps-vector-experiment?utm_source=chatgpt.com"':
+        - /url: https://github.com/gsi-cyberjapan/gsimaps-vector-experiment?utm_source=chatgpt.com
+        - generic: GitHub
+      - text: orgGILvl means
+      - strong: source geographic information level
+      - text: and is documented as a string. The value "2500" is useful provenance, but does not itself establish a feature’s survey date, positional error, or passenger use.
+      - 'link "maps.gsi.go.jp: https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf, https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf?utm_source=chatgpt.com"':
+        - /url: https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf?utm_source=chatgpt.com
+        - generic: maps.gsi.go.jp
+      - text: The older experimental_railcl README distinguishes the overall experiment’s
+      - strong: 2014-08-01
+      - text: start from the railway-centreline service’s
+      - strong: 2015-08-03
+      - text: launch. “2014” should therefore not be treated as a verified survey date without additional metadata. Its resemblance to Apple’s western fork is evidence for investigating generalization, not proof that Apple used that dataset.
+      - 'link "GitHub: GitHub - gsi-cyberjapan/experimental_railcl: 地図情報（鉄道中心線）のベクトルタイル提供実験, https://github.com/gsi-cyberjapan/experimental_railcl?utm_source=chatgpt.com"':
+        - /url: https://github.com/gsi-cyberjapan/experimental_railcl?utm_source=chatgpt.com
+        - generic: GitHub
+    - paragraph:
+      - strong: Agreement elsewhere is supporting context, not a substitute for checking the exact replacement span.
+      - text: Conversely, close agreement on the exact span is a strong reason not to call an Apple-directed displacement a source correction.
+    - 'heading "2. Decision criteria: identify where the disagreement first appears" [level=2]'
+    - paragraph: For each remaining local discrepancy, compare the ordered passenger source chain, assembled display geometry before smoothing, final rendered stroke, current GSI reference, and original Apple artwork.
+    - region "Scrollable table":
+      - table:
+        - rowgroup:
+          - row "Decisive observation Classification Concrete action":
+            - columnheader "Decisive observation"
+            - columnheader "Classification"
+            - columnheader "Concrete action"
+        - rowgroup:
+          - row "The selected source contains a bend or stem, but display assembly drops vertices, trims its extent, or bridges across it. Display construction defect Restore the necessary source vertices or correct that local assembly operation. Preserve the existing leg/stem split.":
+            - cell "The selected source contains a bend or stem, but display assembly drops vertices, trims its extent, or bridges across it."
+            - cell "Display construction defect"
+            - cell "Restore the necessary source vertices or correct that local assembly operation. Preserve the existing leg/stem split."
+          - row "The source-derived display span contains an undersampled chord or isolated positional anomaly, while current GSI supplies an unambiguous, better-supported shape for the same passenger leg between stable anchors. Repairable display-input defect Replace only the supported interior span, using the selection rules below.":
+            - cell "The source-derived display span contains an undersampled chord or isolated positional anomaly, while current GSI supplies an unambiguous, better-supported shape for the same passenger leg between stable anchors.":
+              - text: The source-derived display span contains an undersampled chord or isolated positional anomaly, while current GSI supplies an unambiguous, better-supported shape for
+              - strong: the same passenger leg
+              - text: between stable anchors.
+            - cell "Repairable display-input defect"
+            - cell "Replace only the supported interior span, using the selection rules below."
+          - row "The unsmoothed display geometry follows the intended reference, but the final stroke cuts a bend, overshoots, or rounds a protected corner. Renderer defect Correct the responsible local simplification or smoothing behavior. Do not compensate by moving otherwise correct input coordinates.":
+            - cell "The unsmoothed display geometry follows the intended reference, but the final stroke cuts a bend, overshoots, or rounds a protected corner."
+            - cell "Renderer defect"
+            - cell "Correct the responsible local simplification or smoothing behavior. Do not compensate by moving otherwise correct input coordinates."
+          - row "Source, unsmoothed display, rendered stroke, and current GSI agree locally; Apple differs. Basemap disagreement Retain the surveyed representation by default. Consider a separately justified Apple presentation adjustment.":
+            - cell "Source, unsmoothed display, rendered stroke, and current GSI agree locally; Apple differs."
+            - cell "Basemap disagreement"
+            - cell "Retain the surveyed representation by default. Consider a separately justified Apple presentation adjustment."
+          - row "The best-looking match requires choosing another nearby leg, or feature identity and ordering cannot be established. Insufficient correspondence evidence Leave the span unchanged and identify the specific missing evidence.":
+            - cell "The best-looking match requires choosing another nearby leg, or feature identity and ordering cannot be established."
+            - cell "Insufficient correspondence evidence"
+            - cell "Leave the span unchanged and identify the specific missing evidence."
+    - button "Copy table":
+    - button "Expand table":
+    - paragraph:
+      - text: A sharp turn, short segment, or reversal is
+      - strong: an inspection trigger, not proof of a defect
+      - text: ", especially in this switchback setting."
+    - paragraph:
+      - text: Before accepting a positional correction, require the observed difference and proposed improvement to exceed the relevant decoding, sampling, and tracing uncertainty. The reported
+      - strong: 10–25 m
+      - text: disagreement is not yet a measured Apple-pixel residual and should not become either an automatic displacement allowance or a pass threshold.
+    - paragraph:
+      - text: For coordinate comparisons, use
+      - strong: matched-leg, ordered correspondence
+      - text: ", with distances checked in both directions and explicit coverage of bends and stems. An unrestricted nearest-polyline distance can look excellent while matching the opposite side of a hairpin or ignoring a missing stem."
+    - heading "3. Choose interior GSI replacement spans by identity and stable anchors" [level=2]
+    - heading "Establish the passenger chain before selecting geometry" [level=3]
+    - paragraph: Use the existing validated passenger graph to determine inclusion. GSI supplies candidate shape; membership in its railway layer does not establish that a feature belongs to the passenger movement being drawn.
+    - paragraph:
+      - text: GSI’s attributes distinguish single track, multiple track, siding, and station portions. Those distinctions help review candidates but do not independently identify passenger use. In particular, retain an already validated passenger switchback stem even if a mapping category describes it as a siding; exclude unverified freight and service tracks.
+      - 'link "maps.gsi.go.jp: https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf, https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf?utm_source=chatgpt.com"':
+        - /url: https://maps.gsi.go.jp/help/pdf/vector/attribute.pdf?utm_source=chatgpt.com
+        - generic: maps.gsi.go.jp
+    - paragraph: Identify each candidate by its existing leg/stem identity, traversal direction, and ordered connection sequence. Do not construct a path by sorting coordinates or repeatedly choosing the nearest feature.
+    - heading "Bracket only the demonstrated defect" [level=3]
+    - paragraph:
+      - text: Choose the smallest contiguous replacement whose boundaries lie in
+      - strong: already agreeing portions of the same leg
+      - text: ":"
+    - list:
+      - listitem: Select an existing display vertex before the defect and one after it.
+      - listitem: Check their neighboring geometry as well as their positions. Both boundaries must correspond to the same GSI chain in the same order.
+      - listitem: Require the connection to remain unambiguous around each boundary. Two nearby endpoints alone are insufficient in a hairpin.
+      - listitem: Keep switchback junctions, reversal endpoints, station attachments, and corroborated real corners outside automatic replacement spans. A defect involving one of those anchors needs its own explicit local decision.
+    - paragraph: An “interior” span is defined by these protected railway features and stable correspondences, not by an arbitrary distance from an interval endpoint.
+    - heading "Preserve shape through the splice" [level=3]
+    - paragraph: Extract the corresponding ordered GSI subpolyline and retain its meaningful bend vertices. Where tiles split a feature, reconstruct only the demonstrated continuation; proximity to a neighboring rail is not enough.
+    - paragraph: Keep the existing boundary coordinates exactly fixed. Accept the splice only when it meets them without a substantial invented connecting chord or an unexplained kink. If it does not, seek better boundaries within the same bounded, unambiguous leg. If none exist, reject that candidate.
+    - paragraph: For an ordinary curved section, check the incoming and outgoing directions at the splice. At a genuine corner, preserve the intended change of direction—do not require artificial smoothness there.
+    - paragraph: "Two operations must not be mistaken for repairs:"
+    - list:
+      - listitem: Adding interpolated points to an existing straight chord does not recover the missing bend.
+      - listitem: Fitting a smooth curve through the entire switchback can erase a real corner or imply a connection between legs.
+    - paragraph:
+      - text: Store the accepted replacement as
+      - strong: display geometry
+      - text: ", with its original span, GSI provenance, boundary identities, and reason. Keep physical geometry and mileage unchanged."
+    - heading "4. When an Apple-directed display adjustment is justified" [level=2]
+    - paragraph:
+      - strong: "Yes: permit a local Apple presentation adjustment when the same passenger geometry can be represented coherently and the improvement is demonstrated against the original Apple baseline."
+    - paragraph: "Require all of the following:"
+    - list:
+      - strong: Same railway identity.
+      - text: Every adjusted portion corresponds to the same passenger leg or stem before and after.
+      - strong: Explicit, bounded extent.
+      - text: The adjustment names the affected display span and rejoins unchanged geometry at reviewed boundaries.
+      - strong: Preserved topology and visual meaning.
+      - text: The two main legs and terminal stem remain distinct and correctly connected. The adjustment creates no apparent bypass, crossing, or connection to another rail.
+      - strong: Measured presentation benefit.
+      - text: The native comparison demonstrates improved alignment or satisfaction of the station constraint, beyond tracing uncertainty.
+      - strong: A separate physical reference.
+      - text: The original coordinates, graph attachments, route semantics, and mileage remain authoritative.
+    - paragraph:
+      - text: Keep switchback junctions out of automatic adjustment. If a separately reviewed station or shared-node adjustment is necessary, use
+      - strong: one shared display anchor
+      - text: for the affected node and update its incident display parts coherently. Independently moving the endpoints of adjoining parts would break the displayed connection.
+    - paragraph: Retain a mapping from each display location to its original edge and position along that edge. Station dots and the associated normal or highlighted railway stroke must use that same mapping. Routing, physical distance calculations, and physical-geometry exports must continue to use the canonical data.
+    - paragraph: Where Apple’s artwork omits a stem, collapses two legs, or cannot support the actual fork arrangement, preserve the verified arrangement and record the remaining basemap discrepancy. Adopting the older GSI fork merely because it resembles Apple would not establish the required correspondence.
+    - 'heading "5. Station dots: enforce both requirements simultaneously" [level=2]'
+    - paragraph: "I would interpret the requirement conservatively as:"
+    - blockquote:
+      - paragraph:
+        - strong: The entire station dot, including its outline, is inside the correct Apple blue station footprint, and the dot’s centre lies directly on the original Apple passenger railway artwork for that station’s leg or stem.
+    - paragraph: Merely overlapping the railway with the edge of a large dot is insufficient.
+    - heading "First test whether a valid placement exists" [level=3]
+    - paragraph: "For one native map view, let:"
+    - list:
+      - math:
+        - generic: B
+      - generic: B
+      - text: be the original Apple blue footprint for the station;
+      - math:
+        - generic: A
+        - generic: e
+      - text: A
+      - generic: e
+      - text: be the reviewed centreline of the original Apple passenger railway symbol belonging to the station’s correct leg or stem;
+      - math:
+        - generic: D
+        - generic: r
+      - text: D
+      - generic: r
+      - text: be the rendered dot shape, including its outline.
+    - paragraph: The allowable dot centres are
+    - math:
+      - generic: Q
+      - generic: =
+      - generic: (
+      - generic: B
+      - generic: ⊖
+      - generic: D
+      - generic: r
+      - generic: )
+      - generic: ∩
+      - generic: A
+      - generic: e
+    - text: Q = (B ⊖
+    - text: D
+    - generic: r
+    - text: ) ∩
+    - text: A
+    - generic: e
+    - paragraph:
+      - text: Here,
+      - math:
+        - generic: B
+        - generic: ⊖
+        - generic: D
+        - generic: r
+      - generic: B ⊖
+      - text: D
+      - generic: r
+      - text: means the positions where the
+      - strong: whole dot fits inside the footprint
+      - text: . Intersecting that area with
+      - math:
+        - generic: A
+        - generic: e
+      - text: A
+      - generic: e
+      - text: enforces the railway requirement at the same time.
+    - paragraph: This is a proposed acceptance test, not a claim that those Apple features have already been extracted. For this small area, reviewed tracing of the original native crops is sufficient; a global image-recognition system is unnecessary. Record tracing and antialiasing uncertainty as measurement uncertainty, not as permission to move the dot several metres away from the artwork.
+    - heading "If a valid placement exists" [level=3]
+    - paragraph:
+      - text: Choose a point in
+      - math:
+        - generic: Q
+      - generic: Q
+      - text: on the correct passenger leg or stem, favoring the smallest displacement that also permits a valid local continuation of the display railway.
+    - paragraph: "Keep separate:"
+    - list:
+      - listitem: the canonical station position and graph attachment;
+      - listitem: the Apple-specific display anchor;
+      - listitem: the relationship between that display anchor and the original station/edge identity.
+    - paragraph:
+      - text: If the surveyed railway misses the Apple placement, adjust the short station-adjacent
+      - strong: display span
+      - text: so that the custom railway passes through the same dot centre. Moving only the marker would leave the station visually detached from its railway.
+    - paragraph: For a terminal-stem station, the dot must retain that terminal-stem role. Placing it on a nearby through leg because that leg intersects the blue footprint is not an acceptable solution. If a station shares a graph node with other parts, preserve that shared-node relationship in the display mapping.
+    - heading "If no valid placement exists" [level=3]
+    - paragraph: "Handle three situations differently:"
+    - table:
+      - rowgroup:
+        - row "Situation Disposition":
+          - columnheader "Situation"
+          - columnheader "Disposition"
+      - rowgroup:
+        - 'row "The correct original Apple railway visibly does not intersect the station footprint. BLOCKED for that station: the two requested appearance constraints are incompatible in that view."':
+          - cell "The correct original Apple railway visibly does not intersect the station footprint."
+          - 'cell "BLOCKED for that station: the two requested appearance constraints are incompatible in that view."':
+            - strong: "BLOCKED for that station:"
+            - text: the two requested appearance constraints are incompatible in that view.
+        - 'row "The railway intersects the footprint, but the full dot cannot fit at its established size. BLOCKED by marker fit: report the size conflict. Do not silently shrink or suppress the dot to report success."':
+          - cell "The railway intersects the footprint, but the full dot cannot fit at its established size."
+          - 'cell "BLOCKED by marker fit: report the size conflict. Do not silently shrink or suppress the dot to report success."':
+            - strong: "BLOCKED by marker fit:"
+            - text: report the size conflict. Do not silently shrink or suppress the dot to report success.
+        - 'row "The railway or footprint is hidden, indistinct, or its passenger-leg identity is uncertain. NEEDS_CONTEXT for that station: obtain a usable native view or resolve feature identity before deciding feasibility."':
+          - cell "The railway or footprint is hidden, indistinct, or its passenger-leg identity is uncertain."
+          - 'cell "NEEDS_CONTEXT for that station: obtain a usable native view or resolve feature identity before deciding feasibility."':
+            - strong: "NEEDS_CONTEXT for that station:"
+            - text: obtain a usable native view or resolve feature identity before deciding feasibility.
+    - button "Copy table":
+    - button "Expand table":
+    - paragraph: A candidate also fails if the dot can fit but the associated display railway cannot reach it without violating the protected fork/stem arrangement.
+    - paragraph:
+      - text: Drawing a new custom rail beneath the dot does not prove that it lies on the
+      - strong: original Apple artwork
+      - text: . Both requirements must be checked against the preserved original baseline.
+    - heading "Check the applicable viewing scales" [level=3]
+    - paragraph: A point that passes at one scale is not automatically valid across the scales where station dots appear. Check the current inspection scale, adjacent detail levels, and relevant transitions in station artwork.
+    - paragraph: Prefer one stable geographic display anchor. If that anchor cannot satisfy the requirement across the applicable views, record the failing views explicitly. Do not introduce runtime nearest-rail snapping or silently make the station jump between legs.
+    - heading "6. Concrete actions and focused native verification" [level=2]
+    - paragraph: Codex should perform the following work only for the remaining Ohiradai discrepancies and affected stations.
+    - heading "A. Capture a usable baseline before editing" [level=3]
+    - paragraph: For each affected bend, fork, and station, preserve an original native Apple baseline with the actual camera, map configuration, output dimensions, and scale recorded. Use a flat view for the geometric comparison.
+    - paragraph:
+      - text: Generate before, candidate, and reference overlays against
+      - strong: that same baseline
+      - text: . Apple documents the snapshot workflow as generating the map image and then drawing overlays or annotations; Snapshot.point(for:) provides coordinate-to-image positioning. Use that projection rather than aligning independent screenshots by eye.
+      - 'link "developer.apple.com: Displaying Maps, https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/LocationAwarenessPG/MapKit/MapKit.html?utm_source=chatgpt.com, 1 additional source"':
+        - /url: https://developer.apple.com/library/archive/documentation/UserExperience/Conceptual/LocationAwarenessPG/MapKit/MapKit.html?utm_source=chatgpt.com
+        - generic: developer.apple.com
+        - generic: "+1"
+    - heading "B. Measure the relevant disagreement" [level=3]
+    - paragraph: "Maintain distinct measurements for distinct decisions:"
+    - list:
+      - strong: "Source-derived display repair:"
+      - text: compare the matched display span with the accepted current reference, including bend and stem coverage.
+      - strong: "Renderer repair:"
+      - text: compare the final stroke with the projected intended display geometry.
+      - strong: "Apple presentation adjustment:"
+      - text: compare the final display with the reviewed original Apple passenger artwork.
+      - strong: "Station placement:"
+      - text: verify full-dot containment and centre-on-original-rail simultaneously.
+    - paragraph: Report sampled maximums as sampled maximums. Include protected vertices and bend extrema so that a favorable average cannot hide one cut corner. A GSI distance must never be relabeled as an Apple-pixel residual.
+    - heading "C. Apply only candidates that pass the relevant decision gate" [level=3]
+    - paragraph: Use GSI interior replacement for demonstrated display-input defects. Use a local renderer correction for demonstrated stroke defects. Use an explicitly identified Apple display adjustment where the presentation criteria are satisfied.
+    - paragraph: Retain the other spans with their actual unresolved cause.
+    - heading "D. Recheck the actual native rendering after the fix" [level=3]
+    - paragraph: Inspect the affected crop and its unchanged approaches at the relevant scales. Check the normal railway, the station dot, and any associated highlighted path that uses the changed display geometry.
+    - paragraph: "The focused acceptance checks are:"
+    - list:
+      - listitem: Canonical physical coordinates, graph attachments, passenger membership, and mileage remain unchanged.
+      - listitem: Each switchback still has the intended two legs and terminal stem, with coincident shared display junctions and no visual bypass.
+      - listitem: Unmodified boundaries and protected real corners remain intact.
+      - listitem: The final renderer preserves the accepted replacement or display adjustment.
+      - listitem: Each station passes both original-Apple requirements in the views being accepted.
+      - listitem: Any remaining mismatch is recorded with its actual disposition rather than marked repaired.
+    - paragraph: A compact per-location record should contain the decision, changed span or station identity, before/after evidence, relevant measurements, and native recheck result.
+    - heading "Action-changing risks" [level=2]
+    - list:
+      - strong: "Wrong-rail correspondence:"
+      - text: nearby switchback legs or unresolved multiple-track representations can defeat nearest-distance matching. Require explicit ordered passenger-chain identity before replacement or snapping.
+      - strong: "Incompatible Apple geometry:"
+      - text: an omitted stem, collapsed fork, or empty station-placement intersection prevents full Apple alignment under the stated constraints. Preserve the railway topology and mark the affected presentation requirement blocked.
+      - strong: "Invalid comparison conditions:"
+      - text: camera, scale, style, or baseline differences can manufacture an apparent improvement. Reuse one original baseline for the comparison, then verify the actual native view.
+      - strong: "Later artwork changes:"
+      - text: an Apple-specific override can cease to fit after the basemap changes. Keep its evidence and applicable views identifiable so that a changed baseline triggers local re-evaluation, without changing physical railway data.
+    - button "Copy":
+    - button "Rate response":
+    - button "Share":
+    - button "Read aloud":
+    - button "Regenerate response":
+    - button "More actions":
+    - generic: ChatGPT can make mistakes. Check important info.
+    - button "Scroll to bottom":
+    - heading "Latest response" [level=4]
+    - status
+    - button "Add files and more":
+    - textbox "Ask ChatGPT" [active]:
+      - paragraph: Ask ChatGPT
+    - button "Select ChatGPT model":
+      - generic: Pro
+    - button "Dictate":
+    - button "Start Voice":
+- status
+- status
+- status
+- status
+- status
+- status: Response complete
+- dialog:
+  - banner:
+    - heading "Activity" [level=3]
+  - button "Subagents 1 used":
+    - generic: Subagents
+    - generic: 1 used
+  - banner:
+    - button "Outputs" [expanded]:
+      - generic: Outputs
+  - generic: No outputs yet

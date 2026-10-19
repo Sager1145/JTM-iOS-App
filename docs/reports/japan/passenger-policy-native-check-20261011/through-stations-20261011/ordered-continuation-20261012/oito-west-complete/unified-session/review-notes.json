@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-34-oito-west-baseline-20261017",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "lineRender": "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+    "packageVersion": "2025.5.2"
+  },
+  "notes": [
+    {
+      "id": "jp-西日本旅客鉄道-大糸線#2/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "River-valley diagonal/curve reference disagreement, especially point8: red bows southwest and rejoins toward southeast. Same main shape present in display.png; do not blame smoothing. These are concrete shape candidates; labelled blue transit geometry alone is not surveyed physical authority.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000007/basemap.png": "ff561d5015c0deb3c0a0c7664933983651c098a95f5554b1ac768c01e7451bfe",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000007/smooth.png": "bb4db501f136eb07d2b38398bd4983d6628b53323ff11b45f9610befe1c6bf8b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000008/basemap.png": "dcbd4a4ba4012918f2f86dee38ee3bef58218bca66ecd2e632cb08dc9a7c5b7d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000008/smooth.png": "e598b400ec70082f6db0d41eb3977b46f25d100fe47ddc195cc82174958b0c06",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000009/basemap.png": "29a516600e273741e60fb24c7ddaa69707b790f83acef81dc54797a0d86ab125",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000009/smooth.png": "c2e4a0184912529088270efb0c3ad6da307329572b5a447ee4742400c94a6f99",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000010/basemap.png": "3f8b5ac4a2b76b04afb1eb87252b827f10f337b48142ae15f0b0aca07b0a6144",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000010/smooth.png": "6d48cb0b6aaf13992a37db9aecec457913352511dbfec8e5eb23e90ce2af8b53"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線#3/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Repeated S-curve/reference disagreements and Kotaki southeast shoulder. Point16 alternates sides of blue line, so not a single translation. No verified sharp reversal or physical gap. These are concrete shape candidates; labelled blue transit geometry alone is not surveyed physical authority.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000014/basemap.png": "d6bdcca461121871750efb1ec820e4af5fa2a8d9af6ff3092a9ef4f7e658a53d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000014/smooth.png": "1c8010e8503e6c54bc83b1587d036190044c651f0ef00475787beb75ba268419",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000016/basemap.png": "825d5ea50cd29f037bf5856d886fb964669c58491a4838ad4a82ff5ad02a6edd",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000016/smooth.png": "4de1f3b3cb550cc5dd1df64d34810b1827eb00c72f8a98b57253785191b197c1",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000021/basemap.png": "c8d5a6cc83d0d1e9a3d337004fb19438e019bd027d38eb7aeb3a0f81bcd72558",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000021/smooth.png": "1c3247e7ed9e057db93917716112e8e5597fec513a50c306ade6d65ae11d9af7",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000024/basemap.png": "f661bcf22d5b0522c452d9e235d5c52853267e356b162e9c24dd4eb7324aab5b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000024/smooth.png": "a7669c0a6ec2e8f3d96cac042402f32c7c232bcd481539d2d17bf125db4d6b70"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線#4/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Kotaki approach plus mountain-body bends: red and blue change sides, with local chord differences around river/road context. Avoid fitting to route148 or river strokes. These are concrete shape candidates; labelled blue transit geometry alone is not surveyed physical authority.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000000/basemap.png": "b4aba745ea93553cd53799d0f8597de2bd927d5d312d90c80d85e5ee5aa702a2",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000000/smooth.png": "4ca26f5a76943398c99fce78dfeefd1aaebc3f6142151b0cefe3cca31c2ec75e",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000003/basemap.png": "1f8349dd901108869e0967c891b537e8fa2a2a93af24851f149fb320ac5cc5de",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000003/smooth.png": "b119b5d0e0a4313f33d1b09e2fc84237447f926a8eef27e4bb8f91660daac8b4",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000005/basemap.png": "e8a4c599e2edcb60b7e0b3c222d4a8b49e4048c345f938b188e15f1b7e1a8cfb",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000005/smooth.png": "9a5ca43f5fbdb9f303b7698f772690c9e359a0aaed7189fe2cf33a5283331696",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000011/basemap.png": "6368e49de7476f10b8d2a2a49c0aed16fbaceebafed61d8f5062daaf6ba039ab",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000011/smooth.png": "6f04ebf4c2edd4bcf2a19df90b74899d5a6401affcaf10a0910358cbae9a8ab9"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線#5/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Nechi station transverse/approach reference difference and local reverse curve near point9; own blue station caps remain unresolved. These are concrete shape candidates; labelled blue transit geometry alone is not surveyed physical authority.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000000/basemap.png": "0b0d38c13f1e9c13a56404c8f1aed37a8b1415688e99f15d65bf90689f8a37dc",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000000/smooth.png": "c8882d6401da9db26b1a8406afe002515ceab3741721198dda10f4a8d67d41a0",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000001/basemap.png": "32740fded60bec0c62a230c14ecb72106dbe42ae5a1c80f8d4f4d53b3b630dd8",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000001/smooth.png": "0752bc205d611ace9f9d39ce5d01b2c971e380e463d170cb80d31c7076e7cdae",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000009/basemap.png": "e8a938c502fddcbd02760612758b9d17dddd5950ad33c0c35a668c0eccbacb2d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000009/smooth.png": "b9af71b684aae0e2b789d396cc83a85af12e6fd15bdc2d717777f4acbb1302cd"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線#7/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Itoigawa approach turns onto the east-west station corridor; final source-derived endpoint hook remains visible. Resolve the Oito platform3/4 group separately from Hisui and elevated Shinkansen before any fit or alias. These are concrete shape candidates; labelled blue transit geometry alone is not surveyed physical authority.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000008/basemap.png": "f4c31d0fd09694a0e516de7604c39a56fe7f2c809507384b31f9bcd637b53d60",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000008/smooth.png": "ee206664265b2d7c007cc3006451b3c742da4952aa5328bf401a9d0047f49a01",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000010/basemap.png": "2f97eb7207d1cbe83fdaca1847421ab6681e9d8febd6a23a0488ca3f974f4b63",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000010/smooth.png": "134bd56323f37e08f8c8f61b204089d5ac28883362a0f755a4bd8cf89ecb6731",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000011/basemap.png": "1637813cc22788031ac9af4d7d38d9de0bd49908782d07bed05a0a267fcb1045",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000011/smooth.png": "898e614e1a077f85368fbb2153b4fae201e07ce84f0674a049325537adb0b430"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001821",
+      "conclusion": "insufficientEvidence",
+      "note": "Minami-Otari JR West passenger frame must be distinguished from JR East and yard envelope. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000000/000000/basemap.png": "bce6dd32e1c52d5f1971c6412ace32ebca3e9c1d65ca9c48fed8a1d242e174ff",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000000/000000/smooth.png": "9158b0eb316b5da8f91519fc87954ca7c9880b482d2fc12d4cc26c4c4bc0c1cf"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001790",
+      "conclusion": "insufficientEvidence",
+      "note": "Nakatsuchi own blue frame is locatable; longitudinal caps remain unmeasured. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000000/000014/basemap.png": "22164e5035f087e64b31901088ba8d517f02f9d01c2954c82447180ca7c915f3",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000000/000014/smooth.png": "c818867f71c63fae797cc7b2967a6ea26ef8a3c633d8c9b6cb1df42f2a903516"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001772",
+      "conclusion": "insufficientEvidence",
+      "note": "Kita-Otari own frame visible; east-side transverse/approach question remains. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000001/000016/basemap.png": "1806e48e1a8537c713a96d5122db65c627110dd34714750b58e99f6fa8c59c5d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000001/000016/smooth.png": "37a794bc33f24e01c48d4a3daea74566d1ca8753ee48a61ea29c46d3e719c34b"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001734",
+      "conclusion": "insufficientEvidence",
+      "note": "Hiraiwa own frame visible with south approach shape difference; building envelope is not full platform extent. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000023/basemap.png": "93666e825a6d63d221e4edd1eeb4350ad754783114d22d3220d7c4ed48e07aeb",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000002/000023/smooth.png": "fd408f323bac66b594df494e7a870430a9f8add5779cc1d2f6c65c8dfd511750"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001715",
+      "conclusion": "insufficientEvidence",
+      "note": "Kotaki own frame and both approaches visible; local southeast shoulder needs supported own-rail controls. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000024/basemap.png": "f661bcf22d5b0522c452d9e235d5c52853267e356b162e9c24dd4eb7324aab5b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000003/000024/smooth.png": "a7669c0a6ec2e8f3d96cac042402f32c7c232bcd481539d2d17bf125db4d6b70"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001706",
+      "conclusion": "insufficientEvidence",
+      "note": "Nechi own station band visible; transverse position and full platform midpoint unresolved. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000013/basemap.png": "0b0d38c13f1e9c13a56404c8f1aed37a8b1415688e99f15d65bf90689f8a37dc",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000004/000013/smooth.png": "c8882d6401da9db26b1a8406afe002515ceab3741721198dda10f4a8d67d41a0"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001686",
+      "conclusion": "insufficientEvidence",
+      "note": "Kubiki-Ono own station frame visible; no full cap-to-cap midpoint accepted. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000017/basemap.png": "67d03b661bf563a62eface7256c50f664746404f8620178adc969c75c43d626d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000005/000017/smooth.png": "6b7bf6963dce1c085ed512e05c7b7a04b72faee8db0eb8b8820576d0921baac1"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001681",
+      "conclusion": "insufficientEvidence",
+      "note": "Himekawa frame is narrow at z17; whole passenger extent remains unmeasured. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000006/000007/basemap.png": "481720bfbc944def57da28a869e0730f6b77a5d5e8c02891844d23e2b9586554",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000006/000007/smooth.png": "2f56568d65fe12678cbede2d8cebaf27c18eff7ed5e69e277c00da06d0b0a197"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-大糸線/station/001666",
+      "conclusion": "insufficientEvidence",
+      "note": "Itoigawa own conventional group is distinct from elevated Shinkansen. Official dated schematic/platform table identifies Oito3/4, but supplies no WGS84 caps. Retained source hook is a candidate, not proof to follow a neighboring railway. Purple passages, yards and other railway groups are excluded; no alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000011/basemap.png": "1637813cc22788031ac9af4d7d38d9de0bd49908782d07bed05a0a267fcb1045",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000007/000011/smooth.png": "898e614e1a077f85368fbb2153b4fae201e07ce84f0674a049325537adb0b430"
+      }
+    }
+  ]
+}

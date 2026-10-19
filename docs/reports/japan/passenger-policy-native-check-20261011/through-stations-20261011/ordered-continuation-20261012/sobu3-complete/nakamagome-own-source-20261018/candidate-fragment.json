@@ -1,0 +1,1998 @@
+{
+  "format": "jtm-sobu3-nakamagome-own-passenger-fragment-v1",
+  "status": "candidate fragment only; not applied or natively accepted",
+  "retrievedAt": "2026-10-18T20:22:12Z",
+  "lineID": "jp-東日本旅客鉄道-総武線-3",
+  "intervalIndex": 3,
+  "stationIDs": [
+    "004235",
+    "004301"
+  ],
+  "canonicalKilometres": 6.415,
+  "geographicAttribution": "© OpenStreetMap contributors, ODbL 1.0; MLIT N02 2025 source boundaries retained. OSM is secondary geographic evidence, not a new official survey.",
+  "baseline": {
+    "displayCoordinates": [
+      [
+        139.721609,
+        35.601703
+      ],
+      [
+        139.72144,
+        35.60132
+      ],
+      [
+        139.72136,
+        35.60112
+      ],
+      [
+        139.72124,
+        35.60085
+      ],
+      [
+        139.71978,
+        35.59754
+      ],
+      [
+        139.71953,
+        35.59706
+      ],
+      [
+        139.71861,
+        35.59611
+      ],
+      [
+        139.7178,
+        35.59543
+      ],
+      [
+        139.71779,
+        35.59542
+      ],
+      [
+        139.7169,
+        35.59486
+      ],
+      [
+        139.71619,
+        35.59455
+      ],
+      [
+        139.71516,
+        35.59422
+      ],
+      [
+        139.7116,
+        35.59321
+      ],
+      [
+        139.70858,
+        35.59237
+      ],
+      [
+        139.70808,
+        35.59208
+      ],
+      [
+        139.70782,
+        35.59201
+      ],
+      [
+        139.70746,
+        35.5919
+      ],
+      [
+        139.70724,
+        35.59184
+      ],
+      [
+        139.70624,
+        35.59156
+      ],
+      [
+        139.70605,
+        35.59152
+      ],
+      [
+        139.70571,
+        35.59142
+      ],
+      [
+        139.70508,
+        35.59124
+      ],
+      [
+        139.70484,
+        35.59119
+      ],
+      [
+        139.70372,
+        35.59087
+      ],
+      [
+        139.70343,
+        35.59079
+      ],
+      [
+        139.70245,
+        35.59052
+      ],
+      [
+        139.70215,
+        35.59043
+      ],
+      [
+        139.70146,
+        35.59024
+      ],
+      [
+        139.70106,
+        35.59013
+      ],
+      [
+        139.70079,
+        35.59005
+      ],
+      [
+        139.70043,
+        35.58996
+      ],
+      [
+        139.69978,
+        35.58978
+      ],
+      [
+        139.69821,
+        35.58934
+      ],
+      [
+        139.69782,
+        35.58923
+      ],
+      [
+        139.69767,
+        35.58919
+      ],
+      [
+        139.69746,
+        35.58913
+      ],
+      [
+        139.6973,
+        35.58909
+      ],
+      [
+        139.69665,
+        35.58891
+      ],
+      [
+        139.69648,
+        35.58886
+      ],
+      [
+        139.69628,
+        35.58881
+      ],
+      [
+        139.69607,
+        35.58875
+      ],
+      [
+        139.6935,
+        35.58802
+      ],
+      [
+        139.69324,
+        35.58793
+      ],
+      [
+        139.69285,
+        35.58782
+      ],
+      [
+        139.69269,
+        35.58777
+      ],
+      [
+        139.69188,
+        35.58751
+      ],
+      [
+        139.69168,
+        35.58745
+      ],
+      [
+        139.69142,
+        35.58738
+      ],
+      [
+        139.69126,
+        35.58733
+      ],
+      [
+        139.69042,
+        35.58708
+      ],
+      [
+        139.69026,
+        35.58704
+      ],
+      [
+        139.68986,
+        35.58692
+      ],
+      [
+        139.68916,
+        35.58668
+      ],
+      [
+        139.68883,
+        35.58658
+      ],
+      [
+        139.68837,
+        35.58645
+      ],
+      [
+        139.68682,
+        35.58601
+      ],
+      [
+        139.68322,
+        35.58497
+      ],
+      [
+        139.68271,
+        35.58483
+      ],
+      [
+        139.68251,
+        35.58477
+      ],
+      [
+        139.68039,
+        35.58417
+      ],
+      [
+        139.67752,
+        35.58334
+      ],
+      [
+        139.67561,
+        35.58268
+      ],
+      [
+        139.67474,
+        35.58238
+      ],
+      [
+        139.67463,
+        35.58234
+      ],
+      [
+        139.67064,
+        35.58096
+      ],
+      [
+        139.6702,
+        35.58081
+      ],
+      [
+        139.66847,
+        35.58017
+      ],
+      [
+        139.66814,
+        35.58004
+      ],
+      [
+        139.66757,
+        35.57983
+      ],
+      [
+        139.66734,
+        35.57975
+      ],
+      [
+        139.66628,
+        35.57934
+      ],
+      [
+        139.66605,
+        35.57923
+      ],
+      [
+        139.66596,
+        35.57919
+      ],
+      [
+        139.66576,
+        35.57909
+      ],
+      [
+        139.66538154453167,
+        35.57887807187502
+      ],
+      [
+        139.66512203776082,
+        35.57872873307293
+      ],
+      [
+        139.66480622291706,
+        35.57850839713543
+      ],
+      [
+        139.66451978619833,
+        35.57825378671877
+      ],
+      [
+        139.66428965755253,
+        35.57799672812502
+      ],
+      [
+        139.66410849244835,
+        35.57777149583335
+      ],
+      [
+        139.66393467187538,
+        35.5775291263021
+      ],
+      [
+        139.6637681958337,
+        35.577257378645854
+      ],
+      [
+        139.66366537239622,
+        35.5770737653646
+      ],
+      [
+        139.66355765260462,
+        35.57685098125001
+      ],
+      [
+        139.66347931093796,
+        35.5766477825521
+      ],
+      [
+        139.66338872838588,
+        35.576327071354186
+      ],
+      [
+        139.66332017942753,
+        35.57602227330733
+      ],
+      [
+        139.6632712158858,
+        35.57572726796874
+      ],
+      [
+        139.66325407864622,
+        35.57549224296874
+      ],
+      [
+        139.6632675436203,
+        35.575271907031286
+      ],
+      [
+        139.66329202539114,
+        35.57505157109379
+      ],
+      [
+        139.66332,
+        35.57486
+      ],
+      [
+        139.663362,
+        35.574667
+      ]
+    ],
+    "physicalSegment": [
+      6.415,
+      1,
+      [
+        [
+          139.72144,
+          35.60132
+        ],
+        [
+          139.72136,
+          35.60112
+        ],
+        [
+          139.72124,
+          35.60085
+        ],
+        [
+          139.71978,
+          35.59754
+        ],
+        [
+          139.71953,
+          35.59706
+        ],
+        [
+          139.71861,
+          35.59611
+        ],
+        [
+          139.7178,
+          35.59543
+        ],
+        [
+          139.71779,
+          35.59542
+        ],
+        [
+          139.7169,
+          35.59486
+        ],
+        [
+          139.71619,
+          35.59455
+        ],
+        [
+          139.71516,
+          35.59422
+        ],
+        [
+          139.7116,
+          35.59321
+        ],
+        [
+          139.70858,
+          35.59237
+        ],
+        [
+          139.70808,
+          35.59208
+        ],
+        [
+          139.70782,
+          35.59201
+        ],
+        [
+          139.70746,
+          35.5919
+        ],
+        [
+          139.70724,
+          35.59184
+        ],
+        [
+          139.70624,
+          35.59156
+        ],
+        [
+          139.70605,
+          35.59152
+        ],
+        [
+          139.70571,
+          35.59142
+        ],
+        [
+          139.70508,
+          35.59124
+        ],
+        [
+          139.70484,
+          35.59119
+        ],
+        [
+          139.70372,
+          35.59087
+        ],
+        [
+          139.70343,
+          35.59079
+        ],
+        [
+          139.70245,
+          35.59052
+        ],
+        [
+          139.70215,
+          35.59043
+        ],
+        [
+          139.70146,
+          35.59024
+        ],
+        [
+          139.70106,
+          35.59013
+        ],
+        [
+          139.70079,
+          35.59005
+        ],
+        [
+          139.70043,
+          35.58996
+        ],
+        [
+          139.69978,
+          35.58978
+        ],
+        [
+          139.69821,
+          35.58934
+        ],
+        [
+          139.69782,
+          35.58923
+        ],
+        [
+          139.69767,
+          35.58919
+        ],
+        [
+          139.69746,
+          35.58913
+        ],
+        [
+          139.6973,
+          35.58909
+        ],
+        [
+          139.69665,
+          35.58891
+        ],
+        [
+          139.69648,
+          35.58886
+        ],
+        [
+          139.69628,
+          35.58881
+        ],
+        [
+          139.69607,
+          35.58875
+        ],
+        [
+          139.6935,
+          35.58802
+        ],
+        [
+          139.69324,
+          35.58793
+        ],
+        [
+          139.69285,
+          35.58782
+        ],
+        [
+          139.69269,
+          35.58777
+        ],
+        [
+          139.69188,
+          35.58751
+        ],
+        [
+          139.69168,
+          35.58745
+        ],
+        [
+          139.69142,
+          35.58738
+        ],
+        [
+          139.69126,
+          35.58733
+        ],
+        [
+          139.69042,
+          35.58708
+        ],
+        [
+          139.69026,
+          35.58704
+        ],
+        [
+          139.68986,
+          35.58692
+        ],
+        [
+          139.68916,
+          35.58668
+        ],
+        [
+          139.68883,
+          35.58658
+        ],
+        [
+          139.68837,
+          35.58645
+        ],
+        [
+          139.68682,
+          35.58601
+        ],
+        [
+          139.68322,
+          35.58497
+        ],
+        [
+          139.68271,
+          35.58483
+        ],
+        [
+          139.68251,
+          35.58477
+        ],
+        [
+          139.68039,
+          35.58417
+        ],
+        [
+          139.67752,
+          35.58334
+        ],
+        [
+          139.67561,
+          35.58268
+        ],
+        [
+          139.67474,
+          35.58238
+        ],
+        [
+          139.67463,
+          35.58234
+        ],
+        [
+          139.67064,
+          35.58096
+        ],
+        [
+          139.6702,
+          35.58081
+        ],
+        [
+          139.66847,
+          35.58017
+        ],
+        [
+          139.66814,
+          35.58004
+        ],
+        [
+          139.66757,
+          35.57983
+        ],
+        [
+          139.66734,
+          35.57975
+        ],
+        [
+          139.66628,
+          35.57934
+        ],
+        [
+          139.66605,
+          35.57923
+        ],
+        [
+          139.66596,
+          35.57919
+        ],
+        [
+          139.66576,
+          35.57909
+        ],
+        [
+          139.66538154453167,
+          35.57887807187502
+        ],
+        [
+          139.66512203776082,
+          35.57872873307293
+        ],
+        [
+          139.66480622291706,
+          35.57850839713543
+        ],
+        [
+          139.66451978619833,
+          35.57825378671877
+        ],
+        [
+          139.66428965755253,
+          35.57799672812502
+        ],
+        [
+          139.66410849244835,
+          35.57777149583335
+        ],
+        [
+          139.66393467187538,
+          35.5775291263021
+        ],
+        [
+          139.6637681958337,
+          35.577257378645854
+        ],
+        [
+          139.66366537239622,
+          35.5770737653646
+        ],
+        [
+          139.66355765260462,
+          35.57685098125001
+        ],
+        [
+          139.66347931093796,
+          35.5766477825521
+        ],
+        [
+          139.66338872838588,
+          35.576327071354186
+        ],
+        [
+          139.66332017942753,
+          35.57602227330733
+        ],
+        [
+          139.6632712158858,
+          35.57572726796874
+        ],
+        [
+          139.66325407864622,
+          35.57549224296874
+        ],
+        [
+          139.6632675436203,
+          35.575271907031286
+        ],
+        [
+          139.66329202539114,
+          35.57505157109379
+        ],
+        [
+          139.66332,
+          35.57486
+        ],
+        [
+          139.663362,
+          35.574667
+        ]
+      ]
+    ],
+    "stationRows": [
+      [
+        "004235",
+        "西大井",
+        139.721609,
+        35.601703,
+        "Nishi-Ōi",
+        1
+      ],
+      [
+        "004301",
+        "武蔵小杉",
+        139.663362,
+        35.574667,
+        "Musashi-Kosugi",
+        1
+      ]
+    ],
+    "rawN02": {
+      "file": "app/data/rail-sections.json",
+      "featureIndex": 16210,
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "東海道線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "sourceVertexIndices": [
+        10,
+        29
+      ]
+    }
+  },
+  "sources": [
+    {
+      "wayID": 365183512,
+      "version": 18,
+      "timestamp": "2026-10-06T08:49:59Z",
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "105",
+        "name": "東海道本線（品鶴線）",
+        "name:de": "Tōkaidō-Hauptlinie (Hinkaku-Linie)",
+        "name:en": "Tokaido Main Line (Hinkaku Line)",
+        "name:es": "Línea Tokaido (Línea Hinkaku)",
+        "name:fr": "Ligne principale Tōkaidō (Ligne Hinkaku)",
+        "name:it": "Linea principale Tōkaidō (Linea Hinkaku)",
+        "name:ja": "東海道本線（品鶴線）",
+        "name:ja-Hira": "とうかいどうほんせん（ひんかくせん）",
+        "name:ja-Latn": "Tokaido-honsen (Hinkaku-sen)",
+        "name:ja_rm": "Tōkaidō-honsen (Hinkaku-sen)",
+        "name:ko": "도카이도 본선 (힌카쿠선)",
+        "name:ru": "Главная линия Токайдо (Линия Хинкаку)",
+        "name:vi": "Tuyến Tōkaidō chính (Tuyến Hinkaku)",
+        "name:zh": "东海道本线（品鹤线）",
+        "name:zh-Hans": "东海道本线（品鹤线）",
+        "name:zh-Hant": "東海道本線（品鶴線）",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q2028573",
+        "wikipedia": "ja:品鶴線"
+      },
+      "nodes": [
+        {
+          "id": 3692257215,
+          "version": 1,
+          "timestamp": "2015-08-11T20:59:51Z",
+          "coordinate": [
+            139.7091008,
+            35.5925143
+          ]
+        },
+        {
+          "id": 2202950665,
+          "version": 2,
+          "timestamp": "2015-08-11T21:01:32Z",
+          "coordinate": [
+            139.7087699,
+            35.5924257
+          ]
+        },
+        {
+          "id": 1656329602,
+          "version": 3,
+          "timestamp": "2015-08-11T21:01:31Z",
+          "coordinate": [
+            139.7083831,
+            35.5922928
+          ]
+        },
+        {
+          "id": 1656329575,
+          "version": 2,
+          "timestamp": "2015-08-11T21:01:31Z",
+          "coordinate": [
+            139.7080861,
+            35.5921906
+          ]
+        },
+        {
+          "id": 1656329572,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:49Z",
+          "coordinate": [
+            139.7076708,
+            35.5920487
+          ]
+        },
+        {
+          "id": 1656329570,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:49Z",
+          "coordinate": [
+            139.7072105,
+            35.5919185
+          ]
+        },
+        {
+          "id": 1656329568,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:49Z",
+          "coordinate": [
+            139.7067468,
+            35.5917874
+          ]
+        },
+        {
+          "id": 1656329544,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7062574,
+            35.5916353
+          ]
+        },
+        {
+          "id": 1656329533,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7056907,
+            35.5914668
+          ]
+        },
+        {
+          "id": 1656329531,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7051665,
+            35.5913265
+          ]
+        },
+        {
+          "id": 1656329527,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7046412,
+            35.5911863
+          ]
+        },
+        {
+          "id": 1656329523,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7041204,
+            35.5910414
+          ]
+        },
+        {
+          "id": 1656329517,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7035985,
+            35.5908948
+          ]
+        },
+        {
+          "id": 1656329486,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:47Z",
+          "coordinate": [
+            139.7030788,
+            35.5907473
+          ]
+        },
+        {
+          "id": 1656329482,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:47Z",
+          "coordinate": [
+            139.7025569,
+            35.590597
+          ]
+        },
+        {
+          "id": 1656329478,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:47Z",
+          "coordinate": [
+            139.7020305,
+            35.5904421
+          ]
+        },
+        {
+          "id": 1656329473,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:47Z",
+          "coordinate": [
+            139.7015254,
+            35.5902982
+          ]
+        },
+        {
+          "id": 1656329469,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:47Z",
+          "coordinate": [
+            139.7010001,
+            35.5901379
+          ]
+        },
+        {
+          "id": 1656329439,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:46Z",
+          "coordinate": [
+            139.7004782,
+            35.5899913
+          ]
+        },
+        {
+          "id": 1656329436,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:46Z",
+          "coordinate": [
+            139.7000067,
+            35.5898684
+          ]
+        },
+        {
+          "id": 1656329434,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:46Z",
+          "coordinate": [
+            139.6994814,
+            35.589719
+          ]
+        },
+        {
+          "id": 1656329388,
+          "version": 2,
+          "timestamp": "2020-04-27T09:30:10Z",
+          "coordinate": [
+            139.6976702,
+            35.5891936
+          ]
+        }
+      ],
+      "routeIdentities": [
+        {
+          "id": 5426444,
+          "version": 32,
+          "timestamp": "2026-10-08T05:49:00Z",
+          "tags": {
+            "distance": "17.8",
+            "from": "品川",
+            "name": "品鶴線",
+            "name:en": "Hinkaku Line",
+            "name:es": "Línea Hinkaku",
+            "note": "東海道本線の支線",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:short": "JR東日本",
+            "operator:short:en": "JR East",
+            "operator:short:ja": "JR東日本",
+            "operator:wikidata": "Q499071",
+            "ref": "JO",
+            "route": "railway",
+            "to": "鶴見",
+            "type": "route",
+            "wikidata": "Q2028573",
+            "wikipedia": "ja:品鶴線"
+          },
+          "ownMembership": [
+            {
+              "type": "way",
+              "ref": 365183512,
+              "role": ""
+            }
+          ]
+        },
+        {
+          "id": 11664782,
+          "version": 39,
+          "timestamp": "2026-10-07T20:27:27Z",
+          "tags": {
+            "colour": "#000080",
+            "from": "千葉",
+            "from:en": "Chiba",
+            "from:es": "Chiba",
+            "from:ja": "千葉",
+            "from:ja-Latn": "Chiba",
+            "from:ko": "지바",
+            "interval": "20",
+            "name": "横須賀・総武快速線 (千葉 → 大船)",
+            "name:en": "Yokosuka-Sobu Line (Chiba → Ofuna)",
+            "name:es": "Línea Yokosuka-Sobu (Chiba → Ofuna)",
+            "name:ja": "横須賀・総武快速線 (千葉 → 大船)",
+            "name:ja-Latn": "Yokosuka-Sōbu-kaisoku-sen (Chiba → Ōfuna)",
+            "name:ko": "요코스카·소부 쾌속선 (지바 → 오후나)",
+            "network": "東京近郊区間",
+            "network:en": "Tokyo Suburban Area",
+            "network:ko": "요코스카선",
+            "network:metro": "横須賀線",
+            "network:wikidata": "Q73063992",
+            "opening_hours": "Mo-Su 05:00-23:00",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ko": "동일본 여객철도 주식회사",
+            "operator:wikidata": "Q499071",
+            "public_transport:version": "2",
+            "ref": "JO",
+            "route": "train",
+            "to": "大船",
+            "to:en": "Ofuna",
+            "to:es": "Ofuna",
+            "to:ja": "大船",
+            "to:ja-Latn": "Ōfuna",
+            "to:ko": "오후나",
+            "type": "route",
+            "wikidata": "Q1332317",
+            "wikipedia": "ja:横須賀・総武快速線"
+          },
+          "ownMembership": [
+            {
+              "type": "way",
+              "ref": 365183512,
+              "role": ""
+            }
+          ]
+        },
+        {
+          "id": 21262041,
+          "version": 7,
+          "timestamp": "2026-10-07T20:27:27Z",
+          "tags": {
+            "colour": "#000080",
+            "from": "千葉",
+            "from:en": "Chiba",
+            "from:es": "Chiba",
+            "from:ja": "千葉",
+            "from:ja-Latn": "Chiba",
+            "from:ko": "지바",
+            "interval": "20",
+            "name": "横須賀・総武快速線 (千葉 → 久里浜)",
+            "name:en": "Yokosuka-Sobu Line (Chiba → Kurihama)",
+            "name:es": "Línea Yokosuka-Sobu (Chiba → Kurihama)",
+            "name:ja": "横須賀・総武快速線 (千葉 → 久里浜)",
+            "name:ja-Latn": "Yokosuka-Sōbu-kaisoku-sen (Chiba → Kurihama)",
+            "name:ko": "요코스카·소부 쾌속선 (지바 → 구리하마)",
+            "network": "東京近郊区間",
+            "network:en": "Tokyo Suburban Area",
+            "network:ko": "요코스카선",
+            "network:metro": "横須賀線",
+            "network:wikidata": "Q73063992",
+            "opening_hours": "Mo-Su 05:00-23:00",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ko": "동일본 여객철도 주식회사",
+            "operator:wikidata": "Q499071",
+            "public_transport:version": "2",
+            "ref": "JO",
+            "route": "train",
+            "to": "久里浜",
+            "to:en": "Kurihama",
+            "to:es": "Kurihama",
+            "to:ja": "久里浜",
+            "to:ja-Latn": "Kurihama",
+            "to:ko": "구리하마",
+            "type": "route",
+            "wikidata": "Q1332317",
+            "wikipedia": "ja:横須賀・総武快速線"
+          },
+          "ownMembership": [
+            {
+              "type": "way",
+              "ref": 365183512,
+              "role": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "wayID": 751605913,
+      "version": 12,
+      "timestamp": "2026-10-04T07:01:08Z",
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "105",
+        "name": "東海道本線（品鶴線）",
+        "name:de": "Tōkaidō-Hauptlinie (Hinkaku-Linie)",
+        "name:en": "Tokaido Main Line (Hinkaku Line)",
+        "name:es": "Línea Tokaido (Línea Hinkaku)",
+        "name:fr": "Ligne principale Tōkaidō (Ligne Hinkaku)",
+        "name:it": "Linea principale Tōkaidō (Linea Hinkaku)",
+        "name:ja": "東海道本線（品鶴線）",
+        "name:ja-Hira": "とうかいどうほんせん（ひんかくせん）",
+        "name:ja-Latn": "Tokaido-honsen (Hinkaku-sen)",
+        "name:ja_rm": "Tōkaidō-honsen (Hinkaku-sen)",
+        "name:ko": "도카이도 본선 (힌카쿠선)",
+        "name:ru": "Главная линия Токайдо (Линия Хинкаку)",
+        "name:vi": "Tuyến Tōkaidō chính (Tuyến Hinkaku)",
+        "name:zh": "东海道本线（品鹤线）",
+        "name:zh-Hans": "东海道本线（品鹤线）",
+        "name:zh-Hant": "東海道本線（品鶴線）",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500",
+        "wikidata": "Q2028573",
+        "wikipedia": "ja:品鶴線"
+      },
+      "nodes": [
+        {
+          "id": 1656329525,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7041071,
+            35.5910749
+          ]
+        },
+        {
+          "id": 1656329529,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7046268,
+            35.591217
+          ]
+        },
+        {
+          "id": 1656329532,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7051476,
+            35.5913627
+          ]
+        },
+        {
+          "id": 1656329534,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7056695,
+            35.591513
+          ]
+        },
+        {
+          "id": 1656329567,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:48Z",
+          "coordinate": [
+            139.7062329,
+            35.5916742
+          ]
+        },
+        {
+          "id": 1656329569,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:49Z",
+          "coordinate": [
+            139.7067413,
+            35.5918208
+          ]
+        },
+        {
+          "id": 1656329571,
+          "version": 1,
+          "timestamp": "2012-03-02T19:12:49Z",
+          "coordinate": [
+            139.707205,
+            35.591952
+          ]
+        },
+        {
+          "id": 1656329573,
+          "version": 2,
+          "timestamp": "2015-08-11T21:01:31Z",
+          "coordinate": [
+            139.7079062,
+            35.5921693
+          ]
+        },
+        {
+          "id": 3692257212,
+          "version": 1,
+          "timestamp": "2015-08-11T20:59:50Z",
+          "coordinate": [
+            139.7080646,
+            35.5922179
+          ]
+        },
+        {
+          "id": 3692257213,
+          "version": 1,
+          "timestamp": "2015-08-11T20:59:50Z",
+          "coordinate": [
+            139.7083726,
+            35.5923255
+          ]
+        },
+        {
+          "id": 3692257214,
+          "version": 1,
+          "timestamp": "2015-08-11T20:59:50Z",
+          "coordinate": [
+            139.7087588,
+            35.5924516
+          ]
+        },
+        {
+          "id": 3692257217,
+          "version": 1,
+          "timestamp": "2015-08-11T20:59:51Z",
+          "coordinate": [
+            139.7090939,
+            35.5925426
+          ]
+        }
+      ],
+      "routeIdentities": [
+        {
+          "id": 11664583,
+          "version": 48,
+          "timestamp": "2026-10-07T20:27:27Z",
+          "tags": {
+            "colour": "#000080",
+            "from": "大船",
+            "from:en": "Ofuna",
+            "from:es": "Ofuna",
+            "from:ja": "大船",
+            "from:ja-Latn": "Ōfuna",
+            "from:ko": "오후나",
+            "interval": "20",
+            "name": "横須賀・総武快速線 (大船 → 千葉)",
+            "name:en": "Yokosuka-Sobu Line (Ofuna → Chiba)",
+            "name:es": "Línea Yokosuka-Sobu (Ofuna → Chiba)",
+            "name:ja": "横須賀・総武快速線 (大船 → 千葉)",
+            "name:ja-Latn": "Yokosuka-Sōbu-kaisoku-sen (Ōfuna → Chiba)",
+            "name:ko": "요코스카·소부 쾌속선 (오후나 → 지바)",
+            "network:ko": "요코스카선",
+            "network:metro": "横須賀線",
+            "opening_hours": "Mo-Su 05:00-23:00",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ko": "동일본 여객철도 주식회사",
+            "operator:wikidata": "Q499071",
+            "public_transport:version": "2",
+            "ref": "JO",
+            "route": "train",
+            "to": "千葉",
+            "to:en": "Chiba",
+            "to:es": "Chiba",
+            "to:ja": "千葉",
+            "to:ja-Latn": "Chiba",
+            "to:ko": "지바",
+            "type": "route",
+            "wikidata": "Q1332317",
+            "wikipedia": "ja:横須賀・総武快速線"
+          },
+          "ownMembership": [
+            {
+              "type": "way",
+              "ref": 751605913,
+              "role": ""
+            }
+          ]
+        },
+        {
+          "id": 21262040,
+          "version": 11,
+          "timestamp": "2026-10-07T20:27:27Z",
+          "tags": {
+            "colour": "#000080",
+            "from": "久里浜",
+            "from:en": "Kurihama",
+            "from:es": "Kurihama",
+            "from:ja": "久里浜",
+            "from:ja-Latn": "Kurihama",
+            "from:ko": "구리하마",
+            "interval": "20",
+            "name": "横須賀・総武快速線 (久里浜 → 千葉)",
+            "name:en": "Yokosuka-Sobu Line (Kurihama → Chiba)",
+            "name:es": "Línea Yokosuka-Sobu (Kurihama → Chiba)",
+            "name:ja": "横須賀・総武快速線 (久里浜 → 千葉)",
+            "name:ja-Latn": "Yokosuka-Sōbu-kaisoku-sen (Kurihama → Chiba)",
+            "name:ko": "요코스카·소부 쾌속선 (구리하마 → 지바)",
+            "network:ko": "요코스카선",
+            "network:metro": "横須賀線",
+            "opening_hours": "Mo-Su 05:00-23:00",
+            "operator": "東日本旅客鉄道",
+            "operator:en": "East Japan Railway Company",
+            "operator:ja": "東日本旅客鉄道",
+            "operator:ko": "동일본 여객철도 주식회사",
+            "operator:wikidata": "Q499071",
+            "public_transport:version": "2",
+            "ref": "JO",
+            "route": "train",
+            "to": "千葉",
+            "to:en": "Chiba",
+            "to:es": "Chiba",
+            "to:ja": "千葉",
+            "to:ja-Latn": "Chiba",
+            "to:ko": "지바",
+            "type": "route",
+            "wikidata": "Q1332317",
+            "wikipedia": "ja:横須賀・総武快速線"
+          },
+          "ownMembership": [
+            {
+              "type": "way",
+              "ref": 751605913,
+              "role": ""
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "sourceFiles": {
+    "way-365183512-full.json": {
+      "sha256": "7b9a33558d4e6a1aa5179b3b663fc25dbbeebeb4da6b3df9d4591b712f7e4817",
+      "bytes": 5405,
+      "url": "https://api.openstreetmap.org/api/0.6/way/365183512/full.json"
+    },
+    "way-751605913-full.json": {
+      "sha256": "f821b8b2415f31b625e56a8952ba7236756250e2e64081fba71c2fcb587b3e75",
+      "bytes": 3677,
+      "url": "https://api.openstreetmap.org/api/0.6/way/751605913/full.json"
+    },
+    "way-365183512-relations.json": {
+      "sha256": "f7b33f23d16204ce1ef45a284a90a75aa0e7a4bbd0fd3ed4b32e131a7a191f16",
+      "bytes": 130601,
+      "url": "https://api.openstreetmap.org/api/0.6/way/365183512/relations.json"
+    },
+    "way-751605913-relations.json": {
+      "sha256": "465b37f2144805e920255cd7d8715b23087df4d8aea8fefa2c02293194f17488",
+      "bytes": 122905,
+      "url": "https://api.openstreetmap.org/api/0.6/way/751605913/relations.json"
+    }
+  },
+  "candidateFragment": {
+    "fromDisplayVertexIndex": 13,
+    "toDisplayVertexIndex": 32,
+    "chosenWayID": 365183512,
+    "chosenWayVersion": 18,
+    "nodeIDs": [
+      1656329602,
+      1656329575,
+      1656329572,
+      1656329570,
+      1656329568,
+      1656329544,
+      1656329533,
+      1656329531,
+      1656329527,
+      1656329523,
+      1656329517,
+      1656329486,
+      1656329482,
+      1656329478,
+      1656329473,
+      1656329469,
+      1656329439,
+      1656329436,
+      1656329434
+    ],
+    "coordinates": [
+      [
+        139.70858,
+        35.59237
+      ],
+      [
+        139.7083831,
+        35.5922928
+      ],
+      [
+        139.7080861,
+        35.5921906
+      ],
+      [
+        139.7076708,
+        35.5920487
+      ],
+      [
+        139.7072105,
+        35.5919185
+      ],
+      [
+        139.7067468,
+        35.5917874
+      ],
+      [
+        139.7062574,
+        35.5916353
+      ],
+      [
+        139.7056907,
+        35.5914668
+      ],
+      [
+        139.7051665,
+        35.5913265
+      ],
+      [
+        139.7046412,
+        35.5911863
+      ],
+      [
+        139.7041204,
+        35.5910414
+      ],
+      [
+        139.7035985,
+        35.5908948
+      ],
+      [
+        139.7030788,
+        35.5907473
+      ],
+      [
+        139.7025569,
+        35.590597
+      ],
+      [
+        139.7020305,
+        35.5904421
+      ],
+      [
+        139.7015254,
+        35.5902982
+      ],
+      [
+        139.7010001,
+        35.5901379
+      ],
+      [
+        139.7004782,
+        35.5899913
+      ],
+      [
+        139.7000067,
+        35.5898684
+      ],
+      [
+        139.6994814,
+        35.589719
+      ],
+      [
+        139.69821,
+        35.58934
+      ]
+    ],
+    "splicePolicy": "Preserve exact raw N02 boundaries. Replace only the intervening display supports with exact nodes from one own passenger track in its stored southwest direction. No averaging, nearest-track selection, smoothing, Shinkansen geometry, canonical or mileage changes.",
+    "startBoundary": {
+      "rawCoordinate": [
+        139.70858,
+        35.59237
+      ],
+      "witness": {
+        "distanceM": 0.9779184633539092,
+        "insertIndex": 1,
+        "point": [
+          139.70858420934155,
+          35.59236189884047
+        ]
+      },
+      "sourceSegmentNodeIDs": [
+        2202950665,
+        1656329602
+      ]
+    },
+    "endBoundary": {
+      "rawCoordinate": [
+        139.69821,
+        35.58934
+      ],
+      "witness": {
+        "distanceM": 1.0669288010471014,
+        "insertIndex": 20,
+        "point": [
+          139.69820603576093,
+          35.589349037339225
+        ]
+      },
+      "sourceSegmentNodeIDs": [
+        1656329434,
+        1656329388
+      ]
+    }
+  },
+  "comparison": {
+    "method": "Existing projectPointOntoPolyline from app/scripts/railway/jp-manual-corrections/geo.mjs; per-corner local deflection; exact endpoint preservation, no full-line fit.",
+    "oldFragmentMetres": 998.7630054447178,
+    "newFragmentMetres": 996.696615380315,
+    "intervalPointCounts": {
+      "before": 93,
+      "candidate": 94
+    },
+    "maximumContextTurnDegrees": {
+      "before": 17.179446229930868,
+      "candidate": 6.858097821686017
+    },
+    "boundaryContextTurns": {
+      "start": 6.858097821686017,
+      "end": 1.0028739350111273
+    },
+    "retainedNodeEdgeLengthsMetres": [
+      19.765410984925886,
+      29.16068746209181,
+      40.73237605938394,
+      44.06726320444823,
+      44.39057584433766,
+      47.37441531490674,
+      54.56032906878506,
+      49.900823804708146,
+      49.991922881264045,
+      49.772269010590314,
+      49.92786779895837,
+      49.77285016164914,
+      50.06386974260442,
+      50.61945369539242,
+      48.39477462756026,
+      50.73393486395315,
+      49.928371202409565,
+      44.771636471355855,
+      50.32114238836092,
+      122.44664079262903
+    ],
+    "sourceControls": [
+      {
+        "displayVertexIndex": 13,
+        "coordinate": [
+          139.70858,
+          35.59237
+        ],
+        "ownWay365183512": {
+          "distanceM": 0.9779184633539092,
+          "insertIndex": 1,
+          "point": [
+            139.70858420934155,
+            35.59236189884047
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 14,
+        "coordinate": [
+          139.70808,
+          35.59208
+        ],
+        "ownWay365183512": {
+          "distanceM": 11.124314436351375,
+          "insertIndex": 3,
+          "point": [
+            139.70803234281527,
+            35.592172232206806
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 15,
+        "coordinate": [
+          139.70782,
+          35.59201
+        ],
+        "ownWay365183512": {
+          "distanceM": 9.19327289403122,
+          "insertIndex": 3,
+          "point": [
+            139.70778061556885,
+            35.59208622186184
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 16,
+        "coordinate": [
+          139.70746,
+          35.5919
+        ],
+        "ownWay365183512": {
+          "distanceM": 9.354737408997412,
+          "insertIndex": 4,
+          "point": [
+            139.70742601104718,
+            35.59197945924037
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 17,
+        "coordinate": [
+          139.70724,
+          35.59184
+        ],
+        "ownWay365183512": {
+          "distanceM": 9.120694883488841,
+          "insertIndex": 5,
+          "point": [
+            139.70720687536243,
+            35.59191747522108
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 18,
+        "coordinate": [
+          139.70624,
+          35.59156
+        ],
+        "ownWay365183512": {
+          "distanceM": 7.32350356576938,
+          "insertIndex": 7,
+          "point": [
+            139.70621218675234,
+            35.59162185649863
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 19,
+        "coordinate": [
+          139.70605,
+          35.59152
+        ],
+        "ownWay365183512": {
+          "distanceM": 5.601014285394752,
+          "insertIndex": 7,
+          "point": [
+            139.7060287284529,
+            35.591567307842446
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 20,
+        "coordinate": [
+          139.70571,
+          35.59142
+        ],
+        "ownWay365183512": {
+          "distanceM": 5.488756509505115,
+          "insertIndex": 7,
+          "point": [
+            139.7056907,
+            35.5914668
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 21,
+        "coordinate": [
+          139.70508,
+          35.59124
+        ],
+        "ownWay365183512": {
+          "distanceM": 6.6996597413195,
+          "insertIndex": 9,
+          "point": [
+            139.7050568948421,
+            35.591297246919595
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 22,
+        "coordinate": [
+          139.70484,
+          35.59119
+        ],
+        "ownWay365183512": {
+          "distanceM": 5.214764223234815,
+          "insertIndex": 9,
+          "point": [
+            139.7048220158318,
+            35.591234558860876
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 23,
+        "coordinate": [
+          139.70372,
+          35.59087
+        ],
+        "ownWay365183512": {
+          "distanceM": 6.193520342324616,
+          "insertIndex": 11,
+          "point": [
+            139.70369763679017,
+            35.590922647199534
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 24,
+        "coordinate": [
+          139.70343,
+          35.59079
+        ],
+        "ownWay365183512": {
+          "distanceM": 5.981679097867612,
+          "insertIndex": 12,
+          "point": [
+            139.70340820142363,
+            35.59084078991723
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 25,
+        "coordinate": [
+          139.70245,
+          35.59052
+        ],
+        "ownWay365183512": {
+          "distanceM": 4.762004665735061,
+          "insertIndex": 14,
+          "point": [
+            139.70243208041367,
+            35.590560270224316
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 26,
+        "coordinate": [
+          139.70215,
+          35.59043
+        ],
+        "ownWay365183512": {
+          "distanceM": 4.941966016616754,
+          "insertIndex": 14,
+          "point": [
+            139.70213140325234,
+            35.59047179208546
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 27,
+        "coordinate": [
+          139.70146,
+          35.59024
+        ],
+        "ownWay365183512": {
+          "distanceM": 3.981299821213211,
+          "insertIndex": 16,
+          "point": [
+            139.70144453098567,
+            35.59027352209595
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 28,
+        "coordinate": [
+          139.70106,
+          35.59013
+        ],
+        "ownWay365183512": {
+          "distanceM": 2.725404126806581,
+          "insertIndex": 16,
+          "point": [
+            139.70104941069283,
+            35.590152947599584
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 29,
+        "coordinate": [
+          139.70079,
+          35.59005
+        ],
+        "ownWay365183512": {
+          "distanceM": 3.035712392360521,
+          "insertIndex": 17,
+          "point": [
+            139.7007790390355,
+            35.59007580469938
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 30,
+        "coordinate": [
+          139.70043,
+          35.58996
+        ],
+        "ownWay365183512": {
+          "distanceM": 1.9839600292972703,
+          "insertIndex": 18,
+          "point": [
+            139.7004233029562,
+            35.58997699067512
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 31,
+        "coordinate": [
+          139.69978,
+          35.58978
+        ],
+        "ownWay365183512": {
+          "distanceM": 2.511138582226451,
+          "insertIndex": 19,
+          "point": [
+            139.69977083207814,
+            35.589801317061635
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 32,
+        "coordinate": [
+          139.69821,
+          35.58934
+        ],
+        "ownWay365183512": {
+          "distanceM": 1.0669288010471014,
+          "insertIndex": 20,
+          "point": [
+            139.69820603576093,
+            35.589349037339225
+          ]
+        }
+      }
+    ],
+    "otherDirectionAtSuspectedControls": [
+      {
+        "displayVertexIndex": 13,
+        "coordinate": [
+          139.70858,
+          35.59237
+        ],
+        "witness": {
+          "distanceM": 2.3959281434921382,
+          "insertIndex": 9,
+          "point": [
+            139.70857012672596,
+            35.592389995391365
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 14,
+        "coordinate": [
+          139.70808,
+          35.59208
+        ],
+        "witness": {
+          "distanceM": 14.838150295730058,
+          "insertIndex": 7,
+          "point": [
+            139.70802207058534,
+            35.592204851202325
+          ]
+        }
+      },
+      {
+        "displayVertexIndex": 15,
+        "coordinate": [
+          139.70782,
+          35.59201
+        ],
+        "witness": {
+          "distanceM": 13.776516799436617,
+          "insertIndex": 6,
+          "point": [
+            139.707765743768,
+            35.592125772990286
+          ]
+        }
+      }
+    ]
+  },
+  "exclusions": {
+    "shinkansen": {
+      "wayIDs": [
+        365183499,
+        365183500,
+        365183503
+      ],
+      "basis": "Existing retained cache tags 東海道新幹線 / 東海旅客鉄道 / gauge1435 / highspeedyes / bridge-layer. No new Shinkansen acquisition or geometry used."
+    },
+    "otherDirection": "751605913 remains an independent passenger track and identity cross-check. Its vertices are not averaged or spliced into the candidate."
+  },
+  "limits": [
+    "No production mutation, no tests/build/app/native run.",
+    "No Main/follows/family/station-platform or current snapshot acceptance.",
+    "Physical route, station IDs, canonical source and stored km remain unchanged; later builder integration must review measured dependents.",
+    "Boundary residuals measure reference proximity, not geographic accuracy.",
+    "Later native evidence must assess the resulting own-corridor display and seam tangents.",
+    "Opposite way751605913 ends inside this candidate window. Its comparison is limited to the covered suspected controls13..15, never extrapolated to the western boundary."
+  ]
+}

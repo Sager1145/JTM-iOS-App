@@ -1,0 +1,371 @@
+{
+  "format": "jtm-viewed-native-originals-v1",
+  "reviewedAt": "2026-10-18",
+  "scope": "jp-WILLER　TRAINS-宮津線#15 candidate, original basemap+smooth every capture",
+  "requestPath": "/private/tmp/jtm-miyazu15-native-20261018/request.json",
+  "resultPath": "/private/tmp/jtm-miyazu15-native-20261018/result.json",
+  "captureIndexPath": "/private/tmp/jtm-miyazu15-native-20261018/capture-index.json",
+  "processID": 61534,
+  "invocationID": "24B43BEA-6045-4E6D-99B2-371AC9E4E3B9",
+  "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "viewedPairCount": 11,
+  "viewedOriginalCount": 22,
+  "viewingMethod": "Each original PNG actually opened with view_image; no contact sheet, resampling, synthetic overlay or pixel metric.",
+  "capturedDisplayEqualsFrozenCandidate": true,
+  "window": {
+    "oldDecodedStartIndex": 3,
+    "oldDecodedEndIndexInclusive": 28,
+    "retainedBefore": [
+      134.91919,
+      35.60674
+    ],
+    "retainedAfter": [
+      134.90653,
+      35.60458
+    ]
+  },
+  "verdict": "supports-narrow-window-3..28; retained region and own platforms remain pending",
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60679,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.919925,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-0",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000000/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000000/smooth.png"
+        }
+      ],
+      "observation": "Kabutoyama station and east entry: continuous red approach follows the same broad rail bend; station blue fill obscures exact own platform face/centre."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60644912235183,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.91740373915746,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-1",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000001/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000001/smooth.png"
+        }
+      ],
+      "observation": "East splice/first coastal bend: continuous flattening into southwest-going curve; no spur, acute hook or jump onto road178."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60560727325116,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.91505095557523,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-2",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000002/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000002/smooth.png"
+        }
+      ],
+      "observation": "East-to-middle bow: red follows rail-symbol direction on the land side of road/river, without original broad extra south bulge or new angular join."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60507739514444,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.9125611446382,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-3",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000003/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000003/smooth.png"
+        }
+      ],
+      "observation": "Middle bow: long southwest-going segment and gentle western flattening continuous; no new kink or crossing of road178."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.6046789355254,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.9100320077516,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-4",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000004/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000004/smooth.png"
+        }
+      ],
+      "observation": "Western half of replacement: broad gentle countercurve retained, approaching tunnel-marker region without a sharp elbow."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.6047159238489,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.90745783507595,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-5",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000005/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000005/smooth.png"
+        }
+      ],
+      "observation": "Exit near decoded28/retained29: continuous shallow crest and southwest bend. Farther west retained red/blue rail-symbol differences remain; no splice hook observed."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000006",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60411921633848,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.9049986295531,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-6",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000006/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000006/smooth.png"
+        }
+      ],
+      "observation": "Retained tunnel-marker/S curve: red remains continuous but falls south of blue rail symbols on western reach; not physical tunnel-centre proof."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000007",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60364241472801,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.90250400373907,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-7",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000007/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000007/smooth.png"
+        }
+      ],
+      "observation": "Retained Juraku reach: red visibly south of blue rail-symbol centre on shallow western run; no new acute hook, not certified aligned."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000008",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60335200825873,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.8999546427662,
+      "pointOrdinal": 8,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-8",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000008/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000008/smooth.png"
+        }
+      ],
+      "observation": "Retained Kumihama approach: visible southward red/blue difference continues; road/stream crossings remain continuous. No own platform inference."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000009",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.60281546909841,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.89746326379105,
+      "pointOrdinal": 9,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-9",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000009/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000009/smooth.png"
+        }
+      ],
+      "observation": "Kumihama station east approach: long retained red straight south of symbol; station blue fill/parallel symbols cannot identify exact own passenger platform."
+    },
+    {
+      "directory": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000010",
+      "itemID": "jp-WILLER　TRAINS-宮津線#15",
+      "latitude": 35.602299,
+      "lineDependency": "f63d9bad83daefec2d2750ecf1c5434f8e670ce5f149876c74e9bef06316b6dd",
+      "longitude": 134.895112,
+      "pointOrdinal": 10,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#15#point-10",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000010/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-miyazu15-native-20261018/alignment/captures/000000/000010/smooth.png"
+        }
+      ],
+      "observation": "Kumihama station endpoint: unchanged red endpoint/approach amid broad blue station fill and several rail symbols; own face/cap unresolved."
+    }
+  ]
+}

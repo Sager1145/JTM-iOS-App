@@ -1,0 +1,471 @@
+{
+  "format": "jtm-manually-viewed-originals-v1",
+  "date": "2026-10-18",
+  "scope": "Miyazu own interval9 candidate, all32 original basemap/smooth pairs actually opened and visually inspected",
+  "captureIndex": "/private/tmp/jtm-miyazu9-native-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "pairCount": 32,
+  "originalPNGCount": 64,
+  "unavailableItemIDs": [],
+  "views": [
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-0",
+      "pointOrdinal": 0,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000000/view.json",
+      "observationGroup": "station-departure",
+      "captureTimestamp": "2026-10-18T22:22:23Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-1",
+      "pointOrdinal": 1,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000001/view.json",
+      "observationGroup": "repaired-curve-and-both-splices",
+      "captureTimestamp": "2026-10-18T22:22:24Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-2",
+      "pointOrdinal": 2,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000002/view.json",
+      "observationGroup": "repaired-curve-and-both-splices",
+      "captureTimestamp": "2026-10-18T22:22:24Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-3",
+      "pointOrdinal": 3,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000003/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000003/view.json",
+      "observationGroup": "repaired-curve-and-both-splices",
+      "captureTimestamp": "2026-10-18T22:22:24Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-4",
+      "pointOrdinal": 4,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000004/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000004/view.json",
+      "observationGroup": "retained-west-to-north-curve",
+      "captureTimestamp": "2026-10-18T22:22:24Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-5",
+      "pointOrdinal": 5,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000005/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000005/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000005/view.json",
+      "observationGroup": "retained-west-to-north-curve",
+      "captureTimestamp": "2026-10-18T22:22:25Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-6",
+      "pointOrdinal": 6,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000006/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000006/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000006/view.json",
+      "observationGroup": "retained-west-to-north-curve",
+      "captureTimestamp": "2026-10-18T22:22:25Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-7",
+      "pointOrdinal": 7,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000007/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000007/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000007/view.json",
+      "observationGroup": "retained-west-to-north-curve",
+      "captureTimestamp": "2026-10-18T22:22:25Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-8",
+      "pointOrdinal": 8,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000008/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000008/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000008/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:25Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-9",
+      "pointOrdinal": 9,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000009/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000009/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000009/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:25Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-10",
+      "pointOrdinal": 10,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000010/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000010/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000010/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:26Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-11",
+      "pointOrdinal": 11,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000011/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000011/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000011/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:26Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-12",
+      "pointOrdinal": 12,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000012/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000012/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000012/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:26Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-13",
+      "pointOrdinal": 13,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000013/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000013/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000013/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:27Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-14",
+      "pointOrdinal": 14,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000014/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000014/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000014/view.json",
+      "observationGroup": "retained-forest-S-curves",
+      "captureTimestamp": "2026-10-18T22:22:27Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-15",
+      "pointOrdinal": 15,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000015/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000015/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000015/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:27Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-16",
+      "pointOrdinal": 16,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000016/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000016/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000016/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:27Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-17",
+      "pointOrdinal": 17,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000017/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000017/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000017/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:27Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-18",
+      "pointOrdinal": 18,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000018/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000018/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000018/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:28Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-19",
+      "pointOrdinal": 19,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000019/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000019/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000019/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:28Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-20",
+      "pointOrdinal": 20,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000020/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000020/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000020/view.json",
+      "observationGroup": "retained-Sakatoko-river-curve",
+      "captureTimestamp": "2026-10-18T22:22:28Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-21",
+      "pointOrdinal": 21,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000021/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000021/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000021/view.json",
+      "observationGroup": "retained-Taniuchi-northwest-curve",
+      "captureTimestamp": "2026-10-18T22:22:28Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-22",
+      "pointOrdinal": 22,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000022/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000022/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000022/view.json",
+      "observationGroup": "retained-Taniuchi-northwest-curve",
+      "captureTimestamp": "2026-10-18T22:22:29Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-23",
+      "pointOrdinal": 23,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000023/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000023/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000023/view.json",
+      "observationGroup": "retained-Taniuchi-northwest-curve",
+      "captureTimestamp": "2026-10-18T22:22:29Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-24",
+      "pointOrdinal": 24,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000024/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000024/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000024/view.json",
+      "observationGroup": "retained-Tsuneyoshi-river-shoulder-and-offset",
+      "captureTimestamp": "2026-10-18T22:22:29Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-25",
+      "pointOrdinal": 25,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000025/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000025/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000025/view.json",
+      "observationGroup": "retained-Tsuneyoshi-river-shoulder-and-offset",
+      "captureTimestamp": "2026-10-18T22:22:30Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-26",
+      "pointOrdinal": 26,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000026/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000026/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000026/view.json",
+      "observationGroup": "retained-Tsuneyoshi-river-shoulder-and-offset",
+      "captureTimestamp": "2026-10-18T22:22:30Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-27",
+      "pointOrdinal": 27,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000027/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000027/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000027/view.json",
+      "observationGroup": "retained-Tsuneyoshi-river-shoulder-and-offset",
+      "captureTimestamp": "2026-10-18T22:22:30Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-28",
+      "pointOrdinal": 28,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000028/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000028/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000028/view.json",
+      "observationGroup": "retained-Kyotango-Omiya-approach-and-station",
+      "captureTimestamp": "2026-10-18T22:22:30Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-29",
+      "pointOrdinal": 29,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000029/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000029/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000029/view.json",
+      "observationGroup": "retained-Kyotango-Omiya-approach-and-station",
+      "captureTimestamp": "2026-10-18T22:22:31Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-30",
+      "pointOrdinal": 30,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000030/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000030/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000030/view.json",
+      "observationGroup": "retained-Kyotango-Omiya-approach-and-station",
+      "captureTimestamp": "2026-10-18T22:22:31Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "viewpointID": "jp-WILLER　TRAINS-宮津線#9#point-31",
+      "pointOrdinal": 31,
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000031/basemap.png",
+        "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000031/smooth.png"
+      ],
+      "metadataPath": "/private/tmp/jtm-miyazu9-native-20261018/alignment/captures/000000/000031/view.json",
+      "observationGroup": "retained-Kyotango-Omiya-approach-and-station",
+      "captureTimestamp": "2026-10-18T22:22:31Z",
+      "wholeLineRenderDependency": "111d92a934f820481ef5c3e12be9852e4b294960096819704460b3e1c3845829",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    }
+  ],
+  "acceptanceScope": "Supports narrow decoded3..9 display repair only; no whole-interval alignment, station-face or surveyed-centre acceptance; receipt result/freshness not edited."
+}

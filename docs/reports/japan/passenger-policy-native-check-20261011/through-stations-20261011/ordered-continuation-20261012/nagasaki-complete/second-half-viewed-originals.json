@@ -1,0 +1,933 @@
+{
+  "scope": "jp-長崎電気軌道-本線 intervals12..23 excluding21",
+  "reviewedAt": "2026-10-18",
+  "captureIndex": "/private/tmp/jtm-nagasaki-missing-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "pairCount": 27,
+  "originalImageCount": 54,
+  "intervalCounts": {
+    "12": 2,
+    "13": 3,
+    "14": 3,
+    "15": 2,
+    "16": 3,
+    "17": 3,
+    "18": 2,
+    "19": 3,
+    "20": 2,
+    "22": 2,
+    "23": 2
+  },
+  "scopeMissingPairs": [],
+  "falseCornerCandidates": [],
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000000",
+      "itemID": "jp-長崎電気軌道-本線#12",
+      "latitude": 32.76398,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.86449,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#12#point-0",
+      "interval": 12,
+      "fromStation": "茂里町",
+      "toStation": "スタジアムシティノース",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Morimachi→Stadium City North: gentle street/median alignment through Zenza-machi; no isolated red hook or false V visible.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000001",
+      "itemID": "jp-長崎電気軌道-本線#12",
+      "latitude": 32.761325,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.865705,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#12#point-1",
+      "interval": 12,
+      "fromStation": "茂里町",
+      "toStation": "スタジアムシティノース",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000004/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Morimachi→Stadium City North: gentle street/median alignment through Zenza-machi; no isolated red hook or false V visible.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000000",
+      "itemID": "jp-長崎電気軌道-本線#13",
+      "latitude": 32.761325,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.865705,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#13#point-0",
+      "interval": 13,
+      "fromStation": "スタジアムシティノース",
+      "toStation": "スタジアムシティサウス",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City North→South: broad compound street bend via Takaracho follows basemap corridor; preserve real direction changes.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000001",
+      "itemID": "jp-長崎電気軌道-本線#13",
+      "latitude": 32.75882631251366,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.86747524206066,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#13#point-1",
+      "interval": 13,
+      "fromStation": "スタジアムシティノース",
+      "toStation": "スタジアムシティサウス",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City North→South: broad compound street bend via Takaracho follows basemap corridor; preserve real direction changes.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000002",
+      "itemID": "jp-長崎電気軌道-本線#13",
+      "latitude": 32.758105,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.86862,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#13#point-2",
+      "interval": 13,
+      "fromStation": "スタジアムシティノース",
+      "toStation": "スタジアムシティサウス",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000002/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000005/000002/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City North→South: broad compound street bend via Takaracho follows basemap corridor; preserve real direction changes.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000000",
+      "itemID": "jp-長崎電気軌道-本線#14",
+      "latitude": 32.758105,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.86862,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#14#point-0",
+      "interval": 14,
+      "fromStation": "スタジアムシティサウス",
+      "toStation": "八千代町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City South→Yachiyomachi: longitudinal street run and Nishizaka approach visible in overlap; no concrete false corner.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000001",
+      "itemID": "jp-長崎電気軌道-本線#14",
+      "latitude": 32.75532941205513,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87021947992207,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#14#point-1",
+      "interval": 14,
+      "fromStation": "スタジアムシティサウス",
+      "toStation": "八千代町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City South→Yachiyomachi: longitudinal street run and Nishizaka approach visible in overlap; no concrete false corner.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000002",
+      "itemID": "jp-長崎電気軌道-本線#14",
+      "latitude": 32.754605,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87042,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#14#point-2",
+      "interval": 14,
+      "fromStation": "スタジアムシティサウス",
+      "toStation": "八千代町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000002/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000006/000002/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Stadium City South→Yachiyomachi: longitudinal street run and Nishizaka approach visible in overlap; no concrete false corner.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000000",
+      "itemID": "jp-長崎電気軌道-本線#15",
+      "latitude": 32.754605,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87042,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#15#point-0",
+      "interval": 15,
+      "fromStation": "八千代町",
+      "toStation": "長崎駅前",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Yachiyomachi→Nagasaki-ekimae: real bends toward station forecourt road; southern own continuation remains distinct from eastbound junction arm.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000001",
+      "itemID": "jp-長崎電気軌道-本線#15",
+      "latitude": 32.752555,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87182,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#15#point-1",
+      "interval": 15,
+      "fromStation": "八千代町",
+      "toStation": "長崎駅前",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000007/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Yachiyomachi→Nagasaki-ekimae: real bends toward station forecourt road; southern own continuation remains distinct from eastbound junction arm.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000000",
+      "itemID": "jp-長崎電気軌道-本線#16",
+      "latitude": 32.752555,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87182,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#16#point-0",
+      "interval": 16,
+      "fromStation": "長崎駅前",
+      "toStation": "五島町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Nagasaki-ekimae→Goto-machi: straight/gentle southbound road median through Asahi bridge intersection; no false apex or reversal.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000001",
+      "itemID": "jp-長崎電気軌道-本線#16",
+      "latitude": 32.74945507629237,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87221280773534,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#16#point-1",
+      "interval": 16,
+      "fromStation": "長崎駅前",
+      "toStation": "五島町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Nagasaki-ekimae→Goto-machi: straight/gentle southbound road median through Asahi bridge intersection; no false apex or reversal.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000002",
+      "itemID": "jp-長崎電気軌道-本線#16",
+      "latitude": 32.749269,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87222,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#16#point-2",
+      "interval": 16,
+      "fromStation": "長崎駅前",
+      "toStation": "五島町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000002/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000008/000002/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Nagasaki-ekimae→Goto-machi: straight/gentle southbound road median through Asahi bridge intersection; no false apex or reversal.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000000",
+      "itemID": "jp-長崎電気軌道-本線#17",
+      "latitude": 32.749269,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87222,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#17#point-0",
+      "interval": 17,
+      "fromStation": "五島町",
+      "toStation": "大波止",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Goto-machi→Ohato: broad southbound street curvature follows basemap; do not replace with straight harbour-side chord.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000001",
+      "itemID": "jp-長崎電気軌道-本線#17",
+      "latitude": 32.74614262301736,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87218502901337,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#17#point-1",
+      "interval": 17,
+      "fromStation": "五島町",
+      "toStation": "大波止",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Goto-machi→Ohato: broad southbound street curvature follows basemap; do not replace with straight harbour-side chord.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000002",
+      "itemID": "jp-長崎電気軌道-本線#17",
+      "latitude": 32.74564,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87206,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#17#point-2",
+      "interval": 17,
+      "fromStation": "五島町",
+      "toStation": "大波止",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000002/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000009/000002/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Goto-machi→Ohato: broad southbound street curvature follows basemap; do not replace with straight harbour-side chord.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000000",
+      "itemID": "jp-長崎電気軌道-本線#18",
+      "latitude": 32.74564,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87206,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#18#point-0",
+      "interval": 18,
+      "fromStation": "大波止",
+      "toStation": "出島",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Ohato→Dejima: real bend into Dejima-dori visible; red follows street corridor without isolated corner.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000001",
+      "itemID": "jp-長崎電気軌道-本線#18",
+      "latitude": 32.743908,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.871798,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#18#point-1",
+      "interval": 18,
+      "fromStation": "大波止",
+      "toStation": "出島",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000010/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Ohato→Dejima: real bend into Dejima-dori visible; red follows street corridor without isolated corner.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000000",
+      "itemID": "jp-長崎電気軌道-本線#19",
+      "latitude": 32.743908,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.871798,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#19#point-0",
+      "interval": 19,
+      "fromStation": "出島",
+      "toStation": "新地中華街",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Dejima→Shinchi Chinatown: southeast street run then substantial northeast turn at Tsukimachi-dori is real in basemap; preserve.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000001",
+      "itemID": "jp-長崎電気軌道-本線#19",
+      "latitude": 32.74256742053904,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87470754637286,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#19#point-1",
+      "interval": 19,
+      "fromStation": "出島",
+      "toStation": "新地中華街",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Dejima→Shinchi Chinatown: southeast street run then substantial northeast turn at Tsukimachi-dori is real in basemap; preserve.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000002",
+      "itemID": "jp-長崎電気軌道-本線#19",
+      "latitude": 32.742835,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87494,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#19#point-2",
+      "interval": 19,
+      "fromStation": "出島",
+      "toStation": "新地中華街",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000002/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000011/000002/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Dejima→Shinchi Chinatown: southeast street run then substantial northeast turn at Tsukimachi-dori is real in basemap; preserve.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000000",
+      "itemID": "jp-長崎電気軌道-本線#20",
+      "latitude": 32.742835,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87494,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#20#point-0",
+      "interval": 20,
+      "fromStation": "新地中華街",
+      "toStation": "西浜町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Shinchi Chinatown→Nishihamachi: diagonal corridor and bridge approach into junction; sharper meeting with eastbound line is consistent with visible tram/road junction; broad shading limits individual rail proof.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000001",
+      "itemID": "jp-長崎電気軌道-本線#20",
+      "latitude": 32.74372,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.87604,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#20#point-1",
+      "interval": 20,
+      "fromStation": "新地中華街",
+      "toStation": "西浜町",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000013/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Shinchi Chinatown→Nishihamachi: diagonal corridor and bridge approach into junction; sharper meeting with eastbound line is consistent with visible tram/road junction; broad shading limits individual rail proof.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000000",
+      "itemID": "jp-長崎電気軌道-本線#22",
+      "latitude": 32.743415,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.877785,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#22#point-0",
+      "interval": 22,
+      "fromStation": "観光通",
+      "toStation": "思案橋",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Kankodori→Shianbashi: eastbound street curve follows own corridor; no detached false point apparent.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000001",
+      "itemID": "jp-長崎電気軌道-本線#22",
+      "latitude": 32.742675,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.88034,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#22#point-1",
+      "interval": 22,
+      "fromStation": "観光通",
+      "toStation": "思案橋",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000014/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Kankodori→Shianbashi: eastbound street curve follows own corridor; no detached false point apparent.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000000",
+      "itemID": "jp-長崎電気軌道-本線#23",
+      "latitude": 32.742675,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.88034,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#23#point-0",
+      "interval": 23,
+      "fromStation": "思案橋",
+      "toStation": "崇福寺",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000000/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000000/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Shianbashi→Sofukuji: real southeast bend at Aburayamachi then terminal approach; red stops within tram corridor, no visible terminal hook.",
+      "falseCornerCandidate": false
+    },
+    {
+      "directory": "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000001",
+      "itemID": "jp-長崎電気軌道-本線#23",
+      "latitude": 32.74112,
+      "lineDependency": "7324a91d71b3cbd439ce05beaaf39972a89d5b26c274747e8bc9ba477a9965cf",
+      "longitude": 129.882585,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-長崎電気軌道-本線#23#point-1",
+      "interval": 23,
+      "fromStation": "思案橋",
+      "toStation": "崇福寺",
+      "viewedOriginalFiles": [
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000001/basemap.png",
+        "/private/tmp/jtm-nagasaki-missing-20261018/alignment/captures/000015/000001/smooth.png"
+      ],
+      "filesPresent": [
+        true,
+        true
+      ],
+      "reviewMethod": "functions.view_image; original stored file; no pixel edits/composites",
+      "observedFinding": "Shianbashi→Sofukuji: real southeast bend at Aburayamachi then terminal approach; red stops within tram corridor, no visible terminal hook.",
+      "falseCornerCandidate": false
+    }
+  ],
+  "limits": [
+    "Pixel-only visual review, no survey or exact paired-rail centre proof.",
+    "All output scenes show the complete own line context; interval-specific findings are restricted to named scope.",
+    "Interval21 excluded by explicit assignment and left to existing legacy review.",
+    "No recapture, app/native launch, build, test or production edit; IR research unchanged.",
+    "No numerical pixel residual measurement or capture-to-current-source bit comparison performed in this pass."
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.73006870935917,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.464424000000001,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.62046599999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.463502661825274,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61985111362924,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.462653799182227,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61909282356308,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.461808026472433,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61832950016151,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.460977055518612,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61754193482642,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.460151904953086,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61674521739647,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-相模鉄道-相鉄本線#0",
+      "latitude" : 35.459845000000001,
+      "lineDependency" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+      "longitude" : 139.61646500000001,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-相模鉄道-相鉄本線#0#point-6"
+    }
+  ]
+}

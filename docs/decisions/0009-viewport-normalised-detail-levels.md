@@ -4,7 +4,7 @@
 - Date: 2026-09-10
 - Decision owners: Project maintainers
 - Supersedes: The 2026-09-08 "same scale, same detail" rule in
-  `docs/MAP_DETAIL_LEVELS_2026-09-08.md` (0006's LOD work)
+  `docs/reports/map-display/MAP_DETAIL_LEVELS_2026-09-08.md` (0006's LOD work)
 
 ## Context
 

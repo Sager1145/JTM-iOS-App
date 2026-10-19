@@ -1,0 +1,138 @@
+{
+  "status": "plan-only",
+  "candidateRevision": "v1",
+  "cases": [
+    {
+      "intervalIndex": 0,
+      "fromStationID": "002914",
+      "toStationID": "002881",
+      "camera": [
+        35.91396265457336,
+        139.61973422817238,
+        0.018841871933595655
+      ],
+      "coordinateCount": 33
+    },
+    {
+      "intervalIndex": 1,
+      "fromStationID": "002881",
+      "toStationID": "002857",
+      "camera": [
+        35.92798492208287,
+        139.61680958936537,
+        0.023224930594924587
+      ],
+      "coordinateCount": 6
+    },
+    {
+      "intervalIndex": 2,
+      "fromStationID": "002857",
+      "toStationID": "002844",
+      "camera": [
+        35.939216640449175,
+        139.61742174966824,
+        0.010470224503997372
+      ],
+      "coordinateCount": 8
+    },
+    {
+      "intervalIndex": 3,
+      "fromStationID": "002844",
+      "toStationID": "002835",
+      "camera": [
+        35.946336315689365,
+        139.6187646140862,
+        0.010888801216584199
+      ],
+      "coordinateCount": 8
+    },
+    {
+      "intervalIndex": 4,
+      "fromStationID": "002835",
+      "toStationID": "002824",
+      "camera": [
+        35.95359217238929,
+        139.62011534292228,
+        0.010878768883177514
+      ],
+      "coordinateCount": 8
+    },
+    {
+      "intervalIndex": 5,
+      "fromStationID": "002824",
+      "toStationID": "002812",
+      "camera": [
+        35.96052704339454,
+        139.62148062698378,
+        0.009925844132581574
+      ],
+      "coordinateCount": 8
+    },
+    {
+      "intervalIndex": 6,
+      "fromStationID": "002812",
+      "toStationID": "002802",
+      "camera": [
+        35.967504134472804,
+        139.62286591104518,
+        0.011005429102205255
+      ],
+      "coordinateCount": 8
+    },
+    {
+      "intervalIndex": 7,
+      "fromStationID": "002802",
+      "toStationID": "002787",
+      "camera": [
+        35.975650460141054,
+        139.62412924173367,
+        0.013433547902554466
+      ],
+      "coordinateCount": 5
+    },
+    {
+      "intervalIndex": 8,
+      "fromStationID": "002787",
+      "toStationID": "002770",
+      "camera": [
+        35.98550536402207,
+        139.62353963244914,
+        0.016131163740475074
+      ],
+      "coordinateCount": 5
+    },
+    {
+      "intervalIndex": 9,
+      "fromStationID": "002770",
+      "toStationID": "002756",
+      "camera": [
+        35.99514856374006,
+        139.61978734732764,
+        0.012798435413490239
+      ],
+      "coordinateCount": 5
+    },
+    {
+      "intervalIndex": 10,
+      "fromStationID": "002756",
+      "toStationID": "002747",
+      "camera": [
+        36.00342188683493,
+        139.61282252965057,
+        0.01202153387111693
+      ],
+      "coordinateCount": 7
+    },
+    {
+      "intervalIndex": 11,
+      "fromStationID": "002747",
+      "toStationID": "002742",
+      "camera": [
+        36.01064523683165,
+        139.60435342027657,
+        0.009981709992512765
+      ],
+      "coordinateCount": 4
+    }
+  ]
+}

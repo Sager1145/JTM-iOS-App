@@ -1,0 +1,167 @@
+{
+  "lineID": "jp-とさでん交通-駅前線",
+  "reviewer": "parent",
+  "reviewedPairs": 6,
+  "originalPNGsActuallyViewed": 12,
+  "retainedPairs": 4,
+  "newPairs": 2,
+  "wholeLineAcceptance": false,
+  "views": [
+    {
+      "source": "retained",
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000001",
+      "viewpointID": "jp-とさでん交通-駅前線#0#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56389,
+        "longitude": 133.54337,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915538026678726,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233790785.9492409,
+        "rectY": 107619680.60582432,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      }
+    },
+    {
+      "source": "retained",
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000000",
+      "viewpointID": "jp-とさでん交通-駅前線#0#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000265/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.566515,
+        "longitude": 133.543695,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915240795653929,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233791028.28680536,
+        "rectY": 107617331.58091752,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      }
+    },
+    {
+      "source": "retained",
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000001",
+      "viewpointID": "jp-とさでん交通-駅前線#2#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.559097,
+        "longitude": 133.542788,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916080688288889,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233790351.978587,
+        "rectY": 107623969.51737782,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      }
+    },
+    {
+      "source": "retained",
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000000",
+      "viewpointID": "jp-とさでん交通-駅前線#2#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000267/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.562115,
+        "longitude": 133.54316,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991573899962008,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233790629.36189157,
+        "rectY": 107621268.9536286,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      }
+    },
+    {
+      "source": "new missing-only",
+      "intervalIndex": 1,
+      "directory": "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000000",
+      "viewpointID": "jp-とさでん交通-駅前線#1#point-0",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.56389,
+        "longitude": 133.54337,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9915538026678726,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788481.9492409,
+        "rectY": 107617952.60582432,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      }
+    },
+    {
+      "source": "new missing-only",
+      "intervalIndex": 1,
+      "directory": "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000001",
+      "viewpointID": "jp-とさでん交通-駅前線#1#point-1",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-tosaden-ekimae-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.562115,
+        "longitude": 133.54316,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.991573899962008,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788325.36189157,
+        "rectY": 107619540.9536286,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      }
+    }
+  ]
+}

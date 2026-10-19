@@ -1,0 +1,32 @@
+[
+  {
+    "name": "muden-guard",
+    "camera": [
+      33.28286,
+      132.60061,
+      0.0024
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.28166,
+        "lon": 132.59926
+      },
+      {
+        "lat": 33.28166,
+        "lon": 132.60196
+      },
+      {
+        "lat": 33.28406,
+        "lon": 132.60196
+      },
+      {
+        "lat": 33.28406,
+        "lon": 132.59926
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:18.61;lod:17.46;backbones:0;networkStations:1;distance:526.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.282860;centerLon:132.600610;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2887.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "rejected retained guard: own narrow light platform approximately(666,458)–(918,415), longitudinal midpoint~(792,436.5), own sleeper-rail normal~(789,420), current dot~(828,441). Beyond actual half-lane; Muden009423 alias and both Yodo17/18 complete intervals must be owned. Highzoom raw freeze pending."
+  }
+]

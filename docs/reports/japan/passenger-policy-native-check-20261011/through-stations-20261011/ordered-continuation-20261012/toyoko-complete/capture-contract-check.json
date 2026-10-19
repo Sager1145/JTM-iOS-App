@@ -1,0 +1,14 @@
+{
+  "views": 6,
+  "intervalCounts": {
+    "16": 6
+  },
+  "statusCounts": {
+    "captured": 6
+  },
+  "pngSizeCounts": {
+    "(1024, 768)": 18
+  },
+  "maximumReturnedZoomError": 1.7493562154413667e-11,
+  "scope": "Capture contract only, not alignment acceptance"
+}

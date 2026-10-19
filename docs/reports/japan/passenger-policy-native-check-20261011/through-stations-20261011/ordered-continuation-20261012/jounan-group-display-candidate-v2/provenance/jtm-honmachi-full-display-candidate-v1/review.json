@@ -1,0 +1,60 @@
+{
+  "format": "jtm-honmachi-full-display-candidate-review-v1",
+  "verdict": "READY_FOR_ROOT_STATIC_REVIEW",
+  "claimsLimitedTo": "temporary raw-cartography candidate; no native/Main acceptance",
+  "checks": {
+    "finiteCoordinates": true,
+    "zeroLengthEdges": [],
+    "adjacentJoins": [
+      {
+        "left": 0,
+        "right": 1,
+        "exact": true
+      },
+      {
+        "left": 1,
+        "right": 2,
+        "exact": true
+      },
+      {
+        "left": 2,
+        "right": 3,
+        "exact": true
+      }
+    ],
+    "physicalTopologyChanged": false,
+    "intervalCount": 4,
+    "rawReprojectionCount": 9,
+    "expectedRawReprojectionCount": 9,
+    "allRawReprojectionsPresent": true,
+    "edgeMetres": {
+      "min": 7.079762553022346,
+      "max": 7.470844284110037
+    }
+  },
+  "visualReview": {
+    "allNineContactPanelsViewed": true,
+    "focusedFullPanelsViewed": [
+      "interval0-view0",
+      "interval0-view1",
+      "interval1-view1",
+      "interval2-view1",
+      "interval3-view0",
+      "interval3-view1",
+      "interval3-view2"
+    ],
+    "findings": [
+      "Hommachi 6 endpoint remains below Loop crossing on independent north-south terminal frame",
+      "Hommachi 5 and 4 select nearest identified face rather than a staggered-frame gap",
+      "Hommachi 3 point sits at paired-face chainage on own black rail",
+      "Hommachi 2 frame is pass-through only with no station dot",
+      "Hommachi 1 uses the south own frame shared exactly with Jounan H1 representative",
+      "No short hook, reverse U, zero edge, or cross-line snap is visible in the nine raw reprojections"
+    ]
+  },
+  "integrationRequirements": [
+    "Use network.decodeIntervals output for baseline/parity; compact source segment arrays are provenance only",
+    "Preserve station IDs, km, physical registry, and serialized route topology",
+    "Root must perform native inspector/Main acceptance"
+  ]
+}

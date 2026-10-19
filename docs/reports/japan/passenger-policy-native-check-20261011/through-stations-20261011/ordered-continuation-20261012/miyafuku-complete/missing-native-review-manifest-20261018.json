@@ -1,0 +1,770 @@
+{
+  "lineID": "jp-WILLER　TRAINS-宮福線",
+  "requestPath": "/private/tmp/jtm-miyafuku-missing-20261018/request.json",
+  "resultPath": "/private/tmp/jtm-miyafuku-missing-20261018/result.json",
+  "processID": 52148,
+  "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+  "invocationID": "99BB9AB0-0B11-4AAC-B2B2-76CBCF35D7B1",
+  "capturedCount": 14,
+  "failedCount": 0,
+  "pendingCount": 0,
+  "viewPairsActuallyViewed": 14,
+  "originalImagesActuallyViewed": 28,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+  "scope": "Actual complete original basemap+smooth inspection of new own intervals8 and12 only; no crops/redraws/native jobs; geometric/physical acceptance pending.",
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000000",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.37187,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.129255,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-0",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.37187,
+        "longitude": 135.129255,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9705898240499942,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234971003.5135147,
+        "rectY": 105982623.90275706,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000000/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000000/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000000/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 536193,
+          "recordedSHA256NotRecomputed": "9bf4dafe89fcb78321fa90df5e3f098c777ae3538a43c3f63a9657d6eadd2ed6"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000000/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 612001,
+          "recordedSHA256NotRecomputed": "754b0c8523f80b118e9f340fbd061d1a770b04cafa63c68bf2e7ee3a83121a14"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000001",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.37042817263488,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.12584095937035,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-1",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.37042817263488,
+        "longitude": 135.12584095937035,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9706069325917321,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234968457.82031125,
+        "rectY": 105983942.37080581,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000001/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000001/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000001/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 512632,
+          "recordedSHA256NotRecomputed": "24d86d8fe6ad7b9d0074f942c52b845e57720835c41a9d4209c3c56942cf5ee2"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000001/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 587976,
+          "recordedSHA256NotRecomputed": "a27aef0eac45bb1c73bda29218ad1f5831af571c680544a365d244b99c7569d5"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000002",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.37017008265735,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.12201165311973,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-2",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.37017008265735,
+        "longitude": 135.12201165311973,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9706099949895495,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234965602.4826181,
+        "rectY": 105984178.37673399,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000002/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000002/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000002/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 448315,
+          "recordedSHA256NotRecomputed": "3cf1213248f4b82f06eba69919038410c7993f1a79504a777e8a42d74e58e62f"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000002/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 516998,
+          "recordedSHA256NotRecomputed": "8122248fdd46a60bb8efd74a8098ad02244e88315f9b95ad5e1bba48c465aeac"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.368705980305414,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.1186963716191,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-3",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.368705980305414,
+        "longitude": 135.1186963716191,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9706273670977441,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234963130.42955866,
+        "rectY": 105985517.18559217,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 419613,
+          "recordedSHA256NotRecomputed": "3c11f9bf93e4b0c8894ebcddb391935b6dc3befad5e13ac2584bcace247c1e34"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000003/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 483952,
+          "recordedSHA256NotRecomputed": "625382bab845774c44965502e9f0829732aa0993d1a531a15a92ee20418d9fa5"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000004",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36665473378049,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11577029927153,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-4",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.36665473378049,
+        "longitude": 135.11577029927153,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.970651704812335,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234960948.59187835,
+        "rectY": 105987392.8517392,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000004/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000004/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000004/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 410114,
+          "recordedSHA256NotRecomputed": "077117252786a277724412ed723fd742411af8e618b021a54abd9f10da645ce1"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000004/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 472603,
+          "recordedSHA256NotRecomputed": "cf45f24cc756be3f74d0a1a6f62f58155e16799fbf4a3692e83d364d57873d17"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000005",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.364030256246615,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11371726173,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-5",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.364030256246615,
+        "longitude": 135.11371726173,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9706828419953378,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234959417.73613214,
+        "rectY": 105989792.61258656,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000005/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000005/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000005/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 447682,
+          "recordedSHA256NotRecomputed": "0cda81d4dff1bafbcae7fd797bb65524226015232ecb8648e28707699ef8fead"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000005/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 512714,
+          "recordedSHA256NotRecomputed": "e99bce0d8724199ce73f26dcf70d2b777b9e48ef7c887585092786e9bddf5450"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000006",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.36109102451273,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11234332048548,
+      "pointOrdinal": 6,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-6",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.36109102451273,
+        "longitude": 135.11234332048548,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9707177110338013,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234958393.25128633,
+        "rectY": 105992480.08470173,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000006/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000006/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000006/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 411532,
+          "recordedSHA256NotRecomputed": "331e96d891271ba6d32fd4299c43b6af693e3a1fb7ea5f1f72ed1a397deca2eb"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000006/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 475518,
+          "recordedSHA256NotRecomputed": "a1f0b2c6999727f74afcc3d8e176338848f1a6ec1c6857524329174db76de7ae"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000007",
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "latitude": 35.359304,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.111552,
+      "pointOrdinal": 7,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-7",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.359304,
+        "longitude": 135.111552,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9707389098152612,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234957803.19996586,
+        "rectY": 105994113.99397343,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000007/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000007/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000007/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 389992,
+          "recordedSHA256NotRecomputed": "fd5abbe9952ea1871caacb15db986e8fbe4f5f65d83b3c166efa73aab1a17af1"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000001/000007/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 453910,
+          "recordedSHA256NotRecomputed": "49dd5c5e95623da00ce8bb7f6e914d93f1ad688bcaafa86ecad4f52f10238728"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.30658,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.108635,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-0",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.30658,
+        "longitude": 135.108635,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9713639263589104,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234955628.12711823,
+        "rectY": 106042304.25526363,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000000/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000000/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000000/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 965965,
+          "recordedSHA256NotRecomputed": "137aafb40e7619817878b64a57fa6c56b5d9cb8c66cb7139167eccec64bfbdf8"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000000/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1072992,
+          "recordedSHA256NotRecomputed": "f77951b16f37a1c5c88e5e75282b3076f6b3bd66c1bb08009352aab60abc7431"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.30353905941391,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.109628495438,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-1",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.30353905941391,
+        "longitude": 135.109628495438,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9713999499296215,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234956368.93100968,
+        "rectY": 106045082.74686195,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000001/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000001/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000001/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 992932,
+          "recordedSHA256NotRecomputed": "6f93f1c42a8d219b4350c700a00a7f14dc419052b94c52c3d6ca52232742f25c"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000001/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1102886,
+          "recordedSHA256NotRecomputed": "d86e1e6cd6200ac0dda6d6ea8f9b7fd11991a833043be2de32e0aa139c3cb56a"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.30050383847597,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11064621605377,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-2",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.30050383847597,
+        "longitude": 135.11064621605377,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.971435902997298,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234957127.79850295,
+        "rectY": 106047855.90831786,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 965538,
+          "recordedSHA256NotRecomputed": "6c92c8901f672823677629197365f4c41874f22c33ccd462e32986b73a433c97"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000002/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1074651,
+          "recordedSHA256NotRecomputed": "e6bd34f6ae4bb8a3309ab21a96f5392f042ac43e4780a95f80d7720642701a49"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.29819357198091,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11307132525482,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-3",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.29819357198091,
+        "longitude": 135.11307132525482,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9714632669309647,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234958936.090987,
+        "rectY": 106049966.63782284,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1052556,
+          "recordedSHA256NotRecomputed": "bf01547364314d4b16a2e7e54e618238726ead9c480a34d337aadaf0691b7952"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000003/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1162282,
+          "recordedSHA256NotRecomputed": "4f267b996621d46780b2d42310d53b1914994270e88c84558324d201371f954a"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.29722826449252,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11673694211586,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-4",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.29722826449252,
+        "longitude": 135.11673694211586,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9714747000370837,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234961669.37302476,
+        "rectY": 106050848.55415872,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1118368,
+          "recordedSHA256NotRecomputed": "738071fa8e8a23781d6b82a3818bad315d8d5bb63356c112ffc8a13e22d43453"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000004/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1232820,
+          "recordedSHA256NotRecomputed": "606b31fc26714be3ccc815a9810a923160a244824672530acfc5fda1aac6dbb1"
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005",
+      "itemID": "jp-WILLER　TRAINS-宮福線#12",
+      "latitude": 35.296995,
+      "lineDependency": "da3d11ef0066c78912cf2fe9804f22e769db60ce557b4c73d8e44f52b2a427db",
+      "longitude": 135.11767,
+      "pointOrdinal": 5,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#12#point-5",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.296995,
+        "longitude": 135.11767,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9714774627810873,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 234962365.11140978,
+        "rectY": 106051061.66577925,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "captureStatePath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/capture-state.json",
+      "viewMetadataPath": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/view.json",
+      "filesActuallyViewed": [
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/basemap.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1110641,
+          "recordedSHA256NotRecomputed": "8c10874adec1df54d60b3c7856e7b2651111089ebae5ee481d9d3aa21bb8116b"
+        },
+        {
+          "path": "/private/tmp/jtm-miyafuku-missing-20261018/alignment/captures/000000/000005/smooth.png",
+          "viewedOriginal": true,
+          "detail": "original",
+          "byteCount": 1224503,
+          "recordedSHA256NotRecomputed": "7be180c15ca414fd31771e6ff452b8815cb3edf2b9dd38811ac5065ac0bd5cf5"
+        }
+      ]
+    }
+  ]
+}

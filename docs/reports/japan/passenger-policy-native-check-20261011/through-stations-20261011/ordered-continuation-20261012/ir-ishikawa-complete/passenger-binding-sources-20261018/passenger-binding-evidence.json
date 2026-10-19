@@ -1,0 +1,199 @@
+{
+  "scope": "IR #3 own passenger-through-pair binding; no exact face, pair midpoint, survey or automatic product acceptance",
+  "officialStationPage": "https://www.ishikawa-railway.jp/station/higashi_kanazawa/",
+  "officialLayoutURL": "https://www.ishikawa-railway.jp/station/higashi_kanazawa/img/fmp_higashi_kanazawa.png",
+  "officialLayoutFile": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ir-ishikawa-complete/passenger-binding-sources-20261018/official-higashi-kanazawa-layout.png",
+  "officialGuideURL": "https://www.ishikawa-railway.jp/company/pdf/tebiki.pdf",
+  "officialGuideArchivePath": "/private/tmp/jtm-ir-official-tebiki-20261018.pdf",
+  "pdfRenderLimitation": "p19 attempt omitted Japanese text because Poppler Adobe-Japan1 language map unavailable; not used as labelled-diagram evidence. Complete official direct PNG was viewed instead.",
+  "sameWayPassengerStop": {
+    "id": 3977860982,
+    "version": 3,
+    "timestamp": "2024-03-14T15:49:27Z",
+    "coordinate": [
+      136.6697151,
+      36.5935457
+    ],
+    "tags": {
+      "name": "東金沢",
+      "name:en": "Higashi-Kanazawa",
+      "name:ja": "東金沢",
+      "name:ko": "히가시카나자와",
+      "public_transport": "stop_position",
+      "railway": "stop",
+      "train": "yes"
+    },
+    "wayID": 834273931,
+    "wayVersion": 5,
+    "wayNodeIndex": 40,
+    "wayNodeCount": 52,
+    "parentRelationsCount": 0
+  },
+  "previousHoldReportPreserved": "candidate-1-26-native-pixel-review-20261018.md",
+  "actualImageryPairsViewed": 6,
+  "actualOriginalImageryPNGsViewed": 12,
+  "views": [
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-0",
+      "timestamp": "2026-10-18T21:45:23Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000000/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000000/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000000/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Higashi-Kanazawa passenger island and its through pair visible; overlay in own conventional group; centre/face not established."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-1",
+      "timestamp": "2026-10-18T21:45:24Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000001/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000001/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000001/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Same through pair continues beside container terminal and road bridge; red distinct from terminal apron tracks and SE Shinkansen."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-3",
+      "timestamp": "2026-10-18T21:45:27Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000003/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000003/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000003/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Red follows through pair between container terminal NW and maintenance/storage tracks SE; transverse road bridge briefly occludes rails."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-7",
+      "timestamp": "2026-10-18T21:42:22Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000007/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000007/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000007/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Real NW outer through pair beside treatment-plant fence; yard fans lie SE, cartographic blue middle-yard curve is not physical rail proof."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-10",
+      "timestamp": "2026-10-18T21:45:28Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000010/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000010/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000010/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Conventional passenger fan toward Kanazawa distinct from SE elevated/roofed Shinkansen; specific face under roofs unproven."
+    },
+    {
+      "viewpointID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線#3#point-12",
+      "timestamp": "2026-10-18T21:45:29Z",
+      "wholeLineRenderDependency": "7a01d0316b2aeba2211c172581a295f1684412f541093652ceabd74bebb20d2c",
+      "captureSettings": {
+        "appearance": "light",
+        "basemapStyle": "imagery",
+        "height": 1200,
+        "outputModes": [
+          "basemap",
+          "smooth"
+        ],
+        "width": 1600,
+        "zoom": 18
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=18.0;scale=4.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings;basemap=imagery",
+      "result": "pending",
+      "reviewFresh": false,
+      "basemap": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000012/basemap.png",
+      "smooth": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000012/smooth.png",
+      "metadata": "/private/tmp/jtm-ir-own-track-imagery-20261018/alignment/captures/000000/000012/view.json",
+      "actuallyViewedOriginals": [
+        "basemap.png",
+        "smooth.png"
+      ],
+      "finding": "Broad Kanazawa conventional group visible; roof/parallax occludes exact physical passenger face, caps and centre."
+    }
+  ]
+}

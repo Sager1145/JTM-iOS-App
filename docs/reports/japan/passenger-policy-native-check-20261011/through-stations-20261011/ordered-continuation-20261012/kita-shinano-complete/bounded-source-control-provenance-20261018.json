@@ -1,0 +1,34 @@
+[
+  {
+    "intervalIndex": 0,
+    "target": [
+      138.18858,
+      36.8364
+    ],
+    "sourcePath": "app/data/rail-sections.json",
+    "featureIndex": 15085,
+    "properties": {
+      "N02_001": "12",
+      "N02_002": "5",
+      "N02_003": "北しなの線",
+      "N02_004": "しなの鉄道"
+    },
+    "coordinateIndex": 67
+  },
+  {
+    "intervalIndex": 3,
+    "target": [
+      138.24924,
+      36.75312
+    ],
+    "sourcePath": "app/data/rail-sections.json",
+    "featureIndex": 15070,
+    "properties": {
+      "N02_001": "12",
+      "N02_002": "5",
+      "N02_003": "北しなの線",
+      "N02_004": "しなの鉄道"
+    },
+    "coordinateIndex": 4
+  }
+]

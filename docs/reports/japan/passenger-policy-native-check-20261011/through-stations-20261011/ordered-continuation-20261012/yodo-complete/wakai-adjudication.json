@@ -1,0 +1,320 @@
+{
+  "status": "read-only-adjudication-display-defects-no-alias-applied",
+  "nativeDirectory": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/rail-display-network",
+  "consumedNativeRows": {
+    "jp-四国旅客鉄道-予土線": {
+      "stations": [
+        {
+          "id": "jp-四国旅客鉄道-予土線:009535",
+          "lineKey": "jp|jp-四国旅客鉄道-予土線",
+          "stationCode": "009535",
+          "name": "若井",
+          "lon": 133.105835,
+          "lat": 33.188045,
+          "nameRoma": "Wakai",
+          "minZoomMapLibre": 4,
+          "lodMinZoomMapLibre": 5,
+          "isTerminal": true,
+          "slot": [
+            0,
+            0
+          ],
+          "showsLabel": true,
+          "groupLineKeys": [
+            "jp|jp-四国旅客鉄道-予土線",
+            "jp|jp-土佐くろしお鉄道-中村線"
+          ]
+        },
+        {
+          "id": "jp-四国旅客鉄道-予土線:009471",
+          "lineKey": "jp|jp-四国旅客鉄道-予土線",
+          "stationCode": "009471",
+          "name": "北宇和島",
+          "lon": 132.569715,
+          "lat": 33.23924,
+          "nameRoma": "Kita-Uwajima",
+          "minZoomMapLibre": 4,
+          "lodMinZoomMapLibre": 5,
+          "isTerminal": true,
+          "slot": [
+            0,
+            1517
+          ],
+          "showsLabel": true,
+          "groupLineKeys": [
+            "jp|jp-四国旅客鉄道-予土線",
+            "jp|jp-四国旅客鉄道-予讃線"
+          ]
+        }
+      ],
+      "laneRows": [
+        [
+          0.0,
+          76166.3,
+          -0.5
+        ]
+      ],
+      "follows": [],
+      "familyWindows": []
+    },
+    "jp-土佐くろしお鉄道-中村線": {
+      "stations": [
+        {
+          "id": "jp-土佐くろしお鉄道-中村線:009535",
+          "lineKey": "jp|jp-土佐くろしお鉄道-中村線",
+          "stationCode": "009535",
+          "name": "若井",
+          "lon": 133.105835,
+          "lat": 33.188045,
+          "nameRoma": "Wakai",
+          "minZoomMapLibre": 10,
+          "lodMinZoomMapLibre": 10,
+          "isTerminal": false,
+          "slot": [
+            0,
+            80
+          ],
+          "showsLabel": false,
+          "groupLineKeys": [
+            "jp|jp-四国旅客鉄道-予土線",
+            "jp|jp-土佐くろしお鉄道-中村線"
+          ]
+        }
+      ],
+      "laneRows": [
+        [
+          0.0,
+          43113.4,
+          0.5
+        ]
+      ],
+      "follows": [],
+      "familyWindows": []
+    },
+    "jp-四国旅客鉄道-予讃線": {
+      "stations": [
+        {
+          "id": "jp-四国旅客鉄道-予讃線:009471",
+          "lineKey": "jp|jp-四国旅客鉄道-予讃線",
+          "stationCode": "009471",
+          "name": "北宇和島",
+          "lon": 132.569715,
+          "lat": 33.23924,
+          "nameRoma": "Kita-Uwajima",
+          "minZoomMapLibre": 10,
+          "lodMinZoomMapLibre": 10,
+          "isTerminal": false,
+          "slot": [
+            0,
+            4104
+          ],
+          "showsLabel": false,
+          "groupLineKeys": [
+            "jp|jp-四国旅客鉄道-予土線",
+            "jp|jp-四国旅客鉄道-予讃線"
+          ]
+        }
+      ],
+      "laneRows": [
+        [
+          0.0,
+          775.0,
+          -0.5
+        ]
+      ],
+      "follows": [],
+      "familyWindows": []
+    }
+  },
+  "laneBound": {
+    "railWidth": 1.5,
+    "parallelGap": 1.2,
+    "spacing": 2.7,
+    "weightMaximum": 1,
+    "laneLODMaximum": 1,
+    "absoluteHalfLaneOffsetMaximumPoints": 1.35,
+    "stationCoordinateCode": "ios/RailMap/Map/RailMapCoordinator.swift:2620 exact slot/stroke anchor then nearest/installed then fallback; same stroke owns dot"
+  },
+  "wakai": {
+    "stationID": "009535",
+    "rawBothOwners": [
+      133.105835,
+      33.188045
+    ],
+    "mainOwnLightPlatformEndsApprox": [
+      [
+        922,
+        345
+      ],
+      [
+        823,
+        512
+      ]
+    ],
+    "mainPlatformLongMidApprox": [
+      872.5,
+      428.5
+    ],
+    "mainOwnBlackRailNormalApprox": [
+      849,
+      439
+    ],
+    "mainDotApprox": [
+      828,
+      440
+    ],
+    "mainTransverseSeparationApproxPixels": [
+      18,
+      20
+    ],
+    "finding": "Own common stem/station-normal discrepancy beyond intentional lane offset; platform building bulb is excluded from the longitudinal extent. Main dark cartography and Inspector z17 differ in fidelity; no final alias frozen.",
+    "primaryCamera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.188045,
+      "longitude": 133.105835,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 0.9957879232879738,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 233464536.2069049,
+      "rectY": 107955279.25937727,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "primaryRawPixel": [
+      512,
+      384
+    ],
+    "primaryOwnFramePrecision": "Visible elongated strip tiny at z17; no literal high-confidence endpoint pick. Do not substitute attached bulb or whole station-group polygon midpoint.",
+    "provisionalNormalEstimatePixel": [
+      515,
+      389
+    ],
+    "provisionalInverseOnly": [
+      133.1058671865082,
+      33.18800010632484
+    ],
+    "provisionalStatus": "Estimate for correlation only, not an accepted point, needs original higher-resolution frame/inverse before coordinate freeze.",
+    "requiredScope": [
+      [
+        "jp-四国旅客鉄道-予土線",
+        0
+      ],
+      [
+        "jp-土佐くろしお鉄道-中村線",
+        0
+      ],
+      [
+        "jp-土佐くろしお鉄道-中村線",
+        1
+      ]
+    ],
+    "outerGuards": [
+      {
+        "id": "009500",
+        "name": "窪川"
+      },
+      {
+        "id": "009571",
+        "name": "荷稲"
+      },
+      {
+        "id": "009558",
+        "name": "家地川"
+      }
+    ],
+    "sharedStemRule": "Any display station/stem correction is shared by both owners and both Nakamura adjacent endpoints; preserve physical station IDs/km. Literal61shared supports are not physical turnout evidence."
+  },
+  "kitaUwajima": {
+    "stationID": "009471",
+    "rawBothOwners": [
+      132.569715,
+      33.23924
+    ],
+    "mainOwnLightPlatformEndsApprox": [
+      [
+        850,
+        627
+      ],
+      [
+        878,
+        805
+      ]
+    ],
+    "mainPlatformLongMidApprox": [
+      864,
+      716
+    ],
+    "mainDotApprox": [
+      827,
+      439
+    ],
+    "excludedAttachedBuildingApprox": [
+      893,
+      696
+    ],
+    "mainChainageSeparationApproxPixels": 277,
+    "roughDistanceMetres": [
+      65,
+      70
+    ],
+    "finding": "Concrete station chainage defect: dot north of narrow own shared station platform, not a half-lane normal offset. No yard/building centroid accepted.",
+    "thirdOriginalDirectory": "/private/tmp/jtm-yodo-complete-third-v1/captures/002703/000018",
+    "thirdOwnLightPlatformEndsApprox": [
+      [
+        526,
+        430
+      ],
+      [
+        531,
+        476
+      ]
+    ],
+    "thirdOwnRailNormalApprox": [
+      521,
+      453
+    ],
+    "thirdProvisionalInverse": [
+      132.5698115595245,
+      33.23862082757472
+    ],
+    "coordinateUncertainty": "coarse z17 approximately±3px; alias not final, high-resolution raw camera needed to freeze",
+    "requiredScope": [
+      [
+        "jp-四国旅客鉄道-予土線",
+        18
+      ],
+      [
+        "jp-四国旅客鉄道-予讃線",
+        87
+      ],
+      [
+        "jp-四国旅客鉄道-予讃線",
+        88
+      ]
+    ],
+    "outerGuards": [
+      {
+        "id": "009423",
+        "name": "務田"
+      },
+      {
+        "id": "009452",
+        "name": "高光"
+      },
+      {
+        "id": "009486",
+        "name": "宇和島"
+      }
+    ]
+  },
+  "warnings": [
+    "Main screen pixel ruler gives approximate distance; no surveyed railway metric.",
+    "Both stations are through-station passenger boundaries; native isTerminal reflects own legal line endpoint, not proof of physical terminal cap.",
+    "No geometry/station alias, source physical coordinates, topology or km modified.",
+    "No UI/build/test or formal native acceptance claimed."
+  ]
+}

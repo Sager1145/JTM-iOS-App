@@ -1,0 +1,13 @@
+{
+  "ordinal": 33,
+  "lineID": "jp-西日本旅客鉄道-北陸線-p1",
+  "stationCount": 2,
+  "intervalCount": 1,
+  "status": "prepared-only-awaiting-32-final-main",
+  "productionChanges": false,
+  "ownRailwayDirectionRequired": true,
+  "alignmentOf": "jp-西日本旅客鉄道-北陸線",
+  "alignmentDirection": "down",
+  "stationOrderDirection": "up",
+  "nativeCaptured": false
+}

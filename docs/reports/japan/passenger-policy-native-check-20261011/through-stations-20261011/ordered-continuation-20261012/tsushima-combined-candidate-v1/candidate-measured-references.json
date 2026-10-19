@@ -1,0 +1,197 @@
+{
+  "byRegion": [
+    [
+      "jp-名古屋鉄道-名古屋本線",
+      0,
+      8649.4,
+      13383.9,
+      0.5
+    ],
+    [
+      "jp-名古屋鉄道-名古屋本線",
+      0,
+      29567.4,
+      33615.2,
+      -3
+    ],
+    [
+      "jp-名古屋鉄道-名古屋本線",
+      0,
+      33615.2,
+      35490.2,
+      -1
+    ],
+    [
+      "jp-名古屋鉄道-名古屋本線",
+      0,
+      35490.2,
+      38680.5,
+      -0.5
+    ],
+    [
+      "jp-名古屋鉄道-名古屋本線",
+      0,
+      94830.6,
+      100014.3,
+      -1
+    ]
+  ],
+  "hubReportByRegion": [
+    {
+      "hubId": "jp-nagoya",
+      "name": "Nagoya Station throat",
+      "trunkKey": "jp-東海旅客鉄道-東海道線#0",
+      "members": [
+        {
+          "lineId": "jp-東海旅客鉄道-東海道新幹線",
+          "partIndex": 0,
+          "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+          "slot": -3,
+          "side": -1,
+          "reversed": true,
+          "from": 171425,
+          "to": 173225,
+          "previousLane": 0.5
+        },
+        {
+          "lineId": "jp-東海旅客鉄道-関西線",
+          "partIndex": 0,
+          "classKey": "group\u0000東海旅客鉄道:関西線",
+          "slot": -2,
+          "side": -1,
+          "reversed": true,
+          "from": 0,
+          "to": 775,
+          "previousLane": 0.5
+        },
+        {
+          "lineId": "jp-名古屋臨海高速鉄道-西名古屋港線",
+          "partIndex": 0,
+          "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+          "slot": -1,
+          "side": -1,
+          "reversed": true,
+          "from": 0,
+          "to": 450,
+          "previousLane": -0.5
+        },
+        {
+          "lineId": "jp-近畿日本鉄道-名古屋線",
+          "partIndex": 0,
+          "classKey": "group\u0000近畿日本鉄道:名古屋線",
+          "slot": 0,
+          "side": -1,
+          "reversed": true,
+          "from": 0,
+          "to": 450,
+          "previousLane": null
+        },
+        {
+          "lineId": "jp-東海旅客鉄道-中央線",
+          "partIndex": 0,
+          "classKey": "group\u0000東海旅客鉄道:中央線",
+          "slot": 1,
+          "side": 0,
+          "reversed": false,
+          "from": 170950,
+          "to": 173003,
+          "previousLane": -0.5
+        },
+        {
+          "lineId": "jp-東海旅客鉄道-東海道線",
+          "partIndex": 0,
+          "classKey": "group\u0000東海旅客鉄道:東海道線",
+          "slot": 2,
+          "side": 0,
+          "reversed": false,
+          "from": 259875,
+          "to": 263900,
+          "previousLane": 0.5
+        },
+        {
+          "lineId": "jp-名古屋鉄道-名古屋本線",
+          "partIndex": 0,
+          "classKey": "group\u0000名古屋鉄道:名古屋本線",
+          "slot": 3,
+          "side": 1,
+          "reversed": true,
+          "from": 29567.4,
+          "to": 33615.2,
+          "previousLane": -1
+        },
+        {
+          "lineId": "jp-名古屋市-1号線東山線",
+          "partIndex": 0,
+          "excluded": "separate-alignment",
+          "alongsideFrom": 14725,
+          "alongsideTo": 14825,
+          "previousLane": null
+        },
+        {
+          "lineId": "jp-名古屋市-6号線桜通線",
+          "partIndex": 0,
+          "excluded": "crossing",
+          "previousLane": null
+        }
+      ],
+      "classes": [
+        {
+          "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+          "slot": -3,
+          "side": -1,
+          "lineIds": [
+            "jp-東海旅客鉄道-東海道新幹線"
+          ]
+        },
+        {
+          "classKey": "group\u0000東海旅客鉄道:関西線",
+          "slot": -2,
+          "side": -1,
+          "lineIds": [
+            "jp-東海旅客鉄道-関西線"
+          ]
+        },
+        {
+          "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+          "slot": -1,
+          "side": -1,
+          "lineIds": [
+            "jp-名古屋臨海高速鉄道-西名古屋港線"
+          ]
+        },
+        {
+          "classKey": "group\u0000近畿日本鉄道:名古屋線",
+          "slot": 0,
+          "side": -1,
+          "lineIds": [
+            "jp-近畿日本鉄道-名古屋線"
+          ]
+        },
+        {
+          "classKey": "group\u0000東海旅客鉄道:中央線",
+          "slot": 1,
+          "side": 0,
+          "lineIds": [
+            "jp-東海旅客鉄道-中央線"
+          ]
+        },
+        {
+          "classKey": "group\u0000東海旅客鉄道:東海道線",
+          "slot": 2,
+          "side": 0,
+          "lineIds": [
+            "jp-東海旅客鉄道-東海道線"
+          ]
+        },
+        {
+          "classKey": "group\u0000名古屋鉄道:名古屋本線",
+          "slot": 3,
+          "side": 1,
+          "lineIds": [
+            "jp-名古屋鉄道-名古屋本線"
+          ]
+        }
+      ]
+    }
+  ]
+}

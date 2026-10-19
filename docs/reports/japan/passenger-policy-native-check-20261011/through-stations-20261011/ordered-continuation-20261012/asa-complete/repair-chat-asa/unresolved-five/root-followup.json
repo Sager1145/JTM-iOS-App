@@ -1,0 +1,16 @@
+{
+  "status": "sent-to-root-awaiting8-native-basemaps",
+  "rootThreadID": "01a12c88-e8a9-7741-9046-e94472852230",
+  "waitCursor": "631ff085-bcd7-42cb-adf3-1de0e78ffa08:7",
+  "request": "root-supplemental-shots.json",
+  "expectedFirstPass": 8,
+  "reviewRules": "Check actual line/station identities/camera/image count, then literal own narrow face and matching rail. Withhold unsupported alias. Root sole UI owner.",
+  "nativeAcceptance": false,
+  "automationID": "automation",
+  "followupSchedule": "thread heartbeat every5minutes; quiet on unchanged/non-actionable state",
+  "latestObservedRootStatus": "new turn active; states capture/repair/integration/testing to be consolidated in Root; no8-shot supplemental delivery yet",
+  "requestSent": true,
+  "lastCheckUTC": "2026-10-14T09:46:14.261718+00:00",
+  "receivedSupplementalViews": 0,
+  "continuationSentAfterIdle": true
+}

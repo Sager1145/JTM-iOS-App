@@ -1,0 +1,68 @@
+{
+  "caseIndex": 13,
+  "intervalIndex": 13,
+  "source": {
+    "intervalIndex": 13,
+    "fromStationID": "003721",
+    "toStationID": "003692",
+    "camera": [
+      35.688339,
+      139.7805485,
+      0.007491600000001597
+    ],
+    "effectiveCoordinates": [
+      [
+        139.782337,
+        35.686258
+      ],
+      [
+        139.78179,
+        35.6869
+      ],
+      [
+        139.78174,
+        35.68695
+      ],
+      [
+        139.78144,
+        35.68729
+      ],
+      [
+        139.78086,
+        35.68796
+      ],
+      [
+        139.78057,
+        35.68829
+      ],
+      [
+        139.77992,
+        35.68907
+      ],
+      [
+        139.77949,
+        35.68956
+      ],
+      [
+        139.77935,
+        35.68973
+      ],
+      [
+        139.77917,
+        35.68993
+      ],
+      [
+        139.77888,
+        35.69028
+      ],
+      [
+        139.77876,
+        35.69042
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; geographic-and-platform-acceptance-pending",
+  "actualOnStatus": "49 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:9;rides:0;budgetDrops:0;vertices:2960;camera:16.92;lod:15.78;backbones:1;networkStations:15;distance:1644.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.688339;centerLon:139.780549;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2750.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.688339;centerLon:139.780549;distance:1644.2;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

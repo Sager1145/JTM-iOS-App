@@ -1,0 +1,253 @@
+Window: "Rail Diagnostics", App: Rail Diagnostics.
+0 standard window Rail Diagnostics, ID: SceneWindow, Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 text Description: Rail Diagnostics, Secondary Actions: Cancel
+			4 tab group Help: Control Command 1 through 4 switch workspace., Secondary Actions: Cancel
+				5 tab (selected) Description: Tasks & evidence  ⌃⌘1, Value: 1, Secondary Actions: Cancel
+				6 tab Description: Alignment  ⌃⌘2, Value: 0, Secondary Actions: Cancel
+				7 tab Description: Physical routes  ⌃⌘3, Value: 0, Secondary Actions: Cancel
+				8 tab Description: Through history  ⌃⌘4, Value: 0, Secondary Actions: Cancel
+			9 button Description: New task, Control Command N, Secondary Actions: Cancel
+			10 button Description: Open task request, Shift Command O, Secondary Actions: Cancel
+			11 container Secondary Actions: Cancel
+				12 text Description: Tasks & evidence, Secondary Actions: Cancel
+				13 button Description: Copy result path, Secondary Actions: Cancel
+				14 text Description: One request. Exact scope. Native evidence., Secondary Actions: Cancel
+				15 container Secondary Actions: Cancel
+					16 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+					17 text Description: Alignment, Secondary Actions: Cancel
+					18 text Description: ordered-34-oito-west-baseline-20261017, Secondary Actions: Cancel
+					19 text Description: jp-西日本旅客鉄道-大糸線 · complete line, Secondary Actions: Cancel
+					20 text Description: Zoom 17.0 · 1,024 × 768 pt · light · basemap, display, smooth, Secondary Actions: Cancel
+					21 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session
+					22 button Description: Run / resume  ⌘↩, Secondary Actions: Cancel
+					23 button Description: Copy request JSON, Secondary Actions: Cancel
+					24 button Description: Agent request, Secondary Actions: Cancel
+				25 text Description: Progress, Secondary Actions: Cancel
+				26 text Description: 133/133 scoped captures; 0 failed. All alignment and connectivity verdicts require review., Secondary Actions: Cancel
+				27 text Description: 133, Secondary Actions: Cancel
+				28 text Description: 0, Secondary Actions: Cancel
+				29 text Description: 0, Secondary Actions: Cancel
+				30 text Description: Captured, Secondary Actions: Cancel
+				31 text Description: Pending, Secondary Actions: Cancel
+				32 text Description: Failed, Secondary Actions: Cancel
+				33 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/result.json
+				34 text Description: Captured views · 133, Secondary Actions: Cancel
+				35 button Description: Preview full image, Secondary Actions: Cancel
+				36 button (disabled) Description: Previous view  ⌘[, Secondary Actions: Cancel
+				37 button Description: Next view  ⌘], Secondary Actions: Cancel
+				38 text Description: Interval and view numbers match capture-index.json (zero-based)., Secondary Actions: Cancel
+				39 pop up button Description: Viewpoint, jp-西日本旅客鉄道-大糸線#0 · view #0, Secondary Actions: Cancel
+				40 tab group Secondary Actions: Cancel
+					41 tab (selected) Description: Basemap, Value: 1, Secondary Actions: Cancel
+					42 tab Description: Display, Value: 0, Secondary Actions: Cancel
+					43 tab Description: Smooth, Value: 0, Secondary Actions: Cancel
+				44 button Description: Preview captured basemap.png at full resolution, Secondary Actions: Cancel
+				45 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment/captures/000000/000000/basemap.png
+				46 text Description: Evidence files, Secondary Actions: Cancel
+				47 image Description: Document, ID: doc, Secondary Actions: Cancel
+				48 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/source-line.json
+				49 button Description: Copy path, Secondary Actions: Cancel
+				50 image Description: Document, ID: doc, Secondary Actions: Cancel
+				51 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment
+				52 button Description: Copy path, Secondary Actions: Cancel
+				53 image Description: Document, ID: doc, Secondary Actions: Cancel
+				54 text Secondary Actions: Cancel, Description: /Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/oito-west-complete/unified-session/alignment-geometry.json
+				55 button Description: Copy path, Secondary Actions: Cancel
+				56 text Description: Review observations · 0 / 40, Secondary Actions: Cancel
+				57 container Secondary Actions: Cancel
+					58 heading Description: Record an observation, Secondary Actions: Cancel
+					59 pop up button Description: Candidate, Choose candidate, Secondary Actions: Cancel
+					60 pop up button Description: Conclusion, Insufficient evidence, Secondary Actions: Cancel
+					61 text field Placeholder: Observation and limits, Secondary Actions: Cancel
+					62 text field Placeholder: Evidence file paths · one absolute path per line, Secondary Actions: Cancel
+					63 button (disabled) Description: Save observation  ⌃⌘S, Secondary Actions: Cancel
+				64 text field (settable) Placeholder: Filter review candidates, Secondary Actions: Cancel
+				65 text Description: lineOffset, Secondary Actions: Cancel
+				66 text Description: Pending review, Secondary Actions: Cancel
+				67 text Description: jp-西日本旅客鉄道-大糸線#0/lineOffset, Secondary Actions: Cancel
+				68 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				69 text Description: stationApproach, Secondary Actions: Cancel
+				70 text Description: Pending review, Secondary Actions: Cancel
+				71 text Description: jp-西日本旅客鉄道-大糸線#0/stationApproach, Secondary Actions: Cancel
+				72 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				73 text Description: disconnectedParts, Secondary Actions: Cancel
+				74 text Description: Pending review, Secondary Actions: Cancel
+				75 text Description: jp-西日本旅客鉄道-大糸線#0/disconnectedParts, Secondary Actions: Cancel
+				76 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				77 text Description: stationOffset, Secondary Actions: Cancel
+				78 text Description: Pending review, Secondary Actions: Cancel
+				79 text Description: jp-西日本旅客鉄道-大糸線/station/001821, Secondary Actions: Cancel
+				80 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				81 text Description: stationOffset, Secondary Actions: Cancel
+				82 text Description: Pending review, Secondary Actions: Cancel
+				83 text Description: jp-西日本旅客鉄道-大糸線/station/001790, Secondary Actions: Cancel
+				84 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				85 text Description: intervalSeam, Secondary Actions: Cancel
+				86 text Description: Pending review, Secondary Actions: Cancel
+				87 text Description: jp-西日本旅客鉄道-大糸線#0/seam, Secondary Actions: Cancel
+				88 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				89 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				90 text Description: lineOffset, Secondary Actions: Cancel
+				91 text Description: Pending review, Secondary Actions: Cancel
+				92 text Description: jp-西日本旅客鉄道-大糸線#1/lineOffset, Secondary Actions: Cancel
+				93 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				94 text Description: stationApproach, Secondary Actions: Cancel
+				95 text Description: Pending review, Secondary Actions: Cancel
+				96 text Description: jp-西日本旅客鉄道-大糸線#1/stationApproach, Secondary Actions: Cancel
+				97 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				98 text Description: disconnectedParts, Secondary Actions: Cancel
+				99 text Description: Pending review, Secondary Actions: Cancel
+				100 text Description: jp-西日本旅客鉄道-大糸線#1/disconnectedParts, Secondary Actions: Cancel
+				101 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				102 text Description: stationOffset, Secondary Actions: Cancel
+				103 text Description: Pending review, Secondary Actions: Cancel
+				104 text Description: jp-西日本旅客鉄道-大糸線/station/001772, Secondary Actions: Cancel
+				105 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				106 text Description: intervalSeam, Secondary Actions: Cancel
+				107 text Description: Pending review, Secondary Actions: Cancel
+				108 text Description: jp-西日本旅客鉄道-大糸線#1/seam, Secondary Actions: Cancel
+				109 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				110 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				111 text Description: lineOffset, Secondary Actions: Cancel
+				112 text Description: Pending review, Secondary Actions: Cancel
+				113 text Description: jp-西日本旅客鉄道-大糸線#2/lineOffset, Secondary Actions: Cancel
+				114 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				115 text Description: stationApproach, Secondary Actions: Cancel
+				116 text Description: Pending review, Secondary Actions: Cancel
+				117 text Description: jp-西日本旅客鉄道-大糸線#2/stationApproach, Secondary Actions: Cancel
+				118 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				119 text Description: disconnectedParts, Secondary Actions: Cancel
+				120 text Description: Pending review, Secondary Actions: Cancel
+				121 text Description: jp-西日本旅客鉄道-大糸線#2/disconnectedParts, Secondary Actions: Cancel
+				122 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				123 text Description: stationOffset, Secondary Actions: Cancel
+				124 text Description: Pending review, Secondary Actions: Cancel
+				125 text Description: jp-西日本旅客鉄道-大糸線/station/001734, Secondary Actions: Cancel
+				126 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				127 text Description: intervalSeam, Secondary Actions: Cancel
+				128 text Description: Pending review, Secondary Actions: Cancel
+				129 text Description: jp-西日本旅客鉄道-大糸線#2/seam, Secondary Actions: Cancel
+				130 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				131 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				132 text Description: lineOffset, Secondary Actions: Cancel
+				133 text Description: Pending review, Secondary Actions: Cancel
+				134 text Description: jp-西日本旅客鉄道-大糸線#3/lineOffset, Secondary Actions: Cancel
+				135 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				136 text Description: stationApproach, Secondary Actions: Cancel
+				137 text Description: Pending review, Secondary Actions: Cancel
+				138 text Description: jp-西日本旅客鉄道-大糸線#3/stationApproach, Secondary Actions: Cancel
+				139 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				140 text Description: disconnectedParts, Secondary Actions: Cancel
+				141 text Description: Pending review, Secondary Actions: Cancel
+				142 text Description: jp-西日本旅客鉄道-大糸線#3/disconnectedParts, Secondary Actions: Cancel
+				143 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				144 text Description: stationOffset, Secondary Actions: Cancel
+				145 text Description: Pending review, Secondary Actions: Cancel
+				146 text Description: jp-西日本旅客鉄道-大糸線/station/001715, Secondary Actions: Cancel
+				147 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				148 text Description: intervalSeam, Secondary Actions: Cancel
+				149 text Description: Pending review, Secondary Actions: Cancel
+				150 text Description: jp-西日本旅客鉄道-大糸線#3/seam, Secondary Actions: Cancel
+				151 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				152 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				153 text Description: lineOffset, Secondary Actions: Cancel
+				154 text Description: Pending review, Secondary Actions: Cancel
+				155 text Description: jp-西日本旅客鉄道-大糸線#4/lineOffset, Secondary Actions: Cancel
+				156 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				157 text Description: stationApproach, Secondary Actions: Cancel
+				158 text Description: Pending review, Secondary Actions: Cancel
+				159 text Description: jp-西日本旅客鉄道-大糸線#4/stationApproach, Secondary Actions: Cancel
+				160 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				161 text Description: disconnectedParts, Secondary Actions: Cancel
+				162 text Description: Pending review, Secondary Actions: Cancel
+				163 text Description: jp-西日本旅客鉄道-大糸線#4/disconnectedParts, Secondary Actions: Cancel
+				164 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				165 text Description: stationOffset, Secondary Actions: Cancel
+				166 text Description: Pending review, Secondary Actions: Cancel
+				167 text Description: jp-西日本旅客鉄道-大糸線/station/001706, Secondary Actions: Cancel
+				168 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				169 text Description: intervalSeam, Secondary Actions: Cancel
+				170 text Description: Pending review, Secondary Actions: Cancel
+				171 text Description: jp-西日本旅客鉄道-大糸線#4/seam, Secondary Actions: Cancel
+				172 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				173 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				174 text Description: lineOffset, Secondary Actions: Cancel
+				175 text Description: Pending review, Secondary Actions: Cancel
+				176 text Description: jp-西日本旅客鉄道-大糸線#5/lineOffset, Secondary Actions: Cancel
+				177 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				178 text Description: stationApproach, Secondary Actions: Cancel
+				179 text Description: Pending review, Secondary Actions: Cancel
+				180 text Description: jp-西日本旅客鉄道-大糸線#5/stationApproach, Secondary Actions: Cancel
+				181 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				182 text Description: disconnectedParts, Secondary Actions: Cancel
+				183 text Description: Pending review, Secondary Actions: Cancel
+				184 text Description: jp-西日本旅客鉄道-大糸線#5/disconnectedParts, Secondary Actions: Cancel
+				185 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				186 text Description: stationOffset, Secondary Actions: Cancel
+				187 text Description: Pending review, Secondary Actions: Cancel
+				188 text Description: jp-西日本旅客鉄道-大糸線/station/001686, Secondary Actions: Cancel
+				189 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				190 text Description: intervalSeam, Secondary Actions: Cancel
+				191 text Description: Pending review, Secondary Actions: Cancel
+				192 text Description: jp-西日本旅客鉄道-大糸線#5/seam, Secondary Actions: Cancel
+				193 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				194 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				195 text Description: lineOffset, Secondary Actions: Cancel
+				196 text Description: Pending review, Secondary Actions: Cancel
+				197 text Description: jp-西日本旅客鉄道-大糸線#6/lineOffset, Secondary Actions: Cancel
+				198 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				199 text Description: stationApproach, Secondary Actions: Cancel
+				200 text Description: Pending review, Secondary Actions: Cancel
+				201 text Description: jp-西日本旅客鉄道-大糸線#6/stationApproach, Secondary Actions: Cancel
+				202 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				203 text Description: disconnectedParts, Secondary Actions: Cancel
+				204 text Description: Pending review, Secondary Actions: Cancel
+				205 text Description: jp-西日本旅客鉄道-大糸線#6/disconnectedParts, Secondary Actions: Cancel
+				206 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				207 text Description: stationOffset, Secondary Actions: Cancel
+				208 text Description: Pending review, Secondary Actions: Cancel
+				209 text Description: jp-西日本旅客鉄道-大糸線/station/001681, Secondary Actions: Cancel
+				210 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				211 text Description: intervalSeam, Secondary Actions: Cancel
+				212 text Description: Pending review, Secondary Actions: Cancel
+				213 text Description: jp-西日本旅客鉄道-大糸線#6/seam, Secondary Actions: Cancel
+				214 text Secondary Actions: Cancel, Description: Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.
+				215 text Description: Endpoint separation 0.00 m, Secondary Actions: Cancel
+				216 text Description: lineOffset, Secondary Actions: Cancel
+				217 text Description: Pending review, Secondary Actions: Cancel
+				218 text Description: jp-西日本旅客鉄道-大糸線#7/lineOffset, Secondary Actions: Cancel
+				219 text Description: Compare own track with retained native basemap evidence., Secondary Actions: Cancel
+				220 text Description: stationApproach, Secondary Actions: Cancel
+				221 text Description: Pending review, Secondary Actions: Cancel
+				222 text Description: jp-西日本旅客鉄道-大糸線#7/stationApproach, Secondary Actions: Cancel
+				223 text Description: Review station approach, intended connections and false joins; proximity is not physical proof., Secondary Actions: Cancel
+				224 text Description: disconnectedParts, Secondary Actions: Cancel
+				225 text Description: Pending review, Secondary Actions: Cancel
+				226 text Description: jp-西日本旅客鉄道-大糸線#7/disconnectedParts, Secondary Actions: Cancel
+				227 text Description: Review visible breaks and clipping separately from physical connectivity., Secondary Actions: Cancel
+				228 text Description: stationOffset, Secondary Actions: Cancel
+				229 text Description: Pending review, Secondary Actions: Cancel
+				230 text Description: jp-西日本旅客鉄道-大糸線/station/001666, Secondary Actions: Cancel
+				231 text Secondary Actions: Cancel, Description: Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.
+				232 text Description: Recent tasks, Secondary Actions: Cancel
+				233 button Secondary Actions: Cancel, Description: route-49af879a, /Users/sager/Library/Application Support/RailDiagnostics/Inputs/FCF23257-5B67-42A9-B2E1-A7777D56CD03/journeys.json
+				234 button Description: capture-fd55fc80, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				235 button Description: human-keyboard-prepare, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				236 button Description: diagnostics-remake-z18-dark-validation, jp-相模鉄道-相鉄本線 · intervals 0, Secondary Actions: Cancel
+				237 text Secondary Actions: Cancel, Description: Evidence collection and reviewer conclusions are separate. Main is the final production composition check.
+			238 text Description: Evidence ready · review pending, Secondary Actions: Cancel
+			239 text Description: ordered-34-oito-west-baseline-20261017, Secondary Actions: Cancel
+			240 text Description: z17.0 · 1,024×768, Secondary Actions: Cancel
+			241 button Description: Run or resume task, Command Return, Secondary Actions: Cancel
+	242 text Rail Diagnostics
+	243 menu button Window sharing
+244 menu bar
+	245 RailDiagnostics, ID: com.apple.menu.application
+	246 File, ID: com.apple.menu.file
+	247 Edit, ID: com.apple.menu.edit
+	248 View, ID: com.apple.menu.view
+	249 Diagnostics, ID: com.apple.menu.dynamic.798C1784-7DB7-4F87-81D9-03573308BB9B
+	250 Window, ID: com.apple.menu.window
+	251 Help, ID: com.apple.menu.help

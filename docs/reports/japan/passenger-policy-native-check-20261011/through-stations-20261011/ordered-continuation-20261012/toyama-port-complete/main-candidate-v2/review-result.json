@@ -1,0 +1,138 @@
+{
+  "status": "all-14-actual-main-interval-pairs-root-reviewed",
+  "rows": [
+    {
+      "intervalIndex": 0,
+      "pair": [
+        "00-on.png",
+        "00-off.png"
+      ],
+      "onStatus": "41 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:6;rides:0;budgetDrops:0;vertices:1120;camera:17.63;lod:16.65;backbones:1;networkStations:12;distance:884.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.702709;centerLon:137.213089;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:2716.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:21;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 1,
+      "pair": [
+        "01-on.png",
+        "01-off.png"
+      ],
+      "onStatus": "44 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:6;rides:0;budgetDrops:0;vertices:1104;camera:17.04;lod:16.07;backbones:1;networkStations:14;distance:1327.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.703855;centerLon:137.215041;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1825.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 2,
+      "pair": [
+        "02-on.png",
+        "02-off.png"
+      ],
+      "onStatus": "48 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:6;rides:0;budgetDrops:0;vertices:1491;camera:17.00;lod:16.02;backbones:1;networkStations:16;distance:1368.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.703288;centerLon:137.217643;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1650.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 3,
+      "pair": [
+        "03-on.png",
+        "03-off.png"
+      ],
+      "onStatus": "40 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:7;overlays:5;rides:0;budgetDrops:0;vertices:1181;camera:16.88;lod:15.90;backbones:1;networkStations:10;distance:1486.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.703280;centerLon:137.221186;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1765.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:11;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 4,
+      "pair": [
+        "04-on.png",
+        "04-off.png"
+      ],
+      "onStatus": "57 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:11;overlays:7;rides:0;budgetDrops:0;vertices:1863;camera:15.98;lod:15.00;backbones:1;networkStations:21;distance:2771.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.707745;centerLon:137.221793;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1579.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:28;annotationReuses:21;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 5,
+      "pair": [
+        "05-on.png",
+        "05-off.png"
+      ],
+      "onStatus": "36 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:1161;camera:15.93;lod:14.95;backbones:1;networkStations:7;distance:2875.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.715534;centerLon:137.223796;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1825.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 6,
+      "pair": [
+        "06-on.png",
+        "06-off.png"
+      ],
+      "onStatus": "27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:387;camera:17.04;lod:16.07;backbones:1;networkStations:2;distance:1327.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.720672;centerLon:137.224294;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1491.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 7,
+      "pair": [
+        "07-on.png",
+        "07-off.png"
+      ],
+      "onStatus": "37 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:903;camera:15.62;lod:14.64;backbones:1;networkStations:7;distance:3557.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.726666;centerLon:137.224168;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1517.0;rebuilds:2;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:10;annotationReuses:7;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 8,
+      "pair": [
+        "08-on.png",
+        "08-off.png"
+      ],
+      "onStatus": "27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:16.79;lod:15.82;backbones:0;networkStations:2;distance:1578.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.733117;centerLon:137.225746;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1311.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 9,
+      "pair": [
+        "09-on.png",
+        "09-off.png"
+      ],
+      "onStatus": "31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:15.95;lod:14.97;backbones:0;networkStations:4;distance:2834.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.738660;centerLon:137.226026;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1317.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 10,
+      "pair": [
+        "10-on.png",
+        "10-off.png"
+      ],
+      "onStatus": "31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:16.24;lod:15.26;backbones:0;networkStations:4;distance:2318.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.745132;centerLon:137.227090;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1389.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 11,
+      "pair": [
+        "11-on.png",
+        "11-off.png"
+      ],
+      "onStatus": "27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:16.81;lod:15.83;backbones:0;networkStations:2;distance:1563.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.750007;centerLon:137.228820;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1355.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 12,
+      "pair": [
+        "12-on.png",
+        "12-off.png"
+      ],
+      "onStatus": "35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:490;camera:15.63;lod:14.65;backbones:0;networkStations:6;distance:3535.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.753567;centerLon:137.231211;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:2678.0;rebuilds:2;gestureBuilds:0;labelPasses:3;gestureLabelPasses:0;cacheHits:9;annotationReuses:16;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    },
+    {
+      "intervalIndex": 13,
+      "pair": [
+        "13-on.png",
+        "13-off.png"
+      ],
+      "onStatus": "27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:272;camera:16.80;lod:15.82;backbones:0;networkStations:2;distance:1571.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.759535;centerLon:137.233602;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:1484.0;rebuilds:2;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "review": "root visually reviewed own corridor and complete interval; station frame centres not blanket-accepted"
+    }
+  ],
+  "actualCameraAdjustment": {
+    "interval12": "startup camera differed from plan; native Cmd-minus expanded frame. Saved ON/OFF actual centre36.753567,137.231211 distance3535.3; both endpoints visible."
+  },
+  "limits": [
+    "Exact-camera test entry uses normal Main renderer; not a production camera-framing acceptance.",
+    "Station longitudinal frame centres remain separately pending."
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "caseIndex": 21,
+  "intervalIndex": null,
+  "source": {
+    "caseIndex": 21,
+    "intervalIndex": null,
+    "kind": "boundary-context",
+    "stationID": "004014",
+    "stationName": "中目黒",
+    "camera": [
+      35.644114,
+      139.69883,
+      0.008
+    ]
+  },
+  "status": "root-pixel-reviewed-boundary-context; whole-own-passenger-frame-pending",
+  "actualOnStatus": "30 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:1161;camera:16.83;lod:15.68;backbones:0;networkStations:4;distance:1755.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.644114;centerLon:139.698830;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3734.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.644114;centerLon:139.698830;distance:1755.7;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:2;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0"
+}

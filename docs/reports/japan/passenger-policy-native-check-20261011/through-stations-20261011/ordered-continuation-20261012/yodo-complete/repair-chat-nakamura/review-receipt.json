@@ -1,0 +1,258 @@
+{
+  "status": "candidate-only-original-review-complete-with-retained-warnings",
+  "reviewer": "repair-chat-nakamura",
+  "scope": "Nakamura0–3; Wakai/Kaina/Iyoki display seams only; Kubokawa/TosaSaga retained guard warnings",
+  "fullRawBasemapViewsActuallyOpened": {
+    "0": [
+      0,
+      1
+    ],
+    "1": [
+      9,
+      10,
+      11,
+      17
+    ],
+    "2": [
+      12,
+      13
+    ],
+    "3": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "fullFinalCandidateViewsActuallyOpened": {
+    "0": [
+      0,
+      1
+    ],
+    "1": [
+      9,
+      10,
+      11,
+      16,
+      17
+    ],
+    "2": [
+      12,
+      13
+    ],
+    "3": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "completeContactReview": {
+    "raw": {
+      "0": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "1": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "2": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "candidate": {
+      "0": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "1": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28
+      ],
+      "2": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ]
+    },
+    "rule": "Contacts are512x384 overview panels, never reported as original-size inspections. Unchanged reviewed bodies reuse prior exact-input full original evidence from handoff."
+  },
+  "preciseStationRawBasemapsActuallyOpened": [
+    "station-precise/wakai-z18/basemap.png",
+    "station-precise/kaina-z18/basemap.png",
+    "stations-all-z18/guard-iyoki-009579/basemap.png",
+    "stations-all-z18/guard-tosasaga-009586/basemap.png",
+    "stations-all-z18/guard-kubokawa-009500/basemap.png"
+  ],
+  "additionalBaselinePanelsActuallyOpened": [
+    "stations-all-z18/guard-iyoki-009579/display.png",
+    "stations-all-z18/guard-iyoki-009579/smooth.png"
+  ],
+  "stationCandidateReprojectionsActuallyOpened": [
+    "wakai-seam-reprojection.png",
+    "kaina-seam-reprojection.png",
+    "iyoki-seam-reprojection.png",
+    "iyoki-controls-reprojection.png",
+    "naka0-final-start-crop.png"
+  ],
+  "originalCropsActuallyOpened": [
+    "iyoki-original-crop.png",
+    "tosasaga-original-crop.png",
+    "naka0-raw-start.png",
+    "naka0-original-grid.png"
+  ],
+  "savedRegionalImageActuallyOpened": "wakai-regional-aerial-2018-2019.png",
+  "reuseBoundaries": [
+    "Naka0 indices9..end literal unchanged; final Wakai7 controls unchanged. Prior full14 originals/reprojection evidence in regional handoff remains local-support evidence only.",
+    "Naka1 all360 coordinates literal unchanged from KainaV4; v3 sharedstem146 unchanged. Current complete29 overview plus specific fork originals; native candidate acceptance remains pending.",
+    "Naka2 earlier body prefix before new Iyoki support remains exact V4, whose all14 original/reprojection review is recorded in KainaV4 README. New tail reviewed in actual views12/13 and precise999x654 frame.",
+    "Naka3 complete9 originals and final9 reprojections actually opened in this chat; 8 originalfit gaps preserved explicitly."
+  ],
+  "warnings": [
+    {
+      "stationID": "009500",
+      "status": "WARNING",
+      "retainedGuard": [
+        133.137325,
+        33.212675
+      ],
+      "reason": "Kubokawa multi unequal faces and Dosan/Nakamura individual rail assignment unresolved. Shared code is not assignment; no new alias. If guard moves, Dosan59 also required."
+    },
+    {
+      "stationID": "009586",
+      "status": "WARNING",
+      "retainedGuard": [
+        133.101395,
+        33.081189
+      ],
+      "reason": "TosaSaga short upper face versus lower building-connected L strip remains unresolved. Last connector to retained physical guard is provisional, not accepted aligned station geometry. No new alias; a confirmed move requires complete Nakamura4."
+    },
+    {
+      "stationID": "009579",
+      "status": "WARNING-precision",
+      "reason": "Approved alias uses earlier fitted normal497.532421.331; corrected literal rail near498.3421.3 differs by ~0.8px within1.5px declared normal tolerance. Road occludes y~220–299; inferred north continuation between actual rail flanks200 and320. Cartographic, not surveyed."
+    }
+  ],
+  "grok": "Catalog query reported unauthenticated; no Grok worker launched. GPT5.6low read-only subagent extracted schemas/paths/counts only, locally checked by Codex.",
+  "nativeUIBuildDeliveryPerformed": false,
+  "finalCoordinateSHA256": {
+    "0": "5db5ab57c01e882f0927cd992a5f06e27ed43262b7f0dae0ef8e3d33f46d2111",
+    "1": "a9de65cf387edc7ace66b831ba9976bb4518e31ae49451c4ac9195167285a5ac",
+    "2": "550fe490e4fde97110cb0e5f70d7c8336e50f044c92f41af92d0261cfdfdb2b2",
+    "3": "2ac3d9c4086990b536adf53bae924255091d5402e8e2e3caa4aaea59a7f6b403"
+  },
+  "runtimePixelAcceptance": false
+}

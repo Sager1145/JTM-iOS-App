@@ -1,0 +1,37 @@
+[
+  {
+    "id": "gzs-platform",
+    "cameraEntry": "113.263903,22.9913254,18",
+    "purpose": "platform reversal 11832431941"
+  },
+  {
+    "id": "gzs-south-throat",
+    "cameraEntry": "113.2695,22.9845,18",
+    "purpose": "candidate incoming throat; does not cover remote southern attachment"
+  },
+  {
+    "id": "sbt-west-crossover",
+    "cameraEntry": "123.4141,41.8127,19",
+    "purpose": "original crossover1364948209 vs own mainline"
+  },
+  {
+    "id": "sbt-platform",
+    "cameraEntry": "123.4295703,41.8171159,19",
+    "purpose": "VII published anchor vs III own route"
+  },
+  {
+    "id": "d239-dali-east",
+    "cameraEntry": "100.3162728,25.5742697,19",
+    "purpose": "two-node crossover1004183415; critical connector"
+  },
+  {
+    "id": "pne-tunnel-north",
+    "cameraEntry": "101.7366,26.4801,18",
+    "purpose": "incoming anchor5230617665 and tunnel entry"
+  },
+  {
+    "id": "pne-tunnel-south",
+    "cameraEntry": "101.7390985,26.4778035,18",
+    "purpose": "tunnel exit5230023398 and onward source strand; tunnel may have no visible basemap evidence"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "action" : "capture",
+  "captureLimit" : 2,
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    0
+  ],
+  "lineID" : "jp-東武鉄道-伊勢崎線-2",
+  "requestID" : "hikifune-own-branch-sharp-turn-imagery",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-hikifune-imagery-20261018",
+  "workspace" : "alignment"
+}

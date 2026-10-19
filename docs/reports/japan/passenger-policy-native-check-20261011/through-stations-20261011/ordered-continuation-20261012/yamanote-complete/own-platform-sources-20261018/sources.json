@@ -1,0 +1,65 @@
+{
+  "format": "jtm-yamanote-own-platform-research-sources-v1",
+  "retrievedAt": "2026-10-18",
+  "reused": [
+    {
+      "path": "../shinagawa/sources/jr-east-platform-map.png",
+      "actualRepositoryPath": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/shinagawa/sources/jr-east-platform-map.png",
+      "url": "https://www.jreast.co.jp/estation/stations/img/floormap/0788_1f.png",
+      "dateOnImage": "2026-07",
+      "role": "official own1/3 identity and separation; not geodetic map"
+    },
+    {
+      "path": "app/scripts/railway/shinagawa-apple-forks-display-evidence.json",
+      "role": "current accepted-display override owner"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/shinagawa-fork-candidate/candidate-evidence.json",
+      "role": "original7.1399mstationconnector policy and own-pair controls"
+    }
+  ],
+  "downloads": [
+    {
+      "file": "osm-api-shinagawa-own-platforms.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=139.7375,35.6265,139.7393,35.6300",
+      "bytes": 1818469,
+      "licence": "ODbL1.0",
+      "attribution": "© OpenStreetMap contributors"
+    },
+    {
+      "file": "osm-api-komagome-own-platforms.xml",
+      "url": "https://api.openstreetmap.org/api/0.6/map?bbox=139.7455,35.7357,139.7485,35.7372",
+      "bytes": 1070863,
+      "licence": "ODbL1.0",
+      "attribution": "© OpenStreetMap contributors"
+    }
+  ],
+  "officialWebSources": [
+    {
+      "url": "https://www.jreast.co.jp/equipment/equipment_1/wheelchair/pdf/yamanote.pdf",
+      "role": "2025-09 outerplatform3 and Komagomeplatform1 identity"
+    },
+    {
+      "url": "https://media.jreast.co.jp/articles/2257",
+      "role": "JRstation staff article updated2026-09-25; Shinagawa1inner/3outer identity"
+    },
+    {
+      "url": "https://www.jreast.co.jp/estation/stations/712.html",
+      "imageURL": "https://www.jreast.co.jp/estation/stations/img/floormap/0712_b1-2f.png",
+      "role": "Komagome official ownJRframe identity"
+    },
+    {
+      "url": "https://www.jreast.co.jp/press/2018/tokyo/20190226_t01.pdf",
+      "role": "operator historical platform change context; web text read",
+      "archivePath": "/private/tmp/jtm-yamanote-own-platform-originals-20261018/jr-east-shinagawa-20190226.pdf",
+      "archiveStatus": "not downloaded; direct retrievalHTTP403, not image evidence"
+    }
+  ],
+  "derivatives": [
+    "osm-shinagawa-own-evidence.json",
+    "osm-komagome-own-evidence.json",
+    "current-source-provenance.json",
+    "komagome-own-outer-reference.json"
+  ],
+  "changes": "research files only; no production/candidatepackage edits, test, build, capture or app operation"
+}

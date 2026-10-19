@@ -1,0 +1,85 @@
+{
+  "format": "jtm-manually-viewed-originals-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-こうべ未来都市機構-摩耶ケーブル線",
+  "scope": "Full own cable interval",
+  "oldOwnAvailablePairs": 4,
+  "actuallyViewedPairs": 4,
+  "actuallyViewedOriginalPNGs": 8,
+  "notViewedPairs": 0,
+  "notViewedOriginalPNGs": 0,
+  "views": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000000",
+      "reason": "complete own cable interval",
+      "viewpointID": "jp-こうべ未来都市機構-摩耶ケーブル線#0#point-0",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000000/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000000/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:38Z",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000001",
+      "reason": "complete own cable interval",
+      "viewpointID": "jp-こうべ未来都市機構-摩耶ケーブル線#0#point-1",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000001/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000001/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:38Z",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000002",
+      "reason": "complete own cable interval",
+      "viewpointID": "jp-こうべ未来都市機構-摩耶ケーブル線#0#point-2",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000002/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000002/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:38Z",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000003",
+      "reason": "complete own cable interval",
+      "viewpointID": "jp-こうべ未来都市機構-摩耶ケーブル線#0#point-3",
+      "actuallyViewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000003/smooth.png"
+      ],
+      "viewMetadata": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000003/view.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "captureTimestamp": "2026-10-11T04:49:39Z",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b",
+      "receiptResult": "pending",
+      "receiptReviewFresh": false
+    }
+  ],
+  "limits": [
+    "Original basemap and smooth opened separately, original detail; no crops/composites/redraws.",
+    "Legacy isolated centreline receipt; no current wrapper or Main acceptance. No app/native/build/apply/tests."
+  ]
+}

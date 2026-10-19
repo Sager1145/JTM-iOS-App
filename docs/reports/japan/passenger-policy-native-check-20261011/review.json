@@ -1,0 +1,751 @@
+{
+  "format": "jtm-passenger-policy-native-review-v1",
+  "status": "in_progress",
+  "policy": "docs/reports/japan/passenger-representative-display-policy-2026-10-11.md",
+  "scope": {
+    "region": "jp",
+    "lines": 658,
+    "intervals": 9580,
+    "existingJourneys": 201,
+    "journeyDateRange": [
+      "2026-07-03",
+      "2026-08-01"
+    ],
+    "eligibility": "A geometric capture does not establish selected-date passenger eligibility; suspended/bus/freight-only are not accepted as current passenger display."
+  },
+  "apps": {
+    "alignment": {
+      "build": "succeeded",
+      "packageMatchesSource": false,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves",
+      "scope": "isolated zero-lane centreline; production company lanes and family composition excluded",
+      "batchStatus": "paused_before_osaki_keiyo_source_refresh",
+      "captureSnapshot": {
+        "captured": 29781,
+        "failures": 4,
+        "pending": 62431,
+        "viewpoints": 92216,
+        "planDigest": "816d3e84393027df093ffd66c6f697668274886e0055cbcee26accad065a4b1d",
+        "inputBoundary": "before Osaki/Keiyo display repair; changed scopes require new manual after evidence"
+      },
+      "snapshotTimeUTC": null,
+      "batchEvidenceDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence",
+      "humanVerdictScope": "Prior91 interval views and scoped through-station baseline/new Oshiage8 screenshots; nationwide captured views not accepted alignments.",
+      "snapshotNote": "Default remains paused at29781/92216 with4 failures; no resume requested in successor. Old receipts retained. Default/Hakone bundles are before-repair; KisukiKeiyo manual clone has current jp-2025.json only and unchanged v5 binary.",
+      "dependencyInvalidatedReceipts": 52,
+      "handoff": "through-stations-20261011/handoff-20261011-state.md"
+    },
+    "route": {
+      "build": "succeeded",
+      "packageMatchesSource": false,
+      "status": "completed",
+      "input": "/private/tmp/jtm-route-batch-input.json",
+      "journeysReturned": 201,
+      "elapsedSeconds": 380.80668699741364,
+      "timingScope": "routeLoad",
+      "consistencyFailures": 0,
+      "reviewFindings": 929,
+      "evidence": "route-workbench-report.json",
+      "packageNote": "Prior route batch evidence predates this display-only Oshiage repair; route app not rebuilt this round."
+    }
+  },
+  "policyFindings": [
+    {
+      "id": "historical-naming-default",
+      "status": "requires_review",
+      "file": "app/public/rail/jp-render-groups.json",
+      "note": "Historical rule forbids merging published names; new reviewed same-company corridor representation requires explicit declarations, not global company collapse."
+    },
+    {
+      "id": "jp-family-windows",
+      "status": "metadata_review_only",
+      "windows": 35,
+      "lines": 20,
+      "groups": 9,
+      "crossCompanyGroups": 0,
+      "note": "No selected-date or platform/topology acceptance attached to these windows; no Apple verdict."
+    },
+    {
+      "id": "cross-company-circle-owner",
+      "status": "old_metadata_inert",
+      "count": 4,
+      "note": "Current consumers require equal nonempty operator; replay guards remove their own cross-company declarations. Existing native resource refresh and production circles require separate verification."
+    },
+    {
+      "id": "service-exceptions",
+      "status": "date_review_required",
+      "records": 18,
+      "note": "Passing-station code4 remains passenger track. Hisatsu interval15 is inside suspended span, not current passenger acceptance."
+    }
+  ],
+  "visualReviews": [
+    {
+      "itemID": "jp-小田急箱根-鉄道線#5",
+      "viewpointsReviewed": 10,
+      "captureDirectory": "003418",
+      "pointOrdinals": [
+        0,
+        9
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Real small bends and distinct Deyama/Ohiradai reversal stems remain visible. Residual Apple/source disagreement on long approaches and dense bends; not accepted as aligned.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    },
+    {
+      "itemID": "jp-小田急箱根-鉄道線#6",
+      "viewpointsReviewed": 8,
+      "captureDirectory": "003419",
+      "pointOrdinals": [
+        0,
+        7
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Real alternating small curves and Kami-Ohiradai reversal branch retained. Residual Apple/source disagreement around forks and long approach to Miyanoshita.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#14",
+      "viewpointsReviewed": 20,
+      "captureDirectory": "008040",
+      "pointOrdinals": [
+        0,
+        19
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Reversal stem remains a separate branch. Upstream fork/curves at views0–6 and station approaches17–19 still disagree with Apple; intermediate large bends remain present.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    },
+    {
+      "itemID": "jp-西日本旅客鉄道-木次線#15",
+      "viewpointsReviewed": 18,
+      "captureDirectory": "008041",
+      "pointOrdinals": [
+        0,
+        17
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Successive bows alternate across Apple railway at views1–15; Yuki station approach16–17 also needs review. Not a station-only residual.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線-2#0",
+      "viewpointsReviewed": 17,
+      "captureDirectory": "004530",
+      "pointOrdinals": [
+        0,
+        16
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Native UI current endpoints are Nishifunabashi–Minamifunabashi. Independent east fork retained at views4–6. Residual south bow13–14 and platform-corridor approach15–16; precise lane selection not established.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    },
+    {
+      "itemID": "jp-東日本旅客鉄道-京葉線-3#0",
+      "viewpointsReviewed": 18,
+      "captureDirectory": "004531",
+      "pointOrdinals": [
+        0,
+        17
+      ],
+      "zoom": 17,
+      "method": "Human visual review of every native smooth.png via labelled contact sheets; original Apple railway remains visible alongside overlay.",
+      "verdict": "pending_source_investigation",
+      "note": "Native UI current endpoints are Nishifunabashi–Ichikawashiohama. West fork retained4–6. Residual north throat bow3–4 and platform-corridor ambiguity16–17. Shared corridor/company rendering not tested by isolated preview.",
+      "stationDotAcceptance": "not established; batch images exclude the dot"
+    }
+  ],
+  "completion": {
+    "allLinesVisuallyReviewed": false,
+    "allPolicyChecksPassed": false,
+    "viewpointsVisuallyReviewed": 91,
+    "intervalsVisuallyReviewed": 6
+  },
+  "routeObservations": [
+    {
+      "journeyID": "20260706_02_super_tsugaru2",
+      "nativeStatus": "partial_4_of_6",
+      "from": "新青森",
+      "to": "秋田",
+      "unresolved": [
+        "大鰐温泉→大館 path unresolved",
+        "大館→鷹ノ巣 incoming connection unproven"
+      ],
+      "physicalGaps": [
+        "section3 physical path",
+        "section3 entry",
+        "section4 entry"
+      ],
+      "evidence": "ou-physical-gap.png",
+      "verdict": "requires_physical_source_evidence; not geometry-repaired or passed"
+    }
+  ],
+  "stationObservations": [
+    {
+      "stationID": "005725",
+      "name": "三井野原",
+      "zoom": 18,
+      "method": "Live native Apple map, hide and restore overlay without moving camera",
+      "visualResult": "Anchor appears within blue station footprint and on the original railway corridor near platform centre. No numerical Apple-pixel residual measured. Surrounding interval remains pending.",
+      "evidence": [
+        "miinohara-z18-overlay.png",
+        "miinohara-z18-basemap.png"
+      ]
+    },
+    {
+      "stationID": "005260",
+      "name": "大平台",
+      "zoom": 18,
+      "method": "Live native Apple map, hide and restore overlay without moving camera",
+      "visualResult": "Anchor appears within blue station footprint and on the original railway corridor near platform centre. Approaching curve still differs; no entire-interval pass. Native current-viewport note saved as pending.",
+      "evidence": [
+        "ohiradai-z18-overlay.png",
+        "ohiradai-z18-basemap.png"
+      ]
+    }
+  ],
+  "parallelReview": {
+    "mode": "one_native_capture_owner_multiple_read_only_analysis_workers",
+    "captureOwner": "native_capture_owner",
+    "analysisWorkers": [
+      "parallel_hakone_analysis",
+      "parallel_kisuki_keiyo_analysis"
+    ],
+    "nativeInstanceIsolation": "three distinct bundle IDs; distinct output and review paths; same build UUID, icon, assets and package",
+    "heavyWork": "default full batch resumed; two manual instances idle; no simultaneous full-batch captures",
+    "status": "instances_running_independent_analysis_completed",
+    "analysisReports": [
+      "parallel-hakone-analysis.md",
+      "parallel-kisuki-keiyo-analysis.md"
+    ],
+    "independentReviewResult": "91 current z17 views reviewed independently across six intervals; shape retention observed, residual source/display/Apple differences remain pending. New instance screenshots will be reviewed separately.",
+    "instanceEvidence": "parallel-instance-status.json",
+    "version": "0.1",
+    "build": "3",
+    "captureOwnerReport": "capture-owner.md"
+  },
+  "tokyoThroughReview": {
+    "policy": "Follow original Apple black passenger railway through the reviewed platform group into one central representative point; keep independent corridors and cross-company identities.",
+    "northernLineID": "jp-東日本旅客鉄道-東北線-2",
+    "southernLineID": "jp-東日本旅客鉄道-東海道線",
+    "stationCode": "003766",
+    "sharedCoordinate": [
+      139.7671827,
+      35.6811274
+    ],
+    "currentCompactAndGroomedEndpointsExactlyShared": true,
+    "nativeEvidence": "tokyo-through-reference/capture-note.md",
+    "independentReview": "tokyo-through-corridor-review.md",
+    "screenshotsReviewed": 7,
+    "observation": "Representative point appears inside the blue station footprint near middle of black platform railway corridor. North and south separate previews meet the same data endpoint. No evidence of a necessary relocation or superior new coordinate.",
+    "geometryChanged": false,
+    "focusedExistingCircleTest": "1/1 passed; no pixel or production-family acceptance inferred",
+    "remaining": "Exact platform-track correspondence and pixel residual not measured; no nationwide through-running acceptance."
+  },
+  "throughStationsReview": {
+    "status": "shinagawa_tokyo_repaired_native_recheck_in_progress",
+    "stations": [
+      "押上",
+      "涩谷",
+      "目黑",
+      "Kotake-mukaihara",
+      "Ayase"
+    ],
+    "method": "Two isolated manual native instances with one UI/capture owner; two parallel source/image analysis workers. Central and north/south throat overlay/basemap pairs captured with stable camera observations. Default full inventory capture stays separate.",
+    "evidenceDirectory": "through-stations-20261011",
+    "productionGeometryChanged": true,
+    "findings": [
+      "Oshiage repair confirmed in rebuilt production main map: Tobu north and Hanzomon south approach join their new shared B3 point; separate Keisei/Asakusa point preserved. Station card contains all four logical members.",
+      "Shibuya retains independent B3 Denentoshi/Hanzomon and B5 Toyoko/Fukutoshin groups. No demonstrated relocation needed from central review so far.",
+      "Meguro has three operator centreline endpoints exactly shared at the registered station-segment midpoint; north Namboku/Mita reverse-direction -0.5 rows preserve opposite parallel sides, no family suppression. JR Yamanote is independent. Single-line inspector does not prove final main-map company composition.",
+      "Oshiage B1 final production circle/card and four Inspector pairs checked: Keisei/Asakusa central common point inside B1 body, cross-river exposed black rail followed, entry curvature preserved; B3 remains separate."
+    ],
+    "codeChanges": [
+      "Through-running test now includes canonical follow dependencies and resolves follows as production does.",
+      "Oshiage existing test retains both company marks and logical aliases.",
+      "Oshiage lane repair preserves terminal row placement on replay."
+    ],
+    "focusedEvidence": {
+      "oshiageAndThroughRunningExistingFiles": "23/23 passed including new Asakusa cross-river and B1 shared-point regressions",
+      "swiftCounterpart": "Read-only counterpart review found no blocker; actual native scoped shapes reviewed.",
+      "alignmentIncrementalBuild": "Succeeded; three copies synchronized to 0.1/build3/v5",
+      "productionMainIncrementalBuild": "BUILD SUCCEEDED, Debug Mac Catalyst jobs 2; packaged compact source byte-equal and targeted display chunks correct.",
+      "productionCurrentEra": "Actual full Settings UI confirms Network era: Current and Apple Maps; existing value left unchanged; production-main-settings-current.png and AX."
+    },
+    "remaining": [
+      "Kotake/Ayase exact passenger corridor central placement awaits local independent current platform verification and source-bound positioning; no geometry relocation performed for these two stations.",
+      "Nationwide capture and visual review incomplete; capture failures 4 retained."
+    ],
+    "nativeImages": {
+      "oshiage": 13,
+      "shibuya": 12,
+      "meguro": 10,
+      "cameraCaveat": "Some scale-bar labels disagree with reported camera even after stable observations; no pixel distance inferred from label.",
+      "kotake": 12,
+      "ayase": 10,
+      "oshiageProductionMain": 3
+    },
+    "nativeProgressSnapshot": {
+      "captured": 22799,
+      "planned": 92217,
+      "failures": 4,
+      "scope": "After changed-line receipt dependency invalidation; capture only, not alignment acceptance.",
+      "source": "through-stations-20261011/oshiage/after-b1-final-default-resumed.png and AX"
+    },
+    "oshiageRepair": {
+      "stationCode": "003526",
+      "displayCentralCut": [
+        139.81345102105016,
+        35.70970842655579
+      ],
+      "coordinateScope": "Representative source-bound cut using engineering river landmark, not surveyed physical platform precision",
+      "evidence": "through-stations-20261011/oshiage/central-cut-reference.json",
+      "soleChecklist": "through-stations-20261011/README.md",
+      "physicalDataPreserved": true,
+      "nativeEvidence": "through-stations-20261011/oshiage/repaired-*.png and .ax.txt",
+      "nativeImages": 8,
+      "nativeResult": "Shared point inside visible Apple blue-purple station body; north passenger support curves and south directional entry retained, artificial reversal not observed. Underground black track cannot establish exact alignment; isolated zero-lane view not final production company offset proof.",
+      "northArcRepair": {
+        "status": "display_repaired_native_rechecked",
+        "coarseVertex": [
+          139.81336,
+          35.71012
+        ],
+        "oldTurnDegrees": 32.2768,
+        "maxDeviationMetres": 3,
+        "circleSamplingSteps": 18,
+        "scope": "One reviewed display elbow; surveyed physical geometry preserved; radius not claimed as measured.",
+        "focusedTests": "21/21 passed after new production-stroke regression first failed at 32.2768 degrees.",
+        "mainBuild": "Incremental builds succeeded; final compact byte-equal; compiled target36vertices, existing lane embedding7decimal.",
+        "inspectorRefresh": "Three unchanged same-version binaries receive identical updated compact resource and temporary signatures.",
+        "nativeEvidence": "through-stations-20261011/oshiage/after-arc-{inspector-tobu,production}-north-z19-*",
+        "nativeResult": "Inspector same-camera pair and production main pair show continuous short arc and preserved shared point. Production before/after cameras differ slightly; physical radius remains unmeasured."
+      }
+    },
+    "nextCohort": {
+      "stationCodes": [
+        "003294",
+        "003214"
+      ],
+      "geometryChanged": false,
+      "chatAnswer": "through-stations-20261011/oshiage/chat-next-risk-final.ax.txt",
+      "authorization": "User explicitly authorized task contents sent to ChatGPT; candidate coordinates and policy were sent successfully.",
+      "ayasePrimaryWiring": "through-stations-20261011/ayase/official-history-p626-wiring.jpg",
+      "primaryURL": "https://metroarchive.jp/ebook_chiyodasen/data/24/674/nweQt9.jpg",
+      "centerPolicy": "Use the confirmed passenger track group center; differentiate types, operators and independent corridors; shared company lanes straddle the common display center.",
+      "kotakePrimaryEvidence": "through-stations-20261011/kotake/sources/source-note.md",
+      "kotakePrimaryNote": "Two official construction-history JPEGs locally viewed;2023 PDF download403, webpage text only.2016 change governs present topology.",
+      "kotakeCurrentReview": "Read-only Swift/JS follow and lane review: Y interval5 and F interval9 share reversed representative geometry with opposite displayed sides. No demonstrated old flat crossing, reversal or deleted supports. Central point inside elongated station body; individual underground track centers unmeasured.",
+      "kotakeNativeTarget": {
+        "from": [
+          139.68182,
+          35.74228
+        ],
+        "to": [
+          139.68545,
+          35.74063
+        ],
+        "approxLengthMetres": 375.5,
+        "reason": "Existing central viewport does not cover Senkawa-side endpoint; focused native check in progress.",
+        "status": "focused_native_pairs_reviewed_no_justified_geometry_repair"
+      },
+      "kotakeNativeResult": "Two z19 pairs cover chord middle and endpoint. Thin black Fukutoshin artwork supports broad Route441 corridor, but does not distinguish current grade-separated dual routes or2016 connection. No demonstrated new sharp bend or reversal. Precise underground parallel corridors remain unresolved; no relocation.",
+      "kotakeNativeEvidence": "through-stations-20261011/kotake/{yurakucho-senkawa-chord-end,fukutoshin-senkawa-chord-mid}-z19-* PNG and AX"
+    },
+    "oshiageKeiseiReview": {
+      "status": "display_repaired_final_native_rechecked",
+      "stationCode": "003526",
+      "currentSharedPoint": [
+        139.81241,
+        35.71022
+      ],
+      "geometryChanged": true,
+      "primaryPlatformEvidence": "through-stations-20261011/oshiage/sources/keisei-oshiage-station-layout.pdf",
+      "sourcePrintedDate": "2021-03-31",
+      "note": "B1 passenger two-island platform group separate from B3 and surface Tobu. Final common display point derived from complete body ends and native AX georeferencing; physical anchor preserved.",
+      "nativeEvidence": "through-stations-20261011/oshiage/after-b1-final-* PNG and AX; four Inspector pairs, actual production circle/card and separate B3 context",
+      "confirmedResidual": "Labelled Asakusa black rail crossing Kitajukken River lies northwest of current physical/display/smooth approach; old shared station point is near southeast edge of B1 body.",
+      "nextAction": "Continue sole checklist with Kotake-mukaihara current passenger connections and platform center; no justified relocation yet.",
+      "displaySharedPoint": [
+        139.8125322,
+        35.7104587
+      ],
+      "physicalDataPreserved": true,
+      "tests": "23/23 focused existing files pass; initial regressions failed for visible black rail distance14.444m and old B1 anchor outside central body window.",
+      "nativeResult": "Four final Inspector pairs show exposed black rail alignment and continuous real entry bend. Production actual red/purple shared B1 circle inside oblique platform body; clicked circle opens card with Keisei and Toei identities. Wider context retains separate B3 circle. Hidden underground alignment remains representative, not surveyed.",
+      "reference": "through-stations-20261011/oshiage/b1-display-reference.json",
+      "scope": "Two display terminal intervals/anchor only; representative hidden throat and platform tangent, not underground measured precision.",
+      "laneRefresh": "Existing300m zero-slot terminal rows reanchored to new display total; final main resource refreshed and native rechecked.",
+      "chatAnswer": "through-stations-20261011/oshiage/chat-b1-final.ax.txt",
+      "platformPositionBasis": "SW platform-body face C≈392510; complete NE face NE≈611370→C≈957146; representative midpoint C≈675330. Local AX georeferencing; hidden railway precision not measured.",
+      "revision": "First point C647345 was inside B1 but used incomplete central-view extent; final point uses full NE body end. Keisei station-interior SE source support replaced in display by the corresponding NE face centre.",
+      "mainBuild": "Three sequential incremental resource builds succeeded as geometry/zero-row/complete-platform evidence changed; no full test suite or parallel heavy job. Final compact byte-equal and both production chunks share final point."
+    },
+    "shinagawaReview": {
+      "status": "independent_circle_restored_remaining_approaches_under_review",
+      "stationCode": "004095",
+      "scope": "Sobu3 Yokosuka passenger platform13–15 distinct from Tokaido6–12; physical data preserved",
+      "sourceAnchor": [
+        139.739427,
+        35.629035
+      ],
+      "oldDisplayAlias": [
+        139.738535,
+        35.628135
+      ],
+      "displacementScope": "128.5m data coordinate move, not measured Apple pixel residual",
+      "evidence": "through-stations-20261011/shinagawa/ PNG+AX and sources/jr-east-platform-map.png",
+      "sourceMapPrintedDate": "2026-07",
+      "plan": "Remove350m source shift, borrowed surface departure and single obsoletefollow; preserve southbranch support/tails and remeasure dependent lane/followwindows.",
+      "nativeLimit": "Production independent eastern circle visible; popup omitted Sobu because geometry renderGroup dedupe (focused RED reproduced). North source seam and south track identity remain unresolved; no exact Apple rail-centre acceptance.",
+      "popupStatus": "production_mac_card_rechecked_five_rows_including_sobu3",
+      "popupEvidence": "through-stations-20261011/shinagawa/after-popup-fix-production-station-card-{top,bottom}.png and .ax.txt"
+    },
+    "tokyoTerminalReview": {
+      "status": "terminal_spur_native_rechecked",
+      "lineId": "jp-東日本旅客鉄道-東北新幹線",
+      "stationCode": "003766",
+      "candidateExistingSupport": [
+        139.7676701,
+        35.681109
+      ],
+      "currentAnchor": [
+        139.767579,
+        35.68113
+      ],
+      "note": "8.55m lateral physical-anchor spur removed for display; last214m runtime centroid warp restored to retained source supports, upstream prefix unchanged; physical fields retained.",
+      "evidence": "through-stations-20261011/tokyo/after-repair-tohoku-terminal-no-pin-z19-* and after-repair-production-terminals-z19-*"
+    },
+    "focusedVerification": {
+      "javascript": "tokyo-platform-approaches13/13",
+      "swift": "Three StationDisplayParityTests passed: shinagawaProductionPopupGroups, northAmericanPopupRenderGroup, tokyoLogicalAliases; production-groups RED reproduced first",
+      "build": "Second necessary RailMap incremental Catalyst build succeeded, two jobs; popup implementation changed",
+      "physicalComparison": "Only Sobu3 and TohokuShinkansen display fields changed; physical stations/segments unchanged",
+      "derivedScope": "Sobu part/lane/pin and two downstream canonical measures; Tohoku terminal lane cap and one excluded stale diagnostic",
+      "native": "Production Shinagawa card actual five rows including Sobu3; eastern circle restored. Tokyo terminal spur absent and independent Shinkansen circles visible. Shinagawa north/south residuals open."
+    }
+  },
+  "referenceIndex": "through-stations-20261011/evidence-index.md",
+  "skillModernization": {
+    "installedCopies": [
+      "/Users/sager/.codex/skills/jtm-railway-audit-repair",
+      "/Users/sager/.claude/skills/jtm-railway-audit-repair"
+    ],
+    "documents": 7,
+    "verification": "Observed stale baseline and one independent task review; installed document equality/local reference check passed. quick_validate unavailable due missing PyYAML. No synthetic evaluator campaign.",
+    "backup": "/private/tmp/jtm-rail-skill-before-modernization",
+    "scope": "Current chat-first debugging, focused verification, native limits and passenger display rules; scripts/tests preserved"
+  },
+  "hakoneLongArcReview": {
+    "status": "scoped_native_cartographic_review_complete",
+    "lineID": "jp-小田急箱根-鉄道線",
+    "interval": 6,
+    "sourceIndicesInclusive": [
+      47,
+      54
+    ],
+    "kind": "Apple cartographic display-only supplement; underground surveyed position unproven",
+    "redResidualMetres": [
+      9.384995428289988,
+      4.759375337864344
+    ],
+    "focusedSwift": "PassengerStationApproachTests + HakoneSourceReversalTests: 4 tests passed; anchor test has 3 parameter cases",
+    "preserved": "physical stations/segments/mileage, outside supports and two display reversal branches",
+    "replay": "package and derived lane replay idempotent",
+    "native": "Root actually reviewed refreshed clone after-long-arc-context-z18-overlay.png and detail-z19-overlay.png; long continuous arc follows visible original blackrail at both scales, west realbend retained. Wholeline/undergroundsurvey not certified."
+  },
+  "shinagawaNormalPairReview": {
+    "status": "bounded_passenger_pair_shape_and_production_group_native_review_complete",
+    "lineID": "jp-東日本旅客鉄道-総武線-3",
+    "displayStation": [
+      139.73965305042694,
+      35.629035
+    ],
+    "physicalStation": [
+      139.739427,
+      35.629035
+    ],
+    "bounds": [
+      [
+        139.7396393,
+        35.6297092
+      ],
+      [
+        139.73205,
+        35.61655
+      ]
+    ],
+    "source": "identified normal up/down passenger main pair; GSI detailed cartography and 2019 ortho; official July2026 platforms13-15 identity",
+    "focusedJS": "15/15 passed, core24.16m RED and station-midpoint RED observed first",
+    "preserved": "all physical stations/segments/kms; exact outside prefix/tail; true Osaki branch aliases; Tokyo groups and operator identities",
+    "derived": "removed old station pin, rebuilt +/-300m pin at new displaycentre; exact retained tail delta remaps Tokaido-3 follow; removed only stale throat hub diagnostic",
+    "replay": "source repair and derived rulers idempotent",
+    "limits": "Roof precision and per-switch2026 routing unclaimed. Apple southern basemap does not separately identify every passenger rail; no nearest Tokaido blackrail snap or exact track-pixel alignment claim. Whole Shinagawa complex and Tokyo broader corridors remain pending.",
+    "mainBuild": "single incremental Catalyst build succeeded; affected bundled compact lines exactly match source",
+    "shapeReview": {
+      "stationThroughBearingWestOfSouthDegrees": [
+        1.745,
+        2.1
+      ],
+      "northChordDeviationMetres": 1.7,
+      "northMaxLocalTurnDegrees": 3.709,
+      "result": "no large platform bend or discontinuity in current paired-rail representative",
+      "boundary": "stronger OSM/GSI tangent change about188m south remains subject to native check"
+    },
+    "native": "Root actually viewed refreshed Inspector centrez19/southz19/contextz18/westbendz17 and rebuilt main production-central-network. Station passes nearly straight, old centroidbarb removed, real westcurve retained. Main separate Sobu dot inside blue station area; nativeowner clicked and card5 members includes Sobu. Adjacent Tokaido/otherconventional and Shinkansen groups remain distinct."
+  },
+  "shinkansenBasemapRuleReview": {
+    "rule": "Identify Apple Shinkansen-specific styling with overlays hidden; compare correct Shinkansen passenger corridor/platform group; conventional blackrail is not a substitute",
+    "evidence": "Shinagawa current production basemap/network and Tokyo after-repair production terminals z19 basemap/network actually viewed",
+    "reuse": "Tohoku and Tokaido Shinkansen line records unchanged since existing captures",
+    "finding": "Tokyo representative paths apparently differ from specialized styled axis; candidate requiring platform/corridor verification, not accepted defect or automatic nearest snap",
+    "status": "Existing unchecked Tokyo item reprioritized; no geometry mutation or new heavy job"
+  },
+  "osakiKeiyoSuccessorReview": {
+    "reviewedAt": "2026-10-11",
+    "status": "scoped_native_after_complete_with_local_remainders",
+    "build": {
+      "status": "succeeded",
+      "log": "/private/tmp/jtm-osaki-keiyo-build-family-fixed.log",
+      "initialFailure": "New Osaki display family lacked render-policy colour; added matching existing package colours and explicit base/p1 family mapping.",
+      "affectedCompactRowsMatchSource": 5
+    },
+    "mainObservation": {
+      "binary": "existing RailMap Debug Mac Catalyst product",
+      "storage": "isolated empty UITestStores namespace1488132E-A59A-4C26-93F9-C75CE51F8C40; real journey library not used",
+      "cameraInterface": "existing RAILMAP_UI_TEST_CAMERA and CAMERA_PRODUCTION",
+      "scope": "ordinary production network renderer; camera framing differs from before images",
+      "osaki": "Station overlay/basemap pair and member card viewed. Branch/Yamanote/Rinkai identities remain in card. Inspector centreline station and southern approaches viewed; roof-level exact track placement and all production southern windows not certified.",
+      "keiyo": "East-fork shared tail now one red representative in visible production window; independent approaches retained. Minami single red continuity observed, but point/line lies near southern edge of blue station footprint; central platform placement unresolved."
+    },
+    "evidenceRoot": "through-stations-20261011",
+    "evidencePrefixes": [
+      "osaki/after-repair-inspector-",
+      "osaki/after-repair-main-",
+      "keiyo/after-repair-inspector-",
+      "keiyo/after-repair-main-"
+    ],
+    "remaining": [
+      "Keiyo west-arm same-company duplicate visible",
+      "Keiyo Futamata fork small kink requires local geometric review",
+      "MinamiFunabashi station platform-group placement",
+      "Osaki production southern shared tail detailed composition",
+      "Default unchanged-scope capture compatibility and real advancing checkpoint after refresh"
+    ],
+    "physicalInputs": "unchanged; prior focused route evidence reused, no whole batch run",
+    "nationwideAcceptance": false
+  },
+  "osakiSouthProductionContinuation": {
+    "date": "2026-10-11",
+    "rootViewed": true,
+    "evidence": [
+      "through-stations-20261011/osaki/after-repair-main-south-fork-detail-overlay.png",
+      "through-stations-20261011/osaki/after-repair-main-south-fork-detail-basemap.png",
+      "through-stations-20261011/osaki/after-repair-main-south-tail-overlay.png",
+      "through-stations-20261011/osaki/after-repair-main-south-tail-basemap.png"
+    ],
+    "scope": "Visible southern fork and shared tail toward Nishi-Oi; continuous owner corridor, no old green duplicate tail observed. Source retains Rinkai independently. Not whole Osaki or precision roof track acceptance.",
+    "processSession": 46691,
+    "log": "/private/tmp/jtm-osaki-south-tail-production-native.log",
+    "isolatedStorageID": "493399B4-217A-443B-9B43-7981F0736B57",
+    "captureCheckpoint": "29781/92216 failed4 paused; unchanged old resources"
+  },
+  "keiyoWestSharedContinuation": {
+    "date": "2026-10-11",
+    "changedIDs": [
+      "jp-東日本旅客鉄道-京葉線"
+    ],
+    "sharedTenant": "jp-東日本旅客鉄道-京葉線-3",
+    "physicalUnchanged": true,
+    "sourceReplay": "equal",
+    "laneReplay": "equal",
+    "focusedTests": "12/12; /private/tmp/jtm-keiyo-west-focused-tests.log",
+    "build": "succeeded; /private/tmp/jtm-keiyo-west-build.log",
+    "rootViewed": [
+      "keiyo/after-west-shared-main-context-overlay",
+      "keiyo/after-west-shared-main-fork-overlay",
+      "keiyo/after-west-shared-main-fork-basemap",
+      "keiyo/after-west-shared-inspector-fork-view3-overlay",
+      "keiyo/after-west-shared-inspector-fork-view3-basemap"
+    ],
+    "scope": "Visible western shared tail single continuous red, independent pre-fork preserved. Not full 3.78km pixel or station-centre acceptance.",
+    "remaining": [
+      "east fork small kink",
+      "Minami platform/track group binding and source dot",
+      "Ichikawa-Shiohama/full west tail centring beyond visible scope"
+    ],
+    "processSession": 1426,
+    "log": "/private/tmp/jtm-keiyo-west-fork-production-native.log",
+    "network": "ON",
+    "mainCamera": [
+      35.68953,
+      139.95346,
+      2759.8
+    ],
+    "default": "old resources; checkpoint29781/92216failed4 paused; no resume"
+  },
+  "keiyoEastEntranceSeamContinuation": {
+    "reviewedAt": "2026-10-11",
+    "status": "scoped_source_and_native_after_complete",
+    "userPrompt": "这里确实有一个需要修复的小折点",
+    "displayIndex": 45,
+    "originalAlias": [
+      139.96244,
+      35.69156
+    ],
+    "trackEndpoint": [
+      139.9623587,
+      35.6916424
+    ],
+    "sourceWay": 180845361,
+    "displacementM": 11.75448,
+    "preservedRealForkIndex": 40,
+    "physicalFieldsUnchanged": true,
+    "focusedTests": "13/13; RED then GREEN",
+    "testLog": "/private/tmp/jtm-keiyo-seam-focused-tests.log",
+    "buildLog": "/private/tmp/jtm-keiyo-seam-build.log",
+    "compactMatchesSource": 3,
+    "evidencePrefixes": [
+      "keiyo/before-entrance-seam-inspector-",
+      "keiyo/after-entrance-seam-inspector-",
+      "keiyo/after-entrance-seam-main-"
+    ],
+    "mainDetailCamera": {
+      "lat": 35.691636,
+      "lon": 139.962359,
+      "distance": 1103.9
+    },
+    "minamiOfficialDiagram": "obtained and viewed; April2025, no geographic platform binding",
+    "defaultCapture": "paused29781 failed4; original receipts retained, not resumed",
+    "nationwideAcceptance": false
+  },
+  "minamiPassengerCentreContinuation": {
+    "reviewedAt": "2026-10-11",
+    "status": "scoped_native_after_complete",
+    "displayAnchor": [
+      139.995806,
+      35.68186196884773
+    ],
+    "platformWayOrder": [
+      [
+        1,
+        173053168
+      ],
+      [
+        2,
+        1424469769
+      ],
+      [
+        3,
+        1424469770
+      ],
+      [
+        4,
+        173053163
+      ]
+    ],
+    "physicalData": "targeted compare exactly unchanged",
+    "focusedTests": {
+      "pass": 2,
+      "log": "/private/tmp/jtm-minami-green.log",
+      "finalFullSuiteRerun": false
+    },
+    "build": {
+      "status": "succeeded",
+      "log": "/private/tmp/jtm-minami-passenger-centre-final-build.log",
+      "compactRowsMatched": 3,
+      "stationChunksMatched": 2
+    },
+    "native": {
+      "rootViewed": true,
+      "detailCamera": [
+        35.681665,
+        139.995886,
+        438.9
+      ],
+      "matchingBeforeCamera": true,
+      "contextCamera": [
+        35.681665,
+        139.9964,
+        1755.7
+      ],
+      "stationCard": "MinamiFunabashi/Keiyo/JR East; same-name same-company UI row, two logical members retained",
+      "evidencePrefix": "through-stations-20261011/keiyo/after-passenger-centre-main-"
+    },
+    "evidenceBoundary": "Cartographic passenger-group representative with approximate native pixel calibration; not exact physical WGS84 survey. Full line and nationwide remain open.",
+    "inspectors": {
+      "compact": "current",
+      "binary": "existing v5",
+      "manual": "both reopened idle",
+      "defaultLoaded": 29754,
+      "defaultObserved": 29931,
+      "failed": 4,
+      "invalidatedOldReceipts": 27,
+      "resumeClicks": 1,
+      "actualGrowthConfirmed": true,
+      "progressEvidence": "through-stations-20261011/keiyo/after-passenger-centre-default-progress.json"
+    },
+    "nationwideAcceptance": false
+  },
+  "hisatsuTemporalContinuation": {
+    "status": "source_and_focused_temporal_checks_complete",
+    "revision": "2026-10-11.1",
+    "evidence": "through-stations-20261011/hisatsu/README.md",
+    "northValidTo": "2020-07-04",
+    "southServicePeriods": [
+      [
+        null,
+        "2020-07-06"
+      ],
+      [
+        "2020-07-11",
+        "2025-08-07"
+      ],
+      [
+        "2026-07-12",
+        null
+      ]
+    ],
+    "sourceReplayTest": "passed",
+    "displayStampsMatched": 4,
+    "javascriptFeaturesChecked": 96,
+    "swiftEraTestsPassed": 6,
+    "runningNativeBundleUpdated": true,
+    "nativeDatedPixelsMeasured": true,
+    "historicalAlignmentRiskRemainsOpen": true,
+    "alignmentBatchResumed": {
+      "capturedCount": 52859,
+      "total": 92216,
+      "failedCount": 6,
+      "verifiedRunning": true,
+      "planDigestUnchanged": true
+    },
+    "nativeDateSwitchReview": {
+      "status": "passed_visible_boundaries",
+      "evidence": "through-stations-20261011/hisatsu/native/result.json",
+      "dates": [
+        "2020-07-03",
+        "2020-07-04",
+        "2025-08-06",
+        "2025-08-07",
+        "2026-06-28",
+        "2026-07-11",
+        "2026-07-12"
+      ],
+      "modeRestored": "Current",
+      "realUserStoreTouched": false,
+      "draftSaved": false,
+      "incrementalBuild": "succeeded",
+      "historicalGeometryRiskClosed": false
+    }
+  }
+}

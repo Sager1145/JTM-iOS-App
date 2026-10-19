@@ -1,0 +1,514 @@
+[
+  {
+    "intervalIndex": 0,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina00-coordinates.json",
+    "coordinates": [
+      [
+        139.62189826620107,
+        35.90774286029489
+      ],
+      [
+        139.62176952016836,
+        35.9077037554935
+      ],
+      [
+        139.62166223180776,
+        35.90768637557558
+      ],
+      [
+        139.62156567228323,
+        35.907682030595495
+      ],
+      [
+        139.6214691127587,
+        35.907690720555415
+      ],
+      [
+        139.6213832820702,
+        35.907725480385544
+      ],
+      [
+        139.62130281579977,
+        35.90778196507693
+      ],
+      [
+        139.62124380720144,
+        35.90785582961253
+      ],
+      [
+        139.6212008918572,
+        35.907938384011885
+      ],
+      [
+        139.62116870534902,
+        35.9080165933634
+      ],
+      [
+        139.6211472476769,
+        35.90808611272209
+      ],
+      [
+        139.6211311544228,
+        35.90815128706538
+      ],
+      [
+        139.62112579000478,
+        35.90820777145281
+      ],
+      [
+        139.6211472476769,
+        35.90825991085158
+      ],
+      [
+        139.62119552743917,
+        35.908333774941006
+      ],
+      [
+        139.6212545360375,
+        35.90838591425675
+      ],
+      [
+        139.62134036672597,
+        35.908425018721
+      ],
+      [
+        139.6214530195046,
+        35.908455433290946
+      ],
+      [
+        139.62157640111928,
+        35.90848584784921
+      ],
+      [
+        139.6216675962258,
+        35.90852060733005
+      ],
+      [
+        139.62173196924215,
+        35.90855536679561
+      ],
+      [
+        139.62178024900442,
+        35.908603161035835
+      ],
+      [
+        139.62180707109457,
+        35.90865095524719
+      ],
+      [
+        139.62180707109457,
+        35.908703094353925
+      ],
+      [
+        139.62179097784048,
+        35.908781302949606
+      ],
+      [
+        139.62175342691427,
+        35.90888992587092
+      ],
+      [
+        139.62171051157003,
+        35.908998548643126
+      ],
+      [
+        139.6216675962258,
+        35.90910717126621
+      ],
+      [
+        139.62163004529958,
+        35.909215793740174
+      ],
+      [
+        139.62129946518718,
+        35.91007893041455
+      ],
+      [
+        139.6202009474697,
+        35.913117560870866
+      ],
+      [
+        139.61908058112397,
+        35.91613928017643
+      ],
+      [
+        139.61757019014368,
+        35.920243278551226
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002914",
+    "endDiagnosticAlias": "002881"
+  },
+  {
+    "intervalIndex": 1,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina01-coordinates.json",
+    "coordinates": [
+      [
+        139.61757019014368,
+        35.920243278551226
+      ],
+      [
+        139.6166716357705,
+        35.92334125725986
+      ],
+      [
+        139.61620141012668,
+        35.92646959824609
+      ],
+      [
+        139.61604898858707,
+        35.929610992632476
+      ],
+      [
+        139.61622770150893,
+        35.93275565840645
+      ],
+      [
+        139.61674992757816,
+        35.93572656561451
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002881",
+    "endDiagnosticAlias": "002857"
+  },
+  {
+    "intervalIndex": 2,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina02-coordinates.json",
+    "coordinates": [
+      [
+        139.61674992757816,
+        35.93572656561451
+      ],
+      [
+        139.6169028134919,
+        35.93649969410784
+      ],
+      [
+        139.61713348346717,
+        35.93771583598526
+      ],
+      [
+        139.6173025940634,
+        35.93856739730812
+      ],
+      [
+        139.61758690821898,
+        35.94004409995094
+      ],
+      [
+        139.6179385412056,
+        35.941855682813376
+      ],
+      [
+        139.61805870304107,
+        35.942459160694455
+      ],
+      [
+        139.61809357175832,
+        35.94270671528384
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002857",
+    "endDiagnosticAlias": "002844"
+  },
+  {
+    "intervalIndex": 3,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina03-coordinates.json",
+    "coordinates": [
+      [
+        139.61809357175832,
+        35.94270671528384
+      ],
+      [
+        139.61824645767211,
+        35.94341463026867
+      ],
+      [
+        139.6184771276474,
+        35.9446306657463
+      ],
+      [
+        139.61866920371324,
+        35.945480854332686
+      ],
+      [
+        139.61892669577867,
+        35.946957427796775
+      ],
+      [
+        139.61925492812873,
+        35.9487668941741
+      ],
+      [
+        139.61937396560666,
+        35.949431767454556
+      ],
+      [
+        139.61943565641405,
+        35.9499659160949
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002844",
+    "endDiagnosticAlias": "002835"
+  },
+  {
+    "intervalIndex": 4,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina04-coordinates.json",
+    "coordinates": [
+      [
+        139.61943565641405,
+        35.9499659160949
+      ],
+      [
+        139.6195992711639,
+        35.95073456267896
+      ],
+      [
+        139.61980311904904,
+        35.95195048550584
+      ],
+      [
+        139.62005468618855,
+        35.95341265222525
+      ],
+      [
+        139.6202424408196,
+        35.954281140997246
+      ],
+      [
+        139.62057506622023,
+        35.956092821088454
+      ],
+      [
+        139.62070651653295,
+        35.95678420163865
+      ],
+      [
+        139.6207950294305,
+        35.95721842868368
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002835",
+    "endDiagnosticAlias": "002824"
+  },
+  {
+    "intervalIndex": 5,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina05-coordinates.json",
+    "coordinates": [
+      [
+        139.6207950294305,
+        35.95721842868368
+      ],
+      [
+        139.620894271164,
+        35.957739497986694
+      ],
+      [
+        139.6211463988114,
+        35.95895531299192
+      ],
+      [
+        139.6213266936141,
+        35.959803219708235
+      ],
+      [
+        139.62160564335164,
+        35.96127952548889
+      ],
+      [
+        139.62203604807877,
+        35.96309292256232
+      ],
+      [
+        139.6221313558197,
+        35.963614221165344
+      ],
+      [
+        139.62216622453707,
+        35.9638356581054
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002824",
+    "endDiagnosticAlias": "002812"
+  },
+  {
+    "intervalIndex": 6,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina06-coordinates.json",
+    "coordinates": [
+      [
+        139.62216622453707,
+        35.9638356581054
+      ],
+      [
+        139.62231374603272,
+        35.96456943490006
+      ],
+      [
+        139.62254978042603,
+        35.96578514475975
+      ],
+      [
+        139.62271142580875,
+        35.966637075790125
+      ],
+      [
+        139.6229903755463,
+        35.96811325381426
+      ],
+      [
+        139.6233382411245,
+        35.96992409588918
+      ],
+      [
+        139.62351463558196,
+        35.97079924171045
+      ],
+      [
+        139.6235655975533,
+        35.971172610840206
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002812",
+    "endDiagnosticAlias": "002802"
+  },
+  {
+    "intervalIndex": 7,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina07-coordinates.json",
+    "coordinates": [
+      [
+        139.6235655975533,
+        35.971172610840206
+      ],
+      [
+        139.62415842718315,
+        35.974135341088186
+      ],
+      [
+        139.62456552735716,
+        35.97727242741481
+      ],
+      [
+        139.62469288591404,
+        35.97959999999996
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002802",
+    "endDiagnosticAlias": "002787"
+  },
+  {
+    "intervalIndex": 8,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina08-coordinates.json",
+    "coordinates": [
+      [
+        139.62469288591404,
+        35.97959999999996
+      ],
+      [
+        139.624484603526,
+        35.98269397054721
+      ],
+      [
+        139.6239430310465,
+        35.9858102966798
+      ],
+      [
+        139.62308075223774,
+        35.98888178359898
+      ],
+      [
+        139.62234752149584,
+        35.991024999999986
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002787",
+    "endDiagnosticAlias": "002770"
+  },
+  {
+    "intervalIndex": 9,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina09-coordinates.json",
+    "coordinates": [
+      [
+        139.62234752149584,
+        35.991024999999986
+      ],
+      [
+        139.62085582945008,
+        35.99396262740348
+      ],
+      [
+        139.6191631809075,
+        35.99678200064592
+      ],
+      [
+        139.61714801719677,
+        35.999454999999955
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002770",
+    "endDiagnosticAlias": "002756"
+  },
+  {
+    "intervalIndex": 10,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina10-coordinates.json",
+    "coordinates": [
+      [
+        139.61714801719677,
+        35.999454999999955
+      ],
+      [
+        139.61496202827868,
+        36.00198297191334
+      ],
+      [
+        139.61250478363155,
+        36.004317021143116
+      ],
+      [
+        139.60967618784963,
+        36.006519778957404
+      ],
+      [
+        139.60878017427444,
+        36.007164339511164
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002756",
+    "endDiagnosticAlias": "002747"
+  },
+  {
+    "intervalIndex": 11,
+    "coordinateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/repair-chat-ina/diagnostic-intervals/ina11-coordinates.json",
+    "coordinates": [
+      [
+        139.60878017427444,
+        36.007164339511164
+      ],
+      [
+        139.60617976157334,
+        36.00936009388211
+      ],
+      [
+        139.603376173043,
+        36.01154234796785
+      ],
+      [
+        139.6002401742744,
+        36.01386140887133
+      ]
+    ],
+    "status": "complete-diagnostic-body-not-frozen",
+    "startDiagnosticAlias": "002747",
+    "endDiagnosticAlias": "002742"
+  }
+]

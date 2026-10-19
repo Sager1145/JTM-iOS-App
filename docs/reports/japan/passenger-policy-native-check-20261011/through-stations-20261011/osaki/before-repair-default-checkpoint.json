@@ -1,0 +1,11 @@
+{
+  "capturedCount": 29781,
+  "failedCount": 4,
+  "format": "jtm-native-batch-capture-v1",
+  "pendingCount": 62431,
+  "planDigest": "816d3e84393027df093ffd66c6f697668274886e0055cbcee26accad065a4b1d",
+  "unavailableIntervalCount": 0,
+  "observedAt": "2026-10-11T05:16:21.546615",
+  "evidenceKind": "read-only checkpoint after native AX confirmed pause",
+  "checkpointPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/checkpoint.json"
+}

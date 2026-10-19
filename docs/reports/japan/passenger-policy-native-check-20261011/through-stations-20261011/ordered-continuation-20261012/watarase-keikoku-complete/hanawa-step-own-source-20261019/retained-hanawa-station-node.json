@@ -1,0 +1,31 @@
+{
+  "source": "railway-sources/local/osm/degree-cells/platforms/E139N36.json",
+  "fetchedAt": "2026-08-19T02:35:43.825Z",
+  "elements": [
+    {
+      "type": "node",
+      "id": 12597670270,
+      "tags": {
+        "KSJ2:LIN": "わたらせ渓谷線",
+        "KSJ2:STN": "花輪",
+        "name": "花輪",
+        "name:en": "Hanawa",
+        "name:ja": "花輪",
+        "name:ja_rm": "Hanawa",
+        "name:ko": "하나와",
+        "public_transport": "station",
+        "railway": "station",
+        "train": "yes",
+        "wikidata": "Q5646950",
+        "wikipedia": "ja:花輪駅"
+      },
+      "geometry": [
+        {
+          "lat": 36.5208404,
+          "lon": 139.307863
+        }
+      ]
+    }
+  ],
+  "limit": "Station node only; no platform way/caps are established."
+}

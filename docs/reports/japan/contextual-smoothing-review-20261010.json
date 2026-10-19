@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-10",
+  "scope": "Context-sensitive smoothing only. Passenger Hakone intervals5/6 visually rechecked; no railway topology or package geometry changed.",
+  "rootCauses": [
+    "Opposite signed source turns cancelled in windowed spline classification.",
+    "Final fillet did not receive source-hard provenance.",
+    "Old60-degree threshold missed localized35-39-degree Ohiradai corners."
+  ],
+  "policy": {
+    "continuousArc": "Keep bounded spline and ordinary rounding.",
+    "sharpCorner": "Protect individual or net turn>60degrees.",
+    "localizedModerateCorner": "Protect>=30degrees when both neighbor turns are less than75percent of apex.",
+    "closeOpposingBends": "Protect both>=30degree opposite turns when connecting edge<half either exterior support.",
+    "junction": "Stop tangent blend before nearest protected measure.",
+    "unknownSeam": "Retain ambiguous sharp short connector; geographic evidence repair must resolve artifacts.",
+    "application": "Separate measure provenance survives simplification/spline/taper to final fillet. Stations retain separate through-anchor behavior."
+  },
+  "validation": {
+    "swiftTests": 31,
+    "swiftSuites": 4,
+    "swiftDurationSeconds": 0.348,
+    "javascriptTests": 4,
+    "nativeFinalBuild": "succeeded",
+    "nativeSnapshots": 16,
+    "captureFailures": 0,
+    "visuallyReviewed": 16,
+    "nativeIntervalCount": 2,
+    "savedViewportNotes": 2,
+    "sourceQuery": "Six selected real vertices across z13/17/18 all exactly retained by zero-lane web production output."
+  },
+  "remaining": [
+    "Native snapshots still show substantial source corridor offsets around Hakone; both saved interval viewport notes remain needsRepair.",
+    "Classifiers are rendering heuristics, not proof of a physical switch or survey identity.",
+    "Full production multiple-lane offset/fold rendering was not visually certified.",
+    "Concurrent Swift removeOffsetFolds significant-support change differs from JS and was not part of this owned repair; overall pipeline parity not claimed."
+  ],
+  "evidence": "docs/reports/japan/contextual-smoothing-evidence-20261010",
+  "review": "Independent read review found no blocker in owned final changes; junction blend gap corrected, ambiguous seam preservation explicitly tested."
+}

@@ -1,0 +1,146 @@
+{
+  "caseIndex": 14,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 14,
+  "source": {
+    "caseIndex": 14,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 14,
+    "fromStationID": "002187",
+    "toStationID": "002204",
+    "camera": [
+      36.4794525,
+      137.85054,
+      0.05582114999999178
+    ],
+    "effectiveCoordinates": [
+      [
+        137.85627,
+        36.491535
+      ],
+      [
+        137.85588,
+        36.49105
+      ],
+      [
+        137.85531,
+        36.49056
+      ],
+      [
+        137.85451,
+        36.49002
+      ],
+      [
+        137.85427,
+        36.48986
+      ],
+      [
+        137.85397,
+        36.48966
+      ],
+      [
+        137.85371,
+        36.48948
+      ],
+      [
+        137.85359,
+        36.48938
+      ],
+      [
+        137.85226,
+        36.48836
+      ],
+      [
+        137.85158,
+        36.48783
+      ],
+      [
+        137.85117,
+        36.48753
+      ],
+      [
+        137.8486,
+        36.48563
+      ],
+      [
+        137.84794,
+        36.48513
+      ],
+      [
+        137.84778,
+        36.48501
+      ],
+      [
+        137.84694,
+        36.4844
+      ],
+      [
+        137.84664,
+        36.48417
+      ],
+      [
+        137.84634,
+        36.48381
+      ],
+      [
+        137.8461,
+        36.48337
+      ],
+      [
+        137.84518,
+        36.48036
+      ],
+      [
+        137.84499,
+        36.4797
+      ],
+      [
+        137.84484,
+        36.47923
+      ],
+      [
+        137.84481,
+        36.47904
+      ],
+      [
+        137.84484,
+        36.47871
+      ],
+      [
+        137.84515,
+        36.47721
+      ],
+      [
+        137.84522,
+        36.47685
+      ],
+      [
+        137.8459,
+        36.47369
+      ],
+      [
+        137.84667,
+        36.46981
+      ],
+      [
+        137.84704,
+        36.46796
+      ],
+      [
+        137.84716,
+        36.46737
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:14.01;lod:12.86;backbones:0;networkStations:6;distance:12253.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.479452;centerLon:137.850540;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1430.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.479452;centerLon:137.850540;distance:12253.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-14.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Minami-Omachi to Shinano-Tokiwa Takase River bridge and broad turns retained; changing local offset and own frame unresolved."
+}

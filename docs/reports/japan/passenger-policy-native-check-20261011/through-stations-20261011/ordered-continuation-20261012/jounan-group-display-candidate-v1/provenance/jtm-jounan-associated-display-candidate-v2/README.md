@@ -1,0 +1,3 @@
+# Jounan associated Otemachi/Hanazono display candidate v2
+
+Temporary candidate only. Red is current compact source, orange is candidate, yellow circles are candidate endpoint representatives. The candidate covers all four Otemachi intervals and the complete Hanazono interval across 13 actual z18 raws. Physical stations, IDs, kilometres, serialized routes, and topology remain unchanged. Komachi uses the continuous incoming Loop tram rail at the selected platform chainage. Matsuyamashi uses the own rail at the lower terminal frame's longitudinal chainage and follows the complete visible black bend without a hook. Miyata follows the rounded own black bend into the southwest frame. Minamihoribata uses the distinct south arm.

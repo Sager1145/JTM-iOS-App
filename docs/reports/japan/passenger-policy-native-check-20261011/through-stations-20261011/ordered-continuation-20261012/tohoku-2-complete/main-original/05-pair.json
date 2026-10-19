@@ -1,0 +1,70 @@
+{
+  "caseIndex": 5,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 5,
+  "source": {
+    "caseIndex": 5,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 5,
+    "fromStationID": "003368",
+    "toStationID": "003417",
+    "camera": [
+      35.7297695,
+      139.7687685,
+      0.010702230000012563
+    ],
+    "effectiveCoordinates": [
+      [
+        139.766778,
+        35.732086
+      ],
+      [
+        139.76729,
+        35.73127
+      ],
+      [
+        139.76744,
+        35.73108
+      ],
+      [
+        139.76818,
+        35.73012
+      ],
+      [
+        139.76898,
+        35.72917
+      ],
+      [
+        139.76956,
+        35.72853
+      ],
+      [
+        139.77015,
+        35.72799
+      ],
+      [
+        139.77016,
+        35.72798
+      ],
+      [
+        139.77037,
+        35.7278
+      ],
+      [
+        139.770759,
+        35.727453
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t44 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:9;rides:0;budgetDrops:0;vertices:3194;camera:16.41;lod:15.26;backbones:1;networkStations:14;distance:2349.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.729770;centerLon:139.768769;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3895.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:16;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.729770;centerLon:139.768769;distance:2349.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-05.jpg",
+  "observation": "西日暮里至日暮里在西侧有局部小弯；Main 可分辨常磐分岔及千代田线，日暮里京浜東北自身站台中心未验收。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

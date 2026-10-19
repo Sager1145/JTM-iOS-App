@@ -1,0 +1,220 @@
+{
+  "source": "../missing-viewed-originals-20261019.json",
+  "views": [
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000/basemap.png",
+          "recordedByteCount": 280023,
+          "actualByteCount": 280023,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000000/smooth.png",
+          "recordedByteCount": 333633,
+          "actualByteCount": 333633,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.4718,
+        "longitude": 132.930435,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694025600769481,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233331444.48750934,
+        "rectY": 105891186.19294916,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001/basemap.png",
+          "recordedByteCount": 310210,
+          "actualByteCount": 310210,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000001/smooth.png",
+          "recordedByteCount": 366470,
+          "actualByteCount": 366470,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.47027528160012,
+        "longitude": 132.927064633636,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694206975052057,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233328931.3601988,
+        "rectY": 105892582.18993245,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002/basemap.png",
+          "recordedByteCount": 303208,
+          "actualByteCount": 303208,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000002/smooth.png",
+          "recordedByteCount": 357780,
+          "actualByteCount": 357780,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.468323930262045,
+        "longitude": 132.92423439460046,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694439089764714,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233326820.9810152,
+        "rectY": 105894368.7635747,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003/basemap.png",
+          "recordedByteCount": 261744,
+          "actualByteCount": 261744,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000003/smooth.png",
+          "recordedByteCount": 312200,
+          "actualByteCount": 312200,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.466788020417084,
+        "longitude": 132.92116037005974,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694621779434581,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233324528.82218367,
+        "rectY": 105895774.94630453,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    },
+    {
+      "itemID": "jp-一畑電車-北松江線#6",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004/basemap.png",
+          "recordedByteCount": 251032,
+          "actualByteCount": 251032,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/captures/000006/000004/smooth.png",
+          "recordedByteCount": 300382,
+          "actualByteCount": 300382,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.46635,
+        "longitude": 132.91905,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9694673878736915,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233322955.21621332,
+        "rectY": 105896175.96540669,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-ichibata-kitamatsue-missing-20261019/alignment/identity-plan-63ff617fc64d208a1d6220b380851b781efe728b08ea4d6f886b96113f00af24.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "高ノ宮西南侧长斜段红线有短阶梯，p1/p2较清楚；随后湖岸真实大反弯连续，津ノ森站口偏湖侧。仅来源核对线索。"
+    }
+  ]
+}

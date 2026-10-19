@@ -1,0 +1,52 @@
+{
+  "views": 34,
+  "images": 102,
+  "dimensions": [
+    1024,
+    768
+  ],
+  "lineID": "jp-\u897f\u65e5\u672c\u65c5\u5ba2\u9244\u9053-\u5317\u9678\u7dda-p1",
+  "zoom256": 17,
+  "reviewedPairs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33
+  ],
+  "originalSmoothReviewed": [
+    0,
+    11,
+    12
+  ],
+  "scope": "native candidate evidence; correction of erroneous crossing turn, not full pixel alignment or platform acceptance"
+}

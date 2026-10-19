@@ -1,0 +1,19 @@
+{
+  "format": "jtm-tsushima-display-proposal-v4-manifest",
+  "status": "proposal-only",
+  "reprojectionCount": 111,
+  "sourceCaptureSets": [
+    "primary",
+    "secondary",
+    "third"
+  ],
+  "files": {
+    "candidate-v4.geojson": "a943ae3b856cc3ca09fd033fc5f49d7d2f2358e7a3a0e80c42b11ec25f9da858",
+    "candidate-v4.json": "9f4509c13c50a8d2a696c22021b8419be647d1b066d6aa28b2790de09aefe9dd",
+    "interval1-3-three-app-review.md": "f70dab7ce1f27f181553738fe2aafa3e684d03bbdac500f19e619f315c970430",
+    "proposal-v4.md": "bd2760831d2ca7b1c3526f96c46541d3a126e08b1914a698d0149cb025d7b58d",
+    "station-frame-picks.json": "ad9223eac87cc750af954e066132ea64d1d08cb12426b185cb4a0cd86ced7427"
+  },
+  "candidateCoordinatesSHA256": "9f4509c13c50a8d2a696c22021b8419be647d1b066d6aa28b2790de09aefe9dd",
+  "stationFramePicksSHA256": "ad9223eac87cc750af954e066132ea64d1d08cb12426b185cb4a0cd86ced7427"
+}

@@ -1,0 +1,74 @@
+{
+  "stationIndex": 17,
+  "stationID": "009414",
+  "name": "伊予宮野下",
+  "status": "candidate-only-Root-approved-coextensive-group-normal",
+  "retainedProvisionalAlias": [
+    132.6057001257729,
+    33.28881666120304
+  ],
+  "reason": "Root explicitly confirmed the two curved faces are one coextensive passenger group and approved the inherited group-longmid→actual curved-rail-normal alias. The point lies within their common longitudinal range on the own paired-rail group. Retain unequal-face/curved-chainage cartographic warning; no single-face replacement is required.",
+  "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/17-009414/view.json",
+  "actualOpenedPair": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/repair-chat-yodo/stations/station17-raw-pair.jpg",
+  "alternativeNormals": [
+    {
+      "faceIndex": 0,
+      "literalFaceEndpoints": [
+        [
+          330,
+          412
+        ],
+        [
+          605,
+          250
+        ]
+      ],
+      "endpointLongMidpointPixel": [
+        467.5,
+        331.0
+      ],
+      "localTangentNormalPixel": [
+        465.4143344709898,
+        327.821843003413
+      ],
+      "coordinate": [
+        132.60567215024133,
+        33.28880131469524
+      ],
+      "status": "unselected-explicit-alternative",
+      "limits": "Curved face chainage and representative direction remain unresolved. Endpoint arithmetic midpoint is a bounded alternative, not an independently confirmed curved-face chainage midpoint."
+    },
+    {
+      "faceIndex": 1,
+      "literalFaceEndpoints": [
+        [
+          385,
+          400
+        ],
+        [
+          591,
+          279
+        ]
+      ],
+      "endpointLongMidpointPixel": [
+        488.0,
+        339.5
+      ],
+      "localTangentNormalPixel": [
+        475.84436860068257,
+        320.97713310580207
+      ],
+      "coordinate": [
+        132.60572810130446,
+        33.28883200770814
+      ],
+      "status": "unselected-explicit-alternative",
+      "limits": "Curved face chainage and representative direction remain unresolved. Endpoint arithmetic midpoint is a bounded alternative, not an independently confirmed curved-face chainage midpoint."
+    }
+  ],
+  "adoptedAlternative": null,
+  "formalAcceptance": false,
+  "rootDecision": "2026-10-14 explicit task steering: retain [132.6057001257729,33.28881666120304]; do not replace approved alias absent concrete outside-group/off-rail pixel witness.",
+  "alternativesDisposition": "Earlier unselected single-face midpoint alternatives are diagnostic only and superseded as a decision requirement by Root group adjudication. They are not proposed replacements.",
+  "requiredAliasChange": false
+}

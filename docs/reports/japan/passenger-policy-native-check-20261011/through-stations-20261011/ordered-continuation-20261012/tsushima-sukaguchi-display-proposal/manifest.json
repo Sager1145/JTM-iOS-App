@@ -1,0 +1,77 @@
+{
+  "format": "jtm-static-proposal-manifest-v1",
+  "status": "draft-not-frozen",
+  "itemID": "jp-名古屋鉄道-津島線#0",
+  "reprojectionCount": 7,
+  "sourceFiles": [
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view1-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view2-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view3-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view4-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view5-z18-before/view.json",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-complete-native/tsushima-sukaguchi-interval0-view6-z18-before/view.json"
+  ],
+  "outputs": [
+    {
+      "path": "proposal.md",
+      "sha256": "2b57235b758235dcfcc5974b53a180cf237fb7f03e2f89343f863afd54e240fc"
+    },
+    {
+      "path": "own-black-glyph-support.geojson",
+      "sha256": "8b96ad2dd32ad6643a9060eceefd340f20ecc14564df75be57449153daf20c7e"
+    },
+    {
+      "path": "station-frame-picks.json",
+      "sha256": "4a53eb21776f6484acf059bb61bb387cafa6eebf11b18724d5d9b8e6cca19a1a"
+    },
+    {
+      "path": "reprojections/tsushima-0-view0-support.png",
+      "sha256": "c062d42ed3a2d267477e1a248dcbf4251c2883c0fc27317d3426800dddfd5469"
+    },
+    {
+      "path": "reprojections/tsushima-0-view1-support.png",
+      "sha256": "d98ad4903e0cdce88beda8f4254525659bee89b0c9d21a0555a48c8aa1db8032"
+    },
+    {
+      "path": "reprojections/tsushima-0-view2-support.png",
+      "sha256": "e55ed165c6a5f6e14debb5f576c4e1789e9b21ff0d10f757e5dd0a351b1bb18e"
+    },
+    {
+      "path": "reprojections/tsushima-0-view3-support.png",
+      "sha256": "86f36f8b0f9899d218e8f3fe2521a9390c922e5c0f4df3b24881d2ae48ade980"
+    },
+    {
+      "path": "reprojections/tsushima-0-view4-support.png",
+      "sha256": "9da4e642c5e9937d0720eae4faa0e66775d4d6e7948c6cd8635f064052d9798c"
+    },
+    {
+      "path": "reprojections/tsushima-0-view5-support.png",
+      "sha256": "901814ea0ab6be145c3e3a01c5e2608450b9d2755e46208a6c2ab6240a74a8d7"
+    },
+    {
+      "path": "reprojections/tsushima-0-view6-support.png",
+      "sha256": "36a7b33758277a7c9b9b365e163af0834337362580c8a6de2b980eb4fb5e49e4"
+    },
+    {
+      "path": "reprojections/meitetsu-shinkiyosu-z18-before-station-pick.png",
+      "sha256": "b11ce26c389b5a8f957bf7adb824babffb7ae715e0a8980c21e2291bcdcd0809"
+    },
+    {
+      "path": "reprojections/meitetsu-marunouchi-z18-before-station-pick.png",
+      "sha256": "fd364e2a2518ced54a3825315061bb06383681dd821870c82273b1c188c2a2c8"
+    },
+    {
+      "path": "reprojections/meitetsu-shinkawabashi-z18-before-station-pick.png",
+      "sha256": "0264b6e79c1b2047e12a0afcfd2bed09134f51eda87dd64f3f3b086a2239dc63"
+    },
+    {
+      "path": "reprojections/meitetsu-futatsuiri-z18-before-station-pick.png",
+      "sha256": "e844ab16304f93eee53a2c05efd36241c2f0312b4bff3f4b38cfbfb29ef55f55"
+    },
+    {
+      "path": "reprojections/meitetsu-nishibiwajima-z18-before-station-pick.png",
+      "sha256": "86a280471922e397263cb0c99f3fd81d59e4e4c6d48481728fa305f591634c2c"
+    }
+  ]
+}

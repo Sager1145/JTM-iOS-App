@@ -1,0 +1,53 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/candidate-tasks.json",
+  "capturedCount" : 133,
+  "captureIndexPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/source-line.json",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment",
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-西日本旅客鉄道-大糸線#0",
+    "jp-西日本旅客鉄道-大糸線#1",
+    "jp-西日本旅客鉄道-大糸線#2",
+    "jp-西日本旅客鉄道-大糸線#3",
+    "jp-西日本旅客鉄道-大糸線#4",
+    "jp-西日本旅客鉄道-大糸線#5",
+    "jp-西日本旅客鉄道-大糸線#6",
+    "jp-西日本旅客鉄道-大糸線#7"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "133\/133 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "pendingCount" : 0,
+  "requestID" : "ordered-34-oito-west-baseline-20261017",
+  "requestPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/review-notes.json",
+  "runStatusPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:30:38Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

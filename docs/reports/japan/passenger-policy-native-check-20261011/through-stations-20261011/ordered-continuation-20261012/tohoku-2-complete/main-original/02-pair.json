@@ -1,0 +1,90 @@
+{
+  "caseIndex": 2,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 2,
+  "source": {
+    "caseIndex": 2,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 2,
+    "fromStationID": "003236",
+    "toStationID": "003277",
+    "camera": [
+      35.749703499999995,
+      139.74206550000002,
+      0.012111330000000252
+    ],
+    "effectiveCoordinates": [
+      [
+        139.73821,
+        35.752325
+      ],
+      [
+        139.73891,
+        35.75163
+      ],
+      [
+        139.73928,
+        35.75135
+      ],
+      [
+        139.73983,
+        35.75094
+      ],
+      [
+        139.74037,
+        35.75057
+      ],
+      [
+        139.7408,
+        35.75018
+      ],
+      [
+        139.74096,
+        35.75002
+      ],
+      [
+        139.74143,
+        35.74954
+      ],
+      [
+        139.74178,
+        35.74921
+      ],
+      [
+        139.74196,
+        35.74906
+      ],
+      [
+        139.7422,
+        35.74894
+      ],
+      [
+        139.74297,
+        35.74859
+      ],
+      [
+        139.74392,
+        35.74815
+      ],
+      [
+        139.74475,
+        35.74773
+      ],
+      [
+        139.745921,
+        35.747082
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t52 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:7;overlays:6;rides:0;budgetDrops:0;vertices:2555;camera:16.23;lod:15.08;backbones:1;networkStations:15;distance:2658.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.749703;centerLon:139.742066;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2948.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.749703;centerLon:139.742066;distance:2658.3;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-02.jpg",
+  "observation": "王子至上中里沿飞鸟山南侧连续转弯，局部叠加线位于 Apple 京浜東北符号南侧；Main 可区分都电、南北线与各 JR 走廊。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

@@ -1,0 +1,472 @@
+{
+  "schema": "cn-jingshen-connector-continuation/1",
+  "reviewedAt": "2026-10-19",
+  "scope": "Original relation14265737 identity, operating agency, passenger admission and source-path evidence; no production edits or native/build jobs.",
+  "conclusion": {
+    "distinctSourceIdentity": "Direct original relation and all8 member ways consistently name京沈联络线; preserve relation14265737 and ownref1247.",
+    "passengerAdmission": "Direct official12306 line-specific historical passenger operation from2018-12-29.",
+    "operatingAgency": "中国铁路沈阳局集团有限公司 is a corroborated attribution derived from both exact relation-member junction operator tags and the operator own published jurisdiction; not a direct official line-specific company assignment.",
+    "legalInfrastructureOwner": "Unresolved by exact primary source. Do not promote secondary ownership lead to established fact.",
+    "representation": "Parent found existing N02 physical SectionFeature supports stationless corridors; no passenger stations need be invented for relation junction markers."
+  },
+  "originalSource": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "url": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "relation": {
+      "id": 14265737,
+      "members": [
+        [
+          "n",
+          9160197895,
+          ""
+        ],
+        [
+          "n",
+          9160197900,
+          ""
+        ],
+        [
+          "w",
+          651694345,
+          ""
+        ],
+        [
+          "w",
+          651694346,
+          ""
+        ],
+        [
+          "w",
+          651694344,
+          ""
+        ],
+        [
+          "w",
+          651694342,
+          ""
+        ],
+        [
+          "w",
+          651694341,
+          ""
+        ],
+        [
+          "w",
+          651694336,
+          ""
+        ],
+        [
+          "w",
+          651694335,
+          ""
+        ],
+        [
+          "w",
+          652027293,
+          ""
+        ]
+      ],
+      "tags": {
+        "from": "前丁香东线路所",
+        "name": "京沈联络线",
+        "route": "railway",
+        "to": "后丁香西线路所",
+        "type": "route"
+      },
+      "version": 3
+    },
+    "memberWays": [
+      {
+        "id": 651694345,
+        "nodes": [
+          6110779495,
+          12346140745,
+          6110779496,
+          12346140744,
+          6110779498,
+          6110779499,
+          12346140742,
+          6110779500,
+          12346140743,
+          6110779505
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 4
+      },
+      {
+        "id": 651694346,
+        "nodes": [
+          6110779497,
+          6110779495
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 4
+      },
+      {
+        "id": 651694344,
+        "nodes": [
+          6110779489,
+          6110779490,
+          6110779491,
+          6110779492,
+          12346140746,
+          6110779493,
+          12346140747,
+          6110779494,
+          6110779497
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 4
+      },
+      {
+        "id": 651694342,
+        "nodes": [
+          6110779485,
+          12346140749,
+          12346140748,
+          6110779489
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 4
+      },
+      {
+        "id": 651694341,
+        "nodes": [
+          6110778384,
+          6110779488,
+          6110779485
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 4
+      },
+      {
+        "id": 651694336,
+        "nodes": [
+          6110778363,
+          6110778366
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 6
+      },
+      {
+        "id": 651694335,
+        "nodes": [
+          5441389103,
+          5441389106,
+          5441389107,
+          5441389111,
+          6110778361,
+          12346140741,
+          5441389108,
+          12346140740,
+          5441389109,
+          5441389110,
+          6110778362,
+          6110778363
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "layer": "1",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 5
+      },
+      {
+        "id": 652027293,
+        "nodes": [
+          5441389098,
+          5441389099,
+          5441389100,
+          5441389102,
+          5441389103
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "maxspeed": "80",
+          "name": "京沈联络线",
+          "railway": "rail",
+          "ref": "1247",
+          "start_date": "2019",
+          "usage": "branch",
+          "voltage": "25000"
+        },
+        "version": 5
+      }
+    ],
+    "junctionMembers": [
+      {
+        "id": 9160197895,
+        "lon": 123.3322267,
+        "lat": 41.8332366,
+        "tags": {
+          "alt_name": "后丁香西线路所",
+          "name": "大二环2号所",
+          "operator": "中国铁路沈阳局集团有限公司 沈阳车务段",
+          "railway": "junction",
+          "railway:ref": "203431"
+        },
+        "version": 3
+      },
+      {
+        "id": 9160197900,
+        "lon": 123.3192249,
+        "lat": 41.8481096,
+        "tags": {
+          "alt_name": "前丁香东线路所",
+          "name": "丁香湖1号线路所",
+          "operator": "中国铁路沈阳局集团有限公司 沈阳车务段",
+          "railway": "junction",
+          "railway:ref": "203399"
+        },
+        "version": 4
+      }
+    ],
+    "selectedPathReference": "jingshen-topology-review.json#/omittedConnector",
+    "selectedPathNodeIds": [
+      6110778384,
+      6110779488,
+      6110779485,
+      12346140749,
+      12346140748,
+      6110779489,
+      6110779490,
+      6110779491,
+      6110779492,
+      12346140746,
+      6110779493,
+      12346140747,
+      6110779494,
+      6110779497,
+      6110779495,
+      12346140745,
+      6110779496,
+      12346140744,
+      6110779498,
+      6110779499,
+      12346140742,
+      6110779500,
+      12346140743,
+      6110779505
+    ],
+    "selectedPathEdgeWayIds": [
+      651694341,
+      651694341,
+      651694342,
+      651694342,
+      651694342,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694344,
+      651694346,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345,
+      651694345
+    ],
+    "selectedPathLengthMetres": 2086.943,
+    "tailReference": "jingshen-topology-review.json#/ownSourceTail",
+    "tailNodeIds": [
+      12508585461,
+      12508585475,
+      4507873131,
+      5583612385,
+      4507873130,
+      6011910253,
+      4507873128,
+      5583612370,
+      6011910250,
+      4507873127,
+      6011910251,
+      5583612375,
+      4507873126,
+      6011910249,
+      4507873124,
+      12647521090,
+      6110778384
+    ],
+    "tailEdgeWayIds": [
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      659998074,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      1421931595,
+      651694340,
+      651694340
+    ],
+    "tailLengthMetres": 10362.322,
+    "sourceTagLimits": "Neither route relation nor member ways carryoperator/network/railway:traffic_mode=passenger. All8 member ways sayrailway=rail,usage=branch,maxspeed=80,start_date=2019. These fields do not establish350km/h class or2019 exact admission."
+  },
+  "primaryEvidence": [
+    {
+      "id": "12306-jingshen-passenger-admission",
+      "url": "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html",
+      "title": "关于京哈高速承沈段、南龙等线开通运营的公告",
+      "publisher": "中国铁路12306",
+      "retrieval": "Direct page open, paragraphs1–2.",
+      "supports": [
+        "Explicitly names京沈联络线 among passenger-transport initial operation lines effective2018-12-29.",
+        "The next paragraph concerns EMU passenger fares on the named lines."
+      ],
+      "doesNotSupport": [
+        "Company operator or legalowner",
+        "Exact sourceway/track assignment",
+        "UniqueG101 path",
+        "Modernclosure status"
+      ]
+    },
+    {
+      "id": "china-railway-shenyang-jurisdiction",
+      "url": "https://rczp.china-railway.com.cn/page/platform/company_index.html?parentId=319",
+      "title": "中国铁路沈阳局集团有限公司—公司简介",
+      "publisher": "中国国家铁路集团有限公司官方人才招聘网",
+      "retrieval": "Indexed first-party page text obtained by web search. Direct web-open and current browser show page shell/title with dynamic company body omitted, so current rendered正文 was not independently recovered.",
+      "supports": [
+        "Own published company profile identifiesShenyang Group as China Railway wholly owned subsidiary.",
+        "Own profile says jurisdiction covers allLiaoning/Jilin plus neighboring areas and business includespassenger/freighttransport."
+      ],
+      "doesNotSupport": [
+        "An exhaustive legal ownership list",
+        "An explicit line-specific 京沈联络线 company assignment"
+      ],
+      "attributionRule": "Corroborates the same operator already explicitly named by BOTH original relationmemberjunctions. Attribution remains an evidence-labelled inference rather than official exact-corridor assignment."
+    },
+    {
+      "id": "mee-jingshen-project-scope",
+      "url": "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/nscxmgs/201605/t20160522_339517.shtml",
+      "title": "环境保护部关于2013年11月拟对建设项目环境影响评价文件作出审批意见的公示",
+      "publishedAt": "2013-11-14",
+      "publisher": "中华人民共和国生态环境部",
+      "retrieval": "Direct page open, table row4.",
+      "supports": [
+        "Names京沈铁路客运专线辽宁有限责任公司 as one of京沈 project construction units.",
+        "Approved scope includes沈阳枢纽联络线9.343km and reconstructed24.2km."
+      ],
+      "doesNotSupport": [
+        "An explicit ownership mapping of the modern2km京沈联络线",
+        "Post-construction operating company",
+        "Modern nomenclature to exactOSMmemberways"
+      ]
+    }
+  ],
+  "secondaryLeadsNotAdopted": [
+    {
+      "url": "https://www.jprailfan.com/toolst/stat/index.php?emphstat=%E5%89%8D%E4%B8%81%E9%A6%99%E4%B8%9C%E6%89%80&linename=%E4%BA%AC%E6%B2%88%E8%81%94%E7%BB%9C%E7%BA%BF",
+      "lead": "Lists前丁香东所→后丁香西所2km and attributes line to京沈铁路客运专线辽宁有限责任公司; the page labels itself unofficial."
+    },
+    {
+      "url": "https://www.bidcenter.com.cn/news-30575833-1.html",
+      "lead": "A tender repost describes four京沈客专与秦沈客专转线 connections near丁香湖/大二环 with lengths1.995/1.908/2.026/2.067km. The originalfirst-party tender was not located; no ownership promoted fromrepost."
+    }
+  ],
+  "confoundersRejected": [
+    "105.245km京沈与盘营客专联络线/朝凌 project is distinct from this2km沈阳 connector.",
+    "The2013盘营0.403km namesake is not this2018 passenger connector."
+  ],
+  "verification": {
+    "method": "Narrow read-only SQLite keyed relation/way/node queries only; every selected connector andtail edge checked consecutive in its sourceway, path coordinates rechecked against exact source nodes,tailwaymembership checked inrelation3066901.",
+    "selectedConnectorEdges": 23,
+    "own3066901TailEdges": 16,
+    "result": "Pass for exact original adjacency, node coordinates and ownrelationmembership. No claim of native route solve, pixel alignment, runtime, modern operational direction or unique timetabletrackassignment.",
+    "productionEdits": false
+  }
+}

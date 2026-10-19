@@ -1,0 +1,1339 @@
+[
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#0",
+    "slot": 41,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 6,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000041/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004419",
+          "004447"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#1",
+    "slot": 42,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 6,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#1#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000042/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004447",
+          "004492"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#10",
+    "slot": 43,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 8,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#10#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000043/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005000",
+          "005054"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#11",
+    "slot": 44,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 6,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#11#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000044/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "005054",
+          "005097"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#2",
+    "slot": 46,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 19,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-8",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000008",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-9",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000009",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-10",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000010",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-11",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000011",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-12",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000012",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-13",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000013",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-14",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000014",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-15",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000015",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-16",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000016",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-17",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000017",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#2#point-18",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000046/000018",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004492",
+          "004645"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#3",
+    "slot": 47,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 12,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-8",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000008",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-9",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000009",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-10",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000010",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#3#point-11",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000047/000011",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004645",
+          "004728"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#4",
+    "slot": 48,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 8,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#4#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000048/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004728",
+          "004778"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#5",
+    "slot": 49,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 7,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#5#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000049/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004778",
+          "004845"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#6",
+    "slot": 50,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 4,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#6#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000050/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004845",
+          "004865"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#6#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000050/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004845",
+          "004865"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#6#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000050/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004845",
+          "004865"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#6#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000050/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004845",
+          "004865"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#7",
+    "slot": 51,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 9,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#7#point-8",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000051/000008",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004865",
+          "004911"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#9",
+    "slot": 53,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 9,
+    "presentStates": [
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-0",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000000",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-1",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000001",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-2",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000002",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-3",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000003",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-4",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000004",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-5",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000005",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-6",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000006",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-7",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000007",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      },
+      {
+        "viewpointID": "jp-WILLER　TRAINS-宮福線#9#point-8",
+        "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000053/000008",
+        "status": "captured",
+        "savedDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6",
+        "namedPlanMatch": true,
+        "stationIDs": [
+          "004948",
+          "005000"
+        ],
+        "stationIDsMatch": true,
+        "badReceiptFiles": []
+      }
+    ]
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#12",
+    "slot": 45,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 6,
+    "presentStates": []
+  },
+  {
+    "itemID": "jp-WILLER　TRAINS-宮福線#8",
+    "slot": 52,
+    "sourceMatch": true,
+    "displayEqualsSource": true,
+    "planned": 8,
+    "presentStates": []
+  }
+]

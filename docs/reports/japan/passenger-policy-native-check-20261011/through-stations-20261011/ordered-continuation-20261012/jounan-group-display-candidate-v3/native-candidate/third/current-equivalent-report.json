@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 1,
+  "app": "Third Inspector",
+  "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+  "status": "accepted-current-equivalent",
+  "capturedCount": 71,
+  "pendingCount": 0,
+  "failedCount": 0,
+  "viewpointCount": 71,
+  "intervalCount": 29,
+  "panelCount": 213,
+  "captureAccounting": {
+    "kind": "current-equivalent-composition",
+    "freshV3CapturedCount": 30,
+    "reusedV1CurrentEquivalentCapturedCount": 41,
+    "reusedEvidenceIsNotFreshV3Capture": true
+  },
+  "coverage": {
+    "intervalCount": 29,
+    "viewpointCount": 71,
+    "panelCount": 213,
+    "freshV3": {
+      "intervalCount": 12,
+      "viewpointCount": 30,
+      "panelCount": 90,
+      "capturedCount": 30,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "itemIDs": [
+        {
+          "itemID": "jp-伊予鉄道-城南線#0",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#1",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#2",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#3",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#4",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#5",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#6",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#7",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#8",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#9",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城南線#10",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "fresh-v3"
+        },
+        {
+          "itemID": "jp-伊予鉄道-花園線#0",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "fresh-v3"
+        }
+      ]
+    },
+    "reusedV1CurrentEquivalent": {
+      "intervalCount": 17,
+      "viewpointCount": 41,
+      "panelCount": 123,
+      "itemIDs": [
+        {
+          "itemID": "jp-伊予鉄道-城北線#0",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#1",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#2",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#3",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#4",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#5",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#6",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-城北線#7",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-大手町線#0",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-大手町線#1",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-大手町線#2",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-大手町線#3",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-本町線#0",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-本町線#1",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-本町線#2",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-本町線#3",
+          "viewpointCount": 3,
+          "panelCount": 9,
+          "provenance": "reused-v1-current-equivalent"
+        },
+        {
+          "itemID": "jp-伊予鉄道-連絡線#0",
+          "viewpointCount": 2,
+          "panelCount": 6,
+          "provenance": "reused-v1-current-equivalent"
+        }
+      ]
+    }
+  },
+  "intervals": [
+    {
+      "itemID": "jp-伊予鉄道-城南線#0",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#1",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 1,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#2",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#3",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 3,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#4",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#5",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#6",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 6,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#7",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 7,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#8",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#9",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城南線#10",
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 10,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-花園線#0",
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "fresh-v3"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#0",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 0,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#1",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 1,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#2",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#3",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#4",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 4,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#5",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 5,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#6",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-城北線#7",
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-大手町線#0",
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 0,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-大手町線#1",
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-大手町線#2",
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 2,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-大手町線#3",
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-本町線#0",
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 0,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-本町線#1",
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 1,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-本町線#2",
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 2,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-本町線#3",
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "viewpointCount": 3,
+      "capturedCount": 3,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 9,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    },
+    {
+      "itemID": "jp-伊予鉄道-連絡線#0",
+      "lineID": "jp-伊予鉄道-連絡線",
+      "intervalIndex": 0,
+      "viewpointCount": 2,
+      "capturedCount": 2,
+      "pendingCount": 0,
+      "failedCount": 0,
+      "panelCount": 6,
+      "geometryStatus": "available",
+      "reviewVerdict": "accepted-current-equivalent",
+      "captureProvenance": "reused-v1-current-equivalent"
+    }
+  ],
+  "evidence": {
+    "freshReport": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/third/fresh-report.json",
+      "sha256": "f61f1d7c789a0e88fea6e4b3f1002f2695e91a3175c0e50105424b39a675fc6c"
+    },
+    "freshScopeReceipts": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/third/fresh-scope-receipts.json",
+      "sha256": "6b253f181c5fc9c32fc48c9806d6c9cb0c0817a90a0b6ba77be5d7f83ecf7c57"
+    },
+    "freshNativeReview": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/third/fresh-native-review.md",
+      "sha256": "112020446e74a5343e673b1e9da2d215ec480c60d74c3ec20303799265c4428b"
+    },
+    "unchangedFourLineReuse": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/unchanged-four-line-reuse.json",
+      "sha256": "d008250bc60419c1952799bf0bd372e50f08a2d6abcf8eae53e2894e2364b4f3"
+    },
+    "reusedV1Report": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v1/native-candidate/third/report.json",
+      "sha256": "112c4d4ab92a30df1ca4f997689a42b64a73602d0bd7be1fd4fc84e7d4e4e5e5"
+    },
+    "reusedV1CompleteReview": {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v1/native-candidate/third/native-review.md",
+      "sha256": "ee096f1722882a8e504f028915abfa4ec606e308551d8e5cc84938d5962f2b3d"
+    }
+  },
+  "interpretation": "Current-equivalent acceptance combines the fresh V3 manual review of Jounan and Hanazono with the root-confirmed, input-equivalent V1 evidence for Johoku, Otemachi, Honmachi, and Renraku. The 71 viewpoints are not all fresh."
+}
+

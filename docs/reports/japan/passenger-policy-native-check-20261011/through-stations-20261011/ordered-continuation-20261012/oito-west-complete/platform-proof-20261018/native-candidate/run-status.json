@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "E833DE8D-5DE4-4F98-9D3C-1825E6314EF0",
+  "message" : "29\/29 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "itoigawa-own-platform-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-candidate\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T05:17:02Z"
+}

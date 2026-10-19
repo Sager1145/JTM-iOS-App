@@ -1,0 +1,294 @@
+{
+  "path": "railway-sources/local/osm/degree-cells/E138N36.json",
+  "fetchedAt": "2026-08-18T10:36:10.600Z",
+  "endpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+  "elements": [
+    {
+      "id": 462174017,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8386271,
+          "lon": 138.1887958
+        },
+        {
+          "lat": 36.8390194,
+          "lon": 138.188651
+        }
+      ]
+    },
+    {
+      "id": 462174018,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8390291,
+          "lon": 138.1886909
+        },
+        {
+          "lat": 36.8386498,
+          "lon": 138.1888329
+        }
+      ]
+    },
+    {
+      "id": 462174020,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8339529,
+          "lon": 138.188591
+        },
+        {
+          "lat": 36.8340138,
+          "lon": 138.1886202
+        }
+      ]
+    },
+    {
+      "id": 462174023,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8339912,
+          "lon": 138.1886551
+        },
+        {
+          "lat": 36.8339366,
+          "lon": 138.1886239
+        }
+      ]
+    },
+    {
+      "id": 462174024,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-1",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "tunnel": "yes",
+        "tunnel:name": "野尻トンネル",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8340138,
+          "lon": 138.1886202
+        },
+        {
+          "lat": 36.834555,
+          "lon": 138.1888717
+        },
+        {
+          "lat": 36.835196,
+          "lon": 138.1891685
+        },
+        {
+          "lat": 36.8357852,
+          "lon": 138.1893258
+        },
+        {
+          "lat": 36.8361287,
+          "lon": 138.189373
+        },
+        {
+          "lat": 36.8366866,
+          "lon": 138.1893793
+        },
+        {
+          "lat": 36.8370523,
+          "lon": 138.1893175
+        },
+        {
+          "lat": 36.8376454,
+          "lon": 138.1891361
+        },
+        {
+          "lat": 36.8386271,
+          "lon": 138.1887958
+        }
+      ]
+    },
+    {
+      "id": 462174025,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-1",
+        "name": "北しなの線",
+        "name:en": "Kita-Shinano Line",
+        "name:ja": "北しなの線",
+        "operator": "しなの鉄道",
+        "operator:en": "Shinano Railway",
+        "operator:ja": "しなの鉄道",
+        "railway": "rail",
+        "source": "Bing 2011",
+        "tunnel": "yes",
+        "tunnel:name": "野尻トンネル",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 36.8386498,
+          "lon": 138.1888329
+        },
+        {
+          "lat": 36.8376619,
+          "lon": 138.1891995
+        },
+        {
+          "lat": 36.837062,
+          "lon": 138.1893743
+        },
+        {
+          "lat": 36.836693,
+          "lon": 138.1894532
+        },
+        {
+          "lat": 36.8361243,
+          "lon": 138.1894452
+        },
+        {
+          "lat": 36.8357759,
+          "lon": 138.189389
+        },
+        {
+          "lat": 36.8351803,
+          "lon": 138.1892238
+        },
+        {
+          "lat": 36.8345432,
+          "lon": 138.188921
+        },
+        {
+          "lat": 36.8339912,
+          "lon": 138.1886551
+        }
+      ]
+    },
+    {
+      "id": 1254501772,
+      "tags": {
+        "railway": "abandoned",
+        "usage": "main"
+      },
+      "geometry": [
+        {
+          "lat": 36.8333728,
+          "lon": 138.188267
+        },
+        {
+          "lat": 36.8338122,
+          "lon": 138.1883035
+        },
+        {
+          "lat": 36.8341174,
+          "lon": 138.1882517
+        },
+        {
+          "lat": 36.8361903,
+          "lon": 138.187758
+        },
+        {
+          "lat": 36.8366595,
+          "lon": 138.1876817
+        },
+        {
+          "lat": 36.8370643,
+          "lon": 138.1876581
+        },
+        {
+          "lat": 36.837338,
+          "lon": 138.1876788
+        },
+        {
+          "lat": 36.8377514,
+          "lon": 138.1877552
+        },
+        {
+          "lat": 36.8385803,
+          "lon": 138.1881028
+        },
+        {
+          "lat": 36.8390271,
+          "lon": 138.1882427
+        },
+        {
+          "lat": 36.8396665,
+          "lon": 138.188271
+        },
+        {
+          "lat": 36.839922,
+          "lon": 138.1882343
+        }
+      ]
+    }
+  ]
+}

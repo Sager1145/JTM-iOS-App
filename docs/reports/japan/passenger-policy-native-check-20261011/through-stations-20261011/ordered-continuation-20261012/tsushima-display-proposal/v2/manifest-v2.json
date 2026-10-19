@@ -1,0 +1,121 @@
+{
+  "format": "jtm-tsushima-display-proposal-manifest-v2",
+  "status": "proposal-only",
+  "lineID": "jp-名古屋鉄道-津島線",
+  "intervalIndex": 5,
+  "sourceViewCount": 15,
+  "reprojectionCount": 15,
+  "v1Status": "rejected",
+  "files": [
+    {
+      "path": "candidate-v2.geojson",
+      "sha256": "6938af70261beba5794338d6552ecfcb252ed211de7f4973412d000d08bb0c0a",
+      "bytes": 2844
+    },
+    {
+      "path": "candidate-v2.json",
+      "sha256": "35a8bc23d08c734d4629e5a218502bd6bce2935b3761bce93418e35b39453f10",
+      "bytes": 19571
+    },
+    {
+      "path": "evidence-receipts-v2.json",
+      "sha256": "37b682d8b98f17ba18191b998bfce0d8e5337d00ba0362a1a1580d8fe21b5954",
+      "bytes": 14327
+    },
+    {
+      "path": "primary-contact-v2.png",
+      "sha256": "29210a99b6a43612fb59dfd378a4a1bbd5585dc5ce7be8717061a11febd2e499",
+      "bytes": 984851
+    },
+    {
+      "path": "proposal-v2.md",
+      "sha256": "7dc71a8e69c1883f0dc388d93b8c2aaa03346dd7fe4d5a960bb5ea22fdc03b8e",
+      "bytes": 4113
+    },
+    {
+      "path": "secondary-contact-v2.png",
+      "sha256": "a8468f5da75afec4668b784488debfda1278fb32a42e8458411a7f19fcb3a88a",
+      "bytes": 984800
+    },
+    {
+      "path": "third-contact-v2.png",
+      "sha256": "bbd31cf24e6485d8d24c7eb2de468414f93a664712cf0a883890d390d8f78ca6",
+      "bytes": 984673
+    },
+    {
+      "path": "reprojections/primary-view-0.png",
+      "sha256": "7205545832018e67762cce41b8ce51686f44cc9c90c8f8ac479cee51eb6e6070",
+      "bytes": 387798
+    },
+    {
+      "path": "reprojections/primary-view-1.png",
+      "sha256": "d62b738bda9bffb5283401145a24aed4b37dca4f52eb0a58be446ee565d7928c",
+      "bytes": 396440
+    },
+    {
+      "path": "reprojections/primary-view-2.png",
+      "sha256": "2abc4097347123ad99272e5eadcd4d8ffa3e2b2456a69a5d6153418a2b8af5fd",
+      "bytes": 384555
+    },
+    {
+      "path": "reprojections/primary-view-3.png",
+      "sha256": "898be9774334095e464377539cd835dad2974a9ef12d6dc2d5bb2c8b3f0a8db4",
+      "bytes": 403979
+    },
+    {
+      "path": "reprojections/primary-view-4.png",
+      "sha256": "ccbc5ac146bf99e1dcb03907d4db0f9907ce62357f369e016e8545545717b77e",
+      "bytes": 400231
+    },
+    {
+      "path": "reprojections/secondary-view-0.png",
+      "sha256": "dcc52a842a3cbe8f6c7aef8d4a078fdd0177058b2892c47104f43083dc9e6744",
+      "bytes": 387782
+    },
+    {
+      "path": "reprojections/secondary-view-1.png",
+      "sha256": "5b937845a55a0acaf2b2416611619dfe0a176e4ab2211a7c94dfa43d402569dd",
+      "bytes": 396434
+    },
+    {
+      "path": "reprojections/secondary-view-2.png",
+      "sha256": "3b2bb0396929a0fa2973b0feebf7516650a695e90d96ee6ed9abe7e49975eb3e",
+      "bytes": 384551
+    },
+    {
+      "path": "reprojections/secondary-view-3.png",
+      "sha256": "a0e3b7dc0bfb156a8c9c8c333b21085afaaaf15d247d4a96b9b15a6dbcb20060",
+      "bytes": 403974
+    },
+    {
+      "path": "reprojections/secondary-view-4.png",
+      "sha256": "6eb839e1211e8ff93d8c830df6c23d4138e4514412d86496102819a13d183e25",
+      "bytes": 400237
+    },
+    {
+      "path": "reprojections/third-view-0.png",
+      "sha256": "c99a56d7927cf87ef1a08a1477835f2bde831a39ca86e976f58494eae258a1ed",
+      "bytes": 387943
+    },
+    {
+      "path": "reprojections/third-view-1.png",
+      "sha256": "78058ff11f94d870fe32526765bcec346331b3845a118cd05c9ad976d1df0384",
+      "bytes": 395995
+    },
+    {
+      "path": "reprojections/third-view-2.png",
+      "sha256": "a25c7cc0ad9c2f0c684e607cd098ca59505416795af429bef4cdb2e6a0478d36",
+      "bytes": 385151
+    },
+    {
+      "path": "reprojections/third-view-3.png",
+      "sha256": "74ef6118f0133986742b93434a54f75c2e791b4b8185ef011913e1a5e0ca4ac2",
+      "bytes": 403332
+    },
+    {
+      "path": "reprojections/third-view-4.png",
+      "sha256": "f34f6a0e3a96f62bf5cd1deed460c869c55d1dfb53072355968d2d205e60132a",
+      "bytes": 399564
+    }
+  ]
+}

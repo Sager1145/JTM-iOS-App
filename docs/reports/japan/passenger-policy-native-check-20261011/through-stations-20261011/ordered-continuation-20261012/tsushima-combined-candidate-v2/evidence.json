@@ -1,0 +1,518 @@
+{
+  "format": "jtm-tsushima-sukaguchi-display-v1",
+  "status": "accepted-all-three-main",
+  "reviewedAt": "2026-10-14T02:00:52.699Z",
+  "candidate": {
+    "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/candidate.json",
+    "sha256": "147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26"
+  },
+  "owners": {
+    "jp-名古屋鉄道-津島線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "stationIDs": [
+        "005352",
+        "005368",
+        "005370",
+        "005372",
+        "005355",
+        "005375",
+        "005396",
+        "005420"
+      ]
+    },
+    "jp-名古屋鉄道-名古屋本線": {
+      "intervalIndexes": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "stationIDs": [
+        "005323",
+        "005337",
+        "005352",
+        "005374",
+        "005377",
+        "005376",
+        "005393",
+        "005407",
+        "005457"
+      ]
+    }
+  },
+  "baseline": {
+    "packageIndices": {
+      "jp-名古屋鉄道-津島線": 188,
+      "jp-名古屋鉄道-名古屋本線": 182
+    },
+    "lineSha256": {
+      "jp-名古屋鉄道-津島線": "d9901cb2d4c2cddbd573aca7b4926eba701097d180eea3bc18c63f3575e182b0",
+      "jp-名古屋鉄道-名古屋本線": "15b781a19a2af842679ac054708c08ad1ce1c91663a021991966548156f6a5f6"
+    },
+    "displayIntervals": {
+      "jp-名古屋鉄道-津島線": {},
+      "jp-名古屋鉄道-名古屋本線": {}
+    },
+    "displayStations": {
+      "jp-名古屋鉄道-津島線": {},
+      "jp-名古屋鉄道-名古屋本線": {}
+    },
+    "nativeRowsSha256": {
+      "jp-名古屋鉄道-津島線": "efdea13402c9a6f67be254088f9953875b1b1eac56cd83f5681102c4c1172350",
+      "jp-名古屋鉄道-名古屋本線": "ba9e2fc13cc835b69fa706d094e870360f373848cc9d70bfeed7ef2c13a00f6c"
+    },
+    "measuredReferences": {
+      "byRegion": [
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          8649.4,
+          13383.9,
+          0.5
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          29575,
+          33625,
+          -3
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          33625,
+          35500,
+          -1
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          35500,
+          38690.3,
+          -0.5
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          94840.4,
+          100024.1,
+          -1
+        ]
+      ],
+      "hubReportByRegion": [
+        {
+          "hubId": "jp-nagoya",
+          "name": "Nagoya Station throat",
+          "trunkKey": "jp-東海旅客鉄道-東海道線#0",
+          "members": [
+            {
+              "lineId": "jp-東海旅客鉄道-東海道新幹線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+              "slot": -3,
+              "side": -1,
+              "reversed": true,
+              "from": 171425,
+              "to": 173225,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-関西線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:関西線",
+              "slot": -2,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 775,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-名古屋臨海高速鉄道-西名古屋港線",
+              "partIndex": 0,
+              "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+              "slot": -1,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 450,
+              "previousLane": -0.5
+            },
+            {
+              "lineId": "jp-近畿日本鉄道-名古屋線",
+              "partIndex": 0,
+              "classKey": "group\u0000近畿日本鉄道:名古屋線",
+              "slot": 0,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 450,
+              "previousLane": null
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-中央線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:中央線",
+              "slot": 1,
+              "side": 0,
+              "reversed": false,
+              "from": 170950,
+              "to": 173003,
+              "previousLane": -0.5
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-東海道線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:東海道線",
+              "slot": 2,
+              "side": 0,
+              "reversed": false,
+              "from": 259875,
+              "to": 263900,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-名古屋鉄道-名古屋本線",
+              "partIndex": 0,
+              "classKey": "group\u0000名古屋鉄道:名古屋本線",
+              "slot": 3,
+              "side": 1,
+              "reversed": true,
+              "from": 29575,
+              "to": 33625,
+              "previousLane": -1
+            },
+            {
+              "lineId": "jp-名古屋市-1号線東山線",
+              "partIndex": 0,
+              "excluded": "separate-alignment",
+              "alongsideFrom": 14725,
+              "alongsideTo": 14825,
+              "previousLane": null
+            },
+            {
+              "lineId": "jp-名古屋市-6号線桜通線",
+              "partIndex": 0,
+              "excluded": "crossing",
+              "previousLane": null
+            }
+          ],
+          "classes": [
+            {
+              "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+              "slot": -3,
+              "side": -1,
+              "lineIds": [
+                "jp-東海旅客鉄道-東海道新幹線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:関西線",
+              "slot": -2,
+              "side": -1,
+              "lineIds": [
+                "jp-東海旅客鉄道-関西線"
+              ]
+            },
+            {
+              "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+              "slot": -1,
+              "side": -1,
+              "lineIds": [
+                "jp-名古屋臨海高速鉄道-西名古屋港線"
+              ]
+            },
+            {
+              "classKey": "group\u0000近畿日本鉄道:名古屋線",
+              "slot": 0,
+              "side": -1,
+              "lineIds": [
+                "jp-近畿日本鉄道-名古屋線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:中央線",
+              "slot": 1,
+              "side": 0,
+              "lineIds": [
+                "jp-東海旅客鉄道-中央線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:東海道線",
+              "slot": 2,
+              "side": 0,
+              "lineIds": [
+                "jp-東海旅客鉄道-東海道線"
+              ]
+            },
+            {
+              "classKey": "group\u0000名古屋鉄道:名古屋本線",
+              "slot": 3,
+              "side": 1,
+              "lineIds": [
+                "jp-名古屋鉄道-名古屋本線"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "nativeReplay": {
+    "candidateRowsSha256": {
+      "jp-名古屋鉄道-津島線": "3022e732cd9b3ab9ca6224625565dcaaf49571c157c94cb0138ed1588827f195",
+      "jp-名古屋鉄道-名古屋本線": "ad5c67e7bf956c5e7d0387b1fe9a95edb95912df5620c697b32535e48d7a8139"
+    },
+    "candidateMeasuredReferences": {
+      "byRegion": [
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          8649.4,
+          13383.9,
+          0.5
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          29567.4,
+          33615.2,
+          -3
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          33615.2,
+          35490.2,
+          -1
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          35490.2,
+          38680.5,
+          -0.5
+        ],
+        [
+          "jp-名古屋鉄道-名古屋本線",
+          0,
+          94830.6,
+          100014.3,
+          -1
+        ]
+      ],
+      "hubReportByRegion": [
+        {
+          "hubId": "jp-nagoya",
+          "name": "Nagoya Station throat",
+          "trunkKey": "jp-東海旅客鉄道-東海道線#0",
+          "members": [
+            {
+              "lineId": "jp-東海旅客鉄道-東海道新幹線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+              "slot": -3,
+              "side": -1,
+              "reversed": true,
+              "from": 171425,
+              "to": 173225,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-関西線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:関西線",
+              "slot": -2,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 775,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-名古屋臨海高速鉄道-西名古屋港線",
+              "partIndex": 0,
+              "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+              "slot": -1,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 450,
+              "previousLane": -0.5
+            },
+            {
+              "lineId": "jp-近畿日本鉄道-名古屋線",
+              "partIndex": 0,
+              "classKey": "group\u0000近畿日本鉄道:名古屋線",
+              "slot": 0,
+              "side": -1,
+              "reversed": true,
+              "from": 0,
+              "to": 450,
+              "previousLane": null
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-中央線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:中央線",
+              "slot": 1,
+              "side": 0,
+              "reversed": false,
+              "from": 170950,
+              "to": 173003,
+              "previousLane": -0.5
+            },
+            {
+              "lineId": "jp-東海旅客鉄道-東海道線",
+              "partIndex": 0,
+              "classKey": "group\u0000東海旅客鉄道:東海道線",
+              "slot": 2,
+              "side": 0,
+              "reversed": false,
+              "from": 259875,
+              "to": 263900,
+              "previousLane": 0.5
+            },
+            {
+              "lineId": "jp-名古屋鉄道-名古屋本線",
+              "partIndex": 0,
+              "classKey": "group\u0000名古屋鉄道:名古屋本線",
+              "slot": 3,
+              "side": 1,
+              "reversed": true,
+              "from": 29567.4,
+              "to": 33615.2,
+              "previousLane": -1
+            },
+            {
+              "lineId": "jp-名古屋市-1号線東山線",
+              "partIndex": 0,
+              "excluded": "separate-alignment",
+              "alongsideFrom": 14725,
+              "alongsideTo": 14825,
+              "previousLane": null
+            },
+            {
+              "lineId": "jp-名古屋市-6号線桜通線",
+              "partIndex": 0,
+              "excluded": "crossing",
+              "previousLane": null
+            }
+          ],
+          "classes": [
+            {
+              "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+              "slot": -3,
+              "side": -1,
+              "lineIds": [
+                "jp-東海旅客鉄道-東海道新幹線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:関西線",
+              "slot": -2,
+              "side": -1,
+              "lineIds": [
+                "jp-東海旅客鉄道-関西線"
+              ]
+            },
+            {
+              "classKey": "group\u0000名古屋臨海高速鉄道:西名古屋港線",
+              "slot": -1,
+              "side": -1,
+              "lineIds": [
+                "jp-名古屋臨海高速鉄道-西名古屋港線"
+              ]
+            },
+            {
+              "classKey": "group\u0000近畿日本鉄道:名古屋線",
+              "slot": 0,
+              "side": -1,
+              "lineIds": [
+                "jp-近畿日本鉄道-名古屋線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:中央線",
+              "slot": 1,
+              "side": 0,
+              "lineIds": [
+                "jp-東海旅客鉄道-中央線"
+              ]
+            },
+            {
+              "classKey": "group\u0000東海旅客鉄道:東海道線",
+              "slot": 2,
+              "side": 0,
+              "lineIds": [
+                "jp-東海旅客鉄道-東海道線"
+              ]
+            },
+            {
+              "classKey": "group\u0000名古屋鉄道:名古屋本線",
+              "slot": 3,
+              "side": 1,
+              "lineIds": [
+                "jp-名古屋鉄道-名古屋本線"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "acceptance": {
+    "candidateSha256": "147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26",
+    "intervalIDs": [
+      "jp-名古屋鉄道-津島線#0",
+      "jp-名古屋鉄道-津島線#1",
+      "jp-名古屋鉄道-津島線#2",
+      "jp-名古屋鉄道-津島線#3",
+      "jp-名古屋鉄道-津島線#4",
+      "jp-名古屋鉄道-津島線#5",
+      "jp-名古屋鉄道-津島線#6",
+      "jp-名古屋鉄道-名古屋本線#16",
+      "jp-名古屋鉄道-名古屋本線#17",
+      "jp-名古屋鉄道-名古屋本線#18",
+      "jp-名古屋鉄道-名古屋本線#19",
+      "jp-名古屋鉄道-名古屋本線#20",
+      "jp-名古屋鉄道-名古屋本線#21",
+      "jp-名古屋鉄道-名古屋本線#22",
+      "jp-名古屋鉄道-名古屋本線#23"
+    ],
+    "inspectors": [
+      {
+        "id": "primary",
+        "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/native-candidate/primary/accepted-receipt.json",
+        "sha256": "d59f454529ab1cff3d8c135ab5d115d120af45a96c66dfb5f921e76351577df7"
+      },
+      {
+        "id": "secondary",
+        "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/native-candidate/secondary/accepted-receipt.json",
+        "sha256": "e5fb0cfcbc6a3a0d76dc249f084f6bb616cde005d3c0186a1e4fcb8ef0a913bc"
+      },
+      {
+        "id": "third",
+        "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/native-candidate/third/accepted-receipt.json",
+        "sha256": "08617e5729270a14328407ecb04d6aea4da7f6558a4c7da05e905237c750dbeb"
+      }
+    ],
+    "main": {
+      "file": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/main/accepted-receipt.json",
+      "sha256": "d01b9a8182c756ee8a6bbe5bf8a43cf6a839f28a7d058dfeb48b197acd1789b4"
+    }
+  }
+}

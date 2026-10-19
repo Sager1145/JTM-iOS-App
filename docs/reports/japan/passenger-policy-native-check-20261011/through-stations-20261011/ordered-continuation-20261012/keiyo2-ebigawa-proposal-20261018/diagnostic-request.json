@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "requestID": "keiyo-ebigawa-candidate",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/private/tmp/jtm-keiyo-ebigawa-native-20261018",
+  "inputPath": "/private/tmp/jtm-keiyo-ebigawa-candidate-20261018/jp-2025.json",
+  "lineID": "jp-東日本旅客鉄道-京葉線-2",
+  "intervalIndices": [
+    0
+  ],
+  "captureSettings": {
+    "zoom": 17,
+    "width": 1024,
+    "height": 768,
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ]
+  }
+}

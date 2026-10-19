@@ -1,0 +1,2244 @@
+{
+  "trace": [
+    {
+      "pixel": [
+        922.4296057834201,
+        145.95946514771006
+      ],
+      "coordinate": [
+        139.92408116535069,
+        35.667559249283876
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 23.614693085063188,
+      "supported": true,
+      "ambiguity": 0.00569467628814693
+    },
+    {
+      "pixel": [
+        920.0201916338717,
+        149.30531682642453
+      ],
+      "coordinate": [
+        139.924070262304,
+        35.66754694522084
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 23.14796709676412,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        918.5397669469354,
+        153.02127467687302
+      ],
+      "coordinate": [
+        139.92406356310724,
+        35.66753328012403
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.606493734547676,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        917.0593422599993,
+        156.73723252732148
+      ],
+      "coordinate": [
+        139.92405686391047,
+        35.66751961502489
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.155649928046607,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        915.5789175730631,
+        160.45319037776997
+      ],
+      "coordinate": [
+        139.92405016471372,
+        35.66750594992342
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.216411135210024,
+      "supported": true,
+      "ambiguity": 0.021165175994108384
+    },
+    {
+      "pixel": [
+        914.0984928861268,
+        164.1691482282185
+      ],
+      "coordinate": [
+        139.92404346551695,
+        35.66749228481959
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.005385609654482,
+      "supported": true,
+      "ambiguity": 0.10227929967022983
+    },
+    {
+      "pixel": [
+        912.6180681991905,
+        167.88510607866698
+      ],
+      "coordinate": [
+        139.92403676632017,
+        35.66747861971344
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 26.341042744445254,
+      "supported": true,
+      "ambiguity": 0.01280900192431412
+    },
+    {
+      "pixel": [
+        911.1376435122544,
+        171.60106392911544
+      ],
+      "coordinate": [
+        139.9240300671234,
+        35.66746495460493
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.688383989653857,
+      "supported": true,
+      "ambiguity": 0.012483962352426565
+    },
+    {
+      "pixel": [
+        909.6572188253182,
+        175.31702177956393
+      ],
+      "coordinate": [
+        139.92402336792665,
+        35.6674512894941
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.031454334571478,
+      "supported": true,
+      "ambiguity": 0.002433527633729842
+    },
+    {
+      "pixel": [
+        908.1767941383819,
+        179.03297963001245
+      ],
+      "coordinate": [
+        139.92401666872988,
+        35.66743762438091
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.428479885705343,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        906.6963694514455,
+        182.74893748046094
+      ],
+      "coordinate": [
+        139.9240099695331,
+        35.6674239592654
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 28.60145292049927,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        905.2159447645095,
+        186.4648953309094
+      ],
+      "coordinate": [
+        139.92400327033633,
+        35.66741029414755
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.664337977670044,
+      "supported": true,
+      "ambiguity": 0.004314163273524254
+    },
+    {
+      "pixel": [
+        903.7355200775733,
+        190.1808531813579
+      ],
+      "coordinate": [
+        139.92399657113958,
+        35.66739662902734
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 30.49845603504064,
+      "supported": true,
+      "ambiguity": 0.010451602796006387
+    },
+    {
+      "pixel": [
+        902.2550953906369,
+        193.8968110318064
+      ],
+      "coordinate": [
+        139.9239898719428,
+        35.66738296390481
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 28.601134808623463,
+      "supported": true,
+      "ambiguity": 0.009604203603240562
+    },
+    {
+      "pixel": [
+        900.7746707037006,
+        197.6127688822549
+      ],
+      "coordinate": [
+        139.92398317274603,
+        35.66736929877993
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.837145625259303,
+      "supported": true,
+      "ambiguity": 0.011396187479939512
+    },
+    {
+      "pixel": [
+        899.2942460167645,
+        201.32872673270336
+      ],
+      "coordinate": [
+        139.92397647354926,
+        35.66735563365272
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 31.7632455452613,
+      "supported": true,
+      "ambiguity": 0.0009366008189215859
+    },
+    {
+      "pixel": [
+        897.8138213298283,
+        205.04468458315185
+      ],
+      "coordinate": [
+        139.9239697743525,
+        35.66734196852316
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 34.09475648454567,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        896.333396642892,
+        208.76064243360037
+      ],
+      "coordinate": [
+        139.92396307515574,
+        35.667328303391265
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 30.05190907367605,
+      "supported": true,
+      "ambiguity": 0.02030811123567298
+    },
+    {
+      "pixel": [
+        894.8529719559557,
+        212.47660028404886
+      ],
+      "coordinate": [
+        139.92395637595897,
+        35.66731463825706
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 28.55090139833198,
+      "supported": true,
+      "ambiguity": 0.013377705990753193
+    },
+    {
+      "pixel": [
+        893.3725472690196,
+        216.19255813449732
+      ],
+      "coordinate": [
+        139.92394967676222,
+        35.66730097312048
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.568589579378838,
+      "supported": true,
+      "ambiguity": 0.002994524966292763
+    },
+    {
+      "pixel": [
+        891.8921225820834,
+        219.9085159849458
+      ],
+      "coordinate": [
+        139.92394297756545,
+        35.66728730798156
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 32.71676427213351,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        889.482708432535,
+        223.25436766366028
+      ],
+      "coordinate": [
+        139.92393207451875,
+        35.66727500387662
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 11.360393308912293,
+      "supported": true,
+      "ambiguity": 0.01163385028933009
+    },
+    {
+      "pixel": [
+        888.0022837455987,
+        226.97032551410877
+      ],
+      "coordinate": [
+        139.923925375322,
+        35.66726133873325
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 15.544502213656713,
+      "supported": true,
+      "ambiguity": 0.025106780135480757
+    },
+    {
+      "pixel": [
+        886.5218590586625,
+        230.6862833645572
+      ],
+      "coordinate": [
+        139.92391867612523,
+        35.66724767358757
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 21.006717117508003,
+      "supported": true,
+      "ambiguity": 0.020585233099194203
+    },
+    {
+      "pixel": [
+        885.9704238343385,
+        234.77234738673977
+      ],
+      "coordinate": [
+        139.92391618077838,
+        35.66723264740256
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 13.0,
+      "contrast": 4.120336312982147,
+      "supported": true,
+      "ambiguity": 0.04093944891120386
+    },
+    {
+      "pixel": [
+        884.4899991474022,
+        238.48830523718829
+      ],
+      "coordinate": [
+        139.9239094815816,
+        35.66721898225194
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 19.533329020418293,
+      "supported": true,
+      "ambiguity": 0.002475074390573379
+    },
+    {
+      "pixel": [
+        883.0095744604658,
+        242.20426308763678
+      ],
+      "coordinate": [
+        139.92390278238483,
+        35.667205317099
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 13.411086406963072,
+      "supported": true,
+      "ambiguity": 0.006218494198404503
+    },
+    {
+      "pixel": [
+        881.5291497735298,
+        245.92022093808524
+      ],
+      "coordinate": [
+        139.92389608318808,
+        35.66719165194372
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 18.197823179052108,
+      "supported": true,
+      "ambiguity": 0.010824191191566307
+    },
+    {
+      "pixel": [
+        879.1197356239813,
+        249.26607261679965
+      ],
+      "coordinate": [
+        139.92388518014138,
+        35.66717934782402
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 16.244457590370814,
+      "supported": true,
+      "ambiguity": 0.018181974645937637
+    },
+    {
+      "pixel": [
+        877.6393109370451,
+        252.9820304672482
+      ],
+      "coordinate": [
+        139.9238784809446,
+        35.66716568266429
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 22.923171539046265,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        876.1588862501088,
+        256.6979883176967
+      ],
+      "coordinate": [
+        139.92387178174786,
+        35.66715201750224
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 22.03579453275681,
+      "supported": true,
+      "ambiguity": 0.009517834164426985
+    },
+    {
+      "pixel": [
+        875.6074510257848,
+        260.78405233987917
+      ],
+      "coordinate": [
+        139.92386928640101,
+        35.667136991299195
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 10.54238643560312,
+      "supported": true,
+      "ambiguity": 0.027758189168148623
+    },
+    {
+      "pixel": [
+        873.1980368762364,
+        264.1299040185936
+      ],
+      "coordinate": [
+        139.92385838335431,
+        35.667124687171075
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 12.184288812769893,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        871.7176121893002,
+        267.84586186904215
+      ],
+      "coordinate": [
+        139.92385168415754,
+        35.667111022002004
+      ],
+      "offset_pixels": 11.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 11.03784950740696,
+      "supported": true,
+      "ambiguity": 0.005197096169689773
+    },
+    {
+      "pixel": [
+        869.3081980397518,
+        271.1917135477566
+      ],
+      "coordinate": [
+        139.92384078111087,
+        35.66709871786986
+      ],
+      "offset_pixels": 12.0,
+      "pair_spacing_pixels": 13.0,
+      "contrast": 29.875824274707313,
+      "supported": true,
+      "ambiguity": 0.007891978807458898
+    },
+    {
+      "pixel": [
+        867.8277733528156,
+        274.907671398205
+      ],
+      "coordinate": [
+        139.9238340819141,
+        35.66708505269634
+      ],
+      "offset_pixels": 12.0,
+      "pair_spacing_pixels": 13.0,
+      "contrast": 31.422995911736905,
+      "supported": true,
+      "ambiguity": 0.023063911119490684
+    },
+    {
+      "pixel": [
+        868.2053275911037,
+        279.3638415921216
+      ],
+      "coordinate": [
+        139.92383579041717,
+        35.66706866544092
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 21.360947383356617,
+      "supported": true,
+      "ambiguity": 0.011483538135162421
+    },
+    {
+      "pixel": [
+        866.7249029041674,
+        283.07979944257016
+      ],
+      "coordinate": [
+        139.9238290912204,
+        35.66705500026224
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.73513340810134,
+      "supported": true,
+      "ambiguity": 0.008989526065863238
+    },
+    {
+      "pixel": [
+        865.2444782172311,
+        286.79575729301865
+      ],
+      "coordinate": [
+        139.92382239202365,
+        35.66704133508123
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 26.33920294147076,
+      "supported": true,
+      "ambiguity": 3.932484433619773e-05
+    },
+    {
+      "pixel": [
+        863.764053530295,
+        290.5117151434671
+      ],
+      "coordinate": [
+        139.92381569282688,
+        35.667027669897884
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 25.707878124779043,
+      "supported": true,
+      "ambiguity": 0.01876805724688212
+    },
+    {
+      "pixel": [
+        862.2836288433588,
+        294.2276729939156
+      ],
+      "coordinate": [
+        139.9238089936301,
+        35.6670140047122
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 31.860426531979783,
+      "supported": true,
+      "ambiguity": 0.02021107037389225
+    },
+    {
+      "pixel": [
+        860.8032041564225,
+        297.9436308443641
+      ],
+      "coordinate": [
+        139.92380229443333,
+        35.66700033952418
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.614626036260788,
+      "supported": true,
+      "ambiguity": 0.009637629011418599
+    },
+    {
+      "pixel": [
+        859.3227794694861,
+        301.6595886948126
+      ],
+      "coordinate": [
+        139.92379559523658,
+        35.666986674333785
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 23.2847093885754,
+      "supported": true,
+      "ambiguity": 0.004165860984313734
+    },
+    {
+      "pixel": [
+        857.84235478255,
+        305.37554654526105
+      ],
+      "coordinate": [
+        139.9237888960398,
+        35.666973009141074
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 22.891211735765083,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        856.3619300956138,
+        309.09150439570953
+      ],
+      "coordinate": [
+        139.92378219684304,
+        35.666959343946026
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 25.433572756439148,
+      "supported": true,
+      "ambiguity": 0.0033277742110127745
+    },
+    {
+      "pixel": [
+        854.8815054086775,
+        312.8074622461581
+      ],
+      "coordinate": [
+        139.92377549764626,
+        35.66694567874867
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 25.12572433778991,
+      "supported": true,
+      "ambiguity": 0.0009482636734383345
+    },
+    {
+      "pixel": [
+        853.4010807217412,
+        316.52342009660657
+      ],
+      "coordinate": [
+        139.92376879844952,
+        35.66693201354894
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 21.50313243621521,
+      "supported": true,
+      "ambiguity": 0.006384838875484974
+    },
+    {
+      "pixel": [
+        851.9206560348051,
+        320.239377947055
+      ],
+      "coordinate": [
+        139.92376209925274,
+        35.66691834834686
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 19.061357504890374,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        851.369220810481,
+        324.3254419692376
+      ],
+      "coordinate": [
+        139.9237596039059,
+        35.66690332209985
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 18.39701288023891,
+      "supported": true,
+      "ambiguity": 0.0011363496390552014
+    },
+    {
+      "pixel": [
+        849.8887961235448,
+        328.0413998196861
+      ],
+      "coordinate": [
+        139.92375290470912,
+        35.66688965689287
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 20.85631999299713,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        848.4083714366085,
+        331.7573576701346
+      ],
+      "coordinate": [
+        139.92374620551237,
+        35.66687599168357
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 22.647458066230584,
+      "supported": true,
+      "ambiguity": 0.01598922744406848
+    },
+    {
+      "pixel": [
+        846.9279467496723,
+        335.47331552058307
+      ],
+      "coordinate": [
+        139.9237395063156,
+        35.66686232647191
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 22.314544447385273,
+      "supported": true,
+      "ambiguity": 0.00429943727171952
+    },
+    {
+      "pixel": [
+        845.4475220627361,
+        339.18927337103156
+      ],
+      "coordinate": [
+        139.92373280711882,
+        35.6668486612579
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 24.398740946014044,
+      "supported": true,
+      "ambiguity": 0.03896826278119419
+    },
+    {
+      "pixel": [
+        843.9670973757999,
+        342.90523122148005
+      ],
+      "coordinate": [
+        139.92372610792205,
+        35.66683499604158
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 29.328639811887058,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        842.4866726888636,
+        346.62118907192854
+      ],
+      "coordinate": [
+        139.9237194087253,
+        35.66682133082292
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 28.23893297256315,
+      "supported": true,
+      "ambiguity": 0.031559543780540884
+    },
+    {
+      "pixel": [
+        841.0062480019274,
+        350.33714692237703
+      ],
+      "coordinate": [
+        139.92371270952853,
+        35.666807665601894
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 29.869393505814244,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        839.5258233149912,
+        354.0531047728255
+      ],
+      "coordinate": [
+        139.92370601033176,
+        35.66679400037855
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 31.175362751365014,
+      "supported": true,
+      "ambiguity": 0.010659491175495488
+    },
+    {
+      "pixel": [
+        838.045398628055,
+        357.769062623274
+      ],
+      "coordinate": [
+        139.923699311135,
+        35.66678033515287
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 31.099728074002904,
+      "supported": true,
+      "ambiguity": 0.00990892962114247
+    },
+    {
+      "pixel": [
+        836.5649739411186,
+        361.4850204737225
+      ],
+      "coordinate": [
+        139.92369261193824,
+        35.66676666992482
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.04638179488623,
+      "supported": true,
+      "ambiguity": 0.002917505945681312
+    },
+    {
+      "pixel": [
+        835.0845492541824,
+        365.200978324171
+      ],
+      "coordinate": [
+        139.92368591274146,
+        35.66675300469448
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 23.136367561107,
+      "supported": true,
+      "ambiguity": 0.001515915841525688
+    },
+    {
+      "pixel": [
+        833.6041245672462,
+        368.9169361746195
+      ],
+      "coordinate": [
+        139.9236792135447,
+        35.66673933946177
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 24.708005821310543,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        832.12369988031,
+        372.63289402506797
+      ],
+      "coordinate": [
+        139.92367251434794,
+        35.666725674226726
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 24.525474876148294,
+      "supported": true,
+      "ambiguity": 0.013864400265254382
+    },
+    {
+      "pixel": [
+        831.5722646559858,
+        376.7189580472505
+      ],
+      "coordinate": [
+        139.9236700190011,
+        35.666710647943425
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 20.533131211644474,
+      "supported": true,
+      "ambiguity": 0.00911477238161038
+    },
+    {
+      "pixel": [
+        829.1628505064375,
+        380.06480972596495
+      ],
+      "coordinate": [
+        139.9236591159544,
+        35.66669834374961
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 20.57069549661675,
+      "supported": true,
+      "ambiguity": 0.0006627654881286334
+    },
+    {
+      "pixel": [
+        827.6824258195013,
+        383.78076757641344
+      ],
+      "coordinate": [
+        139.92365241675762,
+        35.666684678507536
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 19.668100292398236,
+      "supported": true,
+      "ambiguity": 0.0018606098197794664
+    },
+    {
+      "pixel": [
+        827.1309905951771,
+        387.866831598596
+      ],
+      "coordinate": [
+        139.92364992141077,
+        35.666669652216555
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 23.66367394395853,
+      "supported": true,
+      "ambiguity": 0.006165447597275834
+    },
+    {
+      "pixel": [
+        825.6505659082409,
+        391.58278944904447
+      ],
+      "coordinate": [
+        139.92364322221403,
+        35.66665598696957
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 25.43038468346319,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        824.1701412213047,
+        395.29874729949296
+      ],
+      "coordinate": [
+        139.92363652301725,
+        35.66664232172025
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 21.289707689395506,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        822.6897165343685,
+        399.01470514994145
+      ],
+      "coordinate": [
+        139.92362982382048,
+        35.66662865646862
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 23.977822408473685,
+      "supported": true,
+      "ambiguity": 0.002676959091025197
+    },
+    {
+      "pixel": [
+        821.2092918474322,
+        402.73066300038994
+      ],
+      "coordinate": [
+        139.92362312462373,
+        35.666614991214615
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 24.447348212263925,
+      "supported": true,
+      "ambiguity": 0.003945088324326597
+    },
+    {
+      "pixel": [
+        819.728867160496,
+        406.4466208508384
+      ],
+      "coordinate": [
+        139.92361642542696,
+        35.6666013259583
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 25.04946215646183,
+      "supported": true,
+      "ambiguity": 0.02583390080526966
+    },
+    {
+      "pixel": [
+        818.2484424735597,
+        410.1625787012869
+      ],
+      "coordinate": [
+        139.92360972623018,
+        35.66658766069964
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 25.294936072057226,
+      "supported": true,
+      "ambiguity": 0.0033093455355042204
+    },
+    {
+      "pixel": [
+        816.7680177866235,
+        413.8785365517354
+      ],
+      "coordinate": [
+        139.9236030270334,
+        35.66657399543861
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 8.0,
+      "contrast": 28.92199939935047,
+      "supported": true,
+      "ambiguity": 0.022706170658024393
+    },
+    {
+      "pixel": [
+        815.2875930996872,
+        417.5944944021839
+      ],
+      "coordinate": [
+        139.92359632783666,
+        35.66656033017527
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.5089796387319,
+      "supported": true,
+      "ambiguity": 0.006719670342901098
+    },
+    {
+      "pixel": [
+        813.807168412751,
+        421.3104522526324
+      ],
+      "coordinate": [
+        139.9235896286399,
+        35.66654666490959
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 25.0569275535632,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        812.3267437258148,
+        425.0264101030809
+      ],
+      "coordinate": [
+        139.9235829294431,
+        35.66653299964157
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 24.855595893311488,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        810.8463190388786,
+        428.74236795352937
+      ],
+      "coordinate": [
+        139.92357623024634,
+        35.6665193343712
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.953458389451953,
+      "supported": true,
+      "ambiguity": 0.00020171701084853392
+    },
+    {
+      "pixel": [
+        809.3658943519423,
+        432.45832580397786
+      ],
+      "coordinate": [
+        139.9235695310496,
+        35.6665056690985
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 26.23928813636816,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        807.8854696650061,
+        436.17428365442635
+      ],
+      "coordinate": [
+        139.92356283185282,
+        35.66649200382345
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 24.85284137604377,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        806.4050449780699,
+        439.89024150487484
+      ],
+      "coordinate": [
+        139.92355613265605,
+        35.666478338546064
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 26.003022696977254,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        804.9246202911337,
+        443.6061993553233
+      ],
+      "coordinate": [
+        139.92354943345927,
+        35.66646467326634
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 24.54230531578436,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        803.4441956041974,
+        447.3221572057718
+      ],
+      "coordinate": [
+        139.92354273426253,
+        35.66645100798429
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 27.72458178339194,
+      "supported": true,
+      "ambiguity": 0.0019398207134650662
+    },
+    {
+      "pixel": [
+        801.9637709172612,
+        451.0381150562203
+      ],
+      "coordinate": [
+        139.92353603506575,
+        35.666437342699886
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 9.0,
+      "contrast": 29.082389414460614,
+      "supported": true,
+      "ambiguity": 0.011935090798509762
+    },
+    {
+      "pixel": [
+        800.483346230325,
+        454.7540729066688
+      ],
+      "coordinate": [
+        139.92352933586898,
+        35.666423677413135
+      ],
+      "offset_pixels": 8.0,
+      "pair_spacing_pixels": 0.0,
+      "contrast": 0.0,
+      "supported": false,
+      "ambiguity": 24210.79843659879
+    },
+    {
+      "pixel": [
+        797.1449426181645,
+        457.7298184136492
+      ],
+      "coordinate": [
+        139.92351422897238,
+        35.66641273422609
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 14.0,
+      "contrast": 28.03000882910733,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        795.6645179312281,
+        461.4457762640977
+      ],
+      "coordinate": [
+        139.9235075297756,
+        35.66639906893512
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 14.0,
+      "contrast": 30.534976466782084,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        794.1840932442921,
+        465.1617341145461
+      ],
+      "coordinate": [
+        139.92350083057883,
+        35.666385403641826
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 14.0,
+      "contrast": 19.426144437301488,
+      "supported": true,
+      "ambiguity": 0.005744521212396307
+    },
+    {
+      "pixel": [
+        797.3486158704164,
+        470.7282228236649
+      ],
+      "coordinate": [
+        139.9235151506317,
+        35.666364933087515
+      ],
+      "offset_pixels": 5.0,
+      "pair_spacing_pixels": 5.0,
+      "contrast": 14.715977800819509,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        795.8681911834802,
+        474.44418067411345
+      ],
+      "coordinate": [
+        139.9235084514349,
+        35.66635126778837
+      ],
+      "offset_pixels": 5.0,
+      "pair_spacing_pixels": 5.0,
+      "contrast": 14.77179379437409,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        789.7428191834832,
+        476.30960766589163
+      ],
+      "coordinate": [
+        139.92348073298854,
+        35.66634440774794
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 5.0,
+      "contrast": 11.148890167776273,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        788.2623944965471,
+        480.02556551634007
+      ],
+      "coordinate": [
+        139.92347403379176,
+        35.66633074244529
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 13.0,
+      "contrast": 14.33240580200934,
+      "supported": true,
+      "ambiguity": 0.0014661860134112218
+    },
+    {
+      "pixel": [
+        786.7819698096109,
+        483.74152336678856
+      ],
+      "coordinate": [
+        139.92346733459502,
+        35.66631707714029
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 14.0,
+      "contrast": 26.850786822357705,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        785.3015451226746,
+        487.4574812172371
+      ],
+      "coordinate": [
+        139.92346063539824,
+        35.666303411832985
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 14.0,
+      "contrast": 28.231728468324157,
+      "supported": true,
+      "ambiguity": 0.004416765489562634
+    },
+    {
+      "pixel": [
+        784.7501098983505,
+        491.54354523941964
+      ],
+      "coordinate": [
+        139.9234581400514,
+        35.666288385470224
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 0.0,
+      "contrast": 0.0,
+      "supported": false,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        783.2696852114143,
+        495.25950308986813
+      ],
+      "coordinate": [
+        139.92345144085462,
+        35.66627472015798
+      ],
+      "offset_pixels": 9.0,
+      "pair_spacing_pixels": 15.0,
+      "contrast": 11.930997937103704,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        780.860271061866,
+        498.6053547685825
+      ],
+      "coordinate": [
+        139.92344053780795,
+        35.66626241589699
+      ],
+      "offset_pixels": 10.0,
+      "pair_spacing_pixels": 15.0,
+      "contrast": 27.110334320719048,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        784.0247936879904,
+        504.1718434777014
+      ],
+      "coordinate": [
+        139.92345485786078,
+        35.66624194531112
+      ],
+      "offset_pixels": 5.0,
+      "pair_spacing_pixels": 5.0,
+      "contrast": 13.617280584695237,
+      "supported": true,
+      "ambiguity": 0.010226630932845062
+    },
+    {
+      "pixel": [
+        782.5443690010541,
+        507.88780132814986
+      ],
+      "coordinate": [
+        139.92344815866403,
+        35.66622827999091
+      ],
+      "offset_pixels": 5.0,
+      "pair_spacing_pixels": 6.0,
+      "contrast": 14.747916133327749,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        781.0639443141179,
+        511.6037591785983
+      ],
+      "coordinate": [
+        139.92344145946726,
+        35.666214614668384
+      ],
+      "offset_pixels": 5.0,
+      "pair_spacing_pixels": 5.0,
+      "contrast": 5.552508770402966,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        777.7255407019574,
+        514.5795046855786
+      ],
+      "coordinate": [
+        139.92342635257063,
+        35.66620367145267
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 25.895109088724837,
+      "supported": true,
+      "ambiguity": 0.002999994932463758
+    },
+    {
+      "pixel": [
+        776.2451160150212,
+        518.2954625360272
+      ],
+      "coordinate": [
+        139.92341965337388,
+        35.666190006125944
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 26.991627779434197,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        774.7646913280848,
+        522.0114203864757
+      ],
+      "coordinate": [
+        139.9234129541771,
+        35.66617634079685
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.729448340670444,
+      "supported": true,
+      "ambiguity": 0.041707714418578054
+    },
+    {
+      "pixel": [
+        773.2842666411486,
+        525.7273782369241
+      ],
+      "coordinate": [
+        139.92340625498034,
+        35.66616267546545
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 30.34290472595051,
+      "supported": true,
+      "ambiguity": 0.035297100605538735
+    },
+    {
+      "pixel": [
+        771.8038419542124,
+        529.4433360873726
+      ],
+      "coordinate": [
+        139.92339955578356,
+        35.666149010131704
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 26.117773235832985,
+      "supported": true,
+      "ambiguity": 5.557515061460851e-05
+    },
+    {
+      "pixel": [
+        770.3234172672762,
+        533.1592939378212
+      ],
+      "coordinate": [
+        139.92339285658682,
+        35.66613534479562
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 28.28037645393477,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        768.8429925803399,
+        536.8752517882697
+      ],
+      "coordinate": [
+        139.92338615739004,
+        35.66612167945719
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.45265084060553,
+      "supported": true,
+      "ambiguity": 0.0035411654131137374
+    },
+    {
+      "pixel": [
+        767.3625678934037,
+        540.591209638718
+      ],
+      "coordinate": [
+        139.92337945819327,
+        35.666108014116396
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 31.59758897097374,
+      "supported": true,
+      "ambiguity": 0.0012175679947542136
+    },
+    {
+      "pixel": [
+        765.8821432064675,
+        544.3071674891665
+      ],
+      "coordinate": [
+        139.9233727589965,
+        35.666094348773285
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 28.447544142334245,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        764.4017185195313,
+        548.0231253396151
+      ],
+      "coordinate": [
+        139.92336605979975,
+        35.666080683427836
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.637190661931058,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        762.921293832595,
+        551.7390831900636
+      ],
+      "coordinate": [
+        139.92335936060297,
+        35.66606701808007
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.46613179793333,
+      "supported": true,
+      "ambiguity": 0.007331648302024266
+    },
+    {
+      "pixel": [
+        761.4408691456588,
+        555.455041040512
+      ],
+      "coordinate": [
+        139.9233526614062,
+        35.66605335272994
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 29.52123635395745,
+      "supported": true,
+      "ambiguity": 0.0568009851142031
+    },
+    {
+      "pixel": [
+        759.9604444587226,
+        559.1709988909605
+      ],
+      "coordinate": [
+        139.92334596220945,
+        35.66603968737746
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 30.36561466597727,
+      "supported": true,
+      "ambiguity": 0.04905694302733796
+    },
+    {
+      "pixel": [
+        758.4800197717864,
+        562.8869567414091
+      ],
+      "coordinate": [
+        139.92333926301268,
+        35.66602602202268
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 31.694041967946333,
+      "supported": true,
+      "ambiguity": 0.042017422013529225
+    },
+    {
+      "pixel": [
+        756.9995950848501,
+        566.6029145918576
+      ],
+      "coordinate": [
+        139.9233325638159,
+        35.66601235666552
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 30.160301123939846,
+      "supported": true,
+      "ambiguity": 0.04842787094071096
+    },
+    {
+      "pixel": [
+        755.5191703979139,
+        570.318872442306
+      ],
+      "coordinate": [
+        139.92332586461913,
+        35.66599869130602
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.48783675648852,
+      "supported": true,
+      "ambiguity": 0.05337927525988553
+    },
+    {
+      "pixel": [
+        754.0387457109777,
+        574.0348302927545
+      ],
+      "coordinate": [
+        139.92331916542238,
+        35.66598502594422
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 10.0,
+      "contrast": 27.4245852402545,
+      "supported": true,
+      "ambiguity": 0.06178615325431543
+    },
+    {
+      "pixel": [
+        752.5583210240414,
+        577.7507881432031
+      ],
+      "coordinate": [
+        139.9233124662256,
+        35.66597136058004
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 27.15360062897652,
+      "supported": true,
+      "ambiguity": 0.07281426580613096
+    },
+    {
+      "pixel": [
+        751.0778963371051,
+        581.4667459936516
+      ],
+      "coordinate": [
+        139.92330576702884,
+        35.66595769521354
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 29.476416809008022,
+      "supported": true,
+      "ambiguity": 0.07376299549972806
+    },
+    {
+      "pixel": [
+        749.5974716501689,
+        585.1827038440999
+      ],
+      "coordinate": [
+        139.92329906783206,
+        35.66594402984471
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 30.709091451290405,
+      "supported": true,
+      "ambiguity": 0.046180641790448444
+    },
+    {
+      "pixel": [
+        748.1170469632327,
+        588.8986616945484
+      ],
+      "coordinate": [
+        139.92329236863532,
+        35.66593036447353
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 26.317652175810565,
+      "supported": true,
+      "ambiguity": 0.04689415861025555
+    },
+    {
+      "pixel": [
+        746.6366222762965,
+        592.614619544997
+      ],
+      "coordinate": [
+        139.92328566943854,
+        35.665916699100016
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 25.583352951812735,
+      "supported": true,
+      "ambiguity": 0.03143365617229528
+    },
+    {
+      "pixel": [
+        745.1561975893602,
+        596.3305773954455
+      ],
+      "coordinate": [
+        139.92327897024177,
+        35.66590303372416
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 30.50083990098807,
+      "supported": true,
+      "ambiguity": 0.03459238460866384
+    },
+    {
+      "pixel": [
+        743.675772902424,
+        600.0465352458939
+      ],
+      "coordinate": [
+        139.923272271045,
+        35.665889368345965
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 31.274103847582268,
+      "supported": true,
+      "ambiguity": 0.01032336948387266
+    },
+    {
+      "pixel": [
+        742.1953482154878,
+        603.7624930963424
+      ],
+      "coordinate": [
+        139.92326557184825,
+        35.66587570296543
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.392635975834466,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        740.7149235285516,
+        607.478450946791
+      ],
+      "coordinate": [
+        139.92325887265147,
+        35.66586203758255
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 23.514250062222203,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        739.2344988416153,
+        611.1944087972394
+      ],
+      "coordinate": [
+        139.9232521734547,
+        35.66584837219735
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 29.3516173109089,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        737.7540741546791,
+        614.9103666476879
+      ],
+      "coordinate": [
+        139.92324547425795,
+        35.66583470680979
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 28.33027877874696,
+      "supported": true,
+      "ambiguity": 0.004374303630483103
+    },
+    {
+      "pixel": [
+        736.2736494677429,
+        618.6263244981363
+      ],
+      "coordinate": [
+        139.92323877506118,
+        35.66582104141989
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.838407429881748,
+      "supported": true,
+      "ambiguity": 0.020517546353181287
+    },
+    {
+      "pixel": [
+        734.7932247808066,
+        622.342282348585
+      ],
+      "coordinate": [
+        139.9232320758644,
+        35.66580737602767
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.934546618049723,
+      "supported": true,
+      "ambiguity": 0.04246987229645488
+    },
+    {
+      "pixel": [
+        733.3128000938704,
+        626.0582401990333
+      ],
+      "coordinate": [
+        139.92322537666763,
+        35.66579371063309
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 27.305373281187414,
+      "supported": true,
+      "ambiguity": 0.015399993713061598
+    },
+    {
+      "pixel": [
+        731.8323754069341,
+        629.7741980494818
+      ],
+      "coordinate": [
+        139.92321867747089,
+        35.66578004523619
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.94980098379294,
+      "supported": true,
+      "ambiguity": 0.0029487350424540594
+    },
+    {
+      "pixel": [
+        730.351950719998,
+        633.4901558999304
+      ],
+      "coordinate": [
+        139.9232119782741,
+        35.66576637983695
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.057088720060776,
+      "supported": true,
+      "ambiguity": 0.015501472307929993
+    },
+    {
+      "pixel": [
+        728.8715260330616,
+        637.2061137503789
+      ],
+      "coordinate": [
+        139.92320527907734,
+        35.66575271443534
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 24.871757509735247,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        727.3911013461254,
+        640.9220716008273
+      ],
+      "coordinate": [
+        139.92319857988056,
+        35.66573904903142
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 22.939910636755883,
+      "supported": true,
+      "ambiguity": 0.0015889777322498147
+    },
+    {
+      "pixel": [
+        725.9106766591892,
+        644.6380294512758
+      ],
+      "coordinate": [
+        139.92319188068382,
+        35.66572538362516
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 21.951529744569214,
+      "supported": true,
+      "ambiguity": 0.012930838027159091
+    },
+    {
+      "pixel": [
+        724.430251972253,
+        648.3539873017244
+      ],
+      "coordinate": [
+        139.92318518148704,
+        35.665711718216556
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 26.51293013643196,
+      "supported": true,
+      "ambiguity": 0.0
+    },
+    {
+      "pixel": [
+        722.9498272853167,
+        652.0699451521729
+      ],
+      "coordinate": [
+        139.92317848229027,
+        35.66569805280561
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 26.9665745438652,
+      "supported": true,
+      "ambiguity": 0.0005442324302677439
+    },
+    {
+      "pixel": [
+        721.4694025983805,
+        655.7859030026212
+      ],
+      "coordinate": [
+        139.9231717830935,
+        35.665684387392325
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 28.226668315433088,
+      "supported": true,
+      "ambiguity": 0.02538968988671749
+    },
+    {
+      "pixel": [
+        720.9179673740565,
+        659.8719670248039
+      ],
+      "coordinate": [
+        139.92316928774667,
+        35.66566936091308
+      ],
+      "offset_pixels": 6.0,
+      "pair_spacing_pixels": 11.0,
+      "contrast": 27.11289265596149,
+      "supported": true,
+      "ambiguity": 0.29794882473728934
+    },
+    {
+      "pixel": [
+        718.5085532245081,
+        663.2178187035183
+      ],
+      "coordinate": [
+        139.92315838469997,
+        35.66565705655876
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 25.85585507505867,
+      "supported": true,
+      "ambiguity": 0.025615853593622694
+    },
+    {
+      "pixel": [
+        717.0281285375718,
+        666.9337765539668
+      ],
+      "coordinate": [
+        139.9231516855032,
+        35.66564339113845
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 27.129891221974788,
+      "supported": true,
+      "ambiguity": 0.035465971513952546
+    },
+    {
+      "pixel": [
+        715.5477038506356,
+        670.6497344044152
+      ],
+      "coordinate": [
+        139.92314498630645,
+        35.6656297257158
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 28.1330818341669,
+      "supported": true,
+      "ambiguity": 0.042271018291737524
+    },
+    {
+      "pixel": [
+        714.0672791636994,
+        674.3656922548637
+      ],
+      "coordinate": [
+        139.92313828710968,
+        35.66561606029084
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 26.87305030327557,
+      "supported": true,
+      "ambiguity": 0.020129323381448388
+    },
+    {
+      "pixel": [
+        713.5158439393753,
+        678.4517562770463
+      ],
+      "coordinate": [
+        139.92313579176283,
+        35.665601033798715
+      ],
+      "offset_pixels": 6.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 27.77865516083186,
+      "supported": true,
+      "ambiguity": 0.3206966481204178
+    },
+    {
+      "pixel": [
+        711.1064297898268,
+        681.7976079557608
+      ],
+      "coordinate": [
+        139.92312488871613,
+        35.665588729433864
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 24.21126636360912,
+      "supported": true,
+      "ambiguity": 0.012543961406823846
+    },
+    {
+      "pixel": [
+        709.6260051028906,
+        685.5135658062093
+      ],
+      "coordinate": [
+        139.92311818951939,
+        35.66557506400187
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 26.89725974127007,
+      "supported": true,
+      "ambiguity": 0.02746560578194004
+    },
+    {
+      "pixel": [
+        708.1455804159544,
+        689.2295236566576
+      ],
+      "coordinate": [
+        139.9231114903226,
+        35.66556139856755
+      ],
+      "offset_pixels": 7.0,
+      "pair_spacing_pixels": 12.0,
+      "contrast": 28.097890781097576,
+      "supported": true,
+      "ambiguity": 0.015418935396817782
+    }
+  ],
+  "support_fraction": 0.9863945578231292,
+  "median_contrast": 26.341042744445254,
+  "median_ambiguity": 0.005197096169689773,
+  "rail_confidence": "supported_image_trace",
+  "scale_metres_per_pixel": 0.40925371982001896,
+  "platform": {
+    "status": "no_anchor",
+    "reason": "independent_platform_bounds_not_resolved",
+    "candidate_count": 0
+  },
+  "station_alignment": {
+    "status": "candidate",
+    "kind": "transverse_railway_alignment_only",
+    "pixel": [
+      809.2450522864043,
+      432.7616468888416
+    ],
+    "coordinate": [
+      139.9235689842168,
+      35.66650455364835
+    ],
+    "transverse_displacement_metres": 7.984410716970558,
+    "support_pixels": [
+      [
+        809.3658943519423,
+        432.45832580397786
+      ],
+      [
+        807.8854696650061,
+        436.17428365442635
+      ]
+    ],
+    "contrast": 24.85284137604377,
+    "ambiguity": 0.0
+  }
+}

@@ -1,0 +1,1784 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線",
+  "actualViewpointCount": 40,
+  "actualOriginalPNGCount": 80,
+  "legacyViewsActuallyViewedThisPass": 0,
+  "scope": "All new missing-only views across own intervals0/1/2/5/6/8/14; excludes109legacyviews visual acceptance",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "C092C809-0C5A-4202-A5AA-675E91313A92",
+    "message": "40/40 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 87042,
+    "requestID": "watarase-keikoku-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-watarase-keikoku-missing-20261019/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-19T05:42:05Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "pixelLeads": [
+    {
+      "intervalIndex": 8,
+      "points": [
+        0,
+        1
+      ],
+      "verticesReportedByParent": [
+        3,
+        4,
+        5
+      ],
+      "coordinatesReportedByParent": [
+        [
+          139.30915,
+          36.52161
+        ],
+        [
+          139.30938,
+          36.52174
+        ],
+        [
+          139.30941,
+          36.52174
+        ]
+      ],
+      "status": "red short eastward shoulder visible; own source/window/station join still required"
+    }
+  ],
+  "views": [
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 1194506,
+          "actualByteCount": 1194506,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 1311373,
+          "actualByteCount": 1311373,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.411109,
+        "longitude": 139.333217,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.95809798735962,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238105704.78150544,
+        "rectY": 105026066.64856753,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 1074891,
+          "actualByteCount": 1074891,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 1184024,
+          "actualByteCount": 1184024,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.412685099261,
+        "longitude": 139.32983213407022,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580788000785138,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238103180.842535,
+        "rectY": 105024606.32578044,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 1025380,
+          "actualByteCount": 1025380,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 1133018,
+          "actualByteCount": 1133018,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41347531869759,
+        "longitude": 139.3261291423999,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580691797478516,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238100419.6918195,
+        "rectY": 105023874.14281744,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 981656,
+          "actualByteCount": 981656,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 1091569,
+          "actualByteCount": 1091569,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41243575022423,
+        "longitude": 139.3224963930903,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.958081835678415,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238097710.91760433,
+        "rectY": 105024837.36020762,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 978870,
+          "actualByteCount": 978870,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 1091244,
+          "actualByteCount": 1091244,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41046009465418,
+        "longitude": 139.31945613238602,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581058868585829,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238095443.934914,
+        "rectY": 105026667.87827158,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000005/basemap.png",
+          "recordedByteCount": 954346,
+          "actualByteCount": 954346,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000005/smooth.png",
+          "recordedByteCount": 1064215,
+          "actualByteCount": 1064215,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.408584126117454,
+        "longitude": 139.316328271179,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581287234084882,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238093111.63255456,
+        "rectY": 105028405.98951803,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#0",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000006/basemap.png",
+          "recordedByteCount": 992673,
+          "actualByteCount": 992673,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000000/000006/smooth.png",
+          "recordedByteCount": 1103527,
+          "actualByteCount": 1103527,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.407771,
+        "longitude": 139.315079,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581386214378397,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238092180.10844728,
+        "rectY": 105029159.34926912,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "桐生西出沿共享両毛走廊、跨河后走自身西/西北分岔；下新田前红线有偏NW长弦，未确权；JR西南yard/Jomo北侧走廊独立，无孤立V。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000000/basemap.png",
+          "recordedByteCount": 992932,
+          "actualByteCount": 992932,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000000/smooth.png",
+          "recordedByteCount": 1103791,
+          "actualByteCount": 1103791,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.407771,
+        "longitude": 139.315079,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581386214378397,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238092180.10844728,
+        "rectY": 105029159.34926912,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "下新田自身弧线转西北后北向相老；红线稍在蓝线北/东侧，真实大弯连续；JR西南支向、Tobu南侧接近但未跳接，精确共站轨道未证明。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000001/basemap.png",
+          "recordedByteCount": 1123576,
+          "actualByteCount": 1123576,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000001/smooth.png",
+          "recordedByteCount": 1240489,
+          "actualByteCount": 1240489,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.406314741152,
+        "longitude": 139.31170723778578,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581563477132076,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238089665.94031534,
+        "rectY": 105030508.55052707,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "下新田自身弧线转西北后北向相老；红线稍在蓝线北/东侧，真实大弯连续；JR西南支向、Tobu南侧接近但未跳接，精确共站轨道未证明。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000002/basemap.png",
+          "recordedByteCount": 1081899,
+          "actualByteCount": 1081899,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000002/smooth.png",
+          "recordedByteCount": 1192980,
+          "actualByteCount": 1192980,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.40737905809098,
+        "longitude": 139.30813245838084,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581433924025656,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238087000.39159408,
+        "rectY": 105029522.47986192,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "下新田自身弧线转西北后北向相老；红线稍在蓝线北/东侧，真实大弯连续；JR西南支向、Tobu南侧接近但未跳接，精确共站轨道未证明。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000003/basemap.png",
+          "recordedByteCount": 999139,
+          "actualByteCount": 999139,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000003/smooth.png",
+          "recordedByteCount": 1103509,
+          "actualByteCount": 1103509,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.40935786900732,
+        "longitude": 139.30511464191176,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581193046030119,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238084750.14453852,
+        "rectY": 105027689.11092862,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "下新田自身弧线转西北后北向相老；红线稍在蓝线北/东侧，真实大弯连续；JR西南支向、Tobu南侧接近但未跳接，精确共站轨道未证明。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#1",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000004/basemap.png",
+          "recordedByteCount": 1005687,
+          "actualByteCount": 1005687,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000001/000004/smooth.png",
+          "recordedByteCount": 1112018,
+          "actualByteCount": 1112018,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.410359,
+        "longitude": 139.30436,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581071175309581,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238084187.44274488,
+        "rectY": 105026761.54496118,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "下新田自身弧线转西北后北向相老；红线稍在蓝线北/东侧，真实大弯连续；JR西南支向、Tobu南侧接近但未跳接，精确共站轨道未证明。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000000/basemap.png",
+          "recordedByteCount": 1005690,
+          "actualByteCount": 1005690,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000000/smooth.png",
+          "recordedByteCount": 1112022,
+          "actualByteCount": 1112022,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.410359,
+        "longitude": 139.30436,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9581071175309581,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238084187.44274488,
+        "rectY": 105026761.54496118,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "相老北出维持自身北向，Tobu西北分岔、Jomo东西跨越均独立；运動公園南接近有西侧偏移但无红线孤立V/回头。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000001/basemap.png",
+          "recordedByteCount": 1019750,
+          "actualByteCount": 1019750,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000001/smooth.png",
+          "recordedByteCount": 1124596,
+          "actualByteCount": 1124596,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41339464877901,
+        "longitude": 139.3033326911186,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580701618522021,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238083421.4257226,
+        "rectY": 105023948.88839702,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "相老北出维持自身北向，Tobu西北分岔、Jomo东西跨越均独立；运動公園南接近有西侧偏移但无红线孤立V/回头。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000002/basemap.png",
+          "recordedByteCount": 1027931,
+          "actualByteCount": 1027931,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000002/smooth.png",
+          "recordedByteCount": 1132655,
+          "actualByteCount": 1132655,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41642360669433,
+        "longitude": 139.3022725574863,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580332849248099,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238082630.93279198,
+        "rectY": 105021142.32164009,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "相老北出维持自身北向，Tobu西北分岔、Jomo东西跨越均独立；运動公園南接近有西侧偏移但无红线孤立V/回头。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000003/basemap.png",
+          "recordedByteCount": 1035126,
+          "actualByteCount": 1035126,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000003/smooth.png",
+          "recordedByteCount": 1141220,
+          "actualByteCount": 1141220,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41945010115275,
+        "longitude": 139.3012035826643,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9579964352933372,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238081833.8473926,
+        "rectY": 105018337.92814687,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "相老北出维持自身北向，Tobu西北分岔、Jomo东西跨越均独立；运動公園南接近有西侧偏移但无红线孤立V/回头。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#2",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000004/basemap.png",
+          "recordedByteCount": 1014063,
+          "actualByteCount": 1014063,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000003/000004/smooth.png",
+          "recordedByteCount": 1119804,
+          "actualByteCount": 1119804,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.42041,
+        "longitude": 139.30086,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9579847473081358,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238081577.65358937,
+        "rectY": 105017448.4491775,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "相老北出维持自身北向，Tobu西北分岔、Jomo东西跨越均独立；运動公園南接近有西侧偏移但无红线孤立V/回头。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000000/basemap.png",
+          "recordedByteCount": 554985,
+          "actualByteCount": 554985,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000000/smooth.png",
+          "recordedByteCount": 625887,
+          "actualByteCount": 625887,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.47007,
+        "longitude": 139.257725,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.957379704128866,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238049413.8663822,
+        "rectY": 104971416.58455503,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上神梅北出沿西岸真实S弯向本宿；后半红线偏河侧/东南且部分长弦概化，非孤立V，须自身来源后才可定窗口。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000001/basemap.png",
+          "recordedByteCount": 495178,
+          "actualByteCount": 495178,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000001/smooth.png",
+          "recordedByteCount": 561872,
+          "actualByteCount": 561872,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.47318945681416,
+        "longitude": 139.25819144516012,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9573416733517899,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238049761.6731024,
+        "rectY": 104968524.0497601,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上神梅北出沿西岸真实S弯向本宿；后半红线偏河侧/东南且部分长弦概化，非孤立V，须自身来源后才可定窗口。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000002/basemap.png",
+          "recordedByteCount": 426271,
+          "actualByteCount": 426271,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000002/smooth.png",
+          "recordedByteCount": 491517,
+          "actualByteCount": 491517,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.476069831448825,
+        "longitude": 139.25814027292307,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9573065547981595,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238049723.51631686,
+        "rectY": 104965853.10195377,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上神梅北出沿西岸真实S弯向本宿；后半红线偏河侧/东南且部分长弦概化，非孤立V，须自身来源后才可定窗口。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000003/basemap.png",
+          "recordedByteCount": 434927,
+          "actualByteCount": 434927,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000003/smooth.png",
+          "recordedByteCount": 505304,
+          "actualByteCount": 505304,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.479048330692905,
+        "longitude": 139.25707343694307,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9572702373087958,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238048928.02575362,
+        "rectY": 104963091.0595977,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上神梅北出沿西岸真实S弯向本宿；后半红线偏河侧/东南且部分长弦概化，非孤立V，须自身来源后才可定窗口。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#5",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000004/basemap.png",
+          "recordedByteCount": 418741,
+          "actualByteCount": 418741,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000004/000004/smooth.png",
+          "recordedByteCount": 489832,
+          "actualByteCount": 489832,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.481425,
+        "longitude": 139.259345,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9572412561917364,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238050621.82593423,
+        "rectY": 104960887.03415246,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "上神梅北出沿西岸真实S弯向本宿；后半红线偏河侧/东南且部分长弦概化，非孤立V，须自身来源后才可定窗口。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000000/basemap.png",
+          "recordedByteCount": 418725,
+          "actualByteCount": 418725,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000000/smooth.png",
+          "recordedByteCount": 489802,
+          "actualByteCount": 489802,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.481425,
+        "longitude": 139.259345,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9572412561917364,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238050621.82593423,
+        "rectY": 104960887.03415246,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000001/basemap.png",
+          "recordedByteCount": 399050,
+          "actualByteCount": 399050,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000001/smooth.png",
+          "recordedByteCount": 468410,
+          "actualByteCount": 468410,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.483307200817514,
+        "longitude": 139.26246598637715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9572183034474272,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238052949.00204903,
+        "rectY": 104959141.51049374,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000002/basemap.png",
+          "recordedByteCount": 402308,
+          "actualByteCount": 402308,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000002/smooth.png",
+          "recordedByteCount": 473699,
+          "actualByteCount": 473699,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.48608948958463,
+        "longitude": 139.26419197699084,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9571843725549621,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238054235.99393082,
+        "rectY": 104956561.1816472,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000003/basemap.png",
+          "recordedByteCount": 369801,
+          "actualByteCount": 369801,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000003/smooth.png",
+          "recordedByteCount": 435166,
+          "actualByteCount": 435166,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.48851134782426,
+        "longitude": 139.2663864036824,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9571548353741745,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238055872.2770686,
+        "rectY": 104954315.04506616,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000004/basemap.png",
+          "recordedByteCount": 362351,
+          "actualByteCount": 362351,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000004/smooth.png",
+          "recordedByteCount": 430568,
+          "actualByteCount": 430568,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.49037022521619,
+        "longitude": 139.26941548640988,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9571321631840729,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238058130.9248553,
+        "rectY": 104952590.99375361,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000005/basemap.png",
+          "recordedByteCount": 367713,
+          "actualByteCount": 367713,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000005/smooth.png",
+          "recordedByteCount": 434706,
+          "actualByteCount": 434706,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.490441216189325,
+        "longitude": 139.27331450129682,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9571312973075474,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238061038.24107507,
+        "rectY": 104952525.15100054,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000006/basemap.png",
+          "recordedByteCount": 417248,
+          "actualByteCount": 417248,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000006/smooth.png",
+          "recordedByteCount": 489899,
+          "actualByteCount": 489899,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.492486908524775,
+        "longitude": 139.2756978824307,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9571063453727923,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238062815.418857,
+        "rectY": 104950627.78504291,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 7,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000007",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000007/basemap.png",
+          "recordedByteCount": 504707,
+          "actualByteCount": 504707,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000007/smooth.png",
+          "recordedByteCount": 587526,
+          "actualByteCount": 587526,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.49551786421706,
+        "longitude": 139.27620349513774,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9570693736179751,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238063192.43101692,
+        "rectY": 104947816.50177868,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 8,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000008",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000008/basemap.png",
+          "recordedByteCount": 471329,
+          "actualByteCount": 471329,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000008/smooth.png",
+          "recordedByteCount": 545195,
+          "actualByteCount": 545195,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.49834824763514,
+        "longitude": 139.27536405709205,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9570348460157465,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238062566.50064307,
+        "rectY": 104945191.154706,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#6",
+      "pointOrdinal": 9,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000009",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000009/basemap.png",
+          "recordedByteCount": 421120,
+          "actualByteCount": 421120,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000005/000009/smooth.png",
+          "recordedByteCount": 492498,
+          "actualByteCount": 492498,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.49985,
+        "longitude": 139.277595,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9570165253124608,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238064230.01224536,
+        "rectY": 104943798.15210623,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "本宿向水沼沿西岸真实长反弯；红线部分河侧偏东/南，水沼南接近偏东南，曲线连续无孤立V/错邻线，偏移未确权。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/basemap.png",
+          "recordedByteCount": 456713,
+          "actualByteCount": 456713,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/smooth.png",
+          "recordedByteCount": 524921,
+          "actualByteCount": 524921,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52083,
+        "longitude": 139.3077,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956760509431986,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238086677.92725334,
+        "rectY": 104924334.59784691,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "花轮东北站端可见红线短向东横肩再沿NE自身铁路继续，蓝线较连续；对应待核对v3..5，尚非可删点授权。后续真实东行→东北大曲线保留，无回头/邻线跳接。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/basemap.png",
+          "recordedByteCount": 465384,
+          "actualByteCount": 465384,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/smooth.png",
+          "recordedByteCount": 538917,
+          "actualByteCount": 538917,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5224294687004,
+        "longitude": 139.31105080755052,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956740986041505,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238089176.4704555,
+        "rectY": 104922850.52313125,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "花轮东北站端可见红线短向东横肩再沿NE自身铁路继续，蓝线较连续；对应待核对v3..5，尚非可删点授权。后续真实东行→东北大曲线保留，无回头/邻线跳接。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000002/basemap.png",
+          "recordedByteCount": 426252,
+          "actualByteCount": 426252,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000002/smooth.png",
+          "recordedByteCount": 494334,
+          "actualByteCount": 494334,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52284514081107,
+        "longitude": 139.31492570333708,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956735912153054,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238092065.80217057,
+        "rectY": 104922464.83474419,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "花轮东北站端可见红线短向东横肩再沿NE自身铁路继续，蓝线较连续；对应待核对v3..5，尚非可删点授权。后续真实东行→东北大曲线保留，无回头/邻线跳接。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000003/basemap.png",
+          "recordedByteCount": 408480,
+          "actualByteCount": 408480,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000003/smooth.png",
+          "recordedByteCount": 473369,
+          "actualByteCount": 473369,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.524275,
+        "longitude": 139.317165,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9567184582343735,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238093735.542784,
+        "rectY": 104921138.09992623,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "花轮东北站端可见红线短向东横肩再沿NE自身铁路继续，蓝线较连续；对应待核对v3..5，尚非可删点授权。后续真实东行→东北大曲线保留，无回头/邻线跳接。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#14",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000000/basemap.png",
+          "recordedByteCount": 416141,
+          "actualByteCount": 416141,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000000/smooth.png",
+          "recordedByteCount": 493189,
+          "actualByteCount": 493189,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.636865,
+        "longitude": 139.43965,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9553422159551698,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238185066.97841778,
+        "rectY": 104816591.19318402,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "通洞北出沿山脚真实反弯至足尾；红线多在蓝线西/北侧并以长弦跨过站南弯段，未见孤立V；yard多轨不能证明乘客平台face/精确站帽。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#14",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000001/basemap.png",
+          "recordedByteCount": 426551,
+          "actualByteCount": 426551,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000001/smooth.png",
+          "recordedByteCount": 501898,
+          "actualByteCount": 501898,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.63894868478114,
+        "longitude": 139.4424874438802,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9553167109848726,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238187182.72992292,
+        "rectY": 104814654.92229073,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "通洞北出沿山脚真实反弯至足尾；红线多在蓝线西/北侧并以长弦跨过站南弯段，未见孤立V；yard多轨不能证明乘客平台face/精确站帽。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#14",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000002/basemap.png",
+          "recordedByteCount": 457201,
+          "actualByteCount": 457201,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000002/smooth.png",
+          "recordedByteCount": 537444,
+          "actualByteCount": 537444,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.640507583419954,
+        "longitude": 139.44575665970123,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9552976287320439,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238189620.43392208,
+        "rectY": 104813206.27638856,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "通洞北出沿山脚真实反弯至足尾；红线多在蓝线西/北侧并以长弦跨过站南弯段，未见孤立V；yard多轨不能证明乘客平台face/精确站帽。"
+    },
+    {
+      "itemID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#14",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000003/basemap.png",
+          "recordedByteCount": 433207,
+          "actualByteCount": 433207,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000002/000003/smooth.png",
+          "recordedByteCount": 511072,
+          "actualByteCount": 511072,
+          "actuallyViewed": true
+        }
+      ],
+      "reviewMethod": "functions.view_image separately on original PNGs; no cropping/compositing/pixel alteration",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.641915,
+        "longitude": 139.447775,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9552804001366078,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238191125.4175289,
+        "rectY": 104811898.37383166,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/identity-plan-f576f4e6f320822b0491c5c66b57e1e7b12e0a5db0782a39244d0e8eac59e51c.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "observation": "通洞北出沿山脚真实反弯至足尾；红线多在蓝线西/北侧并以长弦跨过站南弯段，未见孤立V；yard多轨不能证明乘客平台face/精确站帽。"
+    }
+  ]
+}

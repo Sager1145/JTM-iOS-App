@@ -1,0 +1,25 @@
+{
+  "format": "jtm-renraku-display-candidate-review-v1",
+  "verdict": "draft-for-root-raw-review",
+  "actualRawAssociationsReviewed": 2,
+  "finiteCoordinates": true,
+  "zeroLengthEdges": 0,
+  "endpointFramePixels": {
+    "008736-heiwa-renraku": [
+      321,
+      153
+    ],
+    "008742-kami-renraku-jounan": [
+      500,
+      365
+    ]
+  },
+  "identityCorrection": "The diagonal frame is Heiwa/Renraku. The north-south frame is Kami and is shared by Renraku and Jounan. The earlier attribution of the diagonal frame to Kami was incorrect.",
+  "pending": [
+    "Root raw-cartographic acceptance",
+    "Johoku Heiwa horizontal frame selection from complete Johoku raws",
+    "Native Inspector and Main acceptance"
+  ],
+  "productionSourceModified": false,
+  "physicalTopologyChanged": false
+}

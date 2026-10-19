@@ -1,0 +1,26 @@
+{
+  "lineID": "jp-伊予鉄道-本町線",
+  "intervalIndex": 3,
+  "plannedCamera": [
+    33.842801874078404,
+    132.7587773030758,
+    0.007116405803436976
+  ],
+  "actualCenter": [
+    33.842802,
+    132.758777
+  ],
+  "actualMapBounds": [
+    132.754749,
+    33.839244,
+    132.762805,
+    33.84636
+  ],
+  "completeIntervalInsideActualMap": true,
+  "renderStatus": "42 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:9;overlays:5;rides:0;budgetDrops:0;vertices:1945;camera:17.03;lod:15.88;backbones:0;networkStations:20;distance:1561.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.842802;centerLon:132.758777;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1871.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "pixelReview": "pending",
+  "pair": [
+    "honmachi-interval-03-overlay.png",
+    "honmachi-interval-03-basemap.png"
+  ]
+}

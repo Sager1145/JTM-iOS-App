@@ -1,0 +1,733 @@
+{
+  "lineID": "jp-WILLER　TRAINS-宮福線",
+  "interval": 8,
+  "fromStationID": "004911",
+  "toStationID": "004948",
+  "hasDisplayOverride": false,
+  "nativeInput": {
+    "display": [
+      {
+        "latitude": 35.37187,
+        "longitude": 135.129255
+      },
+      {
+        "latitude": 35.37167,
+        "longitude": 135.1289
+      },
+      {
+        "latitude": 35.37127,
+        "longitude": 135.12813
+      },
+      {
+        "latitude": 35.3711,
+        "longitude": 135.12774
+      },
+      {
+        "latitude": 35.37089,
+        "longitude": 135.12726
+      },
+      {
+        "latitude": 35.37067,
+        "longitude": 135.12665
+      },
+      {
+        "latitude": 35.37048,
+        "longitude": 135.12602
+      },
+      {
+        "latitude": 35.37037,
+        "longitude": 135.12564
+      },
+      {
+        "latitude": 35.37029,
+        "longitude": 135.12517
+      },
+      {
+        "latitude": 35.37027,
+        "longitude": 135.12494
+      },
+      {
+        "latitude": 35.37023,
+        "longitude": 135.12455
+      },
+      {
+        "latitude": 35.37022,
+        "longitude": 135.12438
+      },
+      {
+        "latitude": 35.3702,
+        "longitude": 135.12392
+      },
+      {
+        "latitude": 35.37019,
+        "longitude": 135.12376
+      },
+      {
+        "latitude": 35.37018,
+        "longitude": 135.12355
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12347
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12311
+      },
+      {
+        "latitude": 35.37019,
+        "longitude": 135.12251
+      },
+      {
+        "latitude": 35.37018,
+        "longitude": 135.12221
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12201
+      },
+      {
+        "latitude": 35.37013,
+        "longitude": 135.12155
+      },
+      {
+        "latitude": 35.37009,
+        "longitude": 135.12127
+      },
+      {
+        "latitude": 35.36999,
+        "longitude": 135.12095
+      },
+      {
+        "latitude": 35.36986,
+        "longitude": 135.12056
+      },
+      {
+        "latitude": 35.36971,
+        "longitude": 135.12021
+      },
+      {
+        "latitude": 35.36958,
+        "longitude": 135.11999
+      },
+      {
+        "latitude": 35.36943,
+        "longitude": 135.11975
+      },
+      {
+        "latitude": 35.36926,
+        "longitude": 135.11949
+      },
+      {
+        "latitude": 35.36893,
+        "longitude": 135.11901
+      },
+      {
+        "latitude": 35.36858,
+        "longitude": 135.11852
+      },
+      {
+        "latitude": 35.36827,
+        "longitude": 135.11808
+      },
+      {
+        "latitude": 35.36796,
+        "longitude": 135.11764
+      },
+      {
+        "latitude": 35.3676,
+        "longitude": 135.11712
+      },
+      {
+        "latitude": 35.36721,
+        "longitude": 135.11655
+      },
+      {
+        "latitude": 35.36698,
+        "longitude": 135.11619
+      },
+      {
+        "latitude": 35.36636,
+        "longitude": 135.11539
+      },
+      {
+        "latitude": 35.36601,
+        "longitude": 135.11502
+      },
+      {
+        "latitude": 35.36565,
+        "longitude": 135.11471
+      },
+      {
+        "latitude": 35.36526,
+        "longitude": 135.11441
+      },
+      {
+        "latitude": 35.36503,
+        "longitude": 135.11425
+      },
+      {
+        "latitude": 35.36492,
+        "longitude": 135.11416
+      },
+      {
+        "latitude": 35.36452,
+        "longitude": 135.11394
+      },
+      {
+        "latitude": 35.36423,
+        "longitude": 135.11381
+      },
+      {
+        "latitude": 35.36395,
+        "longitude": 135.11368
+      },
+      {
+        "latitude": 35.36359,
+        "longitude": 135.11351
+      },
+      {
+        "latitude": 35.36323,
+        "longitude": 135.11335
+      },
+      {
+        "latitude": 35.36297,
+        "longitude": 135.11319
+      },
+      {
+        "latitude": 35.3627,
+        "longitude": 135.11308
+      },
+      {
+        "latitude": 35.36196,
+        "longitude": 135.11275
+      },
+      {
+        "latitude": 35.36151,
+        "longitude": 135.11255
+      },
+      {
+        "latitude": 35.36115,
+        "longitude": 135.11237
+      },
+      {
+        "latitude": 35.36073,
+        "longitude": 135.11218
+      },
+      {
+        "latitude": 35.36023,
+        "longitude": 135.11195
+      },
+      {
+        "latitude": 35.35976,
+        "longitude": 135.11174
+      },
+      {
+        "latitude": 35.35963,
+        "longitude": 135.11169
+      },
+      {
+        "latitude": 35.359304,
+        "longitude": 135.111552
+      }
+    ],
+    "fromName": "公庄",
+    "fromStationID": "004911",
+    "hasDisplayOverride": false,
+    "id": "jp-WILLER　TRAINS-宮福線#8",
+    "intervalIndex": 8,
+    "lineID": "jp-WILLER　TRAINS-宮福線",
+    "lineName": "宮福線",
+    "operatorName": "WILLER　TRAINS",
+    "source": [
+      {
+        "latitude": 35.37187,
+        "longitude": 135.129255
+      },
+      {
+        "latitude": 35.37167,
+        "longitude": 135.1289
+      },
+      {
+        "latitude": 35.37127,
+        "longitude": 135.12813
+      },
+      {
+        "latitude": 35.3711,
+        "longitude": 135.12774
+      },
+      {
+        "latitude": 35.37089,
+        "longitude": 135.12726
+      },
+      {
+        "latitude": 35.37067,
+        "longitude": 135.12665
+      },
+      {
+        "latitude": 35.37048,
+        "longitude": 135.12602
+      },
+      {
+        "latitude": 35.37037,
+        "longitude": 135.12564
+      },
+      {
+        "latitude": 35.37029,
+        "longitude": 135.12517
+      },
+      {
+        "latitude": 35.37027,
+        "longitude": 135.12494
+      },
+      {
+        "latitude": 35.37023,
+        "longitude": 135.12455
+      },
+      {
+        "latitude": 35.37022,
+        "longitude": 135.12438
+      },
+      {
+        "latitude": 35.3702,
+        "longitude": 135.12392
+      },
+      {
+        "latitude": 35.37019,
+        "longitude": 135.12376
+      },
+      {
+        "latitude": 35.37018,
+        "longitude": 135.12355
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12347
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12311
+      },
+      {
+        "latitude": 35.37019,
+        "longitude": 135.12251
+      },
+      {
+        "latitude": 35.37018,
+        "longitude": 135.12221
+      },
+      {
+        "latitude": 35.37017,
+        "longitude": 135.12201
+      },
+      {
+        "latitude": 35.37013,
+        "longitude": 135.12155
+      },
+      {
+        "latitude": 35.37009,
+        "longitude": 135.12127
+      },
+      {
+        "latitude": 35.36999,
+        "longitude": 135.12095
+      },
+      {
+        "latitude": 35.36986,
+        "longitude": 135.12056
+      },
+      {
+        "latitude": 35.36971,
+        "longitude": 135.12021
+      },
+      {
+        "latitude": 35.36958,
+        "longitude": 135.11999
+      },
+      {
+        "latitude": 35.36943,
+        "longitude": 135.11975
+      },
+      {
+        "latitude": 35.36926,
+        "longitude": 135.11949
+      },
+      {
+        "latitude": 35.36893,
+        "longitude": 135.11901
+      },
+      {
+        "latitude": 35.36858,
+        "longitude": 135.11852
+      },
+      {
+        "latitude": 35.36827,
+        "longitude": 135.11808
+      },
+      {
+        "latitude": 35.36796,
+        "longitude": 135.11764
+      },
+      {
+        "latitude": 35.3676,
+        "longitude": 135.11712
+      },
+      {
+        "latitude": 35.36721,
+        "longitude": 135.11655
+      },
+      {
+        "latitude": 35.36698,
+        "longitude": 135.11619
+      },
+      {
+        "latitude": 35.36636,
+        "longitude": 135.11539
+      },
+      {
+        "latitude": 35.36601,
+        "longitude": 135.11502
+      },
+      {
+        "latitude": 35.36565,
+        "longitude": 135.11471
+      },
+      {
+        "latitude": 35.36526,
+        "longitude": 135.11441
+      },
+      {
+        "latitude": 35.36503,
+        "longitude": 135.11425
+      },
+      {
+        "latitude": 35.36492,
+        "longitude": 135.11416
+      },
+      {
+        "latitude": 35.36452,
+        "longitude": 135.11394
+      },
+      {
+        "latitude": 35.36423,
+        "longitude": 135.11381
+      },
+      {
+        "latitude": 35.36395,
+        "longitude": 135.11368
+      },
+      {
+        "latitude": 35.36359,
+        "longitude": 135.11351
+      },
+      {
+        "latitude": 35.36323,
+        "longitude": 135.11335
+      },
+      {
+        "latitude": 35.36297,
+        "longitude": 135.11319
+      },
+      {
+        "latitude": 35.3627,
+        "longitude": 135.11308
+      },
+      {
+        "latitude": 35.36196,
+        "longitude": 135.11275
+      },
+      {
+        "latitude": 35.36151,
+        "longitude": 135.11255
+      },
+      {
+        "latitude": 35.36115,
+        "longitude": 135.11237
+      },
+      {
+        "latitude": 35.36073,
+        "longitude": 135.11218
+      },
+      {
+        "latitude": 35.36023,
+        "longitude": 135.11195
+      },
+      {
+        "latitude": 35.35976,
+        "longitude": 135.11174
+      },
+      {
+        "latitude": 35.35963,
+        "longitude": 135.11169
+      },
+      {
+        "latitude": 35.359304,
+        "longitude": 135.111552
+      }
+    ],
+    "toName": "下天津",
+    "toStationID": "004948"
+  },
+  "rawN02SourcePath": "app/data/rail-sections.json",
+  "features": [
+    {
+      "featureIndex": 19846,
+      "feature": {
+        "type": "Feature",
+        "properties": {
+          "N02_001": "12",
+          "N02_002": "5",
+          "N02_003": "宮福線",
+          "N02_004": "WILLER　TRAINS"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              135.12961,
+              35.37207
+            ],
+            [
+              135.1289,
+              35.37167
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "featureIndex": 19849,
+      "feature": {
+        "type": "Feature",
+        "properties": {
+          "N02_001": "12",
+          "N02_002": "5",
+          "N02_003": "宮福線",
+          "N02_004": "WILLER　TRAINS"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              135.11169,
+              35.35963
+            ],
+            [
+              135.11174,
+              35.35976
+            ],
+            [
+              135.11195,
+              35.36023
+            ],
+            [
+              135.11218,
+              35.36073
+            ],
+            [
+              135.11237,
+              35.36115
+            ],
+            [
+              135.11255,
+              35.36151
+            ],
+            [
+              135.11275,
+              35.36196
+            ],
+            [
+              135.11308,
+              35.3627
+            ],
+            [
+              135.11319,
+              35.36297
+            ],
+            [
+              135.11335,
+              35.36323
+            ],
+            [
+              135.11351,
+              35.36359
+            ],
+            [
+              135.11368,
+              35.36395
+            ],
+            [
+              135.11381,
+              35.36423
+            ],
+            [
+              135.11394,
+              35.36452
+            ],
+            [
+              135.11416,
+              35.36492
+            ],
+            [
+              135.11425,
+              35.36503
+            ],
+            [
+              135.11441,
+              35.36526
+            ],
+            [
+              135.11471,
+              35.36565
+            ],
+            [
+              135.11502,
+              35.36601
+            ],
+            [
+              135.11539,
+              35.36636
+            ],
+            [
+              135.11619,
+              35.36698
+            ],
+            [
+              135.11655,
+              35.36721
+            ],
+            [
+              135.11712,
+              35.3676
+            ],
+            [
+              135.11764,
+              35.36796
+            ],
+            [
+              135.11808,
+              35.36827
+            ],
+            [
+              135.11852,
+              35.36858
+            ],
+            [
+              135.11901,
+              35.36893
+            ],
+            [
+              135.11949,
+              35.36926
+            ],
+            [
+              135.11975,
+              35.36943
+            ],
+            [
+              135.11999,
+              35.36958
+            ],
+            [
+              135.12021,
+              35.36971
+            ],
+            [
+              135.12056,
+              35.36986
+            ],
+            [
+              135.12095,
+              35.36999
+            ],
+            [
+              135.12127,
+              35.37009
+            ],
+            [
+              135.12155,
+              35.37013
+            ],
+            [
+              135.12201,
+              35.37017
+            ],
+            [
+              135.12221,
+              35.37018
+            ],
+            [
+              135.12251,
+              35.37019
+            ],
+            [
+              135.12311,
+              35.37017
+            ],
+            [
+              135.12347,
+              35.37017
+            ],
+            [
+              135.12355,
+              35.37018
+            ],
+            [
+              135.12376,
+              35.37019
+            ],
+            [
+              135.12392,
+              35.3702
+            ],
+            [
+              135.12438,
+              35.37022
+            ],
+            [
+              135.12455,
+              35.37023
+            ],
+            [
+              135.12494,
+              35.37027
+            ],
+            [
+              135.12517,
+              35.37029
+            ],
+            [
+              135.12564,
+              35.37037
+            ],
+            [
+              135.12602,
+              35.37048
+            ],
+            [
+              135.12665,
+              35.37067
+            ],
+            [
+              135.12726,
+              35.37089
+            ],
+            [
+              135.12774,
+              35.3711
+            ],
+            [
+              135.12813,
+              35.37127
+            ],
+            [
+              135.1289,
+              35.37167
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "interpretation": "Feature19846 is Gujo station source segment;19849 is exact own interstation raw segment, reverse orientation relative to current display. Station coordinates remain canonical."
+}

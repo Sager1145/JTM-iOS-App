@@ -1,0 +1,763 @@
+{
+  "schema": "cn-three-connectors-result-review/1",
+  "rows": 176,
+  "phase": "completed",
+  "completedAt": "2026-10-19T07:44:15Z",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "fallbackGraphCacheMaximumNodes": "not-applicable",
+    "fallbackGraphCacheMode": "standard",
+    "journeyInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+    "rail/cn": "cn:cdd58c633a33a8f246de14ae638895f1b7b4bc5c865ce5fdb6529351c7a6af23"
+  },
+  "comparisonKey": "case id plus mode; native row id already includes mode",
+  "originalGeometryAndReturnCountsUnchanged": true,
+  "deltas": [
+    {
+      "id": "CN-REAL-G101-20261018-forced-known-stops",
+      "train": "G101",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 3,
+        "returnedGeometrySections": 3,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 3,
+        "returnedGeometrySections": 4,
+        "physicalGapEntries": 1
+      },
+      "addedGeometrySections": [
+        {
+          "index": 0,
+          "from": "北京朝阳",
+          "to": "沈阳北"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "沈阳北",
+          "isBoundary": true,
+          "sectionIndex": 1,
+          "to": "长春西"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-G6045-20261018-forced-known-stops",
+      "train": "G6045",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 10,
+        "returnedGeometrySections": 10,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 10,
+        "returnedGeometrySections": 11,
+        "physicalGapEntries": 1
+      },
+      "addedGeometrySections": [
+        {
+          "index": 4,
+          "from": "广州南",
+          "to": "江门"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "广州南",
+          "isBoundary": true,
+          "sectionIndex": 4,
+          "to": "江门"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-D271-20261018-forced-known-stops",
+      "train": "D271",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 6,
+        "returnedGeometrySections": 6,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": false,
+        "resolvedSections": 7,
+        "returnedGeometrySections": 7,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 10,
+          "from": "昆明",
+          "to": "昆明南"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": [
+        {
+          "from": "成都南",
+          "isBoundary": false,
+          "sectionIndex": 0,
+          "to": "彭山"
+        },
+        {
+          "from": "彭山",
+          "isBoundary": false,
+          "sectionIndex": 1,
+          "to": "西昌西"
+        },
+        {
+          "from": "西昌西",
+          "isBoundary": false,
+          "sectionIndex": 2,
+          "to": "德昌西"
+        },
+        {
+          "from": "德昌西",
+          "isBoundary": false,
+          "sectionIndex": 3,
+          "to": "米易东"
+        },
+        {
+          "from": "米易东",
+          "isBoundary": false,
+          "sectionIndex": 4,
+          "to": "盐边"
+        },
+        {
+          "from": "盐边",
+          "isBoundary": false,
+          "sectionIndex": 5,
+          "to": "攀枝花南"
+        },
+        {
+          "from": "元谋西",
+          "isBoundary": false,
+          "sectionIndex": 7,
+          "to": "广通北"
+        }
+      ]
+    },
+    {
+      "id": "CN-REAL-C293-20261018-endpoint-only",
+      "train": "C293",
+      "mode": "endpoint-only",
+      "before": {
+        "complete": false,
+        "resolvedSections": 0,
+        "returnedGeometrySections": 0,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": true,
+        "resolvedSections": 1,
+        "returnedGeometrySections": 1,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 0,
+          "from": "昆明",
+          "to": "西双版纳"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": []
+    },
+    {
+      "id": "CN-REAL-C293-20261018-forced-known-stops",
+      "train": "C293",
+      "mode": "forced-known-stops",
+      "before": {
+        "complete": false,
+        "resolvedSections": 4,
+        "returnedGeometrySections": 4,
+        "physicalGapEntries": 0
+      },
+      "after": {
+        "complete": true,
+        "resolvedSections": 5,
+        "returnedGeometrySections": 5,
+        "physicalGapEntries": 0
+      },
+      "addedGeometrySections": [
+        {
+          "index": 0,
+          "from": "昆明",
+          "to": "昆明南"
+        }
+      ],
+      "removedGeometrySections": [],
+      "remainingUnresolved": []
+    }
+  ],
+  "lostRequestedGeometrySections": [],
+  "existingNativePartsWithIdenticalCoordinates": 551,
+  "existingNativePartsWithChangedCoordinates": [],
+  "findingCounts": [
+    {
+      "severity": "review",
+      "code": "physical_intervals_unproven",
+      "count": 477
+    },
+    {
+      "severity": "review",
+      "code": "route_unavailable",
+      "count": 85
+    },
+    {
+      "severity": "review",
+      "code": "route_partial",
+      "count": 63
+    },
+    {
+      "severity": "review",
+      "code": "physical_intervals_unavailable",
+      "count": 79
+    }
+  ],
+  "structuralFailures": 0,
+  "remainingReviewEntries": 704,
+  "selectedDistinctLineIDs": [
+    "cn-guangshengan-hsr",
+    "cn-osm-relation-1022200",
+    "cn-osm-relation-1043244-branch-10",
+    "cn-osm-relation-1043244-branch-11",
+    "cn-osm-relation-1043244-branch-12",
+    "cn-osm-relation-1043244-branch-16",
+    "cn-osm-relation-10627959",
+    "cn-osm-relation-10694395",
+    "cn-osm-relation-10694395-branch-20",
+    "cn-osm-relation-10884548",
+    "cn-osm-relation-11325371",
+    "cn-osm-relation-11350134",
+    "cn-osm-relation-11376068",
+    "cn-osm-relation-11377383",
+    "cn-osm-relation-11584670",
+    "cn-osm-relation-11589056-branch-19",
+    "cn-osm-relation-11589056-branch-2",
+    "cn-osm-relation-11597839",
+    "cn-osm-relation-11631593",
+    "cn-osm-relation-11672654",
+    "cn-osm-relation-11827616",
+    "cn-osm-relation-11846938",
+    "cn-osm-relation-11897482",
+    "cn-osm-relation-12265072-branch-11",
+    "cn-osm-relation-12265072-branch-27",
+    "cn-osm-relation-12265072-branch-28",
+    "cn-osm-relation-12265072-branch-29",
+    "cn-osm-relation-12265072-branch-32",
+    "cn-osm-relation-12265072-branch-39",
+    "cn-osm-relation-12265072-branch-8",
+    "cn-osm-relation-12301259",
+    "cn-osm-relation-12939686",
+    "cn-osm-relation-12939686-branch-10",
+    "cn-osm-relation-12939686-branch-11",
+    "cn-osm-relation-12939686-branch-12",
+    "cn-osm-relation-12939686-branch-2",
+    "cn-osm-relation-12939686-branch-3",
+    "cn-osm-relation-12939686-branch-4",
+    "cn-osm-relation-12939686-branch-5",
+    "cn-osm-relation-12939686-branch-6",
+    "cn-osm-relation-12939686-branch-7",
+    "cn-osm-relation-12939686-branch-8",
+    "cn-osm-relation-12939686-branch-9",
+    "cn-osm-relation-13342028",
+    "cn-osm-relation-13345565-branch-2",
+    "cn-osm-relation-13345566",
+    "cn-osm-relation-13460161",
+    "cn-osm-relation-13471015",
+    "cn-osm-relation-14566947",
+    "cn-osm-relation-152884",
+    "cn-osm-relation-15786510",
+    "cn-osm-relation-162982-branch-5",
+    "cn-osm-relation-162982-branch-7",
+    "cn-osm-relation-163022-branch-29",
+    "cn-osm-relation-16339140",
+    "cn-osm-relation-163712-branch-33",
+    "cn-osm-relation-17857656",
+    "cn-osm-relation-1912130-branch-10",
+    "cn-osm-relation-1912130-branch-11",
+    "cn-osm-relation-1912130-branch-28",
+    "cn-osm-relation-1925853",
+    "cn-osm-relation-1925853-branch-4",
+    "cn-osm-relation-193064-branch-26",
+    "cn-osm-relation-193064-branch-34",
+    "cn-osm-relation-198494",
+    "cn-osm-relation-20275043",
+    "cn-osm-relation-2067465",
+    "cn-osm-relation-2067465-branch-2",
+    "cn-osm-relation-2101041",
+    "cn-osm-relation-2237862",
+    "cn-osm-relation-3066901",
+    "cn-osm-relation-3070103",
+    "cn-osm-relation-3184780",
+    "cn-osm-relation-3189831",
+    "cn-osm-relation-3246605",
+    "cn-osm-relation-3420812",
+    "cn-osm-relation-3431754",
+    "cn-osm-relation-356778",
+    "cn-osm-relation-4638419",
+    "cn-osm-relation-5456788",
+    "cn-osm-relation-6651966",
+    "cn-osm-relation-6651966-branch-3",
+    "cn-osm-relation-6824013",
+    "cn-osm-relation-7742408",
+    "cn-osm-relation-7945163",
+    "cn-osm-relation-7963957",
+    "cn-osm-relation-8211195",
+    "cn-osm-relation-8291993",
+    "cn-osm-relation-8347482",
+    "cn-osm-relation-8381929",
+    "cn-osm-relation-8397433",
+    "cn-osm-relation-8415510",
+    "cn-osm-relation-8768448"
+  ],
+  "selectedLineKinds": {
+    "conventional": 38,
+    "highspeed": 55
+  },
+  "fullUniqueSummary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 73,
+        "cases": 86,
+        "resolvedSections": 73,
+        "resolvedSectionsKnownSubtotal": 73,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 73,
+        "returnedGeometrySectionsKnownSubtotal": 73,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 73,
+        "referencedStopObservations": 831,
+        "unreferencedStopObservations": 122,
+        "completeCasesWithStopOver2Km": 44
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 86,
+        "resolvedSections": 14,
+        "resolvedSectionsKnownSubtotal": 14,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 14,
+        "returnedGeometrySectionsKnownSubtotal": 14,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 47,
+        "cases": 86,
+        "resolvedSections": 717,
+        "resolvedSectionsKnownSubtotal": 717,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 717,
+        "returnedGeometrySectionsKnownSubtotal": 717,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 47,
+        "referencedStopObservations": 449,
+        "unreferencedStopObservations": 35,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 86,
+        "resolvedSections": 483,
+        "resolvedSectionsKnownSubtotal": 483,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 525,
+        "returnedGeometrySectionsKnownSubtotal": 525,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 42,
+        "physicalGapEntriesKnownSubtotal": 42,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "all88Summary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 75,
+        "cases": 88,
+        "resolvedSections": 75,
+        "resolvedSectionsKnownSubtotal": 75,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 75,
+        "returnedGeometrySectionsKnownSubtotal": 75,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 75,
+        "referencedStopObservations": 868,
+        "unreferencedStopObservations": 126,
+        "completeCasesWithStopOver2Km": 46
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 88,
+        "resolvedSections": 14,
+        "resolvedSectionsKnownSubtotal": 14,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 14,
+        "returnedGeometrySectionsKnownSubtotal": 14,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 49,
+        "cases": 88,
+        "resolvedSections": 756,
+        "resolvedSectionsKnownSubtotal": 756,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 756,
+        "returnedGeometrySectionsKnownSubtotal": 756,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 49,
+        "referencedStopObservations": 486,
+        "unreferencedStopObservations": 39,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 88,
+        "resolvedSections": 499,
+        "resolvedSectionsKnownSubtotal": 499,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 542,
+        "returnedGeometrySectionsKnownSubtotal": 542,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 43,
+        "physicalGapEntriesKnownSubtotal": 43,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "limits": "Some parts have no physicalSelection; matchedGeometry is not proof of unique actual track assignment.",
+  "displayMetadataWithdrawals": [
+    {
+      "id": "CN-REAL-D954-20261018-forced-known-stops",
+      "sectionIndex": 7,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-CZH",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 81.19275335989121,
+            "lineID": "cn-osm-relation-1022200",
+            "name": "沪宁城际线",
+            "operatorName": "中国铁路"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-SZH"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-C881-20261018-forced-known-stops",
+      "sectionIndex": 2,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-JIO",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 50.973855035332896,
+            "lineID": "cn-osm-relation-12149467",
+            "name": "川藏铁路",
+            "operatorName": "中国铁路"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-LIO"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-C881-20261018-forced-known-stops",
+      "sectionIndex": 3,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-LIO",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 126.63865451934075,
+            "lineID": "cn-osm-relation-12149467",
+            "name": "川藏铁路",
+            "operatorName": "中国铁路"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-MIO"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-C6132-20261018-forced-known-stops",
+      "sectionIndex": 0,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-YAE",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 41.15601641679979,
+            "lineID": "cn-osm-relation-11350134",
+            "name": "成雅线",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-CYE"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-Z166-20261018-forced-known-stops",
+      "sectionIndex": 11,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-WXH",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 42.718383602868336,
+            "lineID": "cn-osm-relation-1022200",
+            "name": "沪宁城际线",
+            "operatorName": "中国铁路"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-12306-SZH"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5619-20261018-forced-known-stops",
+      "sectionIndex": 14,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N2092190000",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 7.01258447393837,
+            "lineID": "cn-osm-relation-12939686-branch-11",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N10651628398"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5619-20261018-forced-known-stops",
+      "sectionIndex": 16,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N2092189953",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 8.112148580527064,
+            "lineID": "cn-osm-relation-12939686-branch-9",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N2092190042"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5620-20261018-forced-known-stops",
+      "sectionIndex": 0,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-12306-POW",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 6.642612650793057,
+            "lineID": "cn-osm-relation-12939686",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N2092189988"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5620-20261018-forced-known-stops",
+      "sectionIndex": 3,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N2092190100",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 7.637795385857544,
+            "lineID": "cn-osm-relation-12939686-branch-4",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N2092190162"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5620-20261018-forced-known-stops",
+      "sectionIndex": 4,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N2092190162",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 0.8907355724667987,
+            "lineID": "cn-osm-relation-12939686-branch-5",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N2092189940"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5620-20261018-forced-known-stops",
+      "sectionIndex": 5,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N2092189940",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 6.381659628430045,
+            "lineID": "cn-osm-relation-12939686-branch-6",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N2092189933"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    },
+    {
+      "id": "CN-REAL-5620-20261018-forced-known-stops",
+      "sectionIndex": 18,
+      "partIndex": 0,
+      "before": {
+        "fromStationCode": "CN-OSM-N3328325346",
+        "intervals": [],
+        "lines": [
+          {
+            "km": 6.642192305356139,
+            "lineID": "cn-osm-relation-12939686-branch-12",
+            "name": "5619列车",
+            "operatorName": "中国铁路成都局集团"
+          }
+        ],
+        "provenance": "matchedGeometry",
+        "toStationCode": "CN-OSM-N1588514366"
+      },
+      "after": null,
+      "sourceCoordinatesUnchanged": true
+    }
+  ],
+  "incorrectMetroSelections": 0,
+  "independentOutputReview": {
+    "allSixOriginalSequencesPresent": true,
+    "Kunming": "C293 forced0 and D271 forced10:243 vertices at offset1,49 at244",
+    "JingShen": "G101 forced0:17 vertices at1168,24 at1185",
+    "Jiangmen": "G6045 forced4:25 vertices at320,20 at380",
+    "oldSourcePartsPreserved": 551,
+    "lostParts": 0,
+    "remainingTargetBoundaries": {
+      "G101": "SBT segment1",
+      "G6045": "GZS segment4"
+    },
+    "limits": "Original-source trace, not unique actual movement or measured pixel evidence."
+  }
+}

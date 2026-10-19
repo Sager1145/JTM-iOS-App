@@ -1,0 +1,36 @@
+{
+  "status": "source-direction-preparation-only",
+  "wakaisharedOutgoingPrefixPoints": 61,
+  "wakaiLastCommonSupport": [
+    133.09589,
+    33.15744
+  ],
+  "wakaiFirstYodoSupport": [
+    133.09548,
+    33.15723
+  ],
+  "wakaiFirstNakamuraSupport": [
+    133.09557,
+    33.15732
+  ],
+  "kitauwasharedIncomingTailPoints": 3,
+  "kitaLastPoint": [
+    132.569715,
+    33.23924
+  ],
+  "kitaYosanContinuation": [
+    [
+      132.569715,
+      33.23924
+    ],
+    [
+      132.56975,
+      33.2389
+    ],
+    [
+      132.56991,
+      33.23766
+    ]
+  ],
+  "warnings": "literal shared supports identify scope; no route movement or Apple alignment acceptance inferred"
+}

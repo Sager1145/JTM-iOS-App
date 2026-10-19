@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/candidate-tasks.json",
+  "capturedCount" : 14,
+  "captureIndexPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "e5597f168830a1d22866fa49400ea21441d9d37de6285a11a32899bdcd6da16a",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/alignment",
+    "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東急電鉄-田園都市線#3"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "14\/14 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "denentoshi-own-curve-3-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:17:30Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

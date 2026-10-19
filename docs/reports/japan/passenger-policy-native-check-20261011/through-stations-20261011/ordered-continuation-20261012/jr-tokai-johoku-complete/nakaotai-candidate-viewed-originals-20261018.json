@@ -1,0 +1,33 @@
+{
+  "reviewer": "parent",
+  "actualViewedOriginals": [
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000000/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000000/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000001/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000001/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000002/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000002/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000003/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000003/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000004/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000004/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000005/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000005/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000006/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000006/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000007/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000007/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000008/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000008/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000009/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000009/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000010/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000010/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000011/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000011/smooth.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000012/basemap.png",
+    "/private/tmp/jtm-johoku-nakaotai-native-20261018/alignment/captures/000000/000012/smooth.png"
+  ],
+  "count": 26,
+  "scope": "interval1 all13 views; narrow decoded26..33 display repair only"
+}

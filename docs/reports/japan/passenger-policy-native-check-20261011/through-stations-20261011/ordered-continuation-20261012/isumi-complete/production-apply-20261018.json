@@ -1,0 +1,13 @@
+{
+  "mode": "applied",
+  "lineID": "jp-いすみ鉄道-いすみ線",
+  "intervalIndex": 10,
+  "decodedControls": 49,
+  "interfacePoints": 592,
+  "interfaceMetres": 26937.3,
+  "strokeExclusionPreserved": "substitute_bus",
+  "physicalTopologyChanged": false,
+  "nativeCandidateReviewedPairs": 8,
+  "main": "build succeeded; non-continuous interval chunk present; pixels pending",
+  "continuousStrokeParts": 0
+}

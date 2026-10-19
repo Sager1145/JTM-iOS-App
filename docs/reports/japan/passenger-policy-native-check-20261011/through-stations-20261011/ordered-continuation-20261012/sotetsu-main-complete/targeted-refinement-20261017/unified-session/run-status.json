@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "A0BB214A-04BD-4BA3-A27D-1AF5F9450044",
+  "message" : "42\/42 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "ordered-32-sotetsu-targeted-z19-20261017",
+  "resultPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/sotetsu-main-complete\/targeted-refinement-20261017\/unified-session\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:22:25Z"
+}

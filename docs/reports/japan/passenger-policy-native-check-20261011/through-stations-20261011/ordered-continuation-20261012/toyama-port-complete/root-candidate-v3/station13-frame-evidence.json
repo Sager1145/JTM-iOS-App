@@ -1,0 +1,32 @@
+{
+  "stationID": "001843",
+  "source": "station-details/13-keirin-cartography-before-z19",
+  "fullPassengerFrameCaps": [
+    [
+      519.5,
+      239.0
+    ],
+    [
+      460.0,
+      365.0
+    ]
+  ],
+  "midpointPixel": [
+    489.75,
+    302.0
+  ],
+  "ownRailProjectedPixel": [
+    474.85980519693805,
+    294.5262007237252
+  ],
+  "before": [
+    137.23389103860194,
+    36.757561611852445
+  ],
+  "after": [
+    137.23387890984742,
+    36.757542592228255
+  ],
+  "reason": "V2 chose shorter west platform fragment; use complete east frame cap-to-cap midpoint normal projected to own rail.",
+  "limits": "Manual cartographic frame, not surveyed platform position; raw automated candidate remains unresolved."
+}

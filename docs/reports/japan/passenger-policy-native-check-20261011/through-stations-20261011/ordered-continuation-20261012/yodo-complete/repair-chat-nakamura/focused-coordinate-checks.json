@@ -1,0 +1,205 @@
+{
+  "status": "PASS-for-listed-coordinate-invariants-only",
+  "boundariesAndForks": {
+    "Wakai-Naka0-Naka1": {
+      "coordinates": [
+        [
+          133.1059342417335,
+          33.18812131919491
+        ],
+        [
+          133.10591991458483,
+          33.188092451537244
+        ],
+        [
+          133.10585377546056,
+          33.1879866382192
+        ]
+      ],
+      "dotProductMapPointsSquared": 2951.8031038720374,
+      "forward": true,
+      "turnDegrees": 5.0584665771529265
+    },
+    "Wakai-Naka0-Yodo0": {
+      "coordinates": [
+        [
+          133.1059342417335,
+          33.18812131919491
+        ],
+        [
+          133.10591991458483,
+          33.188092451537244
+        ],
+        [
+          133.10585377546056,
+          33.1879866382192
+        ]
+      ],
+      "dotProductMapPointsSquared": 2951.8031038720374,
+      "forward": true,
+      "turnDegrees": 5.0584665771529265
+    },
+    "Kaina-Naka1-Naka2": {
+      "coordinates": [
+        [
+          133.1161692417337,
+          33.13310636709176
+        ],
+        [
+          133.11620790669843,
+          33.13299655596097
+        ],
+        [
+          133.11623361475006,
+          33.132926679711176
+        ]
+      ],
+      "dotProductMapPointsSquared": 6636.544798307308,
+      "forward": true,
+      "turnDegrees": 0.6951100022967567
+    },
+    "Iyoki-Naka2-Naka3": {
+      "coordinates": [
+        [
+          133.09833836441555,
+          33.10477083796403
+        ],
+        [
+          133.0983224428835,
+          33.10458511013298
+        ],
+        [
+          133.09831529741808,
+          33.10441134687385
+        ]
+      ],
+      "dotProductMapPointsSquared": 25634.89567010887,
+      "forward": true,
+      "turnDegrees": 2.134466359634472
+    },
+    "Kawaoku-shared-NakaLoop": {
+      "coordinates": [
+        [
+          133.09382413731134,
+          33.15680843932611
+        ],
+        [
+          133.09360956059015,
+          33.15674556577149
+        ],
+        [
+          133.09254934244711,
+          33.15667388719591
+        ]
+      ],
+      "dotProductMapPointsSquared": 130064.12450671196,
+      "forward": true,
+      "turnDegrees": 14.673070075669084
+    },
+    "Kawaoku-shared-YodoWest": {
+      "coordinates": [
+        [
+          133.09382413731134,
+          33.15680843932611
+        ],
+        [
+          133.09360956059015,
+          33.15674556577149
+        ],
+        [
+          133.09357737408197,
+          33.15673658383143
+        ]
+      ],
+      "dotProductMapPointsSquared": 4288.0,
+      "forward": true,
+      "turnDegrees": 0.8550973962666929
+    }
+  },
+  "WakaiExactSharedPrefixPoints": 146,
+  "Naka1ExactUnchangedFromV4": true,
+  "Naka0LastSevenExactUnchanged": true,
+  "allIntervalsFiniteValidLonLat": true,
+  "counts": [
+    164,
+    360,
+    161,
+    63
+  ],
+  "turnLimits": [
+    {
+      "intervalIndex": 0,
+      "count": 164,
+      "start": [
+        133.137325,
+        33.212675
+      ],
+      "end": [
+        133.10591991458483,
+        33.188092451537244
+      ],
+      "maximumTurn": {
+        "index": 74,
+        "degrees": 17.592424562181588
+      },
+      "turnsAbove30": [],
+      "minimumEdgeMapPoints": 27.85130481493358
+    },
+    {
+      "intervalIndex": 1,
+      "count": 360,
+      "start": [
+        133.10591991458483,
+        33.188092451537244
+      ],
+      "end": [
+        133.11620790669843,
+        33.13299655596097
+      ],
+      "maximumTurn": {
+        "index": 145,
+        "degrees": 14.673070075669084
+      },
+      "turnsAbove30": [],
+      "minimumEdgeMapPoints": 101.94159541306287
+    },
+    {
+      "intervalIndex": 2,
+      "count": 161,
+      "start": [
+        133.11620790669843,
+        33.13299655596097
+      ],
+      "end": [
+        133.0983224428835,
+        33.10458511013298
+      ],
+      "maximumTurn": {
+        "index": 27,
+        "degrees": 23.49856567595208
+      },
+      "turnsAbove30": [],
+      "minimumEdgeMapPoints": 65.10623263578368
+    },
+    {
+      "intervalIndex": 3,
+      "count": 63,
+      "start": [
+        133.0983224428835,
+        33.10458511013298
+      ],
+      "end": [
+        133.101395,
+        33.081189
+      ],
+      "maximumTurn": {
+        "index": 61,
+        "degrees": 19.25842225296968
+      },
+      "turnsAbove30": [],
+      "minimumEdgeMapPoints": 120.04265899527873
+    }
+  ],
+  "physicalEdits": false,
+  "nativeAcceptance": false
+}

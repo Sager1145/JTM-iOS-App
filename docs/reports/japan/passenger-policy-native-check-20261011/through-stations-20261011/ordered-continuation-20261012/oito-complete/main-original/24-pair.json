@@ -1,0 +1,70 @@
+{
+  "caseIndex": 24,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 24,
+  "source": {
+    "caseIndex": 24,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 24,
+    "fromStationID": "002428",
+    "toStationID": "002442",
+    "camera": [
+      36.295505000000006,
+      137.902235,
+      0.02085930000000637
+    ],
+    "effectiveCoordinates": [
+      [
+        137.90094,
+        36.30002
+      ],
+      [
+        137.90132,
+        36.29944
+      ],
+      [
+        137.9027,
+        36.2972
+      ],
+      [
+        137.90298,
+        36.29664
+      ],
+      [
+        137.90322,
+        36.29609
+      ],
+      [
+        137.90348,
+        36.29499
+      ],
+      [
+        137.90351,
+        36.29457
+      ],
+      [
+        137.90353,
+        36.29385
+      ],
+      [
+        137.9035,
+        36.29159
+      ],
+      [
+        137.90349,
+        36.29099
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:15.43;lod:14.29;backbones:0;networkStations:2;distance:4578.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.295505;centerLon:137.902235;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3878.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.295505;centerLon:137.902235;distance:4578.7;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-24.jpg",
+  "observation": "Toyoshina to Minami-Toyoshina curve/straight continuous. One live Main camera drift blocked capture, restarted planned camera before accepted pair. Own frames unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

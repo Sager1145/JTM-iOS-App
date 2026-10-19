@@ -1,0 +1,97 @@
+{
+  "queueOrdinal": 78,
+  "lineID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線",
+  "reviewedAt": "2026-10-19",
+  "scope": "Complete own single interval 体験坑道→青函トンネル記念館; historical original basemap/smooth review only.",
+  "existingEvidencePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/seikan-tappi-cable-complete/existing-evidence-20261019.json",
+  "counts": {
+    "pairsActuallyViewed": 2,
+    "originalPNGsActuallyViewed": 4,
+    "plannedOwnPairs": 2,
+    "ownPairsUnviewed": 0
+  },
+  "currentInputIdentity": "Prior scoped source/display/station-ID and recorded receipt-size preparation reused; no repeat source audit or hash recomputation.",
+  "observedGeometry": "Independent straight short red stroke west of separate labelled Hokkaido Shinkansen blue line; no isolated V, foldback, terminal hook or detached cap.",
+  "ownRailPositionVerdict": "Unresolved: no independent own inclined cable railway geometry/usable platform caps visible in standard-map originals.",
+  "geometryCandidate": null,
+  "endpointCoordinateCandidate": null,
+  "noNeighborReference": "The nearby Hokkaido Shinkansen/Seikan main railway tunnel is a separate railway, not an own cable alignment control.",
+  "views": [
+    {
+      "viewpointID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0#point-0",
+      "itemID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000000/view.json",
+      "timestamp": "2026-10-11T04:55:39Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 41.2565,
+        "longitude": 140.347638,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.8957232606780964,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238864415.90292478,
+        "rectY": 100386448.71908545,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "08491f5d0d3bf77fe39e93fe39c2e4340defaac83337dcc13a902029c3751709",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "体験坑道 endpoint viewport: red is an independent short north-northeast/south-southwest stroke west of the separately labelled Hokkaido Shinkansen blue line. No isolated V, foldback or hook. Own inclined cable railway is not independently drawn with usable track/platform detail in this standard map; underground position and full endpoint caps remain unresolved."
+    },
+    {
+      "viewpointID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0#point-1",
+      "itemID": "jp-一般財団法人青函トンネル記念館-青函トンネル竜飛斜坑線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000415/000001/view.json",
+      "timestamp": "2026-10-11T04:55:39Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 41.254315,
+        "longitude": 140.347081,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.8957528849740399,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238864000.57362205,
+        "rectY": 100388615.92137975,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "08491f5d0d3bf77fe39e93fe39c2e4340defaac83337dcc13a902029c3751709",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "青函トンネル記念館 endpoint viewport: the same independent short straight red stroke remains west of the separate Hokkaido Shinkansen alignment and ends at the requested camera centre. No reversed tail or detached cap. Surface roads/building/green fill cannot identify underground cable tracks or full own boarding-platform ends; no endpoint/midpoint estimate."
+    }
+  ]
+}

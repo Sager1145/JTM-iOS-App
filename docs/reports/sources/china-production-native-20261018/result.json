@@ -1,0 +1,37 @@
+{
+  "action" : "solve",
+  "candidateTasksPath" : "\/private\/tmp\/railmap-cn-native-20261018\/session\/candidate-tasks.json",
+  "capturedCount" : 0,
+  "captureIndexPath" : null,
+  "captureSettings" : null,
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "journeyInputSHA256" : "530ce69f886be878c52f0c0a05a1c28be2730cd17c08083216dbd9b0aeaa213d",
+    "rail\/cn" : "cn:c0170419d1f8d81a53c75fdfb8d27587da48034f4a2e7fc25957f4373e5106a0"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/railmap-cn-native-20261018\/session\/route-report.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "CN-INTEGRATION-complete",
+    "CN-INTEGRATION-shenzhen-west-kowloon"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "批量处理结束。未确认和无可用路线的记录仍保留。 0 项失败 · 0 项待审阅。检查结果一致性与证据状态；实际线路及性能仍需对应观测。",
+  "packageInputPath" : null,
+  "packageInputSource" : null,
+  "pendingCount" : 0,
+  "requestID" : "cn-production-gsh-20261018",
+  "requestPath" : "\/private\/tmp\/railmap-cn-native-20261018\/session\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/railmap-cn-native-20261018\/session\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/railmap-cn-native-20261018\/session\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T20:16:53Z",
+  "verdict" : "pendingReview",
+  "workspace" : "route"
+}

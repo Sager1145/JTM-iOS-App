@@ -1,0 +1,162 @@
+{
+  "format": "jtm-proposal-manifest-v3",
+  "status": "proposal-only",
+  "files": [
+    {
+      "path": "candidate.geojson",
+      "sha256": "14eb31c4e556bd33dd622be7b1e773ae87bba73a99aecae2f16be0072b37a32d"
+    },
+    {
+      "path": "candidate.json",
+      "sha256": "117c17fa34359ea28943a479d005c9dfb653a0d6c8a3cad855c2af78a31be421"
+    },
+    {
+      "path": "controls.json",
+      "sha256": "d5bd10e0fe02c838dc9a76229b9126bed6212e2c5001c3874db3245aa3689091"
+    },
+    {
+      "path": "proposal.md",
+      "sha256": "a1323a62dadbdfe9fae6f4fb21671aaacb6e3a723810ca26003b4991803524ca"
+    },
+    {
+      "path": "reprojections/interval-16-view-000000.png",
+      "sha256": "d5ec7b89501c854409a24d18c4bd961f22a99d220dc3da5e2c9adcebb318a7bd"
+    },
+    {
+      "path": "reprojections/interval-16-view-000001.png",
+      "sha256": "669959c44058b6d575004566da7ab8a21401be420f6e322e6132427b2b9bb40a"
+    },
+    {
+      "path": "reprojections/interval-16-view-000002.png",
+      "sha256": "603f6a81810bd32a226bbb187a60aee0e2838fac6d7902f66810c4f4a5cf9917"
+    },
+    {
+      "path": "reprojections/interval-16-view-000003.png",
+      "sha256": "2f66ea9697af2bfc03ef96a9918faaebefb7ee09ea44394b894ce137911dfa27"
+    },
+    {
+      "path": "reprojections/interval-17-view-000000.png",
+      "sha256": "df3de135eea308b54b3907c598691f54c8232fc8222f2d74134f928fd778c44b"
+    },
+    {
+      "path": "reprojections/interval-17-view-000001.png",
+      "sha256": "a390e996f7bd1c5934d5aac74a600250a12949c56a518672703d48c322489654"
+    },
+    {
+      "path": "reprojections/interval-17-view-000002.png",
+      "sha256": "1e9de07e572ac2cfb027485696a906af25a96f213c9894a1139118beee377b18"
+    },
+    {
+      "path": "reprojections/interval-18-view-000000.png",
+      "sha256": "d95ef8edb98af56661e0b736f54109687b34762f101e72d76b04e0d9a6b53dfb"
+    },
+    {
+      "path": "reprojections/interval-18-view-000001.png",
+      "sha256": "bf1790f458c6f8335ab9552af76ef3cfb3537346007e9f64d12c38affd4c05ff"
+    },
+    {
+      "path": "reprojections/interval-18-view-000002.png",
+      "sha256": "9f32ad06140617c4d3083cd5a5efb094db6b0916b654a82fe29a0f722c53b582"
+    },
+    {
+      "path": "reprojections/interval-18-view-000003.png",
+      "sha256": "060e4e9dd110d2b5cadb69baba85393bf646002c6a0989bb53e3fa82ae47156f"
+    },
+    {
+      "path": "reprojections/interval-19-view-000000.png",
+      "sha256": "cdb53fc82727f83a75d0ed5a44709975091444d69f8fed8570d519f2205cee6a"
+    },
+    {
+      "path": "reprojections/interval-19-view-000001.png",
+      "sha256": "e5363f004078075b8497bc703c510cd897d88bb76e99ac6fcc999945998f0539"
+    },
+    {
+      "path": "reprojections/interval-19-view-000002.png",
+      "sha256": "f01a8b5ec3e500be37cf04bbcf7f693c916e2a2ed1b948ef685a8bcdafbb7cd1"
+    },
+    {
+      "path": "reprojections/interval-20-view-000000.png",
+      "sha256": "37249556e72264d8e08520b674503b55dd963a3c531709c2b04631f797a2285f"
+    },
+    {
+      "path": "reprojections/interval-20-view-000001.png",
+      "sha256": "7cf13b4bd6894c5c66c5fd1ea72154850060c1461a32ff1c58e3d4c27ad82cd4"
+    },
+    {
+      "path": "reprojections/interval-20-view-000002.png",
+      "sha256": "5401b40a432ead7da7dd5e27bbe34cbc846b39c338ad117c39303283b29e7b30"
+    },
+    {
+      "path": "z18-reprojection-receipt.json",
+      "sha256": "e0b0fcdb090e4ee5585ac351048f89fd85dc3de11569f231538da12b1d7e0130"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-0.png",
+      "sha256": "96be0741823284cb18d122a5b84d9fae31093e43776d01f77814b103e69094a4"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-1.png",
+      "sha256": "1279210741d6dee308b3693c51e658da10bfeb660f5da280db6055d210cb676b"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-2.png",
+      "sha256": "f942f7424cbcae1189944ff1bf08d4f36f46f2981245e731b021081551f2d828"
+    },
+    {
+      "path": "z18-reprojections/interval-16-view-3.png",
+      "sha256": "d4f562e1988ebf4c737f1d83b8d20a3311b968be3a9af879202a357d9f5ae2ff"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-0.png",
+      "sha256": "72014a61ff2ce458bc9ff270c0c4bac0f4f66fc604544a138266326a2c746817"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-1.png",
+      "sha256": "a3368069d28036435a4895ae476a5ad195c3b1e82db68ace96a725b4922062f2"
+    },
+    {
+      "path": "z18-reprojections/interval-17-view-2.png",
+      "sha256": "fd0431ee43bce7dc66669c0cd027764f8ba4beb9efc3a2363b29d9eab9a195f6"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-0.png",
+      "sha256": "ac241ad59097b6bfc7eeb2c34c4e80481b42bef20d05cab47a4fd9ef3fc2f7bb"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-1.png",
+      "sha256": "efb2939ebe15d05669bc5e383c4c6ef82cf7b39ff27d49b0b5fdb0213855d07c"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-2.png",
+      "sha256": "37d29e66a820e034c8ba3eab63c2ef9916d431558447bf0ce1aa67daf463ff18"
+    },
+    {
+      "path": "z18-reprojections/interval-18-view-3.png",
+      "sha256": "f351b705c717cbd64a7385fad90015af509e9571049ad45b10a45911815c1054"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-0.png",
+      "sha256": "f497b5375fbd8682e3ff523995a7cbf2a65469d93bb678580addfb5d5ab4a803"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-1.png",
+      "sha256": "ac3a05f1f7b3f8eeec97fcb1ac765709158092d8be10d78b0a7c63f066efcad3"
+    },
+    {
+      "path": "z18-reprojections/interval-19-view-2.png",
+      "sha256": "c6bc3e743f9671e94f4d2396a474e1bd636cc43dba458f1faa74b4ca992df4db"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-0.png",
+      "sha256": "20139519fe46a91ffaf0ec01db651280fd2a0e9cd5259643e77036650a559eb4"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-1.png",
+      "sha256": "c9c103422c271ee2482396b244f811f8e007ee954f923498b0ebfd2eb4829cd7"
+    },
+    {
+      "path": "z18-reprojections/interval-20-view-2.png",
+      "sha256": "3dfbecf98c12fb2f1914dee50b72461526792b109158c9e0baf2a77ea50084b0"
+    }
+  ]
+}

@@ -1,0 +1,398 @@
+{
+  "scope": "queue 67 Yurikamome missing intervals 0 and 1; original pixel review only",
+  "reviewedAt": "2026-10-19",
+  "lineID": "jp-ゆりかもめ-東京臨海新交通臨海線",
+  "packageVersion": "2025.5.2",
+  "captureIndexPath": "/private/tmp/jtm-yurikamome-missing-20261019/capture-index.json",
+  "resultPath": "/private/tmp/jtm-yurikamome-missing-20261019/result.json",
+  "session": {
+    "capturedCount": 8,
+    "failedCount": 0,
+    "pendingCount": 0,
+    "processID": 87042,
+    "state": "evidenceReady"
+  },
+  "counts": {
+    "newPairsActuallyViewed": 8,
+    "newOriginalPNGsActuallyViewed": 16,
+    "legacyPairsActuallyViewed": 0,
+    "legacyOriginalPNGsActuallyViewed": 0,
+    "otherLegacyPairsNotViewedHere": 58,
+    "interval4RainbowBridgeLoopPairsNotViewedHere": 13
+  },
+  "identityPlanPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/identity-plan-6c2a5a20311a4c275ba7440af2a614713bbf143e667f16d59a0fe90d43357611.json",
+  "currentRelevantIdentity": [
+    {
+      "intervalIndex": 0,
+      "decodedControlCount": 12,
+      "identityMatches": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "decodedControlCount": 45,
+      "identityMatches": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      }
+    }
+  ],
+  "rawN02Provenance": [
+    {
+      "intervalIndex": 0,
+      "featureIndex": 21004,
+      "direction": "reverse",
+      "rawCount": 10,
+      "rawOrientedIndices": [
+        0,
+        9
+      ],
+      "decodedIndices": [
+        1,
+        10
+      ],
+      "operator": "ゆりかもめ",
+      "line": "東京臨海新交通臨海線"
+    },
+    {
+      "intervalIndex": 1,
+      "featureIndex": 21011,
+      "direction": "reverse",
+      "rawCount": 43,
+      "rawOrientedIndices": [
+        0,
+        42
+      ],
+      "decodedIndices": [
+        1,
+        43
+      ],
+      "operator": "ゆりかもめ",
+      "line": "東京臨海新交通臨海線"
+    }
+  ],
+  "findings": {
+    "confirmedFalseCornerOrWrongLine": false,
+    "geometryCandidate": null,
+    "platformCentreCandidate": null,
+    "status": "preserve reviewed geometry; full own platform caps unresolved; no whole-line acceptance"
+  },
+  "views": [
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#0#point-0",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000000",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000000/view.json",
+      "timestamp": "2026-10-19T05:41:04Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.665397,
+        "longitude": 139.759754,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9670939968804995,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238423753.82066062,
+        "rectY": 105713717.50239138,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "新橋 east/southeast departure remains on the separate own diagonal corridor east of the JR multi-track group. The bend at Shiodomekita is rounded and has a corresponding own corridor; no isolated V or hook. The complete usable terminal platform caps are not established."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#0#point-1",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000001",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000001/view.json",
+      "timestamp": "2026-10-19T05:41:05Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.66312266118145,
+        "longitude": 139.7602079943579,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671211820210627,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238424092.34338972,
+        "rectY": 105715804.86213489,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "Own northeast-to-southwest curve and the diagonal 汐留 approach remain continuous. No transverse connector or transfer into the north–south JR group is visible. Own full platform caps are unresolved."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#0#point-2",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000002",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000000/000002/view.json",
+      "timestamp": "2026-10-19T05:41:05Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.662985,
+        "longitude": 139.760075,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671228274340257,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238423993.1756089,
+        "rectY": 105715931.20393836,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "汐留 endpoint viewport: diagonal own alignment continues into the south approach without a local hook or gap; nearby east–west tunnel and western JR group remain separate. Station-centre accuracy is not established."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#1#point-0",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000000",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000000/view.json",
+      "timestamp": "2026-10-19T05:41:06Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.662985,
+        "longitude": 139.760075,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671228274340257,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238423993.1756089,
+        "rectY": 105715931.20393836,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "Same camera as interval 0 point 2, separately opened original pair. Whole-own-line rendering is the same context; no extra geographic coverage claimed. Own south departure remains continuous."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#1#point-1",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000001",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000001/view.json",
+      "timestamp": "2026-10-19T05:41:06Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.66007449802694,
+        "longitude": 139.75890580256046,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671576142662895,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238423121.35880932,
+        "rectY": 105718602.33494061,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "汐留 south departure bends gradually toward the north–south own corridor east of JR, then turns east near Hamamatsucho. Real directional change is retained; no isolated false corner identified."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#1#point-2",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000002",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000002/view.json",
+      "timestamp": "2026-10-19T05:41:07Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.65753814511137,
+        "longitude": 139.75938731745273,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671879271533774,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238423480.4023362,
+        "rectY": 105720930.00896662,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "Compound curve leaves the north–south approach to the east, then bends southeast/south toward Takeshiba. Own thin corridor is distinct from the broad JR group west of it. No cut across JR or isolated V; small cartographic side differences do not establish a repair."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#1#point-3",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000003",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000003/view.json",
+      "timestamp": "2026-10-19T05:41:07Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.65569099857701,
+        "longitude": 139.7624233084812,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672100018800286,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238425744.20132548,
+        "rectY": 105722625.13466623,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "Takeshiba north approach broad southeast-to-southwest curve is continuous. Red follows the own curved corridor and short own station band; no sharp station connector established. Exact passenger platform face/caps are unresolved at z17."
+    },
+    {
+      "viewpointID": "jp-ゆりかもめ-東京臨海新交通臨海線#1#point-4",
+      "itemID": "jp-ゆりかもめ-東京臨海新交通臨海線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000004",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000004/basemap.png",
+        "smooth": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-yurikamome-missing-20261019/alignment/captures/000001/000004/view.json",
+      "timestamp": "2026-10-19T05:41:08Z",
+      "capturedStatus": "captured",
+      "receiptReviewResult": "pending",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.654065,
+        "longitude": 139.762015,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672294328919706,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238425439.74445513,
+        "rectY": 105724117.28052106,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3c892929a27280e7bf9c28c88e37f9550d7051d3a727c0698fa18fc73217018f",
+      "finding": "Takeshiba endpoint and continuing southwest context remain smooth and separate from the western JR/monorail grouping. No endpoint hook or gap; no platform-centre relocation supported."
+    }
+  ]
+}

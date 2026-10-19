@@ -1,0 +1,23 @@
+{
+  "retrievedUTC": "2026-10-12T04:47:00.748298+00:00",
+  "requests": {
+    "way-24548951-full.json": "https://api.openstreetmap.org/api/0.6/way/24548951/full.json",
+    "way-1216370470-full.json": "https://api.openstreetmap.org/api/0.6/way/1216370470/full.json",
+    "station-bbox.osm": "https://api.openstreetmap.org/api/0.6/map?bbox=132.927,35.307,132.929,35.309"
+  },
+  "results": {
+    "way-24548951-full.json": {
+      "status": "saved",
+      "bytes": 14401
+    },
+    "way-1216370470-full.json": {
+      "status": "saved",
+      "bytes": 6978
+    },
+    "station-bbox.osm": {
+      "status": "saved",
+      "bytes": 114342
+    }
+  },
+  "scope": "Two already identified main passenger ways and small Minami-Daito station bbox; no regional fetch."
+}

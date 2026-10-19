@@ -1,0 +1,105 @@
+{
+  "status": "candidate-only-explicit-coextensive-platform-group",
+  "stationID": "009408",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.29672499999997,
+    "longitude": 132.5394649999999,
+    "mapPointsPerPoint": 3.9999999962747097,
+    "metresPerPoint": 0.4972839953133425,
+    "pitch": 0,
+    "rectHeight": 2616,
+    "rectWidth": 3995.9999999701977,
+    "rectX": 233044318.1257528,
+    "rectY": 107860149.81749031,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.000000001343615
+  },
+  "ownFaces": [
+    [
+      [
+        469,
+        174
+      ],
+      [
+        554,
+        420
+      ]
+    ],
+    [
+      [
+        470,
+        230
+      ],
+      [
+        515,
+        347
+      ]
+    ]
+  ],
+  "ownFaceMidpoints": [
+    [
+      511.5,
+      297
+    ],
+    [
+      492.5,
+      288.5
+    ]
+  ],
+  "ownGroupLongMidpoint": [
+    502.0,
+    292.75
+  ],
+  "actualSleeperRails": {
+    "west": [
+      [
+        478,
+        270
+      ],
+      [
+        497,
+        330
+      ]
+    ],
+    "east": [
+      [
+        497,
+        270
+      ],
+      [
+        519,
+        330
+      ]
+    ]
+  },
+  "groupSpineFlanks": [
+    [
+      487.5,
+      270.0
+    ],
+    [
+      508,
+      330
+    ]
+  ],
+  "groupNormalPixel": [
+    495.97612088800446,
+    294.80815869659847
+  ],
+  "candidateDisplayAlias": [
+    132.53944609643924,
+    33.29686934128572
+  ],
+  "coextensiveFaceTest": "Group longcentre at approximatelyy294 lies inside BOTH face longitudinal ranges: long174..420 and island230..347. These coextend along one actual own station railgroup, not separate frames or a road gap.",
+  "excluded": "Broad blue casing, road272 andaccessbreak withinrightlonglightface. Terminal widening does not substitute whole-building length.",
+  "uncertainty": {
+    "normalPixels": 2,
+    "chainagePixels": 4,
+    "individualRailAssignment": false
+  },
+  "actualOriginalAndMagnifiedOpened": true,
+  "formalAcceptance": false
+}

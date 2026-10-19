@@ -1,0 +1,138 @@
+{
+  "caseIndex": 30,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 30,
+  "source": {
+    "caseIndex": 30,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 30,
+    "fromStationID": "002492",
+    "toStationID": "002501",
+    "camera": [
+      36.2419155,
+      137.952927,
+      0.02306535000000082
+    ],
+    "effectiveCoordinates": [
+      [
+        137.944765,
+        36.246908
+      ],
+      [
+        137.94512,
+        36.24675
+      ],
+      [
+        137.94578,
+        36.2463
+      ],
+      [
+        137.94715,
+        36.2453
+      ],
+      [
+        137.94732,
+        36.2452
+      ],
+      [
+        137.94768,
+        36.24504
+      ],
+      [
+        137.94796,
+        36.24493
+      ],
+      [
+        137.94824,
+        36.24482
+      ],
+      [
+        137.94905,
+        36.24448
+      ],
+      [
+        137.94986,
+        36.24415
+      ],
+      [
+        137.95035,
+        36.24395
+      ],
+      [
+        137.95083,
+        36.24375
+      ],
+      [
+        137.9527,
+        36.24297
+      ],
+      [
+        137.95323,
+        36.24273
+      ],
+      [
+        137.9538,
+        36.24242
+      ],
+      [
+        137.95468,
+        36.2419
+      ],
+      [
+        137.95477,
+        36.24183
+      ],
+      [
+        137.95598,
+        36.24097
+      ],
+      [
+        137.95704,
+        36.24022
+      ],
+      [
+        137.95859,
+        36.23918
+      ],
+      [
+        137.95957,
+        36.23849
+      ],
+      [
+        137.95977,
+        36.23834
+      ],
+      [
+        137.95989,
+        36.23824
+      ],
+      [
+        137.96034,
+        36.23779
+      ],
+      [
+        137.96068,
+        36.23744
+      ],
+      [
+        137.96096,
+        36.23709
+      ],
+      [
+        137.961089,
+        36.236923
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t41 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:918;camera:15.29;lod:14.14;backbones:0;networkStations:10;distance:5062.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.241916;centerLon:137.952927;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1466.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.241916;centerLon:137.952927;distance:5062.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-30.jpg",
+  "observation": "Shimauchi to Kita-Matsumoto retains actual curve / Narai River bridge and independent Miyabuchi fork; own passenger platform midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

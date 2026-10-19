@@ -187,3 +187,6 @@ backups/north-america/2026-10-03/**
 /docs/reports/**/*.ax.txt
 /ios/auxiliary/**/Evidence/**/checkpoint*.json
 /ios/auxiliary/**/Evidence/**/report.json
+
+# Apple Maps-derived display evidence stays local (user decision 2026-10-19); repair scripts read it when present.
+/app/scripts/railway/*-apple-*evidence.json

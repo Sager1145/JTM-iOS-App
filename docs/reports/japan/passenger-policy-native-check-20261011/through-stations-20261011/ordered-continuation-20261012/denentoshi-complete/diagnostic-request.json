@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "requestID": "denentoshi-missing-intervals",
+  "workspace": "alignment",
+  "action": "capture",
+  "sessionDirectory": "/private/tmp/jtm-denentoshi-missing-20261018",
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "lineID": "jp-東急電鉄-田園都市線",
+  "intervalIndices": [
+    7,
+    9,
+    12
+  ],
+  "captureSettings": {
+    "zoom": 17,
+    "width": 1024,
+    "height": 768,
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ]
+  }
+}

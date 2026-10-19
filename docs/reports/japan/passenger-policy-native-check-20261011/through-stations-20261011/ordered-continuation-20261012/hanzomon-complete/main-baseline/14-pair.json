@@ -1,0 +1,19 @@
+{
+  "intervalIndex": null,
+  "source": {
+    "caseType": "through-station-context",
+    "intervalIndex": null,
+    "stationID": "003526",
+    "name": "Oshiage",
+    "camera": [
+      35.70970842655579,
+      139.81345102105016,
+      0.005
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "30 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:5;rides:0;budgetDrops:0;vertices:1068;camera:17.33;lod:16.35;backbones:0;networkStations:5;distance:1105.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.709708;centerLon:139.813451;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:2756.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:11;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.709708;centerLon:139.813451;distance:1105.7;viewportWidth:1024.0;viewportHeight:768.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "caseIndex": 14,
+  "caseType": "through-station-context"
+}

@@ -1,0 +1,509 @@
+{
+  "jp-東日本旅客鉄道-京葉線-2": {
+    "total": 5413.198707564217,
+    "follow": {
+      "from": 2068.8259884191734,
+      "to": 5413.198707560695,
+      "canonLineId": "jp-東日本旅客鉄道-京葉線",
+      "canonPartIndex": 0,
+      "canonFrom": 20263.23636518532,
+      "canonTo": 16918.863646043792
+    },
+    "tenant": {
+      "from": 2368.8,
+      "to": 5413.2,
+      "groupId": "東日本旅客鉄道:京葉線"
+    },
+    "owner": {
+      "from": 16918.9,
+      "to": 19963.2,
+      "groupId": "東日本旅客鉄道:京葉線"
+    },
+    "tenantBoundaryMapsTo": 19963.262353604492,
+    "ownerBoundary": 19963.2,
+    "transition": [
+      1768.8259884191734,
+      2368.8259884191734
+    ],
+    "canonicalDirection": "reverse",
+    "exactIdentity": {
+      "bounds": false,
+      "points": false,
+      "measures": false
+    },
+    "newIdentityFilterSkips": false,
+    "zooms": [
+      {
+        "z": 10,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.003242303173580748,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.000020816268960838676,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.0009219546629521901,
+        "familyHandoffTurnDegrees": 3.718802500130198e-8,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 11,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.006484606347161496,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.00004163253792167735,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.0018439093259043802,
+        "familyHandoffTurnDegrees": 3.718802500130198e-8,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 12,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.008926631597171882,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.0003422556343387013,
+        "maxSharedAt": 2368.8,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.0003422556343387013,
+        "familyHandoffPx": 0.0038115774332159015,
+        "familyHandoffTurnDegrees": 0.0010907316385206807,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 13,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.016534320453042015,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.03464151088208249,
+        "maxSharedAt": 4468.8,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.000005010829222012279,
+        "familyHandoffPx": 0.008616662809341733,
+        "familyHandoffTurnDegrees": 0.000007481605097970072,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 14,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.03306864090608403,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.0003330603033734188,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.000010021658444024559,
+        "familyHandoffPx": 0.017233325618683466,
+        "familyHandoffTurnDegrees": 0.000007481605097970072,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 15,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.06613728181216806,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.0006661206067468376,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.000020043316888049117,
+        "familyHandoffPx": 0.03446665123736693,
+        "familyHandoffTurnDegrees": 0.000007481605097970072,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 16,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.13227456362433612,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.0013322412134936753,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.000040086633776098234,
+        "familyHandoffPx": 0.06893330247473387,
+        "familyHandoffTurnDegrees": 0.000007481605097970072,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 17,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.26454912724867224,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.002482847900877857,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.00008017326755219647,
+        "familyHandoffPx": 0.13786660494946773,
+        "familyHandoffTurnDegrees": 0.000007481605097970072,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 18,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 0.5288088088591256,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 2.732902847331481,
+        "maxSharedAt": 4188.8,
+        "sharedSpansOverPoint05Px": [
+          {
+            "from": 4178.8,
+            "to": 4208.8,
+            "max": 2.732902847331481
+          }
+        ],
+        "mappedFamilyHandoffPx": 0.0001496905255572413,
+        "familyHandoffPx": 0.2719022445187564,
+        "familyHandoffTurnDegrees": 0.000015325146146815322,
+        "commonStationEndpointPx": 0
+      },
+      {
+        "z": 19,
+        "fullSamples": 543,
+        "finite": true,
+        "ownStableTo": 1768.8259884191734,
+        "maxOwnStablePx": 1.0524951407334346,
+        "maxOwnStableAt": 1768.8259884191734,
+        "sharedSamples": 306,
+        "maxSharedPx": 0.00915405090113614,
+        "maxSharedAt": 5413.2,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.0002993810511144826,
+        "familyHandoffPx": 0.5438044890375128,
+        "familyHandoffTurnDegrees": 0.000015325146146815322,
+        "commonStationEndpointPx": 0
+      }
+    ]
+  },
+  "jp-東日本旅客鉄道-京葉線-3": {
+    "total": 5907.342284865076,
+    "follow": {
+      "from": 2129.885926151951,
+      "to": 5907.34228486841,
+      "canonLineId": "jp-東日本旅客鉄道-京葉線",
+      "canonPartIndex": 0,
+      "canonFrom": 20997.49204914798,
+      "canonTo": 24774.94840786443
+    },
+    "tenant": {
+      "from": 2429.9,
+      "to": 5907.3,
+      "groupId": "東日本旅客鉄道:京葉線"
+    },
+    "owner": {
+      "from": 21297.5,
+      "to": 24774.9,
+      "groupId": "東日本旅客鉄道:京葉線"
+    },
+    "tenantBoundaryMapsTo": 21297.506122996027,
+    "ownerBoundary": 21297.5,
+    "transition": [
+      1829.885926151951,
+      2429.885926151951
+    ],
+    "canonicalDirection": "forward",
+    "exactIdentity": {
+      "bounds": false,
+      "points": false,
+      "measures": false
+    },
+    "newIdentityFilterSkips": false,
+    "zooms": [
+      {
+        "z": 10,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.0017634978595805647,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 6.507814330688532e-11,
+        "maxSharedAt": 2499.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.00009862579632654737,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 8.231806349783991e-11
+      },
+      {
+        "z": 11,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.0034902405939340403,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 1.3015628661377063e-10,
+        "maxSharedAt": 2499.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.00019725159265309474,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 1.6463612699567982e-10
+      },
+      {
+        "z": 12,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.002916573399976089,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.012096115852037488,
+        "maxSharedAt": 5399.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.0003945031853061895,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 3.2927225399135965e-10
+      },
+      {
+        "z": 13,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.004093861268220481,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.003173278459608366,
+        "maxSharedAt": 5409.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.000789006370612379,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 6.585445079827193e-10
+      },
+      {
+        "z": 14,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.048482416055432076,
+        "maxOwnStableAt": 1810,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.9633632468895211,
+        "maxSharedAt": 2449.9,
+        "sharedSpansOverPoint05Px": [
+          {
+            "from": 2429.9,
+            "to": 2469.9,
+            "max": 0.9633632468895211
+          }
+        ],
+        "mappedFamilyHandoffPx": 0.3755404252495726,
+        "familyHandoffPx": 0.37711574546748056,
+        "familyHandoffTurnDegrees": 0.34368355608728834,
+        "commonStationEndpointPx": 1.3170890159654386e-9
+      },
+      {
+        "z": 15,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.09696483211086415,
+        "maxOwnStableAt": 1810,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.14625587081961464,
+        "maxSharedAt": 3479.9,
+        "sharedSpansOverPoint05Px": [
+          {
+            "from": 3479.9,
+            "to": 3479.9,
+            "max": 0.14625587081961464
+          }
+        ],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.003156025482449516,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 2.634178031930877e-9
+      },
+      {
+        "z": 16,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.1939296642217283,
+        "maxOwnStableAt": 1810,
+        "sharedSamples": 349,
+        "maxSharedPx": 4.16500117164066e-9,
+        "maxSharedAt": 4969.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.006312050964899032,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 5.268356063861754e-9
+      },
+      {
+        "z": 17,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.3878593284434566,
+        "maxOwnStableAt": 1810,
+        "sharedSamples": 349,
+        "maxSharedPx": 8.33000234328132e-9,
+        "maxSharedAt": 3459.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0,
+        "familyHandoffPx": 0.012624101929798064,
+        "familyHandoffTurnDegrees": 1.3301232707110772e-7,
+        "commonStationEndpointPx": 1.0536712127723509e-8
+      },
+      {
+        "z": 18,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.12458905054825713,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.000059277507064683795,
+        "maxSharedAt": 2429.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.000059277507064683795,
+        "familyHandoffPx": 0.02785219240822119,
+        "familyHandoffTurnDegrees": 0.00010005898341769803,
+        "commonStationEndpointPx": 2.1073424255447017e-8
+      },
+      {
+        "z": 19,
+        "fullSamples": 592,
+        "finite": true,
+        "ownStableTo": 1829.885926151951,
+        "maxOwnStablePx": 0.2471576195187516,
+        "maxOwnStableAt": 1829.885926151951,
+        "sharedSamples": 349,
+        "maxSharedPx": 0.00011855501412936759,
+        "maxSharedAt": 2429.9,
+        "sharedSpansOverPoint05Px": [],
+        "mappedFamilyHandoffPx": 0.00011855501412936759,
+        "familyHandoffPx": 0.05570438481644238,
+        "familyHandoffTurnDegrees": 0.00010005898341769803,
+        "commonStationEndpointPx": 4.2146848510894035e-8
+      }
+    ]
+  }
+}
+CAMERA_PROBES {
+  "eastFamilyHandoff": {
+    "id": "jp-東日本旅客鉄道-京葉線-2",
+    "z": 19,
+    "ownMeasure": 2368.8,
+    "canonMeasure": 19963.2,
+    "own": {
+      "lat": 35.691323458420264,
+      "lon": 139.96429675072335
+    },
+    "canonical": {
+      "lat": 35.69132326980346,
+      "lon": 139.964297442057
+    },
+    "midpoint": {
+      "lat": 35.69132336411186,
+      "lon": 139.96429709639017
+    },
+    "seamPx": 0.5438044890375128
+  },
+  "westFamilyHandoff": {
+    "id": "jp-東日本旅客鉄道-京葉線-3",
+    "z": 19,
+    "ownMeasure": 2429.9,
+    "canonMeasure": 21297.5,
+    "own": {
+      "lat": 35.68774947053139,
+      "lon": 139.95095323055614
+    },
+    "canonical": {
+      "lat": 35.68774950960554,
+      "lon": 139.95095328770913
+    },
+    "midpoint": {
+      "lat": 35.68774949006847,
+      "lon": 139.95095325913263
+    },
+    "seamPx": 0.05570438481644238
+  },
+  "eastZ18Peak": {
+    "id": "jp-東日本旅客鉄道-京葉線-2",
+    "z": 18,
+    "ownMeasure": 4188.8,
+    "canonMeasure": 18143.26235360449,
+    "own": {
+      "lat": 35.686277975629466,
+      "lon": 139.98353320501639
+    },
+    "canonical": {
+      "lat": 35.68628009200251,
+      "lon": 139.98352635354638
+    },
+    "midpoint": {
+      "lat": 35.686279033816014,
+      "lon": 139.9835297792814
+    },
+    "seamPx": 2.732902847331481
+  },
+  "westZ14Requested": {
+    "id": "jp-東日本旅客鉄道-京葉線-3",
+    "z": 14,
+    "ownMeasure": 2429.9,
+    "canonMeasure": 21297.506122996027,
+    "own": {
+      "lat": 35.68774738287521,
+      "lon": 139.95095012388492
+    },
+    "canonical": {
+      "lat": 35.687756364608234,
+      "lon": 139.95096184785132
+    },
+    "midpoint": {
+      "lat": 35.68775187374187,
+      "lon": 139.95095598586812
+    },
+    "seamPx": 0.3755404252495726
+  },
+  "westZ14Peak": {
+    "id": "jp-東日本旅客鉄道-京葉線-3",
+    "z": 14,
+    "ownMeasure": 2449.9,
+    "canonMeasure": 21317.506122996027,
+    "own": {
+      "lat": 35.68761930971125,
+      "lon": 139.9507607123508
+    },
+    "canonical": {
+      "lat": 35.687640946981524,
+      "lon": 139.95079232815124
+    },
+    "midpoint": {
+      "lat": 35.68763012834714,
+      "lon": 139.95077652025105
+    },
+    "seamPx": 0.9633632468895211
+  }
+}

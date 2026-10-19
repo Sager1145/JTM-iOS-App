@@ -1,0 +1,94 @@
+{
+  "caseIndex": 6,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 6,
+  "source": {
+    "caseIndex": 6,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 6,
+    "fromStationID": "003417",
+    "toStationID": "003460",
+    "camera": [
+      35.724453999999994,
+      139.7743945,
+      0.013855379999995776
+    ],
+    "effectiveCoordinates": [
+      [
+        139.770759,
+        35.727453
+      ],
+      [
+        139.77093,
+        35.7273
+      ],
+      [
+        139.7712,
+        35.7271
+      ],
+      [
+        139.77145,
+        35.72691
+      ],
+      [
+        139.77188,
+        35.72667
+      ],
+      [
+        139.77227,
+        35.72647
+      ],
+      [
+        139.77274,
+        35.7262
+      ],
+      [
+        139.77309,
+        35.72595
+      ],
+      [
+        139.77347,
+        35.72566
+      ],
+      [
+        139.77399,
+        35.72524
+      ],
+      [
+        139.77477,
+        35.72454
+      ],
+      [
+        139.77509,
+        35.72423
+      ],
+      [
+        139.77543,
+        35.72391
+      ],
+      [
+        139.77564,
+        35.7237
+      ],
+      [
+        139.77741,
+        35.72206
+      ],
+      [
+        139.77803,
+        35.721455
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t61 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:11;rides:0;budgetDrops:0;vertices:3997;camera:16.04;lod:14.89;backbones:1;networkStations:24;distance:3041.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.724454;centerLon:139.774395;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:4213.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.724454;centerLon:139.774395;distance:3041.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-06.jpg",
+  "observation": "日暮里至鶯谷连续斜向客运走廊，叠加线局部偏西南；Main 京成西分岔保持独立，不能依共享 ID 通过本线站台。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

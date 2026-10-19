@@ -1,0 +1,63 @@
+{
+  "status": "proposed-not-applied-not-native-accepted",
+  "stations": [
+    {
+      "stationID": "001843",
+      "name": "競輪場前",
+      "passengerFrameMidpointPixels": [
+        479.20175362816906,
+        285.5831713059863
+      ],
+      "ownRailSupportPixels": [
+        [
+          475.53286058366655,
+          293.18525946330743
+        ],
+        [
+          481.1240690989022,
+          282.27579808084806
+        ]
+      ],
+      "projectedPixel": [
+        479.3817326417794,
+        285.6754123578754
+      ],
+      "coordinate": [
+        137.23389103860194,
+        36.757561611852445
+      ],
+      "source": "station-details/13-keirin-cartography-before-z19",
+      "status": "proposed-manual-own-frame-review"
+    },
+    {
+      "stationID": "001838",
+      "name": "岩瀬浜",
+      "passengerFrameMidpointPixels": [
+        446.7996855012704,
+        270.8686500583788
+      ],
+      "ownRailSupportPixels": [
+        [
+          457,
+          260
+        ],
+        [
+          462,
+          284
+        ]
+      ],
+      "projectedPixel": [
+        458.7458072288473,
+        268.37987469846695
+      ],
+      "coordinate": [
+        137.23400068873673,
+        36.761508772997225
+      ],
+      "source": "station-details/14-iwasehama-extraction-before-z19",
+      "status": "proposed-manual-own-frame-review",
+      "terminal": true
+    }
+  ],
+  "limits": "Raw automated platform candidates remain unresolved. Manual rail identity and complete interval candidate review are required before acceptance."
+}

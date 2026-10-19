@@ -1,0 +1,165 @@
+{
+  "format": "jtm-main-complete-interval-camera-plan-v1",
+  "status": "planned-not-runtime-evidence",
+  "sourcePackage": "app/public/rail/jp-2025.json",
+  "sourcePackageSha256": "fc1b976887463fcf262235178fdefd8038d954eb12189d07fe63ce1586354455",
+  "sourceLineObjectSha256": "15b781a19a2af842679ac054708c08ad1ce1c91663a021991966548156f6a5f6",
+  "inspectorPlan": "../tsushima-complete-native/primary/plan.json",
+  "inspectorPlanSha256": "fb663add24817d41bda40205b66b47e667185e4c689032fafe76d829933e182b",
+  "intervalCount": 5,
+  "inspectorViewpointCount": 17,
+  "expectedMainPairCount": 5,
+  "expectedMainPanelCount": 10,
+  "cases": [
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#16",
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "linePrefix": "meitetsu-main",
+      "intervalIndex": 16,
+      "fromStationID": "005323",
+      "fromStationName": "新清洲",
+      "toStationID": "005337",
+      "toStationName": "丸ノ内",
+      "sourceVertexCount": 13,
+      "inspectorViewpointCount": 4,
+      "inspectorViewpointDistancesMetres": [
+        0,
+        350,
+        700,
+        1024.6982756863347
+      ],
+      "plannedCamera": [
+        35.2078325,
+        136.83875,
+        0.010882500000001016
+      ],
+      "completeIntervalBounds": [
+        136.83536,
+        35.204205,
+        136.84214,
+        35.21146
+      ]
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#17",
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "linePrefix": "meitetsu-main",
+      "intervalIndex": 17,
+      "fromStationID": "005337",
+      "fromStationName": "丸ノ内",
+      "toStationID": "005352",
+      "toStationName": "須ヶ口",
+      "sourceVertexCount": 10,
+      "inspectorViewpointCount": 3,
+      "inspectorViewpointDistancesMetres": [
+        0,
+        350,
+        694.5436369453744
+      ],
+      "plannedCamera": [
+        35.201567499999996,
+        136.8439475,
+        0.007912500000006872
+      ],
+      "completeIntervalBounds": [
+        136.84214,
+        35.19893,
+        136.845755,
+        35.204205
+      ]
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#18",
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "linePrefix": "meitetsu-main",
+      "intervalIndex": 18,
+      "fromStationID": "005352",
+      "fromStationName": "須ヶ口",
+      "toStationID": "005374",
+      "toStationName": "新川橋",
+      "sourceVertexCount": 8,
+      "inspectorViewpointCount": 4,
+      "inspectorViewpointDistancesMetres": [
+        0,
+        350,
+        700,
+        746.0768787215761
+      ],
+      "plannedCamera": [
+        35.19709,
+        136.8491875,
+        0.010297500000007176
+      ],
+      "completeIntervalBounds": [
+        136.845755,
+        35.19525,
+        136.85262,
+        35.19893
+      ]
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#19",
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "linePrefix": "meitetsu-main",
+      "intervalIndex": 19,
+      "fromStationID": "005374",
+      "fromStationName": "新川橋",
+      "toStationID": "005377",
+      "toStationName": "二ツ杁",
+      "sourceVertexCount": 8,
+      "inspectorViewpointCount": 3,
+      "inspectorViewpointDistancesMetres": [
+        0,
+        350,
+        657.5275767417914
+      ],
+      "plannedCamera": [
+        35.194950000000006,
+        136.85616299999998,
+        0.010628999999980238
+      ],
+      "completeIntervalBounds": [
+        136.85262,
+        35.19465,
+        136.859706,
+        35.19525
+      ]
+    },
+    {
+      "itemID": "jp-名古屋鉄道-名古屋本線#20",
+      "lineID": "jp-名古屋鉄道-名古屋本線",
+      "linePrefix": "meitetsu-main",
+      "intervalIndex": 20,
+      "fromStationID": "005377",
+      "fromStationName": "二ツ杁",
+      "toStationID": "005376",
+      "toStationName": "西枇杷島",
+      "sourceVertexCount": 9,
+      "inspectorViewpointCount": 3,
+      "inspectorViewpointDistancesMetres": [
+        0,
+        350,
+        509.47371760478535
+      ],
+      "plannedCamera": [
+        35.1948725,
+        136.862493,
+        0.008361000000036256
+      ],
+      "completeIntervalBounds": [
+        136.859706,
+        35.19466,
+        136.86528,
+        35.195085
+      ]
+    }
+  ],
+  "notIncluded": [
+    "runtime capture evidence",
+    "whole-network context capture",
+    "replacement station coordinates",
+    "Main interval 15 unless Shinkiyosu evidence later proves its alias must move",
+    "Main interval 21 because Nishibiwajima remains a supported unchanged guard",
+    "production data changes"
+  ]
+}

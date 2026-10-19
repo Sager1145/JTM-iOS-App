@@ -1,0 +1,22 @@
+{
+  "status": "candidate-only",
+  "historyID": "jp.h2005.h3e.station-opening-2021-56.current.stations",
+  "stationID": "001921",
+  "before": [
+    137.21958845,
+    36.70299479,
+    137.2201228,
+    36.703019330000004
+  ],
+  "after": [
+    137.21958845,
+    36.70299167819579,
+    137.2201228,
+    36.703019330000004
+  ],
+  "validFromUnchanged": "2021-03-21",
+  "matchedDisplayStationIDs": [
+    "001921"
+  ],
+  "note": "Retain existing spatial date matcher after the display-only normal shift; all other history records unchanged. A14-to1 fragment count change is whole-chain fallback granularity, not proof of lost section date coverage."
+}

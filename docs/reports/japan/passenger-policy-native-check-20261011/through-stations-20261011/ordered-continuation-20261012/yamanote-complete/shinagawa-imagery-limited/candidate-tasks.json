@@ -1,0 +1,61 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東日本旅客鉄道-山手線#0\/lineOffset",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東日本旅客鉄道-山手線#0\/stationApproach",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東日本旅客鉄道-山手線#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東日本旅客鉄道-山手線\/station\/004095",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004095"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東日本旅客鉄道-山手線\/station\/004135",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004135"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東日本旅客鉄道-山手線#0\/seam",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-山手線#0",
+      "jp-東日本旅客鉄道-山手線#1"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004135"
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "scope": "Bounded current-own-input comparisons for queue35–38; not a whole-tree custody workflow or pixel acceptance",
+  "legacyRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2",
+  "method": "Independent reviewer compared raw/display point IEEE754 bits and endpoint stationIDs in actual receipt-referenced immutable plans. Recomputed current whole-own geometry dependency using each actual legacy renderContract. Parent separately reads decisive current/source/pixel cases.",
+  "lines": [
+    {
+      "ordinal": 35,
+      "lineID": "jp-京阪電気鉄道-京津線",
+      "reuseIntervals": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reuseViews": 20,
+      "currentOriginalReceiptRefresh": [
+        4,
+        5
+      ],
+      "reason": "LegacyLibrary last2 display42/16points vs current55/47. Current owning row matches frozen final repair-builder result; final AFTER contacts+coverage retained, originaltmpreceipts absent. Existing final repair not invalidated.",
+      "legacyDependency": "203ad00cfc837546938a779b63af95016fe0ec5fc69c9bbdb008ab2a9bff9d03",
+      "currentWithLegacyContract": "2b0c317cd01b38821621e72609718d62de969a864a3d2d1479fdc5286d1164e0"
+    },
+    {
+      "ordinal": 36,
+      "lineID": "jp-京成電鉄-押上線",
+      "reuseIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "reuseViews": 25,
+      "currentWithLegacyContractEqualsReceipt": "6e284b52bb25f1c7f446d49a08e751814a46fbdced7a6497c56fcf2760fac067"
+    },
+    {
+      "ordinal": 37,
+      "lineID": "jp-東京地下鉄-13号線副都心線",
+      "reuseIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "reuseViews": 51,
+      "currentWithLegacyContractEqualsReceipt": "163fe2ae40981250a7cf09af0e5d3f6b0de2e2f6347019088d08476984a3e805"
+    },
+    {
+      "ordinal": 38,
+      "lineID": "jp-東急電鉄-東横線",
+      "reuseIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        17,
+        18,
+        19
+      ],
+      "reuseViews": 96,
+      "missingIntervals": [
+        16
+      ],
+      "missingOldViews": 5,
+      "currentWithLegacyContractEqualsReceipt": "4cd17817c45bbab14c8d4365b98e76950a7fccb16069b3afb3cc73a06975aa70",
+      "note": "96state/view dependencies agree. Two actual immutable plans contain identical20ownitems and viewpoints; receipt-listed files exist and sizes agree, no fullPNG rehash. Directory numbers are string-order identities, not numeric interval order."
+    }
+  ]
+}

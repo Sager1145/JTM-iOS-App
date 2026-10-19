@@ -1,0 +1,73 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 0,
+    "fromStationID": "003104",
+    "toStationID": "003112",
+    "camera": [
+      35.791057499999994,
+      139.6500075,
+      0.013323628210102408
+    ],
+    "effectiveCoordinates": [
+      [
+        139.645685,
+        35.791895
+      ],
+      [
+        139.64682,
+        35.79169
+      ],
+      [
+        139.64694,
+        35.79166
+      ],
+      [
+        139.64795,
+        35.79146
+      ],
+      [
+        139.64884,
+        35.79128
+      ],
+      [
+        139.64976,
+        35.7911
+      ],
+      [
+        139.65076,
+        35.79091
+      ],
+      [
+        139.65164,
+        35.79074
+      ],
+      [
+        139.65233,
+        35.79061
+      ],
+      [
+        139.65317,
+        35.79044
+      ],
+      [
+        139.65337,
+        35.7904
+      ],
+      [
+        139.65433,
+        35.79022
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:258;camera:16.09;lod:14.94;backbones:0;networkStations:3;distance:2924.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.791057;centerLon:139.650008;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3635.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.791057;centerLon:139.650008;distance:2924.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/case-00.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

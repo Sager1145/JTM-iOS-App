@@ -1,0 +1,15 @@
+{
+  "views": 34,
+  "intervalCounts": {
+    "0": 34
+  },
+  "statusCounts": {
+    "captured": 34
+  },
+  "pngSizeCounts": {
+    "(1024, 768)": 102
+  },
+  "maximumReturnedZoomError": 1.9245049998062314e-11,
+  "maximumReturnedCenterErrorPoints": 7.1383965405402705e-09,
+  "scope": "Native file/projection contract only, not railway acceptance"
+}

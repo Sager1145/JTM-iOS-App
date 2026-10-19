@@ -1,0 +1,132 @@
+[
+  {
+    "stationID": "001826",
+    "fromRawInterval": 5,
+    "viewIndex": 1,
+    "pixel": [
+      470,
+      367
+    ],
+    "coordinate": [
+      137.03766674966806,
+      36.77010811484489
+    ],
+    "oldCoordinate": [
+      137.03758628339762,
+      36.76991044644015
+    ],
+    "normalDistanceToV4LocusMetres": 0.49931208473345173,
+    "projectedFraction": 0.3371428258021241,
+    "projectedLocalSegmentIndex": 87,
+    "chainageMapPoints": 32197.465112018283,
+    "deltaMapPoints": [
+      4.008715987205505,
+      1.2030539512634277
+    ],
+    "localRampSupportMetres": 30
+  },
+  {
+    "stationID": "001834",
+    "fromRawInterval": 7,
+    "viewIndex": 2,
+    "pixel": [
+      607,
+      180
+    ],
+    "coordinate": [
+      137.0324666749384,
+      36.76394673201305
+    ],
+    "oldCoordinate": [
+      137.03263297189733,
+      36.764127225918116
+    ],
+    "normalDistanceToV4LocusMetres": 2.250109457793047,
+    "projectedFraction": 0.0914937822877326,
+    "projectedLocalSegmentIndex": 1,
+    "chainageMapPoints": 39237.57257827266,
+    "deltaMapPoints": [
+      14.1012621819973,
+      12.52554376423359
+    ],
+    "localRampSupportMetres": 30
+  },
+  {
+    "stationID": "001845",
+    "fromRawInterval": 10,
+    "viewIndex": 2,
+    "pixel": [
+      543,
+      244
+    ],
+    "coordinate": [
+      137.02375335218431,
+      36.755661730116074
+    ],
+    "oldCoordinate": [
+      137.02400547983171,
+      36.75586803111289
+    ],
+    "normalDistanceToV4LocusMetres": 2.773877500560175,
+    "projectedFraction": 0.07867979068065616,
+    "projectedLocalSegmentIndex": 1,
+    "chainageMapPoints": 49347.03509851585,
+    "deltaMapPoints": [
+      -17.958529710769653,
+      -14.76865440607071
+    ],
+    "localRampSupportMetres": 30
+  },
+  {
+    "stationID": "001851",
+    "fromRawInterval": 11,
+    "viewIndex": 2,
+    "pixel": [
+      502,
+      310
+    ],
+    "coordinate": [
+      137.02069941104514,
+      36.75258006800441
+    ],
+    "oldCoordinate": [
+      137.0211071068154,
+      36.75304426311316
+    ],
+    "normalDistanceToV4LocusMetres": 4.731990087185772,
+    "projectedFraction": 0.17942688555458666,
+    "projectedLocalSegmentIndex": 1,
+    "chainageMapPoints": 53008.5740807325,
+    "deltaMapPoints": [
+      30.632399886846542,
+      25.1979913264513
+    ],
+    "localRampSupportMetres": 30
+  },
+  {
+    "stationID": "001861",
+    "fromRawInterval": 13,
+    "viewIndex": 2,
+    "pixel": [
+      505,
+      294
+    ],
+    "coordinate": [
+      137.0149065042993,
+      36.747557847238795
+    ],
+    "oldCoordinate": [
+      137.0150137926599,
+      36.74751916165422
+    ],
+    "normalDistanceToV4LocusMetres": 8.942985528706307,
+    "projectedFraction": 0.02488373347262375,
+    "projectedLocalSegmentIndex": 122,
+    "chainageMapPoints": 59407.9124804419,
+    "deltaMapPoints": [
+      -42.43342271447182,
+      -61.79587256908417
+    ],
+    "localRampSupportMetres": 30
+  }
+]

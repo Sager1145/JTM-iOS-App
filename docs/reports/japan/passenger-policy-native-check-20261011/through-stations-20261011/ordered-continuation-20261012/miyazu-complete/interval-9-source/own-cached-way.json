@@ -1,0 +1,117 @@
+{
+  "cachePath": "railway-sources/local/osm/degree-cells/E135N35.json",
+  "fetchedAt": "2026-08-18T10:31:02.971Z",
+  "ways": [
+    {
+      "id": 32052922,
+      "tags": {
+        "KSJ2:LIN": "宮津線",
+        "electrified": "no",
+        "gauge": "1067",
+        "maxspeed": "85",
+        "name": "京都丹後鉄道宮豊線",
+        "name:en": "Kyoto Tango Railway Miyatoyo Line",
+        "name:ja": "京都丹後鉄道宮豊線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "京都丹後鉄道",
+        "operator:en": "Kyoto Tango Railway",
+        "operator:ja": "京都丹後鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "main"
+      },
+      "geometry": [
+        {
+          "lat": 35.5430149,
+          "lon": 135.1254822
+        },
+        {
+          "lat": 35.5430009,
+          "lon": 135.1254424
+        },
+        {
+          "lat": 35.5428312,
+          "lon": 135.1249591
+        },
+        {
+          "lat": 35.5426476,
+          "lon": 135.1244029
+        },
+        {
+          "lat": 35.5425063,
+          "lon": 135.1240066
+        },
+        {
+          "lat": 35.5422597,
+          "lon": 135.1232984
+        },
+        {
+          "lat": 35.5421495,
+          "lon": 135.1228935
+        },
+        {
+          "lat": 35.5420607,
+          "lon": 135.1225198
+        },
+        {
+          "lat": 35.5420089,
+          "lon": 135.1222348
+        },
+        {
+          "lat": 35.5419939,
+          "lon": 135.122118
+        },
+        {
+          "lat": 35.5419619,
+          "lon": 135.1218688
+        },
+        {
+          "lat": 35.5419283,
+          "lon": 135.1214908
+        },
+        {
+          "lat": 35.5418878,
+          "lon": 135.1210637
+        },
+        {
+          "lat": 35.5418439,
+          "lon": 135.1206069
+        },
+        {
+          "lat": 35.5417733,
+          "lon": 135.1200841
+        },
+        {
+          "lat": 35.5416803,
+          "lon": 135.1195317
+        },
+        {
+          "lat": 35.541596,
+          "lon": 135.1190926
+        },
+        {
+          "lat": 35.5415144,
+          "lon": 135.11874
+        },
+        {
+          "lat": 35.5413682,
+          "lon": 135.1182385
+        },
+        {
+          "lat": 35.5411459,
+          "lon": 135.1175243
+        },
+        {
+          "lat": 35.5405759,
+          "lon": 135.1157023
+        },
+        {
+          "lat": 35.5402475,
+          "lon": 135.114724
+        }
+      ]
+    }
+  ]
+}

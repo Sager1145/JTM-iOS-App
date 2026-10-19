@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/candidate-tasks.json",
+  "capturedCount" : 20,
+  "captureIndexPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "dab79821d1d4c30ce8f30832fe630c1c2c8c30fad5cbca0ccd0a20cc2f3dfe58",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment",
+    "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東日本旅客鉄道-総武線-3#3"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "20\/20 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-sobu-nakamagome-candidate-20261018\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "sobu3-nakamagome-own-passenger-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T21:05:01Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

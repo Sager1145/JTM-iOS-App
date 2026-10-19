@@ -1,0 +1,296 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.49212692857401,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.628135,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73853500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.627109595171717,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73855718728313,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.626070509182085,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73871795279481,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.625025143540036,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73867084642586,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.623996363579558,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73842922181737,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.622972286076241,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73815833489013,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.621950346334913,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73787467372864,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.620927940044965,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73759355001047,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.61990548998385,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73731266825851,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.618911431778614,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73691870890602,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.618042685795338,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73620699848004,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.617369394794892,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73522570005139,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.61698124513557,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73403390537104,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.616854859374129,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.7327581450823,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.617001025550522,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73148658151604,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.617504709614025,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.73036499478283,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.618287147706091,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.72951285232108,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.619178126626039,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.72883526062509,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-17"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment\/captures\/000000\/000018",
+      "itemID" : "jp-東日本旅客鉄道-山手線#0",
+      "latitude" : 35.619945000000001,
+      "lineDependency" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+      "longitude" : 139.72824499999999,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "pending",
+      "viewpointID" : "jp-東日本旅客鉄道-山手線#0#point-18"
+    }
+  ]
+}

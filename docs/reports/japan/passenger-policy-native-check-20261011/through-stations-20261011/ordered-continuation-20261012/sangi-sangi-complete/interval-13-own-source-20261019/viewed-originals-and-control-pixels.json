@@ -1,0 +1,249 @@
+{
+  "viewedPairs": 3,
+  "viewedPNGs": 6,
+  "views": [
+    {
+      "pointOrdinal": 0,
+      "actuallyViewed": true,
+      "originalPaths": [
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.16404,
+        "longitude": 136.48793,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9730495196139111,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235984105.02235025,
+        "rectY": 106172430.29386234,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "controls": [
+        {
+          "decodedVertex": 0,
+          "x": 799.9999999962747,
+          "y": 600.0000000018626
+        },
+        {
+          "decodedVertex": 1,
+          "x": 770.1738382205367,
+          "y": 574.917002491653
+        },
+        {
+          "decodedVertex": 2,
+          "x": 721.7063253261149,
+          "y": 535.0120938885957
+        },
+        {
+          "decodedVertex": 3,
+          "x": 665.7822719961405,
+          "y": 488.2661253977567
+        },
+        {
+          "decodedVertex": 4,
+          "x": 611.7223537713289,
+          "y": 443.8002293519676
+        },
+        {
+          "decodedVertex": 5,
+          "x": 541.8172871097922,
+          "y": 384.51203625276685
+        },
+        {
+          "decodedVertex": 6,
+          "x": 500.8063146658242,
+          "y": 351.44730236008763
+        },
+        {
+          "decodedVertex": 7,
+          "x": 454.2029368840158,
+          "y": 312.68160212785006
+        },
+        {
+          "decodedVertex": 8,
+          "x": 422.51263999566436,
+          "y": 286.45765418186784
+        },
+        {
+          "decodedVertex": 9,
+          "x": 378.7054648846388,
+          "y": 255.6729250010103
+        },
+        {
+          "decodedVertex": 10,
+          "x": 347.01516799628735,
+          "y": 237.4300742931664
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 1,
+      "actuallyViewed": true,
+      "originalPaths": [
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.16605427834955,
+        "longitude": 136.48497144042534,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9730257421589463,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235981898.96043766,
+        "rectY": 106170593.03218354,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "controls": [
+        {
+          "decodedVertex": 0,
+          "x": 1075.757739070803,
+          "y": 829.657709851861
+        },
+        {
+          "decodedVertex": 1,
+          "x": 1045.931577295065,
+          "y": 804.5747123416513
+        },
+        {
+          "decodedVertex": 2,
+          "x": 997.4640644006431,
+          "y": 764.669803738594
+        },
+        {
+          "decodedVertex": 3,
+          "x": 941.5400110706687,
+          "y": 717.923835247755
+        },
+        {
+          "decodedVertex": 4,
+          "x": 887.4800928458571,
+          "y": 673.4579392019659
+        },
+        {
+          "decodedVertex": 5,
+          "x": 817.5750261843204,
+          "y": 614.1697461027652
+        },
+        {
+          "decodedVertex": 6,
+          "x": 776.5640537403524,
+          "y": 581.105012210086
+        },
+        {
+          "decodedVertex": 7,
+          "x": 729.960675958544,
+          "y": 542.3393119778484
+        },
+        {
+          "decodedVertex": 8,
+          "x": 698.2703790701926,
+          "y": 516.1153640318662
+        },
+        {
+          "decodedVertex": 9,
+          "x": 654.463203959167,
+          "y": 485.33063485100865
+        },
+        {
+          "decodedVertex": 10,
+          "x": 622.7729070708156,
+          "y": 467.08778414316475
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 2,
+      "actuallyViewed": true,
+      "originalPaths": [
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-sangi-sangi-missing-20261019/alignment/captures/000000/000002/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.16764478398673,
+        "longitude": 136.48169932412722,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9730069662539593,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235979459.0936861,
+        "rectY": 106169142.26952086,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "controls": [
+        {
+          "decodedVertex": 0,
+          "x": 1380.7410830147564,
+          "y": 1011.0030426867306
+        },
+        {
+          "decodedVertex": 1,
+          "x": 1350.9149212390184,
+          "y": 985.920045176521
+        },
+        {
+          "decodedVertex": 2,
+          "x": 1302.4474083445966,
+          "y": 946.0151365734637
+        },
+        {
+          "decodedVertex": 3,
+          "x": 1246.5233550146222,
+          "y": 899.2691680826247
+        },
+        {
+          "decodedVertex": 4,
+          "x": 1192.4634367898107,
+          "y": 854.8032720368356
+        },
+        {
+          "decodedVertex": 5,
+          "x": 1122.558370128274,
+          "y": 795.5150789376348
+        },
+        {
+          "decodedVertex": 6,
+          "x": 1081.547397684306,
+          "y": 762.4503450449556
+        },
+        {
+          "decodedVertex": 7,
+          "x": 1034.9440199024975,
+          "y": 723.684644812718
+        },
+        {
+          "decodedVertex": 8,
+          "x": 1003.2537230141461,
+          "y": 697.4606968667358
+        },
+        {
+          "decodedVertex": 9,
+          "x": 959.4465479031205,
+          "y": 666.6759676858783
+        },
+        {
+          "decodedVertex": 10,
+          "x": 927.7562510147691,
+          "y": 648.4331169780344
+        }
+      ]
+    }
+  ]
+}

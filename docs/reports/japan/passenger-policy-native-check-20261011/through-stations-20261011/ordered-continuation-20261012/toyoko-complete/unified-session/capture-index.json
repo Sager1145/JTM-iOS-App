@@ -1,0 +1,140 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 298.70169127865387,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.498775000000002,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.63330500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.496091389933362,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.6333252881301,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.493619836391233,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.63210488534762,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.491571804144499,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.63000788097705,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.489536165119134,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.62790246604462,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/toyoko-complete\/unified-session\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東急電鉄-東横線#16",
+      "latitude" : 35.489525999999998,
+      "lineDependency" : "f0033b2c337e6536f7838f5209c918cab0c06059e23891a89456d9f24e51f38c",
+      "longitude" : 139.62789900000001,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-東横線#16#point-5"
+    }
+  ]
+}

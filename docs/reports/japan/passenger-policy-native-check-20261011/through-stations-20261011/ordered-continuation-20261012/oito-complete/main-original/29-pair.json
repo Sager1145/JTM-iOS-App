@@ -1,0 +1,98 @@
+{
+  "caseIndex": 29,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 29,
+  "source": {
+    "caseIndex": 29,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 29,
+    "fromStationID": "002496",
+    "toStationID": "002492",
+    "camera": [
+      36.24678,
+      137.9381925,
+      0.017491899368883113
+    ],
+    "effectiveCoordinates": [
+      [
+        137.93162,
+        36.24633
+      ],
+      [
+        137.93218,
+        36.24637
+      ],
+      [
+        137.93535,
+        36.24661
+      ],
+      [
+        137.9371,
+        36.24675
+      ],
+      [
+        137.93824,
+        36.24683
+      ],
+      [
+        137.93943,
+        36.24693
+      ],
+      [
+        137.94129,
+        36.24707
+      ],
+      [
+        137.94285,
+        36.2472
+      ],
+      [
+        137.94321,
+        36.24722
+      ],
+      [
+        137.94329,
+        36.24722
+      ],
+      [
+        137.94352,
+        36.24723
+      ],
+      [
+        137.94375,
+        36.24721
+      ],
+      [
+        137.94399,
+        36.24719
+      ],
+      [
+        137.94428,
+        36.24711
+      ],
+      [
+        137.94441,
+        36.24706
+      ],
+      [
+        137.94476,
+        36.24691
+      ],
+      [
+        137.944765,
+        36.246908
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:744;camera:15.69;lod:14.54;backbones:0;networkStations:3;distance:3839.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.246780;centerLon:137.938193;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2902.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.246780;centerLon:137.938193;distance:3839.5;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-29.jpg",
+  "observation": "Shimatakamatsu to Shimauchi corridor and eastern curve locally south of Apple glyph; own station frames unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

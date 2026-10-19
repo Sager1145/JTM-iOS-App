@@ -23,7 +23,7 @@ per-line rebuild; regenerating them from raw sources is out of scope here.
 ## Decision
 
 Rebuild the display derivative as `jtm-display-network-v2`
-(`docs/DISPLAY_NETWORK_V2_2026-09-10.md`):
+(`docs/reports/map-display/DISPLAY_NETWORK_V2_2026-09-10.md`):
 
 - `manifest.json` holds every line's header, bounds, `dependsOn` (canonical
   lines named by its `follows`) and a byte range. No geometry.

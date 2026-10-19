@@ -1,0 +1,191 @@
+{
+  "schema": "cn-three-connectors-before-metadata-fix/1",
+  "completedAt": "2026-10-19T07:10:03Z",
+  "nativeRows": 176,
+  "rawSession": "railway-sources/local/china/comparisons/real-trains-20261018/native-three-connectors-final-verified-session",
+  "summary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 75,
+        "cases": 88,
+        "resolvedSections": 75,
+        "resolvedSectionsKnownSubtotal": 75,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 75,
+        "returnedGeometrySectionsKnownSubtotal": 75,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 75,
+        "referencedStopObservations": 868,
+        "unreferencedStopObservations": 126,
+        "completeCasesWithStopOver2Km": 46
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 88,
+        "resolvedSections": 14,
+        "resolvedSectionsKnownSubtotal": 14,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 14,
+        "returnedGeometrySectionsKnownSubtotal": 14,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 88,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 49,
+        "cases": 88,
+        "resolvedSections": 756,
+        "resolvedSectionsKnownSubtotal": 756,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 756,
+        "returnedGeometrySectionsKnownSubtotal": 756,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 88,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 49,
+        "referencedStopObservations": 486,
+        "unreferencedStopObservations": 39,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 88,
+        "resolvedSections": 499,
+        "resolvedSectionsKnownSubtotal": 499,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 542,
+        "returnedGeometrySectionsKnownSubtotal": 542,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 43,
+        "physicalGapEntriesKnownSubtotal": 43,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 1010,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "fullUniqueSummary": {
+    "endpoint-only": {
+      "original": {
+        "complete": 73,
+        "cases": 86,
+        "resolvedSections": 73,
+        "resolvedSectionsKnownSubtotal": 73,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 73,
+        "returnedGeometrySectionsKnownSubtotal": 73,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 73,
+        "referencedStopObservations": 831,
+        "unreferencedStopObservations": 122,
+        "completeCasesWithStopOver2Km": 44
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 86,
+        "resolvedSections": 14,
+        "resolvedSectionsKnownSubtotal": 14,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 14,
+        "returnedGeometrySectionsKnownSubtotal": 14,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 0,
+        "physicalGapEntriesKnownSubtotal": 0,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 86,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    },
+    "forced-known-stops": {
+      "original": {
+        "complete": 47,
+        "cases": 86,
+        "resolvedSections": 717,
+        "resolvedSectionsKnownSubtotal": 717,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 717,
+        "returnedGeometrySectionsKnownSubtotal": 717,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": null,
+        "physicalGapEntriesKnownSubtotal": null,
+        "physicalGapEntriesUnknownCases": 86,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 47,
+        "referencedStopObservations": 449,
+        "unreferencedStopObservations": 35,
+        "completeCasesWithStopOver2Km": 2
+      },
+      "railmap": {
+        "complete": 14,
+        "cases": 86,
+        "resolvedSections": 483,
+        "resolvedSectionsKnownSubtotal": 483,
+        "resolvedSectionsUnknownCases": 0,
+        "returnedGeometrySections": 525,
+        "returnedGeometrySectionsKnownSubtotal": 525,
+        "returnedGeometrySectionsUnknownCases": 0,
+        "physicalGapEntries": 42,
+        "physicalGapEntriesKnownSubtotal": 42,
+        "physicalGapEntriesUnknownCases": 0,
+        "unassignedGeometryParts": 0,
+        "expectedSections": 971,
+        "completeCasesWithAnyReference": 14,
+        "referencedStopObservations": 112,
+        "unreferencedStopObservations": 4,
+        "completeCasesWithStopOver2Km": 0
+      }
+    }
+  },
+  "wrongDisplayIdentityAssignments": [
+    {
+      "id": "CN-REAL-D271-20261018-forced-known-stops",
+      "sectionIndex": 10,
+      "reason": "Display canonicalization guessed a metro identity despite actual original national-rail source path. Not an actual metro source-geometry traversal."
+    },
+    {
+      "id": "CN-REAL-C293-20261018-forced-known-stops",
+      "sectionIndex": 0,
+      "reason": "Display canonicalization guessed a metro identity despite actual original national-rail source path. Not an actual metro source-geometry traversal."
+    }
+  ],
+  "sourceGeometryEvidence": "three-connectors-focused-review.json",
+  "findingCounts": {
+    "physical_intervals_unproven": 491,
+    "route_unavailable": 85,
+    "route_partial": 63,
+    "physical_intervals_unavailable": 65
+  },
+  "finalAcceptance": false,
+  "nextFix": "Require canonical display identity to be traversed by source-qualified original CN path keys; preserve surveyed source geometry and strict station anchors."
+}

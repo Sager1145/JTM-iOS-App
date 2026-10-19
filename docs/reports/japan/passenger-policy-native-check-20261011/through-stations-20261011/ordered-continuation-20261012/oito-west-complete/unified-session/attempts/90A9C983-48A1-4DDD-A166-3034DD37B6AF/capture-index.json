@@ -1,0 +1,2680 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 292.8476665669815,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.774633000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90839199999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.776849678639977,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91016248155594,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.778936461897146,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91210538903042,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.780975718618883,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91414579061401,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.78329691934649,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91568344648707,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.785906796839868,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91584774743146,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.788431134390564,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91518603828263,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.791024087286985,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91553849098673,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.793632779333883,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91509259040001,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.796251181197619,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91484503935541,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.798418109867221,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91300856475561,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.801021060020595,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91306684003413,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.803170745456107,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.91130423779933,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.804810967497417,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90873903252034,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#0",
+      "latitude" : 36.805619999999998,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.907895,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#0#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.805619999999998,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.907895,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.807984485379571,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90725878039387,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.810466206924772,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.9083381034055,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.812960195128582,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90776553787532,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.815124378946763,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90589326087988,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.817383500300117,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90421282044568,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.819934686703462,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90425769091163,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.822373347670002,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90548400857324,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.824841080256284,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90658050364664,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.827444305929333,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90616850548076,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.829982179387059,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90530524136747,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.832556008982657,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90461056912434,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.835103134209646,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90377960950565,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.837680369141772,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90378066608196,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.840068785461618,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90516090685921,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000015",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.842440923352001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90644303052449,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-15"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000001\/000016",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#1",
+      "latitude" : 36.842565,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90644499999999,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#1#point-16"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.842565,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90644499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.844902500819153,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.9051417399607,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.847058139697374,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90325276474448,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.849265225689237,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90146598255131,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.85184335923406,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90112515770406,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.854282623715406,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.90008790108899,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.856741779654449,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.89902582943458,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.858863942399189,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.89728588075459,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.86021848211891,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.89447464304305,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.862172472029251,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.89227083948521,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.864174469503801,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.89013219534405,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.866128002819373,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.88792514013844,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.868052175175357,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8856777979843,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.869979972743607,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.88343503248967,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.871895495275275,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8811758884612,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000015",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.873819978984628,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87892908717717,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-15"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000016",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.87573759788696,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87667458087012,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-16"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000017",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.876915448605203,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87373985803112,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-17"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000018",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.877953598332049,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87071483149163,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-18"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000019",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.879307227073738,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86791408978416,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-19"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000020",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.881758091836765,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86688996175459,
+      "pointOrdinal" : 20,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-20"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000021",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.88416701120363,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8657687415641,
+      "pointOrdinal" : 21,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-21"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000022",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.88672768898455,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86572534258428,
+      "pointOrdinal" : 22,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-22"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000002\/000023",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#2",
+      "latitude" : 36.886875000000003,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86562499999999,
+      "pointOrdinal" : 23,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#2#point-23"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.886875000000003,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86562499999999,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.888879457055125,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86351425910487,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.891407796545344,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86317871173733,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.893718198980586,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86459454973652,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.896038061487197,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86595957785164,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.896959539254993,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86897400031222,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.898495649455604,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87164707483103,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.900427103077732,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87378875845954,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.903049743644893,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87404069593924,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.905676660457765,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87427472166937,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.908303606818023,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87450732817919,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.910931004436947,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8747318434294,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.913558236072781,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87496074872962,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.916184380100091,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87519948907189,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.918772777311297,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87574182525321,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000015",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.921121359732176,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87447407745455,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-15"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000016",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.923247019558112,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87264954571435,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-16"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000017",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.925682251859527,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87174201495711,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-17"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000018",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.927124000456757,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86899599961427,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-18"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000019",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.929636604385465,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86835735827134,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-19"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000020",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.931609647992026,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86626552809651,
+      "pointOrdinal" : 20,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-20"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000021",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.933284232671255,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86372437218606,
+      "pointOrdinal" : 21,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-21"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000022",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.935345696583632,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86176953105681,
+      "pointOrdinal" : 22,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-22"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000023",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.93770353705257,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86050163342352,
+      "pointOrdinal" : 23,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-23"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000003\/000024",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#3",
+      "latitude" : 36.938175000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85950500000001,
+      "pointOrdinal" : 24,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#3#point-24"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.938175000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85950500000001,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.940008111052258,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8574404857317,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.942526436063417,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85654639302251,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.945017625084773,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85595060793068,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.947589070756614,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85579478877162,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.949866162970096,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85742651942081,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.951817132715689,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8595955476527,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.954361101292811,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85962166851095,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.956723275151212,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.8608612766171,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.95890558221376,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86270415415072,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.961191622586433,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86433972822735,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.963530669316135,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86585033457752,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.966025158330261,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86690386965628,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000004\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#4",
+      "latitude" : 36.966655000000003,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86712,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#4#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.966655000000003,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86712,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.96917584749054,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86807170041143,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.971549317668313,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86937272834166,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.97376494662366,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87107290324198,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.976296605667081,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87193310443323,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.978781160106067,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87301378792219,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.981043495511649,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87464349426998,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.983093211878028,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87671350217178,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.985050044555535,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87891499057724,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.987292056876974,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.88048496534597,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.989889319995605,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.88019117358741,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.992242049342458,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87874487051948,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-11"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000012",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.994751471223786,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87786352621379,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-12"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000013",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.997212346008908,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87668893155092,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-13"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000014",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 36.999685637512414,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87555594419081,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-14"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000015",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 37.002151423930911,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87439748466736,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-15"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000016",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 37.004614421745515,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87322974669553,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-16"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000005\/000017",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#5",
+      "latitude" : 37.006160000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87249,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#5#point-17"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.006160000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87249,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.008631392114808,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87135192291123,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.011095553358778,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.87018813468251,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.01351882906139,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86890182453376,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.015728208380636,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86711792737435,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.017568560373412,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86476368221298,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.019363975454652,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86235050636918,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000006\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#6",
+      "latitude" : 37.020420000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.860975,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#6#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000000",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.020420000000001,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.860975,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-0"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000001",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.022213128720949,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85855934706987,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-1"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000002",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.02400348363836,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85614030975444,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-2"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000003",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.026235856890132,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85470892679899,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-3"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000004",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.028868667403103,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85463280689783,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-4"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000005",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.031501538373384,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85455354539221,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-5"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000006",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.034134377118612,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85447251643848,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-6"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000007",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.036767600853196,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85441419413701,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-7"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000008",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.039398364312675,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85442844490072,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-8"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000009",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.041678127918956,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85590907600715,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-9"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000010",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.042774183744321,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.85887037297212,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-10"
+    },
+    {
+      "directory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session\/alignment\/captures\/000007\/000011",
+      "itemID" : "jp-西日本旅客鉄道-大糸線#7",
+      "latitude" : 37.043114000000003,
+      "lineDependency" : "b09f1b171470a6d130af3fe0ca82b72e0b55d7969f3e9a372b90d80b2e3f6f78",
+      "longitude" : 137.86111500000001,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-大糸線#7#point-11"
+    }
+  ]
+}

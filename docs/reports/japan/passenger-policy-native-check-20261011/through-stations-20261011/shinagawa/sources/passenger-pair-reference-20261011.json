@@ -1,0 +1,1821 @@
+{
+  "status": "bounded-display-corridor-ready",
+  "retrievedAt": "2026-10-11",
+  "lineId": "jp-東日本旅客鉄道-総武線-3",
+  "crs": "WGS84 longitude latitude",
+  "sources": {
+    "gsiVector": {
+      "url": "https://maps.gsi.go.jp/development/vt.html",
+      "snapshotDate": "2026-07-01",
+      "publishedUpdate": "2026-09-16",
+      "files": [
+        "gsi-rail-north.pbf",
+        "gsi-rail-south.pbf",
+        "gsi-rail-decoded.geojson",
+        "gsi-rail-16-58205-25820.pbf",
+        "gsi-rail-16-58206-25820.pbf",
+        "gsi-rail-16-58205-25821.pbf",
+        "gsi-west-curve-decoded.geojson"
+      ],
+      "sourceCRS": "Web Mercator vector tile grid",
+      "conversion": "MVT positive-down y / extent; inverse Web Mercator, original tile/feature ordinal recorded on every decoded feature. No datum offset.",
+      "limits": "Snapshot is not individual track survey date; detailed features lack line IDs and cartographic turnout joins are not a railway graph."
+    },
+    "gsiImagery": {
+      "url": "https://maps.gsi.go.jp/development/ichiran.html",
+      "layer": "nendophoto2019",
+      "photographyYear": 2019,
+      "files": [
+        "gsi-2019-south-strip.png",
+        "gsi-2019-west-curve.png"
+      ],
+      "stripOriginTile": [
+        18,
+        232825,
+        103271
+      ],
+      "stripDimensionsPixels": [
+        768,
+        2304
+      ],
+      "westCurveOriginTile": [
+        18,
+        232822,
+        103280
+      ],
+      "westCurveDimensionsPixels": [
+        1536,
+        1280
+      ],
+      "limits": "2019 imagery establishes geographic corridor and bridge ordering, not October 2026 turnout status."
+    },
+    "datedTrackMapping": {
+      "url": "https://www.haisenryakuzu.net/documents/jr/east/tokaido/",
+      "file": "track-diagram-v7.pdf",
+      "version": "7.0",
+      "published": "2025-11-03",
+      "surveyDates": {
+        "TokyoAtami": "2025-08",
+        "ShinagawaShinTsurumi": "2022-10"
+      },
+      "license": "CC BY 4.0, haishenryakuzu.net",
+      "limits": "Schematic; not georeferenced and no adopted per-switch 2026 certification."
+    },
+    "fieldObservation": {
+      "url": "https://mirai-report.com/blog-entry-1296.html",
+      "published": "2014-04-08",
+      "surveyPeriod": "2013-11/12",
+      "files": [
+        "historical-south-article.html",
+        "shinagawa201311_30.png",
+        "shinagawa201311_32b.jpg"
+      ],
+      "limits": "Dated original southern switch observation; historic topology only, no coordinates."
+    },
+    "osm": {
+      "cacheFetchedAt": "2026-08-18T10:37:59.411Z",
+      "file": "osm-bounded-rail-ways.json",
+      "license": "ODbL, OpenStreetMap contributors",
+      "purpose": "Main/passenger identities and continuous way endpoints; not independent positional truth. Source tags are KSJ2 / 2007 MLIT, so neither freshness nor positional independence is assumed."
+    },
+    "officialPlatformFamily": {
+      "url": "https://www.jreast.co.jp/estation/stations/788.html",
+      "mapDate": "2026-07",
+      "purpose": "Platforms13–15 Yokosuka/Sobu passenger family distinct from Tokaido6–12; schematic family identity, not coordinate survey."
+    }
+  },
+  "identity": {
+    "upMainWays": [
+      1313812927,
+      1313812926,
+      211472447,
+      211472356,
+      211472339,
+      211472445,
+      364965009,
+      211472363,
+      211472457,
+      365183505
+    ],
+    "downMainWays": [
+      853189600,
+      853189598,
+      210181293,
+      211472312,
+      211472444,
+      210312685,
+      210312686,
+      364965011,
+      211472388,
+      211472429
+    ],
+    "upSouthGsiFeatureIndices": [
+      83,
+      78,
+      130,
+      157,
+      229,
+      254
+    ],
+    "downSouthGsiFeatureIndices": [
+      90,
+      104,
+      144,
+      154,
+      230,
+      255
+    ],
+    "basis": "Continuous exact geometry endpoints of identified JR East 1067 mm main passenger ways, Yokosuka-named at station and Hinkaku-named south; station ways have oneway=yes. Correlated with GSI positional rails, imagery bridge ordering, dated track diagram and official platform family 13–15. Physical railway name alone is not service identity. Cache has no OSM node IDs. Siding853189601 and adjacent Tokaido ways excluded.",
+    "excludedWays": [
+      853189601
+    ]
+  },
+  "representativeCentreSupports": [
+    {
+      "latitude": 35.6272,
+      "up": [
+        139.739470569,
+        35.6272
+      ],
+      "down": [
+        139.739514427,
+        35.6272
+      ],
+      "centre": [
+        139.739492498,
+        35.6272
+      ],
+      "gsiFeatureIndices": [
+        83,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62695,
+      "up": [
+        139.73941209,
+        35.62695
+      ],
+      "down": [
+        139.739456437,
+        35.62695
+      ],
+      "centre": [
+        139.739434263,
+        35.62695
+      ],
+      "gsiFeatureIndices": [
+        78,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62681,
+      "up": [
+        139.739360418,
+        35.62681
+      ],
+      "down": [
+        139.739423962,
+        35.62681
+      ],
+      "centre": [
+        139.73939219,
+        35.62681
+      ],
+      "gsiFeatureIndices": [
+        78,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6267,
+      "up": [
+        139.739319823,
+        35.6267
+      ],
+      "down": [
+        139.739398447,
+        35.6267
+      ],
+      "centre": [
+        139.739359135,
+        35.6267
+      ],
+      "gsiFeatureIndices": [
+        78,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6265,
+      "up": [
+        139.739269298,
+        35.6265
+      ],
+      "down": [
+        139.739346427,
+        35.6265
+      ],
+      "centre": [
+        139.739307862,
+        35.6265
+      ],
+      "gsiFeatureIndices": [
+        78,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6262,
+      "up": [
+        139.73919351,
+        35.6262
+      ],
+      "down": [
+        139.739252448,
+        35.6262
+      ],
+      "centre": [
+        139.739222979,
+        35.6262
+      ],
+      "gsiFeatureIndices": [
+        78,
+        90
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62589,
+      "up": [
+        139.739118743,
+        35.62589
+      ],
+      "down": [
+        139.739169274,
+        35.62589
+      ],
+      "centre": [
+        139.739144008,
+        35.62589
+      ],
+      "gsiFeatureIndices": [
+        130,
+        144
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62549,
+      "up": [
+        139.739026724,
+        35.62549
+      ],
+      "down": [
+        139.739073122,
+        35.62549
+      ],
+      "centre": [
+        139.739049923,
+        35.62549
+      ],
+      "gsiFeatureIndices": [
+        130,
+        154
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6252186,
+      "up": [
+        139.738969805,
+        35.6252186
+      ],
+      "down": [
+        139.739009881,
+        35.6252186
+      ],
+      "centre": [
+        139.738989843,
+        35.6252186
+      ],
+      "gsiFeatureIndices": [
+        130,
+        154
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62501,
+      "up": [
+        139.738919763,
+        35.62501
+      ],
+      "down": [
+        139.738961273,
+        35.62501
+      ],
+      "centre": [
+        139.738940518,
+        35.62501
+      ],
+      "gsiFeatureIndices": [
+        157,
+        154
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.624,
+      "up": [
+        139.738681297,
+        35.624
+      ],
+      "down": [
+        139.738725867,
+        35.624
+      ],
+      "centre": [
+        139.738703582,
+        35.624
+      ],
+      "gsiFeatureIndices": [
+        229,
+        230
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6234,
+      "up": [
+        139.738541209,
+        35.6234
+      ],
+      "down": [
+        139.738588175,
+        35.6234
+      ],
+      "centre": [
+        139.738564692,
+        35.6234
+      ],
+      "gsiFeatureIndices": [
+        229,
+        230
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6226,
+      "up": [
+        139.738348162,
+        35.6226
+      ],
+      "down": [
+        139.738388254,
+        35.6226
+      ],
+      "centre": [
+        139.738368208,
+        35.6226
+      ],
+      "gsiFeatureIndices": [
+        254,
+        255
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6225,
+      "up": [
+        139.738319436,
+        35.6225
+      ],
+      "down": [
+        139.738359905,
+        35.6225
+      ],
+      "centre": [
+        139.738339671,
+        35.6225
+      ],
+      "gsiFeatureIndices": [
+        254,
+        255
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6215,
+      "up": [
+        139.738047253,
+        35.6215
+      ],
+      "down": [
+        139.738091427,
+        35.6215
+      ],
+      "centre": [
+        139.73806934,
+        35.6215
+      ],
+      "gsiFeatureIndices": [
+        254,
+        255
+      ],
+      "source": "gsi"
+    }
+  ],
+  "boundaries": {
+    "physicalStation": [
+      139.739427,
+      35.629035
+    ],
+    "displayStation": [
+      139.73965305042694,
+      35.629035
+    ],
+    "northRetainedSource": [
+      139.7396393,
+      35.6297092
+    ],
+    "southRetainedSource": [
+      139.73205,
+      35.61655
+    ],
+    "actualOsakiSouthDisplayForks": [
+      [
+        139.7255211,
+        35.6087882
+      ],
+      [
+        139.7255384,
+        35.6088669
+      ]
+    ],
+    "northTransition": "Exact retained normal-up source support to representative pair midpoint at station; smoothstep lateral weight 0→0.5 entirely between the two identified passenger rails. Preserve north prefix; no surveyed roof/platform centre claim.",
+    "southTransition": "Continue identified pair centre around actual west curve, using GSI positional pair supports with continuous OSM main-way identity. Last shallow curve35.61677–35.6166 uses the two identified OSM rails because latitude-only GSI fragment correspondence is ambiguous. Exact retained source at35.61655 agrees with GSI pair centre within0.05m; preserve entire source tail and real Osaki fork projections. Support35.62049 is a western approach point, not an Osaki junction."
+  },
+  "verdict": "READY: bounded display-only centre and approach override between exact retained normal-up support35.6297092 and independently supported exact south rejoin35.61655. Physical operational inputs and downstream source/forks preserved.",
+  "stationRepresentative": {
+    "latitude": 35.629035,
+    "up": [
+      139.7395602837456,
+      35.629035
+    ],
+    "down": [
+      139.7397458171083,
+      35.629035
+    ],
+    "centre": [
+      139.73965305042694,
+      35.629035
+    ],
+    "osmWayIds": [
+      1313812926,
+      853189600
+    ],
+    "source": "osm"
+  },
+  "northTransitionSupports": [
+    {
+      "latitude": 35.6297092,
+      "up": [
+        139.7396393,
+        35.6297092
+      ],
+      "down": [
+        139.7398006735476,
+        35.6297092
+      ],
+      "centre": [
+        139.7397199867738,
+        35.6297092
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.7396393,
+        35.6297092
+      ],
+      "downRailWeight": 0.0
+    },
+    {
+      "latitude": 35.6296,
+      "up": [
+        139.7396218472582,
+        35.6296
+      ],
+      "down": [
+        139.73978425080347,
+        35.6296
+      ],
+      "centre": [
+        139.73970304903082,
+        35.6296
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73962754797176,
+        35.6296
+      ],
+      "downRailWeight": 0.035102149777571444
+    },
+    {
+      "latitude": 35.6295,
+      "up": [
+        139.73960586489392,
+        35.6295
+      ],
+      "down": [
+        139.73977096389584,
+        35.6295
+      ],
+      "centre": [
+        139.7396884143949,
+        35.6295
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73962477657258,
+        35.6295
+      ],
+      "downRailWeight": 0.11454750449174333
+    },
+    {
+      "latitude": 35.6293727,
+      "up": [
+        139.73958551934416,
+        35.6293727
+      ],
+      "down": [
+        139.7397549,
+        35.6293727
+      ],
+      "centre": [
+        139.73967020967208,
+        35.6293727
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.7396277514538,
+        35.6293727
+      ],
+      "downRailWeight": 0.24933254298121313
+    },
+    {
+      "latitude": 35.6293463,
+      "up": [
+        139.7395813,
+        35.6293463
+      ],
+      "down": [
+        139.73975438943398,
+        35.6293463
+      ],
+      "centre": [
+        139.739667844717,
+        35.6293463
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73962953044352,
+        35.6293463
+      ],
+      "downRailWeight": 0.27864464296750285
+    },
+    {
+      "latitude": 35.62925,
+      "up": [
+        139.73957238537142,
+        35.62925
+      ],
+      "down": [
+        139.73975252702832,
+        35.62925
+      ],
+      "centre": [
+        139.73966245619988,
+        35.62925
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73964081897572,
+        35.62925
+      ],
+      "downRailWeight": 0.37988772551365707
+    },
+    {
+      "latitude": 35.6291713,
+      "up": [
+        139.7395651,
+        35.6291713
+      ],
+      "down": [
+        139.739751005,
+        35.6291713
+      ],
+      "centre": [
+        139.73965805249998,
+        35.6291713
+      ],
+      "osmWayIds": [
+        1313812927,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73964819141753,
+        35.6291713
+      ],
+      "downRailWeight": 0.4469563354200811
+    },
+    {
+      "latitude": 35.6291607,
+      "up": [
+        139.73956472544168,
+        35.6291607
+      ],
+      "down": [
+        139.7397508,
+        35.6291607
+      ],
+      "centre": [
+        139.73965776272084,
+        35.6291607
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.7396492664389,
+        35.6291607
+      ],
+      "downRailWeight": 0.4543393679679511
+    },
+    {
+      "latitude": 35.6291,
+      "up": [
+        139.73956258056538,
+        35.6291
+      ],
+      "down": [
+        139.7397483937826,
+        35.6291
+      ],
+      "centre": [
+        139.739655487174,
+        35.6291
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73965306298814,
+        35.6291
+      ],
+      "downRailWeight": 0.4869536414845129
+    },
+    {
+      "latitude": 35.629035,
+      "up": [
+        139.7395602837456,
+        35.629035
+      ],
+      "down": [
+        139.7397458171083,
+        35.629035
+      ],
+      "centre": [
+        139.73965305042694,
+        35.629035
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm",
+      "display": [
+        139.73965305042694,
+        35.629035
+      ],
+      "downRailWeight": 0.5
+    }
+  ],
+  "stationToSouthSupports": [
+    {
+      "latitude": 35.629035,
+      "up": [
+        139.7395602837456,
+        35.629035
+      ],
+      "down": [
+        139.7397458171083,
+        35.629035
+      ],
+      "centre": [
+        139.73965305042694,
+        35.629035
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.62894,
+      "up": [
+        139.73955692685513,
+        35.62894
+      ],
+      "down": [
+        139.73974205119967,
+        35.62894
+      ],
+      "centre": [
+        139.73964948902739,
+        35.62894
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6288,
+      "up": [
+        139.73955197985867,
+        35.6288
+      ],
+      "down": [
+        139.73973650143958,
+        35.6288
+      ],
+      "centre": [
+        139.7396442406491,
+        35.6288
+      ],
+      "osmWayIds": [
+        1313812926,
+        853189600
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.62869,
+      "up": [
+        139.7395480904011,
+        35.62869
+      ],
+      "down": [
+        139.73973214091382,
+        35.62869
+      ],
+      "centre": [
+        139.73964011565744,
+        35.62869
+      ],
+      "osmWayIds": [
+        211472447,
+        853189600
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6285,
+      "up": [
+        139.73953897142857,
+        35.6285
+      ],
+      "down": [
+        139.73972410741564,
+        35.6285
+      ],
+      "centre": [
+        139.7396315394221,
+        35.6285
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6283,
+      "up": [
+        139.73952937251013,
+        35.6283
+      ],
+      "down": [
+        139.73971562606573,
+        35.6283
+      ],
+      "centre": [
+        139.73962249928792,
+        35.6283
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6281,
+      "up": [
+        139.73951912196392,
+        35.6281
+      ],
+      "down": [
+        139.73969972486532,
+        35.6281
+      ],
+      "centre": [
+        139.7396094234146,
+        35.6281
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6279,
+      "up": [
+        139.73950863284358,
+        35.6279
+      ],
+      "down": [
+        139.73967171622726,
+        35.6279
+      ],
+      "centre": [
+        139.7395901745354,
+        35.6279
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6277,
+      "up": [
+        139.73949759271707,
+        35.6277
+      ],
+      "down": [
+        139.73962994024222,
+        35.6277
+      ],
+      "centre": [
+        139.73956376647965,
+        35.6277
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6275,
+      "up": [
+        139.73947260197173,
+        35.6275
+      ],
+      "down": [
+        139.73958127522707,
+        35.6275
+      ],
+      "centre": [
+        139.7395269385994,
+        35.6275
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.62735,
+      "up": [
+        139.73944652573118,
+        35.62735
+      ],
+      "down": [
+        139.7395456779775,
+        35.62735
+      ],
+      "centre": [
+        139.73949610185434,
+        35.62735
+      ],
+      "osmWayIds": [
+        211472447,
+        853189598
+      ],
+      "source": "osm"
+    }
+  ],
+  "westCurveSupports": [
+    {
+      "latitude": 35.6213,
+      "up": [
+        139.73799453300066,
+        35.6213
+      ],
+      "down": [
+        139.73803799829207,
+        35.6213
+      ],
+      "centre": [
+        139.73801626564637,
+        35.6213
+      ],
+      "gsiFeatureIndices": [
+        341,
+        342
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.621,
+      "up": [
+        139.7379143036473,
+        35.621
+      ],
+      "down": [
+        139.73795835419736,
+        35.621
+      ],
+      "centre": [
+        139.73793632892233,
+        35.621
+      ],
+      "gsiFeatureIndices": [
+        341,
+        342
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6206,
+      "up": [
+        139.73780733117616,
+        35.6206
+      ],
+      "down": [
+        139.73785216207105,
+        35.6206
+      ],
+      "centre": [
+        139.73782974662362,
+        35.6206
+      ],
+      "gsiFeatureIndices": [
+        341,
+        342
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62049,
+      "up": [
+        139.73777790298996,
+        35.62049
+      ],
+      "down": [
+        139.737823344898,
+        35.62049
+      ],
+      "centre": [
+        139.737800623944,
+        35.62049
+      ],
+      "gsiFeatureIndices": [
+        311,
+        313
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.62031,
+      "up": [
+        139.73772893634404,
+        35.62031
+      ],
+      "down": [
+        139.7377746054117,
+        35.62031
+      ],
+      "centre": [
+        139.73775177087788,
+        35.62031
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6201,
+      "up": [
+        139.73766907521397,
+        35.6201
+      ],
+      "down": [
+        139.73771350400173,
+        35.6201
+      ],
+      "centre": [
+        139.73769128960785,
+        35.6201
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6198,
+      "up": [
+        139.7375650008183,
+        35.6198
+      ],
+      "down": [
+        139.73760927041806,
+        35.6198
+      ],
+      "centre": [
+        139.73758713561818,
+        35.6198
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6196,
+      "up": [
+        139.737476243039,
+        35.6196
+      ],
+      "down": [
+        139.73752477788787,
+        35.6196
+      ],
+      "centre": [
+        139.73750051046343,
+        35.6196
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6193,
+      "up": [
+        139.7373141248419,
+        35.6193
+      ],
+      "down": [
+        139.73735670909747,
+        35.6193
+      ],
+      "centre": [
+        139.7373354169697,
+        35.6193
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61901,
+      "up": [
+        139.73711187867502,
+        35.61901
+      ],
+      "down": [
+        139.7371632083059,
+        35.61901
+      ],
+      "centre": [
+        139.73713754349046,
+        35.61901
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6188,
+      "up": [
+        139.73695825925014,
+        35.6188
+      ],
+      "down": [
+        139.73700952677808,
+        35.6188
+      ],
+      "centre": [
+        139.7369838930141,
+        35.6188
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61869,
+      "up": [
+        139.73687779193236,
+        35.61869
+      ],
+      "down": [
+        139.7369290269302,
+        35.61869
+      ],
+      "centre": [
+        139.73690340943128,
+        35.61869
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6185,
+      "up": [
+        139.7367333746627,
+        35.6185
+      ],
+      "down": [
+        139.73678420777105,
+        35.6185
+      ],
+      "centre": [
+        139.73675879121686,
+        35.6185
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61828,
+      "up": [
+        139.73654983505494,
+        35.61828
+      ],
+      "down": [
+        139.73659681885113,
+        35.61828
+      ],
+      "centre": [
+        139.73657332695302,
+        35.61828
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.618,
+      "up": [
+        139.73626557515186,
+        35.618
+      ],
+      "down": [
+        139.73631451577958,
+        35.618
+      ],
+      "centre": [
+        139.73629004546572,
+        35.618
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.6178,
+      "up": [
+        139.73602735965127,
+        35.6178
+      ],
+      "down": [
+        139.73608234500145,
+        35.6178
+      ],
+      "centre": [
+        139.73605485232636,
+        35.6178
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61761,
+      "up": [
+        139.73577628608555,
+        35.61761
+      ],
+      "down": [
+        139.73584167839172,
+        35.61761
+      ],
+      "centre": [
+        139.73580898223864,
+        35.61761
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61741,
+      "up": [
+        139.73546312796353,
+        35.61741
+      ],
+      "down": [
+        139.7355376646443,
+        35.61741
+      ],
+      "centre": [
+        139.7355003963039,
+        35.61741
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61729,
+      "up": [
+        139.73524092027804,
+        35.61729
+      ],
+      "down": [
+        139.73530572788047,
+        35.61729
+      ],
+      "centre": [
+        139.73527332407926,
+        35.61729
+      ],
+      "gsiFeatureIndices": [
+        329,
+        330
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61717,
+      "up": [
+        139.7349781712028,
+        35.61717
+      ],
+      "down": [
+        139.73504325754928,
+        35.61717
+      ],
+      "centre": [
+        139.73501071437605,
+        35.61717
+      ],
+      "gsiFeatureIndices": [
+        17,
+        297
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61704,
+      "up": [
+        139.73462031191266,
+        35.61704
+      ],
+      "down": [
+        139.73473538224636,
+        35.61704
+      ],
+      "centre": [
+        139.73467784707952,
+        35.61704
+      ],
+      "gsiFeatureIndices": [
+        235,
+        18
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61691,
+      "up": [
+        139.73419557504343,
+        35.61691
+      ],
+      "down": [
+        139.73432984054762,
+        35.61691
+      ],
+      "centre": [
+        139.73426270779552,
+        35.61691
+      ],
+      "gsiFeatureIndices": [
+        233,
+        231
+      ],
+      "source": "gsi"
+    },
+    {
+      "latitude": 35.61684,
+      "up": [
+        139.73393482883424,
+        35.61684
+      ],
+      "down": [
+        139.73409204840635,
+        35.61684
+      ],
+      "centre": [
+        139.7340134386203,
+        35.61684
+      ],
+      "gsiFeatureIndices": [
+        227,
+        231
+      ],
+      "source": "gsi"
+    }
+  ],
+  "lastCurveSupports": [
+    {
+      "latitude": 35.61677,
+      "up": [
+        139.73367706486488,
+        35.61677
+      ],
+      "down": [
+        139.73385605833334,
+        35.61677
+      ],
+      "centre": [
+        139.7337665615991,
+        35.61677
+      ],
+      "osmWayIds": [
+        211472363,
+        364965011
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.61673,
+      "up": [
+        139.7334709030769,
+        35.61673
+      ],
+      "down": [
+        139.73367325088495,
+        35.61673
+      ],
+      "centre": [
+        139.73357207698092,
+        35.61673
+      ],
+      "osmWayIds": [
+        365183505,
+        364965011
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.61669,
+      "up": [
+        139.73319736816606,
+        35.61669
+      ],
+      "down": [
+        139.73344335714285,
+        35.61669
+      ],
+      "centre": [
+        139.73332036265447,
+        35.61669
+      ],
+      "osmWayIds": [
+        365183505,
+        211472429
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.61665,
+      "up": [
+        139.73272966966823,
+        35.61665
+      ],
+      "down": [
+        139.73310053148148,
+        35.61665
+      ],
+      "centre": [
+        139.73291510057487,
+        35.61665
+      ],
+      "osmWayIds": [
+        365183505,
+        211472429
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.6166,
+      "up": [
+        139.73226189665425,
+        35.6166
+      ],
+      "down": [
+        139.73257560945942,
+        35.6166
+      ],
+      "centre": [
+        139.73241875305683,
+        35.6166
+      ],
+      "osmWayIds": [
+        365183505,
+        211472429
+      ],
+      "source": "osm"
+    },
+    {
+      "latitude": 35.61655,
+      "up": [
+        139.7319368862836,
+        35.61655
+      ],
+      "down": [
+        139.7321621874249,
+        35.61655
+      ],
+      "centre": [
+        139.73204953685425,
+        35.61655
+      ],
+      "gsiFeatureIndices": [
+        178,
+        208
+      ],
+      "source": "gsi",
+      "display": [
+        139.73205,
+        35.61655
+      ],
+      "retainedSourceDifferenceMeters": 0.04191468934777731
+    }
+  ],
+  "displayPaths": {
+    "northTransition": [
+      [
+        139.7396393,
+        35.6297092
+      ],
+      [
+        139.73962754797176,
+        35.6296
+      ],
+      [
+        139.73962477657258,
+        35.6295
+      ],
+      [
+        139.7396277514538,
+        35.6293727
+      ],
+      [
+        139.73962953044352,
+        35.6293463
+      ],
+      [
+        139.73964081897572,
+        35.62925
+      ],
+      [
+        139.73964819141753,
+        35.6291713
+      ],
+      [
+        139.7396492664389,
+        35.6291607
+      ],
+      [
+        139.73965306298814,
+        35.6291
+      ],
+      [
+        139.73965305042694,
+        35.629035
+      ]
+    ],
+    "south": [
+      [
+        139.73965305042694,
+        35.629035
+      ],
+      [
+        139.73964948902739,
+        35.62894
+      ],
+      [
+        139.7396442406491,
+        35.6288
+      ],
+      [
+        139.73964011565744,
+        35.62869
+      ],
+      [
+        139.7396315394221,
+        35.6285
+      ],
+      [
+        139.73962249928792,
+        35.6283
+      ],
+      [
+        139.7396094234146,
+        35.6281
+      ],
+      [
+        139.7395901745354,
+        35.6279
+      ],
+      [
+        139.73956376647965,
+        35.6277
+      ],
+      [
+        139.7395269385994,
+        35.6275
+      ],
+      [
+        139.73949610185434,
+        35.62735
+      ],
+      [
+        139.739492498,
+        35.6272
+      ],
+      [
+        139.739434263,
+        35.62695
+      ],
+      [
+        139.73939219,
+        35.62681
+      ],
+      [
+        139.739359135,
+        35.6267
+      ],
+      [
+        139.739307862,
+        35.6265
+      ],
+      [
+        139.739222979,
+        35.6262
+      ],
+      [
+        139.739144008,
+        35.62589
+      ],
+      [
+        139.739049923,
+        35.62549
+      ],
+      [
+        139.738989843,
+        35.6252186
+      ],
+      [
+        139.738940518,
+        35.62501
+      ],
+      [
+        139.738703582,
+        35.624
+      ],
+      [
+        139.738564692,
+        35.6234
+      ],
+      [
+        139.738368208,
+        35.6226
+      ],
+      [
+        139.738339671,
+        35.6225
+      ],
+      [
+        139.73806934,
+        35.6215
+      ],
+      [
+        139.73801626564637,
+        35.6213
+      ],
+      [
+        139.73793632892233,
+        35.621
+      ],
+      [
+        139.73782974662362,
+        35.6206
+      ],
+      [
+        139.737800623944,
+        35.62049
+      ],
+      [
+        139.73775177087788,
+        35.62031
+      ],
+      [
+        139.73769128960785,
+        35.6201
+      ],
+      [
+        139.73758713561818,
+        35.6198
+      ],
+      [
+        139.73750051046343,
+        35.6196
+      ],
+      [
+        139.7373354169697,
+        35.6193
+      ],
+      [
+        139.73713754349046,
+        35.61901
+      ],
+      [
+        139.7369838930141,
+        35.6188
+      ],
+      [
+        139.73690340943128,
+        35.61869
+      ],
+      [
+        139.73675879121686,
+        35.6185
+      ],
+      [
+        139.73657332695302,
+        35.61828
+      ],
+      [
+        139.73629004546572,
+        35.618
+      ],
+      [
+        139.73605485232636,
+        35.6178
+      ],
+      [
+        139.73580898223864,
+        35.61761
+      ],
+      [
+        139.7355003963039,
+        35.61741
+      ],
+      [
+        139.73527332407926,
+        35.61729
+      ],
+      [
+        139.73501071437605,
+        35.61717
+      ],
+      [
+        139.73467784707952,
+        35.61704
+      ],
+      [
+        139.73426270779552,
+        35.61691
+      ],
+      [
+        139.7340134386203,
+        35.61684
+      ],
+      [
+        139.7337665615991,
+        35.61677
+      ],
+      [
+        139.73357207698092,
+        35.61673
+      ],
+      [
+        139.73332036265447,
+        35.61669
+      ],
+      [
+        139.73291510057487,
+        35.61665
+      ],
+      [
+        139.73241875305683,
+        35.6166
+      ],
+      [
+        139.73205,
+        35.61655
+      ]
+    ]
+  },
+  "limits": [
+    "Representative display corridor, not train-specific crossover routing or surveyed platform centre.",
+    "GSI 2026 snapshot does not establish each track survey date; 2019 orthophotos predate station works. OSM cache fetched2026 but KSJ2/2007 source tags prohibit freshness and independent survey claims.",
+    "Mapped polyline supports joined linearly; no unidentified nearest-black-track snap or physical graph switch edges added. Data-reference4m regression tolerance is not positional survey accuracy.",
+    "Physical stations, segments, IDs and kilometres unchanged."
+  ]
+}

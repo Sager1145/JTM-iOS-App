@@ -1,0 +1,34 @@
+[
+  {
+    "case": "sobu",
+    "lineID": "jp-東日本旅客鉄道-総武線-3",
+    "bundledPackageEqualsProduction": true,
+    "chunkOffset": 7282500,
+    "chunkLength": 11210,
+    "fullChunkVertexCount": 347
+  },
+  {
+    "case": "ir",
+    "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+    "bundledPackageEqualsProduction": true,
+    "chunkOffset": 0,
+    "chunkLength": 22069,
+    "fullChunkVertexCount": 647
+  },
+  {
+    "case": "johoku",
+    "lineID": "jp-JR東海交通事業-城北線",
+    "bundledPackageEqualsProduction": true,
+    "chunkOffset": 22069,
+    "chunkLength": 5706,
+    "fullChunkVertexCount": 149
+  },
+  {
+    "case": "miyazu",
+    "lineID": "jp-WILLER　TRAINS-宮津線",
+    "bundledPackageEqualsProduction": true,
+    "chunkOffset": 27775,
+    "chunkLength": 39934,
+    "fullChunkVertexCount": 1586
+  }
+]

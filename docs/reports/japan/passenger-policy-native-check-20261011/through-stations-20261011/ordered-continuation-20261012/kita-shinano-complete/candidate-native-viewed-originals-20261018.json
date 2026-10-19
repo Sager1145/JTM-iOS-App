@@ -1,0 +1,1223 @@
+{
+  "date": "2026-10-18",
+  "lineID": "jp-しなの鉄道-北しなの線",
+  "scope": "Candidate complete interval0 only; positive verdict only olddisplayvertex69 removal",
+  "actualCandidatePairCount": 26,
+  "actualCandidateOriginalPNGCount": 52,
+  "additionalHistoricalPairCount": 1,
+  "additionalHistoricalOriginalPNGCount": 2,
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "E2F53A26-52EF-441B-A788-E8259DADDBDC",
+    "message": "26/26 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 61534,
+    "requestID": "kita-shinano-step-candidate-complete-interval",
+    "resultPath": "/private/tmp/jtm-kita-shinano-step-native-20261018/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-18T23:43:54Z"
+  },
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "frozenRetainedGuards": {
+    "indices": [
+      66,
+      67,
+      68,
+      70,
+      71
+    ],
+    "coordinates": [
+      [
+        138.18861,
+        36.838
+      ],
+      [
+        138.18863,
+        36.83697
+      ],
+      [
+        138.18858,
+        36.8364
+      ],
+      [
+        138.18854,
+        36.83439
+      ],
+      [
+        138.18852,
+        36.83422
+      ]
+    ]
+  },
+  "historicalOriginals": [
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/kita-shinano-complete/vertex68-own-source-20261018/apple-p14-basemap.png",
+      "actuallyViewed": true,
+      "actualByteCount": 191452
+    },
+    {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/kita-shinano-complete/vertex68-own-source-20261018/apple-p14-smooth.png",
+      "actuallyViewed": true,
+      "actualByteCount": 224918
+    }
+  ],
+  "verdict": "Supports deletion of old decodedvertex69 transverse display step only. Existing broad offsets, physical/tunnel surveyed centre, platformface/caps and wholeline remain unaccepted.",
+  "views": [
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 623408,
+          "actualByteCount": 623408,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 704768,
+          "actualByteCount": 704768,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.872305,
+        "longitude": 138.212185,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.952452299742173,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237269802.73675376,
+        "rectY": 104597475.17953594,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "妙高高原自身端点与南向出站：红线走本线南向，妙高はねうま线北向另标；站台面/共用端点物理归属未证明。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 666470,
+          "actualByteCount": 666470,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 754982,
+          "actualByteCount": 754982,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.869276438660364,
+        "longitude": 138.21130082145228,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9524895770251767,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237269143.44544363,
+        "rectY": 104600298.03630172,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "妙高高原南侧近直线段与北端缓弯，红线偏西于蓝符，未见断口或跳邻线；非本次位置验收。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 625945,
+          "actualByteCount": 625945,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 715857,
+          "actualByteCount": 715857,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.86613254162458,
+        "longitude": 138.21119450067476,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.952528271086515,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237269064.1669259,
+        "rectY": 104603228.27660736,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "関川东侧近直段接南侧真缓弯，红连续，旧宽侧偏保留。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 548569,
+          "actualByteCount": 548569,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 633889,
+          "actualByteCount": 633889,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.86300049151909,
+        "longitude": 138.21092280096926,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9525668164627997,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237268861.5729416,
+        "rectY": 104606147.35520057,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "熊坂北侧真南→西南缓弯，红东偏明显但连续，未被本次修正或接受。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 4,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000004",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 478357,
+          "actualByteCount": 478357,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 560969,
+          "actualByteCount": 560969,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.86025404477916,
+        "longitude": 138.20903181309592,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9526006139495264,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237267451.5501859,
+        "rectY": 104608706.95202774,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "熊坂西南向真弯与北侧近直段连续，原有红蓝宽偏保留，无新V。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 5,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000005",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000005/basemap.png",
+          "recordedByteCount": 405350,
+          "actualByteCount": 405350,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000005/smooth.png",
+          "recordedByteCount": 479106,
+          "actualByteCount": 479106,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.857682928097816,
+        "longitude": 138.20676643518084,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.952632251841731,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237265762.3619813,
+        "rectY": 104611103.06371859,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "熊坂真实西南→西向弧线保留；红蓝交叉及局部偏移仍在，不能宣称全弧准确。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 6,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000006",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000006/basemap.png",
+          "recordedByteCount": 420639,
+          "actualByteCount": 420639,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000006/smooth.png",
+          "recordedByteCount": 493584,
+          "actualByteCount": 493584,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.85571170066389,
+        "longitude": 138.20377011698665,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9526565067157943,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237263528.14520139,
+        "rectY": 104612940.06348458,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "熊坂南侧真弧与直段，红北偏较蓝符，未见新短横或回头。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 7,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000007",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000007/basemap.png",
+          "recordedByteCount": 469367,
+          "actualByteCount": 469367,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000007/smooth.png",
+          "recordedByteCount": 552994,
+          "actualByteCount": 552994,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.854898722091946,
+        "longitude": 138.19997926090645,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.952666509640575,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237260701.47803324,
+        "rectY": 104613697.66974564,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "跨国道18号前后保留真反弯，红北/东偏位置差保留；没有转入道路。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 8,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000008",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000008/basemap.png",
+          "recordedByteCount": 483081,
+          "actualByteCount": 483081,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000008/smooth.png",
+          "recordedByteCount": 564486,
+          "actualByteCount": 564486,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.85354392675744,
+        "longitude": 138.1964306286055,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9526831786732024,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237258055.4260058,
+        "rectY": 104614960.17150006,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "国道18号跨越上下文、东侧真缓弯保留，红连续，无新V。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 9,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000009",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000009/basemap.png",
+          "recordedByteCount": 473275,
+          "actualByteCount": 473275,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000009/smooth.png",
+          "recordedByteCount": 552947,
+          "actualByteCount": 552947,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.8516132829107,
+        "longitude": 138.1934601381675,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.952706931860531,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237255840.46779674,
+        "rectY": 104616759.25421098,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "18号以南本线真缓弯接直段，红连续，残余侧偏不作准确性验收。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 10,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000010",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000010/basemap.png",
+          "recordedByteCount": 359439,
+          "actualByteCount": 359439,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000010/smooth.png",
+          "recordedByteCount": 427346,
+          "actualByteCount": 427346,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.84861151553219,
+        "longitude": 138.19236868093049,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9527438611774205,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237255026.6182936,
+        "rectY": 104619556.37993851,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "高速公路东侧北南向真缓弯，红连续，无孤立新钩。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 11,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000011",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000011/basemap.png",
+          "recordedByteCount": 318240,
+          "actualByteCount": 318240,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000011/smooth.png",
+          "recordedByteCount": 379018,
+          "actualByteCount": 379018,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.8459127797734,
+        "longitude": 138.1903782986049,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9527770601883542,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237253542.48166254,
+        "rectY": 104622071.03908864,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "目标以北自身连续缓曲，较底图蓝符有宽东偏，保持既有形态；本次不接受整段中心。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 12,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000012",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000012/basemap.png",
+          "recordedByteCount": 315294,
+          "actualByteCount": 315294,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000012/smooth.png",
+          "recordedByteCount": 375454,
+          "actualByteCount": 375454,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.84340378431817,
+        "longitude": 138.188015855569,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9528079231600765,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251780.91645807,
+        "rectY": 104624408.82021476,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "目标以北保留长弧：红较蓝符东偏明显，无突然横向新接缝；范围外未验收。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 13,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000013",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000013/basemap.png",
+          "recordedByteCount": 371718,
+          "actualByteCount": 371718,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000013/smooth.png",
+          "recordedByteCount": 435626,
+          "actualByteCount": 435626,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.84034327666986,
+        "longitude": 138.18812730502796,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9528455677479888,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251864.01919785,
+        "rectY": 104627260.3743898,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "目标北侧保留弧到直段；红东偏在目标上方保留，进入目标段连续，无新钩。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 14,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000014",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000014/basemap.png",
+          "recordedByteCount": 437277,
+          "actualByteCount": 437277,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000014/smooth.png",
+          "recordedByteCount": 504979,
+          "actualByteCount": 504979,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.8372318481404,
+        "longitude": 138.18862491562115,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9528838358570649,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237252235.06454927,
+        "rectY": 104630159.25589006,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "关键目标视点：旧decoded69红色短右台阶已不可见；经过保留68到70的红线连续，没有短横腿、回头或缺口。宽东偏上段仍保留，非全线中心验收。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 15,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000015",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000015/basemap.png",
+          "recordedByteCount": 465685,
+          "actualByteCount": 465685,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000015/smooth.png",
+          "recordedByteCount": 533646,
+          "actualByteCount": 533646,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.83408819133889,
+        "longitude": 138.1884948935624,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9529224974694178,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237252138.11307526,
+        "rectY": 104633088.04433072,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "目标南侧近直段及后继真缓弯，红线连续，没有为删除69产生新V或横接缝。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 16,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000016",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000016/basemap.png",
+          "recordedByteCount": 501963,
+          "actualByteCount": 501963,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000016/smooth.png",
+          "recordedByteCount": 573364,
+          "actualByteCount": 573364,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.8310278577935,
+        "longitude": 138.1875856371762,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9529601315681551,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251460.12237346,
+        "rectY": 104635939.08902586,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "野尻北侧真缓弯及南侧长直线，红连续，未出现新孤立角点。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 17,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000017",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000017/basemap.png",
+          "recordedByteCount": 535911,
+          "actualByteCount": 535911,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000017/smooth.png",
+          "recordedByteCount": 610036,
+          "actualByteCount": 610036,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.82789669890818,
+        "longitude": 138.18751280988295,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9529986337947806,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251405.8184077,
+        "rectY": 104638855.99744846,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "六月/野尻长直段、高速穿越北侧上下文，红连续，未跳到公路。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 18,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000018",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000018/basemap.png",
+          "recordedByteCount": 584277,
+          "actualByteCount": 584277,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000018/smooth.png",
+          "recordedByteCount": 664006,
+          "actualByteCount": 664006,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.82475379006775,
+        "longitude": 138.18767698690095,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9530372776171886,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251528.23766518,
+        "rectY": 104641783.73178957,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "高速交叉与119号路附近长直段，红沿本线连续；工程高程/地下位置未证明。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 19,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000019",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000019/basemap.png",
+          "recordedByteCount": 572378,
+          "actualByteCount": 572378,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000019/smooth.png",
+          "recordedByteCount": 650097,
+          "actualByteCount": 650097,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.821606504921,
+        "longitude": 138.18764,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9530759723498956,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251500.6582329,
+        "rectY": 104644715.42231993,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "信濃町IC西侧长直段接南侧真弯，红连续，无新钩。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 20,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000020",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000020/basemap.png",
+          "recordedByteCount": 550659,
+          "actualByteCount": 550659,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000020/smooth.png",
+          "recordedByteCount": 628664,
+          "actualByteCount": 628664,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.818458883647956,
+        "longitude": 138.18764,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9531146683137229,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237251500.6582329,
+        "rectY": 104647647.30536705,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "赤渋北侧南→东南真弯保留，红连续，无新V；侧偏仍非测量证明。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 21,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000021",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000021/basemap.png",
+          "recordedByteCount": 545906,
+          "actualByteCount": 545906,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000021/smooth.png",
+          "recordedByteCount": 624234,
+          "actualByteCount": 624234,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.815452402736035,
+        "longitude": 138.18851500465487,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9531516264285197,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237252153.1089927,
+        "rectY": 104650447.60924152,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "赤渋→熊倉南东向真弯保持，红没有跳入18号道路。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 22,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000022",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000022/basemap.png",
+          "recordedByteCount": 592042,
+          "actualByteCount": 592042,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000022/smooth.png",
+          "recordedByteCount": 671980,
+          "actualByteCount": 671980,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.81261244102895,
+        "longitude": 138.19019857820314,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9531865351219228,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237253408.4724181,
+        "rectY": 104653092.71237059,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "熊倉/みどりが丘东南向进黑姬廊道连续，红稍偏西南，未新改站场方向。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 23,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000023",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000023/basemap.png",
+          "recordedByteCount": 651133,
+          "actualByteCount": 651133,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000023/smooth.png",
+          "recordedByteCount": 733776,
+          "actualByteCount": 733776,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.810401002428605,
+        "longitude": 138.19298366604917,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.953213716399042,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237255485.1844346,
+        "rectY": 104655152.34935771,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "黑姬北侧进站真缓弯到斜直段连续，无新帽端钩；站台face未证明。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 24,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000024",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000024/basemap.png",
+          "recordedByteCount": 687861,
+          "actualByteCount": 687861,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000024/smooth.png",
+          "recordedByteCount": 770359,
+          "actualByteCount": 770359,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.80826293546485,
+        "longitude": 138.195868896196,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9532399944873056,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237257636.56796274,
+        "rectY": 104657143.5946543,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "黑姬自身站场及两侧东南向斜直段，红连续，宽蓝站填色不证明具体乘客平台/caps。"
+    },
+    {
+      "itemID": "jp-しなの鉄道-北しなの線#0",
+      "pointOrdinal": 25,
+      "directory": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000025",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000025/basemap.png",
+          "recordedByteCount": 692969,
+          "actualByteCount": 692969,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/captures/000000/000025/smooth.png",
+          "recordedByteCount": 776268,
+          "actualByteCount": 776268,
+          "actuallyViewed": true
+        }
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.80732,
+        "longitude": 138.19711,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9532515832878797,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237258562.0020338,
+        "rectY": 104658021.76080321,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "namedIdentityPlan": "/private/tmp/jtm-kita-shinano-step-native-20261018/alignment/identity-plan-85f85b9c178b0d940adda1e5786ebe46f690cc0ce0b21a2b481a6be5882ceff6.json",
+      "identityMatches": {
+        "ownLineAndInterval": true,
+        "sourceEqualsFrozenPhysical": true,
+        "displayEqualsOnly69Deletion": true,
+        "stationIDs": true
+      },
+      "reviewMethod": "functions.view_image separately for each original PNG; no pixel modifications",
+      "observation": "黑姬自身区间终点和南端上下文：红连续进入站廊，无新断口/横钩；后继区间与整线不在本次验收。"
+    }
+  ]
+}

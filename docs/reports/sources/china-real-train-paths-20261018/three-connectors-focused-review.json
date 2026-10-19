@@ -1,0 +1,172 @@
+{
+  "schema": "cn-three-connectors-focused-native/1",
+  "session": "railway-sources/local/china/comparisons/real-trains-20261018/focused-three-connectors-source-display-epoch-session",
+  "completedAt": "2026-10-19T07:32:06Z",
+  "compiledUUID": "B8FD2EEC-47F0-3FB3-AE63-7370C4FC356A",
+  "CNContextEpoch": "source-display-identity:1|source-anchor:1",
+  "rows": [
+    {
+      "id": "CN-REAL-G101-20261018-forced-known-stops",
+      "expectedSections": 4,
+      "returnedGeometrySections": 4,
+      "internalResolvedSections": 3,
+      "physicalGaps": [
+        {
+          "isBoundary": true,
+          "segmentIndex": 1
+        }
+      ],
+      "unresolvedSections": [
+        {
+          "from": "沈阳北",
+          "isBoundary": true,
+          "sectionIndex": 1,
+          "to": "长春西"
+        }
+      ],
+      "selectedLineIDs": [
+        "cn-osm-relation-3066901"
+      ]
+    },
+    {
+      "id": "CN-REAL-G6045-20261018-forced-known-stops",
+      "expectedSections": 11,
+      "returnedGeometrySections": 11,
+      "internalResolvedSections": 10,
+      "physicalGaps": [
+        {
+          "isBoundary": true,
+          "segmentIndex": 4
+        }
+      ],
+      "unresolvedSections": [
+        {
+          "from": "广州南",
+          "isBoundary": true,
+          "sectionIndex": 4,
+          "to": "江门"
+        }
+      ],
+      "selectedLineIDs": [
+        "cn-guangshengan-hsr",
+        "cn-osm-relation-8381929"
+      ]
+    },
+    {
+      "id": "CN-REAL-C293-20261018-forced-known-stops",
+      "expectedSections": 5,
+      "returnedGeometrySections": 5,
+      "internalResolvedSections": 5,
+      "physicalGaps": [],
+      "unresolvedSections": [],
+      "selectedLineIDs": [
+        "cn-osm-relation-8415510"
+      ]
+    },
+    {
+      "id": "CN-G6045-GZS-JM-standalone",
+      "expectedSections": 1,
+      "returnedGeometrySections": 1,
+      "internalResolvedSections": 1,
+      "physicalGaps": [],
+      "unresolvedSections": [],
+      "selectedLineIDs": []
+    }
+  ],
+  "sourceSequenceChecks": [
+    {
+      "reviewID": "cn-reviewed-physical-jingha-shenyang-own-tail",
+      "vertices": 17,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-G101-20261018-forced-known-stops",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 1168,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "reviewID": "cn-reviewed-physical-jingshen-connector",
+      "vertices": 24,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-G101-20261018-forced-known-stops",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 1185,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "reviewID": "cn-reviewed-physical-kunming-south-connector",
+      "vertices": 243,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-C293-20261018-forced-known-stops",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 1,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "reviewID": "cn-reviewed-physical-kunming-nankun-kunyu-crossover",
+      "vertices": 49,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-C293-20261018-forced-known-stops",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 244,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "reviewID": "cn-reviewed-physical-xinhui-jiangmen",
+      "vertices": 20,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-G6045-20261018-forced-known-stops",
+          "sectionIndex": 4,
+          "partIndex": 0,
+          "vertexOffset": 380,
+          "direction": 1
+        },
+        {
+          "id": "CN-G6045-GZS-JM-standalone",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 380,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "reviewID": "cn-reviewed-physical-jianghai-jiangmendong",
+      "vertices": 25,
+      "completeSourceSequenceHits": [
+        {
+          "id": "CN-REAL-G6045-20261018-forced-known-stops",
+          "sectionIndex": 4,
+          "partIndex": 0,
+          "vertexOffset": 320,
+          "direction": 1
+        },
+        {
+          "id": "CN-G6045-GZS-JM-standalone",
+          "sectionIndex": 0,
+          "partIndex": 0,
+          "vertexOffset": 320,
+          "direction": 1
+        }
+      ]
+    }
+  ],
+  "incorrectMetroSelections": 0,
+  "limits": "Output trace confirms reviewed original sequences and no incorrect metro selection. It does not establish unique actual train tracks or pixel accuracy."
+}

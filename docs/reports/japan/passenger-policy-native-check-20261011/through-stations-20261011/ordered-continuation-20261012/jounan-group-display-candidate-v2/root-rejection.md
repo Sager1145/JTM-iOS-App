@@ -1,0 +1,5 @@
+# Root rejection — Jounan group V2 raw proposal
+
+Root actually opened all six complete raw reprojections (Jounan #2 three, Hanazono #0 three), original Jounan #2 view1 and a3x original-pixel curve diagnostic. Hanazono NS continuation and the literal Minamihoribata EW junction are accepted at raw-proposal level only. City Hall curve is rejected: orange candidate controls follow the NW road/moat curb rather than the thin black rail with visible cross-ties. Around view1 y361, candidate x525 differs from own rail nearx545; around y426, candidate x486 differs from own rail nearx520. These approximate pixel comparisons establish a wrong cartographic locus, not surveyed metres.
+
+Do not build, apply, or claim V2 native/Main acceptance. Revised V3 must follow the literal black rail around this curve while preserving the station alias/endpoints, remaining28 intervals, other35 line-scoped aliases, physical data and reference structures. V2 candidate/manifest remain preserved unchanged as rejected evidence.

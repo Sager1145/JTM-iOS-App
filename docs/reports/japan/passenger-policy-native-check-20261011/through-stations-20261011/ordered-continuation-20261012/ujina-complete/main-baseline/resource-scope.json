@@ -1,0 +1,11 @@
+{
+  "ids": [
+    "jp-広島電鉄-宇品線",
+    "jp-広島電鉄-皆実線",
+    "jp-広島電鉄-本線",
+    "jp-東京地下鉄-11号線半蔵門線"
+  ],
+  "compactOwningLinesEqualCurrentSourceInFiveApps": true,
+  "candidateAndOriginalMainMetadataAndLiteralChunksEqual": true,
+  "note": "Targeted dependency comparison only; does not replace original runtime or geographic evidence."
+}

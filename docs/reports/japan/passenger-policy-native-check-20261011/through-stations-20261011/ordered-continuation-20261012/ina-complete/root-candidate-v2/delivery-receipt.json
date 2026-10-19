@@ -1,0 +1,20 @@
+{
+  "formalPackageSHA256": "1da3dea7b93394bfa7fbc1be8118871998970a6d73dcbc0a08d945b02d5a197e",
+  "nativeJPSHA256": "d2b7785c2b4697c3f3ff6dad0783d49e309501f95560c1580c3a3315441265c2",
+  "historySHA256": "08606e1241fe18b3c1a0a2638e321e948410a54ce48494b86b7091423d4169a6",
+  "sourceInaApplied": true,
+  "originalMainUpdated": true,
+  "signatureVerified": true,
+  "originalMainActualRecheck": {
+    "stations": [
+      "志久",
+      "大宮",
+      "内宿"
+    ],
+    "onOffPairs": 3,
+    "imagesManuallyReviewed": 6,
+    "allRendered": true,
+    "allBudgetDrops": 0
+  },
+  "directAppleOmiyaPixelFit": "unmeasured; explicit reference assistance"
+}

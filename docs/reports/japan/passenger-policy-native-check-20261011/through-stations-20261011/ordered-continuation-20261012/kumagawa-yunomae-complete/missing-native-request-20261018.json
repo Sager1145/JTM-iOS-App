@@ -1,0 +1,24 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    2,
+    10
+  ],
+  "lineID": "jp-くま川鉄道-湯前線",
+  "requestID": "kumagawa-yunomae-missing-own-intervals",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018",
+  "workspace": "alignment"
+}

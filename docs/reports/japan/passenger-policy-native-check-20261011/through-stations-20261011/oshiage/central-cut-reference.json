@@ -1,0 +1,27 @@
+{
+  "sourceURL": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/58220/25800.pbf",
+  "purpose": "Georeferenced river landmark for engineering figure 103/104 station centre; NOT a new railway survey",
+  "bankIntersections": [
+    {
+      "t": 0.6539938481466978,
+      "point": [
+        139.8134395814149,
+        35.709760153602076
+      ],
+      "featureID": null
+    },
+    {
+      "t": 0.5545187591362357,
+      "point": [
+        139.8134624606854,
+        35.7096566995095
+      ],
+      "featureID": null
+    }
+  ],
+  "candidate": [
+    139.81345102105016,
+    35.70970842655579
+  ],
+  "stationPosition": "Representative source-bound central cut; precise physical platform centre not surveyed"
+}

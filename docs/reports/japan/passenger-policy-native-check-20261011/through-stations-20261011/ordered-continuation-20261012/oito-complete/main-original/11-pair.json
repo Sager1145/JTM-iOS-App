@@ -1,0 +1,182 @@
+{
+  "caseIndex": 11,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 11,
+  "source": {
+    "caseIndex": 11,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 11,
+    "fromStationID": "002148",
+    "toStationID": "002167",
+    "camera": [
+      36.5266225,
+      137.8521575,
+      0.04166084999999441
+    ],
+    "effectiveCoordinates": [
+      [
+        137.84625,
+        36.53564
+      ],
+      [
+        137.84656,
+        36.53511
+      ],
+      [
+        137.84718,
+        36.53416
+      ],
+      [
+        137.84721,
+        36.53409
+      ],
+      [
+        137.84815,
+        36.53267
+      ],
+      [
+        137.84862,
+        36.53196
+      ],
+      [
+        137.84882,
+        36.53165
+      ],
+      [
+        137.84919,
+        36.53109
+      ],
+      [
+        137.84952,
+        36.5306
+      ],
+      [
+        137.84988,
+        36.53005
+      ],
+      [
+        137.85019,
+        36.52956
+      ],
+      [
+        137.85055,
+        36.52902
+      ],
+      [
+        137.85087,
+        36.52853
+      ],
+      [
+        137.85129,
+        36.52791
+      ],
+      [
+        137.8513,
+        36.52789
+      ],
+      [
+        137.85157,
+        36.52748
+      ],
+      [
+        137.85177,
+        36.52716
+      ],
+      [
+        137.85196,
+        36.52687
+      ],
+      [
+        137.85228,
+        36.52638
+      ],
+      [
+        137.85264,
+        36.52584
+      ],
+      [
+        137.85288,
+        36.52547
+      ],
+      [
+        137.85291,
+        36.52543
+      ],
+      [
+        137.85334,
+        36.52478
+      ],
+      [
+        137.85403,
+        36.52373
+      ],
+      [
+        137.85436,
+        36.52322
+      ],
+      [
+        137.85474,
+        36.52265
+      ],
+      [
+        137.85507,
+        36.52214
+      ],
+      [
+        137.85542,
+        36.52162
+      ],
+      [
+        137.85547,
+        36.52155
+      ],
+      [
+        137.85575,
+        36.52113
+      ],
+      [
+        137.85611,
+        36.52057
+      ],
+      [
+        137.85643,
+        36.52009
+      ],
+      [
+        137.85681,
+        36.51951
+      ],
+      [
+        137.85701,
+        36.51921
+      ],
+      [
+        137.85712,
+        36.51905
+      ],
+      [
+        137.85751,
+        36.51846
+      ],
+      [
+        137.85789,
+        36.51787
+      ],
+      [
+        137.858065,
+        36.517605
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:14.43;lod:13.28;backbones:0;networkStations:6;distance:9145.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.526622;centerLon:137.852157;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1667.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.526622;centerLon:137.852157;distance:9145.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-11.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Shinano-Kizaki to Kita-Omachi long straight lies east/northeast of Apple glyph; own station frames unresolved."
+}

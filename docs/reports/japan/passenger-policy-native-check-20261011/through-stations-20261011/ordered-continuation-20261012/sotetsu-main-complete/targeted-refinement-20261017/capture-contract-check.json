@@ -1,0 +1,1152 @@
+{
+  "viewCount": 42,
+  "statuses": {
+    "captured": 42
+  },
+  "intervalCounts": {
+    "jp-相模鉄道-相鉄本線#0": 7,
+    "jp-相模鉄道-相鉄本線#1": 10,
+    "jp-相模鉄道-相鉄本線#16": 25
+  },
+  "checks": [
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 0,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999991344,
+        "centerYPoints": 599.9999999974552,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 1,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999842988,
+        "centerYPoints": 599.9999999942083,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 2,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999953902,
+        "centerYPoints": 599.9999999991227,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000124176,
+        "mapPointsPerPointY": 1.9999999999627467,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999991044,
+        "zoom256Y": 19.000000000026873
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 3,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999807787,
+        "centerYPoints": 599.9999999935279,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 4,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999896918,
+        "centerYPoints": 600.000000003783,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.000000000012418,
+        "mapPointsPerPointY": 2.0000000000620877,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999991044,
+        "zoom256Y": 18.999999999955214
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 5,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999839401,
+        "centerYPoints": 600.0000000064501,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#0",
+      "pointOrdinal": 6,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999933245,
+        "centerYPoints": 599.9999999964028,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 0,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999933245,
+        "centerYPoints": 599.9999999964028,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 1,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000233106,
+        "centerYPoints": 599.9999999935128,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 2,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999744473,
+        "centerYPoints": 599.9999999928106,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.0000000000682965,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999950735
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 3,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000016688,
+        "centerYPoints": 599.9999999928448,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999999993,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 4,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000006326,
+        "centerYPoints": 600.0000000014851,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 5,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000011081,
+        "centerYPoints": 599.9999999938934,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 1.9999999999503295,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19.00000000003583
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 6,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000066432,
+        "centerYPoints": 599.9999999940741,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 7,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000088129,
+        "centerYPoints": 600.0000000043822,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 8,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000365873,
+        "centerYPoints": 600.000000006167,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000000004,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#1",
+      "pointOrdinal": 9,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000224427,
+        "centerYPoints": 599.9999999953858,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000124176,
+        "mapPointsPerPointY": 2.000000000012417,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999991044,
+        "zoom256Y": 18.999999999991044
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 0,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000117163,
+        "centerYPoints": 599.9999999995387,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 1,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000082483,
+        "centerYPoints": 599.99999999764,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999999998,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 2,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999858101,
+        "centerYPoints": 599.9999999963633,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 1.9999999999689555,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 19.000000000022393
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 3,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.00000000793,
+        "centerYPoints": 600.000000005562,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000124176,
+        "mapPointsPerPointY": 2.000000000012417,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999991044,
+        "zoom256Y": 18.999999999991044
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 4,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000084175,
+        "centerYPoints": 599.9999999975581,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999875826,
+        "mapPointsPerPointY": 1.999999999987582,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19.000000000008956,
+        "zoom256Y": 19.000000000008956
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 5,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999786055,
+        "centerYPoints": 600.0000000020782,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.999999999987582,
+        "mapPointsPerPointY": 2.000000000037253,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19.000000000008956,
+        "zoom256Y": 18.999999999973127
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 6,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000076599,
+        "centerYPoints": 600.0000000073483,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 7,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000305937,
+        "centerYPoints": 600.0000000050186,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 8,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000151547,
+        "centerYPoints": 600.0000000079565,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 9,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999952141,
+        "centerYPoints": 600.0000000003556,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 10,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000074477,
+        "centerYPoints": 599.9999999883557,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 1.999999999968956,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 19.000000000022393
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 11,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000035684,
+        "centerYPoints": 599.9999999905162,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.000000000018627,
+        "mapPointsPerPointY": 1.999999999968956,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 19.000000000022393
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 12,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000081852,
+        "centerYPoints": 600.0000000068914,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 13,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999944864,
+        "centerYPoints": 600.0000000011104,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999999998,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 14,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999999653,
+        "centerYPoints": 600.0000000079368,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999999998,
+        "mapPointsPerPointY": 2.00000000004967,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 18.99999999996417
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 15,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999869692,
+        "centerYPoints": 599.9999999925752,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.0000000000186264,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 16,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999777567,
+        "centerYPoints": 599.9999999970725,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 1.999999999968956,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 19.000000000022393
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 17,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000313042,
+        "centerYPoints": 600.000000002255,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.0000000000186264,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 18,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999995634,
+        "centerYPoints": 599.9999999939337,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2,
+        "mapPointsPerPointY": 2,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 19,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999882601,
+        "centerYPoints": 599.9999999975637,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.000000000018626,
+        "mapPointsPerPointY": 2.0000000000186264,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 20,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999979787,
+        "centerYPoints": 599.9999999933278,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.000000000018626,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 21,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.000000004393,
+        "centerYPoints": 599.9999999929787,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.000000000018626,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 22,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999933228,
+        "centerYPoints": 600.0000000011065,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.0000000000186264,
+        "mapPointsPerPointY": 2.0000000000186264,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999986564
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 23,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000191013,
+        "centerYPoints": 600.0000000063948,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 1.9999999999999998,
+        "mapPointsPerPointY": 1.9999999999999996,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 19,
+        "zoom256Y": 19
+      }
+    },
+    {
+      "itemID": "jp-相模鉄道-相鉄本線#16",
+      "pointOrdinal": 24,
+      "status": "captured",
+      "imageSizes": {
+        "basemap": [
+          1600,
+          1200
+        ],
+        "smooth": [
+          1600,
+          1200
+        ]
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000095686,
+        "centerYPoints": 599.9999999948533,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 2.000000000018627,
+        "mapPointsPerPointY": 2.0000000000682974,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 18.999999999986564,
+        "zoom256Y": 18.999999999950735
+      }
+    }
+  ],
+  "projectionSummary": {
+    "maxZoomError": 4.9265480583926546e-11,
+    "maxCentreErrorPoints": 3.658726654975908e-08,
+    "allDisplayScaleOne": true
+  }
+}

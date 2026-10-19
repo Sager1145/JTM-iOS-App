@@ -1,0 +1,82 @@
+{
+  "caseIndex": 22,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 22,
+  "source": {
+    "caseIndex": 22,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 22,
+    "fromStationID": "002366",
+    "toStationID": "002388",
+    "camera": [
+      36.330762,
+      137.8851185,
+      0.03828594000001303
+    ],
+    "effectiveCoordinates": [
+      [
+        137.881877,
+        36.339049
+      ],
+      [
+        137.88188,
+        36.33904
+      ],
+      [
+        137.88206,
+        36.33868
+      ],
+      [
+        137.88228,
+        36.33832
+      ],
+      [
+        137.88293,
+        36.3373
+      ],
+      [
+        137.8835,
+        36.33645
+      ],
+      [
+        137.88434,
+        36.335
+      ],
+      [
+        137.88461,
+        36.33442
+      ],
+      [
+        137.88599,
+        36.33007
+      ],
+      [
+        137.88667,
+        36.32784
+      ],
+      [
+        137.88713,
+        36.32632
+      ],
+      [
+        137.88819,
+        36.32306
+      ],
+      [
+        137.88836,
+        36.322475
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:774;camera:14.56;lod:13.41;backbones:0;networkStations:4;distance:8404.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.330762;centerLon:137.885119;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1571.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.330762;centerLon:137.885119;distance:8404.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-22.jpg",
+  "observation": "Hotaka to Hakuyacho southern curve and straight retained; varying local offset, own frame unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

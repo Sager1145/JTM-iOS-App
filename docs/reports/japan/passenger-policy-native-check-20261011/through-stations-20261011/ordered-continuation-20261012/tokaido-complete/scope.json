@@ -1,0 +1,17 @@
+{
+  "ordinal": 31,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "stationCount": 33,
+  "intervalCount": 32,
+  "status": "complete-baseline-analysis-repairs-and-platforms-open",
+  "productionChanges": false,
+  "rootOnly": true,
+  "nextOrdinal": 32,
+  "evidence": {
+    "nativeViewsPerApp": 348,
+    "rootReviewedNativeViews": 1044,
+    "originalMainPairs": 32,
+    "rootReviewedMainFrames": 64
+  },
+  "ownPlatformMidpointsOpen": 33
+}

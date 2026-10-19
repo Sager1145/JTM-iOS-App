@@ -1,0 +1,128 @@
+Window: "Rail Alignment Inspector", App: Rail Alignment Inspector.
+0 standard window Rail Alignment Inspector, ID: SceneWindow, Secondary Actions: Raise
+	1 container Secondary Actions: Cancel
+		2 image Description: InspectorLogo, Secondary Actions: Cancel
+		3 text Description: Rail Inspector, Secondary Actions: Cancel
+		4 tab group Secondary Actions: Cancel
+			5 tab Description: 底图, Value: 0, Secondary Actions: Cancel
+			6 tab Description: 包几何, Value: 0, Secondary Actions: Cancel
+			7 tab Description: 显示几何, Value: 0, Secondary Actions: Cancel
+			8 tab Description: 平滑, Value: 0, Secondary Actions: Cancel
+			9 tab (selected) Description: 叠加对照, Value: 1, Secondary Actions: Cancel
+			10 tab Description: 抽离, Value: 0, Secondary Actions: Cancel
+		11 button Description: 只看底图, Secondary Actions: Cancel
+		12 text Description: 日本铁路 · 底图审查, Secondary Actions: Cancel
+		13 text Description: 全量 9580 · 视点结论 0 · 详细覆盖 0, Secondary Actions: Cancel
+		14 text Description: 叠加透明度, Secondary Actions: Cancel
+		15 slider (settable, float) Value: 0.6842105, Details: 0.7, Secondary Actions: Cancel
+		16 text Description: 70%, Secondary Actions: Cancel
+		17 button Description: 导出视点记录, Secondary Actions: Cancel
+		18 button Description: 导出完整计划, Secondary Actions: Cancel
+		19 tab group Secondary Actions: Cancel
+			20 tab (selected) Description: 检查队列, Value: 1, Secondary Actions: Cancel
+			21 tab Description: 线路, Value: 0, Secondary Actions: Cancel
+		22 button Description: 导出同视点证据, Secondary Actions: Cancel
+		23 button Description: 导入轨道 GeoJSON, Secondary Actions: Cancel
+		24 text Description: 未加载外部轨道参考, Secondary Actions: Cancel
+		25 button Description: z17, Secondary Actions: Cancel
+		26 button Description: z18, Secondary Actions: Cancel
+		27 switch Description: 地铁示意线, Value: 0, Secondary Actions: Cancel
+			28 text Description: 地铁示意线, Secondary Actions: Cancel
+			29 switch Value: 0, Secondary Actions: Cancel
+		30 button Description: 抽离铁路与车站, ID: appleMapExtractButton, Secondary Actions: Cancel
+		31 button (disabled) Description: 导出抽离结果, Secondary Actions: Cancel
+		32 text field (settable) Value: jp-九州旅客鉄道-肥薩線#19, Placeholder: 搜索线路 / 公司 / 站点 / ID, Secondary Actions: Cancel
+		33 button Description: 自动检查全部区间, Secondary Actions: Cancel
+		34 button Description: 检查当前区间, Secondary Actions: Cancel
+		35 button Description: 检查当前线路, Secondary Actions: Cancel
+		36 button (disabled) Description: 暂停, Secondary Actions: Cancel
+		37 button (disabled) Description: 重试失败, Secondary Actions: Cancel
+		38 button Description: 批量报告, Secondary Actions: Cancel
+		39 text Description: 证据 0/92,216 · 失败 0, Secondary Actions: Cancel
+		40 switch Description: 只看待检区间, Value: 0, Secondary Actions: Cancel
+			41 text Description: 只看待检区间, Secondary Actions: Cancel
+			42 switch Value: 0, Secondary Actions: Cancel
+		43 container (selected) Secondary Actions: Cancel
+			44 container Secondary Actions: Cancel
+				45 text (selected) Description: 肥薩線 · 栗野 → 大隅横川, Secondary Actions: Cancel
+				46 text (selected) Description: 优先级 60 · 待复核, Secondary Actions: Cancel
+		47 text Description: 1 / 9,580 个区间 · 2025.5.2, Secondary Actions: Cancel
+		48 scroll area Secondary Actions: Cancel, Scroll Down, Scroll Up
+			49 container Secondary Actions: Cancel
+				50 text Description: 结论仅针对当前视点；长区间须逐段检查。, Secondary Actions: Cancel
+				51 text Description: 源几何相邻顶点间距超过120米：长间隙复核候选；显示几何相邻顶点间距超过120米：长间隙复核候选, Secondary Actions: Cancel
+				52 text Description: 最长弦 454 m · 转角 15° · 顶点 92 / 92, Secondary Actions: Cancel
+				53 pop up button Description: 结论, 待复核, Secondary Actions: Cancel
+					54 text Description: 待复核, Secondary Actions: Cancel
+					55 button (selected) Description: 待复核, Secondary Actions: Cancel
+					56 button Description: 与底图对齐, Secondary Actions: Cancel
+					57 button Description: 需要修复, Secondary Actions: Cancel
+					58 button Description: 底图证据不足, Secondary Actions: Cancel
+					59 button Description: 已修复, Secondary Actions: Cancel
+				60 text field Placeholder: 检查说明 / 证据来源, Secondary Actions: Cancel
+				61 button Description: 保存结论, Secondary Actions: Cancel
+				62 button Description: 下一待检, Secondary Actions: Cancel
+				63 text Description: jp-九州旅客鉄道-肥薩線, Secondary Actions: Cancel
+				64 pop up button Description: 站点, 20. 栗野, Secondary Actions: Cancel
+					65 text Description: 20. 栗野, Secondary Actions: Cancel
+					66 button Description: 1. 八代, Secondary Actions: Cancel
+					67 button Description: 2. 段, Secondary Actions: Cancel
+					68 button Description: 3. 坂本, Secondary Actions: Cancel
+					69 button Description: 4. 葉木, Secondary Actions: Cancel
+					70 button Description: 5. 鎌瀬, Secondary Actions: Cancel
+					71 button Description: 6. 瀬戸石, Secondary Actions: Cancel
+					72 button Description: 7. 海路, Secondary Actions: Cancel
+					73 button Description: 8. 吉尾, Secondary Actions: Cancel
+					74 button Description: 9. 白石, Secondary Actions: Cancel
+					75 button Description: 10. 球泉洞, Secondary Actions: Cancel
+					76 button Description: 11. 一勝地, Secondary Actions: Cancel
+					77 button Description: 12. 那良口, Secondary Actions: Cancel
+					78 button Description: 13. 渡, Secondary Actions: Cancel
+					79 button Description: 14. 西人吉, Secondary Actions: Cancel
+					80 button Description: 15. 人吉, Secondary Actions: Cancel
+					81 button Description: 16. 大畑, Secondary Actions: Cancel
+					82 button Description: 17. 矢岳, Secondary Actions: Cancel
+					83 button Description: 18. 真幸, Secondary Actions: Cancel
+					84 button Description: 19. 吉松, Secondary Actions: Cancel
+					85 button (selected) Description: 20. 栗野, Secondary Actions: Cancel
+					86 button Description: 21. 大隅横川, Secondary Actions: Cancel
+					87 button Description: 22. 植村, Secondary Actions: Cancel
+					88 button Description: 23. 霧島温泉, Secondary Actions: Cancel
+					89 button Description: 24. 嘉例川, Secondary Actions: Cancel
+					90 button Description: 25. 中福良, Secondary Actions: Cancel
+					91 button Description: 26. 表木山, Secondary Actions: Cancel
+					92 button Description: 27. 日当山, Secondary Actions: Cancel
+					93 button Description: 28. 隼人, Secondary Actions: Cancel
+				94 button Description: 上一站, Secondary Actions: Cancel
+				95 button Description: 下一站, Secondary Actions: Cancel
+				96 button Description: 上个视点, Secondary Actions: Cancel
+				97 text Description: 1/20, Secondary Actions: Cancel
+				98 button Description: 下个视点, Secondary Actions: Cancel
+				99 button Description: 从首个详细视点开始, Secondary Actions: Cancel
+				100 button Description: 站点附近, Secondary Actions: Cancel
+				101 button Description: 下一站区间, Secondary Actions: Cancel
+				102 button Description: 全线, Secondary Actions: Cancel
+		103 text Description: z 13.81 · 9.20 m/pt · display 4 parts · smooth 7524 vertices · 可视平滑→显示 2.0 m (735点 / 步长≤20.0m), Secondary Actions: Cancel
+		104 text Description: 批量证据保存：/private/tmp/jtm-ordered-hisatsu-manual-20261012, Secondary Actions: Cancel
+		105 text Description: 批量取证与偏移候选不等于底图对齐结论；复核通过后才更新区间结论。, Secondary Actions: Cancel
+		106 text Description: 蓝：包解码几何（含站点端点） · 青：显示几何 · 洋红：单线中心线平滑 · 橙：外部参考, Secondary Actions: Cancel
+		107 text Description: 直接对照底图铁路线；底图未画出的轨道无法判定。此预览未包含主程序的多线错位、共享走廊、连接与折叠。, Secondary Actions: Cancel
+		108 element Description: 栗野, 包内站点 · 009952, Help: Shows more info, Secondary Actions: Cancel
+		109 container Secondary Actions: Cancel
+			110 image Secondary Actions: Cancel, Value: {"camera":{"altitude":11224,"distance":11224,"pitch":0,"yaw":0,"zoom":15},"center":{"lat":31.928367,"lon":130.709316},"corners":[{"lat":31.901241,"lon":130.660501},{"lat":31.901241,"lon":130.758131},{"lat":31.955485,"lon":130.758131},{"lat":31.955485,"lon":130.660501}],"emphasis":"Explore","fullRegion":{"east":130.758131,"latSpan":0.054244,"lonSpan":0.09763,"north":31.955485,"south":31.901241,"west":130.660501},"labels":true,"overlay":"None","region":{"east":130.758131,"latSpan":0.054244,"lonSpan":0.09763,"
+				111 element Description: 栗野, 栗野, 包内站点 · 009952, ID: VKPointFeature, Secondary Actions: Cancel
+				112 element Description: Kurino, ID: VKPointFeature, Secondary Actions: Cancel
+		113 link Description: Legal, Secondary Actions: Cancel
+	114 close button
+	115 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	116 minimize button
+	117 text Rail Alignment Inspector
+118 menu bar
+	119 RailAlignmentInspector, ID: com.apple.menu.application
+	120 File, ID: com.apple.menu.file
+	121 Edit, ID: com.apple.menu.edit
+	122 View, ID: com.apple.menu.view
+	123 Window, ID: com.apple.menu.window
+	124 Help, ID: com.apple.menu.help
+
+The focused UI element is 32 text field (settable) Value: jp-九州旅客鉄道-肥薩線#19, Placeholder: 搜索线路 / 公司 / 站点 / ID, Secondary Actions: Cancel

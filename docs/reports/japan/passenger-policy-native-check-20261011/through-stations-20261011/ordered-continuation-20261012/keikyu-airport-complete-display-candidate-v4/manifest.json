@@ -1,0 +1,147 @@
+{
+  "format": "jtm-keikyu-airport-complete-display-candidate-manifest-v4",
+  "rawFrameCount": 27,
+  "finalReprojectionFrameCount": 27,
+  "files": [
+    {
+      "path": "candidate.json",
+      "sha256": "7cb13f599fd50cdd53a56939584ca93c4f71feec928b85202e98623fbc7a8292"
+    },
+    {
+      "path": "interval-0.geojson",
+      "sha256": "3f103cdf0c34d28a85bc671edf295f1a4b779df04c7b918c0f33b890e535291b"
+    },
+    {
+      "path": "interval-1.geojson",
+      "sha256": "66635a24aa2dbcf98b4b710749df0929fad7df2e6a3ebffd4d61753645304ea3"
+    },
+    {
+      "path": "interval-2.geojson",
+      "sha256": "bb04026664a6c8642351218c2c820115ea34ea17e5f078559f0024e4c3dd005d"
+    },
+    {
+      "path": "interval-3.geojson",
+      "sha256": "df199f51b2404a9f65dc914de36604c889010dfc5494310644114a58955070fd"
+    },
+    {
+      "path": "interval-4.geojson",
+      "sha256": "df0e638303cb64d3da45a22e5bbbea3b457105c1667fb8d55d30e950a90c3d24"
+    },
+    {
+      "path": "interval-5.geojson",
+      "sha256": "8b912e71c87817edb9571aa132984d515b8f1f2d292afbd67aacfe405b84d901"
+    },
+    {
+      "path": "raw-reprojections/interval-0-view-0.png",
+      "sha256": "c28a71b99ad871648c0af8f24675fb779b12f535e8865ae90b2cd424e62575f9"
+    },
+    {
+      "path": "raw-reprojections/interval-0-view-1.png",
+      "sha256": "1f567028ed739dc4f07579fd944d4cff4b9db22eb385c5e9f74a90cf21acf07b"
+    },
+    {
+      "path": "raw-reprojections/interval-0-view-2.png",
+      "sha256": "b13a5d33e96a6419e673723108e09e24b27d92bd3ea333f08ffbd73f9062b895"
+    },
+    {
+      "path": "raw-reprojections/interval-0-view-3.png",
+      "sha256": "8e5b686e405aebbad7abe363003fb95941666c9eec50fd304c13406f5d20c082"
+    },
+    {
+      "path": "raw-reprojections/interval-1-view-0.png",
+      "sha256": "dcff263caaa292a518a33d7e73ec005830b8a9408cd6dd885d0416888755b492"
+    },
+    {
+      "path": "raw-reprojections/interval-1-view-1.png",
+      "sha256": "cef898b1c4a6bee666ebad5984e181586eb407e5bddc5958551efa6801ab029e"
+    },
+    {
+      "path": "raw-reprojections/interval-1-view-2.png",
+      "sha256": "cc9b8bf449493165851e2c8b86c47cb469109fad46e2ae138309b63e99178500"
+    },
+    {
+      "path": "raw-reprojections/interval-1-view-3.png",
+      "sha256": "fb28f203cd24a28e1ad2a33d15044f26e3acc1e4e0a50d968ae8eda5efb84d9b"
+    },
+    {
+      "path": "raw-reprojections/interval-2-view-0.png",
+      "sha256": "19b70c41c177d9e9978aec14a4935187c2bc0fe49c21259142d849a07c3b7bf4"
+    },
+    {
+      "path": "raw-reprojections/interval-2-view-1.png",
+      "sha256": "d485913810e62f0f5f28d6c735d527a1c75c6b9541c8b9ff8f8d829d344a46bb"
+    },
+    {
+      "path": "raw-reprojections/interval-2-view-2.png",
+      "sha256": "b264a66ca22b28c3bb746b34d9c4121902257c216d07411ce52aa62b3c23ab71"
+    },
+    {
+      "path": "raw-reprojections/interval-3-view-0.png",
+      "sha256": "3b284b76fc91125d1f7defb2e801a4f030cbbf57c240f26a11a7f35dc5d713d2"
+    },
+    {
+      "path": "raw-reprojections/interval-3-view-1.png",
+      "sha256": "5ad0fb4f954c1082b1a90668297d424068d32084a4ec8bc787da81e7702a1a18"
+    },
+    {
+      "path": "raw-reprojections/interval-3-view-2.png",
+      "sha256": "fb7fd1896512ba36782209266e9ae49278369749edf19aad9815c7893026b0d4"
+    },
+    {
+      "path": "raw-reprojections/interval-3-view-3.png",
+      "sha256": "d9c9125deba55e15d54f1d7824542fa281ccc05feada06cc16758f2d40b5ab62"
+    },
+    {
+      "path": "raw-reprojections/interval-4-view-0.png",
+      "sha256": "321e554cbb756b50311f2b051a16774c977df9c507b4b0dde4c89517a53fd608"
+    },
+    {
+      "path": "raw-reprojections/interval-4-view-1.png",
+      "sha256": "6fc338dece2b34f8d417ff3501fce58b38c2af64e8a28e0c462568ae7450d4b9"
+    },
+    {
+      "path": "raw-reprojections/interval-4-view-2.png",
+      "sha256": "7b25e732fa4349396f196fb941c17b7b46a5f2c0680637b4c919917ca150b7ae"
+    },
+    {
+      "path": "raw-reprojections/interval-4-view-3.png",
+      "sha256": "f6b56c3fe5e9aad804eaea27ceaf8b5f9534a18d32916b111a08fa14c8429fc1"
+    },
+    {
+      "path": "raw-reprojections/interval-4-view-4.png",
+      "sha256": "917cefd824ff41e8327c609b9b8ea3da77b1f805bab5fdecfe0fb790fc9a2f73"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-0.png",
+      "sha256": "dd876e64e91a917c8ff2e2f585377364fa8691d0f1cb9778dfb5563ec27c7c15"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-1.png",
+      "sha256": "ab27731f40e954534f31d9bcac782301e88861c7448669ff51df47f29e9c57de"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-2.png",
+      "sha256": "56e61b78d7e1e039014c3882d5e945137b6d708692496187123b534a3c513b71"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-3.png",
+      "sha256": "7431621b80dfa139659b457f546e4ef6ede5eb5fb4c5e957ceeeeb567c1b6a3b"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-4.png",
+      "sha256": "6b38cae12aaaa92ebdc651a8c0d8e858ae69518204d0caf77f6a7ccce95047b8"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-5.png",
+      "sha256": "767bb4d1262fcca00726cdff0a86c301b623e947214c45b028bab2b1a1687814"
+    },
+    {
+      "path": "raw-reprojections/interval-5-view-6.png",
+      "sha256": "cc09f474d61e64fd78610e5c698b10d9f863ceb186c94bac47f5c72cc5cfa67e"
+    },
+    {
+      "path": "README.md",
+      "sha256": "7947aacf74249391f1a1184cfe19993e475d9f5c37c6688f1d091958b06e1e35"
+    }
+  ]
+}

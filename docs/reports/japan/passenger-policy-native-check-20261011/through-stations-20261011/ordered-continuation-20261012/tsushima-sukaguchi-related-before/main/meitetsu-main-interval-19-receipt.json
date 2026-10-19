@@ -1,0 +1,28 @@
+{
+  "lineID": "jp-名古屋鉄道-名古屋本線",
+  "intervalIndex": 19,
+  "sourceLineObjectSha256": "15b781a19a2af842679ac054708c08ad1ce1c91663a021991966548156f6a5f6",
+  "plannedCamera": [
+    35.194950000000006,
+    136.85616299999998,
+    0.010628999999980238
+  ],
+  "actualCenter": [
+    35.19495,
+    136.856163
+  ],
+  "actualMapBounds": [
+    136.850048,
+    35.189635,
+    136.862278,
+    35.200264
+  ],
+  "completeIntervalInsideActualMap": true,
+  "renderStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1032;camera:16.43;lod:15.28;backbones:1;networkStations:7;distance:2332.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.194950;centerLon:136.856163;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2113.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "pixelReview": {
+    "reviewer": "Root",
+    "status": "baseline reviewed; repair required, ambiguous own station groups remain warning",
+    "panels": 2,
+    "candidateAcceptance": false
+  }
+}

@@ -1,0 +1,272 @@
+[
+  {
+    "name": "mainline-interval-16",
+    "camera": [
+      35.20804289688875,
+      136.83867355704314,
+      0.009909599022635262
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.203088,
+        "lon": 136.832972
+      },
+      {
+        "lat": 35.203088,
+        "lon": 136.844375
+      },
+      {
+        "lat": 35.212998,
+        "lon": 136.844375
+      },
+      {
+        "lat": 35.212998,
+        "lon": 136.832972
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 22,
+    "onStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:903;camera:16.53;lod:15.38;backbones:1;networkStations:4;distance:2174.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.208043;centerLon:136.838674;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2617.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "accepted complete Main16 v2 river curve and retained guard; cartographic precision WARNING"
+  },
+  {
+    "name": "mainline-interval-17",
+    "camera": [
+      35.20166611583832,
+      136.84411916137714,
+      0.008583066023593844
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.197374,
+        "lon": 136.839181
+      },
+      {
+        "lat": 35.197374,
+        "lon": 136.849057
+      },
+      {
+        "lat": 35.205958,
+        "lon": 136.849057
+      },
+      {
+        "lat": 35.205958,
+        "lon": 136.839181
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 87,
+    "onStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1290;camera:16.74;lod:15.59;backbones:1;networkStations:4;distance:1883.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.201666;centerLon:136.844119;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2574.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main17 v2 true forward Suko convergence; hidden own-frame precision WARNING"
+  },
+  {
+    "name": "mainline-interval-18",
+    "camera": [
+      35.197081237253315,
+      136.84931356382398,
+      0.008880829952246927
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.192641,
+        "lon": 136.844204
+      },
+      {
+        "lat": 35.192641,
+        "lon": 136.854423
+      },
+      {
+        "lat": 35.201522,
+        "lon": 136.854423
+      },
+      {
+        "lat": 35.201522,
+        "lon": 136.844204
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 92,
+    "onStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1290;camera:16.69;lod:15.54;backbones:1;networkStations:4;distance:1948.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.197081;centerLon:136.849314;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2193.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main18 v2 south approach into westbound Tsush direction, no U turn; precision WARNING"
+  },
+  {
+    "name": "mainline-interval-19",
+    "camera": [
+      35.19509747243963,
+      136.8559940208322,
+      0.01049249537161927
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.189851,
+        "lon": 136.849958
+      },
+      {
+        "lat": 35.189851,
+        "lon": 136.86203
+      },
+      {
+        "lat": 35.200344,
+        "lon": 136.86203
+      },
+      {
+        "lat": 35.200344,
+        "lon": 136.849958
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 16,
+    "onStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1290;camera:16.45;lod:15.30;backbones:1;networkStations:7;distance:2302.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.195097;centerLon:136.855994;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2214.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main19 v2 river-east shallow curve into straight rail; precision WARNING"
+  },
+  {
+    "name": "mainline-interval-20",
+    "camera": [
+      35.194934968932714,
+      136.862490317791,
+      0.008346765808903455
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.190761,
+        "lon": 136.857688
+      },
+      {
+        "lat": 35.190761,
+        "lon": 136.867292
+      },
+      {
+        "lat": 35.199108,
+        "lon": 136.867292
+      },
+      {
+        "lat": 35.199108,
+        "lon": 136.857688
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 12,
+    "onStatus": "18 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1234;camera:16.78;lod:15.63;backbones:1;networkStations:6;distance:1831.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.194935;centerLon:136.862490;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2258.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main20 v2 forward supports and continuous shallow curve; no visible reverse hook, station wash precision WARNING"
+  },
+  {
+    "name": "mainline-interval-21",
+    "camera": [
+      35.192687855967854,
+      136.8681642753315,
+      0.008107711058531208
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.188634,
+        "lon": 136.8635
+      },
+      {
+        "lat": 35.188634,
+        "lon": 136.872829
+      },
+      {
+        "lat": 35.196742,
+        "lon": 136.872829
+      },
+      {
+        "lat": 35.196742,
+        "lon": 136.8635
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 30,
+    "onStatus": "16 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:1290;camera:16.82;lod:15.67;backbones:1;networkStations:5;distance:1779.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.192688;centerLon:136.868164;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2541.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main21 v2 station join and both bridge approaches; precision WARNING"
+  },
+  {
+    "name": "mainline-interval-22",
+    "camera": [
+      35.186926374945344,
+      136.87115383263745,
+      0.009222634439165845
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.182315,
+        "lon": 136.865849
+      },
+      {
+        "lat": 35.182315,
+        "lon": 136.876459
+      },
+      {
+        "lat": 35.191538,
+        "lon": 136.876459
+      },
+      {
+        "lat": 35.191538,
+        "lon": 136.865849
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 24,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:1161;camera:16.63;lod:15.48;backbones:1;networkStations:3;distance:2023.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.186926;centerLon:136.871154;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2711.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "accepted complete Main22 v2 forward merge and lane-offset corridor; station frame precision WARNING"
+  },
+  {
+    "name": "mainline-interval-23",
+    "camera": [
+      35.177093078086614,
+      136.87835350611687,
+      0.01929392645117183
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.167446,
+        "lon": 136.867256
+      },
+      {
+        "lat": 35.167446,
+        "lon": 136.889451
+      },
+      {
+        "lat": 35.186739,
+        "lon": 136.889451
+      },
+      {
+        "lat": 35.186739,
+        "lon": 136.867256
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 27,
+    "onStatus": "53 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:10;rides:0;budgetDrops:0;vertices:3670;camera:15.57;lod:14.42;backbones:1;networkStations:27;distance:4234.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.177093;centerLon:136.878354;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2646.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+    "rootPixelReview": "accepted complete Main23 v2 eastern passenger corridor and retained underground tail; underground precision WARNING"
+  },
+  {
+    "name": "station-005376-close",
+    "camera": [
+      35.195131029593654,
+      136.86536851289753,
+      0.0018
+    ],
+    "actualCorners": [
+      {
+        "lat": 35.194231,
+        "lon": 136.864333
+      },
+      {
+        "lat": 35.194231,
+        "lon": 136.866404
+      },
+      {
+        "lat": 35.196031,
+        "lon": 136.866404
+      },
+      {
+        "lat": 35.196031,
+        "lon": 136.864333
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:645;camera:18.99;lod:17.84;backbones:1;networkStations:1;distance:395.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.195131;centerLon:136.865369;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2816.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "accepted v2 Nishibiwajima station own long-face midpoint and straight joining rail, no hook; station wash precision WARNING"
+  }
+]

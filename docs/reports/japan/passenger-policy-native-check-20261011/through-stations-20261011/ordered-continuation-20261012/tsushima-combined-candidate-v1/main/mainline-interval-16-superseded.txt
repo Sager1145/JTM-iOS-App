@@ -1,0 +1,1 @@
+This pair was recaptured with V2 inputs. Exact V2 artifacts and receipt are in sibling tsushima-combined-candidate-v2/main. V1 geometry unchanged for this interval, but original V1 Main16 pair overwritten; do not treat these four files as V1 captures.

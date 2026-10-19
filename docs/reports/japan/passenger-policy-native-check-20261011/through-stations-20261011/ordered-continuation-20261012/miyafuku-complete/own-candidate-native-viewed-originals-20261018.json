@@ -1,0 +1,408 @@
+{
+  "format": "bounded-human-original-pixel-review-v1",
+  "date": "2026-10-18",
+  "scope": "Historical combined Miyafuku intervals0+8 candidate capture; independent interval verdicts, no automatic receipt or whole-line acceptance.",
+  "captureIndex": "/private/tmp/jtm-miyafuku-own-native-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 18
+  },
+  "pairedViewsActuallyViewed": 19,
+  "originalPNGsActuallyViewed": 38,
+  "unviewedPairsInThisCaptureIndex": 0,
+  "unavailableItemIDs": [],
+  "reviewerAction": "Read-only original viewing and report/manifest writing; no app/native/capture/build/tests/apply or source/production change.",
+  "intervalVerdicts": {
+    "0": "WITHHOLD current5..29 candidate: visible south-boundary off-corridor shoulder and sustained eastward tail/platform displacement.",
+    "8": "SUPPORT narrow4..32 own passenger-corridor display reference; platform centres, underground survey, retained corridor accuracy and whole-line/Main acceptance excluded."
+  },
+  "views": [
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.199975,
+        35.53444
+      ],
+      "timestamp": "2026-10-18T23:04:02Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained Miyazu station/departure context is continuous. This view does not resolve own platform caps or longitudinal centre."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-1",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.19804732995976,
+        35.53305553483734
+      ],
+      "timestamp": "2026-10-18T23:04:02Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "North splice is continuous with a mild shoulder; repaired departure follows the own south/east side of the shared station corridor. No isolated V or gap."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-2",
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.19610761526374,
+        35.53167751154328
+      ],
+      "timestamp": "2026-10-18T23:04:03Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Own Miyafuku south arm is followed; distinct Miyazu/Miyatoyo northwest arm is not selected. Continuous repaired bend."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-3",
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000003/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.194527247743,
+        35.53003063423372
+      ],
+      "timestamp": "2026-10-18T23:04:03Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Own south arm remains continuous and distinct from the northwest branch. No isolated hook or gap within repaired curve."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-4",
+      "intervalIndex": 0,
+      "pointOrdinal": 4,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000004/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000004/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.1936984169398,
+        35.52805525699818
+      ],
+      "timestamp": "2026-10-18T23:04:03Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "WITHHOLD: after the southern repair boundary, red departs east of the own cartographic railway corridor. A visible off-corridor shoulder remains despite a small numeric join angle."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-5",
+      "intervalIndex": 0,
+      "pointOrdinal": 5,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000005/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000005/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.19317178779073,
+        35.526008750648906
+      ],
+      "timestamp": "2026-10-18T23:04:03Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "WITHHOLD: eastward displacement continues in the retained southern tail; the defect is sustained, not a single antialiasing pixel or an acute-angle-only issue."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-6",
+      "intervalIndex": 0,
+      "pointOrdinal": 6,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000006/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000006/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.19246290717945,
+        35.5239924697232
+      ],
+      "timestamp": "2026-10-18T23:04:04Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "WITHHOLD: retained Miyamura approach remains east of the depicted own railway axis. Own platform attribution/centre and the adjacent interval continuity need resolution."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#0",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#0#point-7",
+      "intervalIndex": 0,
+      "pointOrdinal": 7,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000007/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000000/000007/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.192245,
+        35.523345
+      ],
+      "timestamp": "2026-10-18T23:04:04Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "WITHHOLD: terminal view reaches Miyamura with red near the east edge of the broad station frame. No independent face/cap survey is available; do not accept this endpoint from the fill."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-0",
+      "intervalIndex": 8,
+      "pointOrdinal": 0,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.129255,
+        35.37187
+      ],
+      "timestamp": "2026-10-18T23:04:04Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained Gujo station/departure is continuous. Red has a modest lateral offset in station context; caps and longitudinal centre are not proved."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-1",
+      "intervalIndex": 8,
+      "pointOrdinal": 1,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.12705999630495,
+        35.37077882025567
+      ],
+      "timestamp": "2026-10-18T23:04:04Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Entry to the repaired broad westward curve is continuous; no isolated V, gap or return hook. Retained station approach remains outside narrow acceptance."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-2",
+      "intervalIndex": 8,
+      "pointOrdinal": 2,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.12470750122645,
+        35.36998353724737
+      ],
+      "timestamp": "2026-10-18T23:04:05Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Own compound curve is preserved; old northward bulge is absent. Own bridge/tunnel cartographic context remains continuous, without flattening the real turn."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-3",
+      "intervalIndex": 8,
+      "pointOrdinal": 3,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000003/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.12214525715996,
+        35.37009762748733
+      ],
+      "timestamp": "2026-10-18T23:04:05Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Repaired compound curve and transition into the source-attributed tunnel chain are continuous. Minor basemap lateral differences do not establish a survey."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-4",
+      "intervalIndex": 8,
+      "pointOrdinal": 4,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000004/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000004/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11972808677476,
+        35.36952410139392
+      ],
+      "timestamp": "2026-10-18T23:04:05Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Continuous source-attributed tunnel alignment lies northwest of the blue cartographic line in part of the frame. This is a residual cartographic discrepancy, not evidence of surveyed buried track position."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-5",
+      "intervalIndex": 8,
+      "pointOrdinal": 5,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000005/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000005/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11778262903246,
+        35.368155028994046
+      ],
+      "timestamp": "2026-10-18T23:04:05Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Southern window exit near old control32 [135.11712,35.3676] is continuous into the retained suffix; no new off-corridor shoulder comparable to interval0. Tunnel/bridge symbols do not expose underground rail."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-6",
+      "intervalIndex": 8,
+      "pointOrdinal": 6,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000006/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000006/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11588320502375,
+        35.36674223564253
+      ],
+      "timestamp": "2026-10-18T23:04:05Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained southwest-to-south curve is continuous, with a small lateral cartographic difference. No new hook or gap at the repaired/retained transition."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-7",
+      "intervalIndex": 8,
+      "pointOrdinal": 7,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000007/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000007/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11430078845783,
+        35.36510300857293
+      ],
+      "timestamp": "2026-10-18T23:04:06Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained southward bend and road-crossing/tunnel context remain continuous. Slight eastward red/blue difference is recorded; genuine curve must be retained."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-8",
+      "intervalIndex": 8,
+      "pointOrdinal": 8,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000008/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000008/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11331353383255,
+        35.36317074264379
+      ],
+      "timestamp": "2026-10-18T23:04:06Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained southward curve continues through the crossing context without an isolated V or gap. Neither road alignment nor nearby cartography is used as a replacement track."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-9",
+      "intervalIndex": 8,
+      "pointOrdinal": 9,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000009/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000009/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.11240066551946,
+        35.36121133128466
+      ],
+      "timestamp": "2026-10-18T23:04:06Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained Shimo-Amazu approach remains continuous. Modest lateral displacement near the station context is outside this window’s platform acceptance."
+    },
+    {
+      "itemID": "jp-WILLER　TRAINS-宮福線#8",
+      "viewpointID": "jp-WILLER　TRAINS-宮福線#8#point-10",
+      "intervalIndex": 8,
+      "pointOrdinal": 10,
+      "originalFilesActuallyViewed": {
+        "basemap": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000010/basemap.png",
+        "smooth": "/private/tmp/jtm-miyafuku-own-native-20261018/alignment/captures/000001/000010/smooth.png"
+      },
+      "viewMethod": "Each original PNG opened separately with view_image detail=original; no composite substituted.",
+      "camera": [
+        135.111552,
+        35.359304
+      ],
+      "timestamp": "2026-10-18T23:04:06Z",
+      "wholeLineRenderDependency": "c3d419f96f8f8bdc38eee7bf1fb852e75b07028031b389db67d1cd78a18b8e09",
+      "receiptResultUnchanged": "pending",
+      "receiptReviewFreshUnchanged": false,
+      "finding": "Retained Shimo-Amazu endpoint is continuous in the broad station frame. Exact own face, platform caps and longitudinal centre remain unproved."
+    }
+  ]
+}

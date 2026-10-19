@@ -1,0 +1,168 @@
+{
+  "format": "jtm-passenger-risk-review-v1",
+  "status": "high_risk_native_review_completed_with_remaining_findings",
+  "scope": "Passenger railway evidence only; bends, branches, parallel tracks and source proof gaps prioritized",
+  "package": {
+    "lines": 658,
+    "intervals": 9580,
+    "stationMemberships": 10234,
+    "distinctStationCodes": 9042,
+    "structureRecords": 18174
+  },
+  "priorNativeRouteBatch": {
+    "completed": 201,
+    "resolved": 197,
+    "partial": 4,
+    "consistencyFailures": 0,
+    "reviewFindings": 930
+  },
+  "focusedNativeRouteRecheck": {
+    "completed": 4,
+    "resolved": 3,
+    "partial": 1,
+    "consistencyFailures": 0,
+    "reviewFindings": 10,
+    "elapsedSeconds": 25.892351984977722,
+    "timingScope": "routeLoad",
+    "resolutionSemantics": "physical-section-evidence-v5",
+    "report": "ios/refactor-parallel/route-final-passenger-recheck-20261010.json",
+    "rows": [
+      {
+        "id": "20260705_03_chuo_line",
+        "resolvedSectionCount": 10,
+        "expectedSectionCount": 10,
+        "physicalGapCount": 0
+      },
+      {
+        "id": "20260706_02_super_tsugaru2",
+        "resolvedSectionCount": 4,
+        "expectedSectionCount": 6,
+        "physicalGapCount": 3
+      },
+      {
+        "id": "20260720_42_astram_hondori_johoku",
+        "resolvedSectionCount": 2,
+        "expectedSectionCount": 2,
+        "physicalGapCount": 0
+      },
+      {
+        "id": "20260727_08_narita_express",
+        "resolvedSectionCount": 1,
+        "expectedSectionCount": 1,
+        "physicalGapCount": 0
+      }
+    ],
+    "note": "Fresh native semantic migration supersedes v3/v4 focused results; not a fresh rerun of all 201 original records."
+  },
+  "nativeAlignmentEvidence": {
+    "originalSuccessfulCaptures": 446,
+    "followupSuccessfulCaptures": 102,
+    "captureFailures": 0,
+    "note": "Mac unlocked; all 123 current scoped captures reviewed. Historical overlapping captures are not additive certified coverage. Nine native saved verdicts are viewport-only; all-view range findings recorded separately.",
+    "finalSuccessfulCaptures": 123,
+    "finalVisuallyReviewedCaptures": 123,
+    "nativeSavedViewportReviews": 9,
+    "nativeDetailCertifiedIntervals": 0,
+    "visualReview": "docs/reports/japan/passenger-native-visual-review-20261010.json",
+    "savedViewRecords": "docs/reports/japan/passenger-native-viewpoint-records-20261010.json"
+  },
+  "remainingHighRisk": [
+    {
+      "area": "Ou Owani-Onsen–Odate",
+      "status": "unproven",
+      "reason": "Owani-Onsen–Odate tunnel source vertex and adjacent boundary connections remain unproven; native route stays 4/6 with three physical gaps."
+    },
+    {
+      "area": "Asa Akano–Ananai",
+      "status": "no_go_for_replacement",
+      "reason": "KSJ2 provenance and hidden tunnel alternative are not independent positional proof"
+    },
+    {
+      "area": "Yodo Tosa-Taisho–Tosa-Showa",
+      "status": "no_go_for_replacement",
+      "reason": "Approximately29m shape difference without independent georeferenced curve evidence"
+    },
+    {
+      "area": "Keiyo earlier parallel offsets and northern branch throat",
+      "status": "visible_offset_requires_repair",
+      "reason": "Fresh native views confirm branch2 south displacement at 7–13 and branch3 northern throat eastward bow at 3–4; bounded tail repairs follow blue corridor."
+    },
+    {
+      "area": "Kisuki Miinohara approach and station point",
+      "status": "visible_offset_requires_repair",
+      "reason": "Views17–19 displaced east/southeast; station005725 outside Apple blue station footprint. No coordinate repair applied."
+    },
+    {
+      "area": "Hakone Ohiradai station point and broader curves",
+      "status": "visible_offset_requires_repair",
+      "reason": "Station005260 on road north of Apple blue station footprint; protected fold retained, broader source curve mismatch remains."
+    },
+    {
+      "area": "Hisatsu Okoba–Yatake",
+      "status": "visible_offset_requires_repair",
+      "reason": "Protected reversal retained, but eastward track offset persists in views13–27. Suspension remains excluded."
+    },
+    {
+      "area": "Keishin and Tsurumi exact parallel tracks/switches",
+      "status": "insufficient_basemap",
+      "reason": "Corridor-level fixes visible; exact track/switch details unresolved. Kamisakaemachi station dot boundary unresolved."
+    }
+  ],
+  "limits": [
+    "No national geographic PASS",
+    "No measured CPU or speed improvement",
+    "No unproved switch connection/date or freight-only edge",
+    "Hisatsu suspension remains excluded"
+  ],
+  "focusedRegression": {
+    "tests": 10,
+    "suites": 4,
+    "passed": true,
+    "seconds": 7.885,
+    "log": "/private/tmp/jtm-final-owned-corridor-green.log",
+    "scope": "Full production Kanda corridor and actual Sobu/NEx inference, accepted installed registry edge ownership, date/operator checks, wrong IDs and memo isolation"
+  },
+  "alignmentFinalBuild": "succeeded",
+  "nativeAlignmentFinalPlan": {
+    "lineCount": 658,
+    "intervalCount": 9580,
+    "viewpointCount": 92215,
+    "capturedCount": 123,
+    "failedCount": 0,
+    "path": "/private/tmp/jtm-passenger-risk-final-recheck",
+    "focusedRecaptureIntervals": 9,
+    "focusedRecaptureViewpoints": 123,
+    "queue": "docs/reports/japan/passenger-native-recapture-queue-20261010.json",
+    "visuallyReviewedCount": 123,
+    "captureReport": "ios/refactor-parallel/alignment-final-risk-recheck-20261010.json"
+  },
+  "affectedDataQuery": {
+    "rows": 9,
+    "intervals": 66,
+    "embeddedParts": 9,
+    "result": "valid coordinates, embedded cache parity and derived part counts consistent"
+  },
+  "routeFinalBuild": "succeeded",
+  "stationFootprintReview": {
+    "report": "docs/reports/japan/station-footprint-review-20261010.json",
+    "scope": "17 distinct endpoint coordinates of nine repaired passenger intervals; not all Japanese stations",
+    "reviewed": 17,
+    "visuallyInside": 14,
+    "visuallyOutside": 2,
+    "boundaryUnresolved": 1,
+    "outsideStationIDs": [
+      "005260",
+      "005725"
+    ],
+    "boundaryUnresolvedStationIDs": [
+      "005987"
+    ],
+    "productionRiddenCircleRuntimeVerified": false,
+    "coordinateRepairsApplied": false
+  },
+  "localRepairFollowup": {
+    "date": "2026-10-10",
+    "report": "docs/reports/japan/passenger-local-repair-recheck-20261010.json",
+    "scope": "71 new scoped native snapshots; three local display repairs; two previously outside station points freshly inside. Earlier wider findings remain."
+  }
+}

@@ -1,0 +1,385 @@
+{
+  "status": "planned-not-runtime-evidence",
+  "lineObjectSha256": "551e25913d9dce4e3ff22c0d9968893b23ba0072c47bf7ffee7609b97e59820e",
+  "intervalCount": 21,
+  "cases": [
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 0,
+      "fromStationID": "005410",
+      "toStationID": "005430",
+      "plannedCamera": [
+        35.17894,
+        137.0175175,
+        0.011782500000009577
+      ],
+      "completeIntervalBounds": [
+        137.01359,
+        35.175325,
+        137.021445,
+        35.182555
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 1,
+      "fromStationID": "005430",
+      "toStationID": "005437",
+      "plannedCamera": [
+        35.1744025,
+        137.01009,
+        0.010500000000007503
+      ],
+      "completeIntervalBounds": [
+        137.00659,
+        35.17348,
+        137.01359,
+        35.175325
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 2,
+      "fromStationID": "005437",
+      "toStationID": "005470",
+      "plannedCamera": [
+        35.17089,
+        137.00128999999998,
+        0.015899999999973602
+      ],
+      "completeIntervalBounds": [
+        136.99599,
+        35.1683,
+        137.00659,
+        35.17348
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 3,
+      "fromStationID": "005470",
+      "toStationID": "005488",
+      "plannedCamera": [
+        35.165535000000006,
+        136.99094000000002,
+        0.015149999999991337
+      ],
+      "completeIntervalBounds": [
+        136.98589,
+        35.16277,
+        136.99599,
+        35.1683
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 4,
+      "fromStationID": "005488",
+      "toStationID": "005500",
+      "plannedCamera": [
+        35.161640000000006,
+        136.979265,
+        0.019874999999998977
+      ],
+      "completeIntervalBounds": [
+        136.97264,
+        35.16051,
+        136.98589,
+        35.16277
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 5,
+      "fromStationID": "005500",
+      "toStationID": "005482",
+      "plannedCamera": [
+        35.162252499999994,
+        136.968175,
+        0.013395000000031132
+      ],
+      "completeIntervalBounds": [
+        136.96371,
+        35.16063,
+        136.97264,
+        35.163875
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 6,
+      "fromStationID": "005482",
+      "toStationID": "005478",
+      "plannedCamera": [
+        35.1652875,
+        136.95810749999998,
+        0.016807499999984543
+      ],
+      "completeIntervalBounds": [
+        136.952505,
+        35.163875,
+        136.96371,
+        35.1667
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 7,
+      "fromStationID": "005478",
+      "toStationID": "005473",
+      "plannedCamera": [
+        35.1671575,
+        136.949265,
+        0.009720000000015716
+      ],
+      "completeIntervalBounds": [
+        136.946025,
+        35.16649,
+        136.952505,
+        35.167825
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 8,
+      "fromStationID": "005473",
+      "toStationID": "005460",
+      "plannedCamera": [
+        35.168805,
+        136.94205,
+        0.01192499999999086
+      ],
+      "completeIntervalBounds": [
+        136.938075,
+        35.167825,
+        136.946025,
+        35.169785
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 9,
+      "fromStationID": "005460",
+      "toStationID": "005450",
+      "plannedCamera": [
+        35.170222499999994,
+        136.9340225,
+        0.01215750000000071
+      ],
+      "completeIntervalBounds": [
+        136.92997,
+        35.169785,
+        136.938075,
+        35.17066
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 10,
+      "fromStationID": "005450",
+      "toStationID": "005453",
+      "plannedCamera": [
+        35.170805,
+        136.9250375,
+        0.01479749999998603
+      ],
+      "completeIntervalBounds": [
+        136.920105,
+        35.17066,
+        136.92997,
+        35.17095
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 11,
+      "fromStationID": "005453",
+      "toStationID": "005459",
+      "plannedCamera": [
+        35.1703105,
+        136.914355,
+        0.017250000000018417
+      ],
+      "completeIntervalBounds": [
+        136.908605,
+        35.169951,
+        136.920105,
+        35.17067
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 12,
+      "fromStationID": "005459",
+      "toStationID": "005464",
+      "plannedCamera": [
+        35.169582,
+        136.9030055,
+        0.016798500000007266
+      ],
+      "completeIntervalBounds": [
+        136.897406,
+        35.169213,
+        136.908605,
+        35.169951
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 13,
+      "fromStationID": "005464",
+      "toStationID": "005451",
+      "plannedCamera": [
+        35.1700525,
+        136.890553,
+        0.020558999999977345
+      ],
+      "completeIntervalBounds": [
+        136.8837,
+        35.1685,
+        136.897406,
+        35.171605
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 14,
+      "fromStationID": "005451",
+      "toStationID": "005423",
+      "plannedCamera": [
+        35.1745775,
+        136.88058,
+        0.009359999999986712
+      ],
+      "completeIntervalBounds": [
+        136.87746,
+        35.171605,
+        136.8837,
+        35.17755
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 15,
+      "fromStationID": "005423",
+      "toStationID": "005426",
+      "plannedCamera": [
+        35.17727,
+        136.8723525,
+        0.015322500000024775
+      ],
+      "completeIntervalBounds": [
+        136.867245,
+        35.17699,
+        136.87746,
+        35.17755
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 16,
+      "fromStationID": "005426",
+      "toStationID": "005440",
+      "plannedCamera": [
+        35.174845000000005,
+        136.86477,
+        0.007425000000012005
+      ],
+      "completeIntervalBounds": [
+        136.862295,
+        35.1727,
+        136.867245,
+        35.17699
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 17,
+      "fromStationID": "005440",
+      "toStationID": "005475",
+      "plannedCamera": [
+        35.170215,
+        136.85861,
+        0.011054999999970505
+      ],
+      "completeIntervalBounds": [
+        136.854925,
+        35.16773,
+        136.862295,
+        35.1727
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 18,
+      "fromStationID": "005475",
+      "toStationID": "005504",
+      "plannedCamera": [
+        35.1629485,
+        136.854674,
+        0.014344499999999982
+      ],
+      "completeIntervalBounds": [
+        136.854423,
+        35.158167,
+        136.854925,
+        35.16773
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 19,
+      "fromStationID": "005504",
+      "toStationID": "005533",
+      "plannedCamera": [
+        35.153312,
+        136.8538565,
+        0.014564999999997497
+      ],
+      "completeIntervalBounds": [
+        136.85329,
+        35.148457,
+        136.854423,
+        35.158167
+      ]
+    },
+    {
+      "lineID": "jp-名古屋市-1号線東山線",
+      "linePrefix": "higashiyama",
+      "intervalIndex": 20,
+      "fromStationID": "005533",
+      "toStationID": "005564",
+      "plannedCamera": [
+        35.143771,
+        136.853272,
+        0.014057999999998572
+      ],
+      "completeIntervalBounds": [
+        136.85303,
+        35.139085,
+        136.853514,
+        35.148457
+      ]
+    }
+  ]
+}

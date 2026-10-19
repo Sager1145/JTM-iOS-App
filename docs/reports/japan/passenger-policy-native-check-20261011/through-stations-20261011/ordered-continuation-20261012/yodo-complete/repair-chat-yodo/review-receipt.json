@@ -1,0 +1,451 @@
+{
+  "format": "jtm-yodo-repair-chat-review-v1",
+  "status": "candidate-only-all19-reviewed-Root-approved-group-warnings-retained",
+  "productionWritesThisChat": false,
+  "appsOpenedThisChat": 0,
+  "buildsThisChat": 0,
+  "nativeAcceptance": false,
+  "candidateGeometryEditsThisChat": 0,
+  "reuse": "All19 latest handed-off station-integrated arrays copied byte-identically, not refitted. Existing per-body fitting evidence remains inherited; this chat supplies a new complete Primary same-camera reprojection review and precise-station crop review.",
+  "actuallyOpened": {
+    "primaryFullViewportReprojectionPanels": 245,
+    "primarySheets": 68,
+    "stationRawViewCrops": 20,
+    "stationRawCropPanels": 20,
+    "stationCandidateCropPanels": 20,
+    "stationSheets": 5,
+    "additionalFullOriginalAndOverlayStation12Panels": 2,
+    "secondaryPanels": 0,
+    "thirdPanels": 0,
+    "MainPanels": 0
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "viewsOpened": 18,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "finding": "Wakai exact approved prefix retained; uncomplicated own line after split; Iejigawa tail joins precise frame.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 1,
+      "viewsOpened": 15,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "finding": "Iejigawa west curve and Utsuigawa end connect forward; local-body-v3 false controls absent.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 2,
+      "viewsOpened": 22,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21
+      ],
+      "finding": "Broad river-side curves and tunnel/cartographic bridge continuations remain on identified Yodo glyph; TosaTaisho end retained within pick uncertainty.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 3,
+      "viewsOpened": 27,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "finding": "All27 overlapping views reviewed, including corrected11–14 and24–26; small own-glyph bend retained, no capture-order reversal.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 4,
+      "viewsOpened": 14,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "finding": "Showa precise relocated chainage and Togawa approach connect without oldguard return.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 5,
+      "viewsOpened": 24,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "finding": "All24 views including local false-control removals reviewed; road106/381, river and tunnel labels excluded from own line identity.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 6,
+      "viewsOpened": 13,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "finding": "All13 views including former local zigzag and Ekawasaki throat reviewed; group rail allocation qualification retained.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 7,
+      "viewsOpened": 9,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "finding": "All9 including corrected body and precise Nishigaho incoming controls reviewed; continuous varying own-band approach.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 8,
+      "viewsOpened": 18,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "finding": "All18 including final outgoing Nishigaho correction reviewed; initial precise support and next body continue forward.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 9,
+      "viewsOpened": 6,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "finding": "All6 reviewed through Mato/Yoshinobu; station points use frame longitudinal normals.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 10,
+      "viewsOpened": 8,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "finding": "All8 reviewed; earlier road381 falsepick excluded, real curvature retained; label gaps do not force oldsource returns.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 11,
+      "viewsOpened": 11,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "finding": "All11 reviewed; Izume incoming adjacent geometry matches its own sleeper corridor, rather than parallel road381.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 12,
+      "viewsOpened": 6,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "finding": "All6 reviewed; Izume outgoing and Chikanaga approach preserve own passenger group; platform number allocation not inferred.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 13,
+      "viewsOpened": 8,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "finding": "All8 reviewed; Chikanaga island group and Fukata straight/curve approach preserved; label-obscured cap uncertainty retained.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 14,
+      "viewsOpened": 10,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "finding": "All10 reviewed; rivercrossing, double bends and Ouchi approach remain on own Yodo corridor.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 15,
+      "viewsOpened": 5,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "finding": "All5 reviewed; shallow curved body kept, Nima face/access bulb distinction retained.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 16,
+      "viewsOpened": 8,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "finding": "All8 body panels reviewed; IyoMiyanoshita endpoint retains Root-approved coextensive groupnormal with unequal curved-face cartographic warning.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 17,
+      "viewsOpened": 4,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "finding": "All4 reviewed; Muden incoming forward supports remove former guard hook; IyoMiyanoshita start retains Root-approved coextensive groupnormal.",
+      "formalAcceptance": false
+    },
+    {
+      "intervalIndex": 18,
+      "viewsOpened": 19,
+      "ordinalsOpened": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "finding": "All19 reviewed; Muden outgoing controls are forward, body shallow bends retained, Yosan/Yodo fork own eastern labelled Yodo continuation followed; exact approved Kita tail retained.",
+      "formalAcceptance": false
+    }
+  ],
+  "stationWarnings": [
+    {
+      "stationIndex": 7,
+      "qualification": "Retained inherited group/platform assignment qualification; no physical rail/platform-number inference."
+    },
+    {
+      "stationIndex": 13,
+      "qualification": "Retained inherited group/platform assignment qualification; no physical rail/platform-number inference."
+    },
+    {
+      "stationIndex": 19,
+      "qualification": "Retained inherited group/platform assignment qualification; no physical rail/platform-number inference."
+    },
+    {
+      "stationIndex": 17,
+      "qualification": "Root approved coextensive-group longitudinal midpoint→actual curved-rail normal. Retain unequal curved-face/group/platform-number uncertainty; no single-face replacement required."
+    }
+  ],
+  "projection": "Each literal camera rectX/Y/Width/Height and viewport size used independently. MapKit268435456 world Mercator, WGS84 longitude-first. Primary actual1024x768; precise stations actual999x654. No fixed viewport assumption used to project coordinates.",
+  "limits": [
+    "No all-three native replay or Main final lane/dot/smoothing observed by this chat. Root owns these tests.",
+    "Inherited platform cap uncertainty and label occlusions retained. No measured maximum Apple pixel residual claimed.",
+    "245 opened reprojections are review records, not geographic pass counters. Secondary/third basemaps differ in selected sampled bytes; their independent review not claimed.",
+    "Root explicitly adjudicated station17 coextensive group. This approves retaining the alias basis, not final native/Main render acceptance."
+  ],
+  "readConsumers": [
+    "app/scripts/railway/repair-yodo-shared-stations-display.mjs: candidateIntervals/displayStationCoordinates and exact Wakai/Kita shared support contract read only",
+    "ios/RailKit/Sources/RailCore/Rendering/StationDisplay.swift: station label/alias consumer queried; no consumer or native resource modified"
+  ],
+  "rootSteeringIntegrated": true
+}

@@ -1,0 +1,156 @@
+{
+  "caseIndex": 14,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 14,
+  "source": {
+    "caseIndex": 14,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 14,
+    "fromStationID": "004633",
+    "toStationID": "004685",
+    "camera": [
+      35.45655,
+      139.611324,
+      0.0431045999999931
+    ],
+    "effectiveCoordinates": [
+      [
+        139.622278,
+        35.46588
+      ],
+      [
+        139.62179,
+        35.46533
+      ],
+      [
+        139.62133,
+        35.46475
+      ],
+      [
+        139.62073,
+        35.46421
+      ],
+      [
+        139.62055,
+        35.46401
+      ],
+      [
+        139.6201,
+        35.46352
+      ],
+      [
+        139.61986,
+        35.46325
+      ],
+      [
+        139.61841,
+        35.46164
+      ],
+      [
+        139.61829,
+        35.46153
+      ],
+      [
+        139.61752,
+        35.46068
+      ],
+      [
+        139.6159,
+        35.45893
+      ],
+      [
+        139.61479,
+        35.45771
+      ],
+      [
+        139.61374,
+        35.45657
+      ],
+      [
+        139.61298,
+        35.45587
+      ],
+      [
+        139.61213,
+        35.45515
+      ],
+      [
+        139.61129,
+        35.45462
+      ],
+      [
+        139.61092,
+        35.45444
+      ],
+      [
+        139.6096,
+        35.45374
+      ],
+      [
+        139.60766,
+        35.45264
+      ],
+      [
+        139.60516,
+        35.45124
+      ],
+      [
+        139.60473,
+        35.45099
+      ],
+      [
+        139.60425,
+        35.45071
+      ],
+      [
+        139.6033,
+        35.45
+      ],
+      [
+        139.60286,
+        35.4496
+      ],
+      [
+        139.60167,
+        35.44846
+      ],
+      [
+        139.60037,
+        35.44722
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t86 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:15;overlays:10;rides:0;budgetDrops:0;vertices:5044;camera:14.40;lod:13.26;backbones:1;networkStations:60;distance:9460.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.456550;centerLon:139.611324;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2297.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:16;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:11;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:4;labelPassMaxMs:4;gestureLabelPassMaxMs:0;regionTickMaxMs:4;stackingMaxMs:0;annotationViews:60;markerPhases:setup=1,endpointSpecsClaims=0,endpointLayout=0,selectedNames=0,ridesDigest=0,records=0,connections=1,hiddenRides=0,rideDotLoop=0,rideLabels=0,networkStations=5,annotationDiff=0,annotationApply=0,rideStationOverlayInstall=1,annotationRestyle=0,endpointsAdd=0,other=3,drawnCount=0,stationsCount=3251,culled=0,annAdded=60,annRemoved=0,annRetained=0,annCoordChanged=0,restyledViews=0",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.456550;centerLon:139.611324;distance:9460.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:4;labelPassMaxMs:4;gestureLabelPassMaxMs:0;regionTickMaxMs:4;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.456550",
+      "35.456550"
+    ],
+    "centerLon": [
+      "139.611324",
+      "139.611324"
+    ],
+    "distance": [
+      "9460.4",
+      "9460.4"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true
+}

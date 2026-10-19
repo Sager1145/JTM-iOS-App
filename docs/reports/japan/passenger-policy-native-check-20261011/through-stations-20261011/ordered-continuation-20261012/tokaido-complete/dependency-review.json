@@ -1,0 +1,78 @@
+{
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "ownerChecks": [
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    },
+    {
+      "path": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true
+    }
+  ],
+  "displayOverrideIntervals": [
+    "6"
+  ],
+  "scope": "Focused owning-row equality only",
+  "existingRepairReview": {
+    "path": "app/scripts/railway/shinagawa-apple-forks-display-evidence.json",
+    "intervalIndex": 6,
+    "candidateEqualsFrozen": true,
+    "priorAcceptedDisplayCartography": true,
+    "ownPlatformSurveyAcceptance": false
+  },
+  "mainCameraPlanReview": {
+    "cases": 32,
+    "displayOverrideInterval": 6,
+    "reviewedSources": [
+      "app/public/rail-network.js:864",
+      "app/public/rail-network.js:879",
+      "ios/RailKit/Sources/RailCore/Data/CompactPackage.swift:290"
+    ],
+    "finding": "Camera helper applies station and interval display overrides before endpoint welding, consistent for this owning line with JS and Swift display decoder. Planned camera is not actual viewport evidence."
+  },
+  "postCaptureFocusedOwnerChecks": [
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "frozenOwnerEqual": true,
+      "sharedOwnerIDsEqual": true,
+      "sharedOwnerComparison": "All owning line IDs including current owner, matching frozen shared-station-owners.json definition"
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true,
+      "sharedOwnerIDsEqual": true,
+      "sharedOwnerComparison": "All owning line IDs including current owner, matching frozen shared-station-owners.json definition"
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true,
+      "sharedOwnerIDsEqual": true,
+      "sharedOwnerComparison": "All owning line IDs including current owner, matching frozen shared-station-owners.json definition"
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true,
+      "sharedOwnerIDsEqual": true,
+      "sharedOwnerComparison": "All owning line IDs including current owner, matching frozen shared-station-owners.json definition"
+    },
+    {
+      "path": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/jp-2025.json",
+      "frozenOwnerEqual": true,
+      "sharedOwnerIDsEqual": true,
+      "sharedOwnerComparison": "All owning line IDs including current owner, matching frozen shared-station-owners.json definition"
+    }
+  ]
+}

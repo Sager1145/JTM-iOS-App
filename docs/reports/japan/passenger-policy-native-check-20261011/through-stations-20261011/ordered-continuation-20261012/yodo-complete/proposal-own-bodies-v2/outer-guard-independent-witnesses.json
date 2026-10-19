@@ -1,0 +1,428 @@
+{
+  "status": "candidate-only-independent-originals-opened",
+  "guards": [
+    {
+      "stationID": "009579",
+      "raw": "guard-iyoki-009579",
+      "faceEndpoints": [
+        [
+          515,
+          328
+        ],
+        [
+          508,
+          516
+        ]
+      ],
+      "faceMidpoint": [
+        511.5,
+        422
+      ],
+      "railFlanks": [
+        [
+          502,
+          328
+        ],
+        [
+          497,
+          422
+        ],
+        [
+          493,
+          516
+        ]
+      ],
+      "aliasPixel": [
+        497.53201129146083,
+        421.3313196894848
+      ],
+      "additionalCompleteInterval": "jp-土佐くろしお鉄道-中村線#3",
+      "precision": "Single narrow face. ±1.5px normal,±2px endpoint chainage candidate tolerance; oldy327 visibly north.",
+      "alias": [
+        133.0983224428835,
+        33.10458511013298
+      ],
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoki-009579/view.json"
+    },
+    {
+      "stationID": "009452",
+      "raw": "guard-takamitsu-009452",
+      "faceEndpoints": [
+        [
+          489,
+          240
+        ],
+        [
+          507,
+          310
+        ]
+      ],
+      "faceMidpoint": [
+        498,
+        275
+      ],
+      "railFlanks": [
+        [
+          494,
+          240
+        ],
+        [
+          503,
+          275
+        ],
+        [
+          512,
+          310
+        ]
+      ],
+      "aliasPixel": [
+        502.68989280245023,
+        273.7940275650842
+      ],
+      "additionalCompleteInterval": "jp-四国旅客鉄道-予讃線#86",
+      "precision": "Single short narrow face. ±1.5px normal,±2px endpoint chainage; oldy327 south.",
+      "alias": [
+        132.57352211192358,
+        33.25621867536047
+      ],
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-takamitsu-009452/view.json"
+    },
+    {
+      "stationID": "009486",
+      "raw": "guard-uwajima-009486",
+      "faceEndpoints": [
+        [
+          400,
+          418
+        ],
+        [
+          543,
+          294
+        ]
+      ],
+      "faceMidpoint": [
+        471.5,
+        356
+      ],
+      "railFlanks": [
+        [
+          402,
+          414
+        ],
+        [
+          540,
+          277
+        ]
+      ],
+      "aliasPixel": [
+        466.0019569989157,
+        350.46182529817787
+      ],
+      "additionalCompleteInterval": null,
+      "precision": "Corrected actual SE narrow face NEcap543294; earlier552270 was beyond narrow face and is withdrawn. Longitudinal midpoint471.5356 projectedSEpairedrail. NWface376400→519265 is distinct and has earlier midpoint. Candidate allocation to SEpairedrail matches present approach only, not independently proved operator/individual rail; ±2px and owner/Root adjudication remain.",
+      "alias": [
+        132.56753030248967,
+        33.22607971709397
+      ],
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-uwajima-009486/view.json",
+      "status": "SEindividual-face-alternative-unaccepted-Rootrequires-two-face-group",
+      "groupAlternative": {
+        "faces": [
+          [
+            [
+              376,
+              400
+            ],
+            [
+              519,
+              265
+            ]
+          ],
+          [
+            [
+              400,
+              418
+            ],
+            [
+              543,
+              294
+            ]
+          ]
+        ],
+        "groupLongitudinalMidpoint": [
+          459.5,
+          344.25
+        ],
+        "passengerGroupRailFlanks": [
+          [
+            388,
+            406.5
+          ],
+          [
+            529,
+            269
+          ]
+        ],
+        "aliasPixel": [
+          455.7635917730698,
+          340.41848320002066
+        ],
+        "limits": "Group normal betweenpassengerstationrails only, excludingseparateNWyardtracks andattachedSEbuilding. Unequalface lengths retained. Candidategroupcartographicnormal, notsurveyedoperator rail.",
+        "alias": [
+          132.56747537961877,
+          33.22612478573718
+        ]
+      }
+    },
+    {
+      "stationID": "009500",
+      "raw": "guard-kubokawa-009500",
+      "aliasPixel": null,
+      "additionalCompleteInterval": "jp-四国旅客鉄道-土讃線#59",
+      "precision": "Several unequally long light faces: west roughlyy354–419, islandy282–423,easty376–422. Currentcode does not decide own individual rail or one common longitudinal midpoint. No candidate alias from ambiguous group.",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-kubokawa-009500/view.json",
+      "ownerDependency": "Shipped package station009500 is Dosan terminalindex60 of61stations/60segments andNakamura initialindex0: Dosan59 andNaka0 endpoint owners ifsharedalias moves. No railallocation conclusion."
+    }
+  ],
+  "limits": "All four actual999x654 basemaps and crops opened. Uwajima display also opened to identify current approach, not authoritative physical assignment. No production/source/app writes or freeze; alias moves require complete shared owner dependencies.",
+  "additionalOuterEndpoints": [
+    {
+      "stationID": "009434",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoyoshida-009434/view.json",
+      "status": "candidate-two-face-group-midpoint",
+      "narrowFaceEndpoints": [
+        [
+          [
+            516,
+            251
+          ],
+          [
+            489,
+            343
+          ]
+        ],
+        [
+          [
+            535,
+            252
+          ],
+          [
+            518,
+            319
+          ]
+        ]
+      ],
+      "groupLongitudinalMidpoint": [
+        514.5,
+        291.25
+      ],
+      "groupRailFlanks": [
+        [
+          515,
+          290
+        ],
+        [
+          512,
+          300
+        ],
+        [
+          508,
+          320
+        ],
+        [
+          506,
+          330
+        ],
+        [
+          503.5,
+          340
+        ]
+      ],
+      "aliasPixel": [
+        514.7082093991671,
+        291.29684711481264
+      ],
+      "alias": [
+        132.54439658319012,
+        33.27357012800977
+      ],
+      "additionalCompleteInterval": "jp-四国旅客鉄道-予讃線#85",
+      "limits": "Own pairedstationrailwaygroup normal, notindividualoperator rail. Unequalface lengths disclosed; geometric mean of literalface midpoints, ±2px endpoint/normal. Existingguard499327 materiallysouth. Root/owner adjudication andallthreeMainpending.",
+      "previousAliasWithdrawn": {
+        "pixel": [
+          508.32223183391005,
+          289.3698096885813
+        ],
+        "reason": "Preliminaryrailflanks northwestofactualownblack. Actualpixel scansplusmagnifiedcrop identifylocalownblack around515290,512300,506330."
+      },
+      "approachControls": [
+        {
+          "pixel": [
+            536,
+            100
+          ],
+          "coordinate": [
+            132.5445108012554,
+            33.2744280859793
+          ],
+          "side": "north",
+          "warning": "singleapproachglyph"
+        },
+        {
+          "pixel": [
+            521.5,
+            225
+          ],
+          "coordinate": [
+            132.54443301719402,
+            33.273867467416075
+          ],
+          "side": "north",
+          "warning": "multipleownblackpixels518/523/525; pairedgroupcentre"
+        },
+        {
+          "pixel": [
+            519,
+            240
+          ],
+          "coordinate": [
+            132.54441960614895,
+            33.273800192946595
+          ],
+          "side": "north",
+          "warning": "pairedblackpixels516/521/522;groupcentre"
+        },
+        {
+          "pixel": [
+            512,
+            300
+          ],
+          "coordinate": [
+            132.5443820552228,
+            33.273531094550286
+          ],
+          "side": "south",
+          "warning": "owncentralblack"
+        },
+        {
+          "pixel": [
+            508,
+            320
+          ],
+          "coordinate": [
+            132.54436059755068,
+            33.273441394900544
+          ],
+          "side": "south",
+          "warning": "ownblack507/509"
+        },
+        {
+          "pixel": [
+            506,
+            330
+          ],
+          "coordinate": [
+            132.54434986871468,
+            33.27339654504111
+          ],
+          "side": "south",
+          "warning": "ownblack505/507"
+        },
+        {
+          "pixel": [
+            503.5,
+            340
+          ],
+          "coordinate": [
+            132.5443364576696,
+            33.27335169515865
+          ],
+          "side": "south",
+          "warning": "ownblack502/505"
+        },
+        {
+          "pixel": [
+            501,
+            350
+          ],
+          "coordinate": [
+            132.54432304662453,
+            33.27330684525315
+          ],
+          "side": "south",
+          "warning": "pairedblack499/503"
+        },
+        {
+          "pixel": [
+            490.5,
+            370
+          ],
+          "coordinate": [
+            132.54426672023527,
+            33.273217145373025
+          ],
+          "side": "south",
+          "warning": "pairedblack489/492"
+        },
+        {
+          "pixel": [
+            484,
+            400
+          ],
+          "coordinate": [
+            132.54423185151813,
+            33.27308259538006
+          ],
+          "side": "south",
+          "warning": "pairedblack479/489;downstreamturnoutgroup widens"
+        },
+        {
+          "pixel": [
+            473.5,
+            430
+          ],
+          "coordinate": [
+            132.54417552512882,
+            33.27294804517977
+          ],
+          "side": "south",
+          "warning": "multipleownblack468/469/472/474/479;groupcentreprecision±2px"
+        }
+      ]
+    },
+    {
+      "stationID": "009586",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-tosasaga-009586/view.json",
+      "status": "exactalias-withheld-lowerL-strip-identity-gap",
+      "clearShortNarrowFaceEndpoints": [
+        [
+          503,
+          290
+        ],
+        [
+          503,
+          329
+        ]
+      ],
+      "clearShortFaceMidpoint": [
+        503,
+        309.5
+      ],
+      "shortFaceNormalAlternativePixel": [
+        491.7240013205678,
+        309.9100363156157
+      ],
+      "shortFaceNormalAlternative": [
+        133.10135328629502,
+        33.08126581653117
+      ],
+      "lowerLStrip": "Thinverticalrough514334→514400 connectswideU/attachedstation/buildingshape. Pixels alone do not establish whetherthis isownpassengerface orbuildingcasing.",
+      "combinedLongitudinalAlternativePixel": [
+        495,
+        345
+      ],
+      "additionalCompleteIntervalIfAliasMoves": "jp-土佐くろしお鉄道-中村線#4",
+      "limits": "Old499327 isneither clearshortface midpoint norcombined290–400extent midpoint. Contradictorylongitudinalalternativeswithheld; no exactaliasfreeze untilownface identity adjudicated. Bothactualfullbasemap and5x cropopened."
+    }
+  ]
+}

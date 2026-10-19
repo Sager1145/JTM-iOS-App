@@ -1,0 +1,45 @@
+{
+  "review": "independent own-platform evidence review of delete-B-only candidate; no source/native edits",
+  "imageryDirectory": "/private/tmp/jtm-platform-proof-20261018/yokohama-imagery/alignment/captures/000000",
+  "cameraView0": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 35.464424,
+    "longitude": 139.620466,
+    "mapPointsPerPoint": 2,
+    "metresPerPoint": 0.24237257388700092,
+    "pitch": 0,
+    "rectHeight": 2400,
+    "rectWidth": 3200,
+    "rectX": 238324693.16011804,
+    "rectY": 105901539.24266395,
+    "viewportHeightPoints": 1200,
+    "viewportWidthPoints": 1600,
+    "zoom256": 19
+  },
+  "projectedSourcePointsView0": {
+    "A": [
+      799.9999999850988,
+      600.0
+    ],
+    "B": [
+      820.1326591968536,
+      688.8035513013601
+    ],
+    "C": [
+      600.1647160947323,
+      981.762201718986
+    ]
+  },
+  "candidateCAHeadingDegrees": 27.629912857422482,
+  "ownOSMTrack2ChordHeadingDegrees": 28.150849088709446,
+  "verdict": "ACCEPT bounded delete-B-only repair for false local tip; no claim of surveyed hidden-track alignment or exact Apple platform caps",
+  "reason": "A is within explicitly related own platform and +0.47m from longitudinal midpoint; C within same own group. Candidate AC remains inside convex envelope by convexity. Imagery shows old B at/east of own football-roof edge toward JR; AC returns continuously beneath identified own station roof. Operator historical plan has gentle curved own tracks, no 49.7deg local bend. No station/cap coordinate is inferred from roof edges.",
+  "limits": [
+    "OSM hidden-platform tracks and platform edges are simplified straight mapping with historical edits.",
+    "Roof conceals actual rails and physical platform caps; imagery does not measure the residual curve.",
+    "Historical radii700/1000m establish gentle platform curves but are not current survey geometry or authority for a new fitted arc.",
+    "The zero-lane Inspector imagery does not by itself accept final production lane/circle output.",
+    "Exact current representative rail centre and several-metre residual offset remain unmeasured; A unchanged is justified as a reasonable bounded own-frame representative, not centimetre accuracy."
+  ]
+}

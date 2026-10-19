@@ -1,0 +1,124 @@
+{
+  "status": "candidate-only-seven-interval-helper-pass",
+  "candidateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/finalcandidate-input.json",
+  "candidateSha256": "87fd1c46f5dafb9546fc6bd6f80d5453f425722042563b1f18f45d985ed488bc",
+  "inputFiles": [
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/assigned-interval-candidates.json",
+      "sha256": "550ad9ee60b84ac8d62e60dfcb27ac4fcb20f3c6c2bd1d263b7f9beb98d0acd3"
+    },
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-wakai-nakamura-v3/yodo-interval-0-coordinates.json",
+      "sha256": "c9f547786dba6e3b984c3ff505a2a453345c81595fb4a980463c2637d9e5632d"
+    },
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-kaina-tail-v4/nakamura-interval-1-coordinates.json",
+      "sha256": "a9de65cf387edc7ace66b831ba9976bb4518e31ae49451c4ac9195167285a5ac"
+    },
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/proposal-kaina-tail-v4/nakamura-interval-2-coordinates.json",
+      "sha256": "c2c75b8ee0297e4c26c324804d7cd7ab949a7281b6dc554c2084ee3d8b890351"
+    }
+  ],
+  "productionCAS": {
+    "packageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+    "lanesSha256": "734b9587c3ea9aa26334500680ff0684d4c5fb63be25b8ed599ec36bcc21525b"
+  },
+  "intervalIDs": [
+    "jp-四国旅客鉄道-予土線#0",
+    "jp-四国旅客鉄道-予土線#18",
+    "jp-土佐くろしお鉄道-中村線#0",
+    "jp-土佐くろしお鉄道-中村線#1",
+    "jp-土佐くろしお鉄道-中村線#2",
+    "jp-四国旅客鉄道-予讃線#87",
+    "jp-四国旅客鉄道-予讃線#88"
+  ],
+  "intervals": [
+    {
+      "lineID": "jp-四国旅客鉄道-予土線",
+      "intervalIndex": 0,
+      "points": 219,
+      "coordinateSha256": "d931a4a39213158fe1643a4cfadae241f8171001debd88f310db89585f82dcde"
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予土線",
+      "intervalIndex": 18,
+      "points": 137,
+      "coordinateSha256": "e9384dd35a94f360fd965ae844fb2e1f72a3e4bab43abb596ed831f375c7529c"
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 0,
+      "points": 85,
+      "coordinateSha256": "f8ccf7ad05912c5367e62b29556cc2d267c73d32865c961b87adf1611f401cb3"
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 1,
+      "points": 360,
+      "coordinateSha256": "53019e8c09458c1f57bdf55c5aabc845b8208e589109c2ce31260435fe3866d8"
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 2,
+      "points": 157,
+      "coordinateSha256": "7464987370c8d3fcec13b8d66c69182987baf41d1439c8de77c0428ffe2a3429"
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 87,
+      "points": 33,
+      "coordinateSha256": "8141daa5e38205fadcfce4d7c701b3621871f0d8c77fd497d48a2467c39268a1"
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 88,
+      "points": 26,
+      "coordinateSha256": "74cf8b45d8339c843b20c3ad98e5d6cb402f93a35951cd6f98e96d2f67dcaa3c"
+    }
+  ],
+  "candidateRowsSha256": {
+    "jp-四国旅客鉄道-予土線": "199b08ee85a87e834c39b213d653b3c45fd25200fe8497359b71ebac9d5823de",
+    "jp-土佐くろしお鉄道-中村線": "83cd4dc1db6e25cc9e3708e9275b0a1ccfdb31d3c78a316b2c44be05806d180d",
+    "jp-四国旅客鉄道-予讃線": "2f2653b0cb11c9fd8af5c879c4867a2e8437db2e4184ddfd92e10757b60f4aa6"
+  },
+  "candidateMeasuredReferencesSha256": "0e0089fa55680885d22cc756fb02a174ff2a07d1f35eb0f2535c51adf45b319a",
+  "rulers": [
+    {
+      "lineID": "jp-四国旅客鉄道-予土線",
+      "oldTotal": 76166.29350598699,
+      "newTotal": 76262.01634230342,
+      "suffixDelta": 95.72283631643222
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "oldTotal": 43113.35413928109,
+      "newTotal": 43125.84763451615,
+      "suffixDelta": 12.493495235059527
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "oldTotal": 297876.6723673162,
+      "newTotal": 297876.6711416187,
+      "suffixDelta": -0.0012256975169293582
+    }
+  ],
+  "physicalLineHashes": {
+    "jp-四国旅客鉄道-予土線": "1ac356e549187032475e39e298ccfd559618b9b032aaf0109f92b919ff8dd229",
+    "jp-土佐くろしお鉄道-中村線": "53d693e87cf35eecfb365b0930f955b8844ab70b2505d937686e540cbd138bf2",
+    "jp-四国旅客鉄道-予讃線": "368fd6564bc3a48ac9199f2704b9173381f20505b25940fa831d87a2186ae2ab"
+  },
+  "physicalTopologyChanged": false,
+  "unownedNativeSlices": "literal-equality-PASS",
+  "nativeAcceptance": false,
+  "resourceBuild": false,
+  "meaningfulFocusedTest": {
+    "command": "node --test --test-name-pattern='shared through-station aliases preserve forward passage and native measured boundaries' app/tests/display-lanes-parts.test.mjs",
+    "status": "PASS",
+    "tests": 1,
+    "totalDurationMs": 136.334666,
+    "reuse": "Latest focused test after mapper exact-boundary fix; owner/test code unchanged since that execution. Final candidate/helper preparation changes data artifacts only.",
+    "ownerSha256": "209e8445126a353a85b55bf9d140d41ea9d5e7d84e97ff8d993fe6f46806c8e6",
+    "testFileSha256": "bece05c2c0bf047621df6465df4737deacb6f16a27b7eb21a321368720012ed4"
+  }
+}

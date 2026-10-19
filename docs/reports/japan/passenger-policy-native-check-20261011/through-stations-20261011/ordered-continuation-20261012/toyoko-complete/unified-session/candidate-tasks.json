@@ -1,0 +1,73 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東急電鉄-東横線#16\/lineOffset",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東急電鉄-東横線#16\/stationApproach",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東急電鉄-東横線#16\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-東横線\/station\/004528",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004528"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-東横線\/station\/004554",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004554"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-東横線#15\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#15",
+      "jp-東急電鉄-東横線#16"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004528"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-東横線#16\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-東横線#16",
+      "jp-東急電鉄-東横線#17"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004554"
+  }
+]

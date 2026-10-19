@@ -1,0 +1,178 @@
+{
+  "caseIndex": 15,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 15,
+  "source": {
+    "caseIndex": 15,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 15,
+    "fromStationID": "002344",
+    "toStationID": "002318",
+    "camera": [
+      36.362505,
+      139.12428,
+      0.02897548310227147
+    ],
+    "effectiveCoordinates": [
+      [
+        139.139545,
+        36.35411
+      ],
+      [
+        139.13866,
+        36.35449
+      ],
+      [
+        139.13689,
+        36.35533
+      ],
+      [
+        139.13633,
+        36.35562
+      ],
+      [
+        139.13524,
+        36.35624
+      ],
+      [
+        139.13508,
+        36.35633
+      ],
+      [
+        139.13478,
+        36.35649
+      ],
+      [
+        139.13383,
+        36.35702
+      ],
+      [
+        139.13281,
+        36.35758
+      ],
+      [
+        139.13124,
+        36.35849
+      ],
+      [
+        139.13095,
+        36.35865
+      ],
+      [
+        139.13021,
+        36.35906
+      ],
+      [
+        139.12917,
+        36.35964
+      ],
+      [
+        139.12839,
+        36.36007
+      ],
+      [
+        139.12691,
+        36.36092
+      ],
+      [
+        139.12567,
+        36.36163
+      ],
+      [
+        139.12461,
+        36.36222
+      ],
+      [
+        139.12334,
+        36.36292
+      ],
+      [
+        139.12227,
+        36.36348
+      ],
+      [
+        139.1218,
+        36.36374
+      ],
+      [
+        139.12164,
+        36.36384
+      ],
+      [
+        139.12074,
+        36.36435
+      ],
+      [
+        139.12047,
+        36.36449
+      ],
+      [
+        139.11981,
+        36.36485
+      ],
+      [
+        139.11876,
+        36.36545
+      ],
+      [
+        139.1169,
+        36.36649
+      ],
+      [
+        139.11611,
+        36.36693
+      ],
+      [
+        139.11519,
+        36.36745
+      ],
+      [
+        139.11439,
+        36.36789
+      ],
+      [
+        139.11348,
+        36.3684
+      ],
+      [
+        139.11301,
+        36.36867
+      ],
+      [
+        139.11219,
+        36.36913
+      ],
+      [
+        139.11156,
+        36.36947
+      ],
+      [
+        139.11064,
+        36.36999
+      ],
+      [
+        139.10976,
+        36.37047
+      ],
+      [
+        139.10957,
+        36.37058
+      ],
+      [
+        139.109015,
+        36.3709
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t37 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:748;camera:14.47;lod:13.33;backbones:0;networkStations:7;distance:8904.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.362505;centerLon:139.124280;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1611.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.362505;centerLon:139.124280;distance:8904.5;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-15.jpg",
+  "observation": "Komagata–Maebashi Oshima straight corridor continuous; own station longitudinal platform midpoints unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

@@ -1,0 +1,27 @@
+{
+  "lineID": "jp-伊予鉄道-城南線",
+  "intervalIndex": 3,
+  "plannedCamera": [
+    33.84045749895062,
+    132.76560926552258,
+    0.004
+  ],
+  "actualCenter": [
+    33.840457,
+    132.765609
+  ],
+  "actualMapBounds": [
+    132.763345,
+    33.838457,
+    132.767873,
+    33.842457
+  ],
+  "completeIntervalInsideActualMap": true,
+  "displayBranchLeadInsInsideActualMap": true,
+  "renderStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:3;rides:0;budgetDrops:0;vertices:649;camera:17.86;lod:16.71;backbones:0;networkStations:4;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.840457;centerLon:132.765609;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4404.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+  "pixelReview": "pending",
+  "pair": [
+    "jounan-interval-03-overlay.png",
+    "jounan-interval-03-basemap.png"
+  ]
+}

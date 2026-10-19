@@ -1,0 +1,518 @@
+{
+  "status": "candidate-only-local-supports",
+  "stations": [
+    {
+      "stationIndex": 0,
+      "stationID": "009535",
+      "alias": [
+        133.10591991458483,
+        33.188092451537244
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          529,
+          276
+        ],
+        [
+          470,
+          384
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          133.10607816491677,
+          33.188321408798565
+        ],
+        [
+          133.10576166425307,
+          33.18783655741936
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 1,
+      "stationID": "009558",
+      "alias": [
+        133.07469411310052,
+        33.1614135938415
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          550,
+          325
+        ],
+        [
+          600,
+          324
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          133.0750159031105,
+          33.161418981461324
+        ],
+        [
+          133.075284124012,
+          33.16142347219167
+        ]
+      ],
+      "normalBetweenFlanks": false,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 2,
+      "stationID": "009549",
+      "alias": [
+        133.029745,
+        33.1755
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          420,
+          326
+        ],
+        [
+          600,
+          330
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          133.02931852876668,
+          33.17550449000907
+        ],
+        [
+          133.0302841240121,
+          33.175486529971394
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 3,
+      "stationID": "009526",
+      "alias": [
+        132.975604,
+        33.194759
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          521,
+          250
+        ],
+        [
+          491,
+          350
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.97571933498784,
+          33.195104654030224
+        ],
+        [
+          132.97555840244695,
+          33.1946557524276
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 4,
+      "stationID": "009493",
+      "alias": [
+        132.8971970505558,
+        33.220327752246135
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          415,
+          180
+        ],
+        [
+          550,
+          335
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.89685770667643,
+          33.22065369356896
+        ],
+        [
+          132.89758190311045,
+          33.21995809816644
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 5,
+      "stationID": "009477",
+      "alias": [
+        132.85566220635872,
+        33.23488060934604
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          345
+        ],
+        [
+          550,
+          302
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.85540624040624,
+          33.23481923461911
+        ],
+        [
+          132.85621090311065,
+          33.23501217401641
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 6,
+      "stationID": "009515",
+      "alias": [
+        132.79160101923895,
+        33.20163631555099
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          386
+        ],
+        [
+          500,
+          310
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.7914262404061,
+          33.20152516855324
+        ],
+        [
+          132.79196268220903,
+          33.20186630721735
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 7,
+      "stationID": "009545",
+      "alias": [
+        132.78295884635548,
+        33.1783065810009
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          430,
+          296
+        ],
+        [
+          470,
+          311
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.78280717294706,
+          33.17835418586216
+        ],
+        [
+          132.78302174966825,
+          33.17828683789194
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 8,
+      "stationID": "009537",
+      "alias": [
+        132.76706073004522,
+        33.18738595964557
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          485,
+          330
+        ],
+        [
+          453,
+          420
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.76708221593873,
+          33.18743653180834
+        ],
+        [
+          132.76691055456178,
+          33.18703248509722
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 9,
+      "stationID": "009489",
+      "alias": [
+        132.74507442481666,
+        33.22423201663592
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          274
+        ],
+        [
+          580,
+          319
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.74461624040612,
+          33.22432783813921
+        ],
+        [
+          132.74558183565154,
+          33.22412590013791
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 10,
+      "stationID": "009488",
+      "alias": [
+        132.72916517460845,
+        33.2246258915195
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          420,
+          254
+        ],
+        [
+          530,
+          357
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.72888852876667,
+          33.22484258662078
+        ],
+        [
+          132.72947861475,
+          33.2243803750056
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 11,
+      "stationID": "009484",
+      "alias": [
+        132.70862573280914,
+        33.22840870994638
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          264
+        ],
+        [
+          550,
+          345
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.70835124040622,
+          33.22853269974194
+        ],
+        [
+          132.70915590311074,
+          33.2281692284773
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 12,
+      "stationID": "009459",
+      "alias": [
+        132.6916428154467,
+        33.251894675581404
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          262
+        ],
+        [
+          500,
+          357
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.6914012404061,
+          33.25208659577845
+        ],
+        [
+          132.69193768220907,
+          33.25166041700484
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 13,
+      "stationID": "009455",
+      "alias": [
+        132.67656256459787,
+        33.25562379829094
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          460,
+          307
+        ],
+        [
+          580,
+          354
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.6761781054879,
+          33.255749717913034
+        ],
+        [
+          132.67682183565148,
+          33.25553888067127
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 14,
+      "stationID": "009441",
+      "alias": [
+        132.66031360527268,
+        33.267703918071675
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          478,
+          280
+        ],
+        [
+          500,
+          390
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.66027966501247,
+          33.26784580804793
+        ],
+        [
+          132.66039768220912,
+          33.26735242671206
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 15,
+      "stationID": "009416",
+      "alias": [
+        132.64205110948944,
+        33.28702130620883
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          520,
+          354
+        ],
+        [
+          620,
+          468
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.6418699705696,
+          33.287193924571454
+        ],
+        [
+          132.64240641237257,
+          33.28668271535474
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    },
+    {
+      "stationIndex": 18,
+      "stationID": "009423",
+      "alias": [
+        132.60047485675528,
+        33.28290206443831
+      ],
+      "ownLiteralFlankPixels": [
+        [
+          400,
+          330.5
+        ],
+        [
+          550,
+          304.5
+        ]
+      ],
+      "ownLiteralFlankCoordinates": [
+        [
+          132.60007624040605,
+          33.282844304245344
+        ],
+        [
+          132.60088090311046,
+          33.28296090121259
+        ]
+      ],
+      "normalBetweenFlanks": true,
+      "qualification": "Only short actual flank supports; no unsupported straight extrapolation. Long joins require actual body and exact cumulative ordering."
+    }
+  ],
+  "unresolved": [
+    1
+  ]
+}

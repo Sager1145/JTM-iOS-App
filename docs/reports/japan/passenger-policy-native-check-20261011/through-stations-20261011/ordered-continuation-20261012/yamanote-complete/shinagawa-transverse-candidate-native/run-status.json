@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "18BB3C37-DFEF-430F-850E-397BA3833E8F",
+  "message" : "8\/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "yamanote-transverse-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-yamanote-transverse-candidate-native\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:50:36Z"
+}

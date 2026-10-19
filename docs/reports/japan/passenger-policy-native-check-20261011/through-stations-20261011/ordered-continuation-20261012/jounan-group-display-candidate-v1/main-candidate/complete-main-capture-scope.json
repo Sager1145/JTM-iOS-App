@@ -1,0 +1,774 @@
+{
+  "status": "actual-capture-only-not-acceptance",
+  "candidateSha256": "6453e121524c38948cbfc64d919ab0621b3f3c4e35667268368b2c6a4b7e8d1e",
+  "lineIDs": [
+    "jp-伊予鉄道-城南線",
+    "jp-伊予鉄道-城北線",
+    "jp-伊予鉄道-大手町線",
+    "jp-伊予鉄道-本町線",
+    "jp-伊予鉄道-花園線",
+    "jp-伊予鉄道-連絡線"
+  ],
+  "intervalCount": 29,
+  "pairedPanelCount": 58,
+  "allCompletePathsInsideActualMap": true,
+  "budgetDrops": 0,
+  "fullContextPair": "full-six-line-context",
+  "review": "Independent review pending final14+full; Minami endpoint question open",
+  "intervals": [
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 5,
+      "plannedCamera": [
+        33.85355800907863,
+        132.7596170699407,
+        0.004
+      ],
+      "actualCenter": [
+        33.853558,
+        132.759617
+      ],
+      "actualMapBounds": [
+        132.757353,
+        33.851558,
+        132.761882,
+        33.855558
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "18 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1419;camera:17.86;lod:16.71;backbones:0;networkStations:6;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.853558;centerLon:132.759617;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2145.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-05-overlay.png",
+        "johoku-interval-05-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.84865654299739,
+        132.76713476221292,
+        0.006394821504244419
+      ],
+      "actualCenter": [
+        33.848657,
+        132.767135
+      ],
+      "actualMapBounds": [
+        132.763515,
+        33.845459,
+        132.770755,
+        33.851854
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:774;camera:17.19;lod:16.04;backbones:0;networkStations:5;distance:1403.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.848657;centerLon:132.767135;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4131.0;rebuilds:2;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-02-overlay.png",
+        "johoku-interval-02-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.851918492627405,
+        132.75884059755327,
+        0.004
+      ],
+      "actualCenter": [
+        33.851918,
+        132.758841
+      ],
+      "actualMapBounds": [
+        132.756576,
+        33.849918,
+        132.761105,
+        33.853918
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "20 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1465;camera:17.86;lod:16.71;backbones:0;networkStations:7;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.851918;centerLon:132.758841;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1975.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "honmachi-interval-00-overlay.png",
+        "honmachi-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.840633615,
+        132.753878175,
+        0.004574294999997619
+      ],
+      "actualCenter": [
+        33.840634,
+        132.753878
+      ],
+      "actualMapBounds": [
+        132.751289,
+        33.838346,
+        132.756467,
+        33.842921
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "25 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:3;rides:0;budgetDrops:0;vertices:1262;camera:17.67;lod:16.52;backbones:0;networkStations:10;distance:1003.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.840634;centerLon:132.753878;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2131.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "otemachi-interval-01-overlay.png",
+        "otemachi-interval-01-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.84932307699318,
+        132.75884192394264,
+        0.004
+      ],
+      "actualCenter": [
+        33.849323,
+        132.758842
+      ],
+      "actualMapBounds": [
+        132.756578,
+        33.847323,
+        132.761106,
+        33.851323
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "21 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:2;rides:0;budgetDrops:0;vertices:1465;camera:17.86;lod:16.71;backbones:0;networkStations:8;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.849323;centerLon:132.758842;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1958.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "honmachi-interval-01-overlay.png",
+        "honmachi-interval-01-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.85028550713899,
+        132.76371978693157,
+        0.004
+      ],
+      "actualCenter": [
+        33.850286,
+        132.76372
+      ],
+      "actualMapBounds": [
+        132.761455,
+        33.848285,
+        132.765984,
+        33.852285
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:774;camera:17.86;lod:16.71;backbones:0;networkStations:3;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.850286;centerLon:132.763720;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2035.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-03-overlay.png",
+        "johoku-interval-03-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 4,
+      "plannedCamera": [
+        33.852481732113965,
+        132.76154400181778,
+        0.004
+      ],
+      "actualCenter": [
+        33.852482,
+        132.761544
+      ],
+      "actualMapBounds": [
+        132.75928,
+        33.850482,
+        132.763808,
+        33.854482
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "18 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:1;rides:0;budgetDrops:0;vertices:1032;camera:17.86;lod:16.71;backbones:0;networkStations:6;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.852482;centerLon:132.761544;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2127.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-04-overlay.png",
+        "johoku-interval-04-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.840138185,
+        132.75686601,
+        0.004389209999999366
+      ],
+      "actualCenter": [
+        33.840138,
+        132.756866
+      ],
+      "actualMapBounds": [
+        132.754382,
+        33.837944,
+        132.75935,
+        33.842333
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "24 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:3;rides:0;budgetDrops:0;vertices:1006;camera:17.73;lod:16.58;backbones:0;networkStations:10;distance:963.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.840138;centerLon:132.756866;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2171.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:7;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "pixelReview": "pending",
+      "pair": [
+        "otemachi-interval-00-overlay.png",
+        "otemachi-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.83972742,
+        132.75976789999999,
+        0.004316459999969879
+      ],
+      "actualCenter": [
+        33.839727,
+        132.759768
+      ],
+      "actualMapBounds": [
+        132.757325,
+        33.837569,
+        132.762211,
+        33.841886
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "26 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:8;overlays:5;rides:0;budgetDrops:0;vertices:973;camera:17.75;lod:16.60;backbones:0;networkStations:12;distance:947.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.839727;centerLon:132.759768;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4182.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "Root reviewed; independent full review recorded separately",
+      "pair": [
+        "jounan-interval-01-overlay.png",
+        "jounan-interval-01-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 6,
+      "plannedCamera": [
+        33.8430491077,
+        132.7751166388,
+        0.004004256900000058
+      ],
+      "actualCenter": [
+        33.843049,
+        132.775117
+      ],
+      "actualMapBounds": [
+        132.77285,
+        33.841047,
+        132.777383,
+        33.845051
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:516;camera:17.86;lod:16.71;backbones:0;networkStations:4;distance:878.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.843049;centerLon:132.775117;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2310.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-06-overlay.png",
+        "jounan-interval-06-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 7,
+      "plannedCamera": [
+        33.845512279054184,
+        132.7754026811045,
+        0.004
+      ],
+      "actualCenter": [
+        33.845512,
+        132.775403
+      ],
+      "actualMapBounds": [
+        132.773138,
+        33.843512,
+        132.777667,
+        33.847512
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:903;camera:17.86;lod:16.71;backbones:0;networkStations:7;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.845512;centerLon:132.775403;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2029.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-07-overlay.png",
+        "jounan-interval-07-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.840179959614204,
+        132.7585418430758,
+        0.004
+      ],
+      "actualCenter": [
+        33.84018,
+        132.758542
+      ],
+      "actualMapBounds": [
+        132.756278,
+        33.83818,
+        132.760806,
+        33.84218
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "20 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:3;rides:0;budgetDrops:0;vertices:895;camera:17.86;lod:16.71;backbones:0;networkStations:8;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.840180;centerLon:132.758542;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2242.0;rebuilds:5;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:7;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "Root reviewed; independent full review recorded separately",
+      "pair": [
+        "jounan-interval-00-overlay.png",
+        "jounan-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-連絡線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.84712278389317,
+        132.77497163444522,
+        0.004
+      ],
+      "actualCenter": [
+        33.847123,
+        132.774972
+      ],
+      "actualMapBounds": [
+        132.772707,
+        33.845123,
+        132.777236,
+        33.849123
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:774;camera:17.86;lod:16.71;backbones:0;networkStations:6;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.847123;centerLon:132.774972;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1896.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:1;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "renraku-interval-00-overlay.png",
+        "renraku-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 10,
+      "plannedCamera": [
+        33.8493405449,
+        132.7850779662791,
+        0.004
+      ],
+      "actualCenter": [
+        33.849341,
+        132.785078
+      ],
+      "actualMapBounds": [
+        132.782814,
+        33.847341,
+        132.787342,
+        33.851341
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:307;camera:17.86;lod:16.71;backbones:0;networkStations:2;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.849341;centerLon:132.785078;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2231.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-10-overlay.png",
+        "jounan-interval-10-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-花園線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.83760920335,
+        132.76204495705,
+        0.004409419950000881
+      ],
+      "actualCenter": [
+        33.837609,
+        132.762045
+      ],
+      "actualMapBounds": [
+        132.759549,
+        33.835404,
+        132.764541,
+        33.839814
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "26 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:8;overlays:5;rides:0;budgetDrops:0;vertices:1360;camera:17.72;lod:16.57;backbones:0;networkStations:12;distance:967.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.837609;centerLon:132.762045;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1941.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:2;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "pixelReview": "pending",
+      "pair": [
+        "hanazono-interval-00-overlay.png",
+        "hanazono-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.839543134483606,
+        132.76303342,
+        0.005480100000028187
+      ],
+      "actualCenter": [
+        33.839543,
+        132.763033
+      ],
+      "actualMapBounds": [
+        132.759932,
+        33.836803,
+        132.766135,
+        33.842283
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "26 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:8;overlays:5;rides:0;budgetDrops:0;vertices:1340;camera:17.41;lod:16.26;backbones:0;networkStations:12;distance:1202.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.839543;centerLon:132.763033;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2076.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-02-overlay.png",
+        "jounan-interval-02-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 5,
+      "plannedCamera": [
+        33.8414665827,
+        132.7725241338,
+        0.007024391400022978
+      ],
+      "actualCenter": [
+        33.841467,
+        132.772524
+      ],
+      "actualMapBounds": [
+        132.768548,
+        33.837954,
+        132.7765,
+        33.844979
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:3;rides:0;budgetDrops:0;vertices:1042;camera:17.05;lod:15.90;backbones:0;networkStations:12;distance:1541.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.841467;centerLon:132.772524;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2033.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-05-overlay.png",
+        "jounan-interval-05-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 4,
+      "plannedCamera": [
+        33.84114316553921,
+        132.76827054052256,
+        0.005736388432296735
+      ],
+      "actualCenter": [
+        33.841143,
+        132.768271
+      ],
+      "actualMapBounds": [
+        132.765024,
+        33.838275,
+        132.771518,
+        33.844011
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "21 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:6;rides:0;budgetDrops:0;vertices:961;camera:17.34;lod:16.19;backbones:0;networkStations:8;distance:1258.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.841143;centerLon:132.768271;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2102.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:7;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-04-overlay.png",
+        "jounan-interval-04-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.84045749895062,
+        132.76560926552258,
+        0.004
+      ],
+      "actualCenter": [
+        33.840457,
+        132.765609
+      ],
+      "actualMapBounds": [
+        132.763345,
+        33.838457,
+        132.767873,
+        33.842457
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:647;camera:17.86;lod:16.71;backbones:0;networkStations:4;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.840457;centerLon:132.765609;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2143.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-03-overlay.png",
+        "jounan-interval-03-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.842801874078404,
+        132.7587773030758,
+        0.007116405803436976
+      ],
+      "actualCenter": [
+        33.842802,
+        132.758777
+      ],
+      "actualMapBounds": [
+        132.754749,
+        33.839244,
+        132.762805,
+        33.84636
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "42 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:9;overlays:5;rides:0;budgetDrops:0;vertices:1945;camera:17.03;lod:15.88;backbones:0;networkStations:20;distance:1561.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.842802;centerLon:132.758777;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1871.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "honmachi-interval-03-overlay.png",
+        "honmachi-interval-03-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 6,
+      "plannedCamera": [
+        33.852360459154255,
+        132.75741275463105,
+        0.004
+      ],
+      "actualCenter": [
+        33.85236,
+        132.757413
+      ],
+      "actualMapBounds": [
+        132.755148,
+        33.85036,
+        132.759677,
+        33.85436
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "16 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1161;camera:17.86;lod:16.71;backbones:0;networkStations:5;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.852360;centerLon:132.757413;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2095.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-06-overlay.png",
+        "johoku-interval-06-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 9,
+      "plannedCamera": [
+        33.8478927276,
+        132.78247991565001,
+        0.007305646950030109
+      ],
+      "actualCenter": [
+        33.847893,
+        132.78248
+      ],
+      "actualMapBounds": [
+        132.778344,
+        33.84424,
+        132.786615,
+        33.851545
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:723;camera:16.99;lod:15.84;backbones:0;networkStations:9;distance:1602.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.847893;centerLon:132.782480;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2166.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-09-overlay.png",
+        "jounan-interval-09-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 1,
+      "plannedCamera": [
+        33.84809356058838,
+        132.7709931722832,
+        0.005180408706593198
+      ],
+      "actualCenter": [
+        33.848094,
+        132.770993
+      ],
+      "actualMapBounds": [
+        132.768061,
+        33.845503,
+        132.773926,
+        33.850684
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:893;camera:17.49;lod:16.34;backbones:0;networkStations:7;distance:1136.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.848094;centerLon:132.770993;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2143.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-01-overlay.png",
+        "johoku-interval-01-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.84250184,
+        132.75240347,
+        0.0042077099999993095
+      ],
+      "actualCenter": [
+        33.842502,
+        132.752403
+      ],
+      "actualMapBounds": [
+        132.750022,
+        33.840398,
+        132.754785,
+        33.844606
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:902;camera:17.79;lod:16.64;backbones:0;networkStations:5;distance:923.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.842502;centerLon:132.752403;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2946.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "otemachi-interval-02-overlay.png",
+        "otemachi-interval-02-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 0,
+      "plannedCamera": [
+        33.847827006812075,
+        132.7736127809334,
+        0.004
+      ],
+      "actualCenter": [
+        33.847827,
+        132.773613
+      ],
+      "actualMapBounds": [
+        132.771348,
+        33.845827,
+        132.775877,
+        33.849827
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:645;camera:17.86;lod:16.71;backbones:0;networkStations:7;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.847827;centerLon:132.773613;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2029.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-00-overlay.png",
+        "johoku-interval-00-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城北線",
+      "intervalIndex": 7,
+      "plannedCamera": [
+        33.849220144311126,
+        132.7557926928381,
+        0.006015402933378766
+      ],
+      "actualCenter": [
+        33.84922,
+        132.755793
+      ],
+      "actualMapBounds": [
+        132.752387,
+        33.846212,
+        132.759198,
+        33.852228
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "28 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:3;rides:0;budgetDrops:0;vertices:1727;camera:17.27;lod:16.12;backbones:0;networkStations:12;distance:1319.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.849220;centerLon:132.755793;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2048.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "johoku-interval-07-overlay.png",
+        "johoku-interval-07-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 8,
+      "plannedCamera": [
+        33.84704407040418,
+        132.7777411911,
+        0.006910526699996922
+      ],
+      "actualCenter": [
+        33.847044,
+        132.777741
+      ],
+      "actualMapBounds": [
+        132.773829,
+        33.843589,
+        132.781653,
+        33.850499
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "27 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1050;camera:17.07;lod:15.92;backbones:0;networkStations:11;distance:1516.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.847044;centerLon:132.777741;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2069.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+      "pixelReview": "pending",
+      "pair": [
+        "jounan-interval-08-overlay.png",
+        "jounan-interval-08-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-本町線",
+      "intervalIndex": 2,
+      "plannedCamera": [
+        33.846598911317656,
+        132.75881978836068,
+        0.004274705914330212
+      ],
+      "actualCenter": [
+        33.846599,
+        132.75882
+      ],
+      "actualMapBounds": [
+        132.7564,
+        33.844462,
+        132.76124,
+        33.848736
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:2;rides:0;budgetDrops:0;vertices:1263;camera:17.77;lod:16.62;backbones:0;networkStations:6;distance:937.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.846599;centerLon:132.758820;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1995.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:1;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+      "pixelReview": "pending",
+      "pair": [
+        "honmachi-interval-02-overlay.png",
+        "honmachi-interval-02-basemap.png"
+      ]
+    },
+    {
+      "lineID": "jp-伊予鉄道-大手町線",
+      "intervalIndex": 3,
+      "plannedCamera": [
+        33.84555971,
+        132.75381871500002,
+        0.004965899999998413
+      ],
+      "actualCenter": [
+        33.84556,
+        132.753819
+      ],
+      "actualMapBounds": [
+        132.751008,
+        33.843077,
+        132.75663,
+        33.848043
+      ],
+      "completeIntervalInsideActualMap": true,
+      "renderStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:3;rides:0;budgetDrops:0;vertices:1318;camera:17.55;lod:16.40;backbones:0;networkStations:7;distance:1089.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.845560;centerLon:132.753819;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2101.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+      "pixelReview": "pending",
+      "pair": [
+        "otemachi-interval-03-overlay.png",
+        "otemachi-interval-03-basemap.png"
+      ]
+    }
+  ]
+}

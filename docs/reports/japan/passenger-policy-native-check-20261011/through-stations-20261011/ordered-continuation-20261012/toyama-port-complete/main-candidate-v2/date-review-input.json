@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "trains": [
+    {
+      "id": "2021-03-20-TOYAMA-DATE",
+      "date": "2021-03-20",
+      "number": "Toyama opening date review",
+      "origin": "インテック本社前",
+      "destination": "奥田中学校前",
+      "region": "jp",
+      "route_confirmation": "pending",
+      "visible": false,
+      "stops": [
+        {
+          "name": "インテック本社前",
+          "n02_station_code": "001917",
+          "stop_type": "origin",
+          "ride_segment": true
+        },
+        {
+          "name": "奥田中学校前",
+          "n02_station_code": "001918",
+          "stop_type": "destination",
+          "ride_segment": true
+        }
+      ]
+    }
+  ]
+}

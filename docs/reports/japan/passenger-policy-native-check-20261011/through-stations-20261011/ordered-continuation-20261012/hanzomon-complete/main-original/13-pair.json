@@ -1,0 +1,18 @@
+{
+  "caseIndex": 13,
+  "intervalIndex": null,
+  "source": {
+    "caseType": "through-station-context",
+    "intervalIndex": null,
+    "stationID": "003922",
+    "name": "Shibuya",
+    "camera": [
+      35.65945,
+      139.701035,
+      0.0048
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:7;overlays:7;rides:0;budgetDrops:0;vertices:1011;camera:17.57;lod:16.42;backbones:0;networkStations:7;distance:1053.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.659450;centerLon:139.701035;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3843.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:18;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.659450;centerLon:139.701035;distance:1053.4;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0"
+}

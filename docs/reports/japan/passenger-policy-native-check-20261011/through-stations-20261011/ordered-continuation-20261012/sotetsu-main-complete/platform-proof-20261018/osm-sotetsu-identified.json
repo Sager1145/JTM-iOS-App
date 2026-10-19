@@ -1,0 +1,1408 @@
+{
+  "source": "© OpenStreetMap contributors",
+  "licence": "https://opendatacommons.org/licenses/odbl/1-0/",
+  "rawFile": "osm-overpass-raw.json",
+  "osm3s": {
+    "timestamp_osm_base": "2026-10-18T04:49:10Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+    {
+      "type": "node",
+      "id": 3996454576,
+      "lat": 35.46518,
+      "lon": 139.6209925,
+      "timestamp": "2023-06-21T02:51:43Z",
+      "version": 5,
+      "changeset": 137583932,
+      "user": "wheelmap_visitor",
+      "uid": 290680,
+      "tags": {
+        "railway": "buffer_stop",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3996454579,
+      "lat": 35.4652059,
+      "lon": 139.620924,
+      "timestamp": "2023-03-12T23:00:12Z",
+      "version": 2,
+      "changeset": 133603978,
+      "user": "flierfy",
+      "uid": 445671,
+      "tags": {
+        "railway": "buffer_stop"
+      }
+    },
+    {
+      "type": "node",
+      "id": 3996454582,
+      "lat": 35.4652337,
+      "lon": 139.6208565,
+      "timestamp": "2023-03-12T23:00:12Z",
+      "version": 2,
+      "changeset": 133603978,
+      "user": "flierfy",
+      "uid": 445671,
+      "tags": {
+        "railway": "buffer_stop"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7024303318,
+      "lat": 35.4651573,
+      "lon": 139.6209776,
+      "timestamp": "2026-08-20T05:12:08Z",
+      "version": 26,
+      "changeset": 187722535,
+      "user": "gs-shintaro",
+      "uid": 24435102,
+      "tags": {
+        "local_ref": "1",
+        "name": "横浜",
+        "name:de": "Yokohama",
+        "name:en": "Yokohama",
+        "name:es": "Yokohama",
+        "name:ja": "横浜",
+        "name:ja-Hira": "よこはま",
+        "name:ja_rm": "Yokohama",
+        "name:ko": "요코하마",
+        "name:ru": "Йокогама",
+        "network": "相鉄線",
+        "operator": "相模鉄道",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "SO01",
+        "train": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7024303319,
+      "lat": 35.465183,
+      "lon": 139.6209089,
+      "timestamp": "2026-08-20T05:12:08Z",
+      "version": 26,
+      "changeset": 187722535,
+      "user": "gs-shintaro",
+      "uid": 24435102,
+      "tags": {
+        "local_ref": "2",
+        "name": "横浜",
+        "name:de": "Yokohama",
+        "name:en": "Yokohama",
+        "name:es": "Yokohama",
+        "name:ja": "横浜",
+        "name:ja-Hira": "よこはま",
+        "name:ja_rm": "Yokohama",
+        "name:ko": "요코하마",
+        "name:ru": "Йокогама",
+        "network": "相鉄線",
+        "operator": "相模鉄道",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "SO01",
+        "train": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7024303320,
+      "lat": 35.4652066,
+      "lon": 139.6208387,
+      "timestamp": "2026-08-20T05:12:08Z",
+      "version": 26,
+      "changeset": 187722535,
+      "user": "gs-shintaro",
+      "uid": 24435102,
+      "tags": {
+        "local_ref": "3",
+        "name": "横浜",
+        "name:de": "Yokohama",
+        "name:en": "Yokohama",
+        "name:es": "Yokohama",
+        "name:ja": "横浜",
+        "name:ja-Hira": "よこはま",
+        "name:ja_rm": "Yokohama",
+        "name:ko": "요코하마",
+        "name:ru": "Йокогама",
+        "network": "相鉄線",
+        "operator": "相模鉄道",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "ref": "SO01",
+        "train": "yes"
+      }
+    },
+    {
+      "type": "node",
+      "id": 7804259443,
+      "lat": 35.4642692,
+      "lon": 139.6202973,
+      "timestamp": "2026-08-20T05:12:08Z",
+      "version": 23,
+      "changeset": 187722535,
+      "user": "gs-shintaro",
+      "uid": 24435102,
+      "tags": {
+        "name": "横浜",
+        "name:de": "Yokohama",
+        "name:en": "Yokohama",
+        "name:es": "Yokohama",
+        "name:ja": "横浜 (相模鉄道)",
+        "name:ja-Hira": "よこはま",
+        "name:ja_rm": "Yokohama",
+        "name:ko": "요코하마",
+        "name:ru": "Йокогама",
+        "network": "相鉄線",
+        "operator": "相模鉄道",
+        "platforms": "3",
+        "public_transport": "station",
+        "railway": "station",
+        "ref": "SO01",
+        "train": "yes"
+      }
+    },
+    {
+      "type": "way",
+      "id": 145563673,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 6,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4627508,
+        "minlon": 139.619196,
+        "maxlat": 35.4631834,
+        "maxlon": 139.6195432
+      },
+      "nodes": [
+        10727443050,
+        3928774464,
+        10727443052,
+        1589571034
+      ],
+      "geometry": [
+        {
+          "lat": 35.4631834,
+          "lon": 139.6195432
+        },
+        {
+          "lat": 35.4629905,
+          "lon": 139.6193893
+        },
+        {
+          "lat": 35.4628538,
+          "lon": 139.6192799
+        },
+        {
+          "lat": 35.4627508,
+          "lon": 139.619196
+        }
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "service": "crossover",
+        "source": "Bing",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 145563675,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 6,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4627668,
+        "minlon": 139.6191671,
+        "maxlat": 35.4631804,
+        "maxlon": 139.6195834
+      },
+      "nodes": [
+        10727443049,
+        3928774464,
+        1589571035
+      ],
+      "geometry": [
+        {
+          "lat": 35.4631804,
+          "lon": 139.6195834
+        },
+        {
+          "lat": 35.4629905,
+          "lon": 139.6193893
+        },
+        {
+          "lat": 35.4627668,
+          "lon": 139.6191671
+        }
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "service": "crossover",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 145563678,
+      "timestamp": "2025-03-23T07:33:38Z",
+      "version": 10,
+      "changeset": 163974481,
+      "user": "tutuw002",
+      "uid": 4531722,
+      "bounds": {
+        "minlat": 35.4629627,
+        "minlon": 139.6192805,
+        "maxlat": 35.4635047,
+        "maxlon": 139.6197175
+      },
+      "nodes": [
+        3928774461,
+        1589571042,
+        3996454561,
+        3996454568
+      ],
+      "geometry": [
+        {
+          "lat": 35.4629627,
+          "lon": 139.6192805
+        },
+        {
+          "lat": 35.4633447,
+          "lon": 139.6195935
+        },
+        {
+          "lat": 35.4634767,
+          "lon": 139.6196976
+        },
+        {
+          "lat": 35.4635047,
+          "lon": 139.6197175
+        }
+      ],
+      "tags": {
+        "bridge": "yes",
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "service": "siding",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 251513739,
+      "timestamp": "2023-11-20T09:39:18Z",
+      "version": 14,
+      "changeset": 144238727,
+      "user": "yurinchi",
+      "uid": 18000723,
+      "bounds": {
+        "minlat": 35.4545519,
+        "minlon": 139.6107742,
+        "maxlat": 35.4625437,
+        "maxlon": 139.6189548
+      },
+      "nodes": [
+        11363854692,
+        1589570952,
+        1589570954,
+        1589570960,
+        1589570962,
+        1589570966,
+        1589570970,
+        1589570974,
+        8318939436,
+        1589570978,
+        1589570983,
+        1589570986,
+        1589570989,
+        1589570990,
+        1589570992,
+        1589570994,
+        1589570996,
+        1589570998,
+        1589571000,
+        1589571007,
+        1589571021,
+        1589571027,
+        1589571029,
+        1589571032,
+        3928774462,
+        1589571033
+      ],
+      "geometry": [
+        {
+          "lat": 35.4545519,
+          "lon": 139.6107742
+        },
+        {
+          "lat": 35.4546083,
+          "lon": 139.6108835
+        },
+        {
+          "lat": 35.4547894,
+          "lon": 139.6112122
+        },
+        {
+          "lat": 35.4549636,
+          "lon": 139.6115079
+        },
+        {
+          "lat": 35.4551645,
+          "lon": 139.6118408
+        },
+        {
+          "lat": 35.4553787,
+          "lon": 139.6121476
+        },
+        {
+          "lat": 35.4556287,
+          "lon": 139.6124764
+        },
+        {
+          "lat": 35.455886,
+          "lon": 139.6127846
+        },
+        {
+          "lat": 35.4560481,
+          "lon": 139.612961
+        },
+        {
+          "lat": 35.4563532,
+          "lon": 139.6132677
+        },
+        {
+          "lat": 35.4565939,
+          "lon": 139.6134976
+        },
+        {
+          "lat": 35.4567108,
+          "lon": 139.6136068
+        },
+        {
+          "lat": 35.4569742,
+          "lon": 139.6138475
+        },
+        {
+          "lat": 35.4572576,
+          "lon": 139.6141165
+        },
+        {
+          "lat": 35.4575874,
+          "lon": 139.6144169
+        },
+        {
+          "lat": 35.4580611,
+          "lon": 139.6148502
+        },
+        {
+          "lat": 35.4585127,
+          "lon": 139.6152615
+        },
+        {
+          "lat": 35.4591365,
+          "lon": 139.6158327
+        },
+        {
+          "lat": 35.4594663,
+          "lon": 139.6161099
+        },
+        {
+          "lat": 35.4598045,
+          "lon": 139.6164103
+        },
+        {
+          "lat": 35.4599264,
+          "lon": 139.6165229
+        },
+        {
+          "lat": 35.4614176,
+          "lon": 139.6179214
+        },
+        {
+          "lat": 35.4616734,
+          "lon": 139.6181481
+        },
+        {
+          "lat": 35.4620606,
+          "lon": 139.6184962
+        },
+        {
+          "lat": 35.4622249,
+          "lon": 139.6186509
+        },
+        {
+          "lat": 35.4625437,
+          "lon": 139.6189548
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "oneway": "yes",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805192,
+      "timestamp": "2019-12-01T21:05:15Z",
+      "version": 2,
+      "changeset": 77791252,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4635352,
+        "minlon": 139.6197647,
+        "maxlat": 35.4653427,
+        "maxlon": 139.6210803
+      },
+      "nodes": [
+        3996454566,
+        3996454563,
+        3996454585,
+        3996454586,
+        3996454575,
+        3996454574,
+        3996454584,
+        3996454583,
+        3996454572,
+        3996454571,
+        3996454581,
+        3996454580,
+        3996454569,
+        3996454567,
+        3996454578,
+        3996454577,
+        3996454566
+      ],
+      "geometry": [
+        {
+          "lat": 35.4635433,
+          "lon": 139.6199296
+        },
+        {
+          "lat": 35.4635352,
+          "lon": 139.6199481
+        },
+        {
+          "lat": 35.465261,
+          "lon": 139.6210803
+        },
+        {
+          "lat": 35.4653427,
+          "lon": 139.6208933
+        },
+        {
+          "lat": 35.4636225,
+          "lon": 139.6197647
+        },
+        {
+          "lat": 35.4636139,
+          "lon": 139.6197843
+        },
+        {
+          "lat": 35.4652429,
+          "lon": 139.6208527
+        },
+        {
+          "lat": 35.4652356,
+          "lon": 139.6208694
+        },
+        {
+          "lat": 35.4636039,
+          "lon": 139.6197992
+        },
+        {
+          "lat": 35.4635824,
+          "lon": 139.6198483
+        },
+        {
+          "lat": 35.4652155,
+          "lon": 139.6209195
+        },
+        {
+          "lat": 35.4652083,
+          "lon": 139.620936
+        },
+        {
+          "lat": 35.4635725,
+          "lon": 139.6198631
+        },
+        {
+          "lat": 35.4635506,
+          "lon": 139.6199133
+        },
+        {
+          "lat": 35.4651894,
+          "lon": 139.6209882
+        },
+        {
+          "lat": 35.4651823,
+          "lon": 139.6210046
+        },
+        {
+          "lat": 35.4635433,
+          "lon": 139.6199296
+        }
+      ],
+      "tags": {
+        "area": "yes",
+        "public_transport": "platform",
+        "railway": "platform"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805193,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 6,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4635047,
+        "minlon": 139.6197175,
+        "maxlat": 35.4636088,
+        "maxlon": 139.6197899
+      },
+      "nodes": [
+        3996454568,
+        3996454573
+      ],
+      "geometry": [
+        {
+          "lat": 35.4635047,
+          "lon": 139.6197175
+        },
+        {
+          "lat": 35.4636088,
+          "lon": 139.6197899
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "service": "siding",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805194,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 7,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4636088,
+        "minlon": 139.6197899,
+        "maxlat": 35.4652337,
+        "maxlon": 139.6208565
+      },
+      "nodes": [
+        3996454573,
+        7024303320,
+        3996454582
+      ],
+      "geometry": [
+        {
+          "lat": 35.4636088,
+          "lon": 139.6197899
+        },
+        {
+          "lat": 35.4652066,
+          "lon": 139.6208387
+        },
+        {
+          "lat": 35.4652337,
+          "lon": 139.6208565
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "railway:track_ref": "3",
+        "ref": "SO",
+        "service": "siding",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805195,
+      "timestamp": "2025-03-23T07:33:38Z",
+      "version": 9,
+      "changeset": 163974481,
+      "user": "tutuw002",
+      "uid": 4531722,
+      "bounds": {
+        "minlat": 35.4625437,
+        "minlon": 139.6189548,
+        "maxlat": 35.4629627,
+        "maxlon": 139.6192805
+      },
+      "nodes": [
+        1589571033,
+        3928774461
+      ],
+      "geometry": [
+        {
+          "lat": 35.4625437,
+          "lon": 139.6189548
+        },
+        {
+          "lat": 35.4629627,
+          "lon": 139.6192805
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "service": "siding",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805196,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 8,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4635789,
+        "minlon": 139.6198551,
+        "maxlat": 35.4652059,
+        "maxlon": 139.620924
+      },
+      "nodes": [
+        3996454570,
+        7024303319,
+        3996454579
+      ],
+      "geometry": [
+        {
+          "lat": 35.4635789,
+          "lon": 139.6198551
+        },
+        {
+          "lat": 35.465183,
+          "lon": 139.6209089
+        },
+        {
+          "lat": 35.4652059,
+          "lon": 139.620924
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "railway:track_ref": "2",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805197,
+      "timestamp": "2021-01-13T14:45:28Z",
+      "version": 6,
+      "changeset": 97449269,
+      "user": "fuk",
+      "uid": 550066,
+      "bounds": {
+        "minlat": 35.4635471,
+        "minlon": 139.6199214,
+        "maxlat": 35.46518,
+        "maxlon": 139.6209925
+      },
+      "nodes": [
+        3996454576,
+        7024303318,
+        3996454565
+      ],
+      "geometry": [
+        {
+          "lat": 35.46518,
+          "lon": 139.6209925
+        },
+        {
+          "lat": 35.4651573,
+          "lon": 139.6209776
+        },
+        {
+          "lat": 35.4635471,
+          "lon": 139.6199214
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "railway:track_ref": "1",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805198,
+      "timestamp": "2021-01-13T14:45:28Z",
+      "version": 5,
+      "changeset": 97449269,
+      "user": "fuk",
+      "uid": 550066,
+      "bounds": {
+        "minlat": 35.463457,
+        "minlon": 139.6198495,
+        "maxlat": 35.4635471,
+        "maxlon": 139.6199214
+      },
+      "nodes": [
+        3996454565,
+        3996454560
+      ],
+      "geometry": [
+        {
+          "lat": 35.4635471,
+          "lon": 139.6199214
+        },
+        {
+          "lat": 35.463457,
+          "lon": 139.6198495
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 396805200,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 5,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4634883,
+        "minlon": 139.6197881,
+        "maxlat": 35.4635789,
+        "maxlon": 139.6198551
+      },
+      "nodes": [
+        3996454562,
+        3996454564,
+        3996454570
+      ],
+      "geometry": [
+        {
+          "lat": 35.4634883,
+          "lon": 139.6197881
+        },
+        {
+          "lat": 35.4635346,
+          "lon": 139.6198251
+        },
+        {
+          "lat": 35.4635789,
+          "lon": 139.6198551
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 751402844,
+      "timestamp": "2023-03-11T11:09:22Z",
+      "version": 5,
+      "changeset": 133549001,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4631803,
+        "minlon": 139.6195892,
+        "maxlat": 35.463457,
+        "maxlon": 139.6198495
+      },
+      "nodes": [
+        3996454560,
+        1589571036,
+        10727443048
+      ],
+      "geometry": [
+        {
+          "lat": 35.463457,
+          "lon": 139.6198495
+        },
+        {
+          "lat": 35.4632351,
+          "lon": 139.6196393
+        },
+        {
+          "lat": 35.4631803,
+          "lon": 139.6195892
+        }
+      ],
+      "tags": {
+        "bridge": "yes",
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 751402845,
+      "timestamp": "2019-12-01T21:05:15Z",
+      "version": 1,
+      "changeset": 77791252,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4619829,
+        "minlon": 139.6185007,
+        "maxlat": 35.4625437,
+        "maxlon": 139.6189548
+      },
+      "nodes": [
+        1589571033,
+        1589571030
+      ],
+      "geometry": [
+        {
+          "lat": 35.4625437,
+          "lon": 139.6189548
+        },
+        {
+          "lat": 35.4619829,
+          "lon": 139.6185007
+        }
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "service": "siding",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 751402846,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 5,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4625437,
+        "minlon": 139.6189548,
+        "maxlat": 35.4631838,
+        "maxlon": 139.6195371
+      },
+      "nodes": [
+        1589571033,
+        1589571035,
+        10727443051
+      ],
+      "geometry": [
+        {
+          "lat": 35.4625437,
+          "lon": 139.6189548
+        },
+        {
+          "lat": 35.4627668,
+          "lon": 139.6191671
+        },
+        {
+          "lat": 35.4631838,
+          "lon": 139.6195371
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1153435729,
+      "timestamp": "2023-03-11T11:09:22Z",
+      "version": 1,
+      "changeset": 133549001,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4619829,
+        "minlon": 139.6185007,
+        "maxlat": 35.4631803,
+        "maxlon": 139.6195892
+      },
+      "nodes": [
+        10727443048,
+        1589571034,
+        1589571030
+      ],
+      "geometry": [
+        {
+          "lat": 35.4631803,
+          "lon": 139.6195892
+        },
+        {
+          "lat": 35.4627508,
+          "lon": 139.619196
+        },
+        {
+          "lat": 35.4619829,
+          "lon": 139.6185007
+        }
+      ],
+      "tags": {
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "maxspeed": "100",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1153435730,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 2,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4631804,
+        "minlon": 139.6195834,
+        "maxlat": 35.4632351,
+        "maxlon": 139.6196393
+      },
+      "nodes": [
+        1589571036,
+        10727443049
+      ],
+      "geometry": [
+        {
+          "lat": 35.4632351,
+          "lon": 139.6196393
+        },
+        {
+          "lat": 35.4631804,
+          "lon": 139.6195834
+        }
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "service": "crossover",
+        "source": "Bing 2014",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1153435731,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 2,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4631834,
+        "minlon": 139.6195432,
+        "maxlat": 35.4632537,
+        "maxlon": 139.6195992
+      },
+      "nodes": [
+        1589571038,
+        10727443050
+      ],
+      "geometry": [
+        {
+          "lat": 35.4632537,
+          "lon": 139.6195992
+        },
+        {
+          "lat": 35.4631834,
+          "lon": 139.6195432
+        }
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "service": "crossover",
+        "source": "Bing",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "way",
+      "id": 1153435732,
+      "timestamp": "2023-03-11T15:14:46Z",
+      "version": 2,
+      "changeset": 133557121,
+      "user": "flierfy",
+      "uid": 445671,
+      "bounds": {
+        "minlat": 35.4631838,
+        "minlon": 139.6195371,
+        "maxlat": 35.4634883,
+        "maxlon": 139.6197881
+      },
+      "nodes": [
+        10727443051,
+        1589571038,
+        3996454562
+      ],
+      "geometry": [
+        {
+          "lat": 35.4631838,
+          "lon": 139.6195371
+        },
+        {
+          "lat": 35.4632537,
+          "lon": 139.6195992
+        },
+        {
+          "lat": 35.4634883,
+          "lon": 139.6197881
+        }
+      ],
+      "tags": {
+        "bridge": "yes",
+        "colour": "#0c1e56",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "相模鉄道本線",
+        "name:de": "Sōtetsu Hauptlinie",
+        "name:ja_rm": "Sōtetsu Honsen",
+        "operator": "相模鉄道",
+        "railway": "rail",
+        "ref": "SO",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      }
+    },
+    {
+      "type": "relation",
+      "id": 9552394,
+      "timestamp": "2020-10-04T16:53:56Z",
+      "version": 3,
+      "changeset": 91939947,
+      "user": "Diego Sanguinetti",
+      "uid": 309382,
+      "bounds": {
+        "minlat": 35.4635352,
+        "minlon": 139.6197647,
+        "maxlat": 35.4653427,
+        "maxlon": 139.6210803
+      },
+      "members": [
+        {
+          "type": "node",
+          "ref": 7024303320,
+          "role": "stop",
+          "lat": 35.4652066,
+          "lon": 139.6208387
+        },
+        {
+          "type": "node",
+          "ref": 7024303319,
+          "role": "stop",
+          "lat": 35.465183,
+          "lon": 139.6209089
+        },
+        {
+          "type": "node",
+          "ref": 7024303318,
+          "role": "stop",
+          "lat": 35.4651573,
+          "lon": 139.6209776
+        },
+        {
+          "type": "node",
+          "ref": 7804259443,
+          "role": "",
+          "lat": 35.4642692,
+          "lon": 139.6202973
+        },
+        {
+          "type": "node",
+          "ref": 3377401689,
+          "role": "",
+          "lat": 35.464693,
+          "lon": 139.6205405
+        },
+        {
+          "type": "way",
+          "ref": 396805192,
+          "role": "",
+          "geometry": [
+            {
+              "lat": 35.4635433,
+              "lon": 139.6199296
+            },
+            {
+              "lat": 35.4635352,
+              "lon": 139.6199481
+            },
+            {
+              "lat": 35.465261,
+              "lon": 139.6210803
+            },
+            {
+              "lat": 35.4653427,
+              "lon": 139.6208933
+            },
+            {
+              "lat": 35.4636225,
+              "lon": 139.6197647
+            },
+            {
+              "lat": 35.4636139,
+              "lon": 139.6197843
+            },
+            {
+              "lat": 35.4652429,
+              "lon": 139.6208527
+            },
+            {
+              "lat": 35.4652356,
+              "lon": 139.6208694
+            },
+            {
+              "lat": 35.4636039,
+              "lon": 139.6197992
+            },
+            {
+              "lat": 35.4635824,
+              "lon": 139.6198483
+            },
+            {
+              "lat": 35.4652155,
+              "lon": 139.6209195
+            },
+            {
+              "lat": 35.4652083,
+              "lon": 139.620936
+            },
+            {
+              "lat": 35.4635725,
+              "lon": 139.6198631
+            },
+            {
+              "lat": 35.4635506,
+              "lon": 139.6199133
+            },
+            {
+              "lat": 35.4651894,
+              "lon": 139.6209882
+            },
+            {
+              "lat": 35.4651823,
+              "lon": 139.6210046
+            },
+            {
+              "lat": 35.4635433,
+              "lon": 139.6199296
+            }
+          ]
+        },
+        {
+          "type": "node",
+          "ref": 1782392805,
+          "role": "",
+          "lat": 35.4642742,
+          "lon": 139.6202513
+        }
+      ],
+      "tags": {
+        "name": "横浜",
+        "name:es": "Yokohama (Línea Sōtetsu)",
+        "name:ja": "横浜 (相模鉄道)",
+        "operator": "相模鉄道",
+        "public_transport": "stop_area",
+        "public_transport:version": "2",
+        "type": "public_transport"
+      }
+    }
+  ]
+}

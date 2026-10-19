@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "lineID": "jp-三陸鉄道-北リアス線",
+  "intervalIndex": 12,
+  "reviewer": "parent /root",
+  "pairCount": 3,
+  "originalPNGCount": 6,
+  "currentIdentityEvidence": "existing-evidence-20261019.json",
+  "namedPlans": [
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json"
+  ],
+  "viewedOriginals": [
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000000/basemap.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000000/smooth.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000001/basemap.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000001/smooth.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000002/basemap.png",
+    "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000484/000002/smooth.png"
+  ],
+  "unviewedRetainedPairs": 225,
+  "conclusion": "insufficientEvidence",
+  "limits": "No visible isolated false V or reverse tail. Passenger platform precise endpoints and side offsets unresolved; no production change."
+}

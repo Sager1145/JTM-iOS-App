@@ -1,0 +1,903 @@
+{
+  "status": "Source research only; own station physical faces unresolved, no candidate or geometry change",
+  "lineID": "jp-えちぜん鉄道-勝山永平寺線",
+  "intervalIndex": 6,
+  "rawSource": {
+    "feature161ReverseEqualsDecodedInterior": true,
+    "stationFeature154Midpoint": [
+      136.277265,
+      36.09012
+    ]
+  },
+  "cache": {
+    "path": "railway-sources/local/osm/degree-cells/E136N36.json",
+    "fetchedAt": "2026-08-18T10:31:59.026Z",
+    "endpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter"
+  },
+  "ways": [
+    {
+      "id": 24373397,
+      "version": 5,
+      "timestamp": "2025-07-05T07:17:45Z",
+      "reverseInEastboundChain": true,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "勝山永平寺線",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "nodes": [
+        264459006,
+        9383615108,
+        1669753704,
+        264459004,
+        264459002,
+        264459000,
+        264458998,
+        264458996,
+        264458994,
+        264458992,
+        9383615099,
+        264459084,
+        264459086,
+        264458989,
+        264458462,
+        264458458,
+        264458460,
+        264458468,
+        264458470,
+        264458464,
+        264458466
+      ],
+      "coordinates": [
+        [
+          136.2757935,
+          36.0898072
+        ],
+        [
+          136.2754817,
+          36.0897493
+        ],
+        [
+          136.2753224,
+          36.089704
+        ],
+        [
+          136.2748656,
+          36.0895362
+        ],
+        [
+          136.2745057,
+          36.0893354
+        ],
+        [
+          136.2740758,
+          36.0890697
+        ],
+        [
+          136.2733176,
+          36.0885962
+        ],
+        [
+          136.2727835,
+          36.0882626
+        ],
+        [
+          136.2720208,
+          36.0877792
+        ],
+        [
+          136.2716108,
+          36.0875201
+        ],
+        [
+          136.2715153,
+          36.0874607
+        ],
+        [
+          136.2710166,
+          36.0871505
+        ],
+        [
+          136.2703227,
+          36.0867916
+        ],
+        [
+          136.2698858,
+          36.0866145
+        ],
+        [
+          136.26952,
+          36.086473
+        ],
+        [
+          136.269449,
+          36.086439
+        ],
+        [
+          136.2692367,
+          36.0863635
+        ],
+        [
+          136.2689259,
+          36.0862438
+        ],
+        [
+          136.2684182,
+          36.0860434
+        ],
+        [
+          136.2668275,
+          36.0854099
+        ],
+        [
+          136.2663867,
+          36.0852225
+        ]
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1412418313,
+      "version": 1,
+      "timestamp": "2025-07-05T07:17:45Z",
+      "reverseInEastboundChain": true,
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "勝山永平寺線",
+        "layer": "1",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "nodes": [
+        264458983,
+        264459006
+      ],
+      "coordinates": [
+        [
+          136.2760376,
+          36.089851
+        ],
+        [
+          136.2757935,
+          36.0898072
+        ]
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1412418312,
+      "version": 1,
+      "timestamp": "2025-07-05T07:17:45Z",
+      "reverseInEastboundChain": true,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "勝山永平寺線",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "nodes": [
+        264458970,
+        264458983
+      ],
+      "coordinates": [
+        [
+          136.27656,
+          36.0899453
+        ],
+        [
+          136.2760376,
+          36.089851
+        ]
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1017340560,
+      "version": 1,
+      "timestamp": "2022-01-01T13:56:19Z",
+      "reverseInEastboundChain": false,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "勝山永平寺線",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "nodes": [
+        264458970,
+        264458968,
+        264458954
+      ],
+      "coordinates": [
+        [
+          136.27656,
+          36.0899453
+        ],
+        [
+          136.2771814,
+          36.0900612
+        ],
+        [
+          136.2780227,
+          36.0902197
+        ]
+      ],
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 332270250,
+      "version": 2,
+      "timestamp": "2022-01-01T13:56:19Z",
+      "reverseInEastboundChain": true,
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "KSJ2:LIN": "勝山永平寺線",
+        "name": "えちぜん鉄道勝山永平寺線",
+        "name:ja": "えちぜん鉄道勝山永平寺線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "えちぜん鉄道",
+        "operator:ja": "えちぜん鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "600"
+      },
+      "nodes": [
+        264458956,
+        264458954
+      ],
+      "coordinates": [
+        [
+          136.2786825,
+          36.0903511
+        ],
+        [
+          136.2780227,
+          36.0902197
+        ]
+      ],
+      "cacheGeometryExact": true
+    }
+  ],
+  "ownChainNodeIDs": [
+    264458466,
+    264458464,
+    264458470,
+    264458468,
+    264458460,
+    264458458,
+    264458462,
+    264458989,
+    264459086,
+    264459084,
+    9383615099,
+    264458992,
+    264458994,
+    264458996,
+    264458998,
+    264459000,
+    264459002,
+    264459004,
+    1669753704,
+    9383615108,
+    264459006,
+    264458983,
+    264458970,
+    264458968,
+    264458954,
+    264458956
+  ],
+  "ownChainCoordinates": [
+    [
+      136.2663867,
+      36.0852225
+    ],
+    [
+      136.2668275,
+      36.0854099
+    ],
+    [
+      136.2684182,
+      36.0860434
+    ],
+    [
+      136.2689259,
+      36.0862438
+    ],
+    [
+      136.2692367,
+      36.0863635
+    ],
+    [
+      136.269449,
+      36.086439
+    ],
+    [
+      136.26952,
+      36.086473
+    ],
+    [
+      136.2698858,
+      36.0866145
+    ],
+    [
+      136.2703227,
+      36.0867916
+    ],
+    [
+      136.2710166,
+      36.0871505
+    ],
+    [
+      136.2715153,
+      36.0874607
+    ],
+    [
+      136.2716108,
+      36.0875201
+    ],
+    [
+      136.2720208,
+      36.0877792
+    ],
+    [
+      136.2727835,
+      36.0882626
+    ],
+    [
+      136.2733176,
+      36.0885962
+    ],
+    [
+      136.2740758,
+      36.0890697
+    ],
+    [
+      136.2745057,
+      36.0893354
+    ],
+    [
+      136.2748656,
+      36.0895362
+    ],
+    [
+      136.2753224,
+      36.089704
+    ],
+    [
+      136.2754817,
+      36.0897493
+    ],
+    [
+      136.2757935,
+      36.0898072
+    ],
+    [
+      136.2760376,
+      36.089851
+    ],
+    [
+      136.27656,
+      36.0899453
+    ],
+    [
+      136.2771814,
+      36.0900612
+    ],
+    [
+      136.2780227,
+      36.0902197
+    ],
+    [
+      136.2786825,
+      36.0903511
+    ]
+  ],
+  "route": {
+    "id": 1871694,
+    "version": 23,
+    "timestamp": "2026-07-17T11:51:45Z",
+    "tags": {
+      "name": "えちぜん鉄道勝山永平寺線",
+      "name:en": "Katsuyama Eiheiji Line",
+      "name:ja": "えちぜん鉄道勝山永平寺線",
+      "public_transport:version": "1",
+      "route": "railway",
+      "type": "route",
+      "wikidata": "Q6378238",
+      "wikipedia": "ja:えちぜん鉄道勝山永平寺線"
+    },
+    "membersOfInterest": [
+      {
+        "index": 14,
+        "type": "node",
+        "ref": 264458968,
+        "role": "stop"
+      },
+      {
+        "index": 15,
+        "type": "node",
+        "ref": 264458989,
+        "role": "stop"
+      },
+      {
+        "index": 64,
+        "type": "way",
+        "ref": 1017340560,
+        "role": ""
+      },
+      {
+        "index": 65,
+        "type": "way",
+        "ref": 1412418312,
+        "role": ""
+      },
+      {
+        "index": 66,
+        "type": "way",
+        "ref": 1412418313,
+        "role": ""
+      },
+      {
+        "index": 67,
+        "type": "way",
+        "ref": 24373397,
+        "role": ""
+      },
+      {
+        "index": 68,
+        "type": "way",
+        "ref": 332270250,
+        "role": ""
+      }
+    ]
+  },
+  "oldDecodedInterval": [
+    [
+      136.269855,
+      36.08663
+    ],
+    [
+      136.27019,
+      36.08679
+    ],
+    [
+      136.27031,
+      36.08684
+    ],
+    [
+      136.27101,
+      36.08722
+    ],
+    [
+      136.27161,
+      36.08756
+    ],
+    [
+      136.27202,
+      36.08785
+    ],
+    [
+      136.27277,
+      36.08837
+    ],
+    [
+      136.2733,
+      36.08874
+    ],
+    [
+      136.27404,
+      36.08919
+    ],
+    [
+      136.27444,
+      36.08942
+    ],
+    [
+      136.27487,
+      36.08961
+    ],
+    [
+      136.2754,
+      36.08978
+    ],
+    [
+      136.27591,
+      36.08989
+    ],
+    [
+      136.27684,
+      36.09004
+    ],
+    [
+      136.277265,
+      36.09012
+    ]
+  ],
+  "perControlProjections": [
+    {
+      "index": 0,
+      "coordinate": [
+        136.269855,
+        36.08663
+      ],
+      "distanceM": 2.7495594708637987,
+      "insertIndex": 6,
+      "point": [
+        136.2698682109261,
+        36.086607696134614
+      ]
+    },
+    {
+      "index": 1,
+      "coordinate": [
+        136.27019,
+        36.08679
+      ],
+      "distanceM": 5.187351895880807,
+      "insertIndex": 7,
+      "point": [
+        136.27021588246146,
+        36.086748300878746
+      ]
+    },
+    {
+      "index": 2,
+      "coordinate": [
+        136.27031,
+        36.08684
+      ],
+      "distanceM": 5.148111921850999,
+      "insertIndex": 8,
+      "point": [
+        136.27034088364312,
+        36.08680100497119
+      ]
+    },
+    {
+      "index": 3,
+      "coordinate": [
+        136.27101,
+        36.08722
+      ],
+      "distanceM": 6.485774256163123,
+      "insertIndex": 9,
+      "point": [
+        136.27105402432198,
+        36.08717377857365
+      ]
+    },
+    {
+      "index": 4,
+      "coordinate": [
+        136.27161,
+        36.08756
+      ],
+      "distanceM": 3.5392196293677416,
+      "insertIndex": 11,
+      "point": [
+        136.27163426257903,
+        36.08753492720544
+      ]
+    },
+    {
+      "index": 5,
+      "coordinate": [
+        136.27202,
+        36.08785
+      ],
+      "distanceM": 6.239009156546218,
+      "insertIndex": 12,
+      "point": [
+        136.27206284838482,
+        36.08780585030709
+      ]
+    },
+    {
+      "index": 6,
+      "coordinate": [
+        136.27277,
+        36.08837
+      ],
+      "distanceM": 10.190782271489017,
+      "insertIndex": 13,
+      "point": [
+        136.2728393550264,
+        36.08829748716871
+      ]
+    },
+    {
+      "index": 7,
+      "coordinate": [
+        136.2733,
+        36.08874
+      ],
+      "distanceM": 13.61913128945567,
+      "insertIndex": 14,
+      "point": [
+        136.27339267893626,
+        36.088643087201675
+      ]
+    },
+    {
+      "index": 8,
+      "coordinate": [
+        136.27404,
+        36.08919
+      ],
+      "distanceM": 12.57963572361735,
+      "insertIndex": 15,
+      "point": [
+        136.27412504873067,
+        36.08910013821294
+      ]
+    },
+    {
+      "index": 9,
+      "coordinate": [
+        136.27444,
+        36.08942
+      ],
+      "distanceM": 11.09545135196402,
+      "insertIndex": 16,
+      "point": [
+        136.27451015651232,
+        36.08933788643423
+      ]
+    },
+    {
+      "index": 10,
+      "coordinate": [
+        136.27487,
+        36.08961
+      ],
+      "distanceM": 7.3069600145538125,
+      "insertIndex": 17,
+      "point": [
+        136.27490365133346,
+        36.089550177700865
+      ]
+    },
+    {
+      "index": 11,
+      "coordinate": [
+        136.2754,
+        36.08978
+      ],
+      "distanceM": 5.657032979674189,
+      "insertIndex": 18,
+      "point": [
+        136.27542089823788,
+        36.08973200985672
+      ]
+    },
+    {
+      "index": 12,
+      "coordinate": [
+        136.27591,
+        36.08989
+      ],
+      "distanceM": 6.718871942128673,
+      "insertIndex": 20,
+      "point": [
+        136.27592620849558,
+        36.08983101250351
+      ]
+    },
+    {
+      "index": 13,
+      "coordinate": [
+        136.27684,
+        36.09004
+      ],
+      "distanceM": 4.60212830925684,
+      "insertIndex": 22,
+      "point": [
+        136.27685151842368,
+        36.08999967236129
+      ]
+    },
+    {
+      "index": 14,
+      "coordinate": [
+        136.277265,
+        36.09012
+      ],
+      "distanceM": 4.661910119766942,
+      "insertIndex": 23,
+      "point": [
+        136.27727677991945,
+        36.090079169472524
+      ]
+    }
+  ],
+  "adjacentInterval7FirstThreeProjections": [
+    {
+      "index": 0,
+      "coordinate": [
+        136.277265,
+        36.09012
+      ],
+      "distanceM": 4.661910119766942,
+      "insertIndex": 23,
+      "point": [
+        136.27727677991945,
+        36.090079169472524
+      ]
+    },
+    {
+      "index": 1,
+      "coordinate": [
+        136.27769,
+        36.0902
+      ],
+      "distanceM": 4.654379837324075,
+      "insertIndex": 23,
+      "point": [
+        136.27770176091494,
+        36.090159235427336
+      ]
+    },
+    {
+      "index": 2,
+      "coordinate": [
+        136.27788,
+        36.09025
+      ],
+      "distanceM": 6.19256697489971,
+      "insertIndex": 23,
+      "point": [
+        136.27789564770092,
+        36.09019576348579
+      ]
+    }
+  ],
+  "stationNodeEvidence": {
+    "nodes": {
+      "HigashiFujishima": [
+        136.2698858,
+        36.0866145
+      ],
+      "EchizenShimabashi": [
+        136.2771814,
+        36.0900612
+      ]
+    },
+    "oldEndpointToStationNodeM": {
+      "HigashiFujishima": 3.2604594646284517,
+      "EchizenShimabashi": 9.958832117617417
+    },
+    "platformFaceEstablished": false
+  },
+  "sourceFiles": [
+    {
+      "file": "operator-station-7.html",
+      "sha256": "927da0a661e68fe584f377d4415927945a77f54d37aace14108eb933eaa7a0a0",
+      "url": "https://www.echizen-tetudo.co.jp/station/7.html"
+    },
+    {
+      "file": "operator-station-8.html",
+      "sha256": "ea0eb2d6db7024292e028032335dace540fd55687be279c1b3027f2f32ab098c",
+      "url": "https://www.echizen-tetudo.co.jp/station/8.html"
+    },
+    {
+      "file": "way-1017340560-full.json",
+      "sha256": "196b14735c433cc2eb7a6a75850808f9d6c9c2d16738255a4815450d3bcc0682",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1017340560/full.json"
+    },
+    {
+      "file": "way-1017340560-relations.json",
+      "sha256": "f9ae1c724446596da36dc8277be47ec7b9c7bfc2654dd261bde9569845701570",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1017340560/relations.json"
+    },
+    {
+      "file": "way-1017340561-full.json",
+      "sha256": "1ae1390b54997f33d37540c537e2b90e8157e804b65a6a57b64b6f540420758f",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1017340561/full.json"
+    },
+    {
+      "file": "way-1412418312-full.json",
+      "sha256": "36c3f8187ce86f6420202600c1b27ee9db45a90bf414d803943544b80258d49b",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1412418312/full.json"
+    },
+    {
+      "file": "way-1412418313-full.json",
+      "sha256": "a3a229dcfc250313901c097ec4838687e1093104d684e1bba0e13c84c5f07efe",
+      "url": "https://api.openstreetmap.org/api/0.6/way/1412418313/full.json"
+    },
+    {
+      "file": "way-24373397-full.json",
+      "sha256": "60d19a86149bc80c3cdd30378ba3b7198e045fd6d21a0762fcfb37e3455004e3",
+      "url": "https://api.openstreetmap.org/api/0.6/way/24373397/full.json"
+    },
+    {
+      "file": "way-332270250-full.json",
+      "sha256": "8bf13491da77c7c86d3c540909a972ab4be7d40813db56b1d9a7b4dd35a34f8f",
+      "url": "https://api.openstreetmap.org/api/0.6/way/332270250/full.json"
+    },
+    {
+      "file": "way-424071505-full.json",
+      "sha256": "c28b32e6a5c98aab881ad5c42c86e216b7a65927130c1ed4e1037e6d8c83d456",
+      "url": "https://api.openstreetmap.org/api/0.6/way/424071505/full.json"
+    }
+  ],
+  "cacheAllSevenComparison": [
+    {
+      "id": 24373397,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1412418313,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1412418312,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1017340560,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 1017340561,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 332270250,
+      "cacheGeometryExact": true
+    },
+    {
+      "id": 424071505,
+      "cacheGeometryExact": true
+    }
+  ]
+}

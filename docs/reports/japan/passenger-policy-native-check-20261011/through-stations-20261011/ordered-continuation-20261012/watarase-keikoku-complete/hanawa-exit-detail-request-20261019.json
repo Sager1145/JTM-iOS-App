@@ -1,0 +1,27 @@
+{
+  "action": "capture",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 19
+  },
+  "inputPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+  "intervalIndices": [
+    8
+  ],
+  "lineID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線",
+  "requestID": "watarase-hanawa-exit-detail",
+  "schemaVersion": 1,
+  "sessionDirectory": "/private/tmp/jtm-watarase-hanawa-exit-detail-20261019",
+  "workspace": "alignment",
+  "viewpointIDs": [
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8#point-0",
+    "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8#point-1"
+  ]
+}

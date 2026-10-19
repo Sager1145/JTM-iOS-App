@@ -1,0 +1,173 @@
+{
+  "scope": "Actual Ohiradai display intervals5/6; selected localized moderate and reversal vertices, zero lanes, web production buildStroke; not whole-map certification",
+  "rows": [
+    {
+      "interval": 5,
+      "zoom": 13,
+      "reviewedSourceIndices": [
+        36,
+        45,
+        123
+      ],
+      "sourceCoordinates": [
+        [
+          139.08508,
+          35.23345
+        ],
+        [
+          139.0866,
+          35.23248
+        ],
+        [
+          139.07533,
+          35.23829
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "interval": 5,
+      "zoom": 17,
+      "reviewedSourceIndices": [
+        36,
+        45,
+        123
+      ],
+      "sourceCoordinates": [
+        [
+          139.08508,
+          35.23345
+        ],
+        [
+          139.0866,
+          35.23248
+        ],
+        [
+          139.07533,
+          35.23829
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "interval": 5,
+      "zoom": 18,
+      "reviewedSourceIndices": [
+        36,
+        45,
+        123
+      ],
+      "sourceCoordinates": [
+        [
+          139.08508,
+          35.23345
+        ],
+        [
+          139.0866,
+          35.23248
+        ],
+        [
+          139.07533,
+          35.23829
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "interval": 6,
+      "zoom": 13,
+      "reviewedSourceIndices": [
+        5,
+        22,
+        60
+      ],
+      "sourceCoordinates": [
+        [
+          139.07533,
+          35.23829
+        ],
+        [
+          139.07524,
+          35.23596
+        ],
+        [
+          139.06692,
+          35.23842
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "interval": 6,
+      "zoom": 17,
+      "reviewedSourceIndices": [
+        5,
+        22,
+        60
+      ],
+      "sourceCoordinates": [
+        [
+          139.07533,
+          35.23829
+        ],
+        [
+          139.07524,
+          35.23596
+        ],
+        [
+          139.06692,
+          35.23842
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "interval": 6,
+      "zoom": 18,
+      "reviewedSourceIndices": [
+        5,
+        22,
+        60
+      ],
+      "sourceCoordinates": [
+        [
+          139.07533,
+          35.23829
+        ],
+        [
+          139.07524,
+          35.23596
+        ],
+        [
+          139.06692,
+          35.23842
+        ]
+      ],
+      "exactlyRetained": [
+        true,
+        true,
+        true
+      ]
+    }
+  ]
+}

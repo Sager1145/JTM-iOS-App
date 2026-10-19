@@ -1,0 +1,423 @@
+{
+  "format": "jtm-manyo-v5-secondary-actual-review-receipt-v1",
+  "reviewerRole": "Secondary actual-render reader",
+  "reviewDate": "2026-10-13",
+  "status": "ACCEPTED_CARTOGRAPHY_WITH_RETAINED_WARNING",
+  "verdict": "ACCEPT: the Secondary actual cyan display and red smooth renderings are continuous and cartographically acceptable across the nine scoped intervals.",
+  "evidenceRoot": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary",
+  "reviewScope": {
+    "captureItemCount": 9,
+    "tripleCount": 23,
+    "panelCount": 69,
+    "panelCountsByType": {
+      "basemap": 23,
+      "display": 23,
+      "smooth": 23
+    },
+    "captureFailureCount": 0,
+    "targetPendingCount": 0,
+    "contactSheetCount": 6,
+    "focusedOriginalPanelCount": 20,
+    "decodedImageDimensions": {
+      "width": 1024,
+      "height": 768
+    },
+    "allPanelsActuallyViewed": true,
+    "fiveOwnFrameEndpointsActuallyViewedAtFullResolution": true
+  },
+  "actualIDs": {
+    "captureItems": [
+      {
+        "captureID": "000425",
+        "itemID": "jp-万葉線-高岡軌道線#10",
+        "fromStationID": "001842",
+        "toStationID": "001845",
+        "tripleCount": 3
+      },
+      {
+        "captureID": "000426",
+        "itemID": "jp-万葉線-高岡軌道線#11",
+        "fromStationID": "001845",
+        "toStationID": "001851",
+        "tripleCount": 3
+      },
+      {
+        "captureID": "000427",
+        "itemID": "jp-万葉線-高岡軌道線#12",
+        "fromStationID": "001851",
+        "toStationID": "001854",
+        "tripleCount": 2
+      },
+      {
+        "captureID": "000428",
+        "itemID": "jp-万葉線-高岡軌道線#13",
+        "fromStationID": "001854",
+        "toStationID": "001861",
+        "tripleCount": 3
+      },
+      {
+        "captureID": "000429",
+        "itemID": "jp-万葉線-高岡軌道線#14",
+        "fromStationID": "001861",
+        "toStationID": "001864",
+        "tripleCount": 2
+      },
+      {
+        "captureID": "000435",
+        "itemID": "jp-万葉線-高岡軌道線#5",
+        "fromStationID": "001824",
+        "toStationID": "001826",
+        "tripleCount": 2
+      },
+      {
+        "captureID": "000436",
+        "itemID": "jp-万葉線-高岡軌道線#6",
+        "fromStationID": "001826",
+        "toStationID": "001833",
+        "tripleCount": 3
+      },
+      {
+        "captureID": "000437",
+        "itemID": "jp-万葉線-高岡軌道線#7",
+        "fromStationID": "001833",
+        "toStationID": "001834",
+        "tripleCount": 3
+      },
+      {
+        "captureID": "000438",
+        "itemID": "jp-万葉線-高岡軌道線#8",
+        "fromStationID": "001834",
+        "toStationID": "001837",
+        "tripleCount": 2
+      }
+    ],
+    "viewpointIDs": [
+      "jp-万葉線-高岡軌道線#10#point-0",
+      "jp-万葉線-高岡軌道線#10#point-1",
+      "jp-万葉線-高岡軌道線#10#point-2",
+      "jp-万葉線-高岡軌道線#11#point-0",
+      "jp-万葉線-高岡軌道線#11#point-1",
+      "jp-万葉線-高岡軌道線#11#point-2",
+      "jp-万葉線-高岡軌道線#12#point-0",
+      "jp-万葉線-高岡軌道線#12#point-1",
+      "jp-万葉線-高岡軌道線#13#point-0",
+      "jp-万葉線-高岡軌道線#13#point-1",
+      "jp-万葉線-高岡軌道線#13#point-2",
+      "jp-万葉線-高岡軌道線#14#point-0",
+      "jp-万葉線-高岡軌道線#14#point-1",
+      "jp-万葉線-高岡軌道線#5#point-0",
+      "jp-万葉線-高岡軌道線#5#point-1",
+      "jp-万葉線-高岡軌道線#6#point-0",
+      "jp-万葉線-高岡軌道線#6#point-1",
+      "jp-万葉線-高岡軌道線#6#point-2",
+      "jp-万葉線-高岡軌道線#7#point-0",
+      "jp-万葉線-高岡軌道線#7#point-1",
+      "jp-万葉線-高岡軌道線#7#point-2",
+      "jp-万葉線-高岡軌道線#8#point-0",
+      "jp-万葉線-高岡軌道線#8#point-1"
+    ],
+    "fiveOwnFrameStationIDs": [
+      "001826",
+      "001834",
+      "001845",
+      "001851",
+      "001861"
+    ]
+  },
+  "dependencies": {
+    "candidate": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/candidate.json",
+      "sha256": "2491759e8cc0317d5f29c82c7935b4370a7c30baf45439086cd59d61db3b60ba"
+    },
+    "report": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/report.json",
+      "sha256": "f22cdb2c0b68fafed861e6b1f514017dd62cf6f09f53add0da47d2577bbd6831"
+    },
+    "checkpoint": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/checkpoint.json",
+      "sha256": "7716b7655a80956dde75a398615792d3ed6210aa1e2f0dff481cf5a75432bb03"
+    },
+    "plan": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/plan.json",
+      "sha256": "78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350"
+    },
+    "identityPlan": {
+      "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json",
+      "planDigest": "78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350",
+      "sha256": "78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350"
+    },
+    "referenceDependencies": [
+      "Apple-only"
+    ],
+    "wholeLineRenderDependencies": [
+      "114cbbc6f6271f6da6d730288dfb502ef621b1fea727a153663b08bfc777adc7"
+    ],
+    "renderContracts": [
+      "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings"
+    ],
+    "originalDisplayPartIndices": [
+      0
+    ],
+    "originalSmoothPartIndices": [
+      0
+    ]
+  },
+  "targetReportRows": [
+    {
+      "itemID": "jp-万葉線-高岡軌道線#10",
+      "capturedCount": 3,
+      "viewpointCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.5174526673845275e-09,
+      "smoothToDisplayMaximumMetres": 0.7464162977826617,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#11",
+      "capturedCount": 3,
+      "viewpointCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.63685054335468e-09,
+      "smoothToDisplayMaximumMetres": 0.7464162977826617,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#12",
+      "capturedCount": 2,
+      "viewpointCount": 2,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.63685054335468e-09,
+      "smoothToDisplayMaximumMetres": 0.20912135794200215,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#13",
+      "capturedCount": 3,
+      "viewpointCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.63685054335468e-09,
+      "smoothToDisplayMaximumMetres": 0.2528220102132552,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#14",
+      "capturedCount": 2,
+      "viewpointCount": 2,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.63685054335468e-09,
+      "smoothToDisplayMaximumMetres": 0.2528220102132552,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#5",
+      "capturedCount": 2,
+      "viewpointCount": 2,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.83271767557583e-09,
+      "smoothToDisplayMaximumMetres": 0.02872469521879223,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#6",
+      "capturedCount": 3,
+      "viewpointCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.83271767557583e-09,
+      "smoothToDisplayMaximumMetres": 0.02872469521879223,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#7",
+      "capturedCount": 3,
+      "viewpointCount": 3,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.781047914682516e-09,
+      "smoothToDisplayMaximumMetres": 0.020562709937015797,
+      "reviewVerdict": "pending"
+    },
+    {
+      "itemID": "jp-万葉線-高岡軌道線#8",
+      "capturedCount": 2,
+      "viewpointCount": 2,
+      "failedCount": 0,
+      "pendingCount": 0,
+      "candidateViewpointCountOver10m": 0,
+      "displayToDecodedDisplayMaximumMetres": 6.5174526673845275e-09,
+      "smoothToDisplayMaximumMetres": 0.03652365145920896,
+      "reviewVerdict": "pending"
+    }
+  ],
+  "geometryChecks": {
+    "exactCandidateJoinCount": 5,
+    "joins": [
+      {
+        "stationID": "001826",
+        "coordinate": [
+          137.03766674966806,
+          36.77010811484489
+        ],
+        "beforeIntervalIndex": 5,
+        "afterIntervalIndex": 6,
+        "beforeActualViewID": "000435/000001",
+        "afterActualViewID": "000436/000000",
+        "candidateEndpointEquality": "exact",
+        "displayLocalTurnDegrees": 0.9023376601753625,
+        "smoothLocalTurnDegrees": 0.9023377123565126,
+        "focusedVisualFinding": "straight smooth join; no V, cap, zero edge, or endpoint break"
+      },
+      {
+        "stationID": "001834",
+        "coordinate": [
+          137.0324666749384,
+          36.76394673201305
+        ],
+        "beforeIntervalIndex": 7,
+        "afterIntervalIndex": 8,
+        "beforeActualViewID": "000437/000002",
+        "afterActualViewID": "000438/000000",
+        "candidateEndpointEquality": "exact",
+        "displayLocalTurnDegrees": 2.6165013582027257,
+        "smoothLocalTurnDegrees": 1.35919844712069,
+        "focusedVisualFinding": "straight/soft join; no V, cap, zero edge, or endpoint break"
+      },
+      {
+        "stationID": "001845",
+        "coordinate": [
+          137.02375335218431,
+          36.755661730116074
+        ],
+        "beforeIntervalIndex": 10,
+        "afterIntervalIndex": 11,
+        "beforeActualViewID": "000425/000002",
+        "afterActualViewID": "000426/000000",
+        "candidateEndpointEquality": "exact",
+        "displayLocalTurnDegrees": 3.2252648582442305,
+        "smoothLocalTurnDegrees": 1.6761712705613832,
+        "focusedVisualFinding": "straight/soft join; no V, cap, zero edge, or endpoint break"
+      },
+      {
+        "stationID": "001851",
+        "coordinate": [
+          137.02069941104514,
+          36.75258006800441
+        ],
+        "beforeIntervalIndex": 11,
+        "afterIntervalIndex": 12,
+        "beforeActualViewID": "000426/000002",
+        "afterActualViewID": "000427/000000",
+        "candidateEndpointEquality": "exact",
+        "displayLocalTurnDegrees": 5.49924487098022,
+        "smoothLocalTurnDegrees": 2.8649171130111313,
+        "focusedVisualFinding": "smooth join; no V, cap, zero edge, or endpoint break"
+      },
+      {
+        "stationID": "001861",
+        "coordinate": [
+          137.0149065042993,
+          36.747557847238795
+        ],
+        "beforeIntervalIndex": 13,
+        "afterIntervalIndex": 14,
+        "beforeActualViewID": "000428/000002",
+        "afterActualViewID": "000429/000000",
+        "candidateEndpointEquality": "exact",
+        "displayLocalTurnDegrees": 10.372583500939413,
+        "smoothLocalTurnDegrees": 4.591789521379411,
+        "focusedVisualFinding": "curve retained through station; bend not cut; no V, cap, zero edge, or endpoint break"
+      }
+    ],
+    "candidateZeroLengthConsecutiveEdgeCount": 0,
+    "candidateMinimumConsecutiveEdgeMetres": 0.0815470254855731,
+    "actualRenderedDisplayZeroLengthConsecutiveEdgeCount": 0,
+    "actualRenderedSmoothZeroLengthConsecutiveEdgeCount": 0,
+    "actualRenderedDisplayMinimumConsecutiveEdgeMetres": 0.0815470261577223,
+    "actualRenderedSmoothMinimumConsecutiveEdgeMetres": 0.0815470261577223,
+    "visualFindings": {
+      "vShapeObserved": false,
+      "endpointCapObserved": false,
+      "zeroEdgeObserved": false,
+      "bendCutObserved": false,
+      "joinBreakObserved": false,
+      "note": "All 69 actual panels were read in ordered contact sheets; both interval-side display and smooth originals at each of the five own-frame joins were then read at full 1024x768 resolution."
+    }
+  },
+  "renderSemantics": {
+    "displayColour": "cyan",
+    "smoothColour": "red",
+    "evidenceKind": "actual native Inspector rendering",
+    "externalReferenceUsedForAcceptance": false
+  },
+  "retainedCartographyWarning": "Physical travel-direction platform identity and metre-scale survey precision remain WARNING. This receipt accepts rendered continuity/cartography only; it does not upgrade that identity/precision evidence.",
+  "mainDotClaim": false,
+  "mainDotLimitation": "No claim is made about Main dot or selection-marker placement; Root owns Main review.",
+  "candidateStateLimitation": "The immutable candidate still records native/Main acceptance false. This separate receipt records only the Secondary reader conclusion and does not mutate candidate or source.",
+  "sourceMutation": false,
+  "uiAction": false,
+  "buildRun": false,
+  "reviewArtifacts": {
+    "orderedContactSheets": [
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-1.jpg",
+        "sha256": "30d34f0b4312250ddf4ab42c8d067760cdffc278b0643142cba3902029265d64"
+      },
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-2.jpg",
+        "sha256": "2fa0f6563c0097b576090fa19ba4eba13716fd6934da05a3cbf8cff0c56c5319"
+      },
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-3.jpg",
+        "sha256": "f0fae14b452e74f9ccd60660a9551dcf0ab5d8c7ecb119b7e8d2ac5409269520"
+      },
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-4.jpg",
+        "sha256": "2a8f978187e5930a647212de2e3e174a047b1e93c806e4a169d43ff894a721ed"
+      },
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-5.jpg",
+        "sha256": "bd360a31b2210cbf828bda0bc2b1f0fede7a33d6ec755d0b481a8881f1a4044a"
+      },
+      {
+        "path": "/private/tmp/jtm-manyo-v5-secondary-review/all-panels-page-6.jpg",
+        "sha256": "b97453581742ee748eae81c0126497df885a10e12e88290a209c13097a31a633"
+      }
+    ],
+    "focusedOriginalPanels": [
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000435/000001/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000435/000001/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000436/000000/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000436/000000/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000437/000002/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000437/000002/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000438/000000/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000438/000000/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000425/000002/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000425/000002/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000426/000000/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000426/000000/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000426/000002/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000426/000002/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000427/000000/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000427/000000/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000428/000002/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000428/000002/smooth.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000429/000000/display.png",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/native-candidate/secondary/captures/000429/000000/smooth.png"
+    ]
+  }
+}

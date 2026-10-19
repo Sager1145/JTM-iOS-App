@@ -1,0 +1,62 @@
+{
+  "ordinal": 30,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "status": "complete-baseline-analysis-repairs-and-platforms-open",
+  "productionChanges": false,
+  "native": {
+    "primary": {
+      "captureStarted": true,
+      "rootPixelReviewed": 55,
+      "expected": 55,
+      "captured": 55,
+      "failed": 0,
+      "idleConfirmed": true
+    },
+    "secondary": {
+      "captureStarted": true,
+      "rootPixelReviewed": 55,
+      "expected": 55,
+      "captured": 55,
+      "failedOriginal": 1,
+      "retryCaptured": 6,
+      "retryFailed": 0,
+      "idleConfirmed": true,
+      "retryDirectory": "native/secondary-retry",
+      "originalCaptured": 54
+    },
+    "third": {
+      "captureStarted": true,
+      "rootPixelReviewed": 55,
+      "expected": 55,
+      "captured": 55,
+      "failed": 0,
+      "idleConfirmed": true
+    }
+  },
+  "main": {
+    "capturedPairs": 12,
+    "rootPixelReviewedPairs": 12,
+    "frames": 24,
+    "budgetDrops": 0,
+    "fullIntervalsReviewed": 12
+  },
+  "viewsPerInterval": [
+    6,
+    6,
+    4,
+    7,
+    4,
+    3,
+    4,
+    5,
+    3,
+    4,
+    4,
+    5
+  ],
+  "notes": [
+    "Three dedicated apps 55 views each / 165 views actually opened by root. Secondary original 54 success / 1 failure retained; scoped interval0 recapture 6/6 success in separate directory.",
+    "12 original Main full-interval ON/OFF pairs / 24 frames actually opened. Same camera centres, distance and viewport checked; network rendered with budgetDrops0 and OFF confirmed.",
+    "No production edit. Local contour/anchor candidates and all13 own longitudinal whole-platform midpoint acceptance remain open."
+  ]
+}

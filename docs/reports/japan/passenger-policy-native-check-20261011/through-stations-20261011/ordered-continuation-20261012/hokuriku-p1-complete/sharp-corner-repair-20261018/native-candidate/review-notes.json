@@ -1,0 +1,19 @@
+{
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+    "packageVersion" : "2025.5.2"
+  },
+  "notes" : [
+    {
+      "conclusion" : "insufficientEvidence",
+      "evidenceSHA256" : {
+        "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/hokuriku-p1-complete\/sharp-corner-repair-20261018\/main-production\/crossing-on.png" : "5590248b71a023f2faefddb966f61693e2676a03a98de8d071e394ef0675357c"
+      },
+      "id" : "jp-西日本旅客鉄道-北陸線-p1#0\/lineOffset",
+      "note" : "Hatsuhara false crossing turn repaired using its own eastern arc. All 34 views and Main reviewed. Southern offsets and station platforms remain unresolved."
+    }
+  ],
+  "requestID" : "hokuriku-eastern-arc-candidate",
+  "schemaVersion" : 1
+}

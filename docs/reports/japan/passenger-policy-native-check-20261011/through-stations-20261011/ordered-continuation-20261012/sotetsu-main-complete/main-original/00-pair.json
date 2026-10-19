@@ -1,0 +1,55 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-相模鉄道-相鉄本線",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-相模鉄道-相鉄本線",
+    "intervalIndex": 0,
+    "fromStationID": "004633",
+    "toStationID": "004653",
+    "camera": [
+      35.462134500000005,
+      139.6184925,
+      0.01057748999999923
+    ],
+    "effectiveCoordinates": [
+      [
+        139.620466,
+        35.464424
+      ],
+      [
+        139.62052,
+        35.46423
+      ],
+      [
+        139.61993,
+        35.46359
+      ],
+      [
+        139.61965,
+        35.46328
+      ],
+      [
+        139.61852,
+        35.46201
+      ],
+      [
+        139.61769,
+        35.46113
+      ],
+      [
+        139.61678,
+        35.46019
+      ],
+      [
+        139.616465,
+        35.459845
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-candidates-open",
+  "actualOnStatus": "\t\t\t\t43 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:7;overlays:7;rides:0;budgetDrops:0;vertices:1974;camera:16.43;lod:15.28;backbones:0;networkStations:13;distance:2321.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.462134;centerLon:139.618493;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2267.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.462134;centerLon:139.618493;distance:2321.5;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootObservation": "横浜起点附近本线与 JR 多线并行，站场共享锚点及本线自有站台归属仍开放；平沼橋方向连续。ON/OFF底图与方向目视相符，未计作站台验收。"
+}

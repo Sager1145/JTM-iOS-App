@@ -1,0 +1,202 @@
+{
+  "pairs": 2,
+  "PNGs": 4,
+  "views": [
+    {
+      "pointOrdinal": 0,
+      "actuallyViewed": true,
+      "originalPNGs": [
+        "/private/tmp/jtm-watarase-hanawa-exit-detail-20261019/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-exit-detail-20261019/alignment/captures/000000/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52083,
+        "longitude": 139.3077,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.2391901273579965,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 238091477.92725334,
+        "rectY": 104927934.59784691,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "controlPixels": [
+        {
+          "oldDecodedVertex": 1,
+          "coordinate": [
+            139.30806,
+            36.52105
+          ],
+          "x": 934.2177280038595,
+          "y": 497.936881557107
+        },
+        {
+          "oldDecodedVertex": 2,
+          "coordinate": [
+            139.3091,
+            36.5216
+          ],
+          "x": 1321.9578311145306,
+          "y": 242.7778157889843
+        },
+        {
+          "oldDecodedVertex": 3,
+          "coordinate": [
+            139.30915,
+            36.52161
+          ],
+          "x": 1340.5991822183132,
+          "y": 238.13854324817657
+        },
+        {
+          "oldDecodedVertex": 4,
+          "coordinate": [
+            139.30938,
+            36.52174
+          ],
+          "x": 1426.3493973463774,
+          "y": 177.82794578373432
+        },
+        {
+          "oldDecodedVertex": 5,
+          "coordinate": [
+            139.30941,
+            36.52174
+          ],
+          "x": 1437.5342079997063,
+          "y": 177.82794578373432
+        },
+        {
+          "oldDecodedVertex": 6,
+          "coordinate": [
+            139.30943,
+            36.52175
+          ],
+          "x": 1444.99074845016,
+          "y": 173.18866486102343
+        },
+        {
+          "oldDecodedVertex": 7,
+          "coordinate": [
+            139.31036,
+            36.52219
+          ],
+          "x": 1791.7198791056871,
+          "y": -30.94028949737549
+        },
+        {
+          "oldDecodedVertex": 8,
+          "coordinate": [
+            139.31065,
+            36.52231
+          ],
+          "x": 1899.8397155553102,
+          "y": -86.61202397942543
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 1,
+      "actuallyViewed": true,
+      "originalPNGs": [
+        "/private/tmp/jtm-watarase-hanawa-exit-detail-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-exit-detail-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52141958143176,
+        "longitude": 139.30875884137794,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.23918832824674277,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 238092267.45660922,
+        "rectY": 104927387.555454,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "controlPixels": [
+        {
+          "oldDecodedVertex": 1,
+          "coordinate": [
+            139.30806,
+            36.52105
+          ],
+          "x": 539.4530500620604,
+          "y": 771.4580780118704
+        },
+        {
+          "oldDecodedVertex": 2,
+          "coordinate": [
+            139.3091,
+            36.5216
+          ],
+          "x": 927.1931531727314,
+          "y": 516.2990122437477
+        },
+        {
+          "oldDecodedVertex": 3,
+          "coordinate": [
+            139.30915,
+            36.52161
+          ],
+          "x": 945.834504276514,
+          "y": 511.65973970294
+        },
+        {
+          "oldDecodedVertex": 4,
+          "coordinate": [
+            139.30938,
+            36.52174
+          ],
+          "x": 1031.5847194045782,
+          "y": 451.34914223849773
+        },
+        {
+          "oldDecodedVertex": 5,
+          "coordinate": [
+            139.30941,
+            36.52174
+          ],
+          "x": 1042.769530057907,
+          "y": 451.34914223849773
+        },
+        {
+          "oldDecodedVertex": 6,
+          "coordinate": [
+            139.30943,
+            36.52175
+          ],
+          "x": 1050.2260705083609,
+          "y": 446.70986131578684
+        },
+        {
+          "oldDecodedVertex": 7,
+          "coordinate": [
+            139.31036,
+            36.52219
+          ],
+          "x": 1396.955201163888,
+          "y": 242.58090695738792
+        },
+        {
+          "oldDecodedVertex": 8,
+          "coordinate": [
+            139.31065,
+            36.52231
+          ],
+          "x": 1505.075037613511,
+          "y": 186.90917247533798
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1107 @@
+{
+  "schema": "cn-jingshen-sbt-boundary-review/1",
+  "reviewedAt": "2026-10-19",
+  "scope": "Read-only bounded original SQLite source and SBT station/section records. No production change, build, national graph or native replay.",
+  "observedBoundary": {
+    "report": "/private/tmp/cn-three-connectors-20261019/focused-identity-session/route-report.json",
+    "train": "CN-REAL-G101-20261018-forced-known-stops",
+    "incomingNode": 12640376454,
+    "outgoingNode": 12640351644,
+    "incomingCoordinate": [
+      123.4133092,
+      41.8124676
+    ],
+    "outgoingCoordinate": [
+      123.4295703,
+      41.8171159
+    ],
+    "reason": "Incoming geometry follows the published 京哈线 branch3 SBT record, whose source anchor is original switch105, roughly1.45km west of the true703.653 station mileage. Outgoing geometry follows the published 京哈高速 SBT record on original trackVII."
+  },
+  "existingStationRecords": [
+    {
+      "type": "Feature",
+      "properties": {
+        "line_name": "京哈线",
+        "line_id": "cn-osm-relation-198494-branch-3",
+        "line_ids": [
+          "cn-osm-relation-198494-branch-3"
+        ],
+        "operator": "中国铁路",
+        "railway_class_code": "12",
+        "institution_type_code": "1",
+        "region": "CN",
+        "station_name": "沈阳北",
+        "n02_station_code": "CN-12306-SBT",
+        "n02_group_code": "cn-official-12306-sbt",
+        "display_point": [
+          123.4133092,
+          41.8124676
+        ],
+        "source_station_node_id": 676578837,
+        "source_anchor_node_id": 12640376454
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            123.4124944,
+            41.8122704
+          ],
+          [
+            123.4133092,
+            41.8124676
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "line_name": "京哈线",
+        "line_id": "cn-osm-relation-198494-branch-4",
+        "line_ids": [
+          "cn-osm-relation-198494-branch-4"
+        ],
+        "operator": "中国铁路",
+        "railway_class_code": "12",
+        "institution_type_code": "1",
+        "region": "CN",
+        "station_name": "沈阳北",
+        "n02_station_code": "CN-12306-SBT",
+        "n02_group_code": "cn-official-12306-sbt",
+        "display_point": [
+          123.4293853,
+          41.8174132
+        ],
+        "source_station_node_id": 676578837,
+        "source_anchor_node_id": 12640351642
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            123.4293853,
+            41.8174132
+          ],
+          [
+            123.4313699,
+            41.8181124
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "line_name": "沈大线",
+        "line_id": "cn-osm-relation-2067465-branch-2",
+        "line_ids": [
+          "cn-osm-relation-2067465-branch-2"
+        ],
+        "operator": "中国铁路",
+        "railway_class_code": "11",
+        "institution_type_code": "2",
+        "region": "CN",
+        "station_name": "沈阳北",
+        "n02_station_code": "CN-12306-SBT",
+        "n02_group_code": "cn-official-12306-sbt",
+        "display_point": [
+          123.4132533,
+          41.8126021
+        ],
+        "source_station_node_id": 676578837,
+        "source_anchor_node_id": 12640376453
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            123.4132533,
+            41.8126021
+          ],
+          [
+            123.4118846,
+            41.8122687
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "line_name": "京哈高速线",
+        "line_id": "cn-osm-relation-3066901",
+        "line_ids": [
+          "cn-osm-relation-3066901"
+        ],
+        "operator": "中国铁路",
+        "railway_class_code": "12",
+        "institution_type_code": "1",
+        "region": "CN",
+        "station_name": "沈阳北",
+        "n02_station_code": "CN-12306-SBT",
+        "n02_group_code": "cn-official-12306-sbt",
+        "display_point": [
+          123.4295703,
+          41.8171159
+        ],
+        "source_station_node_id": 676578837,
+        "source_anchor_node_id": 12640351644
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            123.4349576,
+            41.8190089
+          ],
+          [
+            123.4295703,
+            41.8171159
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "line_name": "沈大高速线",
+        "line_id": "cn-osm-relation-11631593",
+        "line_ids": [
+          "cn-osm-relation-11631593"
+        ],
+        "operator": "中国铁路",
+        "railway_class_code": "12",
+        "institution_type_code": "1",
+        "region": "CN",
+        "station_name": "沈阳北",
+        "n02_station_code": "CN-12306-SBT",
+        "n02_group_code": "cn-official-12306-sbt",
+        "display_point": [
+          123.429839,
+          41.8166842
+        ],
+        "source_station_node_id": 676578837,
+        "source_anchor_node_id": 12640351646
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            123.4285406,
+            41.8162231
+          ],
+          [
+            123.429839,
+            41.8166842
+          ]
+        ]
+      }
+    }
+  ],
+  "sourceStationMarker": {
+    "id": 676578837,
+    "lon": 123.4294351,
+    "lat": 41.8173345,
+    "tags": {
+      "alt_name": "沈阳北站",
+      "alt_name:en": "Shenyang North Railway Station",
+      "name": "沈阳北",
+      "name:cs": "Šen-jang sever",
+      "name:en": "Shenyangbei",
+      "name:ja": "瀋陽北",
+      "name:ko": "선양베이",
+      "name:ru": "Шеньян-Северный",
+      "name:zh": "沈阳北",
+      "operator": "中国铁路沈阳局集团有限公司 沈阳站",
+      "public_transport": "station",
+      "railway": "station",
+      "railway:position:exact:京哈:上": "703.715",
+      "railway:position:exact:京哈:下": "703.653",
+      "railway:position:exact:京哈高速": "703.653",
+      "railway:position:exact:沈大高速": "401.061",
+      "railway:ref": "53885",
+      "start_date": "1990-10-22",
+      "wikidata": "Q988013",
+      "wikipedia": "en:Shenyang North railway station"
+    },
+    "version": 15
+  },
+  "sourceAnchors": [
+    {
+      "id": 12640376454,
+      "lon": 123.4133092,
+      "lat": 41.8124676,
+      "tags": {
+        "railway": "switch",
+        "ref": "105"
+      },
+      "version": 1
+    },
+    {
+      "id": 12640351644,
+      "lon": 123.4295703,
+      "lat": 41.8171159,
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "703.653"
+      },
+      "version": 1
+    },
+    {
+      "id": 12640351645,
+      "lon": 123.4298107,
+      "lat": 41.8167297,
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "703.653"
+      },
+      "version": 1
+    },
+    {
+      "id": 12640351642,
+      "lon": 123.4293853,
+      "lat": 41.8174132,
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "703.715"
+      },
+      "version": 1
+    },
+    {
+      "id": 12640351646,
+      "lon": 123.429839,
+      "lat": 41.8166842,
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "401.061"
+      },
+      "version": 1
+    }
+  ],
+  "publishedTrackIds": {
+    "incoming": "cn-osm-relation-198494-branch-3",
+    "outgoing": "cn-osm-relation-3066901",
+    "incomingSectionFeatureIndex": 832,
+    "incomingOriginalNodeIndex": 192,
+    "outgoingSectionFeatureIndex": 3652,
+    "outgoingOriginalNodeIndex": 139,
+    "trackIII703653Published": false
+  },
+  "sameRelationPassengerContinuationToIII": {
+    "distanceMetres": 1448.5655509657774,
+    "nodeIds": [
+      12640376454,
+      12642538656,
+      12642538664,
+      12640376416,
+      12640376410,
+      12640376385,
+      12640376384,
+      12640376262,
+      12640376701,
+      12640376702,
+      12640376703,
+      12640376704,
+      12640376705,
+      12640376706,
+      12640351645
+    ],
+    "edgeWayIds": [
+      1365210397,
+      1365210404,
+      471447912,
+      471447912,
+      471447912,
+      471447912,
+      471447912,
+      1364948087,
+      1364948087,
+      1364948087,
+      1364948087,
+      1364948087,
+      1364948087,
+      1364948087
+    ],
+    "ways": [
+      {
+        "id": 1365210397,
+        "nodes": [
+          12642538656,
+          12640376454
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 2
+      },
+      {
+        "id": 1365210404,
+        "nodes": [
+          12642538664,
+          12642538656
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 2
+      },
+      {
+        "id": 471447912,
+        "nodes": [
+          12640376262,
+          12640376384,
+          12640376385,
+          12640376410,
+          12640376416,
+          12642538664
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 19
+      },
+      {
+        "id": 1364948087,
+        "nodes": [
+          12640376376,
+          12640376709,
+          12640376708,
+          12640376707,
+          12640351645,
+          12640376706,
+          12640376705,
+          12640376704,
+          12640376703,
+          12640376702,
+          12640376701,
+          12640376262
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "100",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:track_ref": "III",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 3
+      }
+    ],
+    "nodes": [
+      {
+        "id": 12640376454,
+        "lon": 123.4133092,
+        "lat": 41.8124676,
+        "tags": {
+          "railway": "switch",
+          "ref": "105"
+        },
+        "version": 1
+      },
+      {
+        "id": 12642538656,
+        "lon": 123.4151682,
+        "lat": 41.8129175,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12642538664,
+        "lon": 123.4157323,
+        "lat": 41.8130541,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376416,
+        "lon": 123.4185534,
+        "lat": 41.8137368,
+        "tags": {
+          "railway": "switch",
+          "ref": "115"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376410,
+        "lon": 123.4197095,
+        "lat": 41.8140167,
+        "tags": {
+          "railway": "switch",
+          "ref": "119"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376385,
+        "lon": 123.4200493,
+        "lat": 41.8140988,
+        "tags": {
+          "railway": "switch",
+          "ref": "123"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376384,
+        "lon": 123.4211508,
+        "lat": 41.8143654,
+        "tags": {
+          "railway": "switch",
+          "ref": "127"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376262,
+        "lon": 123.4232353,
+        "lat": 41.8148698,
+        "tags": {
+          "railway": "switch",
+          "ref": "131"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376701,
+        "lon": 123.4261622,
+        "lat": 41.8155782,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376702,
+        "lon": 123.4266336,
+        "lat": 41.8156982,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376703,
+        "lon": 123.4268814,
+        "lat": 41.8157653,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376704,
+        "lon": 123.427502,
+        "lat": 41.8159454,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376705,
+        "lon": 123.4281605,
+        "lat": 41.816155,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376706,
+        "lon": 123.4286374,
+        "lat": 41.8163138,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640351645,
+        "lon": 123.4298107,
+        "lat": 41.8167297,
+        "tags": {
+          "railway": "milestone",
+          "railway:position": "703.653"
+        },
+        "version": 1
+      }
+    ],
+    "relationId": 3066901,
+    "relationVersion": 81,
+    "boundedSearch": "Only own relation3066901 memberways reached by exactnodes within2600m of source; no spatialjoins; bounded≤80ways.",
+    "coordinates": [
+      [
+        123.4133092,
+        41.8124676
+      ],
+      [
+        123.4151682,
+        41.8129175
+      ],
+      [
+        123.4157323,
+        41.8130541
+      ],
+      [
+        123.4185534,
+        41.8137368
+      ],
+      [
+        123.4197095,
+        41.8140167
+      ],
+      [
+        123.4200493,
+        41.8140988
+      ],
+      [
+        123.4211508,
+        41.8143654
+      ],
+      [
+        123.4232353,
+        41.8148698
+      ],
+      [
+        123.4261622,
+        41.8155782
+      ],
+      [
+        123.4266336,
+        41.8156982
+      ],
+      [
+        123.4268814,
+        41.8157653
+      ],
+      [
+        123.427502,
+        41.8159454
+      ],
+      [
+        123.4281605,
+        41.816155
+      ],
+      [
+        123.4286374,
+        41.8163138
+      ],
+      [
+        123.4298107,
+        41.8167297
+      ]
+    ],
+    "wayMembership": {
+      "1365210397": true,
+      "1365210404": true,
+      "471447912": true,
+      "1364948087": true
+    },
+    "longitudeProgressesEastAtEveryEdge": true
+  },
+  "exactNodeContinuationToExistingVIIAnchor": {
+    "distanceMetres": 1445.4319045726932,
+    "nodeIds": [
+      12640376454,
+      12640376427,
+      12640376426,
+      12640376425,
+      12642538657,
+      12642538663,
+      12640376424,
+      12640376419,
+      12640376388,
+      12640376762,
+      12640376763,
+      12640376764,
+      12640376765,
+      12640376212,
+      12640376766,
+      12640351644
+    ],
+    "edgeWayIds": [
+      1364948209,
+      1364948209,
+      1364948209,
+      1365210396,
+      1365210403,
+      385360731,
+      385360731,
+      385360731,
+      385360731,
+      385360731,
+      385360731,
+      385360731,
+      385360731,
+      1364948089,
+      1364948089
+    ],
+    "ways": [
+      {
+        "id": 1364948209,
+        "nodes": [
+          12640376454,
+          12640376427,
+          12640376426,
+          12640376425
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "version": 1
+      },
+      {
+        "id": 1365210396,
+        "nodes": [
+          12640376428,
+          12640376425,
+          12642538657
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 2
+      },
+      {
+        "id": 1365210403,
+        "nodes": [
+          12642538657,
+          12642538663
+        ],
+        "tags": {
+          "bridge": "yes",
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 2
+      },
+      {
+        "id": 385360731,
+        "nodes": [
+          12642538663,
+          12640376424,
+          12640376419,
+          12640376388,
+          12640376762,
+          12640376763,
+          12640376764,
+          12640376765,
+          12640376212
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 17
+      },
+      {
+        "id": 1364948089,
+        "nodes": [
+          12640376212,
+          12640376766,
+          12640351644,
+          12640376221
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "layer": "1",
+          "maxspeed": "200",
+          "maxspeed:designed": "350",
+          "name": "京哈高速线",
+          "old_name": "哈大高铁",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:track_ref": "VII",
+          "railway:traffic_mode": "passenger",
+          "ref": "3007",
+          "source": "bing",
+          "start_date": "2012-12-01",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "version": 2
+      }
+    ],
+    "nodes": [
+      {
+        "id": 12640376454,
+        "lon": 123.4133092,
+        "lat": 41.8124676,
+        "tags": {
+          "railway": "switch",
+          "ref": "105"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376427,
+        "lon": 123.4137516,
+        "lat": 41.8125838,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376426,
+        "lon": 123.4145143,
+        "lat": 41.8128018,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376425,
+        "lon": 123.4148986,
+        "lat": 41.8129007,
+        "tags": {
+          "railway": "switch",
+          "ref": "107"
+        },
+        "version": 1
+      },
+      {
+        "id": 12642538657,
+        "lon": 123.4151669,
+        "lat": 41.8129657,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12642538663,
+        "lon": 123.4157321,
+        "lat": 41.8131025,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376424,
+        "lon": 123.416049,
+        "lat": 41.8131792,
+        "tags": {
+          "railway": "switch",
+          "ref": "109"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376419,
+        "lon": 123.4170718,
+        "lat": 41.8134268,
+        "tags": {
+          "railway": "switch",
+          "railway:switch": "[",
+          "ref": "113"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376388,
+        "lon": 123.4216332,
+        "lat": 41.814531,
+        "tags": {
+          "railway": "switch",
+          "ref": "125"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376762,
+        "lon": 123.422151,
+        "lat": 41.8146564,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376763,
+        "lon": 123.4224612,
+        "lat": 41.8147348,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376764,
+        "lon": 123.4228046,
+        "lat": 41.8148316,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376765,
+        "lon": 123.4231926,
+        "lat": 41.81495,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640376212,
+        "lon": 123.4242534,
+        "lat": 41.815293,
+        "tags": {
+          "railway": "switch",
+          "ref": "135"
+        },
+        "version": 1
+      },
+      {
+        "id": 12640376766,
+        "lon": 123.4258944,
+        "lat": 41.8158242,
+        "tags": {},
+        "version": 1
+      },
+      {
+        "id": 12640351644,
+        "lon": 123.4295703,
+        "lat": 41.8171159,
+        "tags": {
+          "railway": "milestone",
+          "railway:position": "703.653"
+        },
+        "version": 1
+      }
+    ],
+    "relationId": 3066901,
+    "relationVersion": 81,
+    "boundedSearch": "Exact-node adjacency starting at switch105; only own relation3066901 member ways or explicitly service=crossover ways; 2600m bound, at most80ways; no spatial joins. Search stopped as target became reachable.",
+    "coordinates": [
+      [
+        123.4133092,
+        41.8124676
+      ],
+      [
+        123.4137516,
+        41.8125838
+      ],
+      [
+        123.4145143,
+        41.8128018
+      ],
+      [
+        123.4148986,
+        41.8129007
+      ],
+      [
+        123.4151669,
+        41.8129657
+      ],
+      [
+        123.4157321,
+        41.8131025
+      ],
+      [
+        123.416049,
+        41.8131792
+      ],
+      [
+        123.4170718,
+        41.8134268
+      ],
+      [
+        123.4216332,
+        41.814531
+      ],
+      [
+        123.422151,
+        41.8146564
+      ],
+      [
+        123.4224612,
+        41.8147348
+      ],
+      [
+        123.4228046,
+        41.8148316
+      ],
+      [
+        123.4231926,
+        41.81495
+      ],
+      [
+        123.4242534,
+        41.815293
+      ],
+      [
+        123.4258944,
+        41.8158242
+      ],
+      [
+        123.4295703,
+        41.8171159
+      ]
+    ],
+    "wayMembership": {
+      "1364948209": false,
+      "1365210396": true,
+      "1365210403": true,
+      "385360731": true,
+      "1364948089": true
+    },
+    "longitudeProgressesEastAtEveryEdge": true
+  },
+  "operatorEvidence": {
+    "relation3066901": {
+      "from": "北京朝阳",
+      "name": "京哈高速线",
+      "name:en": "Beijing–Harbin High-Speed Railway",
+      "name:zh": "京哈高速线",
+      "operator": "中国铁路",
+      "operator:en": "China Railway",
+      "operator:wikidata": "Q1073489",
+      "operator:zh": "中国铁路",
+      "ref": "3007",
+      "route": "railway",
+      "to": "哈尔滨",
+      "type": "route"
+    },
+    "stationMarkerOperator": "中国铁路沈阳局集团有限公司 沈阳站",
+    "limits": "All four named ways toIII and four named ways after the crossover toVII are own relation3066901 passenger main tracks with source name京哈高速线/ref3007. The station marker explicitly attributes station operations to中国铁路沈阳局集团有限公司 沈阳站. Neither fact turns a non-member crossover into a relation member or proves its own legalownership."
+  },
+  "stopAreaReview": {
+    "query": "relations where tags contain沈阳北 and public_transport/stop_area, then exact member inspection",
+    "relations": [
+      {
+        "id": 8308563,
+        "kind": "metroLine2StopArea"
+      },
+      {
+        "id": 16389908,
+        "kind": "metroLine4StopArea"
+      },
+      {
+        "id": 16389909,
+        "kind": "metroStopAreaGroup"
+      },
+      {
+        "id": 19700231,
+        "kind": "busStopArea",
+        "members": [
+          [
+            "n",
+            13208774573,
+            "platform"
+          ],
+          [
+            "w",
+            663918285,
+            "station"
+          ]
+        ]
+      }
+    ],
+    "result": "No examined named stop_area provides a national-rail stop_position link between switch105 and trackVII. Relation19700231 has highway bus_stop node13208774573 and stationbuildingway663918285; the building way is not present in the rail SQLite extract. These stop_areas cannot be used as a rail junction."
+  },
+  "verdict": {
+    "rootCause": "Published branch3 passenger record anchors SBT to original western switch105; the next section uses the original station mileage703.653 on trackVII. Shared station code does not make these nodes physically identical.",
+    "allOwnMemberPathToExistingAnchor": "Not found: the exact reachable own-member component fromswitch105 reaches trackIII703.653, not trackVII703.653.",
+    "allOwnMemberPathToRealStationMileage": "Found:14originaledges/4passengerways,1448.566m to trackIII source node12640351645. This is a genuine station-mileage endpoint but is not an existing published station anchor.",
+    "exactExistingAnchorPath": "Found:15originaledges/5ways,1445.432m to current trackVII anchor12640351644, entirely eastward with no reversed edge. First3edges are source crossoverway1364948209, outside relation3066901; all followingways are own-member passengerways.",
+    "missingEvidence": [
+      "Crossover1364948209 is originalrail/service=crossover/gauge1435 but has no explicit name,operator,passenger tag or membership in3066901. Formal publication would need an applicable reviewed crossover ownership/passenger contract; do not label it an original relation member.",
+      "If using the all-own-member path toIII instead, a genuine station binding and subsequent exact physical departure route would be required. Existing VII anchor must not be moved or coordinate-welded."
+    ],
+    "noAutomaticRepairClaim": "No source_station anchor changed, no fake station/junction created, no production repair applied. Any formal network addition requires the parent focused native replay before claiming the SBT boundary gap removed."
+  },
+  "verification": {
+    "originalConsecutiveEdgeChecks": "Passed both candidate paths against keyed source way arrays.",
+    "scope": "Exact local node adjacency, own relation membership, passenger tags, existing station records and named stop_area members only.",
+    "nativeObservedGapRemoved": false,
+    "productionEdits": false
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "caseIndex": 4,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 4,
+  "source": {
+    "caseIndex": 4,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 4,
+    "fromStationID": "003335",
+    "toStationID": "003368",
+    "camera": [
+      35.7347805,
+      139.7641765,
+      0.012448590000002256
+    ],
+    "effectiveCoordinates": [
+      [
+        139.761575,
+        35.737475
+      ],
+      [
+        139.76248,
+        35.73669
+      ],
+      [
+        139.76257,
+        35.73661
+      ],
+      [
+        139.76342,
+        35.73584
+      ],
+      [
+        139.76419,
+        35.73515
+      ],
+      [
+        139.76439,
+        35.73497
+      ],
+      [
+        139.76477,
+        35.73462
+      ],
+      [
+        139.76514,
+        35.73426
+      ],
+      [
+        139.76551,
+        35.73384
+      ],
+      [
+        139.76602,
+        35.7332
+      ],
+      [
+        139.76619,
+        35.73301
+      ],
+      [
+        139.76626,
+        35.73289
+      ],
+      [
+        139.76656,
+        35.73241
+      ],
+      [
+        139.76675,
+        35.73213
+      ],
+      [
+        139.766778,
+        35.732086
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t52 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:11;rides:0;budgetDrops:0;vertices:3285;camera:16.19;lod:15.04;backbones:1;networkStations:18;distance:2732.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.734780;centerLon:139.764176;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3751.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:16;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.734780;centerLon:139.764176;distance:2732.3;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-04.jpg",
+  "observation": "田端至西日暮里宽走廊西侧客运轴连续；Main 保留山手线并行及日暮里舍人高架，站台身份与局部偏移仍待核。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

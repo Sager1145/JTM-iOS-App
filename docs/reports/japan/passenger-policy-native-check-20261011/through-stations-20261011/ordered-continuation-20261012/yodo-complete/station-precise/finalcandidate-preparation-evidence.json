@@ -1,0 +1,193 @@
+{
+  "format": "jtm-yodo-shared-stations-display-v1",
+  "status": "candidate-only",
+  "reviewedAt": "2026-10-14T04:13:56.539Z",
+  "candidate": {
+    "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/finalcandidate-input.json",
+    "sha256": "87fd1c46f5dafb9546fc6bd6f80d5453f425722042563b1f18f45d985ed488bc"
+  },
+  "owners": {
+    "jp-四国旅客鉄道-予土線": {
+      "intervalIndexes": [
+        0,
+        18
+      ],
+      "stationIDs": [
+        "009535",
+        "009558",
+        "009423",
+        "009471"
+      ]
+    },
+    "jp-土佐くろしお鉄道-中村線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2
+      ],
+      "stationIDs": [
+        "009500",
+        "009535",
+        "009571",
+        "009579"
+      ]
+    },
+    "jp-四国旅客鉄道-予讃線": {
+      "intervalIndexes": [
+        87,
+        88
+      ],
+      "stationIDs": [
+        "009452",
+        "009471",
+        "009486"
+      ]
+    }
+  },
+  "baseline": {
+    "packageIndices": {
+      "jp-四国旅客鉄道-予土線": 202,
+      "jp-土佐くろしお鉄道-中村線": 215,
+      "jp-四国旅客鉄道-予讃線": 203
+    },
+    "lineSha256": {
+      "jp-四国旅客鉄道-予土線": "1ac356e549187032475e39e298ccfd559618b9b032aaf0109f92b919ff8dd229",
+      "jp-土佐くろしお鉄道-中村線": "53d693e87cf35eecfb365b0930f955b8844ab70b2505d937686e540cbd138bf2",
+      "jp-四国旅客鉄道-予讃線": "368fd6564bc3a48ac9199f2704b9173381f20505b25940fa831d87a2186ae2ab"
+    },
+    "displayIntervals": {
+      "jp-四国旅客鉄道-予土線": {},
+      "jp-土佐くろしお鉄道-中村線": {},
+      "jp-四国旅客鉄道-予讃線": {}
+    },
+    "displayStations": {
+      "jp-四国旅客鉄道-予土線": {},
+      "jp-土佐くろしお鉄道-中村線": {},
+      "jp-四国旅客鉄道-予讃線": {}
+    },
+    "nativeRowsSha256": {
+      "jp-四国旅客鉄道-予土線": "14f507672999e79e063d58eef278acf947766a72061a23201e699009f161d4ad",
+      "jp-土佐くろしお鉄道-中村線": "278ef6244414494263bbcff8f782ee436ef600aa8709a6319d3908a52784cbca",
+      "jp-四国旅客鉄道-予讃線": "401eb13a8d7ff061fc7ac17c5b8ea8079fc83e78e638c24347fdd9d708cf4a5d"
+    },
+    "measuredReferences": {
+      "byRegion": [
+        [
+          "jp-四国旅客鉄道-予土線",
+          0,
+          0,
+          76166.3,
+          -0.5
+        ],
+        [
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          0,
+          775,
+          -0.5
+        ],
+        [
+          "jp-土佐くろしお鉄道-中村線",
+          0,
+          0,
+          43113.4,
+          0.5
+        ]
+      ],
+      "followsByRegion": [
+        [
+          "jp-四国旅客鉄道-予讃線-2",
+          0,
+          0,
+          400,
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          208721.47853976674,
+          209100
+        ],
+        [
+          "jp-四国旅客鉄道-予讃線-3",
+          0,
+          3125,
+          5848.757994870308,
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          246975,
+          249700.32822160423
+        ]
+      ],
+      "colorByRegion": {
+        "jp-四国旅客鉄道-予讃線": {
+          "color": "#be7f03",
+          "colorDark": "#fbaf18"
+        }
+      },
+      "renderGroupByRegion": {
+        "jp-四国旅客鉄道-予讃線": "四国旅客鉄道:予讃線"
+      }
+    }
+  },
+  "nativeReplay": {
+    "candidateRowsSha256": {
+      "jp-四国旅客鉄道-予土線": "199b08ee85a87e834c39b213d653b3c45fd25200fe8497359b71ebac9d5823de",
+      "jp-土佐くろしお鉄道-中村線": "83cd4dc1db6e25cc9e3708e9275b0a1ccfdb31d3c78a316b2c44be05806d180d",
+      "jp-四国旅客鉄道-予讃線": "2f2653b0cb11c9fd8af5c879c4867a2e8437db2e4184ddfd92e10757b60f4aa6"
+    },
+    "candidateMeasuredReferences": {
+      "byRegion": [
+        [
+          "jp-四国旅客鉄道-予土線",
+          0,
+          0,
+          76262,
+          -0.5
+        ],
+        [
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          0,
+          775,
+          -0.5
+        ],
+        [
+          "jp-土佐くろしお鉄道-中村線",
+          0,
+          0,
+          43125.8,
+          0.5
+        ]
+      ],
+      "followsByRegion": [
+        [
+          "jp-四国旅客鉄道-予讃線-2",
+          0,
+          0,
+          400,
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          208721.47853976674,
+          209100
+        ],
+        [
+          "jp-四国旅客鉄道-予讃線-3",
+          0,
+          3125,
+          5848.757994870308,
+          "jp-四国旅客鉄道-予讃線",
+          0,
+          246975,
+          249700.32822160423
+        ]
+      ],
+      "colorByRegion": {
+        "jp-四国旅客鉄道-予讃線": {
+          "color": "#be7f03",
+          "colorDark": "#fbaf18"
+        }
+      },
+      "renderGroupByRegion": {
+        "jp-四国旅客鉄道-予讃線": "四国旅客鉄道:予讃線"
+      }
+    }
+  }
+}

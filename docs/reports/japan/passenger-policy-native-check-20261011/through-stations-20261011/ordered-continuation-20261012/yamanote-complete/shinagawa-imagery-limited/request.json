@@ -1,0 +1,24 @@
+{
+  "action" : "capture",
+  "captureLimit" : 2,
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    0
+  ],
+  "lineID" : "jp-東日本旅客鉄道-山手線",
+  "requestID" : "yamanote-shinagawa-own-platform-imagery",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018",
+  "workspace" : "alignment"
+}

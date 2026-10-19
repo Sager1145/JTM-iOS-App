@@ -1,0 +1,80 @@
+{
+  "status": "proposal-only; no source mutation; seam transitions require same-leg/native review",
+  "stationCode": "005364",
+  "physicalCoordinate": [
+    133.009867,
+    35.196656
+  ],
+  "stationProjection": {
+    "distanceM": 13.38505694634684,
+    "insertIndex": 14,
+    "point": [
+      133.0097851711849,
+      35.19655590704016
+    ]
+  },
+  "stationSegmentNodeIDs": [
+    12645331108,
+    266913453
+  ],
+  "identifiedChain": [
+    [
+      1132447256,
+      true
+    ],
+    [
+      24548956,
+      false
+    ],
+    [
+      1132447258,
+      true
+    ]
+  ],
+  "seams": [
+    {
+      "interval": 9,
+      "physicalIndex": 109,
+      "physicalCoordinate": [
+        133.00806,
+        35.19881
+      ],
+      "projection": {
+        "distanceM": 2.0812049932706107,
+        "insertIndex": 2,
+        "point": [
+          133.00808288359283,
+          35.19881080257575
+        ]
+      },
+      "segmentNodeIDs": [
+        266915699,
+        266915696
+      ],
+      "affectedPhysicalMetres": 301.1220400492547
+    },
+    {
+      "interval": 10,
+      "physicalIndex": 4,
+      "physicalCoordinate": [
+        133.01089,
+        35.19622
+      ],
+      "projection": {
+        "distanceM": 13.244801497734835,
+        "insertIndex": 17,
+        "point": [
+          133.01083469504653,
+          35.19610979368334
+        ]
+      },
+      "segmentNodeIDs": [
+        266913455,
+        266914612
+      ],
+      "affectedPhysicalMetres": 104.97908897282277
+    }
+  ],
+  "aerial": "regional-aerial/izumo-minari-z18.png",
+  "caveat": "Station POI and projection are not platform-centre proof. Wider east approach lacks this aerial coverage. Simple perpendicular seam aliases can make hard corners; do not apply without bounded tangent-preserving transition."
+}

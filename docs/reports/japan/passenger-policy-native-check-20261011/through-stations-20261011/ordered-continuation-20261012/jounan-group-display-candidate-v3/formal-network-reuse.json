@@ -1,0 +1,21 @@
+{
+  "mode": "reuse-accepted-V3-network-payloads",
+  "freshBuilderRun": false,
+  "changedProducerInputs": [
+    "jp.geometrySource.manualOverrides acceptance metadata only"
+  ],
+  "unchangedProducerInputs": [
+    "all658 JP line objects",
+    "JP officialGeometryComparison",
+    "entire display-lanes artifact",
+    "all regional network payloads and station JSON"
+  ],
+  "manifestChange": {
+    "field": "packageSHA256.jp",
+    "from": "0a238cf11529d0c3fb32ddef49b228e4976dd19770aee67f2d51a2ad6d00c009",
+    "to": "fc1b976887463fcf262235178fdefd8038d954eb12189d07fe63ce1586354455"
+  },
+  "sourceReview": "build-display-network.py reads JP lines and officialGeometryComparison, not manualOverrides",
+  "formalSourceApply": "accepted-display-cartography",
+  "focusedTests": "10/10 PASS"
+}

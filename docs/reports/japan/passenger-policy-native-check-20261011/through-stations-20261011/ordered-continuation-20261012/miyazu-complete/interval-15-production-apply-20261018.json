@@ -1,0 +1,13 @@
+{
+  "mode": "applied",
+  "lineID": "jp-WILLER　TRAINS-宮津線",
+  "intervalIndices": [
+    9,
+    15
+  ],
+  "nativePoints": 1568,
+  "nativeMetres": 83936.6,
+  "physicalTopologyChanged": false,
+  "interval15NativeReviewedPairs": 11,
+  "mainInterval15": "pending"
+}

@@ -1,0 +1,103 @@
+{
+  "format": "jtm-jounan-west-display-owner-draft-review-v1",
+  "normalizedLineIDs": [
+    "jp-伊予鉄道-城南線",
+    "jp-伊予鉄道-城北線",
+    "jp-伊予鉄道-大手町線",
+    "jp-伊予鉄道-本町線",
+    "jp-伊予鉄道-花園線",
+    "jp-伊予鉄道-連絡線"
+  ],
+  "candidateIntervalCounts": {
+    "jp-伊予鉄道-城南線": 11,
+    "jp-伊予鉄道-城北線": 8,
+    "jp-伊予鉄道-大手町線": 4,
+    "jp-伊予鉄道-本町線": 4,
+    "jp-伊予鉄道-花園線": 1,
+    "jp-伊予鉄道-連絡線": 1
+  },
+  "candidateStationCounts": {
+    "jp-伊予鉄道-城南線": 12,
+    "jp-伊予鉄道-城北線": 9,
+    "jp-伊予鉄道-大手町線": 5,
+    "jp-伊予鉄道-本町線": 5,
+    "jp-伊予鉄道-花園線": 2,
+    "jp-伊予鉄道-連絡線": 2
+  },
+  "nativeReplay": {
+    "status": "derived-candidate-only-not-native-reviewed",
+    "candidateRowsSha256": {
+      "jp-伊予鉄道-城南線": "d858ea9177361e5f6a2e408af5dd3556abc0768c2c6dcd5a4e5760ffc78a882f",
+      "jp-伊予鉄道-城北線": "c0c3cf1daa717425085dc3d5f684743be7a97ee2c05b489198c941f45a7fe1cc",
+      "jp-伊予鉄道-大手町線": "cfe4aff3c349aeb90b1b0bc3c76fbfaca6ead43e0c957cbcb78db25576cc7421",
+      "jp-伊予鉄道-本町線": "d8853d76a7db7ae34b4eafd02b29f771f65361e67db1bd4e5c5811ddc8b1f917",
+      "jp-伊予鉄道-花園線": "1df440ffca504f8cd5e0beaa742093192f8de903f469aa80581361180fd02fa7",
+      "jp-伊予鉄道-連絡線": "5cd043867d4d5014598871ee823771399ff24f862f53217f9395fe2d2a003b62"
+    },
+    "summaries": {
+      "jp-伊予鉄道-城南線": [
+        {
+          "partIndex": 0,
+          "pointCount": 12,
+          "metres": 49.9,
+          "classification": "complex"
+        },
+        {
+          "partIndex": 1,
+          "pointCount": 532,
+          "metres": 3520.7,
+          "classification": "station-approach/groomed"
+        }
+      ],
+      "jp-伊予鉄道-城北線": [
+        {
+          "partIndex": 0,
+          "pointCount": 980,
+          "metres": 2714.8,
+          "classification": "station-approach/groomed"
+        }
+      ],
+      "jp-伊予鉄道-大手町線": [
+        {
+          "partIndex": 0,
+          "pointCount": 204,
+          "metres": 1406.1,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-本町線": [
+        {
+          "partIndex": 0,
+          "pointCount": 194,
+          "metres": 1423.4,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-花園線": [
+        {
+          "partIndex": 0,
+          "pointCount": 58,
+          "metres": 370.5,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-連絡線": [
+        {
+          "partIndex": 0,
+          "pointCount": 53,
+          "metres": 166.1,
+          "classification": null
+        }
+      ]
+    }
+  },
+  "physicalTopologyChanged": false,
+  "sourceParity": "network.decodeIntervals over current physical compact lines",
+  "pending": {
+    "jounanTerminalTangent": "V3 raw-cartographic-proposal-accepted; native/Main pending",
+    "relatedGuards": "Renraku V2 and Johoku V2 raw-cartographic proposals accepted; native/Main pending",
+    "nativeCandidate": "not-run",
+    "mainCandidate": "not-run",
+    "accepted": false
+  }
+}

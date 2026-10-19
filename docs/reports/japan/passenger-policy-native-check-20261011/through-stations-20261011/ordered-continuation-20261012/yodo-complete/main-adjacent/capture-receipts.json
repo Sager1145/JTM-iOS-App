@@ -1,0 +1,152 @@
+[
+  {
+    "name": "nakamura-0",
+    "camera": [
+      33.20036,
+      133.12158,
+      0.044085999999987274
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.178314,
+        "lon": 133.09681
+      },
+      {
+        "lat": 33.178314,
+        "lon": 133.14635
+      },
+      {
+        "lat": 33.2224,
+        "lon": 133.14635
+      },
+      {
+        "lat": 33.2224,
+        "lon": 133.09681
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 81,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:1782;camera:14.41;lod:13.26;backbones:0;networkStations:5;distance:9671.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.200360;centerLon:133.121580;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2496.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "full baseline pair actually reviewed: entire Kubokawa–Wakai inside camera, continuous northeast–southwest approach without return hook; endpoint Wakai known own-platform normal defect remains open; thin regional guide not precise surveyed alignment acceptance."
+  },
+  {
+    "name": "nakamura-1",
+    "camera": [
+      33.160537500000004,
+      133.102415,
+      0.08527325000000695
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.117891,
+        "lon": 133.054526
+      },
+      {
+        "lat": 33.117891,
+        "lon": 133.150304
+      },
+      {
+        "lat": 33.203164,
+        "lon": 133.150304
+      },
+      {
+        "lat": 33.203164,
+        "lon": 133.054526
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 195,
+    "onStatus": "25 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:2243;camera:13.46;lod:12.31;backbones:0;networkStations:10;distance:18707.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.160537;centerLon:133.102415;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1923.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+    "rootPixelReview": "full baseline pair actually reviewed: Wakai–Kaina and full Yodo west arm visible; continuous north–south Nakamura, no reverse hook into Yodo loop. Shared stem is known transverse defect, own thin cartographic southern guide remains pending original-frame review; terrain and regional zoom cannot establish survey alignment."
+  },
+  {
+    "name": "yosan-87",
+    "camera": [
+      33.24761,
+      132.57135499999998,
+      0.0259469999999979
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.234636,
+        "lon": 132.556769
+      },
+      {
+        "lat": 33.234636,
+        "lon": 132.585941
+      },
+      {
+        "lat": 33.260583,
+        "lon": 132.585941
+      },
+      {
+        "lat": 33.260583,
+        "lon": 132.556769
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 29,
+    "onStatus": "16 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1618;camera:15.17;lod:14.03;backbones:0;networkStations:5;distance:5692.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.247610;centerLon:132.571355;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1993.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "full baseline pair actually reviewed: complete Takamitsu–Kita-Uwajima endpoints visible, Yodo northeast arm joins toward southbound Uwajima with no north return hook. Kita chainage defect remains open; mixed terrain tile fidelity and thin guide limit exact alignment acceptance."
+  },
+  {
+    "name": "yosan-88",
+    "camera": [
+      33.232712500000005,
+      132.569275,
+      0.020235250000002127
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.222594,
+        "lon": 132.557902
+      },
+      {
+        "lat": 33.222594,
+        "lon": 132.580648
+      },
+      {
+        "lat": 33.24283,
+        "lon": 132.580648
+      },
+      {
+        "lat": 33.24283,
+        "lon": 132.557902
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 23,
+    "onStatus": "12 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:645;camera:15.53;lod:14.38;backbones:0;networkStations:3;distance:4439.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.232712;centerLon:132.569275;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1970.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "full baseline pair actually reviewed: complete Kita-Uwajima–Uwajima inside camera, southbound continuation reaches terminal without fragments or northbound return. Kita starting boundary is known chainage defect; regional Uwajima own terminal frame too small for precise midpoint verdict, outer physical ID retained, candidate endpoint context still required."
+  },
+  {
+    "name": "nakamura-2",
+    "camera": [
+      33.1190195,
+      133.1087465,
+      0.04343254999999289
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.097301,
+        "lon": 133.084367
+      },
+      {
+        "lat": 33.097301,
+        "lon": 133.133126
+      },
+      {
+        "lat": 33.140733,
+        "lon": 133.133126
+      },
+      {
+        "lat": 33.140733,
+        "lon": 133.084367
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 117,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1806;camera:14.43;lod:13.28;backbones:0;networkStations:4;distance:9528.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.119019;centerLon:133.108746;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1355.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "full baseline pair actually reviewed: all Kaina–Iyoki points and endpoints visible, continuous southbound passage without return hook. Kaina own-platform normal defect confirmed separately; regional southern curve/own-guide offsets require original14-frame review before final candidate acceptance, forest/cartographic limitations retained."
+  }
+]

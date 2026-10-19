@@ -1,0 +1,17 @@
+{
+  "candidate": true,
+  "productionApplied": false,
+  "intervals": 12,
+  "aliases": 13,
+  "jpHistorySHA256": "08606e1241fe18b3c1a0a2638e321e948410a54ce48494b86b7091423d4169a6",
+  "apps": [
+    "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app",
+    "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app",
+    "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app",
+    "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-main-candidates/Asa RailMap Candidate.app"
+  ],
+  "mainCandidateApp": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-main-candidates/Ina RailMap Candidate.app",
+  "mainCandidateBundleIdentifier": "com.JRM.RailMap.InaCandidate",
+  "catalogPairing": "JP regions, JP line catalog offsets and JP joins replaced together from staged JP build; other regions retained",
+  "formalInaSourceApplied": false
+}

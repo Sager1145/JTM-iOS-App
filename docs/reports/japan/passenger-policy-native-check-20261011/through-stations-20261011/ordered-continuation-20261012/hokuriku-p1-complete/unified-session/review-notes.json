@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-33-hokuriku-p1-baseline-20261017",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "lineRender": "9ac2217ed1edef44351f03366d03ae0caabb6f11c4d847faccdb9b6971f3f33e",
+    "packageVersion": "2025.5.2"
+  },
+  "notes": [
+    {
+      "id": "jp-西日本旅客鉄道-北陸線-p1#0/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Concrete reference-disagreement candidates: loop bottom point14–16 displaced from the isolated blue arc; point26–30 cuts/changes the shape of the southern reverse curve. Display.png already contains the main differences, and completeLineDisplayParts equals the canonical132-point source. Not a global smoothing regression. Blue railway reference/physical tunnel geometry must be confirmed before adopting supports; never replace the paired loop by the other directional straight railway.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000014/basemap.png": "0cace86afe9e3109fd21b2856f37457221dc6027e9e6131bce035980e0363061",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000014/smooth.png": "2773df98e20a28ff3c939f70dac9b41f7fc1ce122aec78f02444226e6bc8578f",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000028/basemap.png": "9e878fbd89b84053ef1fdb6e6e6dfbf3b5c75624c8c865fd31ef757e37f14482",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000028/smooth.png": "a999b2876ac56369f37374f50e68aaaba542f415e60884e6d9c06279b9f2d953"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-北陸線-p1#0/stationApproach",
+      "conclusion": "insufficientEvidence",
+      "note": "Paired loop retained through its complete own course. Tsuruga has multiple independent conventional/Shinkansen/Obama/Hapi groups; own p1 down metadata and up stored station order do not identify a passenger platform or grant switches. Both fragment ends are station boundaries, not proven operational termini.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000000/basemap.png": "dc83551bfb50d8517c0bbf44c6a9111ebed7b4872dc7f1a4bf7dd39b7734d686",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000000/smooth.png": "71fce3eb2c208c8cfd9e79b788713dc18adda5e9423a8d7362b358c9d31a9778",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000001/basemap.png": "7474968eecbc537ff2173e61a58050fd6198d2cea21cdf2bed6b115acf934649",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000001/smooth.png": "ceff2a3f1218ffd55f529ef18a40d532880a3bac71077a0a4b94f67165120680",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000032/basemap.png": "e6d6c7f8842b9669c727a8ec69c6ca8a0b1cb09eeeb06e6b56e3716c9c7bce02",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000032/smooth.png": "3fced1f71ae9edebc8431dcd73b5282d7fdc473f41a05822bfed61601f4cc836",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/basemap.png": "f4cf32d4eb60d99bce71f51f76d287af81433978c8ff09cca6a7e7ad36ec1f70",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/smooth.png": "82672fed985c23cd7477aa54d965b8f879d00f062dc9ea2697839d176b50a153"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-北陸線-p1#0/disconnectedParts",
+      "conclusion": "noIssueObserved",
+      "note": "No visible gap or unintended branch in the complete34-view isolated smooth review. This only addresses visible continuity of these saved images; crossing the other direction or highway does not establish physical connectivity or Main joins.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000008/basemap.png": "e2d26390671ed64e96d35f2831c8e202cd041745711dd0745e91efe32b4f080a",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000008/smooth.png": "24e7723498c1c3bf8acb00eaab81a1b1b9a69907ff975b75939f21cfe896fdb2",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000012/basemap.png": "4b894b712ed095172a42aa03c3cabb2a25870a1e97b3e786340be4eee628b020",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000012/smooth.png": "7bed80c2f6289268f8679cadb95caaff019204dcb5f1f6c1322c311668dc31da",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000021/basemap.png": "70e810d04ed2a7efd3b1ccc70128a70a106c88839f9db73dc20fb756b71a51cc",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000021/smooth.png": "13ba914f67e4e0554263b1ca23b52f35a312ec20765ba884b9172fca170fa7a4",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/basemap.png": "f4cf32d4eb60d99bce71f51f76d287af81433978c8ff09cca6a7e7ad36ec1f70",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/smooth.png": "82672fed985c23cd7477aa54d965b8f879d00f062dc9ea2697839d176b50a153"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-北陸線-p1/station/010186",
+      "conclusion": "insufficientEvidence",
+      "note": "Tsuruga platform/level identity is not established for this paired p1 path by the z17 station envelope. Separate Hapi/Shinkansen/Obama directions and purple access; no midpoint/alias adopted.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000000/basemap.png": "dc83551bfb50d8517c0bbf44c6a9111ebed7b4872dc7f1a4bf7dd39b7734d686",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000000/smooth.png": "71fce3eb2c208c8cfd9e79b788713dc18adda5e9423a8d7362b358c9d31a9778"
+      }
+    },
+    {
+      "id": "jp-西日本旅客鉄道-北陸線-p1/station/004256",
+      "conclusion": "insufficientEvidence",
+      "note": "Shin-Hikida station band visible and red approaches longitudinally, but own directional platform caps and representative longitudinal midpoint are unmeasured. Do not average independent faces or treat this fragment end as a terminus.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000032/basemap.png": "e6d6c7f8842b9669c727a8ec69c6ca8a0b1cb09eeeb06e6b56e3716c9c7bce02",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000032/smooth.png": "3fced1f71ae9edebc8431dcd73b5282d7fdc473f41a05822bfed61601f4cc836",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/basemap.png": "f4cf32d4eb60d99bce71f51f76d287af81433978c8ff09cca6a7e7ad36ec1f70",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hokuriku-p1-complete/unified-session/alignment/captures/000000/000033/smooth.png": "82672fed985c23cd7477aa54d965b8f879d00f062dc9ea2697839d176b50a153"
+      }
+    }
+  ]
+}

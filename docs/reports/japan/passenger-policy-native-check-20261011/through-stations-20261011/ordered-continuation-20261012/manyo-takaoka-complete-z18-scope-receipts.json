@@ -1,0 +1,832 @@
+{
+  "format": "jtm-manual-native-extraction-scope-v1",
+  "lineID": "jp-万葉線-高岡軌道線",
+  "intervalCount": 17,
+  "viewCount": 51,
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "viewIndex": 0,
+      "analysis": "manyo-rokudoji-taka-interval0-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236419524.88620093,
+        "y": 104678736.17161787
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.16793893129770993,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 0,
+      "viewIndex": 1,
+      "analysis": "manyo-rokudoji-taka-interval0-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236416809.35657817,
+        "y": 104678841.41364992
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.03305785123966942,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 0,
+      "viewIndex": 2,
+      "analysis": "manyo-rokudoji-taka-interval0-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236416176.89954126,
+        "y": 104679560.17300391
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.0311284046692607,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 1,
+      "viewIndex": 0,
+      "analysis": "manyo-rokudoji-taka-interval1-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3995.9999999701977,
+        "x": 236416176.89954126,
+        "y": 104679560.17300399
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.0311284046692607,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 1,
+      "viewIndex": 1,
+      "analysis": "manyo-rokudoji-taka-interval1-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236414699.21272248,
+        "y": 104682054.98083103
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.12041884816753927,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 1,
+      "viewIndex": 2,
+      "analysis": "manyo-rokudoji-taka-interval1-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236412953.04556787,
+        "y": 104684405.17828524
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.054187192118226604,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 1,
+      "viewIndex": 3,
+      "analysis": "manyo-rokudoji-taka-interval1-view3-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236412355.4225636,
+        "y": 104685216.19683442
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.07142857142857142,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 2,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval2-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236412355.4225636,
+        "y": 104685216.19683442
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.07142857142857142,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 2,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval2-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236411153.79838216,
+        "y": 104687874.65930933
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.05084745762711865,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 2,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval2-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236409866.8821815,
+        "y": 104690502.74373287
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.03015075376884422,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 2,
+      "viewIndex": 3,
+      "analysis": "manyo-north-taka-interval2-view3-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996,
+        "x": 236409838.84016374,
+        "y": 104690555.25814916
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.035175879396984924,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 3,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval3-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996,
+        "x": 236409838.84016353,
+        "y": 104690555.25814916
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.035175879396984924,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 3,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval3-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236407877.96217027,
+        "y": 104692717.83774939
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.07171314741035857,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 3,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval3-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236406703.36490667,
+        "y": 104693329.3642135
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.11231884057971014,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 4,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval4-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236406703.36490667,
+        "y": 104693329.3642135
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.11231884057971014,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 4,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval4-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236403813.3445873,
+        "y": 104692911.14892796
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.07450980392156863,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 4,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval4-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.9999999701977,
+        "width": 3996.0000000298023,
+        "x": 236400925.99977204,
+        "y": 104692425.47900125
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.12274368231046931,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 4,
+      "viewIndex": 3,
+      "analysis": "manyo-north-taka-interval4-view3-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236399065.72267324,
+        "y": 104694240.14343756
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.13142857142857142,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 4,
+      "viewIndex": 4,
+      "analysis": "manyo-north-taka-interval4-view4-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236399026.85651922,
+        "y": 104694376.60775957
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.15789473684210525,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 5,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval5-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236399026.85651922,
+        "y": 104694376.60775957
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.15789473684210525,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 5,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval5-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236398538.45311996,
+        "y": 104696000.96845606
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.21052631578947367,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval6-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236398538.45311996,
+        "y": 104696000.96845606
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.21052631578947367,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval6-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236397468.91766512,
+        "y": 104698695.8508035
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.10891089108910891,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 6,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval6-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236396994.94924808,
+        "y": 104699235.61675248
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1320754716981132,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval7-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236396994.94924808,
+        "y": 104699235.61675248
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1320754716981132,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval7-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3995.9999999701977,
+        "x": 236395051.63965008,
+        "y": 104701428.11430262
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1780821917808219,
+      "platformStatus": [
+        "platform_cartography_midpoint_candidate",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 7,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval7-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236394112.99636638,
+        "y": 104702484.0800266
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1735159817351598,
+      "platformStatus": [
+        "unresolved",
+        "unresolved",
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 8,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval8-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236394112.99636638,
+        "y": 104702484.0800266
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1735159817351598,
+      "platformStatus": [
+        "unresolved",
+        "unresolved",
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 8,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval8-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236392595.5903858,
+        "y": 104704187.36988387
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.21363636363636362,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 9,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval9-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236392595.5903858,
+        "y": 104704187.36988387
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.21363636363636362,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 9,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval9-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236390641.44765857,
+        "y": 104706369.99780786
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.04608294930875576,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 9,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval9-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996,
+        "x": 236389873.95312366,
+        "y": 104707254.11992355
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.04739336492890995,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval10-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3996,
+        "x": 236389873.95312366,
+        "y": 104707254.11992355
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.04739336492890995,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval10-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236388128.45098782,
+        "y": 104709606.68562311
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.1262135922330097,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 10,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval10-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236387871.87201422,
+        "y": 104709939.16315702
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.13526570048309178,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval11-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.9999999701977,
+        "width": 3995.9999999701977,
+        "x": 236387871.87201422,
+        "y": 104709939.163157
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.14009661835748793,
+      "platformStatus": [
+        "unresolved",
+        "platform_cartography_midpoint_candidate"
+      ]
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval11-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236386034.39623445,
+        "y": 104712220.34999096
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.046948356807511735,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 11,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval11-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236385758.68845233,
+        "y": 104712543.13982838
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.04225352112676056,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval12-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236385758.68845242,
+        "y": 104712543.13982838
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.04225352112676056,
+      "platformStatus": [
+        "unresolved",
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval12-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.999999985099,
+        "width": 3995.9999999701977,
+        "x": 236383906.04253933,
+        "y": 104714811.49182512
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.02857142857142857,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 12,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval12-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236383829.68143934,
+        "y": 104714914.36977777
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.02843601895734597,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval13-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236383829.68143934,
+        "y": 104714914.36977777
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.02843601895734597,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval13-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236381806.47179246,
+        "y": 104717013.13281721
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.08778625954198473,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 13,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval13-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236381427.18410817,
+        "y": 104717280.86809623
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.05925925925925926,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 14,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval14-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3995.9999999701977,
+        "x": 236381427.18410817,
+        "y": 104717280.86809623
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.05925925925925926,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 14,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval14-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236379957.49998662,
+        "y": 104718317.52413538
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.055776892430278883,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 15,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval15-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236379957.49998662,
+        "y": 104718317.52413538
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.055776892430278883,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 15,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval15-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236380359.40751666,
+        "y": 104720008.33926296
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.03553299492385787,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 16,
+      "viewIndex": 0,
+      "analysis": "manyo-north-taka-interval16-view0-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236380359.40751666,
+        "y": 104720008.33926296
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0.03553299492385787,
+      "platformStatus": []
+    },
+    {
+      "intervalIndex": 16,
+      "viewIndex": 1,
+      "analysis": "manyo-north-taka-interval16-view1-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236381288.67413408,
+        "y": 104722446.64270857
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0,
+      "platformStatus": [
+        "unresolved"
+      ]
+    },
+    {
+      "intervalIndex": 16,
+      "viewIndex": 2,
+      "analysis": "manyo-north-taka-interval16-view2-extraction-before/apple-map-extraction/analysis.json",
+      "mapRect": {
+        "height": 2615.9999999701977,
+        "width": 3996.0000000298023,
+        "x": 236381576.31491703,
+        "y": 104722736.6367706
+      },
+      "width": 999,
+      "height": 654,
+      "supportFraction": 0,
+      "platformStatus": [
+        "unresolved"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "caseIndex": 27,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 27,
+  "source": {
+    "caseIndex": 27,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 27,
+    "fromStationID": "002470",
+    "toStationID": "002487",
+    "camera": [
+      36.2551325,
+      137.91102999999998,
+      0.022880549999991402
+    ],
+    "effectiveCoordinates": [
+      [
+        137.90398,
+        36.260085
+      ],
+      [
+        137.90445,
+        36.25953
+      ],
+      [
+        137.90509,
+        36.25877
+      ],
+      [
+        137.90554,
+        36.25826
+      ],
+      [
+        137.90576,
+        36.25805
+      ],
+      [
+        137.90613,
+        36.25773
+      ],
+      [
+        137.90685,
+        36.25728
+      ],
+      [
+        137.90838,
+        36.25633
+      ],
+      [
+        137.91027,
+        36.25517
+      ],
+      [
+        137.91258,
+        36.25373
+      ],
+      [
+        137.91274,
+        36.25364
+      ],
+      [
+        137.91356,
+        36.25313
+      ],
+      [
+        137.91472,
+        36.25239
+      ],
+      [
+        137.9149,
+        36.25228
+      ],
+      [
+        137.91641,
+        36.25132
+      ],
+      [
+        137.91662,
+        36.25117
+      ],
+      [
+        137.91683,
+        36.25103
+      ],
+      [
+        137.91746,
+        36.25058
+      ],
+      [
+        137.91808,
+        36.25018
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t31 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:387;camera:15.30;lod:14.15;backbones:0;networkStations:4;distance:5022.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.255133;centerLon:137.911030;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2905.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.255133;centerLon:137.911030;distance:5022.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-27.jpg",
+  "observation": "Hitoichiba to Azusabashi continuous diagonal corridor; approach/station stroke south of Apple band locally. Own frame unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

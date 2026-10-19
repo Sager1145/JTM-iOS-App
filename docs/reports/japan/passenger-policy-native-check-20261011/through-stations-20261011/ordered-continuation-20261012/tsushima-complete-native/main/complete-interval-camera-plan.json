@@ -1,0 +1,133 @@
+{
+  "status": "planned-not-runtime-evidence",
+  "lineObjectSha256": "d9901cb2d4c2cddbd573aca7b4926eba701097d180eea3bc18c63f3575e182b0",
+  "intervalCount": 7,
+  "cases": [
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 0,
+      "fromStationID": "005352",
+      "toStationID": "005368",
+      "plannedCamera": [
+        35.1978175,
+        136.835805,
+        0.029850000000010368
+      ],
+      "completeIntervalBounds": [
+        136.825855,
+        35.195955,
+        136.845755,
+        35.19968
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 1,
+      "fromStationID": "005368",
+      "toStationID": "005370",
+      "plannedCamera": [
+        35.195875,
+        136.81604449999998,
+        0.029431500000001165
+      ],
+      "completeIntervalBounds": [
+        136.806234,
+        35.195795,
+        136.825855,
+        35.195955
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 2,
+      "fromStationID": "005370",
+      "toStationID": "005372",
+      "plannedCamera": [
+        35.1955475,
+        136.797122,
+        0.027335999999962723
+      ],
+      "completeIntervalBounds": [
+        136.78801,
+        35.1953,
+        136.806234,
+        35.195795
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 3,
+      "fromStationID": "005372",
+      "toStationID": "005355",
+      "plannedCamera": [
+        35.1969725,
+        136.7774725,
+        0.0316125000000369
+      ],
+      "completeIntervalBounds": [
+        136.766935,
+        35.19524,
+        136.78801,
+        35.198705
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 4,
+      "fromStationID": "005355",
+      "toStationID": "005375",
+      "plannedCamera": [
+        35.1974125,
+        136.75865499999998,
+        0.02483999999999753
+      ],
+      "completeIntervalBounds": [
+        136.750375,
+        35.195245,
+        136.766935,
+        35.19958
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 5,
+      "fromStationID": "005375",
+      "toStationID": "005396",
+      "plannedCamera": [
+        35.1920375,
+        136.744645,
+        0.017189999999999372
+      ],
+      "completeIntervalBounds": [
+        136.738915,
+        35.18883,
+        136.750375,
+        35.195245
+      ]
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "linePrefix": "tsushima",
+      "intervalIndex": 6,
+      "fromStationID": "005396",
+      "toStationID": "005420",
+      "plannedCamera": [
+        35.18343,
+        136.7348475,
+        0.019440000000005852
+      ],
+      "completeIntervalBounds": [
+        136.73078,
+        35.17803,
+        136.738915,
+        35.18883
+      ]
+    }
+  ]
+}

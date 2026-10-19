@@ -1,0 +1,30 @@
+[
+  {
+    "case": "sobu",
+    "sameCameraAndViewport": true,
+    "on": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:1161;camera:16.24;lod:15.10;backbones:1;networkStations:4;distance:2633.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.591500;centerLon:139.704200;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3279.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "off": "5 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.591500;centerLon:139.704200;distance:2633.8;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:2;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0",
+    "evidenceDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sobu3-complete/main-four-repairs-20261018"
+  },
+  {
+    "case": "ir",
+    "sameCameraAndViewport": true,
+    "on": "14 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:3;rides:0;budgetDrops:0;vertices:1005;camera:16.49;lod:15.34;backbones:1;networkStations:5;distance:2195.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.584480;centerLon:136.655480;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1324.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "off": "5 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.584480;centerLon:136.655480;distance:2195.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+    "evidenceDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ir-ishikawa-complete/main-four-repairs-20261018"
+  },
+  {
+    "case": "johoku",
+    "sameCameraAndViewport": true,
+    "on": "12 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:570;camera:16.51;lod:15.37;backbones:0;networkStations:4;distance:2194.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.218300;centerLon:136.873000;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3649.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:7;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "off": "5 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.218300;centerLon:136.873000;distance:2194.7;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+    "evidenceDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jr-tokai-johoku-complete/main-four-repairs-20261018"
+  },
+  {
+    "case": "miyazu",
+    "sameCameraAndViewport": true,
+    "on": "7 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:16.83;lod:15.68;backbones:0;networkStations:1;distance:1755.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.542100;centerLon:135.122800;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:6904.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "off": "5 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.542100;centerLon:135.122800;distance:1755.8;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+    "evidenceDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyazu-complete/main-four-repairs-20261018"
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "B9DC21F7-CDE3-4746-ADD5-FC0A4D72A48C",
+  "message" : "8\/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "yamanote-changed-interval0",
+  "resultPath" : "\/private\/tmp\/jtm-yamanote-interval0-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:27:25Z"
+}

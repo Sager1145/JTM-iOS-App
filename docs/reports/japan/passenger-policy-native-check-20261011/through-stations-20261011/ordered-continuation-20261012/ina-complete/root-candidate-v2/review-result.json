@@ -1,0 +1,49 @@
+{
+  "status": "applied-complete-corridor-review-with-declared-occluded-omiya-reference",
+  "inspectors": {
+    "primary": {
+      "allIntervalsReviewed": 12,
+      "v1ContinuousViewsReviewed": 55,
+      "v2ChangedIntervalViewsReviewed": 11,
+      "v2Intervals": [
+        0,
+        11
+      ]
+    },
+    "secondary": {
+      "allIntervalsReviewed": 12,
+      "v1ContinuousViewsReviewed": 55,
+      "v2ChangedIntervalViewsReviewed": 11,
+      "v2Intervals": [
+        0,
+        11
+      ]
+    },
+    "third": {
+      "allIntervalsReviewed": 12,
+      "v1ContinuousViewsReviewed": 55,
+      "v2ChangedIntervalViewsReviewed": 11,
+      "v2Intervals": [
+        0,
+        11
+      ]
+    }
+  },
+  "main": {
+    "v1All12PairsReviewed": true,
+    "v2ChangedPairsReviewed": [
+      0,
+      11
+    ],
+    "originalDeliveredDetailPairsReviewed": [
+      "大宮",
+      "志久",
+      "内宿"
+    ]
+  },
+  "reuse": "V2 intervals 1..10 exact coordinate equality checked. Main rendering debug dylib matches original Main. Full physical topology unchanged.",
+  "limitations": [
+    "Omiya passenger platform is hidden by Apple building/rail coverage. Its endpoint is reference-assisted, not an Apple pixel-fit claim.",
+    "Cartographic review does not establish surveyed alignment accuracy."
+  ]
+}

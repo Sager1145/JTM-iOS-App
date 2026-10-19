@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "requestID": "sangi-nishinojiri-own-detail",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "lineRender": "30612891085183e000d117780fdb2ae8514c3100bcb22d487a3b4e8e88b11f4e",
+    "packageVersion": "2025.5.2"
+  },
+  "notes": [
+    {
+      "id": "jp-三岐鉄道-三岐線#13/lineOffset",
+      "conclusion": "insufficientEvidence",
+      "note": "Actual original review: complete z17 interval5 pairs plus exact new-z19 planned p1/p3/p5 three pairs. Own six-way passenger chain established; OSM projection is opposite visible Apple-blue correction direction and is not adopted. Red NE offset continues through original v9..12 then crosses own blue and becomes SW. Original v0 rail is obscured by station fill; fixed v0/v9 window cannot close on own blue. No authority/candidate/apply. Preserve true compound curve; full passenger platform caps unresolved. Only named own interval reviewed; old other82 pairs not reviewed anew. This ledger is written on disk; no claim that the quit App has reloaded it.",
+      "evidenceSHA256": {
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000001/basemap.png": "92112b2bcbbad526eac118f16393f21e9494678a71a7f34ba11fcc76f8fd2793",
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000001/smooth.png": "3ac4073e1e6285e04f0d8dab2e609f804e7ea4c861060d6055021d81093f8b14",
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000003/basemap.png": "72604fe316d2645d5fe60d0024b8bcc38f3c06e75351f2afcb81a91bc7c654fb",
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000003/smooth.png": "fd9ea47e6ec5081ae4abb500ac4835a3d5ef0b5b4e909782299b9dec745c4c79",
+        "/private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment/captures/000000/000005/basemap.png": "4b608145e1ceb3dcfa3b83a07311591c1a03fcf27821ebe8403b7e33db4c46a1",
+        "/private/tmp/jtm-sangi-nishinojiri-own-guard-detail-20261019/alignment/captures/000000/000005/smooth.png": "14bb8e9d85e184374b0c91afe0cf525f2f03548ef15c8ed63676d2b694ee7b97",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sangi-sangi-complete/interval-13-own-source-20261019/z19-fixed-guard-feasibility-review-20261019.md": "85132d944fe6316d79978258886ed1167e79d897129c658719096e9dbf4e1aa3"
+      }
+    }
+  ]
+}

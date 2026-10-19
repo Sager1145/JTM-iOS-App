@@ -1,0 +1,98 @@
+{
+  "status": "candidate-only",
+  "alias": [
+    132.60047485675528,
+    33.28290206443831
+  ],
+  "incoming17": [
+    {
+      "pixel": [
+        650,
+        284
+      ],
+      "coordinates": [
+        132.60141734491344,
+        33.283052833326956
+      ]
+    },
+    {
+      "pixel": [
+        600,
+        294
+      ],
+      "coordinates": [
+        132.60114912401195,
+        33.28300798840522
+      ]
+    },
+    {
+      "pixel": [
+        550,
+        304.5
+      ],
+      "coordinates": [
+        132.60088090311046,
+        33.28296090121259
+      ]
+    },
+    {
+      "pixel": [
+        500,
+        314
+      ],
+      "coordinates": [
+        132.60061268220898,
+        33.28291829849262
+      ]
+    }
+  ],
+  "outgoing18": [
+    {
+      "pixel": [
+        450,
+        322.5
+      ],
+      "coordinates": [
+        132.60034446130754,
+        33.28288018025185
+      ]
+    },
+    {
+      "pixel": [
+        400,
+        330.5
+      ],
+      "coordinates": [
+        132.60007624040605,
+        33.282844304245344
+      ]
+    },
+    {
+      "pixel": [
+        350,
+        340
+      ],
+      "coordinates": [
+        132.59980801950456,
+        33.28280170146845
+      ]
+    }
+  ],
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.28286,
+    "longitude": 132.60061000000002,
+    "mapPointsPerPoint": 3.9999999925494194,
+    "metresPerPoint": 0.4973619121002477,
+    "pitch": 0,
+    "rectHeight": 2616,
+    "rectWidth": 3995.9999999701977,
+    "rectX": 233089911.14230046,
+    "rectY": 107872517.83946279,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.00000000268723
+  },
+  "incoming17Review": "Actual magnified raw540..690/250..325 opened;650284 clear continuation beside label replaces provisional650282.600294,550304.5,500314 confirmed own sleeper flanks."
+}

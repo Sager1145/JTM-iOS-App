@@ -1,0 +1,7488 @@
+{
+  "schema": "cn-shenyang-north-boundary-continuation/3",
+  "reviewedAt": "2026-10-19",
+  "scope": "Original pinned SQLite only for topology and identity. Targeted keyed source rows and exact member-reference queries; two bounded pre-existing candidate paths rechecked. No national graph/rescan, production edit, build, test, native replay or source repair.",
+  "source": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "url": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sourceSha256FromExistingPinnedManifest": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "shaRecomputed": false,
+    "relationId": 3066901,
+    "relationVersion": 81,
+    "relationTags": {
+      "from": "北京朝阳",
+      "name": "京哈高速线",
+      "name:en": "Beijing–Harbin High-Speed Railway",
+      "name:zh": "京哈高速线",
+      "operator": "中国铁路",
+      "operator:en": "China Railway",
+      "operator:wikidata": "Q1073489",
+      "operator:zh": "中国铁路",
+      "ref": "3007",
+      "route": "railway",
+      "to": "哈尔滨",
+      "type": "route"
+    }
+  },
+  "verdict": {
+    "repairAdmissible": false,
+    "reason": "Expanded original-source audit found a genuine519.930km own306passenger strand fromswitch105 throughSBTIII/CRT/VAB to exact306→704sourcejunction1038. Its own704continuation exhausts after75.223km atnode9798408903; nextpassengerway1067140203v3 has zero originalrelation memberships. No exact join to currently published704geometry and no genuineMDBowntrackarrival was established under unchanged ownership gates.",
+    "crossover": "1364948209v1 is a real consecutive rail/crossover geometry with zero relation memberships in the pinned source, no operator and no passenger tag. It cannot satisfy current physical-section sourceRelations inventory or original-passenger-relation admission.",
+    "alternativeIII": "All14edges of the1448.566m path are four own3066901 passenger main ways. These may supply genuine physical extension geometry without any anchor substitution. An additional original same-node physical continuation back into the published departure is required; the bounded east-throat trace did not find it.",
+    "noStopAreaBinding": "Neither III12640351645, VII12640351644 nor10512640376454 has any exact node relation membership. Station marker676578837 itself has only six railway-route memberships, no stop_area. Platform track ways1364948087 and1364948089 each belong only to3066901. No original stop_area explicitly binds these platforms together.",
+    "continuation": "III track continues to exact east endpoint12640376376 through own3066901 way1364948087v3 and then own3066901 way1364948098v2. VII continues through1364948089v2 to12640376221 then1364948100v2. These distinct explicit strand continuations do not provide an exact-node join betweenIII andVII.",
+    "recommendedAction": "KeepG101boundary withheld. Retain accepted physical source state and existing station anchors. Genuine new rawstation bindings do not authorize publishing an incomplete519.930km+75.223km extension that merely relocates the gap. Do not admit1067140203 from matchingname/ref/passenger or invent relationmembership. No additional native/build replay justified by this incomplete source evidence.",
+    "expandedCorridorResult": "The omitted passenger mainline strand throughSBTIII reachesCRT on a distinct original parallel track, with no shared source node in either current published3066901 or198494 geometry anywhere in the traced SBT-toCRT eligible component. No exact complete boundary repair manifest is established. BeyondCRT topology is outside the requested corridor; this is not a full3066901/global disconnection claim."
+  },
+  "bindingNodes": [
+    {
+      "id": 676578837,
+      "version": 15,
+      "coordinate": [
+        123.4294351,
+        41.8173345
+      ],
+      "tags": {
+        "alt_name": "沈阳北站",
+        "alt_name:en": "Shenyang North Railway Station",
+        "name": "沈阳北",
+        "name:cs": "Šen-jang sever",
+        "name:en": "Shenyangbei",
+        "name:ja": "瀋陽北",
+        "name:ko": "선양베이",
+        "name:ru": "Шеньян-Северный",
+        "name:zh": "沈阳北",
+        "operator": "中国铁路沈阳局集团有限公司 沈阳站",
+        "public_transport": "station",
+        "railway": "station",
+        "railway:position:exact:京哈:上": "703.715",
+        "railway:position:exact:京哈:下": "703.653",
+        "railway:position:exact:京哈高速": "703.653",
+        "railway:position:exact:沈大高速": "401.061",
+        "railway:ref": "53885",
+        "start_date": "1990-10-22",
+        "wikidata": "Q988013",
+        "wikipedia": "en:Shenyang North railway station"
+      },
+      "exactNodeRelationMemberships": [
+        {
+          "id": 198494,
+          "version": 328,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "from": "北京",
+            "name": "京哈线",
+            "name:en": "Jingha Line",
+            "network": "中国铁路",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "ref": "0007",
+            "route": "railway",
+            "to": "哈尔滨",
+            "type": "route",
+            "wikidata": "Q1074605",
+            "wikipedia": "zh:京哈线"
+          }
+        },
+        {
+          "id": 2067465,
+          "version": 125,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "alt_name:cs": "Železniční trať Šen-ta",
+            "from": "沈阳北",
+            "name": "沈大线",
+            "name:cs": "Železniční trať Šen-jang – Ta-lien",
+            "name:en": "Shenda Railway",
+            "network": "中国铁路",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "ref": "0231",
+            "route": "railway",
+            "to": "大连",
+            "type": "route"
+          }
+        },
+        {
+          "id": 3066901,
+          "version": 81,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "from": "北京朝阳",
+            "name": "京哈高速线",
+            "name:en": "Beijing–Harbin High-Speed Railway",
+            "name:zh": "京哈高速线",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "ref": "3007",
+            "route": "railway",
+            "to": "哈尔滨",
+            "type": "route"
+          }
+        },
+        {
+          "id": 11628841,
+          "version": 11,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "from": "沈阳北",
+            "name": "沈山北道线",
+            "ref": "0226",
+            "route": "railway",
+            "to": "裕国/永安桥线路所",
+            "type": "route"
+          }
+        },
+        {
+          "id": 11631593,
+          "version": 29,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "from": "沈阳北",
+            "name": "沈大高速线",
+            "name:zh-Hant": "瀋大高速線",
+            "network": "中国铁路",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "owner": "哈大铁路客运专线有限责任公司",
+            "ref": "3019",
+            "route": "railway",
+            "to": "大连北",
+            "type": "route"
+          }
+        },
+        {
+          "id": 18295893,
+          "version": 43,
+          "memberships": [
+            [
+              "n",
+              676578837,
+              ""
+            ]
+          ],
+          "tags": {
+            "from": "沈阳北",
+            "name": "沈佳高速线",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "ref": "3105",
+            "route": "railway",
+            "to": "佳木斯",
+            "type": "route"
+          }
+        }
+      ]
+    },
+    {
+      "id": 12640351645,
+      "version": 1,
+      "coordinate": [
+        123.4298107,
+        41.8167297
+      ],
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "703.653"
+      },
+      "exactNodeRelationMemberships": []
+    },
+    {
+      "id": 12640351644,
+      "version": 1,
+      "coordinate": [
+        123.4295703,
+        41.8171159
+      ],
+      "tags": {
+        "railway": "milestone",
+        "railway:position": "703.653"
+      },
+      "exactNodeRelationMemberships": []
+    },
+    {
+      "id": 12640376454,
+      "version": 1,
+      "coordinate": [
+        123.4133092,
+        41.8124676
+      ],
+      "tags": {
+        "railway": "switch",
+        "ref": "105"
+      },
+      "exactNodeRelationMemberships": []
+    }
+  ],
+  "candidates": {
+    "sameRelationPassengerContinuationToIII": {
+      "nodeIds": [
+        12640376454,
+        12642538656,
+        12642538664,
+        12640376416,
+        12640376410,
+        12640376385,
+        12640376384,
+        12640376262,
+        12640376701,
+        12640376702,
+        12640376703,
+        12640376704,
+        12640376705,
+        12640376706,
+        12640351645
+      ],
+      "edgeWayIds": [
+        1365210397,
+        1365210404,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087
+      ],
+      "coordinates": [
+        [
+          123.4133092,
+          41.8124676
+        ],
+        [
+          123.4151682,
+          41.8129175
+        ],
+        [
+          123.4157323,
+          41.8130541
+        ],
+        [
+          123.4185534,
+          41.8137368
+        ],
+        [
+          123.4197095,
+          41.8140167
+        ],
+        [
+          123.4200493,
+          41.8140988
+        ],
+        [
+          123.4211508,
+          41.8143654
+        ],
+        [
+          123.4232353,
+          41.8148698
+        ],
+        [
+          123.4261622,
+          41.8155782
+        ],
+        [
+          123.4266336,
+          41.8156982
+        ],
+        [
+          123.4268814,
+          41.8157653
+        ],
+        [
+          123.427502,
+          41.8159454
+        ],
+        [
+          123.4281605,
+          41.816155
+        ],
+        [
+          123.4286374,
+          41.8163138
+        ],
+        [
+          123.4298107,
+          41.8167297
+        ]
+      ],
+      "nodeVersions": {
+        "12640376454": 1,
+        "12642538656": 1,
+        "12642538664": 1,
+        "12640376416": 1,
+        "12640376410": 1,
+        "12640376385": 1,
+        "12640376384": 1,
+        "12640376262": 1,
+        "12640376701": 1,
+        "12640376702": 1,
+        "12640376703": 1,
+        "12640376704": 1,
+        "12640376705": 1,
+        "12640376706": 1,
+        "12640351645": 1
+      },
+      "wayVersions": {
+        "1365210397": 2,
+        "1365210404": 2,
+        "471447912": 19,
+        "1364948087": 3
+      },
+      "ways": [
+        {
+          "id": 1365210397,
+          "version": 2,
+          "nodes": [
+            12642538656,
+            12640376454
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1365210397,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 1365210404,
+          "version": 2,
+          "nodes": [
+            12642538664,
+            12642538656
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1365210404,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 471447912,
+          "version": 19,
+          "nodes": [
+            12640376262,
+            12640376384,
+            12640376385,
+            12640376410,
+            12640376416,
+            12642538664
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  471447912,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 1364948087,
+          "version": 3,
+          "nodes": [
+            12640376376,
+            12640376709,
+            12640376708,
+            12640376707,
+            12640351645,
+            12640376706,
+            12640376705,
+            12640376704,
+            12640376703,
+            12640376702,
+            12640376701,
+            12640376262
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "maxspeed": "100",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:track_ref": "III",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1364948087,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        }
+      ],
+      "distanceMetresFromPriorBoundedReview": 1448.5655509657774,
+      "everyEdgeOriginalConsecutive": true,
+      "allWaysOwn3066901Members": true
+    },
+    "exactNodeContinuationToExistingVIIAnchor": {
+      "nodeIds": [
+        12640376454,
+        12640376427,
+        12640376426,
+        12640376425,
+        12642538657,
+        12642538663,
+        12640376424,
+        12640376419,
+        12640376388,
+        12640376762,
+        12640376763,
+        12640376764,
+        12640376765,
+        12640376212,
+        12640376766,
+        12640351644
+      ],
+      "edgeWayIds": [
+        1364948209,
+        1364948209,
+        1364948209,
+        1365210396,
+        1365210403,
+        385360731,
+        385360731,
+        385360731,
+        385360731,
+        385360731,
+        385360731,
+        385360731,
+        385360731,
+        1364948089,
+        1364948089
+      ],
+      "coordinates": [
+        [
+          123.4133092,
+          41.8124676
+        ],
+        [
+          123.4137516,
+          41.8125838
+        ],
+        [
+          123.4145143,
+          41.8128018
+        ],
+        [
+          123.4148986,
+          41.8129007
+        ],
+        [
+          123.4151669,
+          41.8129657
+        ],
+        [
+          123.4157321,
+          41.8131025
+        ],
+        [
+          123.416049,
+          41.8131792
+        ],
+        [
+          123.4170718,
+          41.8134268
+        ],
+        [
+          123.4216332,
+          41.814531
+        ],
+        [
+          123.422151,
+          41.8146564
+        ],
+        [
+          123.4224612,
+          41.8147348
+        ],
+        [
+          123.4228046,
+          41.8148316
+        ],
+        [
+          123.4231926,
+          41.81495
+        ],
+        [
+          123.4242534,
+          41.815293
+        ],
+        [
+          123.4258944,
+          41.8158242
+        ],
+        [
+          123.4295703,
+          41.8171159
+        ]
+      ],
+      "nodeVersions": {
+        "12640376454": 1,
+        "12640376427": 1,
+        "12640376426": 1,
+        "12640376425": 1,
+        "12642538657": 1,
+        "12642538663": 1,
+        "12640376424": 1,
+        "12640376419": 1,
+        "12640376388": 1,
+        "12640376762": 1,
+        "12640376763": 1,
+        "12640376764": 1,
+        "12640376765": 1,
+        "12640376212": 1,
+        "12640376766": 1,
+        "12640351644": 1
+      },
+      "wayVersions": {
+        "1364948209": 1,
+        "1365210396": 2,
+        "1365210403": 2,
+        "385360731": 17,
+        "1364948089": 2
+      },
+      "ways": [
+        {
+          "id": 1364948209,
+          "version": 1,
+          "nodes": [
+            12640376454,
+            12640376427,
+            12640376426,
+            12640376425
+          ],
+          "tags": {
+            "gauge": "1435",
+            "railway": "rail",
+            "service": "crossover"
+          },
+          "relationMemberships": []
+        },
+        {
+          "id": 1365210396,
+          "version": 2,
+          "nodes": [
+            12640376428,
+            12640376425,
+            12642538657
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1365210396,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 1365210403,
+          "version": 2,
+          "nodes": [
+            12642538657,
+            12642538663
+          ],
+          "tags": {
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1365210403,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 385360731,
+          "version": 17,
+          "nodes": [
+            12642538663,
+            12640376424,
+            12640376419,
+            12640376388,
+            12640376762,
+            12640376763,
+            12640376764,
+            12640376765,
+            12640376212
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  385360731,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        },
+        {
+          "id": 1364948089,
+          "version": 2,
+          "nodes": [
+            12640376212,
+            12640376766,
+            12640351644,
+            12640376221
+          ],
+          "tags": {
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "maxspeed:designed": "350",
+            "name": "京哈高速线",
+            "old_name": "哈大高铁",
+            "railway": "rail",
+            "railway:ctcs": "3",
+            "railway:track_ref": "VII",
+            "railway:traffic_mode": "passenger",
+            "ref": "3007",
+            "source": "bing",
+            "start_date": "2012-12-01",
+            "usage": "main",
+            "voltage": "25000"
+          },
+          "relationMemberships": [
+            {
+              "id": 3066901,
+              "version": 81,
+              "memberships": [
+                [
+                  "w",
+                  1364948089,
+                  ""
+                ]
+              ],
+              "tags": {
+                "from": "北京朝阳",
+                "name": "京哈高速线",
+                "name:en": "Beijing–Harbin High-Speed Railway",
+                "name:zh": "京哈高速线",
+                "operator": "中国铁路",
+                "operator:en": "China Railway",
+                "operator:wikidata": "Q1073489",
+                "operator:zh": "中国铁路",
+                "ref": "3007",
+                "route": "railway",
+                "to": "哈尔滨",
+                "type": "route"
+              }
+            }
+          ]
+        }
+      ],
+      "distanceMetresFromPriorBoundedReview": 1445.4319045726932,
+      "everyEdgeOriginalConsecutive": true,
+      "allWaysOwn3066901Members": false
+    }
+  },
+  "immediateOnwardOwnWays": [
+    {
+      "id": 1364948098,
+      "version": 2,
+      "nodes": [
+        4656538957,
+        4656538929,
+        4656538930,
+        4656538931,
+        4656538932,
+        4656538933,
+        4656538934,
+        4656538935,
+        4656538936,
+        4655942180,
+        12640376655,
+        12640376654,
+        12640376653,
+        12640376652,
+        12640376651,
+        12640376650,
+        12640376649,
+        12640376648,
+        12640376449,
+        12640376437,
+        12640376436,
+        12640376734,
+        12640376713,
+        12640376712,
+        12640376711,
+        12640376710,
+        12640376311,
+        12640376376
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "maxspeed": "200",
+        "maxspeed:designed": "350",
+        "name": "京哈高速线",
+        "old_name": "哈大高铁",
+        "railway": "rail",
+        "railway:ctcs": "3",
+        "railway:traffic_mode": "passenger",
+        "ref": "3007",
+        "source": "bing",
+        "start_date": "2012-12-01",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "own3066901Member": true
+    },
+    {
+      "id": 1364948100,
+      "version": 2,
+      "nodes": [
+        12640376221,
+        12640376767,
+        12640376768,
+        12640376769,
+        12640376756,
+        12640376361,
+        12640376380,
+        12640376433,
+        12640376440,
+        12640376770,
+        12640376771,
+        12640376772,
+        12640376773,
+        12640376774,
+        12640376775,
+        12640376776,
+        3887140509,
+        4656538968,
+        3887140513,
+        4656538967,
+        3887140517,
+        4656538966,
+        3887140523,
+        3887140526,
+        3887140529,
+        3887140531
+      ],
+      "tags": {
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "maxspeed": "200",
+        "maxspeed:designed": "350",
+        "name": "京哈高速线",
+        "old_name": "哈大高铁",
+        "railway": "rail",
+        "railway:ctcs": "3",
+        "railway:traffic_mode": "passenger",
+        "ref": "3007",
+        "source": "bing",
+        "start_date": "2012-12-01",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "own3066901Member": true
+    }
+  ],
+  "builderReview": {
+    "files": [
+      "app/scripts/railway/build-china-physical-junctions.py",
+      "app/scripts/railway/cn_package.py"
+    ],
+    "sourceRelationsGate": "compile_reviewed_physical_sections requires every pathway in the pinned sourceRelations original member inventory. Way1364948209 has no relation membership to supply.",
+    "crossoverPassengerGate": "compile_reviewed_physical_sections rejects service=crossover unless explicit original passenger tags or complete original passenger relation coverage. Generic reviewed-official-corridor evidence is intentionally insufficient for an untagged crossover.",
+    "stationIdentityRule": "Compiler stations() preserves platform alternatives per own-route local strand and choose_ordered_anchors selects an original continuous path. Station identity equivalence does not join source nodes. An exact mileage coincidence cannot authorize teleporting toVII.",
+    "admissiblePhysicalGeometryOnly": "The III path has sufficient topology/relation/passenger evidence for an exact original physical extension under the published ChinaRailway identity. Such an extension does not need an anchor swap or stop_area. It becomes a useful boundary repair only if its original continuation joins the departure at an exact shared source node. That complete path was not established locally; no production manifest proposed."
+  },
+  "primaryEvidenceSearch": {
+    "queries": [
+      "沈阳北站105道岔",
+      "沈阳北站ⅦⅢ股道",
+      "沈阳北站咽喉京哈高速"
+    ],
+    "retrieval": "Search results only; no exact switch105-toVII operating plan or official exact-track passenger use located.",
+    "firstPartyLeadsNotAdopted": [
+      {
+        "url": "https://www.crecg.com/crsg/crsg105/crsg172/116136/index.html",
+        "title": "王波检查指导沈白高铁并入沈阳北站第二阶段转线Ⅰ级封锁施工",
+        "date": "2023-11-29",
+        "limit": "First-party construction news names the station, intersecting corridors and group oversight. No exact105-toVII crossover passenger or platform binding evidence."
+      },
+      {
+        "url": "https://www.crecg.com/crsg/crsg108/120940/index.html",
+        "title": "沈白高铁引入沈阳枢纽施工圆满完成",
+        "date": "2024-10-10",
+        "limit": "First-party construction news concerns station high-speed yard throat signalling modifications; no exact sourceway or stop-anchor admission."
+      }
+    ]
+  },
+  "verification": {
+    "candidateOriginalConsecutiveEdgeChecks": "29/29pass",
+    "candidateOriginalCoordinates": "31/31source occurrences match prior report",
+    "sourceRelationQueries": "Exact membership filtering after narrowly targeted member-reference SQL queries. No graph generated.",
+    "productionEdits": false,
+    "nativeBoundaryRemovalMeasured": false,
+    "buildsOrTestsRun": false,
+    "localEastJoinCheck": "12own3066901 explicit-passenger ways,70source graph nodes within6km station bound; zero exact node intersections with either published3066901 branch; no national graph.",
+    "expandedCorridorCheck": "141original own-passenger ways;447reachable original nodes;446edges from105 to CRT parallel-strand node3266835238;278139.271m. No same-source-node shared with any currently published3066901/198494 branch withinSBT-toCRT component.",
+    "expandedHarbinComponentCheck": "306owncomponent186ways/880nodes/879edges,519930.369m to1038. 704owncomponent74ways/299nodes/298edges,75223.383m to exactownershiphole9798408903. Source-only targeted relation components; no nationalgraph or runtime claims."
+  },
+  "localEastJoinReview": {
+    "question": "Can the genuine own3066901 path throughIII rejoin any existing outgoing published3066901 source node farther east, without moving a station anchor or switching strands?",
+    "scope": "Original3066901 member ways only; exact node adjacency; active explicit passenger main track; no westward path before switch105; within6km of station marker;80wayhardcap. Published node identities from3066901 own sourceIntervals only.",
+    "publishedSources": "app/public/rail/cn-2025.sources.json#/byLine/cn-osm-relation-3066901 and cn-osm-relation-3066901-branch-2 sourceIntervals; only these own306 line intervals inspected for node identity intersection.",
+    "publishedVIIReference": {
+      "lineId": "cn-osm-relation-3066901",
+      "sourceIntervalIndex": 10,
+      "sourceIntervalEndpointNodeIds": [
+        6493821237,
+        12640351644
+      ],
+      "eastOfVIIWayIdsAlreadyPublished": [
+        1364948089,
+        1364948100
+      ]
+    },
+    "sourceWaysRead": 12,
+    "boundedGraphNodeCount": 70,
+    "exactPublishedOwn306NodeIntersection": null,
+    "ownEastStrandWayVersions": {
+      "1365210397": 2,
+      "1365210404": 2,
+      "471447912": 19,
+      "1364948087": 3,
+      "1364948098": 2,
+      "471497352": 10,
+      "1350369857": 2,
+      "471497353": 11,
+      "471497354": 9,
+      "471497355": 9,
+      "471497356": 9,
+      "1348696018": 3
+    },
+    "furthestReachableLocalEndpoint": {
+      "id": 4656538952,
+      "coordinate": [
+        123.4692166,
+        41.8603915
+      ],
+      "version": 2,
+      "tags": {},
+      "distanceAlongOriginalPathMetres": 7786.06858550506
+    },
+    "pathToThatEndpoint": {
+      "nodeIds": [
+        12640376454,
+        12642538656,
+        12642538664,
+        12640376416,
+        12640376410,
+        12640376385,
+        12640376384,
+        12640376262,
+        12640376701,
+        12640376702,
+        12640376703,
+        12640376704,
+        12640376705,
+        12640376706,
+        12640351645,
+        12640376707,
+        12640376708,
+        12640376709,
+        12640376376,
+        12640376311,
+        12640376710,
+        12640376711,
+        12640376712,
+        12640376713,
+        12640376734,
+        12640376436,
+        12640376437,
+        12640376449,
+        12640376648,
+        12640376649,
+        12640376650,
+        12640376651,
+        12640376652,
+        12640376653,
+        12640376654,
+        12640376655,
+        4655942180,
+        4656538936,
+        4656538935,
+        4656538934,
+        4656538933,
+        4656538932,
+        4656538931,
+        4656538930,
+        4656538929,
+        4656538957,
+        4656538958,
+        4656538951,
+        4656538950,
+        4656538949,
+        4656538948,
+        4656538947,
+        4656538946,
+        4656538945,
+        4656538944,
+        4656538943,
+        4656538942,
+        4656538941,
+        4656538940,
+        4656538939,
+        4656538938,
+        4656538959,
+        4656538960,
+        4656538961,
+        4656538963,
+        4656538956,
+        4656538955,
+        4656538954,
+        4656538953,
+        4656538952
+      ],
+      "edgeWayIds": [
+        1365210397,
+        1365210404,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        471497352,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        471497353,
+        471497353,
+        471497354,
+        471497355,
+        471497356,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018
+      ],
+      "coordinates": [
+        [
+          123.4133092,
+          41.8124676
+        ],
+        [
+          123.4151682,
+          41.8129175
+        ],
+        [
+          123.4157323,
+          41.8130541
+        ],
+        [
+          123.4185534,
+          41.8137368
+        ],
+        [
+          123.4197095,
+          41.8140167
+        ],
+        [
+          123.4200493,
+          41.8140988
+        ],
+        [
+          123.4211508,
+          41.8143654
+        ],
+        [
+          123.4232353,
+          41.8148698
+        ],
+        [
+          123.4261622,
+          41.8155782
+        ],
+        [
+          123.4266336,
+          41.8156982
+        ],
+        [
+          123.4268814,
+          41.8157653
+        ],
+        [
+          123.427502,
+          41.8159454
+        ],
+        [
+          123.4281605,
+          41.816155
+        ],
+        [
+          123.4286374,
+          41.8163138
+        ],
+        [
+          123.4298107,
+          41.8167297
+        ],
+        [
+          123.4314943,
+          41.8173264
+        ],
+        [
+          123.4319098,
+          41.8174789
+        ],
+        [
+          123.4327972,
+          41.8178195
+        ],
+        [
+          123.4348353,
+          41.8186263
+        ],
+        [
+          123.4368441,
+          41.8194215
+        ],
+        [
+          123.4373132,
+          41.8196072
+        ],
+        [
+          123.4376911,
+          41.8197473
+        ],
+        [
+          123.4381225,
+          41.8198916
+        ],
+        [
+          123.4384211,
+          41.8199846
+        ],
+        [
+          123.4404387,
+          41.8205504
+        ],
+        [
+          123.4417588,
+          41.8209207
+        ],
+        [
+          123.4423339,
+          41.821082
+        ],
+        [
+          123.4432515,
+          41.8213394
+        ],
+        [
+          123.4450431,
+          41.8218419
+        ],
+        [
+          123.4452437,
+          41.8219027
+        ],
+        [
+          123.4456861,
+          41.8220476
+        ],
+        [
+          123.445908,
+          41.8221259
+        ],
+        [
+          123.4461323,
+          41.8222106
+        ],
+        [
+          123.4465429,
+          41.8223769
+        ],
+        [
+          123.4467807,
+          41.8224801
+        ],
+        [
+          123.4471897,
+          41.8226691
+        ],
+        [
+          123.451153,
+          41.8245733
+        ],
+        [
+          123.4520546,
+          41.8250536
+        ],
+        [
+          123.4527234,
+          41.8254573
+        ],
+        [
+          123.4531285,
+          41.8257175
+        ],
+        [
+          123.453479,
+          41.8259617
+        ],
+        [
+          123.4539094,
+          41.8262753
+        ],
+        [
+          123.4542952,
+          41.8265893
+        ],
+        [
+          123.4554253,
+          41.8275899
+        ],
+        [
+          123.4561217,
+          41.8281872
+        ],
+        [
+          123.4576641,
+          41.8296088
+        ],
+        [
+          123.458139,
+          41.8301083
+        ],
+        [
+          123.4588017,
+          41.8308468
+        ],
+        [
+          123.4593322,
+          41.831471
+        ],
+        [
+          123.4603272,
+          41.8328405
+        ],
+        [
+          123.4607059,
+          41.8334734
+        ],
+        [
+          123.4609382,
+          41.8338726
+        ],
+        [
+          123.4610985,
+          41.8341602
+        ],
+        [
+          123.46132,
+          41.8345999
+        ],
+        [
+          123.4615727,
+          41.8351035
+        ],
+        [
+          123.4617975,
+          41.8356247
+        ],
+        [
+          123.4620282,
+          41.8361978
+        ],
+        [
+          123.4621731,
+          41.8365828
+        ],
+        [
+          123.4622369,
+          41.8367805
+        ],
+        [
+          123.4623993,
+          41.8372965
+        ],
+        [
+          123.4625595,
+          41.8378383
+        ],
+        [
+          123.4658048,
+          41.8486368
+        ],
+        [
+          123.4659652,
+          41.8491617
+        ],
+        [
+          123.4676168,
+          41.853965
+        ],
+        [
+          123.4678275,
+          41.8546573
+        ],
+        [
+          123.4681954,
+          41.8557395
+        ],
+        [
+          123.4684802,
+          41.8568197
+        ],
+        [
+          123.4688322,
+          41.8582509
+        ],
+        [
+          123.469048,
+          41.8594308
+        ],
+        [
+          123.4692166,
+          41.8603915
+        ]
+      ],
+      "nodeVersions": {
+        "12640376454": 1,
+        "12642538656": 1,
+        "12642538664": 1,
+        "12640376416": 1,
+        "12640376410": 1,
+        "12640376385": 1,
+        "12640376384": 1,
+        "12640376262": 1,
+        "12640376701": 1,
+        "12640376702": 1,
+        "12640376703": 1,
+        "12640376704": 1,
+        "12640376705": 1,
+        "12640376706": 1,
+        "12640351645": 1,
+        "12640376707": 1,
+        "12640376708": 1,
+        "12640376709": 1,
+        "12640376376": 1,
+        "12640376311": 1,
+        "12640376710": 1,
+        "12640376711": 1,
+        "12640376712": 1,
+        "12640376713": 1,
+        "12640376734": 1,
+        "12640376436": 1,
+        "12640376437": 1,
+        "12640376449": 1,
+        "12640376648": 1,
+        "12640376649": 1,
+        "12640376650": 1,
+        "12640376651": 1,
+        "12640376652": 1,
+        "12640376653": 1,
+        "12640376654": 1,
+        "12640376655": 1,
+        "4655942180": 3,
+        "4656538936": 1,
+        "4656538935": 1,
+        "4656538934": 1,
+        "4656538933": 1,
+        "4656538932": 1,
+        "4656538931": 1,
+        "4656538930": 1,
+        "4656538929": 1,
+        "4656538957": 1,
+        "4656538958": 1,
+        "4656538951": 1,
+        "4656538950": 1,
+        "4656538949": 1,
+        "4656538948": 1,
+        "4656538947": 1,
+        "4656538946": 1,
+        "4656538945": 1,
+        "4656538944": 1,
+        "4656538943": 1,
+        "4656538942": 1,
+        "4656538941": 1,
+        "4656538940": 1,
+        "4656538939": 1,
+        "4656538938": 1,
+        "4656538959": 1,
+        "4656538960": 1,
+        "4656538961": 2,
+        "4656538963": 2,
+        "4656538956": 2,
+        "4656538955": 2,
+        "4656538954": 2,
+        "4656538953": 2,
+        "4656538952": 2
+      },
+      "wayVersions": {
+        "1365210397": 2,
+        "1365210404": 2,
+        "471447912": 19,
+        "1364948087": 3,
+        "1364948098": 2,
+        "471497352": 10,
+        "1350369857": 2,
+        "471497353": 11,
+        "471497354": 9,
+        "471497355": 9,
+        "471497356": 9,
+        "1348696018": 3
+      }
+    },
+    "boundStop": "Own mainline1348696018 continues beyond6km from the station marker; its outside-bound edges were not traversed. No distant crossovers, neighboring station or whole3066901 graph investigated.",
+    "conclusion": "No station-local same-node eastjoin found. An owned physical extension toIII alone does not connect the105 arrival to currentVII outgoing geometry. No admissible short complete-boundary manifest proposed. This is bounded negative evidence, not proof that the two mainline strands never meet anywhere."
+  },
+  "expandedSBTToCRTCorridorReview": {
+    "scope": "One targeted3066901 original-node component trace from switch105 towardCRT only (41.80<=lat<=43.879, switch105lon<=lon<=125.25), using explicitly passenger active main ways, rejecting crossovers/spurs. Stop as any exact published3066901/198494 node becomes reachable.600wayhardcap. No national graph.",
+    "eligibleSourceWayCount": 141,
+    "eligibleReachableNodeCount": 447,
+    "traversalExhaustedWithinCorridor": true,
+    "wayHardcapReached": false,
+    "publishedNodeIntersection": null,
+    "minimalCompleteGapProposal": null,
+    "sourceRelation": {
+      "id": 3066901,
+      "version": 81
+    },
+    "originalPathToCRTParallelStrand": {
+      "nodeIds": [
+        12640376454,
+        12642538656,
+        12642538664,
+        12640376416,
+        12640376410,
+        12640376385,
+        12640376384,
+        12640376262,
+        12640376701,
+        12640376702,
+        12640376703,
+        12640376704,
+        12640376705,
+        12640376706,
+        12640351645,
+        12640376707,
+        12640376708,
+        12640376709,
+        12640376376,
+        12640376311,
+        12640376710,
+        12640376711,
+        12640376712,
+        12640376713,
+        12640376734,
+        12640376436,
+        12640376437,
+        12640376449,
+        12640376648,
+        12640376649,
+        12640376650,
+        12640376651,
+        12640376652,
+        12640376653,
+        12640376654,
+        12640376655,
+        4655942180,
+        4656538936,
+        4656538935,
+        4656538934,
+        4656538933,
+        4656538932,
+        4656538931,
+        4656538930,
+        4656538929,
+        4656538957,
+        4656538958,
+        4656538951,
+        4656538950,
+        4656538949,
+        4656538948,
+        4656538947,
+        4656538946,
+        4656538945,
+        4656538944,
+        4656538943,
+        4656538942,
+        4656538941,
+        4656538940,
+        4656538939,
+        4656538938,
+        4656538959,
+        4656538960,
+        4656538961,
+        4656538963,
+        4656538956,
+        4656538955,
+        4656538954,
+        4656538953,
+        4656538952,
+        11931191207,
+        4656538962,
+        12475621494,
+        12475621493,
+        12475621492,
+        12475621491,
+        12475621490,
+        12475621489,
+        12475621488,
+        12475621487,
+        12475621486,
+        12475621485,
+        12475621484,
+        12475621483,
+        12475621482,
+        12475621481,
+        12475621480,
+        12475621479,
+        12475621478,
+        12475621477,
+        12475621476,
+        12475621475,
+        12475621474,
+        12475621473,
+        12475621472,
+        12475621471,
+        12475621470,
+        12475621469,
+        12475621468,
+        12475621467,
+        12475621466,
+        12475621558,
+        12475621406,
+        12475621405,
+        12475621550,
+        12475621442,
+        12475621441,
+        12475621440,
+        12475621439,
+        12475621438,
+        12475621437,
+        12475621436,
+        12475621435,
+        12475621434,
+        12475621433,
+        12475621432,
+        12475621431,
+        12475621430,
+        12475621429,
+        12475621428,
+        12475621427,
+        12475621426,
+        12475621425,
+        12475621424,
+        12475621423,
+        12475621422,
+        12475621421,
+        12475621420,
+        12475621419,
+        12475621418,
+        12475621417,
+        12475621416,
+        12475621415,
+        12475621414,
+        12475621413,
+        12475621412,
+        12475621411,
+        12475621410,
+        12475621409,
+        12475621408,
+        12475621407,
+        12475621549,
+        12475621404,
+        12475621555,
+        12475621464,
+        12475621463,
+        12475621462,
+        12475621461,
+        12475621460,
+        12475621459,
+        12475621458,
+        12475621457,
+        12475621456,
+        12475621554,
+        12475621455,
+        12475621454,
+        12475621553,
+        12475621552,
+        12475621453,
+        12475621452,
+        12475621451,
+        12475621450,
+        12475621449,
+        12475621551,
+        12475621448,
+        12475621447,
+        12475621446,
+        12475621445,
+        12475621444,
+        12475621443,
+        12475621556,
+        12475621465,
+        12475621557,
+        12475621402,
+        12475621544,
+        12475621540,
+        12475621546,
+        12475621545,
+        12475621542,
+        12475621543,
+        12475621548,
+        12475621403,
+        12475621547,
+        12475621401,
+        12475621400,
+        12475621399,
+        12475621398,
+        12475621397,
+        12475621396,
+        12475621395,
+        12475621394,
+        12475621393,
+        12475621392,
+        12475621541,
+        12475621391,
+        12475621390,
+        12475621389,
+        12475621388,
+        12475621539,
+        12475621366,
+        12475621365,
+        12475621364,
+        12475621363,
+        12475621501,
+        12475621511,
+        12475621380,
+        12475621510,
+        12475621509,
+        12475621508,
+        12475621379,
+        12475621378,
+        12475621507,
+        12475621504,
+        12475621377,
+        12475621503,
+        12475621354,
+        12475621353,
+        12475621352,
+        12475621498,
+        12475621502,
+        12475621376,
+        12475621375,
+        12475621374,
+        12475621373,
+        12475621372,
+        12475621371,
+        12475621370,
+        12475621369,
+        12475621368,
+        12475621367,
+        12475621513,
+        12475621515,
+        12475621382,
+        12475621381,
+        12475621514,
+        13800922912,
+        13800922934,
+        13800922970,
+        13800922929,
+        13800922942,
+        12475621512,
+        12475621506,
+        12475621505,
+        12475621362,
+        12475621361,
+        12475621360,
+        12475621359,
+        12475621358,
+        12475621357,
+        12475621356,
+        12475621355,
+        12475621499,
+        12475621351,
+        12475621350,
+        12475621349,
+        12475621500,
+        12475621538,
+        12475621537,
+        12475621527,
+        12475621526,
+        12475621525,
+        12475621387,
+        12475621524,
+        12475621528,
+        12475621536,
+        12475621535,
+        12475621523,
+        12475621530,
+        12475621529,
+        12475621519,
+        12475621532,
+        12475621531,
+        12475621534,
+        12475621533,
+        12475621517,
+        12475621518,
+        12475621383,
+        12475621522,
+        12475621386,
+        12475621385,
+        12475621521,
+        12475621384,
+        12475621520,
+        12475621516,
+        12475621497,
+        12475621348,
+        12475621347,
+        12475621346,
+        12475621345,
+        12475621344,
+        12475621343,
+        12475621342,
+        12475621496,
+        12475621341,
+        12475621495,
+        6586649498,
+        6586649497,
+        6586649489,
+        6586649488,
+        6586649483,
+        10912418693,
+        13911018307,
+        13911018308,
+        13911018310,
+        13911018312,
+        13911018315,
+        13911018314,
+        12475621217,
+        12475621216,
+        12475621215,
+        12475621214,
+        12475621282,
+        12475621218,
+        12475621289,
+        12475621288,
+        12475621290,
+        12475621291,
+        12475621293,
+        12475621292,
+        12475621285,
+        12475621284,
+        12475621295,
+        12475621294,
+        12475621287,
+        12475621286,
+        12475621283,
+        12475621219,
+        12475621297,
+        12475621221,
+        12475621296,
+        12475621220,
+        12475621306,
+        12475621225,
+        12475621305,
+        12475621222,
+        12475621302,
+        12475621224,
+        12475621304,
+        12475621303,
+        12475621299,
+        12475621298,
+        12475621301,
+        12475621223,
+        12475621300,
+        12475621308,
+        12475621307,
+        12475621313,
+        12475621312,
+        12475621228,
+        12475621311,
+        12475621310,
+        12475621309,
+        12475621318,
+        12475621317,
+        12475621316,
+        12475621227,
+        12475621226,
+        12475621315,
+        12475621314,
+        12475621329,
+        12475621244,
+        12475621243,
+        12475621242,
+        12475621241,
+        12475621328,
+        12475621240,
+        14254895713,
+        14254895695,
+        12475621327,
+        12475621326,
+        12475621325,
+        12475621321,
+        12475621320,
+        12475621236,
+        12475621235,
+        12475621234,
+        12475621233,
+        12475621232,
+        12475621231,
+        12475621230,
+        12475621229,
+        12475621319,
+        12475621322,
+        12475621323,
+        12475621237,
+        12475621324,
+        12475621239,
+        12475621238,
+        12475621336,
+        12475621264,
+        12475621263,
+        12475621335,
+        12475621262,
+        12475621334,
+        12475621261,
+        12475621333,
+        12475621332,
+        12475621331,
+        12475621260,
+        12475621259,
+        12475621258,
+        12475621257,
+        12475621256,
+        12475621255,
+        12475621254,
+        12475621253,
+        12475621252,
+        12475621251,
+        12475621250,
+        12475621249,
+        12475621248,
+        12475621247,
+        12475621246,
+        12475621245,
+        12475621330,
+        12475621337,
+        12475621281,
+        12475621280,
+        12475621279,
+        12475621278,
+        12475621277,
+        12475621276,
+        12475621275,
+        12475621274,
+        12475621273,
+        12475621272,
+        12475621271,
+        12475621270,
+        12475621269,
+        12475621268,
+        12475621267,
+        12475621266,
+        12475621265,
+        12475621338,
+        12475621340,
+        12475621339,
+        6403386179,
+        3306192248,
+        3306192249,
+        3306192250,
+        6343313072,
+        3306192251,
+        3306192253,
+        6403386172,
+        7909806697,
+        3306192276,
+        3266835238
+      ],
+      "edgeWayIds": [
+        1365210397,
+        1365210404,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        471447912,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948087,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        1364948098,
+        471497352,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        1350369857,
+        471497353,
+        471497353,
+        471497354,
+        471497355,
+        471497356,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696018,
+        1348696010,
+        1348696010,
+        1348696010,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696011,
+        1348696009,
+        1348696009,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696016,
+        1348696015,
+        1348696015,
+        1348696015,
+        1348696014,
+        1348696013,
+        1348696013,
+        1348696013,
+        1348696013,
+        1348696013,
+        1348696013,
+        1348696012,
+        1348696012,
+        1348696012,
+        1348696012,
+        1348696012,
+        1348696012,
+        1348696012,
+        1348696017,
+        1348696017,
+        1348696006,
+        1348696006,
+        1348696000,
+        1348696001,
+        1348696007,
+        1348696003,
+        1348696004,
+        1348696005,
+        1348696008,
+        1348696008,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348696002,
+        1348695999,
+        1348695999,
+        1348695999,
+        1348695999,
+        1348695999,
+        1348695966,
+        1348695966,
+        1348695966,
+        1348695966,
+        1348695966,
+        1348695965,
+        1348695973,
+        1348695973,
+        1348695972,
+        1348695968,
+        1348695971,
+        1348695971,
+        1348695971,
+        1348695961,
+        1348695969,
+        1348695969,
+        1348695962,
+        1348695962,
+        1348695962,
+        1348695962,
+        1348695960,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695967,
+        1348695975,
+        1348695976,
+        1348695976,
+        1348695976,
+        1348695974,
+        1348695974,
+        1348695974,
+        1348695974,
+        1348695974,
+        1348695974,
+        1348695959,
+        1348695970,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695963,
+        1348695958,
+        1348695958,
+        1348695958,
+        1348695958,
+        1348695964,
+        1348695998,
+        1348695988,
+        1348695992,
+        1348695977,
+        1348695991,
+        1348695991,
+        1348695990,
+        1348695993,
+        1348695997,
+        1348695989,
+        1348695980,
+        1348695994,
+        1348695979,
+        1348695984,
+        1348695995,
+        1348695985,
+        1348695996,
+        1348695982,
+        1348695978,
+        1348695983,
+        1348695983,
+        1348695987,
+        1348695987,
+        1348695987,
+        1348695986,
+        1348695986,
+        1348695981,
+        1348695957,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695956,
+        1348695955,
+        1348695955,
+        701330495,
+        701330495,
+        701330495,
+        701330493,
+        701330489,
+        701330489,
+        1174420379,
+        1174420379,
+        1174420379,
+        1174420379,
+        1174420379,
+        1348695896,
+        1348695896,
+        1348695896,
+        1348695896,
+        1348695896,
+        1348695896,
+        1348695897,
+        1348695897,
+        1348695906,
+        1348695905,
+        1348695907,
+        1348695908,
+        1348695909,
+        1348695902,
+        1348695901,
+        1348695900,
+        1348695911,
+        1348695904,
+        1348695903,
+        1348695899,
+        1348695898,
+        1348695898,
+        1348695912,
+        1348695912,
+        1348695910,
+        1348695910,
+        1348695921,
+        1348695921,
+        1348695913,
+        1348695913,
+        1348695919,
+        1348695919,
+        1348695920,
+        1348695916,
+        1348695914,
+        1348695915,
+        1348695918,
+        1348695918,
+        1348695917,
+        1348695923,
+        1348695922,
+        1348695930,
+        1348695927,
+        1348695927,
+        1348695929,
+        1348695928,
+        1348695926,
+        1348695933,
+        1348695932,
+        1348695924,
+        1348695924,
+        1348695924,
+        1348695931,
+        1348695925,
+        1348695944,
+        1348695944,
+        1348695944,
+        1348695944,
+        1348695944,
+        1348695943,
+        1348695943,
+        1348695943,
+        1348695943,
+        1348695940,
+        1348695942,
+        1348695935,
+        1348695937,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695936,
+        1348695934,
+        1348695938,
+        1348695939,
+        1348695939,
+        1348695941,
+        1348695941,
+        1348695941,
+        1348695951,
+        1348695951,
+        1348695951,
+        1348695950,
+        1348695950,
+        1348695948,
+        1348695948,
+        1348695949,
+        1348695945,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695947,
+        1348695946,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695952,
+        1348695953,
+        1348695954,
+        323849163,
+        323849163,
+        323849163,
+        323849163,
+        323849163,
+        677458176,
+        677458176,
+        677458176,
+        677458176,
+        677458176,
+        320182729
+      ],
+      "coordinates": [
+        [
+          123.4133092,
+          41.8124676
+        ],
+        [
+          123.4151682,
+          41.8129175
+        ],
+        [
+          123.4157323,
+          41.8130541
+        ],
+        [
+          123.4185534,
+          41.8137368
+        ],
+        [
+          123.4197095,
+          41.8140167
+        ],
+        [
+          123.4200493,
+          41.8140988
+        ],
+        [
+          123.4211508,
+          41.8143654
+        ],
+        [
+          123.4232353,
+          41.8148698
+        ],
+        [
+          123.4261622,
+          41.8155782
+        ],
+        [
+          123.4266336,
+          41.8156982
+        ],
+        [
+          123.4268814,
+          41.8157653
+        ],
+        [
+          123.427502,
+          41.8159454
+        ],
+        [
+          123.4281605,
+          41.816155
+        ],
+        [
+          123.4286374,
+          41.8163138
+        ],
+        [
+          123.4298107,
+          41.8167297
+        ],
+        [
+          123.4314943,
+          41.8173264
+        ],
+        [
+          123.4319098,
+          41.8174789
+        ],
+        [
+          123.4327972,
+          41.8178195
+        ],
+        [
+          123.4348353,
+          41.8186263
+        ],
+        [
+          123.4368441,
+          41.8194215
+        ],
+        [
+          123.4373132,
+          41.8196072
+        ],
+        [
+          123.4376911,
+          41.8197473
+        ],
+        [
+          123.4381225,
+          41.8198916
+        ],
+        [
+          123.4384211,
+          41.8199846
+        ],
+        [
+          123.4404387,
+          41.8205504
+        ],
+        [
+          123.4417588,
+          41.8209207
+        ],
+        [
+          123.4423339,
+          41.821082
+        ],
+        [
+          123.4432515,
+          41.8213394
+        ],
+        [
+          123.4450431,
+          41.8218419
+        ],
+        [
+          123.4452437,
+          41.8219027
+        ],
+        [
+          123.4456861,
+          41.8220476
+        ],
+        [
+          123.445908,
+          41.8221259
+        ],
+        [
+          123.4461323,
+          41.8222106
+        ],
+        [
+          123.4465429,
+          41.8223769
+        ],
+        [
+          123.4467807,
+          41.8224801
+        ],
+        [
+          123.4471897,
+          41.8226691
+        ],
+        [
+          123.451153,
+          41.8245733
+        ],
+        [
+          123.4520546,
+          41.8250536
+        ],
+        [
+          123.4527234,
+          41.8254573
+        ],
+        [
+          123.4531285,
+          41.8257175
+        ],
+        [
+          123.453479,
+          41.8259617
+        ],
+        [
+          123.4539094,
+          41.8262753
+        ],
+        [
+          123.4542952,
+          41.8265893
+        ],
+        [
+          123.4554253,
+          41.8275899
+        ],
+        [
+          123.4561217,
+          41.8281872
+        ],
+        [
+          123.4576641,
+          41.8296088
+        ],
+        [
+          123.458139,
+          41.8301083
+        ],
+        [
+          123.4588017,
+          41.8308468
+        ],
+        [
+          123.4593322,
+          41.831471
+        ],
+        [
+          123.4603272,
+          41.8328405
+        ],
+        [
+          123.4607059,
+          41.8334734
+        ],
+        [
+          123.4609382,
+          41.8338726
+        ],
+        [
+          123.4610985,
+          41.8341602
+        ],
+        [
+          123.46132,
+          41.8345999
+        ],
+        [
+          123.4615727,
+          41.8351035
+        ],
+        [
+          123.4617975,
+          41.8356247
+        ],
+        [
+          123.4620282,
+          41.8361978
+        ],
+        [
+          123.4621731,
+          41.8365828
+        ],
+        [
+          123.4622369,
+          41.8367805
+        ],
+        [
+          123.4623993,
+          41.8372965
+        ],
+        [
+          123.4625595,
+          41.8378383
+        ],
+        [
+          123.4658048,
+          41.8486368
+        ],
+        [
+          123.4659652,
+          41.8491617
+        ],
+        [
+          123.4676168,
+          41.853965
+        ],
+        [
+          123.4678275,
+          41.8546573
+        ],
+        [
+          123.4681954,
+          41.8557395
+        ],
+        [
+          123.4684802,
+          41.8568197
+        ],
+        [
+          123.4688322,
+          41.8582509
+        ],
+        [
+          123.469048,
+          41.8594308
+        ],
+        [
+          123.4692166,
+          41.8603915
+        ],
+        [
+          123.469505,
+          41.8628513
+        ],
+        [
+          123.4698125,
+          41.8656768
+        ],
+        [
+          123.4700421,
+          41.8683832
+        ],
+        [
+          123.470288,
+          41.8705184
+        ],
+        [
+          123.4705046,
+          41.8720014
+        ],
+        [
+          123.4708649,
+          41.8738777
+        ],
+        [
+          123.471247,
+          41.8757098
+        ],
+        [
+          123.47169,
+          41.8777616
+        ],
+        [
+          123.4719213,
+          41.8788441
+        ],
+        [
+          123.4722189,
+          41.8802789
+        ],
+        [
+          123.4724978,
+          41.8816912
+        ],
+        [
+          123.4728006,
+          41.8834431
+        ],
+        [
+          123.473107,
+          41.8857768
+        ],
+        [
+          123.4733055,
+          41.8874005
+        ],
+        [
+          123.4733476,
+          41.8887994
+        ],
+        [
+          123.4734252,
+          41.891334
+        ],
+        [
+          123.4734019,
+          41.8933455
+        ],
+        [
+          123.4732913,
+          41.8955966
+        ],
+        [
+          123.4725045,
+          41.9054125
+        ],
+        [
+          123.4722775,
+          41.9075031
+        ],
+        [
+          123.4718876,
+          41.9101682
+        ],
+        [
+          123.4712779,
+          41.9132807
+        ],
+        [
+          123.4699876,
+          41.9182735
+        ],
+        [
+          123.4672978,
+          41.9268747
+        ],
+        [
+          123.4654179,
+          41.9333917
+        ],
+        [
+          123.4648782,
+          41.9357304
+        ],
+        [
+          123.4643704,
+          41.9385826
+        ],
+        [
+          123.4639698,
+          41.9412963
+        ],
+        [
+          123.4637318,
+          41.9436124
+        ],
+        [
+          123.4635505,
+          41.9464501
+        ],
+        [
+          123.4634707,
+          41.947995
+        ],
+        [
+          123.4638094,
+          41.9641994
+        ],
+        [
+          123.4639328,
+          41.9698512
+        ],
+        [
+          123.4640133,
+          41.9736085
+        ],
+        [
+          123.4640124,
+          41.9758819
+        ],
+        [
+          123.4646524,
+          42.0054679
+        ],
+        [
+          123.4650181,
+          42.0216886
+        ],
+        [
+          123.4651039,
+          42.0244935
+        ],
+        [
+          123.4652648,
+          42.0271379
+        ],
+        [
+          123.4655542,
+          42.0295192
+        ],
+        [
+          123.4660048,
+          42.0324111
+        ],
+        [
+          123.4664336,
+          42.034808
+        ],
+        [
+          123.4671197,
+          42.0373957
+        ],
+        [
+          123.4678166,
+          42.0396651
+        ],
+        [
+          123.4686315,
+          42.0419347
+        ],
+        [
+          123.4694142,
+          42.0439333
+        ],
+        [
+          123.4705399,
+          42.0464569
+        ],
+        [
+          123.4723091,
+          42.0497615
+        ],
+        [
+          123.4735208,
+          42.0518874
+        ],
+        [
+          123.475247,
+          42.054634
+        ],
+        [
+          123.4772736,
+          42.0574759
+        ],
+        [
+          123.4788281,
+          42.0594977
+        ],
+        [
+          123.4809405,
+          42.0619895
+        ],
+        [
+          123.4833637,
+          42.064664
+        ],
+        [
+          123.4847437,
+          42.0660152
+        ],
+        [
+          123.4867305,
+          42.0678957
+        ],
+        [
+          123.4882443,
+          42.0692602
+        ],
+        [
+          123.490831,
+          42.0714435
+        ],
+        [
+          123.4933126,
+          42.0733636
+        ],
+        [
+          123.4959647,
+          42.0752771
+        ],
+        [
+          123.4980128,
+          42.0766959
+        ],
+        [
+          123.5078837,
+          42.0835575
+        ],
+        [
+          123.5294113,
+          42.0984412
+        ],
+        [
+          123.570443,
+          42.1268897
+        ],
+        [
+          123.5774745,
+          42.1317485
+        ],
+        [
+          123.5847509,
+          42.1369836
+        ],
+        [
+          123.5888147,
+          42.14029
+        ],
+        [
+          123.5910084,
+          42.1421609
+        ],
+        [
+          123.592978,
+          42.1440119
+        ],
+        [
+          123.5956257,
+          42.1465872
+        ],
+        [
+          123.5984382,
+          42.1495973
+        ],
+        [
+          123.6005787,
+          42.1520737
+        ],
+        [
+          123.6023435,
+          42.1541873
+        ],
+        [
+          123.6046477,
+          42.1569984
+        ],
+        [
+          123.6062342,
+          42.1588945
+        ],
+        [
+          123.6113071,
+          42.1650801
+        ],
+        [
+          123.615534,
+          42.1702194
+        ],
+        [
+          123.6194629,
+          42.1750141
+        ],
+        [
+          123.6230567,
+          42.1793527
+        ],
+        [
+          123.628047,
+          42.185423
+        ],
+        [
+          123.6325253,
+          42.1908416
+        ],
+        [
+          123.6379159,
+          42.1973868
+        ],
+        [
+          123.6439213,
+          42.204649
+        ],
+        [
+          123.6473829,
+          42.2089404
+        ],
+        [
+          123.6495572,
+          42.2115567
+        ],
+        [
+          123.6548357,
+          42.2180095
+        ],
+        [
+          123.6573293,
+          42.2209924
+        ],
+        [
+          123.6577234,
+          42.2214571
+        ],
+        [
+          123.6593321,
+          42.2233763
+        ],
+        [
+          123.6675765,
+          42.2333209
+        ],
+        [
+          123.6695712,
+          42.2357268
+        ],
+        [
+          123.6721175,
+          42.2388608
+        ],
+        [
+          123.6729601,
+          42.2398979
+        ],
+        [
+          123.6777967,
+          42.2457613
+        ],
+        [
+          123.6836035,
+          42.2527196
+        ],
+        [
+          123.6900158,
+          42.2604618
+        ],
+        [
+          123.7006404,
+          42.2733699
+        ],
+        [
+          123.7098702,
+          42.2845233
+        ],
+        [
+          123.7193917,
+          42.2960858
+        ],
+        [
+          123.7215625,
+          42.2985866
+        ],
+        [
+          123.734581,
+          42.3144607
+        ],
+        [
+          123.7418528,
+          42.3232933
+        ],
+        [
+          123.7557642,
+          42.340018
+        ],
+        [
+          123.7615884,
+          42.346873
+        ],
+        [
+          123.7692447,
+          42.3552941
+        ],
+        [
+          123.7719067,
+          42.3582246
+        ],
+        [
+          123.7751592,
+          42.3617276
+        ],
+        [
+          123.7843892,
+          42.3717329
+        ],
+        [
+          123.7862521,
+          42.3737549
+        ],
+        [
+          123.8027904,
+          42.391688
+        ],
+        [
+          123.8048953,
+          42.3939447
+        ],
+        [
+          123.8067539,
+          42.3960223
+        ],
+        [
+          123.8083373,
+          42.3977135
+        ],
+        [
+          123.8100596,
+          42.3994817
+        ],
+        [
+          123.8109896,
+          42.4004803
+        ],
+        [
+          123.8133247,
+          42.4029875
+        ],
+        [
+          123.8153305,
+          42.4051758
+        ],
+        [
+          123.8198271,
+          42.4100814
+        ],
+        [
+          123.8249025,
+          42.4156179
+        ],
+        [
+          123.8279259,
+          42.418916
+        ],
+        [
+          123.8309545,
+          42.4221912
+        ],
+        [
+          123.8369187,
+          42.4286404
+        ],
+        [
+          123.8391709,
+          42.4310755
+        ],
+        [
+          123.8453245,
+          42.4377408
+        ],
+        [
+          123.8497738,
+          42.4429989
+        ],
+        [
+          123.8524737,
+          42.4466897
+        ],
+        [
+          123.8556525,
+          42.4515677
+        ],
+        [
+          123.8576287,
+          42.4548947
+        ],
+        [
+          123.8633893,
+          42.4647556
+        ],
+        [
+          123.8662104,
+          42.4695409
+        ],
+        [
+          123.8715011,
+          42.4785142
+        ],
+        [
+          123.8822536,
+          42.4967468
+        ],
+        [
+          123.8857819,
+          42.5027364
+        ],
+        [
+          123.8970324,
+          42.521831
+        ],
+        [
+          123.9189035,
+          42.55883
+        ],
+        [
+          123.9265619,
+          42.571791
+        ],
+        [
+          123.9445956,
+          42.6024491
+        ],
+        [
+          123.947266,
+          42.6069328
+        ],
+        [
+          123.9517961,
+          42.6158757
+        ],
+        [
+          123.9552691,
+          42.6229443
+        ],
+        [
+          123.9629983,
+          42.6384403
+        ],
+        [
+          123.9693449,
+          42.6515309
+        ],
+        [
+          123.9709335,
+          42.6547218
+        ],
+        [
+          123.9749306,
+          42.662935
+        ],
+        [
+          123.9776732,
+          42.6683743
+        ],
+        [
+          123.9818728,
+          42.6766387
+        ],
+        [
+          123.9844729,
+          42.6819545
+        ],
+        [
+          123.9866434,
+          42.6859616
+        ],
+        [
+          123.9907486,
+          42.6924993
+        ],
+        [
+          123.9944882,
+          42.6974948
+        ],
+        [
+          123.9982483,
+          42.7016978
+        ],
+        [
+          123.9994517,
+          42.7031429
+        ],
+        [
+          124.0030692,
+          42.707487
+        ],
+        [
+          124.0074364,
+          42.7127308
+        ],
+        [
+          124.0161783,
+          42.7232197
+        ],
+        [
+          124.021881,
+          42.7300207
+        ],
+        [
+          124.0258533,
+          42.7347575
+        ],
+        [
+          124.0310107,
+          42.7409845
+        ],
+        [
+          124.0347401,
+          42.7454868
+        ],
+        [
+          124.0371843,
+          42.7484375
+        ],
+        [
+          124.0427049,
+          42.7550141
+        ],
+        [
+          124.0459725,
+          42.7589234
+        ],
+        [
+          124.0474623,
+          42.7606641
+        ],
+        [
+          124.0497634,
+          42.7634898
+        ],
+        [
+          124.0533382,
+          42.7677323
+        ],
+        [
+          124.0559371,
+          42.7708527
+        ],
+        [
+          124.0576633,
+          42.7730197
+        ],
+        [
+          124.0618021,
+          42.7778782
+        ],
+        [
+          124.0629623,
+          42.779312
+        ],
+        [
+          124.0637596,
+          42.7802585
+        ],
+        [
+          124.0658229,
+          42.7826585
+        ],
+        [
+          124.0780158,
+          42.7972249
+        ],
+        [
+          124.0850346,
+          42.8056793
+        ],
+        [
+          124.0889145,
+          42.8103385
+        ],
+        [
+          124.0922479,
+          42.8142435
+        ],
+        [
+          124.0953199,
+          42.8174541
+        ],
+        [
+          124.0991603,
+          42.8210207
+        ],
+        [
+          124.1017819,
+          42.8233226
+        ],
+        [
+          124.1048286,
+          42.8257254
+        ],
+        [
+          124.1069665,
+          42.8273615
+        ],
+        [
+          124.1099312,
+          42.8294348
+        ],
+        [
+          124.1289173,
+          42.8429256
+        ],
+        [
+          124.1352372,
+          42.8475575
+        ],
+        [
+          124.1382121,
+          42.8499966
+        ],
+        [
+          124.140695,
+          42.8521788
+        ],
+        [
+          124.1514462,
+          42.8622552
+        ],
+        [
+          124.1631485,
+          42.8732302
+        ],
+        [
+          124.1920577,
+          42.9003257
+        ],
+        [
+          124.2036163,
+          42.9111672
+        ],
+        [
+          124.2133927,
+          42.9202558
+        ],
+        [
+          124.2218466,
+          42.9280899
+        ],
+        [
+          124.2252468,
+          42.9312142
+        ],
+        [
+          124.2287532,
+          42.934549
+        ],
+        [
+          124.2334941,
+          42.9390365
+        ],
+        [
+          124.2455581,
+          42.9502919
+        ],
+        [
+          124.2564038,
+          42.9603964
+        ],
+        [
+          124.2632594,
+          42.9667853
+        ],
+        [
+          124.2693573,
+          42.972477
+        ],
+        [
+          124.2889976,
+          42.9907919
+        ],
+        [
+          124.3017609,
+          43.0026631
+        ],
+        [
+          124.3168782,
+          43.0167603
+        ],
+        [
+          124.3187642,
+          43.0185424
+        ],
+        [
+          124.3228962,
+          43.0223752
+        ],
+        [
+          124.323586,
+          43.0230213
+        ],
+        [
+          124.3297813,
+          43.0287571
+        ],
+        [
+          124.3350812,
+          43.0337045
+        ],
+        [
+          124.3420727,
+          43.0402103
+        ],
+        [
+          124.3456545,
+          43.0435416
+        ],
+        [
+          124.3552373,
+          43.0524586
+        ],
+        [
+          124.3659183,
+          43.0623674
+        ],
+        [
+          124.3851303,
+          43.080088
+        ],
+        [
+          124.3869347,
+          43.0817371
+        ],
+        [
+          124.3879508,
+          43.0827386
+        ],
+        [
+          124.3884121,
+          43.0831678
+        ],
+        [
+          124.3952935,
+          43.0895121
+        ],
+        [
+          124.4016248,
+          43.0953238
+        ],
+        [
+          124.4134751,
+          43.1062409
+        ],
+        [
+          124.4152409,
+          43.107952
+        ],
+        [
+          124.4178062,
+          43.110649
+        ],
+        [
+          124.4202512,
+          43.1134991
+        ],
+        [
+          124.4238749,
+          43.118291
+        ],
+        [
+          124.4258143,
+          43.1214243
+        ],
+        [
+          124.4304373,
+          43.129771
+        ],
+        [
+          124.4309219,
+          43.1306431
+        ],
+        [
+          124.4321218,
+          43.1329257
+        ],
+        [
+          124.4343817,
+          43.136878
+        ],
+        [
+          124.4350952,
+          43.1381756
+        ],
+        [
+          124.4358311,
+          43.1394138
+        ],
+        [
+          124.4366321,
+          43.1408469
+        ],
+        [
+          124.4373482,
+          43.1421369
+        ],
+        [
+          124.4376905,
+          43.142752
+        ],
+        [
+          124.4402835,
+          43.1472869
+        ],
+        [
+          124.4410004,
+          43.1485021
+        ],
+        [
+          124.4417032,
+          43.1497013
+        ],
+        [
+          124.4423413,
+          43.1508211
+        ],
+        [
+          124.442709,
+          43.1514665
+        ],
+        [
+          124.4441632,
+          43.1540955
+        ],
+        [
+          124.4457676,
+          43.1569577
+        ],
+        [
+          124.4480261,
+          43.1607159
+        ],
+        [
+          124.4514725,
+          43.1656046
+        ],
+        [
+          124.4548102,
+          43.1697258
+        ],
+        [
+          124.4584768,
+          43.1737823
+        ],
+        [
+          124.46209,
+          43.1774296
+        ],
+        [
+          124.4661737,
+          43.1815085
+        ],
+        [
+          124.4706096,
+          43.1858943
+        ],
+        [
+          124.4757415,
+          43.1910676
+        ],
+        [
+          124.4782242,
+          43.1935744
+        ],
+        [
+          124.4792538,
+          43.1946006
+        ],
+        [
+          124.4839923,
+          43.1993233
+        ],
+        [
+          124.4859648,
+          43.201339
+        ],
+        [
+          124.4887398,
+          43.2041155
+        ],
+        [
+          124.4896529,
+          43.2050352
+        ],
+        [
+          124.4942601,
+          43.2096482
+        ],
+        [
+          124.4953107,
+          43.2107094
+        ],
+        [
+          124.4965537,
+          43.2119426
+        ],
+        [
+          124.4975998,
+          43.2129865
+        ],
+        [
+          124.500379,
+          43.2157637
+        ],
+        [
+          124.5005856,
+          43.2159736
+        ],
+        [
+          124.506587,
+          43.2218475
+        ],
+        [
+          124.50961,
+          43.2248832
+        ],
+        [
+          124.5165597,
+          43.2318316
+        ],
+        [
+          124.5210266,
+          43.2362289
+        ],
+        [
+          124.5307396,
+          43.2459532
+        ],
+        [
+          124.5335548,
+          43.248715
+        ],
+        [
+          124.5420213,
+          43.2571817
+        ],
+        [
+          124.5471011,
+          43.2622806
+        ],
+        [
+          124.5569727,
+          43.2719292
+        ],
+        [
+          124.5593955,
+          43.2742735
+        ],
+        [
+          124.5642489,
+          43.2782529
+        ],
+        [
+          124.5686511,
+          43.2817765
+        ],
+        [
+          124.5730974,
+          43.2853352
+        ],
+        [
+          124.5799716,
+          43.2908366
+        ],
+        [
+          124.584197,
+          43.2940777
+        ],
+        [
+          124.5882755,
+          43.2974816
+        ],
+        [
+          124.597443,
+          43.304753
+        ],
+        [
+          124.5988258,
+          43.3058593
+        ],
+        [
+          124.6029966,
+          43.3091994
+        ],
+        [
+          124.6044293,
+          43.310312
+        ],
+        [
+          124.6091339,
+          43.3141397
+        ],
+        [
+          124.6168639,
+          43.3201997
+        ],
+        [
+          124.6240176,
+          43.3259017
+        ],
+        [
+          124.6270877,
+          43.3283787
+        ],
+        [
+          124.6307856,
+          43.3313073
+        ],
+        [
+          124.6554632,
+          43.3508332
+        ],
+        [
+          124.6640838,
+          43.3577234
+        ],
+        [
+          124.6740532,
+          43.3656899
+        ],
+        [
+          124.6824577,
+          43.3723055
+        ],
+        [
+          124.6915201,
+          43.3794947
+        ],
+        [
+          124.692549,
+          43.3803109
+        ],
+        [
+          124.7040783,
+          43.3893176
+        ],
+        [
+          124.7231336,
+          43.404618
+        ],
+        [
+          124.7382213,
+          43.4164407
+        ],
+        [
+          124.767491,
+          43.4395579
+        ],
+        [
+          124.7891621,
+          43.456556
+        ],
+        [
+          124.8031362,
+          43.4660263
+        ],
+        [
+          124.8052131,
+          43.4674165
+        ],
+        [
+          124.8059675,
+          43.4679207
+        ],
+        [
+          124.8140503,
+          43.4733228
+        ],
+        [
+          124.8171674,
+          43.475406
+        ],
+        [
+          124.8187497,
+          43.4764552
+        ],
+        [
+          124.8254118,
+          43.4809062
+        ],
+        [
+          124.8336932,
+          43.4864547
+        ],
+        [
+          124.8358429,
+          43.48804
+        ],
+        [
+          124.8387903,
+          43.4903544
+        ],
+        [
+          124.8411728,
+          43.4923009
+        ],
+        [
+          124.8431099,
+          43.4940211
+        ],
+        [
+          124.8444455,
+          43.4952323
+        ],
+        [
+          124.8791234,
+          43.5268428
+        ],
+        [
+          124.8811389,
+          43.5289581
+        ],
+        [
+          124.8832877,
+          43.5313071
+        ],
+        [
+          124.885281,
+          43.533834
+        ],
+        [
+          124.887352,
+          43.5366915
+        ],
+        [
+          124.8901885,
+          43.5412748
+        ],
+        [
+          124.8931745,
+          43.5467398
+        ],
+        [
+          124.8974783,
+          43.5545221
+        ],
+        [
+          124.8992331,
+          43.5581339
+        ],
+        [
+          124.9022864,
+          43.5657946
+        ],
+        [
+          124.907589,
+          43.5795221
+        ],
+        [
+          124.9096678,
+          43.5842685
+        ],
+        [
+          124.9112044,
+          43.5873864
+        ],
+        [
+          124.9130338,
+          43.5905865
+        ],
+        [
+          124.9156627,
+          43.594534
+        ],
+        [
+          124.917708,
+          43.5973148
+        ],
+        [
+          124.921751,
+          43.6023475
+        ],
+        [
+          124.9297063,
+          43.6121585
+        ],
+        [
+          124.9380961,
+          43.6225876
+        ],
+        [
+          124.9393912,
+          43.624207
+        ],
+        [
+          124.9455447,
+          43.6318285
+        ],
+        [
+          124.9623797,
+          43.6526159
+        ],
+        [
+          124.9814099,
+          43.6760703
+        ],
+        [
+          125.0007144,
+          43.6998375
+        ],
+        [
+          125.0149084,
+          43.7174132
+        ],
+        [
+          125.0174072,
+          43.7203048
+        ],
+        [
+          125.0200837,
+          43.7232205
+        ],
+        [
+          125.0222172,
+          43.7253092
+        ],
+        [
+          125.0242301,
+          43.727256
+        ],
+        [
+          125.0273329,
+          43.7301215
+        ],
+        [
+          125.0373995,
+          43.7393091
+        ],
+        [
+          125.042456,
+          43.7439467
+        ],
+        [
+          125.0454541,
+          43.7469111
+        ],
+        [
+          125.0467933,
+          43.7482962
+        ],
+        [
+          125.0486193,
+          43.7502917
+        ],
+        [
+          125.0520612,
+          43.7543443
+        ],
+        [
+          125.0556152,
+          43.7587128
+        ],
+        [
+          125.0594579,
+          43.7634363
+        ],
+        [
+          125.0731688,
+          43.7802383
+        ],
+        [
+          125.0768719,
+          43.7847491
+        ],
+        [
+          125.0833095,
+          43.7925899
+        ],
+        [
+          125.0879788,
+          43.7982763
+        ],
+        [
+          125.0919728,
+          43.80314
+        ],
+        [
+          125.0935797,
+          43.8051044
+        ],
+        [
+          125.0990625,
+          43.8118065
+        ],
+        [
+          125.1013422,
+          43.8145931
+        ],
+        [
+          125.1060957,
+          43.8203181
+        ],
+        [
+          125.1085805,
+          43.8230562
+        ],
+        [
+          125.1112482,
+          43.8257447
+        ],
+        [
+          125.1145145,
+          43.8288215
+        ],
+        [
+          125.1180838,
+          43.8317763
+        ],
+        [
+          125.1205992,
+          43.8335759
+        ],
+        [
+          125.1230002,
+          43.8352751
+        ],
+        [
+          125.1262838,
+          43.8376092
+        ],
+        [
+          125.1301811,
+          43.83992
+        ],
+        [
+          125.1406468,
+          43.845931
+        ],
+        [
+          125.1491768,
+          43.8506744
+        ],
+        [
+          125.1505241,
+          43.851444
+        ],
+        [
+          125.1542998,
+          43.8535304
+        ],
+        [
+          125.1619832,
+          43.8577214
+        ],
+        [
+          125.1695051,
+          43.8619599
+        ],
+        [
+          125.1737912,
+          43.8643364
+        ],
+        [
+          125.1771689,
+          43.8662621
+        ],
+        [
+          125.179612,
+          43.8676564
+        ],
+        [
+          125.1817606,
+          43.8688554
+        ],
+        [
+          125.1823034,
+          43.8691615
+        ],
+        [
+          125.1843032,
+          43.8702801
+        ],
+        [
+          125.1860446,
+          43.8712669
+        ],
+        [
+          125.1911057,
+          43.8741009
+        ],
+        [
+          125.1955773,
+          43.8766161
+        ]
+      ],
+      "nodeVersions": {
+        "12640376454": 1,
+        "12642538656": 1,
+        "12642538664": 1,
+        "12640376416": 1,
+        "12640376410": 1,
+        "12640376385": 1,
+        "12640376384": 1,
+        "12640376262": 1,
+        "12640376701": 1,
+        "12640376702": 1,
+        "12640376703": 1,
+        "12640376704": 1,
+        "12640376705": 1,
+        "12640376706": 1,
+        "12640351645": 1,
+        "12640376707": 1,
+        "12640376708": 1,
+        "12640376709": 1,
+        "12640376376": 1,
+        "12640376311": 1,
+        "12640376710": 1,
+        "12640376711": 1,
+        "12640376712": 1,
+        "12640376713": 1,
+        "12640376734": 1,
+        "12640376436": 1,
+        "12640376437": 1,
+        "12640376449": 1,
+        "12640376648": 1,
+        "12640376649": 1,
+        "12640376650": 1,
+        "12640376651": 1,
+        "12640376652": 1,
+        "12640376653": 1,
+        "12640376654": 1,
+        "12640376655": 1,
+        "4655942180": 3,
+        "4656538936": 1,
+        "4656538935": 1,
+        "4656538934": 1,
+        "4656538933": 1,
+        "4656538932": 1,
+        "4656538931": 1,
+        "4656538930": 1,
+        "4656538929": 1,
+        "4656538957": 1,
+        "4656538958": 1,
+        "4656538951": 1,
+        "4656538950": 1,
+        "4656538949": 1,
+        "4656538948": 1,
+        "4656538947": 1,
+        "4656538946": 1,
+        "4656538945": 1,
+        "4656538944": 1,
+        "4656538943": 1,
+        "4656538942": 1,
+        "4656538941": 1,
+        "4656538940": 1,
+        "4656538939": 1,
+        "4656538938": 1,
+        "4656538959": 1,
+        "4656538960": 1,
+        "4656538961": 2,
+        "4656538963": 2,
+        "4656538956": 2,
+        "4656538955": 2,
+        "4656538954": 2,
+        "4656538953": 2,
+        "4656538952": 2,
+        "11931191207": 1,
+        "4656538962": 3,
+        "12475621494": 1,
+        "12475621493": 1,
+        "12475621492": 1,
+        "12475621491": 1,
+        "12475621490": 1,
+        "12475621489": 1,
+        "12475621488": 1,
+        "12475621487": 1,
+        "12475621486": 1,
+        "12475621485": 1,
+        "12475621484": 1,
+        "12475621483": 1,
+        "12475621482": 1,
+        "12475621481": 1,
+        "12475621480": 1,
+        "12475621479": 1,
+        "12475621478": 1,
+        "12475621477": 1,
+        "12475621476": 1,
+        "12475621475": 1,
+        "12475621474": 1,
+        "12475621473": 1,
+        "12475621472": 1,
+        "12475621471": 1,
+        "12475621470": 1,
+        "12475621469": 1,
+        "12475621468": 1,
+        "12475621467": 1,
+        "12475621466": 1,
+        "12475621558": 1,
+        "12475621406": 1,
+        "12475621405": 1,
+        "12475621550": 1,
+        "12475621442": 1,
+        "12475621441": 1,
+        "12475621440": 1,
+        "12475621439": 1,
+        "12475621438": 1,
+        "12475621437": 1,
+        "12475621436": 1,
+        "12475621435": 1,
+        "12475621434": 1,
+        "12475621433": 1,
+        "12475621432": 1,
+        "12475621431": 1,
+        "12475621430": 1,
+        "12475621429": 1,
+        "12475621428": 1,
+        "12475621427": 1,
+        "12475621426": 1,
+        "12475621425": 1,
+        "12475621424": 1,
+        "12475621423": 1,
+        "12475621422": 1,
+        "12475621421": 1,
+        "12475621420": 1,
+        "12475621419": 1,
+        "12475621418": 1,
+        "12475621417": 1,
+        "12475621416": 1,
+        "12475621415": 1,
+        "12475621414": 1,
+        "12475621413": 1,
+        "12475621412": 1,
+        "12475621411": 1,
+        "12475621410": 1,
+        "12475621409": 1,
+        "12475621408": 1,
+        "12475621407": 1,
+        "12475621549": 1,
+        "12475621404": 1,
+        "12475621555": 1,
+        "12475621464": 1,
+        "12475621463": 1,
+        "12475621462": 1,
+        "12475621461": 1,
+        "12475621460": 1,
+        "12475621459": 1,
+        "12475621458": 1,
+        "12475621457": 1,
+        "12475621456": 1,
+        "12475621554": 1,
+        "12475621455": 1,
+        "12475621454": 1,
+        "12475621553": 1,
+        "12475621552": 1,
+        "12475621453": 1,
+        "12475621452": 1,
+        "12475621451": 1,
+        "12475621450": 1,
+        "12475621449": 1,
+        "12475621551": 1,
+        "12475621448": 1,
+        "12475621447": 1,
+        "12475621446": 1,
+        "12475621445": 1,
+        "12475621444": 1,
+        "12475621443": 1,
+        "12475621556": 1,
+        "12475621465": 1,
+        "12475621557": 1,
+        "12475621402": 1,
+        "12475621544": 1,
+        "12475621540": 1,
+        "12475621546": 1,
+        "12475621545": 1,
+        "12475621542": 1,
+        "12475621543": 1,
+        "12475621548": 1,
+        "12475621403": 1,
+        "12475621547": 1,
+        "12475621401": 1,
+        "12475621400": 1,
+        "12475621399": 1,
+        "12475621398": 1,
+        "12475621397": 1,
+        "12475621396": 1,
+        "12475621395": 1,
+        "12475621394": 1,
+        "12475621393": 1,
+        "12475621392": 1,
+        "12475621541": 1,
+        "12475621391": 1,
+        "12475621390": 1,
+        "12475621389": 1,
+        "12475621388": 1,
+        "12475621539": 1,
+        "12475621366": 1,
+        "12475621365": 1,
+        "12475621364": 1,
+        "12475621363": 1,
+        "12475621501": 1,
+        "12475621511": 1,
+        "12475621380": 1,
+        "12475621510": 1,
+        "12475621509": 1,
+        "12475621508": 1,
+        "12475621379": 1,
+        "12475621378": 1,
+        "12475621507": 1,
+        "12475621504": 1,
+        "12475621377": 1,
+        "12475621503": 1,
+        "12475621354": 1,
+        "12475621353": 1,
+        "12475621352": 1,
+        "12475621498": 1,
+        "12475621502": 1,
+        "12475621376": 1,
+        "12475621375": 1,
+        "12475621374": 1,
+        "12475621373": 1,
+        "12475621372": 1,
+        "12475621371": 1,
+        "12475621370": 1,
+        "12475621369": 1,
+        "12475621368": 1,
+        "12475621367": 1,
+        "12475621513": 1,
+        "12475621515": 1,
+        "12475621382": 1,
+        "12475621381": 1,
+        "12475621514": 1,
+        "13800922912": 1,
+        "13800922934": 1,
+        "13800922970": 1,
+        "13800922929": 1,
+        "13800922942": 1,
+        "12475621512": 2,
+        "12475621506": 1,
+        "12475621505": 1,
+        "12475621362": 1,
+        "12475621361": 1,
+        "12475621360": 1,
+        "12475621359": 1,
+        "12475621358": 1,
+        "12475621357": 1,
+        "12475621356": 1,
+        "12475621355": 1,
+        "12475621499": 1,
+        "12475621351": 1,
+        "12475621350": 1,
+        "12475621349": 1,
+        "12475621500": 1,
+        "12475621538": 1,
+        "12475621537": 1,
+        "12475621527": 1,
+        "12475621526": 1,
+        "12475621525": 1,
+        "12475621387": 1,
+        "12475621524": 1,
+        "12475621528": 1,
+        "12475621536": 1,
+        "12475621535": 1,
+        "12475621523": 1,
+        "12475621530": 1,
+        "12475621529": 1,
+        "12475621519": 1,
+        "12475621532": 1,
+        "12475621531": 1,
+        "12475621534": 1,
+        "12475621533": 1,
+        "12475621517": 1,
+        "12475621518": 1,
+        "12475621383": 1,
+        "12475621522": 1,
+        "12475621386": 1,
+        "12475621385": 1,
+        "12475621521": 1,
+        "12475621384": 1,
+        "12475621520": 1,
+        "12475621516": 1,
+        "12475621497": 1,
+        "12475621348": 1,
+        "12475621347": 1,
+        "12475621346": 1,
+        "12475621345": 1,
+        "12475621344": 1,
+        "12475621343": 1,
+        "12475621342": 1,
+        "12475621496": 1,
+        "12475621341": 1,
+        "12475621495": 1,
+        "6586649498": 1,
+        "6586649497": 1,
+        "6586649489": 1,
+        "6586649488": 1,
+        "6586649483": 1,
+        "10912418693": 1,
+        "13911018307": 1,
+        "13911018308": 1,
+        "13911018310": 1,
+        "13911018312": 1,
+        "13911018315": 1,
+        "13911018314": 1,
+        "12475621217": 1,
+        "12475621216": 1,
+        "12475621215": 1,
+        "12475621214": 1,
+        "12475621282": 1,
+        "12475621218": 1,
+        "12475621289": 1,
+        "12475621288": 1,
+        "12475621290": 1,
+        "12475621291": 1,
+        "12475621293": 1,
+        "12475621292": 1,
+        "12475621285": 1,
+        "12475621284": 1,
+        "12475621295": 1,
+        "12475621294": 1,
+        "12475621287": 1,
+        "12475621286": 1,
+        "12475621283": 1,
+        "12475621219": 1,
+        "12475621297": 1,
+        "12475621221": 1,
+        "12475621296": 1,
+        "12475621220": 1,
+        "12475621306": 1,
+        "12475621225": 1,
+        "12475621305": 1,
+        "12475621222": 1,
+        "12475621302": 1,
+        "12475621224": 1,
+        "12475621304": 1,
+        "12475621303": 1,
+        "12475621299": 1,
+        "12475621298": 1,
+        "12475621301": 1,
+        "12475621223": 1,
+        "12475621300": 1,
+        "12475621308": 1,
+        "12475621307": 1,
+        "12475621313": 1,
+        "12475621312": 1,
+        "12475621228": 1,
+        "12475621311": 1,
+        "12475621310": 1,
+        "12475621309": 1,
+        "12475621318": 1,
+        "12475621317": 1,
+        "12475621316": 1,
+        "12475621227": 1,
+        "12475621226": 1,
+        "12475621315": 1,
+        "12475621314": 1,
+        "12475621329": 1,
+        "12475621244": 1,
+        "12475621243": 1,
+        "12475621242": 1,
+        "12475621241": 1,
+        "12475621328": 1,
+        "12475621240": 1,
+        "14254895713": 1,
+        "14254895695": 1,
+        "12475621327": 1,
+        "12475621326": 1,
+        "12475621325": 1,
+        "12475621321": 1,
+        "12475621320": 1,
+        "12475621236": 1,
+        "12475621235": 1,
+        "12475621234": 1,
+        "12475621233": 1,
+        "12475621232": 1,
+        "12475621231": 1,
+        "12475621230": 1,
+        "12475621229": 1,
+        "12475621319": 1,
+        "12475621322": 1,
+        "12475621323": 1,
+        "12475621237": 1,
+        "12475621324": 1,
+        "12475621239": 1,
+        "12475621238": 1,
+        "12475621336": 1,
+        "12475621264": 1,
+        "12475621263": 1,
+        "12475621335": 1,
+        "12475621262": 1,
+        "12475621334": 1,
+        "12475621261": 1,
+        "12475621333": 1,
+        "12475621332": 1,
+        "12475621331": 1,
+        "12475621260": 1,
+        "12475621259": 1,
+        "12475621258": 1,
+        "12475621257": 1,
+        "12475621256": 1,
+        "12475621255": 1,
+        "12475621254": 1,
+        "12475621253": 1,
+        "12475621252": 1,
+        "12475621251": 1,
+        "12475621250": 1,
+        "12475621249": 1,
+        "12475621248": 1,
+        "12475621247": 1,
+        "12475621246": 1,
+        "12475621245": 1,
+        "12475621330": 1,
+        "12475621337": 1,
+        "12475621281": 1,
+        "12475621280": 1,
+        "12475621279": 1,
+        "12475621278": 1,
+        "12475621277": 1,
+        "12475621276": 1,
+        "12475621275": 1,
+        "12475621274": 1,
+        "12475621273": 1,
+        "12475621272": 1,
+        "12475621271": 1,
+        "12475621270": 1,
+        "12475621269": 1,
+        "12475621268": 1,
+        "12475621267": 1,
+        "12475621266": 1,
+        "12475621265": 1,
+        "12475621338": 1,
+        "12475621340": 1,
+        "12475621339": 1,
+        "6403386179": 1,
+        "3306192248": 2,
+        "3306192249": 2,
+        "3306192250": 2,
+        "6343313072": 3,
+        "3306192251": 3,
+        "3306192253": 3,
+        "6403386172": 2,
+        "7909806697": 2,
+        "3306192276": 3,
+        "3266835238": 3
+      },
+      "wayVersions": {
+        "1365210397": 2,
+        "1365210404": 2,
+        "471447912": 19,
+        "1364948087": 3,
+        "1364948098": 2,
+        "471497352": 10,
+        "1350369857": 2,
+        "471497353": 11,
+        "471497354": 9,
+        "471497355": 9,
+        "471497356": 9,
+        "1348696018": 3,
+        "1348696010": 2,
+        "1348696011": 2,
+        "1348696009": 2,
+        "1348696016": 2,
+        "1348696015": 2,
+        "1348696014": 2,
+        "1348696013": 2,
+        "1348696012": 2,
+        "1348696017": 2,
+        "1348696006": 2,
+        "1348696000": 2,
+        "1348696001": 2,
+        "1348696007": 2,
+        "1348696003": 2,
+        "1348696004": 2,
+        "1348696005": 2,
+        "1348696008": 2,
+        "1348696002": 2,
+        "1348695999": 2,
+        "1348695966": 2,
+        "1348695965": 2,
+        "1348695973": 2,
+        "1348695972": 2,
+        "1348695968": 2,
+        "1348695971": 2,
+        "1348695961": 2,
+        "1348695969": 2,
+        "1348695962": 2,
+        "1348695960": 2,
+        "1348695967": 2,
+        "1348695975": 2,
+        "1348695976": 2,
+        "1348695974": 3,
+        "1348695959": 2,
+        "1348695970": 2,
+        "1348695963": 2,
+        "1348695958": 2,
+        "1348695964": 2,
+        "1348695998": 2,
+        "1348695988": 2,
+        "1348695992": 2,
+        "1348695977": 2,
+        "1348695991": 2,
+        "1348695990": 2,
+        "1348695993": 2,
+        "1348695997": 2,
+        "1348695989": 2,
+        "1348695980": 2,
+        "1348695994": 2,
+        "1348695979": 2,
+        "1348695984": 2,
+        "1348695995": 2,
+        "1348695985": 2,
+        "1348695996": 2,
+        "1348695982": 2,
+        "1348695978": 2,
+        "1348695983": 2,
+        "1348695987": 2,
+        "1348695986": 2,
+        "1348695981": 2,
+        "1348695957": 2,
+        "1348695956": 2,
+        "1348695955": 2,
+        "701330495": 7,
+        "701330493": 6,
+        "701330489": 7,
+        "1174420379": 4,
+        "1348695896": 4,
+        "1348695897": 2,
+        "1348695906": 2,
+        "1348695905": 2,
+        "1348695907": 2,
+        "1348695908": 2,
+        "1348695909": 2,
+        "1348695902": 2,
+        "1348695901": 2,
+        "1348695900": 2,
+        "1348695911": 2,
+        "1348695904": 2,
+        "1348695903": 2,
+        "1348695899": 2,
+        "1348695898": 2,
+        "1348695912": 2,
+        "1348695910": 2,
+        "1348695921": 2,
+        "1348695913": 2,
+        "1348695919": 2,
+        "1348695920": 2,
+        "1348695916": 2,
+        "1348695914": 2,
+        "1348695915": 2,
+        "1348695918": 2,
+        "1348695917": 2,
+        "1348695923": 2,
+        "1348695922": 2,
+        "1348695930": 2,
+        "1348695927": 2,
+        "1348695929": 2,
+        "1348695928": 2,
+        "1348695926": 2,
+        "1348695933": 2,
+        "1348695932": 2,
+        "1348695924": 2,
+        "1348695931": 2,
+        "1348695925": 2,
+        "1348695944": 2,
+        "1348695943": 3,
+        "1348695940": 2,
+        "1348695942": 2,
+        "1348695935": 2,
+        "1348695937": 2,
+        "1348695936": 2,
+        "1348695934": 2,
+        "1348695938": 2,
+        "1348695939": 2,
+        "1348695941": 2,
+        "1348695951": 2,
+        "1348695950": 2,
+        "1348695948": 2,
+        "1348695949": 2,
+        "1348695945": 2,
+        "1348695947": 2,
+        "1348695946": 2,
+        "1348695952": 2,
+        "1348695953": 2,
+        "1348695954": 2,
+        "323849163": 7,
+        "677458176": 6,
+        "320182729": 7
+      },
+      "lengthMetres": 278139.2712339491
+    },
+    "crtEndpointDistinction": {
+      "publishedLineId": "cn-osm-relation-3066901",
+      "publishedCRTAnchorNodeId": 3266835467,
+      "reachedDistinctOwnStrandNodeId": 3266835238,
+      "sourceNodes": {
+        "3266835467": {
+          "coordinate": [
+            125.1955455,
+            43.8766561
+          ],
+          "version": 3,
+          "tags": {}
+        },
+        "3266835238": {
+          "coordinate": [
+            125.1955773,
+            43.8766161
+          ],
+          "version": 3,
+          "tags": {}
+        },
+        "3266835465": {
+          "coordinate": [
+            125.2003809,
+            43.8793247
+          ],
+          "version": 3,
+          "tags": {
+            "railway": "switch"
+          }
+        }
+      },
+      "separationMetres": 5.126372618875598,
+      "ownWayAtReachedCRTNode": {
+        "id": 320182729,
+        "version": 7,
+        "nodes": [
+          3306192276,
+          3266835238,
+          3266835465
+        ]
+      },
+      "ownWayAtPublishedCRTAnchor": {
+        "id": 320182735,
+        "version": 7,
+        "nodes": [
+          3266835257,
+          3266835467,
+          3306192273
+        ]
+      },
+      "actualNorthThroat": {
+        "id": 3266835465,
+        "nextOwnWayId": 320185153,
+        "nextOwnWayVersion": 7,
+        "nonOwnAdjacentSidingId": 1101856732
+      },
+      "constraint": "Original3266835238 and3266835467 remain distinct. Their approximately5m separation supplies no exact-node connection, coordinate weld or permission to change CRT anchor."
+    },
+    "conclusion": "The omitted passenger mainline strand throughSBTIII reachesCRT on a distinct original parallel track, with no shared source node in either current published3066901 or198494 geometry anywhere in the traced SBT-toCRT eligible component. No exact complete boundary repair manifest is established. BeyondCRT topology is outside the requested corridor; this is not a full3066901/global disconnection claim.",
+    "validation": "Every used way is a pinned own3066901 member, active railway=rail, explicit railway:traffic_mode=passenger, without crossover/siding/spur/yard admission.447source nodes/446original edges form a simple path; all coordinates and versions retained. No national graph, tests, builds or native replay."
+  },
+  "expandedHarbin306ComponentReview": {
+    "scope": "One targeted3066901 original-node component trace from switch105 throughCRT andHarbin; original306memberinventory bound only, no northern/eastern geography cutoff; omit region southwest of105 to stay on the existing northbound strand. Explicit passenger active main ways only; no crossovers/spurs. Stop at first reachable exact published source node in3066901/198494/7047176/1656856/8399169/16137482 corridor families. No national graph.",
+    "eligibleComponentExhausted": true,
+    "ownRelationId": 3066901,
+    "ownRelationVersion": 81,
+    "waysRead": 186,
+    "nodeCount": 880,
+    "edgeCount": 879,
+    "lengthMetres": 519930.36949285056,
+    "publishedNodeJoin": null,
+    "terminalOriginalNode": {
+      "id": 6728392266,
+      "coordinate": [
+        126.6356027,
+        45.7646662
+      ],
+      "version": 5,
+      "tags": {
+        "railway": "switch",
+        "ref": "1038"
+      }
+    },
+    "terminalOwn306Way": {
+      "id": 1271240141,
+      "version": 3
+    },
+    "exactSourceCorridorHandoff": {
+      "nodeId": 6728392266,
+      "nextWayId": 715782824,
+      "nextWayVersion": 18,
+      "nextOwnerRelationId": 7047176,
+      "nextOwnerRelationVersion": 65,
+      "nextWayExplicitPassenger": true,
+      "nextWayCurrentlyPublished": false,
+      "unownedCrossoverRejected": {
+        "id": 715994884,
+        "version": 3
+      }
+    },
+    "stationBindingsProposal": [
+      {
+        "markerNodeId": 676578837,
+        "markerVersion": 15,
+        "markerCoordinate": [
+          123.4294351,
+          41.8173345
+        ],
+        "officialTelecode": "SBT",
+        "stationName": "沈阳北",
+        "anchorNodeId": 12640351645,
+        "anchorVersion": 1,
+        "bindingEvidence": {
+          "kind": "original-own-relation-marker-to-original-own-strand-node",
+          "sourceRelationId": 3066901,
+          "sourceRelationVersion": 81,
+          "markerTags": {
+            "alt_name": "沈阳北站",
+            "alt_name:en": "Shenyang North Railway Station",
+            "name": "沈阳北",
+            "name:cs": "Šen-jang sever",
+            "name:en": "Shenyangbei",
+            "name:ja": "瀋陽北",
+            "name:ko": "선양베이",
+            "name:ru": "Шеньян-Северный",
+            "name:zh": "沈阳北",
+            "operator": "中国铁路沈阳局集团有限公司 沈阳站",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:position:exact:京哈:上": "703.715",
+            "railway:position:exact:京哈:下": "703.653",
+            "railway:position:exact:京哈高速": "703.653",
+            "railway:position:exact:沈大高速": "401.061",
+            "railway:ref": "53885",
+            "start_date": "1990-10-22",
+            "wikidata": "Q988013",
+            "wikipedia": "en:Shenyang North railway station"
+          },
+          "officialRecord": {
+            "name": "沈阳北",
+            "telecode": "SBT",
+            "pinyin": "shenyangbei",
+            "initials": "syb",
+            "rawFields": [
+              "syb",
+              "沈阳北",
+              "SBT",
+              "shenyangbei",
+              "syb",
+              "138",
+              "0205",
+              "沈阳",
+              "",
+              "",
+              ""
+            ],
+            "source": "12306-station_name.js"
+          },
+          "markerAnchorDistanceMetres": 74.1048100020431,
+          "scope": "Additional raw N02 binding under existing1500m own-route bound; does not change any existing platform anchor or connect distinct source nodes."
+        }
+      },
+      {
+        "markerNodeId": 9507383335,
+        "markerVersion": 4,
+        "markerCoordinate": [
+          125.1939041,
+          43.8749384
+        ],
+        "officialTelecode": "CRT",
+        "stationName": "长春西",
+        "anchorNodeId": 3266835238,
+        "anchorVersion": 3,
+        "bindingEvidence": {
+          "kind": "original-own-relation-marker-to-original-own-strand-node",
+          "sourceRelationId": 3066901,
+          "sourceRelationVersion": 81,
+          "markerTags": {
+            "name": "长春西",
+            "operator": "中国铁路沈阳局集团有限公司 长春站",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:ref": "53481"
+          },
+          "officialRecord": {
+            "name": "长春西",
+            "telecode": "CRT",
+            "pinyin": "changchunxi",
+            "initials": "ccx",
+            "rawFields": [
+              "ccx",
+              "长春西",
+              "CRT",
+              "changchunxi",
+              "ccx",
+              "34",
+              "0110",
+              "长春",
+              "",
+              "",
+              ""
+            ],
+            "source": "12306-station_name.js"
+          },
+          "markerAnchorDistanceMetres": 229.75697589769763,
+          "scope": "Additional raw N02 binding under existing1500m own-route bound; does not change any existing platform anchor or connect distinct source nodes."
+        }
+      },
+      {
+        "markerNodeId": 2155516551,
+        "markerVersion": 12,
+        "markerCoordinate": [
+          126.5723242,
+          45.7051442
+        ],
+        "officialTelecode": "VAB",
+        "stationName": "哈尔滨西",
+        "anchorNodeId": 10781745447,
+        "anchorVersion": 1,
+        "bindingEvidence": {
+          "kind": "original-own-relation-marker-to-original-own-strand-node",
+          "sourceRelationId": 3066901,
+          "sourceRelationVersion": 81,
+          "markerTags": {
+            "alt_name": "哈尔滨西站;Harbin West Railway Station",
+            "name": "哈尔滨西",
+            "name:en": "Harbin West",
+            "name:ru": "Харбин-Западный",
+            "name:zh": "哈尔滨西",
+            "operator": "中国铁路哈尔滨局集团有限公司 哈尔滨站",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:ref": "53469",
+            "wikidata": "Q5654454",
+            "wikipedia": "zh:哈尔滨西站"
+          },
+          "officialRecord": {
+            "name": "哈尔滨西",
+            "telecode": "VAB",
+            "pinyin": "haerbinxi",
+            "initials": "hebx",
+            "rawFields": [
+              "hex",
+              "哈尔滨西",
+              "VAB",
+              "haerbinxi",
+              "hebx",
+              "75",
+              "0034",
+              "哈尔滨",
+              "",
+              "",
+              ""
+            ],
+            "source": "12306-station_name.js"
+          },
+          "markerAnchorDistanceMetres": 37.07760544179109,
+          "scope": "Additional raw N02 binding under existing1500m own-route bound; does not change any existing platform anchor or connect distinct source nodes."
+        }
+      }
+    ],
+    "scratchManifest": "/private/tmp/cn-boundary-20261019/sbt/jingha-sbt-harbin-own-strand-proposal.json",
+    "conclusion": "Complete eligible northbound own306 component exhausted with no exact currently published306/198/704/1656856/8399169/16137482 node. Real source junction1038 connects306 to an original explicit-passenger704 member way that is absent from the currently published704 source path. This provides a real physical handoff candidate, but not yet a complete join to currentpublishedHarbin-toMDB graph. No existing station anchors changed."
+  },
+  "expandedHarbinToMDB704ComponentReview": {
+    "scope": "One original7047176v65 owned component trace from exact306-704junction1038 node6728392266; explicitly passenger active railmainways only, no unowned crossovers/sidings/spurs. Stop at first reachable currently published7047176 source node, or exhaust this original relation member component. No geographical cutoff or national graph.",
+    "eligibleOwnComponentExhausted": true,
+    "relation": {
+      "id": 7047176,
+      "version": 65
+    },
+    "sourceWayCount": 74,
+    "sourceNodeCount": 299,
+    "sourceEdgeCount": 298,
+    "lengthMetres": 75223.38306081037,
+    "published704NodeIntersection": null,
+    "reachesMDBStation": false,
+    "path": {
+      "nodeIds": [
+        6728392266,
+        6728392267,
+        6728406123,
+        11106087235,
+        6728406124,
+        12159404937,
+        11106087254,
+        6728406126,
+        6728406127,
+        6728406128,
+        6728406129,
+        12159404944,
+        6734857701,
+        11106087243,
+        11106087241,
+        6734857702,
+        6734857703,
+        6734857704,
+        6734857705,
+        6734857706,
+        6734857707,
+        12159404936,
+        6734857708,
+        6734857709,
+        6734857710,
+        12159404933,
+        12141249835,
+        6734857712,
+        6734857713,
+        12159404928,
+        12159404927,
+        9907646557,
+        12159404925,
+        9907646558,
+        12159404923,
+        12159404914,
+        6734857723,
+        6734857724,
+        6734857725,
+        6734857726,
+        12159398298,
+        12159404920,
+        12159404907,
+        12159404903,
+        6734857730,
+        6734857731,
+        6734857732,
+        12159404902,
+        6734857733,
+        6734857734,
+        6734857735,
+        6734857736,
+        12159398300,
+        6734857737,
+        6734857738,
+        6734857739,
+        2344167706,
+        2344167708,
+        6734857746,
+        6734857780,
+        11783479240,
+        6734857785,
+        6734857786,
+        6734857787,
+        6734857797,
+        13307970342,
+        13307970344,
+        6734857789,
+        6734857790,
+        9798409050,
+        11106087260,
+        11106087259,
+        11106087258,
+        9798409049,
+        11106087272,
+        11106087274,
+        11106087276,
+        9798409048,
+        9798409047,
+        9798409046,
+        9798409045,
+        11233678547,
+        11233678546,
+        9798409044,
+        13309418779,
+        9798409043,
+        9798409042,
+        9798409041,
+        9798409040,
+        9798409039,
+        9798409038,
+        9798409037,
+        9798409036,
+        12165665134,
+        9798409035,
+        9798409034,
+        9798409033,
+        9798409032,
+        12165665144,
+        9798409031,
+        12165665145,
+        9798409030,
+        12165665146,
+        12165665147,
+        12165665148,
+        9798409029,
+        9798409028,
+        12165665149,
+        9798409027,
+        12165665150,
+        12165665151,
+        9798409026,
+        9798409025,
+        12165665220,
+        12165665161,
+        12165665162,
+        12165665163,
+        12165665164,
+        12165665165,
+        9798409024,
+        12165665166,
+        12165665218,
+        12165665167,
+        12165665168,
+        9798409023,
+        12165665170,
+        12165665172,
+        9798409022,
+        12165665174,
+        12165665175,
+        12165665178,
+        12165665179,
+        9798409021,
+        12165665181,
+        12165665183,
+        12165665185,
+        9798409020,
+        12165665187,
+        12165665216,
+        9798409019,
+        12165665191,
+        12165665192,
+        12165665193,
+        12165665194,
+        12165665214,
+        9798409018,
+        12165665201,
+        9798409017,
+        12165665200,
+        12165665199,
+        12165665206,
+        12165665205,
+        9798409016,
+        12165665204,
+        12165665210,
+        12165665212,
+        9798409015,
+        12165665233,
+        12165665232,
+        9798409014,
+        12165665231,
+        9798409013,
+        12165665230,
+        12165665229,
+        9798409012,
+        12165665228,
+        12165665236,
+        12165665237,
+        9798409011,
+        9798409010,
+        12165665240,
+        12165665244,
+        12165665245,
+        12165665246,
+        12165665247,
+        9798409009,
+        9798409008,
+        12165665249,
+        12165665251,
+        12165665252,
+        9798409006,
+        9798409005,
+        12165665458,
+        10960137768,
+        10960137769,
+        9798409004,
+        9798409003,
+        12165665467,
+        9798409002,
+        9798409000,
+        12165665485,
+        12165665484,
+        9798408999,
+        12165665483,
+        12165665498,
+        12165665497,
+        9798408998,
+        12165665496,
+        12165665495,
+        9798408997,
+        12165665494,
+        12165665493,
+        12165665492,
+        9798408996,
+        12165665503,
+        12165665504,
+        9798408995,
+        12165665508,
+        12165665509,
+        9798408994,
+        12165665511,
+        12165665513,
+        12165665515,
+        12165665519,
+        12165665520,
+        12165665521,
+        9798408993,
+        12165665524,
+        12165665525,
+        12165665526,
+        9798409001,
+        12165665529,
+        9798408992,
+        12165665531,
+        12165665533,
+        9798408991,
+        9798408990,
+        9798408989,
+        9798408988,
+        9798408987,
+        9798408986,
+        9798408985,
+        9798408952,
+        9798408953,
+        9798408930,
+        9798408954,
+        9798408964,
+        9798408935,
+        9798408963,
+        9798408981,
+        9798408980,
+        9798408977,
+        9798408950,
+        9798408949,
+        9798408976,
+        9798408959,
+        9798408973,
+        9798408947,
+        9798408946,
+        9798408945,
+        9798408944,
+        9798408972,
+        9798408955,
+        9798408967,
+        9798408940,
+        9798408939,
+        9798408938,
+        9798408937,
+        9798408936,
+        9798408979,
+        9798408978,
+        9798408934,
+        9798408956,
+        9798408969,
+        9798408943,
+        12991176859,
+        9798408942,
+        9798408941,
+        9798408968,
+        9798408962,
+        9798408961,
+        9798408975,
+        9798408948,
+        9798408974,
+        9798408960,
+        9798408958,
+        9798408957,
+        9798408933,
+        9798408932,
+        9798408931,
+        9798408971,
+        9798408970,
+        9798408966,
+        9798408965,
+        9798408983,
+        9798408951,
+        9798408982,
+        9798408921,
+        9798408920,
+        9798408899,
+        9798408913,
+        9798408912,
+        9798408906,
+        9798408905,
+        9798408925,
+        9798408924,
+        9798408919,
+        9798408918,
+        9798408903
+      ],
+      "edgeWayIds": [
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        715782824,
+        225659033,
+        1074675442,
+        717082411,
+        717082411,
+        717082411,
+        717082411,
+        717082411,
+        717082411,
+        1074675436,
+        1451045209,
+        1451045208,
+        1451045208,
+        1451045208,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509922,
+        1212509924,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1067140276,
+        1314383740,
+        1314383740,
+        1314383738,
+        1314383738,
+        1314383738,
+        1314383738,
+        1314383738,
+        1314383738,
+        1314383738,
+        1314383738,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1067140274,
+        1314383736,
+        1314383736,
+        1314383736,
+        1314383736,
+        1314383736,
+        1314383736,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383734,
+        1314383732,
+        1314383742,
+        1314383742,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1314383729,
+        1067140273,
+        1067140273,
+        1067140273,
+        1067140273,
+        1067140273,
+        1067140273,
+        1067140273,
+        1180055196,
+        1180055195,
+        1067140272,
+        1067140271,
+        1067140271,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140270,
+        1067140269,
+        1067140269,
+        1067140269,
+        1067140269,
+        1067140269,
+        1067140269,
+        1067140268,
+        1067140267,
+        1067140263,
+        1067140266,
+        1067140265,
+        1067140264,
+        1067140232,
+        1067140233,
+        1067140233,
+        1067140237,
+        1067140252,
+        1067140252,
+        1067140246,
+        1067140261,
+        1067140242,
+        1067140259,
+        1067140259,
+        1067140259,
+        1067140249,
+        1067140235,
+        1067140257,
+        1067140257,
+        1067140257,
+        1067140257,
+        1067140257,
+        1067140244,
+        1067140245,
+        1067140254,
+        1067140254,
+        1067140254,
+        1067140254,
+        1067140254,
+        1067140254,
+        1067140260,
+        1067140247,
+        1067140247,
+        1067140239,
+        1067140255,
+        1067140255,
+        1067140255,
+        1067140255,
+        1067140255,
+        1067140236,
+        1067140251,
+        1067140241,
+        1067140258,
+        1067140258,
+        1067140250,
+        1067140238,
+        1067140248,
+        1067140234,
+        1067140234,
+        1067140234,
+        1067140234,
+        1067140256,
+        1067140243,
+        1067140253,
+        1067140240,
+        1067140262,
+        1067140262,
+        1067140199,
+        1067140227,
+        1067140213,
+        1067140205,
+        1067140223,
+        1067140202,
+        1067140219,
+        1067140212,
+        1067140229,
+        1067140208,
+        1067140226,
+        1067140217
+      ],
+      "coordinates": [
+        [
+          126.6356027,
+          45.7646662
+        ],
+        [
+          126.6364718,
+          45.76475
+        ],
+        [
+          126.6368126,
+          45.7647903
+        ],
+        [
+          126.6371247,
+          45.7648393
+        ],
+        [
+          126.6374192,
+          45.764898
+        ],
+        [
+          126.6376237,
+          45.7649431
+        ],
+        [
+          126.6387401,
+          45.765198
+        ],
+        [
+          126.6390961,
+          45.7652931
+        ],
+        [
+          126.6393662,
+          45.7653754
+        ],
+        [
+          126.6395805,
+          45.7654525
+        ],
+        [
+          126.6397953,
+          45.7655321
+        ],
+        [
+          126.6400423,
+          45.7656386
+        ],
+        [
+          126.640325,
+          45.7657754
+        ],
+        [
+          126.6445355,
+          45.7677385
+        ],
+        [
+          126.6448475,
+          45.7678872
+        ],
+        [
+          126.6451595,
+          45.7680466
+        ],
+        [
+          126.6454283,
+          45.7681968
+        ],
+        [
+          126.645651,
+          45.7683301
+        ],
+        [
+          126.6458781,
+          45.7684851
+        ],
+        [
+          126.6460906,
+          45.768635
+        ],
+        [
+          126.6463282,
+          45.7688226
+        ],
+        [
+          126.6465215,
+          45.7689851
+        ],
+        [
+          126.6466532,
+          45.7691056
+        ],
+        [
+          126.6468176,
+          45.7692647
+        ],
+        [
+          126.6470094,
+          45.7694653
+        ],
+        [
+          126.6471687,
+          45.7696424
+        ],
+        [
+          126.6472748,
+          45.7697763
+        ],
+        [
+          126.6483295,
+          45.7711195
+        ],
+        [
+          126.6485643,
+          45.7714062
+        ],
+        [
+          126.6487387,
+          45.7716134
+        ],
+        [
+          126.6489008,
+          45.7717853
+        ],
+        [
+          126.6491115,
+          45.7720162
+        ],
+        [
+          126.6493157,
+          45.7722136
+        ],
+        [
+          126.6495386,
+          45.7724239
+        ],
+        [
+          126.6497904,
+          45.7726463
+        ],
+        [
+          126.6600312,
+          45.7816589
+        ],
+        [
+          126.6603605,
+          45.7819437
+        ],
+        [
+          126.661309,
+          45.7827614
+        ],
+        [
+          126.6618151,
+          45.783207
+        ],
+        [
+          126.6630211,
+          45.7842621
+        ],
+        [
+          126.6634817,
+          45.7846833
+        ],
+        [
+          126.6638627,
+          45.7850475
+        ],
+        [
+          126.6642838,
+          45.7854669
+        ],
+        [
+          126.6652895,
+          45.7864536
+        ],
+        [
+          126.6658064,
+          45.7869256
+        ],
+        [
+          126.6661599,
+          45.7872253
+        ],
+        [
+          126.666539,
+          45.7875097
+        ],
+        [
+          126.6669059,
+          45.7877631
+        ],
+        [
+          126.6672356,
+          45.7879735
+        ],
+        [
+          126.6676779,
+          45.7882245
+        ],
+        [
+          126.6680794,
+          45.7884291
+        ],
+        [
+          126.6684785,
+          45.7886096
+        ],
+        [
+          126.6688276,
+          45.7887525
+        ],
+        [
+          126.6691839,
+          45.7888884
+        ],
+        [
+          126.6696962,
+          45.7890698
+        ],
+        [
+          126.6700821,
+          45.7891883
+        ],
+        [
+          126.6719986,
+          45.7897247
+        ],
+        [
+          126.672778,
+          45.7899413
+        ],
+        [
+          126.6748244,
+          45.7905401
+        ],
+        [
+          126.6764465,
+          45.7909976
+        ],
+        [
+          126.681344,
+          45.7923902
+        ],
+        [
+          126.6854216,
+          45.7935496
+        ],
+        [
+          126.6862073,
+          45.793752
+        ],
+        [
+          126.6868691,
+          45.7939223
+        ],
+        [
+          126.6887374,
+          45.7943552
+        ],
+        [
+          126.6908285,
+          45.79484
+        ],
+        [
+          126.6910306,
+          45.794892
+        ],
+        [
+          126.6914762,
+          45.7950057
+        ],
+        [
+          126.6920646,
+          45.7951545
+        ],
+        [
+          126.6926216,
+          45.7953092
+        ],
+        [
+          126.6930736,
+          45.7954444
+        ],
+        [
+          126.693527,
+          45.7955885
+        ],
+        [
+          126.6940156,
+          45.7957478
+        ],
+        [
+          126.6944526,
+          45.7959014
+        ],
+        [
+          126.6950033,
+          45.7961073
+        ],
+        [
+          126.6957089,
+          45.7963825
+        ],
+        [
+          126.6964325,
+          45.7966904
+        ],
+        [
+          126.698512,
+          45.7975906
+        ],
+        [
+          126.7046341,
+          45.800265
+        ],
+        [
+          126.7074922,
+          45.8013994
+        ],
+        [
+          126.7103881,
+          45.8024126
+        ],
+        [
+          126.7127439,
+          45.8032458
+        ],
+        [
+          126.7154931,
+          45.8040025
+        ],
+        [
+          126.7176183,
+          45.8047161
+        ],
+        [
+          126.7217803,
+          45.8057762
+        ],
+        [
+          126.7261471,
+          45.806728
+        ],
+        [
+          126.7343003,
+          45.8085038
+        ],
+        [
+          126.7528225,
+          45.812634
+        ],
+        [
+          126.7638579,
+          45.8150549
+        ],
+        [
+          126.8016487,
+          45.8234392
+        ],
+        [
+          126.8138459,
+          45.8261437
+        ],
+        [
+          126.8267246,
+          45.8289227
+        ],
+        [
+          126.8295707,
+          45.8294192
+        ],
+        [
+          126.8308634,
+          45.8296044
+        ],
+        [
+          126.8320683,
+          45.8297557
+        ],
+        [
+          126.8347795,
+          45.8300109
+        ],
+        [
+          126.8369238,
+          45.8301236
+        ],
+        [
+          126.8391039,
+          45.8301438
+        ],
+        [
+          126.8409706,
+          45.8301398
+        ],
+        [
+          126.8420969,
+          45.830105
+        ],
+        [
+          126.8434623,
+          45.8300292
+        ],
+        [
+          126.8447106,
+          45.8299449
+        ],
+        [
+          126.8460953,
+          45.8298055
+        ],
+        [
+          126.8474983,
+          45.8296432
+        ],
+        [
+          126.8488136,
+          45.829462
+        ],
+        [
+          126.8500501,
+          45.8292708
+        ],
+        [
+          126.8526189,
+          45.8287944
+        ],
+        [
+          126.8538337,
+          45.828519
+        ],
+        [
+          126.8547897,
+          45.8282864
+        ],
+        [
+          126.8560601,
+          45.8279605
+        ],
+        [
+          126.8573914,
+          45.8275777
+        ],
+        [
+          126.8584386,
+          45.8272669
+        ],
+        [
+          126.8599201,
+          45.826781
+        ],
+        [
+          126.8607405,
+          45.8264771
+        ],
+        [
+          126.8615856,
+          45.8261647
+        ],
+        [
+          126.862733,
+          45.825711
+        ],
+        [
+          126.8637447,
+          45.8252851
+        ],
+        [
+          126.8651593,
+          45.824649
+        ],
+        [
+          126.8661944,
+          45.8241654
+        ],
+        [
+          126.8675867,
+          45.8234302
+        ],
+        [
+          126.8688368,
+          45.8227162
+        ],
+        [
+          126.8692025,
+          45.8224924
+        ],
+        [
+          126.8700037,
+          45.8220019
+        ],
+        [
+          126.8712941,
+          45.8211572
+        ],
+        [
+          126.8721277,
+          45.8205924
+        ],
+        [
+          126.8729356,
+          45.8200068
+        ],
+        [
+          126.874142,
+          45.819085
+        ],
+        [
+          126.876122,
+          45.817417
+        ],
+        [
+          126.876817,
+          45.8167291
+        ],
+        [
+          126.8773672,
+          45.8162
+        ],
+        [
+          126.8780899,
+          45.815435
+        ],
+        [
+          126.8787746,
+          45.8146621
+        ],
+        [
+          126.879302,
+          45.8140267
+        ],
+        [
+          126.8800172,
+          45.8131105
+        ],
+        [
+          126.8806285,
+          45.8122685
+        ],
+        [
+          126.8813452,
+          45.811253
+        ],
+        [
+          126.8821759,
+          45.8099794
+        ],
+        [
+          126.882609,
+          45.8092003
+        ],
+        [
+          126.8827102,
+          45.8090042
+        ],
+        [
+          126.8830118,
+          45.8084192
+        ],
+        [
+          126.8834531,
+          45.8075841
+        ],
+        [
+          126.8836901,
+          45.8070667
+        ],
+        [
+          126.8839023,
+          45.8065292
+        ],
+        [
+          126.884138,
+          45.8058078
+        ],
+        [
+          126.8843199,
+          45.8051974
+        ],
+        [
+          126.884353,
+          45.8050862
+        ],
+        [
+          126.8849204,
+          45.8028731
+        ],
+        [
+          126.8850855,
+          45.8020681
+        ],
+        [
+          126.8852043,
+          45.8013804
+        ],
+        [
+          126.8853422,
+          45.8004295
+        ],
+        [
+          126.8854089,
+          45.7998054
+        ],
+        [
+          126.885457,
+          45.7991835
+        ],
+        [
+          126.8855041,
+          45.798022
+        ],
+        [
+          126.8855114,
+          45.7970347
+        ],
+        [
+          126.8854549,
+          45.7958408
+        ],
+        [
+          126.8851543,
+          45.7921801
+        ],
+        [
+          126.8850737,
+          45.7911988
+        ],
+        [
+          126.8849034,
+          45.7891809
+        ],
+        [
+          126.8848882,
+          45.7886299
+        ],
+        [
+          126.8847694,
+          45.7855302
+        ],
+        [
+          126.8846995,
+          45.7842817
+        ],
+        [
+          126.8845116,
+          45.7824401
+        ],
+        [
+          126.8844359,
+          45.7816107
+        ],
+        [
+          126.8844041,
+          45.7807273
+        ],
+        [
+          126.8844008,
+          45.7798499
+        ],
+        [
+          126.8844088,
+          45.7789063
+        ],
+        [
+          126.8844404,
+          45.7779248
+        ],
+        [
+          126.8845216,
+          45.7769156
+        ],
+        [
+          126.8846231,
+          45.7762197
+        ],
+        [
+          126.8850793,
+          45.7729283
+        ],
+        [
+          126.8851769,
+          45.7723622
+        ],
+        [
+          126.8854633,
+          45.7711558
+        ],
+        [
+          126.8856426,
+          45.7704704
+        ],
+        [
+          126.8858294,
+          45.7698302
+        ],
+        [
+          126.8861549,
+          45.7685892
+        ],
+        [
+          126.8864118,
+          45.7676531
+        ],
+        [
+          126.886938,
+          45.7658806
+        ],
+        [
+          126.8876452,
+          45.7639328
+        ],
+        [
+          126.88808,
+          45.7628247
+        ],
+        [
+          126.888627,
+          45.761553
+        ],
+        [
+          126.8889355,
+          45.760897
+        ],
+        [
+          126.891769,
+          45.754769
+        ],
+        [
+          126.8982897,
+          45.7408841
+        ],
+        [
+          126.8989295,
+          45.7395216
+        ],
+        [
+          126.8991324,
+          45.7390902
+        ],
+        [
+          126.9010523,
+          45.7349011
+        ],
+        [
+          126.9013545,
+          45.734269
+        ],
+        [
+          126.901515,
+          45.7339144
+        ],
+        [
+          126.9034297,
+          45.7298159
+        ],
+        [
+          126.9046983,
+          45.7271168
+        ],
+        [
+          126.9049834,
+          45.7265556
+        ],
+        [
+          126.9053056,
+          45.7259041
+        ],
+        [
+          126.9057591,
+          45.7250711
+        ],
+        [
+          126.9060343,
+          45.7245745
+        ],
+        [
+          126.9070635,
+          45.7229536
+        ],
+        [
+          126.9073592,
+          45.7225133
+        ],
+        [
+          126.9076416,
+          45.7221025
+        ],
+        [
+          126.9078632,
+          45.7217831
+        ],
+        [
+          126.9082404,
+          45.7212738
+        ],
+        [
+          126.9086373,
+          45.7207366
+        ],
+        [
+          126.9088543,
+          45.7204634
+        ],
+        [
+          126.909167,
+          45.720074
+        ],
+        [
+          126.909678,
+          45.7194432
+        ],
+        [
+          126.9110749,
+          45.7178385
+        ],
+        [
+          126.9121821,
+          45.716701
+        ],
+        [
+          126.912943,
+          45.7159505
+        ],
+        [
+          126.9137934,
+          45.7151632
+        ],
+        [
+          126.9170398,
+          45.7124087
+        ],
+        [
+          126.9183663,
+          45.7113267
+        ],
+        [
+          126.9193105,
+          45.7105683
+        ],
+        [
+          126.920558,
+          45.7095388
+        ],
+        [
+          126.9226282,
+          45.7078567
+        ],
+        [
+          126.9250554,
+          45.7058619
+        ],
+        [
+          126.9262836,
+          45.7048594
+        ],
+        [
+          126.9270968,
+          45.7041794
+        ],
+        [
+          126.9275738,
+          45.7037905
+        ],
+        [
+          126.9282055,
+          45.7032414
+        ],
+        [
+          126.9289212,
+          45.7025882
+        ],
+        [
+          126.9297116,
+          45.7018414
+        ],
+        [
+          126.9302483,
+          45.7013199
+        ],
+        [
+          126.9312581,
+          45.7003329
+        ],
+        [
+          126.9326681,
+          45.6987869
+        ],
+        [
+          126.9334345,
+          45.6979068
+        ],
+        [
+          126.9342864,
+          45.6968511
+        ],
+        [
+          126.9348622,
+          45.6960766
+        ],
+        [
+          126.935409,
+          45.6953287
+        ],
+        [
+          126.9379136,
+          45.6916176
+        ],
+        [
+          126.9385555,
+          45.6907037
+        ],
+        [
+          126.9421813,
+          45.6853638
+        ],
+        [
+          126.9424469,
+          45.6849886
+        ],
+        [
+          126.9438866,
+          45.6828683
+        ],
+        [
+          126.9444448,
+          45.6820701
+        ],
+        [
+          126.9483181,
+          45.6764013
+        ],
+        [
+          126.948999,
+          45.6753852
+        ],
+        [
+          126.9502151,
+          45.6736083
+        ],
+        [
+          126.9540822,
+          45.6679268
+        ],
+        [
+          126.9547001,
+          45.6670371
+        ],
+        [
+          126.9564664,
+          45.6643826
+        ],
+        [
+          126.9635436,
+          45.6540511
+        ],
+        [
+          126.9641824,
+          45.6531185
+        ],
+        [
+          126.9714955,
+          45.6424405
+        ],
+        [
+          126.9767446,
+          45.6347414
+        ],
+        [
+          126.9826783,
+          45.6260307
+        ],
+        [
+          126.9838569,
+          45.6243311
+        ],
+        [
+          126.9850856,
+          45.622478
+        ],
+        [
+          126.9870783,
+          45.619577
+        ],
+        [
+          126.9935247,
+          45.6101436
+        ],
+        [
+          126.9950173,
+          45.6078975
+        ],
+        [
+          126.9988714,
+          45.6029405
+        ],
+        [
+          127.0012906,
+          45.6005052
+        ],
+        [
+          127.0078761,
+          45.5951145
+        ],
+        [
+          127.0111752,
+          45.5925453
+        ],
+        [
+          127.0268599,
+          45.5801294
+        ],
+        [
+          127.0281256,
+          45.5791392
+        ],
+        [
+          127.0287965,
+          45.5786266
+        ],
+        [
+          127.0461419,
+          45.5648865
+        ],
+        [
+          127.0502619,
+          45.561633
+        ],
+        [
+          127.0517533,
+          45.5601807
+        ],
+        [
+          127.0531685,
+          45.5587605
+        ],
+        [
+          127.0562487,
+          45.5551364
+        ],
+        [
+          127.0575938,
+          45.5532054
+        ],
+        [
+          127.0642712,
+          45.5431989
+        ],
+        [
+          127.0677337,
+          45.5381135
+        ],
+        [
+          127.0689478,
+          45.5365188
+        ],
+        [
+          127.0716842,
+          45.5332635
+        ],
+        [
+          127.0741367,
+          45.5306659
+        ],
+        [
+          127.0766877,
+          45.5282536
+        ],
+        [
+          127.0778806,
+          45.5271589
+        ],
+        [
+          127.0784318,
+          45.5266952
+        ],
+        [
+          127.079278,
+          45.5259834
+        ],
+        [
+          127.0887338,
+          45.5179064
+        ],
+        [
+          127.0899005,
+          45.5169477
+        ],
+        [
+          127.0962497,
+          45.5113939
+        ],
+        [
+          127.098714,
+          45.5093939
+        ],
+        [
+          127.1036416,
+          45.5051875
+        ],
+        [
+          127.105452,
+          45.5036674
+        ],
+        [
+          127.1082328,
+          45.5013718
+        ],
+        [
+          127.1092233,
+          45.5004953
+        ],
+        [
+          127.1120811,
+          45.4984915
+        ],
+        [
+          127.1153055,
+          45.4963354
+        ],
+        [
+          127.1182971,
+          45.494666
+        ],
+        [
+          127.1600997,
+          45.4692955
+        ],
+        [
+          127.161767,
+          45.468152
+        ],
+        [
+          127.1625758,
+          45.4675544
+        ],
+        [
+          127.1639144,
+          45.4666334
+        ],
+        [
+          127.1650704,
+          45.4656861
+        ],
+        [
+          127.1662655,
+          45.4648801
+        ],
+        [
+          127.1716495,
+          45.4610061
+        ],
+        [
+          127.1725868,
+          45.4601755
+        ],
+        [
+          127.1801458,
+          45.4547516
+        ],
+        [
+          127.1840449,
+          45.4519017
+        ],
+        [
+          127.1845639,
+          45.4514788
+        ],
+        [
+          127.1937477,
+          45.4447961
+        ],
+        [
+          127.1959754,
+          45.4431933
+        ],
+        [
+          127.2022621,
+          45.4386228
+        ],
+        [
+          127.2031217,
+          45.4379821
+        ],
+        [
+          127.204336,
+          45.4371038
+        ],
+        [
+          127.2050489,
+          45.4365991
+        ],
+        [
+          127.2348339,
+          45.4157404
+        ]
+      ],
+      "nodeVersions": {
+        "6728392266": 5,
+        "6728392267": 3,
+        "6728406123": 3,
+        "11106087235": 2,
+        "6728406124": 3,
+        "12159404937": 1,
+        "11106087254": 2,
+        "6728406126": 3,
+        "6728406127": 3,
+        "6728406128": 3,
+        "6728406129": 4,
+        "12159404944": 1,
+        "6734857701": 3,
+        "11106087243": 2,
+        "11106087241": 2,
+        "6734857702": 3,
+        "6734857703": 3,
+        "6734857704": 3,
+        "6734857705": 3,
+        "6734857706": 3,
+        "6734857707": 3,
+        "12159404936": 1,
+        "6734857708": 3,
+        "6734857709": 3,
+        "6734857710": 3,
+        "12159404933": 1,
+        "12141249835": 2,
+        "6734857712": 2,
+        "6734857713": 2,
+        "12159404928": 1,
+        "12159404927": 1,
+        "9907646557": 2,
+        "12159404925": 1,
+        "9907646558": 2,
+        "12159404923": 1,
+        "12159404914": 1,
+        "6734857723": 2,
+        "6734857724": 2,
+        "6734857725": 2,
+        "6734857726": 2,
+        "12159398298": 1,
+        "12159404920": 1,
+        "12159404907": 1,
+        "12159404903": 1,
+        "6734857730": 2,
+        "6734857731": 2,
+        "6734857732": 2,
+        "12159404902": 1,
+        "6734857733": 2,
+        "6734857734": 2,
+        "6734857735": 2,
+        "6734857736": 2,
+        "12159398300": 1,
+        "6734857737": 2,
+        "6734857738": 2,
+        "6734857739": 2,
+        "2344167706": 6,
+        "2344167708": 5,
+        "6734857746": 3,
+        "6734857780": 3,
+        "11783479240": 1,
+        "6734857785": 1,
+        "6734857786": 1,
+        "6734857787": 1,
+        "6734857797": 3,
+        "13307970342": 1,
+        "13307970344": 1,
+        "6734857789": 2,
+        "6734857790": 2,
+        "9798409050": 2,
+        "11106087260": 1,
+        "11106087259": 1,
+        "11106087258": 1,
+        "9798409049": 2,
+        "11106087272": 1,
+        "11106087274": 1,
+        "11106087276": 1,
+        "9798409048": 1,
+        "9798409047": 1,
+        "9798409046": 1,
+        "9798409045": 2,
+        "11233678547": 2,
+        "11233678546": 1,
+        "9798409044": 2,
+        "13309418779": 1,
+        "9798409043": 1,
+        "9798409042": 1,
+        "9798409041": 1,
+        "9798409040": 1,
+        "9798409039": 3,
+        "9798409038": 1,
+        "9798409037": 1,
+        "9798409036": 1,
+        "12165665134": 1,
+        "9798409035": 2,
+        "9798409034": 1,
+        "9798409033": 1,
+        "9798409032": 1,
+        "12165665144": 1,
+        "9798409031": 2,
+        "12165665145": 1,
+        "9798409030": 2,
+        "12165665146": 1,
+        "12165665147": 1,
+        "12165665148": 1,
+        "9798409029": 2,
+        "9798409028": 1,
+        "12165665149": 1,
+        "9798409027": 2,
+        "12165665150": 1,
+        "12165665151": 1,
+        "9798409026": 2,
+        "9798409025": 1,
+        "12165665220": 1,
+        "12165665161": 1,
+        "12165665162": 1,
+        "12165665163": 1,
+        "12165665164": 1,
+        "12165665165": 1,
+        "9798409024": 2,
+        "12165665166": 1,
+        "12165665218": 1,
+        "12165665167": 1,
+        "12165665168": 1,
+        "9798409023": 2,
+        "12165665170": 1,
+        "12165665172": 1,
+        "9798409022": 2,
+        "12165665174": 1,
+        "12165665175": 1,
+        "12165665178": 1,
+        "12165665179": 1,
+        "9798409021": 2,
+        "12165665181": 1,
+        "12165665183": 1,
+        "12165665185": 1,
+        "9798409020": 2,
+        "12165665187": 1,
+        "12165665216": 1,
+        "9798409019": 2,
+        "12165665191": 1,
+        "12165665192": 1,
+        "12165665193": 1,
+        "12165665194": 1,
+        "12165665214": 1,
+        "9798409018": 1,
+        "12165665201": 1,
+        "9798409017": 2,
+        "12165665200": 1,
+        "12165665199": 1,
+        "12165665206": 1,
+        "12165665205": 1,
+        "9798409016": 2,
+        "12165665204": 1,
+        "12165665210": 1,
+        "12165665212": 1,
+        "9798409015": 1,
+        "12165665233": 1,
+        "12165665232": 1,
+        "9798409014": 2,
+        "12165665231": 1,
+        "9798409013": 2,
+        "12165665230": 1,
+        "12165665229": 1,
+        "9798409012": 2,
+        "12165665228": 1,
+        "12165665236": 1,
+        "12165665237": 1,
+        "9798409011": 2,
+        "9798409010": 2,
+        "12165665240": 1,
+        "12165665244": 1,
+        "12165665245": 1,
+        "12165665246": 1,
+        "12165665247": 1,
+        "9798409009": 2,
+        "9798409008": 1,
+        "12165665249": 1,
+        "12165665251": 1,
+        "12165665252": 1,
+        "9798409006": 2,
+        "9798409005": 1,
+        "12165665458": 1,
+        "10960137768": 2,
+        "10960137769": 2,
+        "9798409004": 2,
+        "9798409003": 2,
+        "12165665467": 1,
+        "9798409002": 2,
+        "9798409000": 2,
+        "12165665485": 1,
+        "12165665484": 1,
+        "9798408999": 2,
+        "12165665483": 1,
+        "12165665498": 1,
+        "12165665497": 1,
+        "9798408998": 2,
+        "12165665496": 1,
+        "12165665495": 1,
+        "9798408997": 2,
+        "12165665494": 1,
+        "12165665493": 1,
+        "12165665492": 1,
+        "9798408996": 2,
+        "12165665503": 1,
+        "12165665504": 1,
+        "9798408995": 2,
+        "12165665508": 1,
+        "12165665509": 1,
+        "9798408994": 2,
+        "12165665511": 1,
+        "12165665513": 1,
+        "12165665515": 1,
+        "12165665519": 1,
+        "12165665520": 1,
+        "12165665521": 1,
+        "9798408993": 2,
+        "12165665524": 1,
+        "12165665525": 1,
+        "12165665526": 1,
+        "9798409001": 2,
+        "12165665529": 1,
+        "9798408992": 2,
+        "12165665531": 1,
+        "12165665533": 1,
+        "9798408991": 2,
+        "9798408990": 1,
+        "9798408989": 1,
+        "9798408988": 1,
+        "9798408987": 1,
+        "9798408986": 1,
+        "9798408985": 1,
+        "9798408952": 1,
+        "9798408953": 1,
+        "9798408930": 1,
+        "9798408954": 1,
+        "9798408964": 1,
+        "9798408935": 1,
+        "9798408963": 1,
+        "9798408981": 1,
+        "9798408980": 1,
+        "9798408977": 1,
+        "9798408950": 1,
+        "9798408949": 1,
+        "9798408976": 1,
+        "9798408959": 1,
+        "9798408973": 1,
+        "9798408947": 1,
+        "9798408946": 1,
+        "9798408945": 1,
+        "9798408944": 1,
+        "9798408972": 1,
+        "9798408955": 1,
+        "9798408967": 1,
+        "9798408940": 1,
+        "9798408939": 1,
+        "9798408938": 1,
+        "9798408937": 1,
+        "9798408936": 1,
+        "9798408979": 1,
+        "9798408978": 1,
+        "9798408934": 1,
+        "9798408956": 1,
+        "9798408969": 1,
+        "9798408943": 2,
+        "12991176859": 1,
+        "9798408942": 1,
+        "9798408941": 1,
+        "9798408968": 1,
+        "9798408962": 1,
+        "9798408961": 1,
+        "9798408975": 1,
+        "9798408948": 1,
+        "9798408974": 1,
+        "9798408960": 1,
+        "9798408958": 1,
+        "9798408957": 1,
+        "9798408933": 1,
+        "9798408932": 1,
+        "9798408931": 1,
+        "9798408971": 2,
+        "9798408970": 2,
+        "9798408966": 2,
+        "9798408965": 2,
+        "9798408983": 2,
+        "9798408951": 1,
+        "9798408982": 2,
+        "9798408921": 2,
+        "9798408920": 2,
+        "9798408899": 2,
+        "9798408913": 2,
+        "9798408912": 2,
+        "9798408906": 2,
+        "9798408905": 2,
+        "9798408925": 1,
+        "9798408924": 1,
+        "9798408919": 1,
+        "9798408918": 1,
+        "9798408903": 1
+      },
+      "wayVersions": {
+        "715782824": 18,
+        "225659033": 6,
+        "1074675442": 3,
+        "717082411": 9,
+        "1074675436": 5,
+        "1451045209": 1,
+        "1451045208": 1,
+        "1212509922": 2,
+        "1212509924": 2,
+        "1067140276": 9,
+        "1314383740": 2,
+        "1314383738": 2,
+        "1067140274": 4,
+        "1314383736": 2,
+        "1314383734": 2,
+        "1314383732": 2,
+        "1314383742": 2,
+        "1314383729": 2,
+        "1067140273": 5,
+        "1180055196": 2,
+        "1180055195": 3,
+        "1067140272": 3,
+        "1067140271": 4,
+        "1067140270": 4,
+        "1067140269": 4,
+        "1067140268": 3,
+        "1067140267": 3,
+        "1067140263": 3,
+        "1067140266": 3,
+        "1067140265": 3,
+        "1067140264": 4,
+        "1067140232": 3,
+        "1067140233": 3,
+        "1067140237": 3,
+        "1067140252": 3,
+        "1067140246": 3,
+        "1067140261": 3,
+        "1067140242": 3,
+        "1067140259": 3,
+        "1067140249": 3,
+        "1067140235": 3,
+        "1067140257": 3,
+        "1067140244": 3,
+        "1067140245": 3,
+        "1067140254": 3,
+        "1067140260": 3,
+        "1067140247": 3,
+        "1067140239": 3,
+        "1067140255": 4,
+        "1067140236": 3,
+        "1067140251": 3,
+        "1067140241": 3,
+        "1067140258": 3,
+        "1067140250": 3,
+        "1067140238": 3,
+        "1067140248": 3,
+        "1067140234": 3,
+        "1067140256": 3,
+        "1067140243": 3,
+        "1067140253": 3,
+        "1067140240": 3,
+        "1067140262": 3,
+        "1067140199": 3,
+        "1067140227": 3,
+        "1067140213": 3,
+        "1067140205": 3,
+        "1067140223": 3,
+        "1067140202": 3,
+        "1067140219": 3,
+        "1067140212": 3,
+        "1067140229": 3,
+        "1067140208": 3,
+        "1067140226": 3,
+        "1067140217": 3
+      }
+    },
+    "boundary": {
+      "lastOwnedWayId": 1067140217,
+      "lastOwnedWayVersion": 3,
+      "originalNodeId": 9798408903,
+      "coordinate": [
+        127.2348339,
+        45.4157404
+      ],
+      "version": 1,
+      "tags": {},
+      "nextOriginalWay": {
+        "id": 1067140203,
+        "version": 3,
+        "nodes": [
+          9798408901,
+          9798408903
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "highspeed": "yes",
+          "maxspeed": "250",
+          "name": "哈牡客专线",
+          "name:en": "Harbin–Mudanjiang High–Speed Railway",
+          "railway": "rail",
+          "railway:ctcs": "3",
+          "railway:traffic_mode": "passenger",
+          "ref": "3073",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "originalRelationMemberships": []
+      }
+    },
+    "eligibilityCompletenessCheck": "Within original3066901 and7047176 own inventories, no explicit-passenger crossover member and no alternative positive passenger_lines-without-traffic_mode passenger way exists. The trace did not accidentally exclude an eligible alternate tag form. All retained ways checked active, original rail, and passenger.",
+    "missingEvidence": "Originalway1067140203v3 has genuine rail/main/passenger name哈牡客专线/ref3073 and exact shared terminalnode9798408903, but belongs to no original source relation whatsoever. Existing strict sourceRelations ownership inventory cannot admit it. Matching name/ref/passenger is not proof of relation ownership.",
+    "verdict": "No completeG101 source path repair. Additional genuine station bindings can bind SBTIII/CRT/VAB to the proven306strand, but would merely move the gap to an unowned original704continuation beforeMDB. Withhold entire proposed long repair; preserve existing stations and physical gates. No new evidence contract or topology fabricated."
+  }
+}

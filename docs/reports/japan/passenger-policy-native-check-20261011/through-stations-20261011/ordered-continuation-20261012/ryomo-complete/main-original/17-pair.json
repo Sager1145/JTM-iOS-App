@@ -1,0 +1,230 @@
+{
+  "caseIndex": 17,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 17,
+  "source": {
+    "caseIndex": 17,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 17,
+    "fromStationID": "002297",
+    "toStationID": "002301",
+    "camera": [
+      36.3812375,
+      139.060185,
+      0.025021274917638014
+    ],
+    "effectiveCoordinates": [
+      [
+        139.07337,
+        36.38347
+      ],
+      [
+        139.07202,
+        36.38329
+      ],
+      [
+        139.07182,
+        36.38326
+      ],
+      [
+        139.0711,
+        36.38317
+      ],
+      [
+        139.07058,
+        36.38311
+      ],
+      [
+        139.06958,
+        36.38298
+      ],
+      [
+        139.06831,
+        36.38281
+      ],
+      [
+        139.0667,
+        36.38261
+      ],
+      [
+        139.06624,
+        36.38255
+      ],
+      [
+        139.06568,
+        36.38249
+      ],
+      [
+        139.06481,
+        36.38237
+      ],
+      [
+        139.06405,
+        36.38226
+      ],
+      [
+        139.06343,
+        36.38218
+      ],
+      [
+        139.06289,
+        36.38214
+      ],
+      [
+        139.06242,
+        36.38214
+      ],
+      [
+        139.06187,
+        36.38218
+      ],
+      [
+        139.06154,
+        36.38222
+      ],
+      [
+        139.06121,
+        36.38227
+      ],
+      [
+        139.06094,
+        36.38232
+      ],
+      [
+        139.06066,
+        36.38238
+      ],
+      [
+        139.06032,
+        36.38245
+      ],
+      [
+        139.0602,
+        36.38247
+      ],
+      [
+        139.05993,
+        36.38251
+      ],
+      [
+        139.05933,
+        36.38264
+      ],
+      [
+        139.0586,
+        36.38278
+      ],
+      [
+        139.05837,
+        36.38283
+      ],
+      [
+        139.05805,
+        36.38289
+      ],
+      [
+        139.05794,
+        36.38291
+      ],
+      [
+        139.05742,
+        36.383
+      ],
+      [
+        139.05697,
+        36.38309
+      ],
+      [
+        139.05658,
+        36.38316
+      ],
+      [
+        139.05628,
+        36.3832
+      ],
+      [
+        139.05588,
+        36.38323
+      ],
+      [
+        139.05551,
+        36.38325
+      ],
+      [
+        139.05515,
+        36.38324
+      ],
+      [
+        139.05475,
+        36.38324
+      ],
+      [
+        139.05432,
+        36.38319
+      ],
+      [
+        139.05366,
+        36.38306
+      ],
+      [
+        139.05334,
+        36.38299
+      ],
+      [
+        139.05253,
+        36.38273
+      ],
+      [
+        139.05201,
+        36.38253
+      ],
+      [
+        139.05172,
+        36.3824
+      ],
+      [
+        139.05152,
+        36.38231
+      ],
+      [
+        139.0514,
+        36.38225
+      ],
+      [
+        139.05106,
+        36.38205
+      ],
+      [
+        139.05096,
+        36.38197
+      ],
+      [
+        139.04998,
+        36.38122
+      ],
+      [
+        139.0489,
+        36.38041
+      ],
+      [
+        139.04829,
+        36.37997
+      ],
+      [
+        139.047,
+        36.379005
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t40 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:1078;camera:14.69;lod:13.54;backbones:0;networkStations:9;distance:7689.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.381237;centerLon:139.060185;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1770.0;rebuilds:2;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.381237;centerLon:139.060185;distance:7689.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-17.jpg",
+  "observation": "Tone River bridge stroke north of Apple railway glyph, with varying curve offset; Shin-Maebashi joins Joetsu passenger corridor, yard fan excluded. Named line boundary is not physical end.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

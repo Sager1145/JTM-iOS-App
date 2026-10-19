@@ -1,0 +1,90 @@
+{
+  "records": [
+    {
+      "source": "/private/tmp/jtm-keiyo-junctions-east-final",
+      "interval": "004530",
+      "viewPaths": [
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000000/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000001/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000002/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000003/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000004/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000005/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000006/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000007/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000008/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000009/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000010/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000011/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000012/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000013/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000014/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000015/view.json",
+        "/private/tmp/jtm-keiyo-junctions-east-final/captures/004530/000016/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-keiyo-junctions-west-final",
+      "interval": "004531",
+      "viewPaths": [
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000000/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000001/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000002/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000003/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000004/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000005/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000006/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000007/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000008/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000009/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000010/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000011/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000012/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000013/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000014/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000015/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000016/view.json",
+        "/private/tmp/jtm-keiyo-junctions-west-final/captures/004531/000017/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-keiyo-junctions-trunk-final",
+      "interval": "004527",
+      "viewPaths": [
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000000/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000001/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000002/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000003/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000004/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000005/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000006/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000007/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000008/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000009/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004527/000010/view.json"
+      ]
+    },
+    {
+      "source": "/private/tmp/jtm-keiyo-junctions-trunk-final",
+      "interval": "004528",
+      "viewPaths": [
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000000/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000001/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000002/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000003/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000004/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000005/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000006/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000007/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000008/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000009/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000010/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000011/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000012/view.json",
+        "/private/tmp/jtm-keiyo-junctions-trunk-final/captures/004528/000013/view.json"
+      ]
+    }
+  ],
+  "viewCount": 60,
+  "review": "60/60 viewpoints, 180 panels manually reviewed; see native-review.md; static zero-lane evidence only"
+}

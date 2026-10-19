@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/candidate-tasks.json",
+  "capturedCount" : 2,
+  "captureIndexPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "4f82a2f6eee66d1a64ede4a488b0174eb265374640841a507689b27dfa53229d",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment",
+    "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東日本旅客鉄道-山手線#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "2\/19 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 17,
+  "requestID" : "yamanote-shinagawa-own-platform-imagery",
+  "requestPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-yamanote-shinagawa-imagery-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-18T19:31:12Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

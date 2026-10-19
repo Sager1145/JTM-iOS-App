@@ -1,0 +1,2886 @@
+{
+  "status": "reviewed-with-open-alignment-finding",
+  "alignmentAccepted": false,
+  "lineID": "jp-四国旅客鉄道-予土線",
+  "intervalIDs": [
+    "jp-四国旅客鉄道-予土線#0",
+    "jp-四国旅客鉄道-予土線#1",
+    "jp-四国旅客鉄道-予土線#2",
+    "jp-四国旅客鉄道-予土線#3",
+    "jp-四国旅客鉄道-予土線#4",
+    "jp-四国旅客鉄道-予土線#5",
+    "jp-四国旅客鉄道-予土線#6",
+    "jp-四国旅客鉄道-予土線#7",
+    "jp-四国旅客鉄道-予土線#8",
+    "jp-四国旅客鉄道-予土線#9",
+    "jp-四国旅客鉄道-予土線#10",
+    "jp-四国旅客鉄道-予土線#11",
+    "jp-四国旅客鉄道-予土線#12",
+    "jp-四国旅客鉄道-予土線#13",
+    "jp-四国旅客鉄道-予土線#14",
+    "jp-四国旅客鉄道-予土線#15",
+    "jp-四国旅客鉄道-予土線#16",
+    "jp-四国旅客鉄道-予土線#17",
+    "jp-四国旅客鉄道-予土線#18"
+  ],
+  "actualReviewedViews": 245,
+  "actualReviewedPanels": 735,
+  "contactSheetsOpened": 68,
+  "originalTriptychsOpened": 52,
+  "originalPanelsReviewed": 156,
+  "originalSelection": [
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "ordinal": 0,
+      "intervalIndex": 0,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.188045,
+        "longitude": 133.105835,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9957879232879738,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233464536.2069049,
+        "rectY": 107955279.25937727,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009535",
+      "toStationID": "009558"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "ordinal": 0,
+      "intervalIndex": 1,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.16141,
+        "longitude": 133.074745,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9960863522133765,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233441353.82266313,
+        "rectY": 107979007.28713311,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009558",
+      "toStationID": "009549"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "ordinal": 0,
+      "intervalIndex": 2,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.1755,
+        "longitude": 133.029745,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9959285092776147,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233407799.39066312,
+        "rectY": 107966455.98309979,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009549",
+      "toStationID": "009526"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 0,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.194759,
+        "longitude": 132.975604,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9957126629183488,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233367428.93504286,
+        "rectY": 107949296.89412892,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "ordinal": 0,
+      "intervalIndex": 4,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.219994,
+        "longitude": 132.897311,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995429669240565,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233309049.44294116,
+        "rectY": 107926807.68738663,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009493",
+      "toStationID": "009477"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "ordinal": 0,
+      "intervalIndex": 5,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.2349,
+        "longitude": 132.85594,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9952624173199732,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233278200.9894685,
+        "rectY": 107913520.54592429,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009477",
+      "toStationID": "009515"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "ordinal": 0,
+      "intervalIndex": 6,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20179,
+        "longitude": 132.79196,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956338344330075,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233230494.0437049,
+        "rectY": 107943031.58119166,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009515",
+      "toStationID": "009545"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "ordinal": 0,
+      "intervalIndex": 7,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.178215,
+        "longitude": 132.78318,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995898087597429,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233223947.2011947,
+        "rectY": 107964037.24234329,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009545",
+      "toStationID": "009537"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "ordinal": 0,
+      "intervalIndex": 8,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.18745,
+        "longitude": 132.76716,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9957945922594006,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233212001.82340267,
+        "rectY": 107955809.3992064,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009537",
+      "toStationID": "009489"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "ordinal": 0,
+      "intervalIndex": 9,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.22409,
+        "longitude": 132.74515,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9953837170463069,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233195589.97788444,
+        "rectY": 107923156.75699353,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009489",
+      "toStationID": "009488"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "ordinal": 0,
+      "intervalIndex": 10,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.224515,
+        "longitude": 132.729315,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9953789487649128,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233183782.54609072,
+        "rectY": 107922777.92752287,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009488",
+      "toStationID": "009484"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "ordinal": 0,
+      "intervalIndex": 11,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.22825,
+        "longitude": 132.708885,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995337041621236,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233168548.8339627,
+        "rectY": 107919448.60583071,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009484",
+      "toStationID": "009459"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "ordinal": 0,
+      "intervalIndex": 12,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.251795,
+        "longitude": 132.691935,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9950727661674863,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233155909.99790934,
+        "rectY": 107898457.67989242,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009459",
+      "toStationID": "009455"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "ordinal": 0,
+      "intervalIndex": 13,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.25566,
+        "longitude": 132.67639,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995029368239244,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233144318.80578843,
+        "rectY": 107895011.40041155,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009455",
+      "toStationID": "009441"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "ordinal": 0,
+      "intervalIndex": 14,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.267635,
+        "longitude": 132.660395,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9948948787841849,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233132392.06934756,
+        "rectY": 107884332.76178245,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009441",
+      "toStationID": "009416"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "ordinal": 0,
+      "intervalIndex": 15,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.287315,
+        "longitude": 132.64176,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9946737608326904,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233118496.80622932,
+        "rectY": 107866780.05172218,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009416",
+      "toStationID": "009411"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "ordinal": 0,
+      "intervalIndex": 16,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.29151,
+        "longitude": 132.629025,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9946266119681686,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233109000.90197337,
+        "rectY": 107863037.99431041,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009411",
+      "toStationID": "009414"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002702/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#17",
+      "ordinal": 0,
+      "intervalIndex": 17,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.288805,
+        "longitude": 132.605855,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9946570148884034,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233091724.09776357,
+        "rectY": 107865450.95062011,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009414",
+      "toStationID": "009423"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000000",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "ordinal": 0,
+      "intervalIndex": 18,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.28286,
+        "longitude": 132.60061,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9947238260533129,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233087813.14230043,
+        "rectY": 107870753.83946279,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009423",
+      "toStationID": "009471"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000018",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "ordinal": 18,
+      "intervalIndex": 18,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.23924,
+        "longitude": 132.569715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9952137078851258,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233064776.16059732,
+        "rectY": 107909651.4637,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009423",
+      "toStationID": "009471"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000001",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 1,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.19780682423706,
+        "longitude": 132.9765154153101,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956784938993791,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233368108.535555,
+        "rectY": 107946581.04456213,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000002",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 2,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20075311669701,
+        "longitude": 132.97565183846007,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956454604596708,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233367464.6059841,
+        "rectY": 107943955.57788306,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000003",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 3,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20194697600351,
+        "longitude": 132.97220969392654,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956320743151762,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233364897.95699108,
+        "rectY": 107942891.69438243,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000004",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 4,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20279789710619,
+        "longitude": 132.96858878279386,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995622533099563,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233362198.00996044,
+        "rectY": 107942133.40444982,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000005",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 5,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20364512831417,
+        "longitude": 132.96496839461918,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956130330389579,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233359498.45287552,
+        "rectY": 107941378.39540803,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000006",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 6,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.2045097578834,
+        "longitude": 132.96136096870256,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9956033376640282,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233356808.56115082,
+        "rectY": 107940607.87430479,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000007",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 7,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.205356174905276,
+        "longitude": 132.95773978106456,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955938462918774,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233354108.4079428,
+        "rectY": 107939853.57607776,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000008",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 8,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20618711329108,
+        "longitude": 132.9541115686804,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995584528278597,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233351403.01670444,
+        "rectY": 107939113.06479326,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000009",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 9,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.2070299509137,
+        "longitude": 132.95049021089005,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955750766143595,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233348702.73662168,
+        "rectY": 107938361.94202866,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000010",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 10,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20787747301865,
+        "longitude": 132.94686719706547,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955655721997695,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233346001.22171032,
+        "rectY": 107937606.63723913,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000011",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 11,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20850943615282,
+        "longitude": 132.94318957732347,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955584849978805,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233343258.98967573,
+        "rectY": 107937043.43208702,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000012",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 12,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.20934112730389,
+        "longitude": 132.93961157990162,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955491577446152,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233340591.04142714,
+        "rectY": 107936302.22325325,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000013",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 13,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21187138234358,
+        "longitude": 132.9374114264666,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9955207801352015,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233338950.48811996,
+        "rectY": 107934047.19937252,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000014",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 14,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21453653835508,
+        "longitude": 132.9354103122978,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954908874609033,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233337458.34924656,
+        "rectY": 107931671.87801175,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000015",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 15,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21691501558147,
+        "longitude": 132.93298247664848,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954642083803165,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233335648.0237754,
+        "rectY": 107929551.99814343,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000016",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 16,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.217374816752795,
+        "longitude": 132.92935970304086,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954590506496152,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233332946.68798277,
+        "rectY": 107929142.1817096,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000017",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 17,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.2159701393818,
+        "longitude": 132.92601667034293,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954748071442968,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233330453.9421309,
+        "rectY": 107930394.1506011,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000018",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 18,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21473209960649,
+        "longitude": 132.9225867959715,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954886939398794,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233327896.44243386,
+        "rectY": 107931497.58111942,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000019",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 19,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21469458616205,
+        "longitude": 132.91883872568536,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954891147119267,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233325101.6786661,
+        "rectY": 107931531.01556844,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000020",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 20,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21523623566783,
+        "longitude": 132.91513399793587,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954830392227519,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233322339.23343617,
+        "rectY": 107931048.26051289,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000021",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 21,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.215768010454845,
+        "longitude": 132.91142592574602,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954770744079079,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233319574.2944107,
+        "rectY": 107930574.30357459,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000022",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 22,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.216311968182325,
+        "longitude": 132.90772105630023,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954709728502947,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233316811.74352434,
+        "rectY": 107930089.48532051,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000023",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 23,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.216828867548045,
+        "longitude": 132.90401088745423,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954651747220414,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233314045.2411187,
+        "rectY": 107929628.78083104,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000024",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 24,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21761845477496,
+        "longitude": 132.90041309051875,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954563176611437,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233311362.52928275,
+        "rectY": 107928925.02857262,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000025",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 25,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.21981538204382,
+        "longitude": 132.89774563523568,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9954316730030294,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233309373.53046247,
+        "rectY": 107926966.89290264,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000026",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "ordinal": 26,
+      "intervalIndex": 3,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.219994,
+        "longitude": 132.897311,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995429669240565,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233309049.44294116,
+        "rectY": 107926807.68738663,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009526",
+      "toStationID": "009493"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000009",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "ordinal": 9,
+      "intervalIndex": 0,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.16067944141929,
+        "longitude": 133.0989313790502,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9960945346318789,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233459388.49402237,
+        "rectY": 107979658.01018825,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009535",
+      "toStationID": "009558"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000010",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "ordinal": 10,
+      "intervalIndex": 0,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.15810694564217,
+        "longitude": 133.09690470308448,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9961233458622089,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233457877.29489177,
+        "rectY": 107981949.34017727,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009535",
+      "toStationID": "009558"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000012",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "ordinal": 12,
+      "intervalIndex": 0,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.1563516218547,
+        "longitude": 133.08994158245534,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9961430038386585,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233452685.2158327,
+        "rectY": 107983512.77395536,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009535",
+      "toStationID": "009558"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000015",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "ordinal": 15,
+      "intervalIndex": 0,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.160708887570486,
+        "longitude": 133.0801097346083,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.996094204831594,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233445354.05872115,
+        "rectY": 107979631.7820207,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009535",
+      "toStationID": "009558"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000016",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "ordinal": 16,
+      "intervalIndex": 18,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.243825555927216,
+        "longitude": 132.57247840345013,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.995162236255814,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233066836.70355636,
+        "rectY": 107905563.2612559,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009423",
+      "toStationID": "009471"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000017",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "ordinal": 17,
+      "intervalIndex": 18,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.24173061310467,
+        "longitude": 132.5697474376992,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9951857522183849,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233064800.34789896,
+        "rectY": 107907431.011319,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+      "fromStationID": "009423",
+      "toStationID": "009471"
+    }
+  ],
+  "captureRoot": "/private/tmp/jtm-yodo-complete-secondary-v1",
+  "binding": {
+    "sourcePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/app/public/rail/jp-2025.json",
+    "installedPath": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app/Contents/Resources/jp-2025.json",
+    "sourcePackageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+    "installedPackageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+    "packagesByteEqual": true,
+    "yodoRowsLiteralEqual": true,
+    "scopeStationsLiteralEqual": true,
+    "sourceDisplayPlanArraysLiteralEqualFor19Intervals": true,
+    "all245ViewIdentityCameraPlanBindingsMatch": true,
+    "identityPlanDigest": "82b1d9255361a68a7f9fc30ac840e0a67da7198dabbafac8deaf1ac32558c869",
+    "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61",
+    "scopeDeclaredLineSha256": "1ac356e549187032475e39e298ccfd559618b9b032aaf0109f92b919ff8dd229"
+  },
+  "countsByInterval": {
+    "jp-四国旅客鉄道-予土線#0": 18,
+    "jp-四国旅客鉄道-予土線#1": 15,
+    "jp-四国旅客鉄道-予土線#2": 22,
+    "jp-四国旅客鉄道-予土線#3": 27,
+    "jp-四国旅客鉄道-予土線#4": 14,
+    "jp-四国旅客鉄道-予土線#5": 24,
+    "jp-四国旅客鉄道-予土線#6": 13,
+    "jp-四国旅客鉄道-予土線#7": 9,
+    "jp-四国旅客鉄道-予土線#8": 18,
+    "jp-四国旅客鉄道-予土線#9": 6,
+    "jp-四国旅客鉄道-予土線#10": 8,
+    "jp-四国旅客鉄道-予土線#11": 11,
+    "jp-四国旅客鉄道-予土線#12": 6,
+    "jp-四国旅客鉄道-予土線#13": 8,
+    "jp-四国旅客鉄道-予土線#14": 10,
+    "jp-四国旅客鉄道-予土線#15": 5,
+    "jp-四国旅客鉄道-予土線#16": 8,
+    "jp-四国旅客鉄道-予土線#17": 4,
+    "jp-四国旅客鉄道-予土線#18": 19
+  },
+  "finding": {
+    "itemID": "jp-四国旅客鉄道-予土線#0",
+    "viewOrdinal": 12,
+    "rawPath": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000012",
+    "description": "Display and smooth cut inside the lower westward Yodo blue glyph arc, distinct from upper Nakamura branch and road. Material departure remains unresolved.",
+    "cameraLongitude": 133.08994158245534,
+    "cameraLatitude": 33.1563516218547,
+    "metresPerPixel": 0.9961430038386585,
+    "samples": [
+      {
+        "x": 550,
+        "glyphY": 420,
+        "displayY": 391,
+        "verticalPixels": 29,
+        "verticalMetres": 28.888147111321096
+      },
+      {
+        "x": 600,
+        "glyphYRange": [
+          421,
+          422
+        ],
+        "displayY": 395,
+        "verticalPixelsRange": [
+          26,
+          27
+        ],
+        "verticalMetresRange": [
+          25.89971809980512,
+          26.895861103643778
+        ]
+      }
+    ],
+    "measurementLimit": "Screen vertical separation from visible thin Apple transit glyph, not perpendicular surveyed rail normal. Inspector ownLane=0; Main -0.5 lane is separate."
+  },
+  "observations": [
+    "All19 intervals and overlapping tails viewed. No additional obvious orphan segment, wrong branch substitution, reverse hook, or substantive display/smooth discrepancy observed.",
+    "All27 risk interval3 originals reviewed; bridge/river/tunnel context remains distinct from road. Small local thin-glyph separation is not certified exact own-rail agreement.",
+    "All20 distinct station endpoint contexts and Kita-Uwajima fork originals reviewed. Inspector does not show Main station-dot placement."
+  ],
+  "limits": [
+    "No Main application or physical survey acceptance.",
+    "Forest/tunnel spans and thin Apple transit glyphs cannot prove physical own rails or exact station faces.",
+    "No national complete claim or reused Primary pixel evidence."
+  ],
+  "views": [
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002693/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#0",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002694/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#1",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002695/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#10",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002696/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#11",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002697/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#12",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002698/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#13",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002699/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#14",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002700/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#15",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002701/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#16",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002702/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#17",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002702/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#17",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002702/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#17",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002702/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#17",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002703/000018/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#18",
+      "pointOrdinal": 18,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000018/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 18,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000019/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 19,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000020/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 20,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002704/000021/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#2",
+      "pointOrdinal": 21,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000018/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 18,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000019/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 19,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000020/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 20,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000021/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 21,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000022/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 22,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000023/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 23,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000024/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 24,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000025/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 25,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002705/000026/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#3",
+      "pointOrdinal": 26,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002706/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#4",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000018/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 18,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000019/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 19,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000020/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 20,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000021/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 21,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000022/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 22,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002707/000023/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#5",
+      "pointOrdinal": 23,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002708/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#6",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002709/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#7",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000006/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 6,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000007/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 7,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000008/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 8,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000009/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 9,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000010/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 10,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000011/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 11,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000012/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 12,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000013/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 13,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000014/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 14,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000015/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 15,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000016/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 16,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002710/000017/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#8",
+      "pointOrdinal": 17,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000000/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 0,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000001/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 1,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000002/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 2,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000003/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 3,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000004/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 4,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    },
+    {
+      "path": "/private/tmp/jtm-yodo-complete-secondary-v1/captures/002711/000005/view.json",
+      "itemID": "jp-四国旅客鉄道-予土線#9",
+      "pointOrdinal": 5,
+      "wholeLineRenderDependency": "79c6a73eb45dbf5ac4933519ee1a6a50211b1d6395b9f09f440aea99f3e8aa61"
+    }
+  ]
+}

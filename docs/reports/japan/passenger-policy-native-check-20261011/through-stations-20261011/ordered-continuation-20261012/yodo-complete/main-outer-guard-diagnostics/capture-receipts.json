@@ -1,0 +1,272 @@
+[
+  {
+    "name": "iyoki",
+    "camera": [
+      33.105009,
+      133.098333,
+      0.0024
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.103809,
+        "lon": 133.096986
+      },
+      {
+        "lat": 33.103809,
+        "lon": 133.09968
+      },
+      {
+        "lat": 33.106209,
+        "lon": 133.09968
+      },
+      {
+        "lat": 33.106209,
+        "lon": 133.096986
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:18.61;lod:17.46;backbones:0;networkStations:1;distance:526.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.105009;centerLon:133.098333;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1276.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "rejected: actual own narrow platform longitudinal middle is around y580, old dot y439 lies at north cap; green line also west of own sleeper rail. Extend Nakamura interval3 for both-side alias correction."
+  },
+  {
+    "name": "takamitsu",
+    "camera": [
+      33.25598,
+      132.573505,
+      0.0024
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.25478,
+        "lon": 132.572156
+      },
+      {
+        "lat": 33.25478,
+        "lon": 132.574854
+      },
+      {
+        "lat": 33.25718,
+        "lon": 132.574854
+      },
+      {
+        "lat": 33.25718,
+        "lon": 132.572156
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:387;camera:18.61;lod:17.46;backbones:0;networkStations:1;distance:526.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.255980;centerLon:132.573505;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2470.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "rejected: actual short station strip near y305–410 has midpoint around y358, old dot y439 lies south; main line remains substantially west of own sleeper rail. Include complete Yosan86 and87 for both-side correction."
+  },
+  {
+    "name": "uwajima",
+    "camera": [
+      33.226185,
+      132.56771,
+      0.0024
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.224985,
+        "lon": 132.566361
+      },
+      {
+        "lat": 33.224985,
+        "lon": 132.569059
+      },
+      {
+        "lat": 33.227385,
+        "lon": 132.569059
+      },
+      {
+        "lat": 33.227385,
+        "lon": 132.566361
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:197;camera:18.61;lod:17.46;backbones:0;networkStations:1;distance:526.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.226185;centerLon:132.567710;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2456.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "rejected: terminal dot near(827,439) is east of two platform longitudinal middles and own group rail; endpoint must coincide with corrected station group normal. Attached southeast station building excluded."
+  },
+  {
+    "name": "kubokawa",
+    "camera": [
+      33.212675,
+      133.137325,
+      0.0024
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.211475,
+        "lon": 133.135976
+      },
+      {
+        "lat": 33.211475,
+        "lon": 133.138674
+      },
+      {
+        "lat": 33.213875,
+        "lon": 133.138674
+      },
+      {
+        "lat": 33.213875,
+        "lon": 133.135976
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:213;camera:18.61;lod:17.46;backbones:0;networkStations:2;distance:526.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.212675;centerLon:133.137325;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2286.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "open evidence: Main confirms two operator dots coincide near(827,439) in multitrack frame; unequal separate station faces and track assignment are not established by shared stationID. Preserve alias pending own operator face evidence; no synthetic shared centre."
+  },
+  {
+    "name": "naka03-full",
+    "camera": [
+      33.093099,
+      133.10041,
+      0.034539000000000895
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.075828,
+        "lon": 133.081028
+      },
+      {
+        "lat": 33.075828,
+        "lon": 133.119792
+      },
+      {
+        "lat": 33.110367,
+        "lon": 133.119792
+      },
+      {
+        "lat": 33.110367,
+        "lon": 133.081028
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 42,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1032;camera:14.76;lod:13.62;backbones:0;networkStations:3;distance:7577.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.093099;centerLon:133.100410;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1748.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "actual entire interval including both endpoints inside corners; no reversed branch hook at regional scale. Known Iyoki station correction and local railway departure remain open, full highzoom independent panels required."
+  },
+  {
+    "name": "yosan86-full",
+    "camera": [
+      33.264695,
+      132.5581875,
+      0.049356388888917815
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.240013,
+        "lon": 132.530436
+      },
+      {
+        "lat": 33.240013,
+        "lon": 132.585939
+      },
+      {
+        "lat": 33.28937,
+        "lon": 132.585939
+      },
+      {
+        "lat": 33.28937,
+        "lon": 132.530436
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 90,
+    "onStatus": "22 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1759;camera:14.25;lod:13.10;backbones:0;networkStations:8;distance:10827.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.264695;centerLon:132.558188;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1729.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "actual entire86 all90points includingbothendpoints insideactualcorners; continuouspassable regionalcurve with no reversehook; knownTakamitsustationandlocalownraildepartureremainopen. Regionalfullview doesnotproveprecisepixelalignment."
+  },
+  {
+    "name": "yosan85-full",
+    "camera": [
+      33.2850675,
+      132.5419525,
+      0.03380675000000544
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.268162,
+        "lon": 132.52294
+      },
+      {
+        "lat": 33.268162,
+        "lon": 132.560965
+      },
+      {
+        "lat": 33.301969,
+        "lon": 132.560965
+      },
+      {
+        "lat": 33.301969,
+        "lon": 132.52294
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 50,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1419;camera:14.79;lod:13.64;backbones:0;networkStations:3;distance:7416.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.285067;centerLon:132.541953;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2303.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "entire85 captured insideactualcorners with bothendpoints and0budgetdrops. Continuous main passable atregional scale, knownTachima/IyoYoshida stationchainage corrections pending. Localbody requires actualownrail fit; overview not alignmentacceptance."
+  },
+  {
+    "name": "yosan84-full",
+    "camera": [
+      33.3232525,
+      132.5313725,
+      0.07692975000000075
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.284779,
+        "lon": 132.488089
+      },
+      {
+        "lat": 33.284779,
+        "lon": 132.574656
+      },
+      {
+        "lat": 33.361709,
+        "lon": 132.574656
+      },
+      {
+        "lat": 33.361709,
+        "lon": 132.488089
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 78,
+    "onStatus": "25 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1806;camera:13.61;lod:12.46;backbones:0;networkStations:9;distance:16877.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.323253;centerLon:132.531373;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1654.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "entire84 allsourcepoints andbothendpoints insideactualcorners with renderednetwork0budgetdrops. Regionaltunnelcontinuation and curves show no reversehook; precisebodyalignment and Shimouwa/Tachima ownframe corrections pending. Underground realtracklocation remains cartographic evidence limitation."
+  },
+  {
+    "name": "yosan83-full",
+    "camera": [
+      33.3564775,
+      132.52042999999998,
+      0.034332777777777324
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.339309,
+        "lon": 132.501106
+      },
+      {
+        "lat": 33.339309,
+        "lon": 132.539754
+      },
+      {
+        "lat": 33.373642,
+        "lon": 132.539754
+      },
+      {
+        "lat": 33.373642,
+        "lon": 132.501106
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 44,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:14.77;lod:13.62;backbones:0;networkStations:3;distance:7532.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.356477;centerLon:132.520430;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2602.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "actual entire83 baseline insidecorners allpoints/bothendpoints,0budgetdrops; no regionalreversehook. KnownShimouwa station shift and Unomachi guard adjudication remainpending; this pair is baseline evidence for repairchats, not acceptance."
+  }
+]

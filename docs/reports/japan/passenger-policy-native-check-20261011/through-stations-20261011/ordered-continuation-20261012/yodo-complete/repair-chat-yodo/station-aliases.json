@@ -1,0 +1,1519 @@
+[
+  {
+    "stationIndex": 0,
+    "stationID": "009535",
+    "name": "若井",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/00-009535",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.18809245153725,
+      "longitude": 133.10591991458483,
+      "mapPointsPerPoint": 4.000000007450581,
+      "metresPerPoint": 0.4978936966422194,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233466697.52380857,
+      "rectY": 107957000.98031491,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.99999999731277
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          530,
+          288
+        ],
+        [
+          480,
+          374
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      504.5,
+      331
+    ],
+    "ownRailFlanks": [
+      [
+        529,
+        276
+      ],
+      [
+        470,
+        384
+      ]
+    ],
+    "ownRailNormalPixel": [
+      500.22849125123804,
+      328.66649059095414
+    ],
+    "inverseProjectedOwnNormal": [
+      133.1059238225165,
+      33.18808497005418
+    ],
+    "proposedDisplayAlias": [
+      133.10591991458483,
+      33.188092451537244
+    ],
+    "retainedWithinPickUncertainty": true,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East attached access bulb near515,334; broad purple casing is not platform length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 1,
+    "stationID": "009558",
+    "name": "家地川",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/01-009558",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.16140999999995,
+      "longitude": 133.07474500000004,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4980431765705354,
+      "pitch": 0,
+      "rectHeight": 2615.999999985099,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233443451.82266313,
+      "rectY": 107980771.28713317,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          456,
+          317
+        ],
+        [
+          522,
+          317
+        ]
+      ],
+      [
+        [
+          456,
+          334
+        ],
+        [
+          526,
+          334
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      490,
+      325.5
+    ],
+    "ownRailFlanks": [
+      [
+        550,
+        325
+      ],
+      [
+        600,
+        324
+      ]
+    ],
+    "ownRailNormalPixel": [
+      490.0139944022391,
+      326.19972011195523
+    ],
+    "inverseProjectedOwnNormal": [
+      133.07469411310052,
+      33.1614135938415
+    ],
+    "proposedDisplayAlias": [
+      133.07469411310052,
+      33.1614135938415
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "Attached north small dot/cap and south casing bulb excluded; two narrow parallel face lengths agree.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 2,
+    "stationID": "009549",
+    "name": "打井川",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/02-009549",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.17549999999999,
+      "longitude": 133.029745,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4979642537112766,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233409897.39066315,
+      "rectY": 107968219.98309979,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          462,
+          337
+        ],
+        [
+          539,
+          339
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      500.5,
+      338
+    ],
+    "ownRailFlanks": [
+      [
+        420,
+        326
+      ],
+      [
+        600,
+        330
+      ]
+    ],
+    "ownRailNormalPixel": [
+      500.72680157946695,
+      327.7939289239882
+    ],
+    "inverseProjectedOwnNormal": [
+      133.0297515810766,
+      33.17549643525176
+    ],
+    "proposedDisplayAlias": [
+      133.029745,
+      33.1755
+    ],
+    "retainedWithinPickUncertainty": true,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "North road55 and wide purple station casing excluded.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 3,
+    "stationID": "009526",
+    "name": "土佐大正",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/03-009526",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.19475899999996,
+      "longitude": 132.9756040000002,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978563309955096,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233369526.93504298,
+      "rectY": 107951060.89412895,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          490,
+          268
+        ],
+        [
+          454,
+          367
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      472,
+      317.5
+    ],
+    "ownRailFlanks": [
+      [
+        521,
+        250
+      ],
+      [
+        491,
+        350
+      ]
+    ],
+    "ownRailNormalPixel": [
+      498.3761467889908,
+      325.41284403669727
+    ],
+    "inverseProjectedOwnNormal": [
+      132.9755979711818,
+      33.1947661247781
+    ],
+    "proposedDisplayAlias": [
+      132.975604,
+      33.194759
+    ],
+    "retainedWithinPickUncertainty": true,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "Large west attached building shapes excluded from narrow own longitudinal strip.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 4,
+    "stationID": "009493",
+    "name": "土佐昭和",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/04-009493",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.21999399999999,
+      "longitude": 132.89731099999995,
+      "mapPointsPerPoint": 4,
+      "metresPerPoint": 0.4977148346202908,
+      "pitch": 0,
+      "rectHeight": 2616.000000014901,
+      "rectWidth": 3996,
+      "rectX": 233311147.44294113,
+      "rectY": 107928571.68738663,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          418,
+          188
+        ],
+        [
+          517,
+          336
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      467.5,
+      262
+    ],
+    "ownRailFlanks": [
+      [
+        415,
+        180
+      ],
+      [
+        550,
+        335
+      ]
+    ],
+    "ownRailNormalPixel": [
+      478.25828402366864,
+      252.62988165680474
+    ],
+    "inverseProjectedOwnNormal": [
+      132.8971970505558,
+      33.220327752246135
+    ],
+    "proposedDisplayAlias": [
+      132.8971970505558,
+      33.220327752246135
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East lateral casing bulb at553,319 and south thin access continuation excluded; own light platform caps determine length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 5,
+    "stationID": "009477",
+    "name": "十川",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/05-009477",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.2349,
+      "longitude": 132.85594000000012,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4976312091234418,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233280298.9894686,
+      "rectY": 107915284.54592428,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          402,
+          366
+        ],
+        [
+          505,
+          337
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      453.5,
+      351.5
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        345
+      ],
+      [
+        550,
+        302
+      ]
+    ],
+    "ownRailNormalPixel": [
+      447.7155119306748,
+      331.3215532465399
+    ],
+    "inverseProjectedOwnNormal": [
+      132.85566220635872,
+      33.23488060934604
+    ],
+    "proposedDisplayAlias": [
+      132.85566220635872,
+      33.23488060934604
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "Road381 and south row of buildings excluded; single railparallel light face is inside own station rectangle.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 6,
+    "stationID": "009515",
+    "name": "半家",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/06-009515",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.20179,
+      "longitude": 132.79196000000005,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978169167528756,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233232592.04370493,
+      "rectY": 107944795.58119166,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          403,
+          398
+        ],
+        [
+          477,
+          344
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      440,
+      371
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        386
+      ],
+      [
+        500,
+        310
+      ]
+    ],
+    "ownRailNormalPixel": [
+      432.5811359026369,
+      361.2383367139959
+    ],
+    "inverseProjectedOwnNormal": [
+      132.79160101923895,
+      33.20163631555099
+    ],
+    "proposedDisplayAlias": [
+      132.79160101923895,
+      33.20163631555099
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "SE attached access/building arm and north casing bulb excluded.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 7,
+    "stationID": "009545",
+    "name": "江川崎",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/07-009545",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.17821499999999,
+      "longitude": 132.78318000000013,
+      "mapPointsPerPoint": 4.000000011175871,
+      "metresPerPoint": 0.49794904518997646,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233226045.20119476,
+      "rectY": 107965801.2423433,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999995969155
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          365,
+          284
+        ],
+        [
+          532,
+          327
+        ]
+      ],
+      [
+        [
+          379,
+          322
+        ],
+        [
+          531,
+          363
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      451.75,
+      324
+    ],
+    "ownRailFlanks": [
+      [
+        430,
+        296
+      ],
+      [
+        470,
+        311
+      ]
+    ],
+    "ownRailNormalPixel": [
+      458.2739726027397,
+      306.6027397260274
+    ],
+    "inverseProjectedOwnNormal": [
+      132.78295884635548,
+      33.1783065810009
+    ],
+    "proposedDisplayAlias": [
+      132.78295884635548,
+      33.1783065810009
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "Central platform access patch and broad southeast attached building excluded; two parallel narrow faces support matching longitudinal centre.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "identityQualification": "Own group/face assignment remains cartographic; no physical platform-number assignment.",
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 8,
+    "stationID": "009537",
+    "name": "西ヶ方",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/08-009537",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.18744999999994,
+      "longitude": 132.7671600000001,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.4978972956659891,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233214099.8234028,
+      "rectY": 107957573.39920643,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          535,
+          288
+        ],
+        [
+          493,
+          418
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      514,
+      353
+    ],
+    "ownRailFlanks": [
+      [
+        485,
+        330
+      ],
+      [
+        453,
+        420
+      ]
+    ],
+    "ownRailNormalPixel": [
+      480.99473914949584,
+      341.26479614204294
+    ],
+    "inverseProjectedOwnNormal": [
+      132.76706073004522,
+      33.18738595964557
+    ],
+    "proposedDisplayAlias": [
+      132.76706073004522,
+      33.18738595964557
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East parallel gray access strip and south bulb excluded; one segmented narrow light platform supports full capped length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 9,
+    "stationID": "009489",
+    "name": "真土",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/09-009489",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22409000000001,
+      "longitude": 132.74515000000005,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.49769185898665685,
+      "pitch": 0,
+      "rectHeight": 2615.9999999701977,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233197687.9778845,
+      "rectY": 107924920.75699356,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          435,
+          279
+        ],
+        [
+          539,
+          299
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      487,
+      289
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        274
+      ],
+      [
+        580,
+        319
+      ]
+    ],
+    "ownRailNormalPixel": [
+      485.4117647058823,
+      295.3529411764706
+    ],
+    "inverseProjectedOwnNormal": [
+      132.74507442481666,
+      33.22423201663592
+    ],
+    "proposedDisplayAlias": [
+      132.74507442481666,
+      33.22423201663592
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East rounded access bulb at548,300 excluded; west light cap and thin railparallel strip determine length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 10,
+    "stationID": "009488",
+    "name": "吉野生",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/10-009488",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22451499999996,
+      "longitude": 132.729315,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4976894748459659,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233185880.5460907,
+      "rectY": 107924541.9275229,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          433,
+          274
+        ],
+        [
+          506,
+          335
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      469.5,
+      304.5
+    ],
+    "ownRailFlanks": [
+      [
+        420,
+        254
+      ],
+      [
+        530,
+        357
+      ]
+    ],
+    "ownRailNormalPixel": [
+      471.570522700251,
+      302.2887621647805
+    ],
+    "inverseProjectedOwnNormal": [
+      132.72916517460845,
+      33.2246258915195
+    ],
+    "proposedDisplayAlias": [
+      132.72916517460845,
+      33.2246258915195
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "West attached building near484,328 and east casing bulb excluded; label partly overlaps north platform cap, longitudinal uncertainty applies.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 11,
+    "stationID": "009484",
+    "name": "松丸",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/11-009484",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.22824999999997,
+      "longitude": 132.70888500000018,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49766851988363814,
+      "pitch": 0,
+      "rectHeight": 2615.999999985099,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233170646.8339628,
+      "rectY": 107921212.60583074,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          338,
+          238
+        ],
+        [
+          558,
+          357
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      448,
+      297.5
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        264
+      ],
+      [
+        550,
+        345
+      ]
+    ],
+    "ownRailNormalPixel": [
+      451.16909259832767,
+      291.6313100030969
+    ],
+    "inverseProjectedOwnNormal": [
+      132.70862573280914,
+      33.22840870994638
+    ],
+    "proposedDisplayAlias": [
+      132.70862573280914,
+      33.22840870994638
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "Broad south attached station building excluded from thin continuous platform; own black sleeper rail runs immediately north of face.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 12,
+    "stationID": "009459",
+    "name": "出目",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/12-009459",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.251795000000016,
+      "longitude": 132.6919350000001,
+      "mapPointsPerPoint": 4.00000000372529,
+      "metresPerPoint": 0.4975363835471016,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233158007.9979094,
+      "rectY": 107900221.67989242,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 17.999999998656385
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          405,
+          255
+        ],
+        [
+          497,
+          342
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      451,
+      298.5
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        262
+      ],
+      [
+        500,
+        357
+      ]
+    ],
+    "ownRailNormalPixel": [
+      445.0328515111695,
+      304.78120893561106
+    ],
+    "inverseProjectedOwnNormal": [
+      132.6916428154467,
+      33.251894675581404
+    ],
+    "proposedDisplayAlias": [
+      132.6916428154467,
+      33.251894675581404
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "North attached access patch and southeast casing cap excluded; sole light face north of own railway determines length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 13,
+    "stationID": "009455",
+    "name": "近永",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/13-009455",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.255660000000006,
+      "longitude": 132.67639000000003,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4975146831929287,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999403954,
+      "rectX": 233146416.80578852,
+      "rectY": 107896775.40041155,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          474,
+          312
+        ],
+        [
+          589,
+          359
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      531.5,
+      335.5
+    ],
+    "ownRailFlanks": [
+      [
+        460,
+        307
+      ],
+      [
+        580,
+        354
+      ]
+    ],
+    "ownRailNormalPixel": [
+      531.6683725690891,
+      335.07011258955987
+    ],
+    "inverseProjectedOwnNormal": [
+      132.67656256459787,
+      33.25562379829094
+    ],
+    "proposedDisplayAlias": [
+      132.67656256459787,
+      33.25562379829094
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 4,
+    "excluded": "North station building and southern yard rail excluded. Island strip lies between two sleeper rails; group-centre normal is display choice, not a platform-number assignment. East cap near label has additional uncertainty.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "identityQualification": "Own group/face assignment remains cartographic; no physical platform-number assignment.",
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 14,
+    "stationID": "009441",
+    "name": "深田",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/14-009441",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.267635000000006,
+      "longitude": 132.66039500000005,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4974474384655244,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233134490.06934762,
+      "rectY": 107886096.76178244,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          497,
+          284
+        ],
+        [
+          508,
+          332
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      502.5,
+      308
+    ],
+    "ownRailFlanks": [
+      [
+        478,
+        280
+      ],
+      [
+        500,
+        390
+      ]
+    ],
+    "ownRailNormalPixel": [
+      484.3269230769231,
+      311.63461538461536
+    ],
+    "inverseProjectedOwnNormal": [
+      132.66031360527268,
+      33.267703918071675
+    ],
+    "proposedDisplayAlias": [
+      132.66031360527268,
+      33.267703918071675
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East attached access arm at509,305 and long southern broad casing excluded; only short light capped strip determines platform length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 15,
+    "stationID": "009416",
+    "name": "大内",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/15-009416",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.28731499999996,
+      "longitude": 132.64175999999992,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49733687948997485,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233120594.80622935,
+      "rectY": 107868544.05172223,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          544,
+          348
+        ],
+        [
+          600,
+          405
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      572,
+      376.5
+    ],
+    "ownRailFlanks": [
+      [
+        520,
+        354
+      ],
+      [
+        620,
+        468
+      ]
+    ],
+    "ownRailNormalPixel": [
+      553.7667420420943,
+      392.4940859279875
+    ],
+    "inverseProjectedOwnNormal": [
+      132.64205110948944,
+      33.28702130620883
+    ],
+    "proposedDisplayAlias": [
+      132.64205110948944,
+      33.28702130620883
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East rounded access bulb at604,410 excluded; narrow light strip ends at its junction with attached bulb. Road283 and river excluded.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 16,
+    "stationID": "009411",
+    "name": "二名",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/16-009411",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.29150999999998,
+      "longitude": 132.62902500000004,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.49731330552094183,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996,
+      "rectX": 233111098.9019734,
+      "rectY": 107864801.99431041,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          383,
+          369
+        ],
+        [
+          509,
+          315
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      446,
+      342
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        369
+      ],
+      [
+        500,
+        325
+      ]
+    ],
+    "ownRailNormalPixel": [
+      448.4919571045576,
+      347.66353887399464
+    ],
+    "inverseProjectedOwnNormal": [
+      132.62875137153515,
+      33.291417343476176
+    ],
+    "proposedDisplayAlias": [
+      132.62875137153515,
+      33.291417343476176
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "North building and southeast gray access strip excluded. Rounded terminal cap lies on narrow face axis; uncertainty includes whether small terminal widening belongs to cap.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 17,
+    "stationID": "009414",
+    "name": "伊予宮野下",
+    "status": "candidate-only-Root-approved-coextensive-group-normal",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/17-009414",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.288804999999975,
+      "longitude": 132.60585500000008,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.49732850651785515,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996.0000000298023,
+      "rectX": 233093822.09776357,
+      "rectY": 107867214.95062014,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          330,
+          412
+        ],
+        [
+          605,
+          250
+        ]
+      ],
+      [
+        [
+          385,
+          400
+        ],
+        [
+          591,
+          279
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      477.75,
+      335.25
+    ],
+    "ownRailFlanks": [
+      [
+        440,
+        344.5
+      ],
+      [
+        520,
+        292
+      ]
+    ],
+    "ownRailNormalPixel": [
+      470.6293515358362,
+      324.3994880546075
+    ],
+    "inverseProjectedOwnNormal": [
+      132.6057001257729,
+      33.28881666120304
+    ],
+    "proposedDisplayAlias": [
+      132.6057001257729,
+      33.28881666120304
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 2,
+    "longitudinalUncertaintyPixels": 6,
+    "excluded": "North attached station building and central access bridge excluded. Two curved narrow faces have unequal lengths; common longitudinal midpoint is provisional with additional chainage uncertainty. Own sleeperflanks400376,440344.5,520292,550276,600257 independently bound label gap.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "identityQualification": "Own group/face assignment remains cartographic; no physical platform-number assignment.",
+    "candidateLongitudinalDecision": "Root explicitly confirmed coextensive group and approved inherited groupnormal; unequal curved-face warning retained.",
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    },
+    "warningFile": "station17-warning-alternatives.json",
+    "rootApprovedAlias": true
+  },
+  {
+    "stationIndex": 18,
+    "stationID": "009423",
+    "name": "務田",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/18-009423",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.28286,
+      "longitude": 132.60061000000002,
+      "mapPointsPerPoint": 3.9999999925494194,
+      "metresPerPoint": 0.4973619121002477,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3995.9999999701977,
+      "rectX": 233089911.14230046,
+      "rectY": 107872517.83946279,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.00000000268723
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          392,
+          339
+        ],
+        [
+          559,
+          310
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      475.5,
+      324.5
+    ],
+    "ownRailFlanks": [
+      [
+        400,
+        330.5
+      ],
+      [
+        550,
+        304.5
+      ]
+    ],
+    "ownRailNormalPixel": [
+      474.30747324818776,
+      317.6200379703141
+    ],
+    "inverseProjectedOwnNormal": [
+      132.60047485675528,
+      33.28290206443831
+    ],
+    "proposedDisplayAlias": [
+      132.60047485675528,
+      33.28290206443831
+    ],
+    "retainedWithinPickUncertainty": false,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "North casing bulb and tiny west attached access patch excluded; caps of own railparallel narrowface determine full length.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  },
+  {
+    "stationIndex": 19,
+    "stationID": "009471",
+    "name": "北宇和島",
+    "status": "candidate-only-raw-station-review",
+    "folder": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/19-009471",
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 33.238689923845335,
+      "longitude": 132.56978339632983,
+      "mapPointsPerPoint": 3.9999999962747097,
+      "metresPerPoint": 0.49760994049244817,
+      "pitch": 0,
+      "rectHeight": 2616,
+      "rectWidth": 3996,
+      "rectX": 233066925.16059732,
+      "rectY": 107911905.8637,
+      "viewportHeightPoints": 654,
+      "viewportWidthPoints": 999,
+      "zoom256": 18.000000001343615
+    },
+    "ownPlatformFaces": [
+      [
+        [
+          497,
+          299
+        ],
+        [
+          505,
+          354
+        ]
+      ]
+    ],
+    "ownPlatformLongMidpoint": [
+      501,
+      326.5
+    ],
+    "ownRailFlanks": [
+      [
+        490,
+        250
+      ],
+      [
+        511,
+        420
+      ]
+    ],
+    "ownRailNormalPixel": [
+      499.4732967519853,
+      326.6885927541665
+    ],
+    "inverseProjectedOwnNormal": [
+      132.5697832530825,
+      33.23869132105772
+    ],
+    "proposedDisplayAlias": [
+      132.56978339632985,
+      33.238689923845335
+    ],
+    "retainedWithinPickUncertainty": true,
+    "normalUncertaintyPixels": 1.5,
+    "longitudinalUncertaintyPixels": 2.5,
+    "excluded": "East attached building near519330 excluded. Island light strip between two actual sleeper rails; Root-authorized group normal retained, no individual Yodo/Yosan rail/platform-number assignment.",
+    "basemapActuallyOpened": true,
+    "magnifiedOwnFrameActuallyOpened": true,
+    "formalAcceptance": false,
+    "identityQualification": "Own group/face assignment remains cartographic; no physical platform-number assignment.",
+    "inheritedStatus": "candidate-only-provisional-raw-pick",
+    "reviewThisChat": {
+      "rawCropActuallyOpened": true,
+      "reprojectedAdjacentIntervalsActuallyOpened": true,
+      "nativeAcceptance": false
+    }
+  }
+]

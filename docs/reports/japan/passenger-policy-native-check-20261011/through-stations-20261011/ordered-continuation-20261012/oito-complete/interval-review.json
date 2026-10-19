@@ -1,0 +1,918 @@
+{
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "001821",
+        "南小谷"
+      ],
+      "toStation": [
+        "001835",
+        "千国"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "00",
+          "01"
+        ]
+      },
+      "observation": "Minami-Otari to Chikuni follows east Himekawa side; varying curve offsets and own station frames unresolved. Operator boundary is not physical terminus.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/00-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "001835",
+        "千国"
+      ],
+      "toStation": [
+        "001875",
+        "白馬大池"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "01",
+          "02",
+          "03"
+        ]
+      },
+      "observation": "Chikuni to Hakuba-Oike river bends vary locally; no constant translation. Own station longitudinal frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/01-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "001875",
+        "白馬大池"
+      ],
+      "toStation": [
+        "001910",
+        "信濃森上"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 13,
+        "sheets": [
+          "04",
+          "05",
+          "06",
+          "07"
+        ]
+      },
+      "observation": "Hakuba-Oike to Shinano-Moriue has local east/south offsets at river-side and Shiojima curves and station approach; retain actual bends.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/02-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "001910",
+        "信濃森上"
+      ],
+      "toStation": [
+        "001946",
+        "白馬"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "07",
+          "08"
+        ]
+      },
+      "observation": "Himekawa crossing and Hakuba approach continuous; local east-side difference at broad Hakuba station band. Own passenger frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/03-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "001946",
+        "白馬"
+      ],
+      "toStation": [
+        "001992",
+        "飯森"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "09",
+          "10",
+          "11"
+        ]
+      },
+      "observation": "Hakuba to Iimori long straight continuous with varying east-side bias; own platform midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/04-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "001992",
+        "飯森"
+      ],
+      "toStation": [
+        "002009",
+        "神城"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "11",
+          "12"
+        ]
+      },
+      "observation": "Iimori to Kamishiro gradual bend and straight retained; own frame caps and midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/05-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "002009",
+        "神城"
+      ],
+      "toStation": [
+        "002038",
+        "南神城"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "13",
+          "14"
+        ]
+      },
+      "observation": "Kamishiro to Minami-Kamishiro continuous gentle bends; own longitudinal passenger frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/06-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "002038",
+        "南神城"
+      ],
+      "toStation": [
+        "002075",
+        "簗場"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 20,
+        "sheets": [
+          "15",
+          "16",
+          "17",
+          "18",
+          "19"
+        ]
+      },
+      "observation": "High-value local candidate: preserve Sanosaka mountain S; north Lake Aoki turn and east-shore straight lie visibly east of Apple rail glyph with changing offset. Do not translate whole line.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/07-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "002075",
+        "簗場"
+      ],
+      "toStation": [
+        "002109",
+        "海ノ口"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 11,
+        "sheets": [
+          "20",
+          "21",
+          "22"
+        ]
+      },
+      "observation": "Yanaba to Uminokuchi mainly straight, local north Yanaba and Kizaki north-shore contour differences retained. Own frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/08-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "002109",
+        "海ノ口"
+      ],
+      "toStation": [
+        "002120",
+        "稲尾"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "22",
+          "23"
+        ]
+      },
+      "observation": "Uminokuchi to Inao lakeside corridor continuous, changing local curve offset; both own platform midpoints unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/09-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "002120",
+        "稲尾"
+      ],
+      "toStation": [
+        "002148",
+        "信濃木崎"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "24",
+          "25"
+        ]
+      },
+      "observation": "Inao to Shinano-Kizaki south-lake curve and Nogu river approach retained; local offsets unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/10-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "002148",
+        "信濃木崎"
+      ],
+      "toStation": [
+        "002167",
+        "北大町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "26",
+          "27"
+        ]
+      },
+      "observation": "Shinano-Kizaki to Kita-Omachi long straight lies east/northeast of Apple glyph; own station frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/11-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "002167",
+        "北大町"
+      ],
+      "toStation": [
+        "002179",
+        "信濃大町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "28",
+          "29"
+        ]
+      },
+      "observation": "Kita-Omachi to Shinano-Omachi north curve outside Apple arc locally; broad station yard fan separate from own passenger platform.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/12-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "002179",
+        "信濃大町"
+      ],
+      "toStation": [
+        "002187",
+        "南大町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "29",
+          "30"
+        ]
+      },
+      "observation": "Shinano-Omachi to Minami-Omachi corridor continuous; separate station fan and passenger axis; own midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/13-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 14,
+      "fromStation": [
+        "002187",
+        "南大町"
+      ],
+      "toStation": [
+        "002204",
+        "信濃常盤"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "31",
+          "32",
+          "33"
+        ]
+      },
+      "observation": "Minami-Omachi to Shinano-Tokiwa Takase River bridge and broad turns retained; changing local offset and own frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/14-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 15,
+      "fromStation": [
+        "002204",
+        "信濃常盤"
+      ],
+      "toStation": [
+        "002221",
+        "安曇沓掛"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "33",
+          "34",
+          "35"
+        ]
+      },
+      "observation": "Shinano-Tokiwa to Azumi-Kutsukake long straight and southern bend continuous; own platform frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/15-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 16,
+      "fromStation": [
+        "002221",
+        "安曇沓掛"
+      ],
+      "toStation": [
+        "002234",
+        "信濃松川"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 9,
+        "sheets": [
+          "35",
+          "36",
+          "37"
+        ]
+      },
+      "observation": "Azumi-Kutsukake to Shinano-Matsukawa continuous long corridor with changing local offsets; own midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/16-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 17,
+      "fromStation": [
+        "002234",
+        "信濃松川"
+      ],
+      "toStation": [
+        "002264",
+        "北細野"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "37",
+          "38",
+          "39"
+        ]
+      },
+      "observation": "Shinano-Matsukawa to Kita-Hosono straight / gentle turn retained; own longitudinal platform acceptance unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/17-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 18,
+      "fromStation": [
+        "002264",
+        "北細野"
+      ],
+      "toStation": [
+        "002272",
+        "細野"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "39",
+          "40"
+        ]
+      },
+      "observation": "Kita-Hosono to Hosono short corridor continuous. Initial Main ON blank grid rejected and valid same-camera replacement reviewed. Own frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/18-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 19,
+      "fromStation": [
+        "002272",
+        "細野"
+      ],
+      "toStation": [
+        "002314",
+        "安曇追分"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 10,
+        "sheets": [
+          "40",
+          "41",
+          "42",
+          "43"
+        ]
+      },
+      "observation": "Hosono to Azumi-Oiwake long corridor and southern river-side turn continuous; local offset and own frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/19-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 20,
+      "fromStation": [
+        "002314",
+        "安曇追分"
+      ],
+      "toStation": [
+        "002332",
+        "有明"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "43",
+          "44"
+        ]
+      },
+      "observation": "Azumi-Oiwake to Ariake corridor continuous; keep Ariake yard fan independent of representative passenger axis. Initial Main blank-grid ON rejected and replacement reviewed.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/20-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 21,
+      "fromStation": [
+        "002332",
+        "有明"
+      ],
+      "toStation": [
+        "002366",
+        "穂高"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 8,
+        "sheets": [
+          "44",
+          "45",
+          "46"
+        ]
+      },
+      "observation": "Ariake to Hotaka Hotaka/Karasu river bridge and approaches continuous; own station longitudinal frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/21-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 22,
+      "fromStation": [
+        "002366",
+        "穂高"
+      ],
+      "toStation": [
+        "002388",
+        "柏矢町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "46",
+          "47",
+          "48"
+        ]
+      },
+      "observation": "Hotaka to Hakuyacho southern curve and straight retained; varying local offset, own frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/22-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 23,
+      "fromStation": [
+        "002388",
+        "柏矢町"
+      ],
+      "toStation": [
+        "002428",
+        "豊科"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 9,
+        "sheets": [
+          "48",
+          "49",
+          "50"
+        ]
+      },
+      "observation": "Hakuyacho to Toyoshina long corridor and Yabake crossing/curve continuous; local station band offset unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/23-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 24,
+      "fromStation": [
+        "002428",
+        "豊科"
+      ],
+      "toStation": [
+        "002442",
+        "南豊科"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "50",
+          "51"
+        ]
+      },
+      "observation": "Toyoshina to Minami-Toyoshina curve/straight continuous. One live Main camera drift blocked capture, restarted planned camera before accepted pair. Own frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/24-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 25,
+      "fromStation": [
+        "002442",
+        "南豊科"
+      ],
+      "toStation": [
+        "002456",
+        "中萱"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "52",
+          "53"
+        ]
+      },
+      "observation": "Minami-Toyoshina to Nakagaya continuous straight/canal crossing; own station frame midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/25-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 26,
+      "fromStation": [
+        "002456",
+        "中萱"
+      ],
+      "toStation": [
+        "002470",
+        "一日市場"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "53",
+          "54",
+          "55"
+        ]
+      },
+      "observation": "Nakagaya to Hitoichiba curves retained; changing local east-side offset and own midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/26-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 27,
+      "fromStation": [
+        "002470",
+        "一日市場"
+      ],
+      "toStation": [
+        "002487",
+        "梓橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "55",
+          "56"
+        ]
+      },
+      "observation": "Hitoichiba to Azusabashi continuous diagonal corridor; approach/station stroke south of Apple band locally. Own frame unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/27-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 28,
+      "fromStation": [
+        "002487",
+        "梓橋"
+      ],
+      "toStation": [
+        "002496",
+        "島高松"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "56",
+          "57"
+        ]
+      },
+      "observation": "Azusa River rail bridge and Shimatakamatsu curve/station corridor south of Apple glyph; local repair candidate, retain actual river crossing.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/28-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 29,
+      "fromStation": [
+        "002496",
+        "島高松"
+      ],
+      "toStation": [
+        "002492",
+        "島内"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "58",
+          "59"
+        ]
+      },
+      "observation": "Shimatakamatsu to Shimauchi corridor and eastern curve locally south of Apple glyph; own station frames unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/29-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 30,
+      "fromStation": [
+        "002492",
+        "島内"
+      ],
+      "toStation": [
+        "002501",
+        "北松本"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 7,
+        "sheets": [
+          "59",
+          "60"
+        ]
+      },
+      "observation": "Shimauchi to Kita-Matsumoto retains actual curve / Narai River bridge and independent Miyabuchi fork; own passenger platform midpoint unresolved.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/30-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    },
+    {
+      "intervalIndex": 31,
+      "fromStation": [
+        "002501",
+        "北松本"
+      ],
+      "toStation": [
+        "002506",
+        "松本"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 3,
+        "sheets": [
+          "61"
+        ]
+      },
+      "observation": "Kita-Matsumoto to Matsumoto retains existing interval31/station002506 display correction without former acute short hook. Existing accepted cartography preserved; no new whole-frame midpoint acceptance.",
+      "geographicAcceptance": "Local contour candidates and own-platform midpoints unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/31-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "sameCameraOnOff": true
+      }
+    }
+  ]
+}

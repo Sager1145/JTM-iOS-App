@@ -1,0 +1,27 @@
+{
+  "lineID": "jp-伊予鉄道-花園線",
+  "intervalIndex": 0,
+  "plannedCamera": [
+    33.83760920335,
+    132.76204495705,
+    0.004409419950000881
+  ],
+  "actualCenter": [
+    33.837609,
+    132.762045
+  ],
+  "actualMapBounds": [
+    132.759549,
+    33.835404,
+    132.764541,
+    33.839814
+  ],
+  "completeIntervalInsideActualMap": true,
+  "displayBranchLeadInsInsideActualMap": true,
+  "renderStatus": "26 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:9;overlays:5;rides:0;budgetDrops:0;vertices:1362;camera:17.72;lod:16.57;backbones:0;networkStations:12;distance:967.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.837609;centerLon:132.762045;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2852.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:10;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "pixelReview": "pending",
+  "pair": [
+    "hanazono-interval-00-overlay.png",
+    "hanazono-interval-00-basemap.png"
+  ]
+}

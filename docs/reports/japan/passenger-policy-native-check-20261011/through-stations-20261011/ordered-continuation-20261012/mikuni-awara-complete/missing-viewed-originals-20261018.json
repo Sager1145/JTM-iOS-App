@@ -1,0 +1,522 @@
+{
+  "reviewDate": "2026-10-18",
+  "lineID": "jp-えちぜん鉄道-三国芦原線",
+  "scope": "Only new missing baseline intervals0/1; not whole-line acceptance",
+  "actualViewpointCount": 8,
+  "actualOriginalPNGCount": 16,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "649651A1-15FD-4C5E-B950-1B891B50C722",
+    "message": "8/8 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 61534,
+    "requestID": "mikuni-awara-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-mikuni-awara-missing-20261018/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-18T23:18:51Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#0",
+      "latitude": 36.070148,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.232904,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#0#point-0",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "福井口自身起点及分岔：红沿北侧本线弧线，胜山永平寺线东/东北臂独立；未见红跳入该臂，宽轨道填色不足以证明自身平台face/caps。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.070148,
+        "longitude": 136.232904,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9622316088742744,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235793943.8540117,
+        "rectY": 105341288.84944206,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000000/basemap.png",
+          "recordedByteCount": 1164299,
+          "actualByteCount": 1164299
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000000/smooth.png",
+          "recordedByteCount": 1286146,
+          "actualByteCount": 1286146
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#0",
+      "latitude": 36.07316301845988,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.23388494762827,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#0#point-1",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "福井口北侧至本线西转的大弯：真实北行后西转保留。红在南北弧的蓝轨带东侧有小幅分离，未见独立V或直角，不借胜山东臂替代。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.07316301845988,
+        "longitude": 136.23388494762827,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621952067587983,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235794675.30157813,
+        "rectY": 105338507.4405297,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000001/basemap.png",
+          "recordedByteCount": 1151668,
+          "actualByteCount": 1151668
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000001/smooth.png",
+          "recordedByteCount": 1273220,
+          "actualByteCount": 1273220
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#0",
+      "latitude": 36.076083728805365,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.23375979201694,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#0#point-2",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000002/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "同一本线真S形弯/跨越相邻Hokuriku走廊上下文；红总体跟随本线西转，弧体小偏移未形成独立锐角或错接邻线。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.076083728805365,
+        "longitude": 136.23375979201694,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621599407210455,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235794581.97879037,
+        "rectY": 105335812.93087775,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000002/basemap.png",
+          "recordedByteCount": 1126381,
+          "actualByteCount": 1126381
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000002/smooth.png",
+          "recordedByteCount": 1243783,
+          "actualByteCount": 1243783
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000003",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#0",
+      "latitude": 36.0769915268485,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.23023056354614,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#0#point-3",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000003/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "本线西转后直段与まつもと町屋方向：红连续进入自己东西向廊道，保留实际反向曲线；未见断口、回头或台阶拼缝。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.0769915268485,
+        "longitude": 136.23023056354614,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621489790249486,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235791950.39530733,
+        "rectY": 105334975.41882057,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000003/basemap.png",
+          "recordedByteCount": 1088836,
+          "actualByteCount": 1088836
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000003/smooth.png",
+          "recordedByteCount": 1203902,
+          "actualByteCount": 1203902
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000004",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#0",
+      "latitude": 36.076965,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.228862,
+      "pointOrdinal": 4,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#0#point-4",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000004/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000004/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "まつもと町屋自身端点及两侧：红通过东西向站廊并维持东侧真实弯道；平台宽填色不证明具体帽端/中心。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.076965,
+        "longitude": 136.228862,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621492993411167,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235790929.9203641,
+        "rectY": 105334999.89197308,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000004/basemap.png",
+          "recordedByteCount": 1084452,
+          "actualByteCount": 1084452
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000000/000004/smooth.png",
+          "recordedByteCount": 1201045,
+          "actualByteCount": 1201045
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000000",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#1",
+      "latitude": 36.076965,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.228862,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#1#point-0",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "#1自身起点（まつもと町屋）重复原图独立查看：与#0末端方向连续，未见接缝V；同一地理视野不重复扩大审阅覆盖。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.076965,
+        "longitude": 136.228862,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621492993411167,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235790929.9203641,
+        "rectY": 105334999.89197308,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000000/basemap.png",
+          "recordedByteCount": 1084598,
+          "actualByteCount": 1084598
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000000/smooth.png",
+          "recordedByteCount": 1201219,
+          "actualByteCount": 1201219
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000001",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#1",
+      "latitude": 36.075706464134505,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.22544365047253,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#1#point-1",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "まつもと町屋→西別院：红沿自身东西向线廊和东侧真实S弯，局部细小红蓝差异不构成已确权修复；未见突然跳邻线。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.075706464134505,
+        "longitude": 136.22544365047253,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621644961347787,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235788381.01421362,
+        "rectY": 105336160.98310302,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000001/basemap.png",
+          "recordedByteCount": 1096472,
+          "actualByteCount": 1096472
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000001/smooth.png",
+          "recordedByteCount": 1217162,
+          "actualByteCount": 1217162
+        }
+      ]
+    },
+    {
+      "directory": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000002",
+      "itemID": "jp-えちぜん鉄道-三国芦原線#1",
+      "latitude": 36.075255,
+      "lineDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "longitude": 136.22299,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-三国芦原線#1#point-2",
+      "actuallyViewedOriginals": [
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000002/basemap.png",
+        "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000002/smooth.png"
+      ],
+      "reviewMethod": "functions.view_image; original PNGs separately, no pixel modification",
+      "observation": "西別院自身端点与西侧相邻区间上下文：红保持本线东西向，不因画面西缘田原町附近南向轨道转向福铁；具体福铁道岔/互通及平台仍未验收。",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.075255,
+        "longitude": 136.22299,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9621699474405523,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 235786551.4398151,
+        "rectY": 105336577.4871673,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "03a56c8c65802aedf2e68cc24a3747c1e41a264cbbbd1895cb1f7eea7bf65575",
+      "namedIdentityPlan": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/identity-plan-eec285f162251e46c945eb6944fb681a4b17a52a1789f2043e9952ebef400339.json",
+      "identityMatchesCurrentOwnInterval": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "pngReceiptFiles": [
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000002/basemap.png",
+          "recordedByteCount": 1047120,
+          "actualByteCount": 1047120
+        },
+        {
+          "file": "/private/tmp/jtm-mikuni-awara-missing-20261018/alignment/captures/000001/000002/smooth.png",
+          "recordedByteCount": 1158199,
+          "actualByteCount": 1158199
+        }
+      ]
+    }
+  ]
+}

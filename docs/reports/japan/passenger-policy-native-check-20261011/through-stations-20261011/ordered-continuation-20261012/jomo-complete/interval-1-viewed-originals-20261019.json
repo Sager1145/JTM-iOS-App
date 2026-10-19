@@ -1,0 +1,150 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-上毛電気鉄道-上毛線",
+  "intervalIndex": 1,
+  "stations": [
+    [
+      "002244",
+      "丸山下"
+    ],
+    [
+      "002251",
+      "富士山下"
+    ]
+  ],
+  "actualViewpointCount": 3,
+  "actualOriginalPNGCount": 6,
+  "otherAlreadyCompleteViewsNotViewedThisPass": 72,
+  "otherPlannedViewsOutsideReviewedInterval": 101,
+  "reusedIdentityReceiptEvidence": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jomo-complete/existing-evidence-20261019.json",
+  "reviewMethod": "functions.view_image individually opened every original basemap/smooth PNG; no pixel alteration",
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "itemID": "jp-上毛電気鉄道-上毛線#1",
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000000",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000000/basemap.png",
+          "recordedByteCount": 366243,
+          "actualByteCount": 366243,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000000/smooth.png",
+          "recordedByteCount": 408063,
+          "actualByteCount": 408063,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.416819,
+        "longitude": 139.321316,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580284708950405,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238099134.75272253,
+        "rectY": 105022503.95069627,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "丸山下西出沿真实大弯向SW，独立跨渡良瀬川后入富士山下，随后西侧真实大弯保持连续。铁桥与北侧赤岩橋道路桥分开；南侧远处Tobu线独立，不能借道路桥或Tobu走向改线。无孤立V/回头；红线丸山下端及富士山下西侧弯部分偏南，桥段局部侧偏未确权，站组宽填充不证明caps。"
+    },
+    {
+      "itemID": "jp-上毛電気鉄道-上毛線#1",
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000001",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000001/basemap.png",
+          "recordedByteCount": 340283,
+          "actualByteCount": 340283,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000001/smooth.png",
+          "recordedByteCount": 383138,
+          "actualByteCount": 383138,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.41550973068635,
+        "longitude": 139.3179167143888,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580444114579293,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238096600.0616583,
+        "rectY": 105023717.11087182,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "丸山下西出沿真实大弯向SW，独立跨渡良瀬川后入富士山下，随后西侧真实大弯保持连续。铁桥与北侧赤岩橋道路桥分开；南侧远处Tobu线独立，不能借道路桥或Tobu走向改线。无孤立V/回头；红线丸山下端及富士山下西侧弯部分偏南，桥段局部侧偏未确权，站组宽填充不证明caps。"
+    },
+    {
+      "itemID": "jp-上毛電気鉄道-上毛線#1",
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000002",
+      "originals": [
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000002/basemap.png",
+          "recordedByteCount": 357955,
+          "actualByteCount": 357955,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000527/000002/smooth.png",
+          "recordedByteCount": 401464,
+          "actualByteCount": 401464,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatchReused": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.413995,
+        "longitude": 139.315845,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9580628529164914,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238095055.27944532,
+        "rectY": 105025120.62466374,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observation": "丸山下西出沿真实大弯向SW，独立跨渡良瀬川后入富士山下，随后西侧真实大弯保持连续。铁桥与北侧赤岩橋道路桥分开；南侧远处Tobu线独立，不能借道路桥或Tobu走向改线。无孤立V/回头；红线丸山下端及富士山下西侧弯部分偏南，桥段局部侧偏未确权，站组宽填充不证明caps。"
+    }
+  ]
+}

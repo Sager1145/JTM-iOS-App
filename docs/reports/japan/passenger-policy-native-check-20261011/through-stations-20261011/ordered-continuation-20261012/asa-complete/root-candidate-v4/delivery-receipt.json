@@ -1,0 +1,14 @@
+{
+  "status": "accepted-and-delivered",
+  "lineID": "jp-土佐くろしお鉄道-阿佐線",
+  "completeIntervals": 20,
+  "inspectorViewsReviewed": 459,
+  "inspectorDetailViewsReviewed": 27,
+  "mainOnOffViewsReviewed": 58,
+  "delivery": "current RailMap.app actual launched and Aki ON/OFF checked",
+  "physicalTopologyChanged": false,
+  "historyChanged": false,
+  "sourceOwner": "app/scripts/railway/repair-asa-complete-display.mjs",
+  "geometryMatchesReviewedCandidate": true,
+  "remainingForAsa": []
+}

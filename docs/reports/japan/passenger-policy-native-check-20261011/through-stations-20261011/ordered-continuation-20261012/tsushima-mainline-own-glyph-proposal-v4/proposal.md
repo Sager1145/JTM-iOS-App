@@ -1,0 +1,19 @@
+# Main own glyph proposal V4: add complete #23
+
+V4 merges this worker's complete Main #16/#19/#20/#21/#22/#23 arrays and aliases. The original five owned intervals are copied literally and their earlier evidence remains applicable; #17/#18 belong to Root/SolHigh integration. `slice-proof.json` confirms literal reuse, exact005407 #22/#23 boundary and005457 endpoint/physical equality. No production source, topology, mileage, station IDs, UI, build or global ledger changed. All7 new original z18 basemaps and all7 actual exact-MKMapRect candidate reprojections were opened.
+
+## Owning identity and forward path
+
+Original intervalInput identifies Main line jp-名古屋鉄道-名古屋本線#23 from005407栄生 to005457名鉄名古屋. Its directional station/source sequence continues southeast and then south to the Main underground station. Regional continuation from the preceding identified Main entrance supports the shared diagonal blue rail glyph through the northern views; the western JR multitrack rows and nearby subway routes do not supply controls. View0 raw own blue points(500,391.5),(560,467.5),(610,530), view1(300,195),(400,324),(500,453),(600,578.5), then view2(220,113),(260,166),(300,220) preserve that forward corridor. Labels are crossed using identified neighboring glyph flanks, never their text pixels as identity.
+
+At the visible Noritake fan, Main follows the EASTmost conventional black continuation toward the source-supported underground approach. View2 literal(340,271.5),(390,329),(567,500) trace that continuation. The middle parallel black(390,351) and continued western blue corridor are rejected. No crossing/branch is promoted to a physical route edge. View3 own black controls(350,65),(450,245.5),(490,319),(531.5,390),(580,465) follow the source-corresponding Main cartography behind Tomita/Mansion buildings, rather than borrowing the unrelated EW railway glyph or west multitracks. View4(400,162.5),(480,298) reach the final independently readable own glyph north of Nagoya's dense station/building complex. Earlier physical supports can be substantially offset from the literal Apple display corridor; this proposal changes display only and does not certify source surveying.
+
+## Unsupported underground span and outer guard
+
+After view4 own point(480,298), buildings obscure independently identifiable Main rail. Original source vertices18–23 are retained EXACTLY: [136.88207,35.17353], [136.88289,35.17234], [136.88338,35.17151], [136.88357,35.17111], [136.88376,35.1707], [136.88387,35.17044]. Their join follows the preceding source-corresponding Main tangent, with no invented pixel rail profile. This original-source span carries a WARNING; it is not Apple pixel-aligned evidence. No JR platform frames, station POI/building centroid or other operator/metro glyph was substituted. View5/view6 show the opaque multioperator station complex and prove no independent own narrow frame.
+
+Meitetsu Nagoya actual package ID is005457. Its original physical coordinate[136.88387,35.17044] remains the display alias and exact#23 end with WARNING. It is an internal through station, not a fabricated terminus; no#24 expansion is supported by a concrete frame defect. Sako start retains exact provisional457337 alias[136.87283701223373,35.18374615617322] from V3 full narrowface evidence. Root remains responsible for raw station convention adjudication and native adjacent-interval replay.
+
+## Limits
+
+Supported direct pixel controls are proposals grounded in actual raws, with 1.5–2px individual support uncertainty and explicit label-gap warnings. Native smoothed strokes, production lanes/joins, circles/popups and quantitative complete-path pixel residual are unmeasured here. The full requested15interval scope in three Inspectors plus Main remains pending Root. No native acceptance or production apply is claimed.

@@ -1,0 +1,18 @@
+{
+  "caseIndex": 27,
+  "lineID": null,
+  "intervalIndex": null,
+  "source": {
+    "caseIndex": 27,
+    "intervalIndex": null,
+    "kind": "junction-context",
+    "camera": [
+      35.6967,
+      139.6783,
+      0.014
+    ]
+  },
+  "status": "root-pixel-reviewed-junction-context; physical-arm-pair-and-curve-acceptance-pending",
+  "actualOnStatus": "48 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:8;overlays:6;rides:0;budgetDrops:0;vertices:1956;camera:16.02;lod:14.87;backbones:0;networkStations:15;distance:3072.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.696700;centerLon:139.678300;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2889.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:13;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:13;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.696700;centerLon:139.678300;distance:3072.6;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:3;labelPassMaxMs:3;gestureLabelPassMaxMs:0;regionTickMaxMs:3;stackingMaxMs:0;annotationViews:0"
+}

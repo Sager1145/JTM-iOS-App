@@ -1,0 +1,23 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "inputPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/app\/public\/rail\/jp-2025.json",
+  "intervalIndices" : [
+    0
+  ],
+  "lineID" : "jp-東日本旅客鉄道-山手線",
+  "requestID" : "yamanote-changed-interval0",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-yamanote-interval0-20261018",
+  "workspace" : "alignment"
+}

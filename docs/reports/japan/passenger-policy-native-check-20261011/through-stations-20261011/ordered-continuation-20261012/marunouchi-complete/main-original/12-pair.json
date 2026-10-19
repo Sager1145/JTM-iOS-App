@@ -1,0 +1,139 @@
+{
+  "caseIndex": 12,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 12,
+  "source": {
+    "caseIndex": 12,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 12,
+    "fromStationID": "003788",
+    "toStationID": "003728",
+    "camera": [
+      35.68052,
+      139.733701,
+      0.013230000000004339
+    ],
+    "effectiveCoordinates": [
+      [
+        139.73732,
+        35.676845
+      ],
+      [
+        139.73724,
+        35.67699
+      ],
+      [
+        139.73704,
+        35.67752
+      ],
+      [
+        139.73697,
+        35.67768
+      ],
+      [
+        139.73679,
+        35.67792
+      ],
+      [
+        139.73659,
+        35.67803
+      ],
+      [
+        139.73657,
+        35.67804
+      ],
+      [
+        139.73624,
+        35.67813
+      ],
+      [
+        139.73532,
+        35.67826
+      ],
+      [
+        139.73424,
+        35.6784
+      ],
+      [
+        139.7337,
+        35.6785
+      ],
+      [
+        139.73325,
+        35.6787
+      ],
+      [
+        139.73307,
+        35.67884
+      ],
+      [
+        139.73282,
+        35.67909
+      ],
+      [
+        139.73262,
+        35.67951
+      ],
+      [
+        139.73243,
+        35.67981
+      ],
+      [
+        139.73216,
+        35.68015
+      ],
+      [
+        139.73166,
+        35.68062
+      ],
+      [
+        139.73103,
+        35.68115
+      ],
+      [
+        139.73099,
+        35.68119
+      ],
+      [
+        139.73074,
+        35.68145
+      ],
+      [
+        139.73058,
+        35.68179
+      ],
+      [
+        139.73033,
+        35.68227
+      ],
+      [
+        139.73029,
+        35.68234
+      ],
+      [
+        139.73014,
+        35.68305
+      ],
+      [
+        139.73009,
+        35.68326
+      ],
+      [
+        139.73009,
+        35.68361
+      ],
+      [
+        139.73009,
+        35.68399
+      ],
+      [
+        139.730082,
+        35.684195
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "63 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:10;rides:0;budgetDrops:0;vertices:5031;camera:16.10;lod:14.96;backbones:0;networkStations:26;distance:2903.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.680520;centerLon:139.733701;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4004.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:18;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.680520;centerLon:139.733701;distance:2903.6;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

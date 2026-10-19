@@ -1,0 +1,62 @@
+{
+  "path": "railway-sources/local/osm/degree-cells/platforms/E136N35.json",
+  "fetchedAt": "2026-08-19T02:30:45.383Z",
+  "elements": [
+    {
+      "type": "node",
+      "id": 8179780147,
+      "tags": {
+        "name": "西藤原",
+        "name:en": "Nishifujiwara",
+        "name:ja": "西藤原",
+        "name:ko": "니시후지와라",
+        "network": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "public_transport": "station",
+        "railway": "station",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "wikidata": "Q11629483",
+        "wikipedia": "ja:西藤原駅"
+      },
+      "geometry": [
+        {
+          "lat": 35.1699835,
+          "lon": 136.4784524
+        }
+      ]
+    },
+    {
+      "type": "node",
+      "id": 8179780152,
+      "tags": {
+        "name": "西野尻",
+        "name:en": "Nishinojiri",
+        "name:ja": "西野尻",
+        "name:ko": "니시노지리",
+        "network": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "public_transport": "station",
+        "railway": "station",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "wheelchair": "limited",
+        "wikidata": "Q11629755",
+        "wikipedia": "ja:西野尻駅"
+      },
+      "geometry": [
+        {
+          "lat": 35.1638326,
+          "lon": 136.4883886
+        }
+      ]
+    }
+  ],
+  "limit": "station nodes, no passenger platform caps proved"
+}

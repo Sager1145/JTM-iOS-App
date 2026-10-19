@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-13",
+  "status": "partial-runtime-evidence-awaiting-serial-execution",
+  "request": "Stress menu tab switching, rotation, folding and combined state changes across supported platforms.",
+  "observed": [
+    {
+      "platform": "Mac Catalyst installed app",
+      "method": "Native UI actions with fresh accessibility observations",
+      "directedTabPairs": 48,
+      "stages": ["compact", "medium", "expanded"],
+      "pairsPerStage": 16,
+      "includesSelfPairs": true,
+      "assertions": ["selected destination", "semantic header", "stage retained"],
+      "extra": "Tokyo query retained through Search→All→Stats→Upcoming→Search and expanded→compact→medium. Original query and Upcoming/medium restored.",
+      "result": "passed-within-observed-scope",
+      "limits": "One window size and installed binary; current-source equivalence, resize, leaks and performance not established. Compact header meaning was checked in observations; automated exact header equality checked for medium and expanded."
+    },
+    {
+      "platform": "iPhone Duo iOS 27.1 installed app, device FE3C512A-DADC-417D-B5E4-A3B169D6746A",
+      "method": "Device Hub UI actions; device identity checked before input; screenshots inspected",
+      "directedTabPairs": 16,
+      "posture": "expanded display",
+      "menuStage": "medium",
+      "includesSelfPairs": true,
+      "walk": [0, 0, 1, 0, 2, 0, 3, 1, 1, 2, 1, 3, 2, 2, 3, 3, 0],
+      "tabOrder": ["Upcoming", "Stats", "All", "Search"],
+      "assertions": ["matching visible page title after each input", "Search query Tokyo retained"],
+      "foldRoundTrips": 1,
+      "foldResult": "Search and Tokyo query retained across expanded→folded→expanded",
+      "extra": "Upward header drag visibly expanded menu from half-height to full-height; subsequent full-height pair traversal was not executed because UI binding lost its window.",
+      "result": "passed-within-observed-scope",
+      "limits": "Empty isolated store. Keyboard, every folded detent, editor, playback, orientation combinations and current-source equivalence remain untested. Default simctl screenshot captured inactive folded screen after unfolding; inner-screen UI observation established actual rendered app state. --display=2 capture timed out and is not success evidence."
+    }
+  ],
+  "preparedNativeTests": {
+    "file": "ios/RailMapUITests/MenuStressUITests.swift",
+    "runtimeStatus": "not-run",
+    "sourceTypecheck": "passed Swift 6 with warnings-as-errors using SDK 27.0, actual XCTest Swift overlay, local test/helper copies and current UITestLaunchConfiguration source composed in one module; this is not an application build or a RailPresentation module integration check",
+    "typecheckLog": "/private/tmp/jtm-menu-stress-20261013/typecheck-final.log",
+    "directedTransitions": 96,
+    "orientationRequests": 48,
+    "duoPostureRoundTrips": 1,
+    "gates": ["MENU_STRESS_TEST=1", "DUO_MENU_POSTURE_TEST=1 for operator posture case"],
+    "scope": "Dock stages restored before each pair when exposed; otherwise initial-stage scope only. Ordinary iPhone remains portrait. Ordinary iPad aspect must match requested orientation. Catalyst orientation entrypoint skips; resize remains separate.",
+    "backup": "/private/tmp/jtm-menu-stress-20261013/MenuStressUITests.swift"
+  },
+  "remaining": [
+    "Run opt-in native stress cases serially on ordinary iPhone, iPad and Duo; Catalyst directed transitions.",
+    "Catalyst narrow/tall and wide/short window resize combinations.",
+    "Duo all supported posture/detent combinations, keyboard, hidden menu, editor draft, journey detail and playback state retention.",
+    "Web's separate three-tab matrix, mobile docked/half/full and desktop visible/hidden states, responsive resize and mode changes.",
+    "Physical-device coverage where available; simulator evidence cannot exclude physical-device stack or performance failures."
+  ],
+  "blockers": [
+    "User explicitly chose serial execution while other UI test jobs remain active; no native stress project build or XCUITest run was launched.",
+    "Shared Device Hub selection changed and later UI binding reported noWindowsAvailable; incomplete operations excluded from pass counts.",
+    "Static-site assembly stalled reading online-only workspace dependencies; both attempts yielded no completed site and this chat's assembly processes were stopped. Existing ui-platform ledger also could not be read (Undefined error: 0). This separate JSON is the scoped result receipt."
+  ],
+  "applicationSourceChanges": "none",
+  "completionClaim": "Full-platform/all-combination testing is not complete."
+}

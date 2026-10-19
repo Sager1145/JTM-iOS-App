@@ -1,0 +1,30 @@
+{
+  "id": "main",
+  "status": "accepted",
+  "candidateSha256": "147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26",
+  "intervalIDs": [
+    "jp-名古屋鉄道-津島線#0",
+    "jp-名古屋鉄道-津島線#1",
+    "jp-名古屋鉄道-津島線#2",
+    "jp-名古屋鉄道-津島線#3",
+    "jp-名古屋鉄道-津島線#4",
+    "jp-名古屋鉄道-津島線#5",
+    "jp-名古屋鉄道-津島線#6",
+    "jp-名古屋鉄道-名古屋本線#16",
+    "jp-名古屋鉄道-名古屋本線#17",
+    "jp-名古屋鉄道-名古屋本線#18",
+    "jp-名古屋鉄道-名古屋本線#19",
+    "jp-名古屋鉄道-名古屋本線#20",
+    "jp-名古屋鉄道-名古屋本線#21",
+    "jp-名古屋鉄道-名古屋本線#22",
+    "jp-名古屋鉄道-名古屋本線#23"
+  ],
+  "actualNewMainFullIntervals": 8,
+  "actualNewMainPairs": 9,
+  "completeBoundsAssertions": true,
+  "reusedUnchangedTsushimaFullIntervals": 7,
+  "reusedUnchangedStationAndContextPairs": 12,
+  "priorMainReceipt": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v1/main/capture-receipts.json",
+  "newMainReceipt": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v2/main/capture-receipts.json",
+  "scopeLimit": "visible passenger corridor/forward directions; hidden rails and underground geometry retain warnings"
+}

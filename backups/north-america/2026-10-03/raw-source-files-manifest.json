@@ -1,0 +1,4055 @@
+{
+  "reason": "Additional archived North America raw sources. Hashes record current archive contents; they do not independently verify pre-move bytes.",
+  "files": [
+    {
+      "path": "app/data/.na-rail.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/1080.zip",
+      "bytes": 55682644,
+      "sha256": "590c9ad6c218cc6263e3601e47bcdc66d3260880d91335339373d6fbf490625d"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/11.zip",
+      "bytes": 19063286,
+      "sha256": "1dbf8054a7b68de217d756725581cba2fd1618d10601b5c4bd0119430d002b8e"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/1126.zip",
+      "bytes": 27450,
+      "sha256": "357a6e055f35fe522034cd1b3e5d0c238fd910a9a3d39c0614d80b2839c018a8"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/13.zip",
+      "bytes": 8804780,
+      "sha256": "51e30b298fefb00c9d31c497060069d5e9e3f3be6e37aa214739a420f6f4181c"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/1330.zip",
+      "bytes": 20477793,
+      "sha256": "b4ad62c695b24c7a375c0f5deebbc00d9f5c1dce1e6fb3a7688d081e4ea30d80"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/147.zip",
+      "bytes": 7110085,
+      "sha256": "f5aa6cc225bfc77b948c0d24708b79cd33489f7a315066007f6cf847c295289e"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/148.zip",
+      "bytes": 1199066,
+      "sha256": "ed9ff86b05f2867d4eb45fd13d1a75ff7af982604110a75352b85df9f82e7369"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/150.zip",
+      "bytes": 13611889,
+      "sha256": "9ed2934bf62169b4053d92f1efc7c5a68790211323b4a57009cb6e4b22e8048a"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/151.zip",
+      "bytes": 243392,
+      "sha256": "3fb5e86c1af98cf4b5a9d15898ff0cc4dba2102fff66f6e322db0dbbad874e85"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/152.zip",
+      "bytes": 8338392,
+      "sha256": "44546ff87dad8e2e2d74bb2e9cd1965b2b2be97a6be3beacc951c6f9187dcd3c"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/165.zip",
+      "bytes": 136151,
+      "sha256": "2e0050436b58a0834c527fd771795f00f0ac144a0ea1a57079f156d29f760a61"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/170.zip",
+      "bytes": 4375825,
+      "sha256": "9625e760097320f1ba8ad9ab319c3104e37cc43c836159d63846b128ad248221"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/1847.zip",
+      "bytes": 2273712,
+      "sha256": "9f61fb198761766a7f59996fd913723f6ef5684b320a2d97702d84e9e2db3e69"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/187.zip",
+      "bytes": 1797310,
+      "sha256": "5bcc9142eb8c1ed491c970f0b21361d532a27cbc2f481138e813de2a1a84a051"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/190.zip",
+      "bytes": 7098127,
+      "sha256": "aa4169a48ff115661922e2c3cef3e7cc9b77a73c0ddbfc90f374e1366fad2ab2"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/1995.zip",
+      "bytes": 911103,
+      "sha256": "392fa4ff445cd0c8b3503ed4c7d81db6a0f5ecd3fc9b070b2dc8250f8ccdfc35"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/205.zip",
+      "bytes": 19438032,
+      "sha256": "656fba544e761529dfb99930fceb2f872a904078d8fe75366846d71cca98ee47"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2054.zip",
+      "bytes": 8542573,
+      "sha256": "3bd6573bfaafb0ea970eb8fb4260a6fd282ea4bc607829f52260a66a01dca3c9"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2060.zip",
+      "bytes": 12660993,
+      "sha256": "fd7e9c3e3f39df060f7da6b9a4aa973cfc5d0febf9d0ecb4b5946c664c5abb23"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2062.zip",
+      "bytes": 2731654,
+      "sha256": "7cea590b9b9dafe00f50417ae5bbd10d01f5038195f29c2af9c6c304bd9e3fb0"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2126.zip",
+      "bytes": 42928416,
+      "sha256": "1b8e59076ee50773e80bca33dd5f4f95f24bd3d0ee6283ffb62337f5bf8eb0da"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2137.zip",
+      "bytes": 2740526,
+      "sha256": "165c27e622e7087c3f80f7246b0c7ac874ceb60c9ed98573902982c72b59475b"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2154.zip",
+      "bytes": 56128429,
+      "sha256": "e0b417f2ea03fcf035ed795c07b47461157b81b0c43d43639094105ed66b0a4a"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2223.zip",
+      "bytes": 28435,
+      "sha256": "3b299905c0a7023a02f6d85757a59e663b9ee730e9f7b5113c3896b7aa83dde0"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2264.zip",
+      "bytes": 2326448,
+      "sha256": "9254f70ee7df65fecac9798d3df0efb3897d2af316c11a4f20a2a6aed91d9a20"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2265.zip",
+      "bytes": 2647582,
+      "sha256": "0f74c7a425e947ba08766282962698be715a7868cba4e0b5d0a027adff1c35c2"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2281.zip",
+      "bytes": 255375,
+      "sha256": "9076631c318966edd42fd02c298435061d26a2a9ca27e733517c11e103f357b4"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2295.zip",
+      "bytes": 122813,
+      "sha256": "57fdd8ce731a587e2570d504cacfc952b284de4af45431dd153fc4dc12db74a4"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2297.zip",
+      "bytes": 652923,
+      "sha256": "bc98fce9ece87944f760142b54fac66059972fc0320154092860b5ad07b18f20"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2350.zip",
+      "bytes": 12280614,
+      "sha256": "82e5bc659d434520d5261ae238cc9ca618e335dcba472f8620f7082be6127e89"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2354.zip",
+      "bytes": 2017646,
+      "sha256": "f57bec4a90c5817b70b54c5bc3f9cbc3e8348230d3dde944c2e1ea05608e9faf"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/247.zip",
+      "bytes": 28314633,
+      "sha256": "2fb735ee93eb2da547366702e84e8b2a2b7a106f95973dcbd4ac3bc00298e628"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/267.zip",
+      "bytes": 10966815,
+      "sha256": "a3548429a68cd96bd3a73ce708d0cfd207d6f892414ab287e53117163f2ae9e8"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/268.zip",
+      "bytes": 2375323,
+      "sha256": "d7d70081a87b98cf43d1c5de0b08c538d63e4d5faa0d0c59308ade734822933f"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2840.zip",
+      "bytes": 2581736,
+      "sha256": "6e5330f7ff0a0c26c4aa062bf818e8ce699924b4d528388d0c80a32ab0092a45"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2854.zip",
+      "bytes": 737942,
+      "sha256": "1a949b3a36369b89029d2c8a0dfd9343824b5cf68d704a0a73b3a1faa25e957f"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2861.zip",
+      "bytes": 632084,
+      "sha256": "65524f139c08d841c764180c27cd50f94904d9ffa32dd8ce0ab9437130abcee2"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2886.zip",
+      "bytes": 10447937,
+      "sha256": "69572de4529dd3b7848e11258df5ea2aef1b36611d953d84fe0170075dbab910"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/2890.zip",
+      "bytes": 1568419,
+      "sha256": "3bfd15d1a965d7074c6843fc69a50d014b2b1e9eabf7d849e9f7bc9aedc1fe7b"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/30.zip",
+      "bytes": 1363931,
+      "sha256": "d5bfe191e8fe85f70b099e0e18cbc16eb9c8a1f6d0d040051103f1962cb80689"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/3035.zip",
+      "bytes": 44501,
+      "sha256": "3186c1f671480386a853d3355ae35ca827fd05933a1f33df3662843d5845349b"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/307.zip",
+      "bytes": 6898475,
+      "sha256": "1ba543fa13aec46b2d77a6de3fa658345c04c46a44268b21181651a44b1bd1c1"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/3093.zip",
+      "bytes": 2206574,
+      "sha256": "462de20a0e81ace3da864bdb9702117bd8434dd53553915653289ba5eec53173"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/3151.zip",
+      "bytes": 87117,
+      "sha256": "9f872bb7bc6ca99029e6426a50e5a2167a96522f13ad97b92a8177b04a84b34c"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/325.zip",
+      "bytes": 3641370,
+      "sha256": "7aae0b6b8ade40735b89a524ea621b0f32b3cf840a3b58f9e95d46e5bbd92935"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/331.zip",
+      "bytes": 8419295,
+      "sha256": "785460181e910e47af9172ccb9da0b10aa61ba9d55539fd6b69d0ad181758ef5"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/333.zip",
+      "bytes": 19854,
+      "sha256": "6fad99327a8f630c9cef4450bc590bf8a8a62431a7385795f04a315ac48f1a3e"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/360.zip",
+      "bytes": 2730505,
+      "sha256": "dbaaf5e696c331038550a6a33cf9f6abd252a7347f3eea8f2de7cdec2e4db9ef"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/368.zip",
+      "bytes": 18620232,
+      "sha256": "f4a36309f42858d3c55bf46298395471621ba6ec1888a141c543a1190a52e2e1"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/389.zip",
+      "bytes": 99567748,
+      "sha256": "31300c36442ef36ccd06def27a6c7d07582d4cbc688cae984cb86f8ef3218bed"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/409.zip",
+      "bytes": 22825185,
+      "sha256": "f5cabff93bca657ce1a8c6bd5c67b718454a0312e8fab5d092210e206b7682fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/437.zip",
+      "bytes": 34398324,
+      "sha256": "a5ffebba72ca444ee8bdaf802e266fc37aaf25372b118472f8042df87e35deea"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/468.zip",
+      "bytes": 193454,
+      "sha256": "d99a7a46ccc78506905a0600b93bf34edee2570d083c81a49d81ec2bcc5d24ef"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/470.zip",
+      "bytes": 56280,
+      "sha256": "7d536b02798b35bcd36c64f6faacb11f042e1dee520237f9cb3f7d75ac4e881b"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/473.zip",
+      "bytes": 2504269,
+      "sha256": "d62c2542fd281ad4eba6cb225c469660e848125b2e9a7252cc936fe6186c5647"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/502.zip",
+      "bytes": 20797660,
+      "sha256": "7536a49b3dfd5f394a11f51981e6ef3feaee5f126cdb787be1eb92360abc74d1"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/503.zip",
+      "bytes": 757262,
+      "sha256": "fca31301d11b76803e64061c6dcce2660fd5a17c2598960b50be7138b79f1e09"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/507.zip",
+      "bytes": 2058694,
+      "sha256": "20c10dd8b0ae4f67ebf83b46aa3245904d7aabe072b0cebe288914090374e16f"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/509.zip",
+      "bytes": 3041715,
+      "sha256": "bb9b1b9a486c342999cd02014689609921235ca33e26b42b9262c560b832b421"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/511.zip",
+      "bytes": 19257132,
+      "sha256": "aab3a560c49c49854f8b8ed857f22f4775a832312739643d871d7498ca1f58bc"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/517.zip",
+      "bytes": 1214919,
+      "sha256": "572eaf8ff298767ce6054a02cf7c03a691bab07959032028f8ff5c73e02719bc"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/524.zip",
+      "bytes": 5925631,
+      "sha256": "6c9dc3ada0fbb2bbd2e53f84300d18eb1a6b0f52acfef9766797ec46ed69eb98"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/53.zip",
+      "bytes": 892312,
+      "sha256": "affdc4d70cac01f71e54f049c754ba36824a885edcdef2ef8b024820c9e93080"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/54.zip",
+      "bytes": 173656,
+      "sha256": "71c80e46edd526e9ebe123be968145b4ccd505f4e9fa012a521e31c7ef311578"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/550.zip",
+      "bytes": 5507,
+      "sha256": "1d1f73295845b1d014a4dc7bc1cb485c6825595e025cf8032c92d74b2d5c611e"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/57.zip",
+      "bytes": 4748379,
+      "sha256": "724a1e64bfeb9193aaf57fe0990387d7755602301ffbcdfc15175dff2ef1c1b5"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/585.zip",
+      "bytes": 35083,
+      "sha256": "a96c8634ce69393626751f027dd444a120b9052d221a27fa2e982a4b81fda120"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/626.zip",
+      "bytes": 19746,
+      "sha256": "3b1a36e24a72ab2e091f5a14dc5d9f532534b6c54bb4fc4309f8c053d2ccd304"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/696.zip",
+      "bytes": 39740852,
+      "sha256": "585343a3607618024e9ebcfa7d770c6d785e647ae93895eebeb5e5bdad6887a8"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/712.zip",
+      "bytes": 18457641,
+      "sha256": "c965959f9f487ea78e45950af2b49fe31136a0c16f2b3268dac91188da1be8ef"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/714.zip",
+      "bytes": 16828874,
+      "sha256": "c1e73ac115c1ffbef74e06e465bd5eda14551ccd4da6b51f3dd01596f4363c65"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/732.zip",
+      "bytes": 36321616,
+      "sha256": "79294c53420b985986705f2aad173a249abc9b65387ee7a90686b4dedd65256d"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/735.zip",
+      "bytes": 1010938,
+      "sha256": "50d96c9f361c8b91fad292f8aa8db727fb7c62110895d1ffc9534235335eb339"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/74.zip",
+      "bytes": 241324,
+      "sha256": "fab6817c18506b46e895cc7d53eeee2e11ffa5b40ec0ed511a24c3834d350f52"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/748.zip",
+      "bytes": 113624,
+      "sha256": "1b1b9c31eba1faa75aa64cf65b1a8d015cd6f08b8383e9e78a5c452f4652b03f"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/802.zip",
+      "bytes": 121152,
+      "sha256": "8926b6d5769c203c359adac63a230b72032f95d9ad8094e1d26e985aeaf066e8"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/885.zip",
+      "bytes": 1568419,
+      "sha256": "3bfd15d1a965d7074c6843fc69a50d014b2b1e9eabf7d849e9f7bc9aedc1fe7b"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/96.zip",
+      "bytes": 438796,
+      "sha256": "8d691922fbec7ed4d2e17955085f1ff228f5b6e3e38f2139f8629e612dd18098"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/ati-pr-2026-08.zip",
+      "bytes": 2234433,
+      "sha256": "750e212f42b490b407351b71dc2303f212d32b221ff5f7228181c128fa6386dd"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/kenosha-official.zip",
+      "bytes": 337434,
+      "sha256": "c7408a810de8165599217004c34c94d80ba6b43f0771f0b7aee1c526c12e5308"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-1993.zip",
+      "bytes": 29407225,
+      "sha256": "a7448b37690d5e80ae0f786476ddc577ada7985d9177507c610f56df42ca9678"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-2035.zip",
+      "bytes": 6229,
+      "sha256": "4c0fd0987c705d50b488a26e8c8706b58959b3af8444d43f188a14025226c719"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-2684.zip",
+      "bytes": 20491,
+      "sha256": "4e56ac90ffa91e25a7e1fdf55bba9250486ed10ea70c9ac67b6304dd2697cff9"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-3222.zip",
+      "bytes": 52764,
+      "sha256": "8eda5f8bd0efddf3ddef3e24919d102b6c90e276400ba13f0cc46c1af8719662"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-3474.zip",
+      "bytes": 2220846,
+      "sha256": "c30f6a52f15c19bcc95c9b71d13b8712f8c2362282cc539b2447dacd5c6afa1e"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdb-406.zip",
+      "bytes": 13985071,
+      "sha256": "b5e67b8f1c2207b3e0b236f33d62c35ac4ad21b3bbd7c42ba1d01d11e3372049"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/mdot-mta-light-rail.zip",
+      "bytes": 834029,
+      "sha256": "1b3e8fd047f7e1e3bdfcfc91b0a4dcc2914cee7853e60789b89b7f8641855dff"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/milwaukee-hop-official.zip",
+      "bytes": 47101,
+      "sha256": "ada16c01456ad76c4899bd6674a67e0783124046374f8e1e1330f4109591d367"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/ntd-41.zip",
+      "bytes": 5217055,
+      "sha256": "82020623de9b23522be093718e8a7fd34124570ea8ce67dce21767a0de14f4e7"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/ntd-60032.zip",
+      "bytes": 6104433,
+      "sha256": "3b32471680f5736301fdcaa2ae98bf62ba6e108ea51589febb1d66114ee567f9"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/ntd-60133.zip",
+      "bytes": 96244,
+      "sha256": "d9a148fd241d48a2d91f8281aac8f5e0b727c45bbf1be61560f5606bc0bf13d3"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-1655.zip",
+      "bytes": 1604263,
+      "sha256": "5cf67e0c0d1fc8655ebce45afa983402514c646450d57e94c81dfa14257827fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-4671.zip",
+      "bytes": 780235,
+      "sha256": "58e36a02310c036f662098b4a3715f6bf4979562af31bcd83839daf8a36519e6"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-61.zip",
+      "bytes": 25618,
+      "sha256": "47b03fb5cdcd8f1e52b1ea229556876fb42f11372ec3b21da0ff0df823091609"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-6691.zip",
+      "bytes": 287495,
+      "sha256": "9263a39e4dff0ee8d1ffb23bacb0884bad90e86cb44f80c6b0b3c7cd18d3b577"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-7068_1.zip",
+      "bytes": 20876,
+      "sha256": "adfc5fb3fc53b0a9fcc0b49a76ccd083eab6a7b1322d7918fcb17a4a1208106a"
+    },
+    {
+      "path": "app/data/raw/na-rail/gtfs/tld-764.zip",
+      "bytes": 5589166,
+      "sha256": "43dba51199d754c8f2183f460d1e9c28d6a65f67d166104267f704ec87a21a3c"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/cta-operator.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/cta-validate.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/gtfs-final.log",
+      "bytes": 3092,
+      "sha256": "40c55b8a4b8ef13ab94f84829f565250133c1331fedc2b31997d94e2b9e2bc15"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/gtfs-manifest-final.json",
+      "bytes": 15867,
+      "sha256": "4fdf0a36dd515255124174a64201fdb76ddfc86b70e18619ed0232561a55bcb0"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/gtfs-manifest-rerun.json",
+      "bytes": 16281,
+      "sha256": "f3cf8e9ff65aa149b3b5514fa49c29574c5cb8bf9993097f3b4478b5c852d6b7"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/gtfs-rerun.log",
+      "bytes": 3401,
+      "sha256": "f6f7dd2138fecb9fe4599593f0c9a638b21d851bd9f95a445a4196cdf1b83c77"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/gtfs.log",
+      "bytes": 5672,
+      "sha256": "64fac2cb48326cc6215f161b8ebb29288755e60bdab03448a40c07560dcfa8fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/narn.log",
+      "bytes": 116,
+      "sha256": "b341a0fbe69efb3034c5dfbe38ce883a66a6051a09e096a53a5decb49089924b"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/osm-geom.log",
+      "bytes": 2200,
+      "sha256": "3db32abeb87dfd44e3ca9c7e28d741179e11ba82d437e2ac9606f738db0d79db"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/rebuild-official-networks-2.log",
+      "bytes": 1271,
+      "sha256": "a3f73419ccf8d9f871bfdd6c965d2655d72490d9b41a2c09399073ec4fa8493a"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/rebuild-official-networks-3.log",
+      "bytes": 1261,
+      "sha256": "a278832a559c1d66948db7144a44ce1b03c456d9b9efae6d083a6618130677c3"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/rebuild-official-networks-4.log",
+      "bytes": 1412,
+      "sha256": "0e9f19ac7db0b2275a6d18f2fba4bfa8234315419e32536defddacfa18c3ed7c"
+    },
+    {
+      "path": "app/data/raw/na-rail/logs/rebuild-official-networks.log",
+      "bytes": 2691,
+      "sha256": "3d71cd16293720bf8f6c293c77a0d842ca3b40968287c1c33b9343dfbe07ff12"
+    },
+    {
+      "path": "app/data/raw/na-rail/na-feeds.4feeds.json",
+      "bytes": 73434,
+      "sha256": "51357258284481a57f6e5b1f56a2bd7126352ddffaf498135319cfa16ff934fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/na-feeds.uta.json",
+      "bytes": 47508,
+      "sha256": "51c459fc62169446cfcfe500cfcff5c40432033838801a60b25f85aa6112903b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0000000.json.gz",
+      "bytes": 252442,
+      "sha256": "155994b2adac472e4cd1a7eefe24d05d40b1b74dc3fa19b774ae5e9817016138"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0001000.json.gz",
+      "bytes": 350326,
+      "sha256": "a39ff1d1cbb0be3e5434ea58e007bc962fb2c43d58a6d9f5cffcfc9f333acb47"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0002000.json.gz",
+      "bytes": 268846,
+      "sha256": "bd50d56c3514ba31e025a444442cdfe4b3d9423227b56423900a74cd14c17acd"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0003000.json.gz",
+      "bytes": 263254,
+      "sha256": "cb4280a18ee9cee48f01543efe85b87e703066aa72e8669e89743fa8792e1539"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0004000.json.gz",
+      "bytes": 250747,
+      "sha256": "279e14ece4ea411d971cb7b38712ea1f41c39be5373b9703c52adfb3a41a56a0"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0005000.json.gz",
+      "bytes": 215452,
+      "sha256": "3151ca38de0579aa0de783de4b5881f76a60470cf6b922ea27965d549a1e0af5"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0006000.json.gz",
+      "bytes": 201438,
+      "sha256": "243fb23b6d0f7883f3e8dc42254012a090c82611e0e1a1e0b891fa6811d535fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0007000.json.gz",
+      "bytes": 111806,
+      "sha256": "b1c1944c0e9cb009e86a831b4a7a91f639ed3e7e50381e146aa16766cc11be9f"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0008000.json.gz",
+      "bytes": 112262,
+      "sha256": "9af75dcc0d70d57f59a2d7b7cad802b615eb0573d363da2d026c477544d25785"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0009000.json.gz",
+      "bytes": 99480,
+      "sha256": "5c269e5f1415c39d3c10a46171bace6c31a20c19c4a84630f44638e6b0b3f75d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0010000.json.gz",
+      "bytes": 171943,
+      "sha256": "76bed21fbc75c236896be1591f8534d4d07adc224dea0f9f10592d0050137f64"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0011000.json.gz",
+      "bytes": 201929,
+      "sha256": "e1f77e719661c1d504dd8cd36b78c6d2d8d0129e7bcf28de7f0f0ecc003943d8"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0012000.json.gz",
+      "bytes": 188809,
+      "sha256": "5baae4645b60c52a1b1b393fa3345cf6438b8e232a86230b675f21eadcc84592"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0013000.json.gz",
+      "bytes": 189760,
+      "sha256": "df94e2ac7a065ac6ba44a1937674e0a59db17e656dd84b71a6ca00273a3782a3"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0014000.json.gz",
+      "bytes": 205431,
+      "sha256": "1b106d70116e36ca50ac7d096cd43272a47a5346139d52b453f0965b477bc976"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0015000.json.gz",
+      "bytes": 207389,
+      "sha256": "c0ce82eb38fc346edc49259b22c91669e92576a7e1fb9610ae9c9251d6a09be4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0016000.json.gz",
+      "bytes": 214690,
+      "sha256": "753d38de5d6ffcf5604ed2dd1e03ab85081dd6c79209c9694e09f1f8a6a956bb"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0017000.json.gz",
+      "bytes": 217640,
+      "sha256": "62be79f1dcae856eb1fc61b14ad23f5b3c6750debb0af42251a2abc9798da320"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0018000.json.gz",
+      "bytes": 229970,
+      "sha256": "3bd2c2aacb6870e625cd86121dea26ff3a8c5974722fe90bbf217619bfddab57"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0019000.json.gz",
+      "bytes": 209005,
+      "sha256": "be45a0162a4bb7259eaae5870304707918dec7ee3b634c67a399f865d36765e8"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0020000.json.gz",
+      "bytes": 231915,
+      "sha256": "843cf2d97197f224a4a0a09e5350d8c13992f166d0873fbfc37ec50eb73fd5aa"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0021000.json.gz",
+      "bytes": 193788,
+      "sha256": "443c3aaf19f0e28a6ee001460797fa05f4f653f680fd844c8aee525723dc0bc9"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0022000.json.gz",
+      "bytes": 190416,
+      "sha256": "42fa001e063f4b3130e9668824eb5d28e725ff017e5b0df80d2d2fcf38ad62ff"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0023000.json.gz",
+      "bytes": 177831,
+      "sha256": "8fc03f1dd836dc661920f4e00f484a69b2dba387ef440625bd8441a1e3ba4fe1"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0024000.json.gz",
+      "bytes": 196976,
+      "sha256": "0548a38dd19f5d1087f4f1f901d97abf69a877d7f71a522be995247595df68d2"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0025000.json.gz",
+      "bytes": 175353,
+      "sha256": "ddc038fd2904656884e5219fca0a6557f28e27b2aa1d5b8df6b0f8ae5dc9a5c0"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0026000.json.gz",
+      "bytes": 183991,
+      "sha256": "e73e1c1b663bddafb4f80e59132fe51dc2b63d2df75bb93a36e11e5913ed6034"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0027000.json.gz",
+      "bytes": 183851,
+      "sha256": "9dcc84f62e3dbd36ab7651e511dd0d49fc055dad145ac7b763b43b75cabae142"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0028000.json.gz",
+      "bytes": 182605,
+      "sha256": "b525ffd9e59ca99bf6990531c8359059b88c73cf6f9029571ab021932da989f7"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0029000.json.gz",
+      "bytes": 187509,
+      "sha256": "63ab650d7800383a5741af8076b119d6894b02596a949c5bf8439329308dcdd5"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0030000.json.gz",
+      "bytes": 180656,
+      "sha256": "e366c2d18c42bc8225f2de028fb990584afc6a79894dcd3e8cb7397cd49b3951"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0031000.json.gz",
+      "bytes": 178678,
+      "sha256": "7b105a739f6eb3d76e5fa681ad74b605a61eb8ea6111581c8096a530c7f3ea1e"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0032000.json.gz",
+      "bytes": 184230,
+      "sha256": "8b66a1ae18b93b4c0ccdc3d0c563beb089fa0fe68de02f2f65103a4fbfc3138f"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0033000.json.gz",
+      "bytes": 189900,
+      "sha256": "18784ec341368d86fe8387622ad5004e7b17cf95f0cb1fc45d7059a7896c3219"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0034000.json.gz",
+      "bytes": 295900,
+      "sha256": "d62cce67ae348847a3b144f10bae73f7132728facbe7550c4fb342e1151e3d9f"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0035000.json.gz",
+      "bytes": 340429,
+      "sha256": "4f28e21a2dc1a201d296d5e820dbe334d690abe6d35ed84cca8713a68ab76734"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0036000.json.gz",
+      "bytes": 191756,
+      "sha256": "7ebf1ae56a6e21ff3f51f3ee636090306209625c6ff71578478bcd06daac474d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0037000.json.gz",
+      "bytes": 199707,
+      "sha256": "43c7bc7b47a34d29ca2efb3b768489c555025a109801a0105c5f05f6a2da252d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0038000.json.gz",
+      "bytes": 261493,
+      "sha256": "45b8ae3fb773ee35cec6328ae0721651bd23a01d6adfe0c0c03a33a36ef1b159"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0039000.json.gz",
+      "bytes": 225158,
+      "sha256": "584240dd9afcf204c6c8d417990a0a4934b19e3091fbc6bffbf7b096e39f0852"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0040000.json.gz",
+      "bytes": 109008,
+      "sha256": "4e736f77b61efc89108152431f401f945c61a190f79d72742e05764bc97827cd"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0041000.json.gz",
+      "bytes": 169571,
+      "sha256": "53838c9ce62a352537b35208edb48c69b55b750be950499721bacd5b17ea5410"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0042000.json.gz",
+      "bytes": 331461,
+      "sha256": "e59fc6a0ebb535986af81d8ac1ca4566fe3867e28a53487480c311197c2c7ca6"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0043000.json.gz",
+      "bytes": 319540,
+      "sha256": "aac2665a85fc159ece5484cc4fa0d69837422a24bf256d9be332a4f143358923"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0044000.json.gz",
+      "bytes": 228517,
+      "sha256": "3861b30f9a985e88a97548e435f3a9abfac0380b9947140ccd698f7b70d5c6df"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0045000.json.gz",
+      "bytes": 374298,
+      "sha256": "f5cb7b6969c137d1f60085cbd815d1b68b150649bc76a76a6979d10ae9f870cd"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0046000.json.gz",
+      "bytes": 380117,
+      "sha256": "0d5a345cfae6123c6c8bc6648f345fc0a3cc5cfd3b6eb4650581a88a611f03aa"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0047000.json.gz",
+      "bytes": 227402,
+      "sha256": "6c2a9ff2cd8b0560da67aa7f043a71b901ae4690d3efeb1b4ebdd4204eccc1ff"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0048000.json.gz",
+      "bytes": 242915,
+      "sha256": "25b722aa3d00c349fb67da6f57696fdbb41f22cdc3b1ed7acf48b2a916c2f3a4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0049000.json.gz",
+      "bytes": 176187,
+      "sha256": "6734503c7fabc9aa5e1d7872585623ed86c3b26331ef549aafb56d202fed4d14"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0050000.json.gz",
+      "bytes": 227440,
+      "sha256": "06b6d56f607801c79dbd3dfd73c9a4c6c89bc4aaee665fcf6b52ed2f706b6964"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0051000.json.gz",
+      "bytes": 233689,
+      "sha256": "1e60f6eae5fb8cef908fed815bb94b0890fb0ccbc92fc91dbd338be85f2ed647"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0052000.json.gz",
+      "bytes": 105634,
+      "sha256": "bfeb425c33a27e26bd33e35faaf8e51748919cce2b608f7c7ab8bc0f3a9b7d75"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0053000.json.gz",
+      "bytes": 133951,
+      "sha256": "f4b8db5d3785fb2e199a765b588ce30419ff92d2b52c4103e2b67d5b786f3577"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0054000.json.gz",
+      "bytes": 142346,
+      "sha256": "62795dea8c9eda885d2404f4955d7b32cbe394c94cb53315b65b50ab34e04c09"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0055000.json.gz",
+      "bytes": 204236,
+      "sha256": "8cac43f4247504d907b02879e60fd301a9ef20f391c1f73bf0d77ee9c194e1bb"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0056000.json.gz",
+      "bytes": 119759,
+      "sha256": "22754c813e376ae0a2765bd8718257d23d26bc7370acab6dc6c18a8468530b14"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0057000.json.gz",
+      "bytes": 266996,
+      "sha256": "37acc0f4eec3e18ddc87a935013efff46903e0909aeec47204d38e6bde1b864b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0058000.json.gz",
+      "bytes": 143071,
+      "sha256": "c0909a2c44eda4d2244f29f7d24b4ef530749ddd026e0884db5d226ad817fc6c"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0059000.json.gz",
+      "bytes": 212908,
+      "sha256": "65ad8c9b1bf07325546e5734ad719da2a96d93e61c907e20bd664cbed31b2018"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0060000.json.gz",
+      "bytes": 245891,
+      "sha256": "b9c9da0c2e430dbc607e762a86aafa6ef1b727273a0d2b43b368a8bb64badad1"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0061000.json.gz",
+      "bytes": 346709,
+      "sha256": "2861059c88e3384f18aaeb6482a4f452e9eabeb6f5710fd66fa3e91bbdb90caa"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0062000.json.gz",
+      "bytes": 234852,
+      "sha256": "07bcf27cb4adf0230c94552085ac2aecc01007eb7f68fb189dd6563634ab90de"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0063000.json.gz",
+      "bytes": 315993,
+      "sha256": "c56343ac03fd35be4cb016f568de7d3f9be558a891783521bd1b10f3aff8fe13"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0064000.json.gz",
+      "bytes": 265924,
+      "sha256": "6544c2a6b3957d7eb42b1080bd744c96a38ea58f5e1052c0d923dfd914c580b3"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0065000.json.gz",
+      "bytes": 216564,
+      "sha256": "57fb90831a60ebc7f767474b0d616e1b6cedb0f5f1fdf0a516aba0f5f2a1ba75"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0066000.json.gz",
+      "bytes": 118154,
+      "sha256": "253f6ef141e225a0e46283322dccddc09f6e143ba1539dc7d60af71a64bcfe80"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0067000.json.gz",
+      "bytes": 133609,
+      "sha256": "18b93aca84ff4ee6f1f1ab306b2f346041eb8f859c667d1d7c95d6bda71e55a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0068000.json.gz",
+      "bytes": 102463,
+      "sha256": "9fc5ac0b1b42c8c6fae17d0d533c176e7511fb18200391772b09c77e78a3678c"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0069000.json.gz",
+      "bytes": 114647,
+      "sha256": "bfa42467602cb430bb1dbdf47f7a14458098a041cda9348bfd7863793e9345b2"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0070000.json.gz",
+      "bytes": 146712,
+      "sha256": "b778628980c5a0d7d965fa667fcabd1ffd8c7e26218b4164a7c67a9eb3682b24"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0071000.json.gz",
+      "bytes": 242324,
+      "sha256": "bdc664c10bd25c0edaeeb43813f4f0f5abf6ac97af17d230c6386fe0e5312559"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0072000.json.gz",
+      "bytes": 194702,
+      "sha256": "5ed012f59de9683f4877ea107b20a14b70aa6376cd1667251053d4c6fa62f941"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0073000.json.gz",
+      "bytes": 281428,
+      "sha256": "96a9324518588671355252cbb0ed18a56f5fac4f5f46769809a91af743945d77"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0074000.json.gz",
+      "bytes": 206587,
+      "sha256": "4aa092cf189e68dd32cdf310c45a48ace0310a47c3b6349195e3782a30f4d1ca"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0075000.json.gz",
+      "bytes": 213251,
+      "sha256": "de3630f4584df44290416e3cc1d884ba150f1d0f62c6a70b3cb5c4495d09d550"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0076000.json.gz",
+      "bytes": 143416,
+      "sha256": "077346722fe587b0d752c14bf8dc8fa743ef92f482cedc1abf63384a14356764"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0077000.json.gz",
+      "bytes": 94030,
+      "sha256": "22d8099847d466ea6055127bd20e66bd87f236190e7a5a876a321e248e144668"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0078000.json.gz",
+      "bytes": 105039,
+      "sha256": "168efb549c283d62484cc8b258b8e675143d187accfcd88401a9c2b394e8f19f"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0079000.json.gz",
+      "bytes": 142900,
+      "sha256": "99fdb946758b97bd7820be399a54c82bff8cd021fd920ce82dd1c37cc9fbb837"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0080000.json.gz",
+      "bytes": 131249,
+      "sha256": "bbd273f604419494750be98a52b8cc5d972884a181579ea97265a818650f7ee4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0081000.json.gz",
+      "bytes": 212561,
+      "sha256": "8b81d2417145feec6af59059ac75b0b10b4359e23653124af275fae39c382a76"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0082000.json.gz",
+      "bytes": 236158,
+      "sha256": "f243aaaa8f322115657c511811c81fa4833021f63ef33b2d79ff91c20c7cdca4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0083000.json.gz",
+      "bytes": 269919,
+      "sha256": "96ef9abfabfbc51b10586fae4cba89165c2914b53a9f7a87116af8508296f013"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0084000.json.gz",
+      "bytes": 295342,
+      "sha256": "f0b8094f33064e47f2b8a36dc6ac8b0702c13e34dbfe4857b81851be5340704d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0085000.json.gz",
+      "bytes": 681818,
+      "sha256": "aae360b1162f415c152e51220118682c95191e5b277764c2d11e41ee6a8aea74"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0086000.json.gz",
+      "bytes": 214252,
+      "sha256": "e5f463e716f6a12f0c52eee33fd95a3603b19b3a4c779d9daa1aed1d0bfb3bdb"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0087000.json.gz",
+      "bytes": 278563,
+      "sha256": "09786411eda096a7a481f0d198a8f9af34b4835bc6b61557ec6b5b19161ae8f6"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0088000.json.gz",
+      "bytes": 190325,
+      "sha256": "634eb20e7ceb267697348c9680ed2b62cc74a4864ba40585f7ecfbc57e965463"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0089000.json.gz",
+      "bytes": 162589,
+      "sha256": "1b0a45a665efc7f8a431ed86c3be2eec88aa03b07c2e716b50d354b9239d4948"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0090000.json.gz",
+      "bytes": 151223,
+      "sha256": "7e2a89c5774c43209e91750f7ff53b6e1f1d8238091a464c748c0f3b6276a6c3"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0091000.json.gz",
+      "bytes": 118148,
+      "sha256": "94b599128ec6ea7d59b8e0f1986e071591546ef6cf067a14a6f601e0a36862e1"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0092000.json.gz",
+      "bytes": 150573,
+      "sha256": "aa17c906bd2126270b09d6dd99db609e8c76c199ffe0a6386cd176ffc6e3c183"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0093000.json.gz",
+      "bytes": 148911,
+      "sha256": "6c496fa5e32acea8fdb366f0e095f0e4bfacea2eb67b7cc7d50abfea2c86de65"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0094000.json.gz",
+      "bytes": 134955,
+      "sha256": "a7a2c8992f00662389117536e9dd8ec12a91e2fe6ceb9644f6c3cc950079f87a"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0095000.json.gz",
+      "bytes": 142475,
+      "sha256": "e74299e82330a6c36103f78ce37cefb3ced2c2fe5bb3603dcd0a6b9731a654ea"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0096000.json.gz",
+      "bytes": 77313,
+      "sha256": "fd7697965cf01fd8130e2f9de0ef306a6ab2c39ff73bb7b9c107b5e879b1137b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0097000.json.gz",
+      "bytes": 169486,
+      "sha256": "536ceb768b332f67d011721bf5dad0ab798dfd6ac62369023c648fc739536bcb"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0098000.json.gz",
+      "bytes": 161092,
+      "sha256": "e89df58665a5e70ae6f16ddb7707e361dd33eb1586d65560fc930cd4f431c6ca"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0099000.json.gz",
+      "bytes": 170041,
+      "sha256": "4a3a1253762a9d6b253effd931ac47c70250d00de64635ac5d8235f97e84d90b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0100000.json.gz",
+      "bytes": 170025,
+      "sha256": "d04b1de55db86c79eef12d59aa87f2bf9a28123ccf40b9cd7718d681eec52a45"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0101000.json.gz",
+      "bytes": 165221,
+      "sha256": "88cdc2708e710c11ac87f1781122f0a99d8b831cef2283372de2bca297f2beac"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0102000.json.gz",
+      "bytes": 159086,
+      "sha256": "7d3c044ec3339911458e42784736647823ba0676c674b88563d566a9209d4902"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0103000.json.gz",
+      "bytes": 143816,
+      "sha256": "ffde866084af7135eab5f6a356984572ec2cbf9a29f2089f5c1966e16efc046b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0104000.json.gz",
+      "bytes": 137142,
+      "sha256": "f068fd179ddf67d15ab63df525ec9c262698a74990da4eabbaad508b8b6ab23d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0105000.json.gz",
+      "bytes": 135860,
+      "sha256": "9ee5d63ccf4a0ec4bad7aded029933ca9856df4d78d32cc7ac80bf439c4345dc"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0106000.json.gz",
+      "bytes": 133314,
+      "sha256": "b3a9b544274063b35d1ae20d8e2a2a5cdb61ba98291f3832e32d0489326a248c"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0107000.json.gz",
+      "bytes": 192814,
+      "sha256": "58307dc526f56b5b3ee4e6a95f10886d8c9ad2aa26e5eecafc6c77d8951c87a4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0108000.json.gz",
+      "bytes": 161700,
+      "sha256": "202795a8c6cfc12c6f773bbbb3e3052605a36e6a196b5e3c04426e465c4dd038"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0109000.json.gz",
+      "bytes": 194928,
+      "sha256": "de9cb2ca27e22f0873e9e12e5b073753df1cb34e22bda01187318b5abfcbac93"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0110000.json.gz",
+      "bytes": 217649,
+      "sha256": "4b22ef17b9f81aaea4a5b537252daaf9aec6aef7c54f0b73bf09972984c19cbf"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0111000.json.gz",
+      "bytes": 162632,
+      "sha256": "efecc100b0ae2a8db9b565f284547e8a48c0a7936217dbae76f6b385f43dcfd9"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0112000.json.gz",
+      "bytes": 184802,
+      "sha256": "2d117b10e1533d3cec2b703bf309a4a7979ec52fa04476e550571a879a93f9cf"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0113000.json.gz",
+      "bytes": 162488,
+      "sha256": "b88a05cfbfc2d4c3a4a5b2e2dbd5a6cb817a385e51ff42bc345be47a8d5f177d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0114000.json.gz",
+      "bytes": 239461,
+      "sha256": "a45e97c49a226663813266146ce3fbd8ca3e5477b3b819153e3efbadd76f5ba7"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0115000.json.gz",
+      "bytes": 348929,
+      "sha256": "3a7c1926265f1cda60e1479e1b1e5927aa0ecbe180a636040c1f187f66c5ccbd"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0116000.json.gz",
+      "bytes": 387634,
+      "sha256": "e0a2408018670da8e5619a7311c00c5d60724b1c95ec7225cbc5ff6b43e43796"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0117000.json.gz",
+      "bytes": 317374,
+      "sha256": "3438ecbcef67a7ebf8859440fde8f413be2bbe2b6dca21eb92afd8c8755fd48b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0118000.json.gz",
+      "bytes": 374783,
+      "sha256": "ec2bd04f04d060d463f760cea4de4ef6c630f7bff3bed0e8df7ed42fbea647cb"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0119000.json.gz",
+      "bytes": 198503,
+      "sha256": "5e43f954d79ed71767a086c80c73cd6337aa17e15b48107df78f90794a3a161a"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0120000.json.gz",
+      "bytes": 222795,
+      "sha256": "78f80c016b309f682359792b02009a04c308054fd31fad43f0d125ef16f2a16b"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0121000.json.gz",
+      "bytes": 144931,
+      "sha256": "4f8608ef9de4ba8d1497912c6da4c69e949e89e141b1b31624e371ca0899f077"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0122000.json.gz",
+      "bytes": 330412,
+      "sha256": "8b7a54b1790da660172c7bf213571ad4be9f80142650110c350b04a860b7cd4a"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0123000.json.gz",
+      "bytes": 351688,
+      "sha256": "a233ebefde0f326349a8a2cc8c2efdd3b3e33dcb216e668990742b3f693c42d4"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0124000.json.gz",
+      "bytes": 348692,
+      "sha256": "dc73c6c499e53f0c3c198fc98921cdd70e3816deba9522a3fdd7ea449268c769"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0125000.json.gz",
+      "bytes": 224377,
+      "sha256": "2f0afee1a13162fd2e178828f31b71f964fcd47ccb06bcb24dcc846dff21a3e2"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0126000.json.gz",
+      "bytes": 206884,
+      "sha256": "25be135a9e7682382f482db70e398fc6ca60084af8f5945e1f1f1d3f4aa5475d"
+    },
+    {
+      "path": "app/data/raw/na-rail/narn/page-0127000.json.gz",
+      "bytes": 93210,
+      "sha256": "9360e1f63dbefa6d3e162da51db301c4104a1e4d3045dcba5b1e0d9c7d7055d1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-california-zephyr.geojson",
+      "bytes": 1637993,
+      "sha256": "92331e3fdd45c4c96de358dea359c5f676095620b9104b4f530527cc8f55c6a3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-capitol-corridor.geojson",
+      "bytes": 151070,
+      "sha256": "591143e0e0855f0cd8b4371ab410634d7a0a5c2c109efa9668a68a4c8ab8d16c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-cardinal.geojson",
+      "bytes": 901122,
+      "sha256": "837ab45d3235a66ccd7c923a9a120a4c1d4ab4fa685e7defa95ac3d12fb886c1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-cascades.geojson",
+      "bytes": 350868,
+      "sha256": "e213c8b997f445b52c1906dd7d6f05110e4deef8f62d6dcc578bc066fd07102d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-city-of-new-orleans.geojson",
+      "bytes": 345121,
+      "sha256": "e308170d4a859415e142cc8ba99b151ceda44efba8e3f6e0bbf9e58d83bb10f2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-coast-starlight.geojson",
+      "bytes": 1287004,
+      "sha256": "069b9b1a2cd3b27e0609abbf76c2066a0f16c995c0a83fe0c284729ef0914754"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-crescent.geojson",
+      "bytes": 1187847,
+      "sha256": "e622919d267148a9770049d6a9b5ccd7e9eff82a1a19e263b86f9f0470fa704f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-downeaster.geojson",
+      "bytes": 125036,
+      "sha256": "477e32bb83696c2c47d4f5132a2bb07e5321d90ddc89ee2c2e79c29c1577c606"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-empire-builder.geojson",
+      "bytes": 1667073,
+      "sha256": "9d0cee7830b782197bc03f20fb76349405e7044bda22850bee27dbf34160f1de"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-illini.geojson",
+      "bytes": 65216,
+      "sha256": "e61d6bb09445696eb8183fef2bed787131b3c9ae2f62edd778069dcbf9b83784"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-keystone-service.geojson",
+      "bytes": 147852,
+      "sha256": "d2e9d969d0c83e93273a116e7e1a535ffa83cbb7cbd1d770eb056def0eebd2fb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-maple-leaf.geojson",
+      "bytes": 351193,
+      "sha256": "13e9b79b5458c31881bf8460e037792ef8eb89fdede1880ad5b539f124e947a7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-northeast-regional.geojson",
+      "bytes": 805856,
+      "sha256": "06e79963f4927f200debd3430ffb9c3592e4ef0952308a78dc321b731db1d697"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-pacific-surfliner.geojson",
+      "bytes": 327056,
+      "sha256": "3e43d0ee7f2650ba241e9c4746f9a924d40dae4b678e0779cb29ed13bb23233f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-saluki.geojson",
+      "bytes": 64924,
+      "sha256": "66bcb8a7b059187daf083299a48a3973ca20ff1026e3aad0d7b42b3cd3a0c829"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-silver-meteor.geojson",
+      "bytes": 1090639,
+      "sha256": "8a258b1f202aca7ecfb2c824c6be63763454b56b3c9b9555c247b808784c92b7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-sunset-limited.geojson",
+      "bytes": 1046437,
+      "sha256": "372b35b53c27dfa617cbd7bf8644b595bde5631a5944b618bf72e1fd02cec120"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-texas-eagle.geojson",
+      "bytes": 1496082,
+      "sha256": "c2a47143fe2ec434f2c6c4719948db793d3156b158b52a567d46e6a94c302088"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/amtrak-ntad-wolverine.geojson",
+      "bytes": 155805,
+      "sha256": "5cdafd23d5ff23295b96379ec2cccd3a7fda3f624b35163f65ff850141452ab1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/bart-sfo-millbrae-wye.geojson",
+      "bytes": 47910,
+      "sha256": "8ca3050c90029f379053db5bf90658f8733a4e34c26e6765ed93b5dfc8d8f4fe"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/calgary-blue.geojson",
+      "bytes": 143727,
+      "sha256": "1a38ea4b3c3b0347d5e371ea9c4bb8996c4be50475ff562de4319c3944392207"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/calgary-red.geojson",
+      "bytes": 136428,
+      "sha256": "d89a7e9bc48420d40dcc5837ef2478aa1d193f01180260b67fcf22023e9848f8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/caltrans-caltrain.geojson",
+      "bytes": 74025,
+      "sha256": "cb10e6d7ea5613f198ff466e0ba8cc8f8cabb33204bbb3205580a8118037c161"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/caltrans-sd-blue.geojson",
+      "bytes": 17129,
+      "sha256": "bde3151fec0d1dae07bee8e1fc0a1fd507086d6902dddeaaac9f6a723d15bc36"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/caltrans-sd-orange.geojson",
+      "bytes": 32510,
+      "sha256": "b4f93860eb003a28353257e0fa749a42426d1948a0932add5c8fdd6dfe6bb5c9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cats-blue.geojson",
+      "bytes": 52286,
+      "sha256": "8d1e9f91ff3279588dcf4db6c6b90992aafb5a69c5721294eaeb653181bcaf28"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cats-gold.geojson",
+      "bytes": 12076,
+      "sha256": "038ef6bce2e2322bc499ac5585899576732471f55897eeffe154fda5d38a9c83"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cincinnati-connector.geojson",
+      "bytes": 19990,
+      "sha256": "e6069b4919b7047830ffbe0809350d0807c22d76a46ceea62c05d403de59665a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-blue.geojson",
+      "bytes": 34705,
+      "sha256": "769e3adf9200aad8f12d1257573569e8d03dff464f39ebc3276195c73132a785"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-brown.geojson",
+      "bytes": 26033,
+      "sha256": "4fa5a2c78b4d18383ec62296222ef65d0166a2253e3add51c58bfd15a36ad329"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-green.geojson",
+      "bytes": 27670,
+      "sha256": "d76c680c388b74cd1dd68d9f4cec2434740a371f13aa2b9e0ff1362358edad8f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-orange.geojson",
+      "bytes": 16568,
+      "sha256": "6c82df0641983858d30978338d61f91c9fe7fe0d0bf619570df1ea220988c21b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-pink.geojson",
+      "bytes": 17899,
+      "sha256": "9dca637cedc669d66da2b4151bdc5e8e7e92aee62ab9d2f07ba37342f63586ee"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-purple.geojson",
+      "bytes": 33187,
+      "sha256": "7de627bdf731817a9317b1f83aa9542d1de9def20224c6910ea489655d7baf02"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-red.geojson",
+      "bytes": 29365,
+      "sha256": "287d516f75c101ca9e85bc396a0ea77c88d0f39bfa4f9658c0daaaf9db6981b9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/cta-yellow.geojson",
+      "bytes": 6317,
+      "sha256": "04090359a70de5370cfa95a1ca44bbef939cfa54964b480e8ebaabcb7f273fbe"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dallas-streetcar.geojson",
+      "bytes": 8982,
+      "sha256": "062cf277e950d8b399ce25e57b439fdd30a4738f549a7674fb512afc8d5e1826"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-blue.geojson",
+      "bytes": 96830,
+      "sha256": "7fccc5c48c1a3958b7f39de2e8fbeab898c97d68a81442c03bd4401fefd4937b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-green.geojson",
+      "bytes": 88432,
+      "sha256": "bbe10d606f76522ed0307cf2b5ae6c7a1750ec1216704757db91db590a558bee"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-m-line.geojson",
+      "bytes": 14171,
+      "sha256": "c4ecb4875cdfdbdb2f57c92441202dd4ff126a3aac91e31dca18f396454ad372"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-orange.geojson",
+      "bytes": 125028,
+      "sha256": "88ab8b156753c107066ce55555566fd392b5be59e66ccc4d564625b2660e1ce9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-red.geojson",
+      "bytes": 85532,
+      "sha256": "e318281da045ec42197d46f8b03a4eb81b7afbf899a7ee0e006f54b1ec5cffd2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-silver.geojson",
+      "bytes": 84586,
+      "sha256": "069c1522c1c77128882e0314fa48c3d501a801d25cdb15d80534f483fc0d2b66"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dart-tre.geojson",
+      "bytes": 94966,
+      "sha256": "a611729acc53ecc963fc4f93e210578572a315c7e97e68b0ffc6af369c316caa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dc-streetcar-benning.geojson",
+      "bytes": 3335,
+      "sha256": "c8b95ad74a42926cd2e5ece3258bc8f2d9947bde729fe36525a0a666a4b18ec7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dc-streetcar.geojson",
+      "bytes": 14982,
+      "sha256": "e21ff396e34316fb0cbfbd9882dfb757c1e7da7c075f4782cad3b1b4beb479b4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/dcta-a-train.geojson",
+      "bytes": 59892,
+      "sha256": "65c176d83d9d4b7f1028708cd14f817e1be9bcc0a6b9c6632e6d7b04882891df"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/detroit-dpm.geojson",
+      "bytes": 23287,
+      "sha256": "c4d785ac6e9ead189fe6a1288513087c9fee64882749dfa7a03f9cb428968c9c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/edmonton-capital.geojson",
+      "bytes": 20602,
+      "sha256": "83f570e610e03640cb7edb322716ca9281987f988e1357f508842010d6d35bb9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/edmonton-metro.geojson",
+      "bytes": 33136,
+      "sha256": "74b25371c04c0599650e6ac53f266c168b96c04f3f8e6fa4233acab9138e3724"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/edmonton-valley.geojson",
+      "bytes": 15229,
+      "sha256": "1316e683f116cbf78b08b6f3b689158c9736e782226f8d5f91519954d66cae24"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/fdot-brightline.geojson",
+      "bytes": 617863,
+      "sha256": "aef5c29f0ff005916ec2ff0ac3e81a6dbaed679c40db18fc6262f8b6257344a9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/fdot-sunrail.geojson",
+      "bytes": 168336,
+      "sha256": "28d80a6cd9c394df29d80ff1938011522b171d515c4cb2a6adc735712e4536d5"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/houston-metro-700.geojson",
+      "bytes": 47866,
+      "sha256": "418fc6403132dcad75669199294df1a2cc36d5917d736493ea8760c05d5170fb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/houston-metro-800.geojson",
+      "bytes": 27820,
+      "sha256": "a28413c22c8cd056fd3b20a18faf39c8cefe805ea7eeaad82a49cce226cc0854"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/houston-metro-900.geojson",
+      "bytes": 27569,
+      "sha256": "0687edb74bcb356f5173f658d6fff22c90970649e06471a7dfa6d0e795023aa4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/houston-metrorail-900.geojson",
+      "bytes": 27343,
+      "sha256": "6d971ca4b83e09e776c5a31fbb4bc971bdfa24779b0a5e118c0822b6b4c0d97a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-801.geojson",
+      "bytes": 233961,
+      "sha256": "639dc690e60267024ec586c22a5dcac03cc896058c7658f564dd169f2e9e4a82"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-802.geojson",
+      "bytes": 55629,
+      "sha256": "07e8be40f84991d26e2cf0f3671bc0e6efbbe343d163d812c2d67fd664a9225e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-803.geojson",
+      "bytes": 52733,
+      "sha256": "03b681f52a278e441f7f511e436a12a8598ef93dffb33d4b9a065b9dc2461310"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-804.geojson",
+      "bytes": 85624,
+      "sha256": "f02f0d89f6c50a75845c8aef7b14056e5a67af34c4ab20a25c986693362a9002"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-805.geojson",
+      "bytes": 35480,
+      "sha256": "e7d21ce6e28adfe8503364eca00b246e1970ae728a2b17d7ce8caf11cb27bde5"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/la-metro-807.geojson",
+      "bytes": 35166,
+      "sha256": "ff65e7a45dc28ae8b75f5b4a1833b73e3d45637f979cd14b7f5720a06f181ea4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-1-babylon.geojson",
+      "bytes": 99632,
+      "sha256": "7cf8b20e2d7356b00f3f9d5a9833f490d00f7f776003b3682be9e698d3146178"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-10-port-jefferson.geojson",
+      "bytes": 139267,
+      "sha256": "36d976b9d9b31366870a4fff08122bfa6bbfe1d426144ed7b58ae637d6363056"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-13-greenport.geojson",
+      "bytes": 82686,
+      "sha256": "142061f2092e5b88bb5cf9cf150b575ce6ca28c3473afcf8c2a934f03a923376"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-2-hempstead.geojson",
+      "bytes": 82908,
+      "sha256": "154881a1849970828420f9b135ce9645a0a4eac5c38b827e2f3d51b45aade5a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-3-oyster-bay.geojson",
+      "bytes": 158004,
+      "sha256": "71d7ac9a48c284d3c119fc109a4d31a82a0fb71979cbd2ec85a1e16a5aa63c29"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-4-ronkonkoma.geojson",
+      "bytes": 221666,
+      "sha256": "f15a4b32aafa20e462e84c431a1dd47c55ff8d0fee32e2af36b22a388206987d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-5-montauk.geojson",
+      "bytes": 195235,
+      "sha256": "1d84b41b43b1ad518bb1b6862a400b33217bc855504b52e0316b647ae1eba814"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-6-long-beach.geojson",
+      "bytes": 88145,
+      "sha256": "d1eb62289a1e7f1d67442bb44be64c6cfc0a927f0c555697c1871cf2d320aa62"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-7-far-rockaway.geojson",
+      "bytes": 80427,
+      "sha256": "32f4911d27a4804d9bef6a90251890e6487d440551bd8e8240cbd76e213cef68"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-8-west-hempstead.geojson",
+      "bytes": 83442,
+      "sha256": "5ce85436f95caa8a3745c1aa5a4d3dcdd52e0717e1e0642c0562a6f947fb16dd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-9-port-washington.geojson",
+      "bytes": 87824,
+      "sha256": "6ebbfac3f980595b89af7d947d8554edcba1ef592f637ad1684ff361c3f78ec8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-1-babylon.geojson",
+      "bytes": 99638,
+      "sha256": "c70b8010b427ad1766abf08084884fb6667e477afaff4e72198e6673c8cab090"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-10-port-jefferson.geojson",
+      "bytes": 139275,
+      "sha256": "f615ee0680d0cc4b6a82cfef4414acbd3bb512b511253774a9e8089407a24695"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-12-city-terminal.geojson",
+      "bytes": 68796,
+      "sha256": "e8092e69ee3a52732fe6ed311f75efa05f9b51a798c8ec9795cec2211f09e86d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-2-hempstead.geojson",
+      "bytes": 82915,
+      "sha256": "b3861a6b60848f5907d60caa60ce2019be4fd9c410a28be43533207abf2b9071"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-3-oyster-bay.geojson",
+      "bytes": 158012,
+      "sha256": "d3b423ae11d7c750d8a31518b675abb59db082564824a6db418e9c488559eec7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-4-ronkonkoma.geojson",
+      "bytes": 221674,
+      "sha256": "7ade7cc6dcdfd14b629da6e14999ec05bae6855a7b67300358b6c25b875781bd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-5-montauk.geojson",
+      "bytes": 195241,
+      "sha256": "7a255c186b54a00b7135f4b6bb7aa4a29dfa55f330f9b95a1ae4ab7c6bda5027"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-6-long-beach.geojson",
+      "bytes": 88151,
+      "sha256": "4b32e27104649c03e86a660d4e6c2c73145c1169f292530af3c42b289534d8d3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-7-far-rockaway.geojson",
+      "bytes": 80433,
+      "sha256": "c0416e28f9c05b50954e7d6b4a0ee1e94dcc4bc50745a7d3d966645ea3939297"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-8-west-hempstead.geojson",
+      "bytes": 83448,
+      "sha256": "4c9ad255c6d237deaa9b8a1074e9c322c46621c98eff8cd1a91878c6fbc1cd63"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/lirr-seam-9-port-washington.geojson",
+      "bytes": 87830,
+      "sha256": "513f506aab7db8922ab2f9ba58b59de08a12398ceb8e5be97e517ae85edf5acc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/manifest.json",
+      "bytes": 26494,
+      "sha256": "84777052016c578c5b908498564f2df830774adadd215851fc7ec0c91718e68a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/marta-blue.geojson",
+      "bytes": 11808,
+      "sha256": "062db0f8b92fd0cc5758929517742e53deedc12080a8110d9ce49512890dd7bf"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/marta-gold.geojson",
+      "bytes": 17349,
+      "sha256": "5c0ddd5fb240a71f55c047347ce37327c4143acb3c5dfa6b739363d6f77dff5d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/marta-green.geojson",
+      "bytes": 5592,
+      "sha256": "7c70d02b9832dba0cd8a39b0c20a498d4760d30966937929672f55d96fdf56e0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/marta-red.geojson",
+      "bytes": 18690,
+      "sha256": "56f5c7f0d3956c0961959f3913a7214e8bb0e4602b882d108006f72933c09ae8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/marta-streetcar.geojson",
+      "bytes": 13074,
+      "sha256": "77af621c418dcd9c15f169da13507662960454e4561e7924583b3ca79475395b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/maryland-light-rail.geojson",
+      "bytes": 80878,
+      "sha256": "13672b68ac0a81566af6a5e0a02f852b40b4979b86279344d628ef47fa63dfa6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/maryland-metro.geojson",
+      "bytes": 28940,
+      "sha256": "652c7ade1f63edf1fc246b123897f762ca720f4089218afdb4d514578d51546f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-capeflyer.geojson",
+      "bytes": 94949,
+      "sha256": "99ccd3886488162d36645a1c4a9945f14e3d5977ab14cc2b30d5e8b87dcda030"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-fairmount.geojson",
+      "bytes": 14396,
+      "sha256": "c48444202e4bdb50f3055f04f8681679f787c83199c440d5d9aa0df9b930134c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-fitchburg.geojson",
+      "bytes": 73428,
+      "sha256": "97462c34041af4c9ccc174b8877050af8b96fc6118a892240434ff8d0ead562c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-foxboro.geojson",
+      "bytes": 125690,
+      "sha256": "e62a8e0e026e61bfdd98fd397909176a9371ca48eb2797ce0ddaed51b804530a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-franklin.geojson",
+      "bytes": 77857,
+      "sha256": "564de98e633d3f3497ec70988d2d20bb464d3b6dd0c25e4215e2bd95e278852b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-greenbush.geojson",
+      "bytes": 50253,
+      "sha256": "7d2b4d3eb8e3227a338b9fc0232d71be1e6100079af0f8527f629739b7bede21"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-haverhill.geojson",
+      "bytes": 48540,
+      "sha256": "428fc202968803a036f10c0e31ee456c0c5147950073d487dd79c55e5c16d2a7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-kingston.geojson",
+      "bytes": 42666,
+      "sha256": "4a1685e30f63af42d2d91c70599d7c46e16202ebe307edce4a70bd2074c481a3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-lowell.geojson",
+      "bytes": 30550,
+      "sha256": "af439b9d6b8b5b236c0a916a4435b489af19f2c33a0bd8ce0ba89706a7898b1b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-needham.geojson",
+      "bytes": 18096,
+      "sha256": "bfab706e59fce48d25783c17b629e4bf00e667db2ef91f6dbdff23a0e59d4d56"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-newbedford.geojson",
+      "bytes": 123797,
+      "sha256": "330c1e5cda24994f67945b7a5483e4e13f82fbf08384c66aa48170670ade9b05"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-newburyport.geojson",
+      "bytes": 58514,
+      "sha256": "f7a7dd5e22e29a45a9f9302b03d2051028637516ec98387e10411abb592dff50"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-providence.geojson",
+      "bytes": 76115,
+      "sha256": "a1a5a1157e2f2d4179ed21ea5a87ed8f1a1ee01f414ff7f15a241f5996114b86"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-commuter-cr-worcester.geojson",
+      "bytes": 71732,
+      "sha256": "51bf5ab4f9148cd06b671173689d31172cb3a3f99bf474331bf1b35cc7f82b8f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-cr-foxboro.geojson",
+      "bytes": 138341,
+      "sha256": "d9475c6ca47f7026bd8e88333a2e53a3a326f06ac148d866188928d975dd0ca2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-cr-newbedford.geojson",
+      "bytes": 101822,
+      "sha256": "151b28732e55145d05f299bb0606cbf4ba59dd40c1e323a8fc10609f528372b6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-cr-providence.geojson",
+      "bytes": 85534,
+      "sha256": "495cff63186560df5381dc00b02397c7bce8fde2fdafaf401a6dd65791aa2fce"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-blue.geojson",
+      "bytes": 10802,
+      "sha256": "e8e7f4f80f8a40f1eb0789917b7cfad36bae1f4260bec7367509c5b7365c868a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-green-b.geojson",
+      "bytes": 22852,
+      "sha256": "0d01d9c8946679b0f61ad6778879cf5dbf64d48d902df93cfa6426c73edba826"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-green-c.geojson",
+      "bytes": 17707,
+      "sha256": "bbedf4afb24084c49099e3ef2a6e91f759e37a4ca2f7df5e33d8e7ab171f8521"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-green-d.geojson",
+      "bytes": 26747,
+      "sha256": "f1fe334bcfea69e524fdebb5e4ad767377bb7a1ccfde30ca275f205dd9df3069"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-green-e.geojson",
+      "bytes": 18536,
+      "sha256": "98f11c7587423a4a419fe21edbbb6a9dc1657ebe994b6f0fde525f3ddc4d8e30"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-mattapan.geojson",
+      "bytes": 4887,
+      "sha256": "f5eb0077e3f7e61ac4f1d06453e8b0378bcc55bc6bd383995a4ce9df2d74ccea"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-orange.geojson",
+      "bytes": 17456,
+      "sha256": "4fca580b9acaf1039703a67407a9e50eecaed8618a64dd43b62d404a40995aae"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-red-columbia.geojson",
+      "bytes": 25092,
+      "sha256": "5c86bab42de2892b05362cb1174055f433fc749cb53437f0e164fef78865b760"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mbta-rapid-red.geojson",
+      "bytes": 25830,
+      "sha256": "3fd862136e225135b895f48b9e84ee4efda6e20a344e9b17b94380207e5482a6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-bnsf.geojson",
+      "bytes": 24437,
+      "sha256": "7fb3bd425057c5653dadc4d632f1ca11dbe7c11ebff7b5751addec9b77e33c75"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-hc.geojson",
+      "bytes": 24552,
+      "sha256": "73583ceb0d1eee908ba3379098fb37c57e0c439b47688a321d61f1843c0f647a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-md-n.geojson",
+      "bytes": 40916,
+      "sha256": "d81e338113a03ecf0c4fb97f620d21da3739b358eed19185abf4a603a8f83c73"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-md-w.geojson",
+      "bytes": 37168,
+      "sha256": "d62226d5df065148b309b3876b40db420044a1269ef68ffa5f3b5fc2632f87ae"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-me.geojson",
+      "bytes": 34867,
+      "sha256": "90f033a2755432cc9a84b1a3e8a435c6751984921047c661ab276183da8c6153"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-ncs.geojson",
+      "bytes": 42995,
+      "sha256": "d3cf2c5f2ad01c83ed0054a15c3bfb1798e3dd2ec48669f6c7202904d2779397"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-ri.geojson",
+      "bytes": 37929,
+      "sha256": "4d589e733b2e455061578c8aebcd282859e7544f63bf755450b893d937833e26"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-sws.geojson",
+      "bytes": 31358,
+      "sha256": "2071eef436516e90192148ac7f39c7f096e04ab386836a554d02f71192f40da6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-up-n.geojson",
+      "bytes": 37467,
+      "sha256": "cddc9e4748939a39cf8af31de6566b6fec7de2592adf5be57411e9adb4873f92"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-up-nw.geojson",
+      "bytes": 48648,
+      "sha256": "58cde62d48719525c778a9aa473a7a7e77d3e919e16a6b48609db9cd081dbca3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metra-up-w.geojson",
+      "bytes": 35801,
+      "sha256": "a86683a74fccb5fc642f95845e083853047b955c571ba29a76644bb3d5ecf7b8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metro-transit-blue.geojson",
+      "bytes": 35453,
+      "sha256": "322c5eac9d594cb92accd6af96e32288bedb6d1ad05e455eb66e5917bf55fd37"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metro-transit-green.geojson",
+      "bytes": 31900,
+      "sha256": "a842235d679ad23430bf22bd1dba6d0cc9d36f73935232718fd83ad470c4fca5"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-91.geojson",
+      "bytes": 85933,
+      "sha256": "c98242ea8524f6137730173200e441325d4d1fbadc2314478ce5d685343f15fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-av.geojson",
+      "bytes": 165282,
+      "sha256": "8c7780ce5b91dd7c4ff43629ec8a047a19b30e0de8b43d4ce7af72bd6a3990aa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-ie-oc.geojson",
+      "bytes": 153974,
+      "sha256": "eb3a00cd2c33420f0f00a2b253c0a0b91978138ed77f76eb1c7dfbf150aa3e72"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-oc.geojson",
+      "bytes": 122646,
+      "sha256": "bf21f4e829136f0e9ccd37d4a3c8eb95df7b284d5a69451ac2529ba2288e276b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-riverside.geojson",
+      "bytes": 27054,
+      "sha256": "dd2749c49c83fcf1f74082af20e58a6090397678f7961f2b18a27619975a4846"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-sb.geojson",
+      "bytes": 152637,
+      "sha256": "ceb4bdf5f5d59d673f9d3a4b633e9cf5a676b8b4269b4d4896cabd731813f96c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/metrolink-scrra-vc.geojson",
+      "bytes": 118146,
+      "sha256": "23e7e122f17bb8618f8d143cd3ec47f9319b6e252675af8bcd4daef826761eb8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/miami-metromover.geojson",
+      "bytes": 14524,
+      "sha256": "d49f115518d6a39976f52935b370075f0efa6472885361b62399ecc801374d5e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/miami-metrorail.geojson",
+      "bytes": 22546,
+      "sha256": "a18b45d1aaf4591c389e384f42a3a714d0953fafa059b97729a520c2befaac5c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/milwaukee-hop.geojson",
+      "bytes": 8803,
+      "sha256": "2c3fb5cfa0f805b2bad9ff616bf50a6d16203005214e318dc2cd90dd1b71d399"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-danbury.geojson",
+      "bytes": 1437328,
+      "sha256": "9b926f85b5799a244aebfaf12b8e7084f30a655ea8b2037fa55166398f117f76"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-harlem.geojson",
+      "bytes": 966354,
+      "sha256": "f3df47a65232969b41a52a20e4745f333a81ff2f7fc1b768abc8456f2d85de8c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-hudson.geojson",
+      "bytes": 1047763,
+      "sha256": "db6c129bf45128de90586d0454b39afaaed98aa22f043a671e21b830f347e06b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-new-canaan.geojson",
+      "bytes": 1221072,
+      "sha256": "10d9f64d61a141d7aa4f4ffedb98f5adfdd18082f06e1572e94d56821bb9cd9f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-new-haven.geojson",
+      "bytes": 1148379,
+      "sha256": "bdb1e2732c1ec7c5e19e83cf05858757ef0cd6dcc3dd388f146823152f015452"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mnr-waterbury.geojson",
+      "bytes": 1375695,
+      "sha256": "a29470b2b9ff8c6e058f11883320c44a29ae6a1f43885d28f069b7e017debb82"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/modot-kc-streetcar.geojson",
+      "bytes": 3350,
+      "sha256": "dc0da87970b1f0fa163bbf4bad0acf98aa5970c81e625901d27e61a6e85136e4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/modot-stl-metrolink.geojson",
+      "bytes": 55273,
+      "sha256": "a25a882229581bfc1fdeed0bf7f5af693fb2c0101c8b3ff08e6ae3a22cae6a60"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-1.geojson",
+      "bytes": 354483,
+      "sha256": "dbd951eaf19c2e33d7827deeebbc4947e93628c6c4ad64c85a4e941fb8c854d2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-2.geojson",
+      "bytes": 544417,
+      "sha256": "eced00d67874a67f5798f958529ef230ef97e9700406084ad4b033ff363be79b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-3.geojson",
+      "bytes": 314801,
+      "sha256": "7908fa7b62878ff7fb537970e3965081e269827b34c5209c6e8fa59232191814"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-4.geojson",
+      "bytes": 453005,
+      "sha256": "ebea04609e7ed6f876b79b210d1a2a659ba43f37fdbebfabe7e658172ccec0f4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-5.geojson",
+      "bytes": 636056,
+      "sha256": "8c1f52e986e518f2e5176bcd69a1c2863ab911fae3309be133bbedc704f7697b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-6.geojson",
+      "bytes": 395727,
+      "sha256": "e12f1922fd605d5dcb3edd96eb37342c999a18b619e56531c13bac3bd5762e94"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-7.geojson",
+      "bytes": 276939,
+      "sha256": "ac6fddb3587d9034a7a2b2a5f58bd1072a518245a7aff29b4aa9e79dd317bcd3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-a.geojson",
+      "bytes": 890625,
+      "sha256": "92ba93be44cd9f46ee001aea57d7a4ec3e43f7346bece53c74b5d440b9eff98c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-b.geojson",
+      "bytes": 347342,
+      "sha256": "e611e73630339b0959cdc0f7349bd08d60522d5f93819f664c72707b755a2c48"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-c.geojson",
+      "bytes": 485468,
+      "sha256": "c5223014374f7e1e463e65f8610f2c4094c9137aa4fe7e59f727f152248f67f3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-d.geojson",
+      "bytes": 530377,
+      "sha256": "c5baedbb761981df98cb5b94303e55610a07157a4375f4e28984e8d85e52e6e4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-e.geojson",
+      "bytes": 247989,
+      "sha256": "4af5ae5e42cce401ce9073c3afe7f292ef25609fdb050113d298bfafca25e25e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-f.geojson",
+      "bytes": 490040,
+      "sha256": "2c2c57dbfe89c15c9ac585088d31178d3286a1f0644d90aa914477691857e171"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-fs.geojson",
+      "bytes": 42013,
+      "sha256": "e8e65e0b5aab6e81e95e2d695bc8f27d41007bbb7e9dd5a6019775cd39cc5605"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-g.geojson",
+      "bytes": 221021,
+      "sha256": "306742b6c74e09a0c6e783cf4639cecffa5a8df59b90d7d3174110d22f294a4d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-gs.geojson",
+      "bytes": 10632,
+      "sha256": "af4c8a0c80fd94e1860465ea36e0df96d35a1af0ddce73d0056acccbeab3e9bd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-h.geojson",
+      "bytes": 12388,
+      "sha256": "e4fd50f8ee399266c6e3db86f4b949816a4b8b0c37ff2380b7202e439ee89ce0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-j.geojson",
+      "bytes": 320842,
+      "sha256": "9c76605ab6bed529c6d41e1ee60f59909fabef205f7f6af6b9915b2c461c8aa4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-l.geojson",
+      "bytes": 339669,
+      "sha256": "fcf69c5b76858e3cdce027955aa7f4c8eb6e4fba2f2c468676d398fbd5127e7b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-m.geojson",
+      "bytes": 194531,
+      "sha256": "af4c56be4472bc48a5e1b083bb046508f7e37d471d66bdb4db9813ac5532c403"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-n.geojson",
+      "bytes": 416923,
+      "sha256": "df58338b16968e3a9cceb7461b3d9418bf475b01aea824939e8cbe6864eb3a67"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-q.geojson",
+      "bytes": 211440,
+      "sha256": "975085c9a41de54fd935eb2a75b8a35bf4bdc71be2ac91b04d7bcfc775a6c1e3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-r.geojson",
+      "bytes": 373806,
+      "sha256": "7ff254ef8c21b7c61d7b2eb3e435587dd29ff4e23e48fbd350589efbac03d13a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-1.geojson",
+      "bytes": 355780,
+      "sha256": "e46bb187f1eda6cc3c49b309b4e90421e5bb529bc3be1600ed38970f195b4b37"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-2.geojson",
+      "bytes": 570027,
+      "sha256": "989676a0e0d7db642a582d3dc79afeec21c8e75d245f33cfc6c18f42779eb8a5"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-3.geojson",
+      "bytes": 329299,
+      "sha256": "b014d7bd3ac0bbb4a52399faa4eec72badc6f89901e5f656e25f17a13b364c0a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-4.geojson",
+      "bytes": 467851,
+      "sha256": "41995882744ec26cd8ec9a0d55b8ba158cdac57cc6fec3a5fc7b1c1c999fc1d9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-5.geojson",
+      "bytes": 659678,
+      "sha256": "474adc2b273ab1f3a2e6660cf29488eb170c065cbf9dd6b3b78d2137e5a840b0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-6.geojson",
+      "bytes": 408610,
+      "sha256": "70606679dcae1a5fc967a7105175ff66c1a1f85883400764d9b0c269b4001b2d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-6x.geojson",
+      "bytes": 408611,
+      "sha256": "53952f338fac39095a3b4e1b2165952f71704f5e3a027b324468d60a69fcb9fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-7.geojson",
+      "bytes": 289125,
+      "sha256": "ca21a4694ae6a9b61cd33a06208b8a5b9a5e89d0616e66054d06f35b422209df"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-7x.geojson",
+      "bytes": 289126,
+      "sha256": "3dc5c9a83d3dc51252d52a2aa3d726c437d0032f2f63516815b8cb72b76c6e71"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-a.geojson",
+      "bytes": 900284,
+      "sha256": "33659ae2115625d8ab003edd21998d5109d65554174d4de92f23ad605c2bf820"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-b.geojson",
+      "bytes": 374353,
+      "sha256": "a85b7ce69b7a7ba74a07b91b199780fab893000ee96f3d0ec67e07da9adf19ea"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-c.geojson",
+      "bytes": 493241,
+      "sha256": "7855f1ff84bb7b08b772a63bf0f6d7a5b2c57130421298982e58a6b9866feaa8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-d.geojson",
+      "bytes": 559040,
+      "sha256": "c0fa2033c8d26d92dff04035e33e935752043aec1bb8dbeecd6b99d4a2d25dfd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-e.geojson",
+      "bytes": 259256,
+      "sha256": "3ef062691fb43e687319671e5dd3e859b542fcf139b47e1f98b9da7433d374cf"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-f.geojson",
+      "bytes": 737657,
+      "sha256": "b2e0ab45b2e1ec1a3441f40af385fa27734cb3d199dee1650636f22ff8851fac"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-fs.geojson",
+      "bytes": 42014,
+      "sha256": "83b23dc099a82b219b5780bcff9790d9dfd8888c6acb3bd1a6b6cd623df83488"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-fx.geojson",
+      "bytes": 737658,
+      "sha256": "1f2bfda5367bdff79703b71de02571ee50c2e6117080d75e72640cfe382fd8a3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-g.geojson",
+      "bytes": 233073,
+      "sha256": "fdc39924ab5d3f7ecf0c35a5017decebd7b892976716431c59860e6d7b5c08cb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-gs.geojson",
+      "bytes": 10633,
+      "sha256": "0e5cbe49d7c99da4086f8ce21a756e091d8b89574e18290631b4c3df560e81ad"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-h.geojson",
+      "bytes": 917185,
+      "sha256": "af09d3f09657539838c632c5f655207699a38c3d1c0ca190dfb3ad5c328ba2c2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-j.geojson",
+      "bytes": 338957,
+      "sha256": "73c9a7e8d745cc91e9f6a539361e2b9ba590d886a8ee274631e3f219fe4814a0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-l.geojson",
+      "bytes": 348944,
+      "sha256": "f3fbc3a936286aa24d1d0b215a069e04401c80fc670ea522736fc86df737d561"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-m.geojson",
+      "bytes": 219920,
+      "sha256": "089c2657f3d0d0e47a82ba0d51dfdb969c5932fbac7e6b9fea7bf9eb3b8663ac"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-n.geojson",
+      "bytes": 434569,
+      "sha256": "5f382a5f0cc1803bf28c68b6c418c368ec73e67cc20e80a1db917ca22ef538e9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-q.geojson",
+      "bytes": 232176,
+      "sha256": "431cca5abfae69e17741ecc341dd63e0a7edf99f8e2099365f47e9f550543f93"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-r.geojson",
+      "bytes": 393911,
+      "sha256": "54c740fc0703b01950a7b3c915302baaf9374407f82b861831eee8004ec27cf2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-si.geojson",
+      "bytes": 66442,
+      "sha256": "e0b22522c87daf72209813b1ad1100562719a0971e12517f0c40f7de63f9a4b3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-w.geojson",
+      "bytes": 272093,
+      "sha256": "42768bafb88be272ac84dd8012250cb94405e2df2e8e112d203ec7cc57d6fd04"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-service-z.geojson",
+      "bytes": 339088,
+      "sha256": "d70cc706c1ea171454179a28f894fed143774ef10981172d8dce13b89581db3f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-si.geojson",
+      "bytes": 125810,
+      "sha256": "8aaed267c712789a425cd97b7cc863349e99aeb4171dac49190dfa9aea7f8f99"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-w.geojson",
+      "bytes": 271577,
+      "sha256": "83774c679d9c4d0be214990e9ccbb820548e7f864551f3d96a4aa36ec6c4926c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mta-subway-z.geojson",
+      "bytes": 320957,
+      "sha256": "c820c039383dd33a1017eb14ecbe55594a46d7174f95ad092150cbd5588a7b12"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mtq-exo-1.geojson",
+      "bytes": 26052,
+      "sha256": "971a302f7e731521ac9cae81b9d5c6aff99f3ef0a23202a65eb615be76ce6f1b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mtq-exo-3.geojson",
+      "bytes": 14644,
+      "sha256": "344343bcbacf9fa6a82028d7d4fe1e1fdafe01b399b32b96a175340dd1cec03f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mtq-exo-4.geojson",
+      "bytes": 33290,
+      "sha256": "0b42c36dce89f0385a55fbc9e298237b4e2f3936b783d690ee076e119b3b7f08"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mtq-exo-5.geojson",
+      "bytes": 13379,
+      "sha256": "297445e9bd61d1bbc78042e4daaf21e59c1cb6f050e8a135feebce46e3eb014c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/mtq-exo-6.geojson",
+      "bytes": 16805,
+      "sha256": "e575f0b2b6121d9c46e9558f34a57ea62af658a6dd3c39716689b6c8f1f8e62f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/nctcog-texrail.geojson",
+      "bytes": 75636,
+      "sha256": "895783ac74ec3eb0ffd94a1ddf5a0a6dbb082fbede7fc75637c42a78788b638e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-light-13-newark.geojson",
+      "bytes": 24608,
+      "sha256": "44424bafffe4dd34af279a4c56559028e614e3213b675aecb50917ff48aabb91"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-light-17-river.geojson",
+      "bytes": 390363,
+      "sha256": "78c3e4b4146269e351aacb989c38784b69caf41414dbd3aac7ba52b7ef95875c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-light-4-hblr.geojson",
+      "bytes": 65427,
+      "sha256": "4ba783ef27e459700b0ea1838ae1388bf98082c8bd291a8bcdc04a8e67fd230d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-1-atlantic-city.geojson",
+      "bytes": 853932,
+      "sha256": "d6709daecb577ac3bcf9dbd3bcde5a2235d3a29097dfac64422230280594e6cc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-10-nec.geojson",
+      "bytes": 675417,
+      "sha256": "52daa2909daa7c708015c3fa4eeb7b27075a8df5f5fd48aca8372f9fb1a797a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-11-njcl.geojson",
+      "bytes": 814683,
+      "sha256": "1f4b70a32eb67877cbde597b9dd6fd3b8f21af4bd7fbcc681e404abe9faa1f62"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-12-njcl.geojson",
+      "bytes": 814683,
+      "sha256": "1828e59fd56d26b5636e51a3a310e9689290b70431c093d96decffa2bfe6778d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-14-pascack.geojson",
+      "bytes": 372457,
+      "sha256": "12624e4ee4c686a5802daf7381eb553c0f4b77f3896d972fbb3ec8cddfb15bb6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-15-princeton.geojson",
+      "bytes": 34216,
+      "sha256": "b2a9c9188bb80190925750db87a106b2d3261e9c4d5ccf5156c28f8e0ca6e24b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-16-raritan.geojson",
+      "bytes": 626491,
+      "sha256": "a2506dcb69114feddb771cd660ac02d989f61e659e82e8bddbd699373ab85028"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-2-montclair-boonton.geojson",
+      "bytes": 798810,
+      "sha256": "3894cdd85dfc93e01f3ba1fbfd73e897028ee7314b0680e22299b381438b0dfc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-3-montclair-boonton.geojson",
+      "bytes": 798810,
+      "sha256": "2e487cff8c14a49ed3cfcefb3bc87dca5eaf835d4df31740d5b6dcaf722c2a28"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-5-main-bergen.geojson",
+      "bytes": 738601,
+      "sha256": "8537b98e142f46bd1388d8004e3eeab559bcfcc449a15621ce4e109be423f690"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-6-port-jervis.geojson",
+      "bytes": 1543657,
+      "sha256": "8004f7164f4e8f6595bfcef20ea57d31771d88549523dfd9a7c1923b56cb0f2b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-7-morristown.geojson",
+      "bytes": 772920,
+      "sha256": "77e9e188b7b94f7f54cb2fe196d729924a62d5054aaa9546ff79b386fde6625d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-8-gladstone.geojson",
+      "bytes": 572515,
+      "sha256": "f1f3b7048a2a375a816a3e5e00f0de1a5e5f105b57dd17136e306ca04e13053c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/njt-rail-9-meadowlands.geojson",
+      "bytes": 102066,
+      "sha256": "0cc4a7060febf764f6fac5f2c20dc761c6959a44b59f0d0f7664e5839c80fe42"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/norta-12.geojson",
+      "bytes": 18133,
+      "sha256": "85800f455acaba67763fa14fbdcc9b11c1f233e497ee08ec08c6e3792e4666df"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/norta-47.geojson",
+      "bytes": 10782,
+      "sha256": "92034f603a3a329b2430afe34eac3879259b02925996984ca3fe6a1aef983d67"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/norta-48.geojson",
+      "bytes": 12362,
+      "sha256": "318e65239625700d9c6aef6c77c47b9a2a369e81f1e6da9a78d96fd589132dfa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/nrwn-on-go-ki.geojson",
+      "bytes": 69221,
+      "sha256": "5905f702189bf493194dc0f4f5003d354dbbf7badaf8112663792d40ea93d704"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/nrwn-on-up-up.geojson",
+      "bytes": 12524,
+      "sha256": "d8ea7717196026535c286b80d2402a5fd8bbd5244b6f812a9047d751ebc4be83"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/oregonmetro-rlis-portland-streetcar-a.geojson",
+      "bytes": 27526,
+      "sha256": "ce562671c9695dc706bf8b3060bf39b4b0e2acc38bdb80b2fbacbd6df7b6ba24"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-br.geojson",
+      "bytes": 167325,
+      "sha256": "ec8b644b2ca9c18516b438b990aa245bf8d913f6e36ff6f8cee369c3629b5ac8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-ki.geojson",
+      "bytes": 415338,
+      "sha256": "6455175c63e7437e98bac2a03263560cada07d3c4fd306fbf721a7f73aa306f1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-le.geojson",
+      "bytes": 137954,
+      "sha256": "060947d5cc6ef074d5de718f9cfcb4b334c6694fd28d468a72528d1d590811e6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-lw.geojson",
+      "bytes": 322890,
+      "sha256": "9f4785bc488e937fd31d2b62151ffc44bdb7a2bf8433f7922f3786b01afe0153"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-mi.geojson",
+      "bytes": 86548,
+      "sha256": "e538477287b4ff1edb570088511a61eced1b3dd6e6d275ab151b93fc4bb95cac"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-rh.geojson",
+      "bytes": 81286,
+      "sha256": "d41951e26263aef7e31a17f5f5ec304110a34bff9a322c90223d893d86689d2c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-go-st.geojson",
+      "bytes": 84451,
+      "sha256": "412b760f61316edada5fa9c60d3b570af2214249291f4b03fa2055ba65786685"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-up-up.geojson",
+      "bytes": 45313,
+      "sha256": "cd9fa88b4511232ee3f66fa2e45a1aa89cf2012ed8c310a4f2222fc1b71b2f96"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-via-119-341.geojson",
+      "bytes": 470751,
+      "sha256": "e1571171785ce97aed211189f903da85b7a8da26f9d2e337578d0d5c034aec4b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-via-119-618.geojson",
+      "bytes": 576887,
+      "sha256": "b4fa391d38815d5d4f5ece8c6cb5d6474c8ef6d505b79b81d7be2e9fd55e5c0a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/orwn-via-119-93.geojson",
+      "bytes": 302418,
+      "sha256": "affc064d7645cab6d58e89798b5d2431ec7c5138fbd587d3cfc2cca60f213e3f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ottawa-trillium-2.geojson",
+      "bytes": 176839,
+      "sha256": "0e772622e49b21ae376df9c131ccb6c5919d3f2f07e5a46c6bbc70db5712781d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ottawa-trillium-4.geojson",
+      "bytes": 66325,
+      "sha256": "ffb3c8886f8f82b5c7e4cf3b35b0bbc3add92d0055788956665bdc73c40eccb0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/path-njt-1024-jsq-33-via-hoboken.geojson",
+      "bytes": 6954,
+      "sha256": "30e608e5b11f175e5d9d5cdeceae3406b792797f674ed1d883b67cd33c9da5cc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/path-njt-859-hoboken-33.geojson",
+      "bytes": 3981,
+      "sha256": "6e952fd55a71ec242f527e3487d0f2526bb580c3c6eedd283762728ed2b9cb27"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/path-njt-860-hoboken-wtc.geojson",
+      "bytes": 4864,
+      "sha256": "7f569877062c4626c505cc576194a1bdcdbf964a780974458bea009171f4464a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/path-njt-861-jsq-33.geojson",
+      "bytes": 5426,
+      "sha256": "030e7e7854cc603ed01b2aa78abad075f1113a500aaa74681ae59b6efbd720a8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/path-njt-862-newark-wtc.geojson",
+      "bytes": 7682,
+      "sha256": "644a6592fae0310682801c34a46f5edbdf1c55765baecb4d737ce3af3af59ade"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/prt-incline-duquesne.geojson",
+      "bytes": 864,
+      "sha256": "ac01793cf2a25ac538786cc200f65686ecb6217dd4364c1f626a060a1f0a6d24"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/prt-incline-monongahela.geojson",
+      "bytes": 874,
+      "sha256": "744da81e4d90c1d0091b593c551c22fc2c971eccca95d7d49565de38fb492a8c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/prt-t-blue.geojson",
+      "bytes": 83430,
+      "sha256": "9df88dddd08b5be53174a1601137867d7f0ff440b86e9f83af5cb3da36e0a54c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/prt-t-red.geojson",
+      "bytes": 63824,
+      "sha256": "bb495345be99c4cd1a459ef54553b0838a6bbb2ab11d5aaa72ba2a27da33c0f4"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/prt-t-silver.geojson",
+      "bytes": 101717,
+      "sha256": "44c3b1b957c7025c2711eeb7168c455bac63a2cf0c28c38e83cb81c77b9389d6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/qline.geojson",
+      "bytes": 10054,
+      "sha256": "64c163e229041fa78a84d4caae95929ff965944d5c38e1f45cf775a3304c1187"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/rta-metra-ri.geojson",
+      "bytes": 132928,
+      "sha256": "e0003b9ec15cd70fd4a4a3b4abcb3870e6b50d56367be1de1ebf468538921d1e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/rta-metra-up-n.geojson",
+      "bytes": 143123,
+      "sha256": "22de87134cd90720106d88d9610e0fb88f0ac717955aa0a64907a19490caf100"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/rta-metra-up-w.geojson",
+      "bytes": 126428,
+      "sha256": "2fdd9a9a367911f711d7eb501a5dca5a8b0ce699a905578fbbd4bea2fe83d956"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-b1.geojson",
+      "bytes": 9345,
+      "sha256": "47e1c5891732e9c86ec0575fc8fb094ee9768fb828eb7c39549604ba5c960ec3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-b3.geojson",
+      "bytes": 9345,
+      "sha256": "6e45ca1923537cacc254f3c177103055ace07fa1fb9d5fd639d20fd91e195e9d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-d1.geojson",
+      "bytes": 9524,
+      "sha256": "e0fbc36afc43392aa5807e6edd18312f0c35b7bcf738d08b7d3445f6125d7426"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-d2.geojson",
+      "bytes": 6765,
+      "sha256": "8156e3cc6943c5a8d2f0b88b32f9e6d402430be175eaa758b662ce4822c3a2ed"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-g1.geojson",
+      "bytes": 19754,
+      "sha256": "408822c9772c12c94da1dad1f52874a1c0200461fd5d73b11e8649d730eeb573"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-l1.geojson",
+      "bytes": 16964,
+      "sha256": "fc8b362857f38b2f857fd7c3fa3714de356cb84967a9ae9701cb441f91040169"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-m1.geojson",
+      "bytes": 13225,
+      "sha256": "52dda89dc1e2352761ff7aaf962903d9415db5cff5fb287bc43ed8a02c75838b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-air.geojson",
+      "bytes": 20813,
+      "sha256": "d37eda77b1ff08aa5d5cdec366ecede2dd180e326b7f7b539cee73107a09ce0b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-che.geojson",
+      "bytes": 32664,
+      "sha256": "758de9c2db03b8a3c9633a60c7929995117897983dacc632fbc4377992c6d199"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-chw.geojson",
+      "bytes": 25572,
+      "sha256": "20e03693fabd6393eb32d0b7858f5d40ee0e97122998c0cbe845477ba2ea4211"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-cyn.geojson",
+      "bytes": 24817,
+      "sha256": "95b60ca72f1756a1cf43c28d027b525a8d86572ce625ebeb9b081f87bf7c7bb9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-fox.geojson",
+      "bytes": 10256,
+      "sha256": "66a58405c780d1f880cea308edd39f31973652d3044751243431047e93d74df0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-lan.geojson",
+      "bytes": 46773,
+      "sha256": "2a9a155a9b63da1f7755271da2ac5fb21dc885b56e19f5943936e37cb0f818f2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-med.geojson",
+      "bytes": 22040,
+      "sha256": "25b33ce26becaaa60aeca88b9d82dfded317c48082a4ab6a6e94d7ce9ce772b3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-nor.geojson",
+      "bytes": 29336,
+      "sha256": "ec5f698de8c79b7fd668ed773330b53cb0589374275eff8676a9e4cc09903bb1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-pao.geojson",
+      "bytes": 43262,
+      "sha256": "0a78ce8e8780b059d08c328baa7358d67ed6e31c161de1083b9183047b75e5cd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-tre.geojson",
+      "bytes": 28533,
+      "sha256": "df981094154745d342f1335ca01a1010934c0e05dd6d44d729508f2df65f89fb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-war.geojson",
+      "bytes": 23671,
+      "sha256": "3e15671711cf55ca1d13d68432398d916777e5cfe5a00995dba5637ae47309fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-wil.geojson",
+      "bytes": 33528,
+      "sha256": "de1826763793bc1e8dd36cd8fc3c522d89ef6ef56b25031aa0cd9660241d3fd3"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-rail-wtr.geojson",
+      "bytes": 58219,
+      "sha256": "0fe93dbd3964fe9d6b1acd93e9bdc2b4237d253be2b181f31ec8b162c4451990"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-t1.geojson",
+      "bytes": 7757,
+      "sha256": "3e7477edb67097f0ffbb1f3f6b73b2aac19da625c371b966bf2591db4b20cff6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-t2.geojson",
+      "bytes": 7316,
+      "sha256": "05e6702c6da36628196ed6ed966b3a181c25269d1e6f46038111a1717535757f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-t3.geojson",
+      "bytes": 9432,
+      "sha256": "4bdddb62af7f940f6a56469c1095d7a5109c42a6a36dce7fe98ec539b82d375f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-t4.geojson",
+      "bytes": 9343,
+      "sha256": "6fd25fc4b0d8657bfe5c97d18a35d37f5a2a013b6fb3d28840bff65d8d7d3329"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/septa-t5.geojson",
+      "bytes": 9106,
+      "sha256": "dbb90fd3dc04b001eddd91208b5bb2ea2262781cc024addb0c589b6d14fbf668"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-ca-i.geojson",
+      "bytes": 4069,
+      "sha256": "656bb8a2afbb1e4e8c58fee20132512a2b6857935317a318ba6123c9536ebb79"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-ca-o.geojson",
+      "bytes": 3973,
+      "sha256": "4413217f35e731bf64fd717a9bae88c885f9f1f510b45bdaae31224ed990c847"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-f-i.geojson",
+      "bytes": 12537,
+      "sha256": "ad6fcae8397765727cd11777ce40fb4d6d4ad0a0a9a3dab101335e30147f4291"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-f-o.geojson",
+      "bytes": 12533,
+      "sha256": "a03eaf741feadcbc7d59a358d8048a03a886769ed9756a55f8e84d065b18a3eb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-j-i.geojson",
+      "bytes": 18004,
+      "sha256": "c31aab9b82060b6afcf3cc2bd65b70ad281b8ea33ae9007fc45e11f9fbb4f2ca"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-j-o.geojson",
+      "bytes": 18089,
+      "sha256": "5052b0d27ea187d9e5a3887016bdfc95113fe460cf188855c3f3275a78320ffb"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-k-i.geojson",
+      "bytes": 21339,
+      "sha256": "7fc750e5ff30be7c43451e926f2248da673bb15c3e4adaf93f5cf32ed1e38c2b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-k-o.geojson",
+      "bytes": 20974,
+      "sha256": "59d539334c52f07a878b694bc96f6d5745df094fd74a56d9c2dd2a5155da3423"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-l-i.geojson",
+      "bytes": 21096,
+      "sha256": "c2ea5e1c85854c2bb2cff90ce65b5519365bf264c56dc34ff8c56bd7b6b9e558"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-l-o.geojson",
+      "bytes": 20969,
+      "sha256": "6bf67ccb17edda3e711029eb98ec47a73f75cf6f67e6e73a5563a0d391d652be"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-m-i.geojson",
+      "bytes": 24121,
+      "sha256": "09ee583877fad317a628305b1a8f70ca79002d410d7285d0e4555a34478a523e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-m-o.geojson",
+      "bytes": 23816,
+      "sha256": "d0a1e5c1190e6c750c06fc96bf4dea2f7093a14a85630421588f20a2fd42e777"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-n-i.geojson",
+      "bytes": 22158,
+      "sha256": "d68dd404592797dbab1cfbca127c76314157ffb909c8c0a16a0d0422b74c8e4c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-n-o.geojson",
+      "bytes": 22213,
+      "sha256": "b1add5c49a9e803e8417f08fe1207c4411e24bd48cfe2240a2749a4b5bda7535"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-ph-i.geojson",
+      "bytes": 5465,
+      "sha256": "279d8c8ecca6d1b52fb20137e12d8396f7d9fb07f1b4ac26950ce5e469ac2bbc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-ph-o.geojson",
+      "bytes": 5456,
+      "sha256": "929d5f013bfb0daa2f40ed06363ff880f8e2ceba684fb651c97e188b60f86935"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-pm-i.geojson",
+      "bytes": 4341,
+      "sha256": "4f185e0239518c4203e6ef9328ba833880d3c16c5b22ce5cee4c9749661a697c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-pm-o.geojson",
+      "bytes": 4331,
+      "sha256": "448fdc90ed67080cf4d9d7ee468d5e2d942a7c326e4a997efa41ba7d58829e8f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-t-i.geojson",
+      "bytes": 15277,
+      "sha256": "f1aff7a4edd3154bd61292ce5277c4191c5e6761abdb17f3a7d76aa3883f7a0b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sfmta-t-o.geojson",
+      "bytes": 15253,
+      "sha256": "f1fc3bd1744894978cdfb7a1e61c3117dcb77565a96941ebf50a2afafbdd25ea"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/sunmetro-streetcar.geojson",
+      "bytes": 27753,
+      "sha256": "3f96d484f9ccc165cf81040f1bf848f9613fafd0fc86105689369d6889a11b41"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/texrail.geojson",
+      "bytes": 75629,
+      "sha256": "8b95afd9198bc87b5fd36a8e2d8cfb0ea1c0971cfd41f69c8ba51fd9bff64011"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/translink-canada.geojson",
+      "bytes": 16395,
+      "sha256": "b4dc7dffe3be7e1b2ed070b722d66d64557ecfd6eaff4c863b1d74f837c6614b"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/translink-expo.geojson",
+      "bytes": 38175,
+      "sha256": "3f073b1bdac5a392dbb04e1c0a294c49cd9522b85d5341891155b102c4c7e2a5"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/translink-millennium.geojson",
+      "bytes": 24409,
+      "sha256": "0731ea6b63c919a4c0245d4dd867d6e3b514ec61182c96e957ad3e0db9ae5c0e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/translink-wce.geojson",
+      "bytes": 74001,
+      "sha256": "495871f7af8420a153186fed1789b91d7dbc5bf5d3e9e2300bd5c5e2f6bd0cdc"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-streetcar-306.geojson",
+      "bytes": 30726,
+      "sha256": "0724ee43e07d5f75ad49b4346ce1bfd726af5377fe33de98ea8ef09b2ed72067"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-streetcar-501.geojson",
+      "bytes": 35216,
+      "sha256": "9519ffb7c8bd83ee8277665e0ddf69ce13810d206d6dbb3cbb3173e6a3efa517"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-streetcar-505.geojson",
+      "bytes": 20190,
+      "sha256": "40d7a2e2c5b2645238ebdcff224376f08345f29b131bee1958cc73f508e99fa9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-streetcar-506.geojson",
+      "bytes": 30728,
+      "sha256": "6414a041e04a3380daa1d1cbf3c9dc5a0d4d4145d6d2dc20ab0b993fcb469baf"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-subway-1.geojson",
+      "bytes": 15081,
+      "sha256": "2354c0d4da0896dd3f7872b0874638f8e8b9a01e2d8a655b6a7937b195c16787"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-subway-2.geojson",
+      "bytes": 11253,
+      "sha256": "6d07358217c70f76ebfe0b178be0c4838e93595a059ce257ff685cb8828abecd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-subway-3.geojson",
+      "bytes": 8503,
+      "sha256": "8f6f9c3d83da189aeadcaca51483ceb4ad6ddcda1d07eb0236f96c84fa5e3b20"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/ttc-subway-4.geojson",
+      "bytes": 1883,
+      "sha256": "a23cbdba996667ff6407eec3267a23fa159a579d8dd680bb61da332f3b83144d"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/uta-701.geojson",
+      "bytes": 62820,
+      "sha256": "186647f9de47f6f36c5632c4e7c43d3fcdd83ab1c8428f083ee2b66e44806992"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/uta-703.geojson",
+      "bytes": 79950,
+      "sha256": "37045ac71d35ba1db6b3e906724332e2587f570526f77a41e9b047b3f0f2ef94"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/uta-704.geojson",
+      "bytes": 55095,
+      "sha256": "e16cf8788ffb291c013b860c144f22055ca5be0b485803b79ae65007018d94c7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/uta-720.geojson",
+      "bytes": 8268,
+      "sha256": "c85fcc19fb346f8eed92feaf60dbd877f9922b715c1034fd03d39aa10a963565"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/uta-750.geojson",
+      "bytes": 411712,
+      "sha256": "7a00d230c44122351ba32d0ad5afb5067f874d1f9306c5e1ec48aa7c0bbacd3c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/vre-fredericksburg.geojson",
+      "bytes": 178322,
+      "sha256": "0113d8b86262711631c3cd986804357457fde100dc05762f9635ec23d2732a0c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/vre-manassas.geojson",
+      "bytes": 111143,
+      "sha256": "34da1d490040e1c694b5d44385960c2ea2027b204ac0bc1ad728e8e2e8d4c8ee"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/vta-blue.geojson",
+      "bytes": 50360,
+      "sha256": "e385c11b7ce45b697494b0bc662772ea4e1bf6ab692226d6f51fc28b021092d1"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/vta-green.geojson",
+      "bytes": 41187,
+      "sha256": "5663ad8b177a3d7bef60f11c75cc37024943e659f478cb48a45919235ece9fd7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/vta-orange.geojson",
+      "bytes": 49997,
+      "sha256": "4b929090b87d6461913d7727a0ad19e30ce946159bdd9be754e167e1364a9b87"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-blue.geojson",
+      "bytes": 99367,
+      "sha256": "20789456af6631ac4fcb9ad402ea5bafeb103aa370634094c9a573df272a1af7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-green.geojson",
+      "bytes": 71587,
+      "sha256": "c45d67097484e13f243b75c29166888185500d8aae638f52de5867672d773fda"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-orange.geojson",
+      "bytes": 234393,
+      "sha256": "ab5b30c893f547c5fa760dd2326b323e1a487bc47856b83ccdb79af1e7963bd8"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-red.geojson",
+      "bytes": 78488,
+      "sha256": "41b11079cbeacc6dea7dc7e5fde0495d8f0b989244e684032df96c98fbf6239c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-silver.geojson",
+      "bytes": 147092,
+      "sha256": "bb2b1ffdfdab7cf687d5c9400ae587f405eff6d7d37c67ceec262039a24fe628"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-networks/wmata-metrorail-yellow.geojson",
+      "bytes": 43297,
+      "sha256": "283a51078964e99630d50556852effef821ce9bcbf1ac2336542dbf1d830955e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/amtrak-ntad.geojson",
+      "bytes": 25897965,
+      "sha256": "ea7344cfbe0f3c4f9434ed15e73b0a53e85615d722d157563add9a4207740c58"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/atlanta-official-heavy-rail.geojson",
+      "bytes": 24215,
+      "sha256": "89f44fafbf70ecb9bf139666136c772c3abb6d49ffeabdf11790eb2d9dd987b0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/atlanta-official-streetcar.geojson",
+      "bytes": 14938,
+      "sha256": "62ec15c5147ade1d3c2cbc332941ba9d06bb94db7e4994ea1016c87b37af7c64"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/cagis-cincinnati-streetcar.geojson",
+      "bytes": 473562,
+      "sha256": "0ad72b5970ff6f36b5255b3f342113ed73054f1a936c8fa63924a1d045f0226f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/calgary-lrt.geojson",
+      "bytes": 275415,
+      "sha256": "26886352770cb1c24d8daa3a7aeaf3192414fc38319daf99fcd9fa9d2c01f333"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/caltrans-crn.geojson",
+      "bytes": 4955038,
+      "sha256": "959e501e0c760fcb6d53d9dfdc3b2eca4af3583cdd95948c4d387b1348096203"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/cats-blue-line.geojson",
+      "bytes": 8528026,
+      "sha256": "18ffd6af5f4780fc79c55679f455665113f5f544b35c0b416b22d4b4781d45ee"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/cats-gold-line.geojson",
+      "bytes": 9226,
+      "sha256": "f5df971aa68401f816172792300eb0365fa3d97822c469bdf758190e9653809c"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/chicago-metra-kml.kml",
+      "bytes": 566123,
+      "sha256": "45cc4365a18b4eebf3abd9f21cf0dfa1fe6506bef0555760bb4066aec28b2356"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/cta.geojson",
+      "bytes": 138686,
+      "sha256": "e165cf996682cf1d13916c25bf4b32bd11097c68ae440f743485823615bfaa96"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/dcgis-metro-lines-regional.geojson",
+      "bytes": 700539,
+      "sha256": "95e061627f801bb2ebd090fa621999902bccd6ecc6ee8d4698455b87f135f6b9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/dcgis-streetcar.geojson",
+      "bytes": 6332,
+      "sha256": "b5117be10dd6e1d62b08dabe3ace1d0941f2f584667bcf20986e50cee202fe7f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/detroit-people-mover-route.geojson",
+      "bytes": 20759,
+      "sha256": "5dabdb1f5c7c34290152be580a54ea05623576a1624ce5ce766822728aa2f2c6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/detroit-qline-route.geojson",
+      "bytes": 1959,
+      "sha256": "79afb56c696f0aa4c0c4bf6fcc7362cc62fe956831d4693de50efe27e4d136ca"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/edmonton-lrt.geojson",
+      "bytes": 47803,
+      "sha256": "b5d8bb4c7762338e5018b4af0211ff208b2e34fbab113e93b69d7961c1d7d3a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/fdot-brightline.geojson",
+      "bytes": 49770,
+      "sha256": "700b843fd8d2a68a0511fbb72820b27685d49b0b149fe0bfef974d7e8a9f12e2"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/fdot-sunrail.geojson",
+      "bytes": 32628,
+      "sha256": "fd9cbb2f06ecae91d421a5487f2194b3c1f2ab8ed29790f7a47aaeeeb90f6867"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/houston-metro.geojson",
+      "bytes": 55730,
+      "sha256": "aae0bb40b3aab50588d6dc6e623d1d7d6d5a7aa116f2c2e3457eaad06b4cfbc7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/houston-metrorail-lines.geojson",
+      "bytes": 48334,
+      "sha256": "ba54ebd9aac52742e5c0115f3230644db0f47dc793d34cfb4f4f866191ee2878"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/la-metro.geojson",
+      "bytes": 367265,
+      "sha256": "a261408da833ceac7fb06567b1faacc14fc7f9f8cebdc4f445e7add9ca700185"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/maryland-mta-light-rail.geojson",
+      "bytes": 146256,
+      "sha256": "497f9e31e17ea7ec141628e3ffd1d3f73f9b0af66d10256819d003ab6b719a90"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/maryland-mta-metro.geojson",
+      "bytes": 52611,
+      "sha256": "d5385ae944840d2b1b9e555d3f32f8f200ff79fe886632cfd812055366079667"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/massgis-mbta-commuter-rail-lines.geojson",
+      "bytes": 745338,
+      "sha256": "770157d6cea1fb68c32540c486c63c3318412a55e9df2fd70fe720264e17424e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/massgis-mbta-commuter.geojson",
+      "bytes": 698482,
+      "sha256": "3bd29bc49c90390cf66738396fadfdb6633c3e4817b7b33c398be2986834176a"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/massgis-mbta-rapid.geojson",
+      "bytes": 180740,
+      "sha256": "4b19950f3e356c33623757fca6d39c6ae23424c96cc0e88c40ca473b98f9cf84"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/metc-transitways.zip",
+      "bytes": 195463,
+      "sha256": "83a5fe55c08b57af9bebc25cb629c4e5f6509cb121cae9ac8b9e6ad0c14dc755"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/metrolink-scrra.geojson",
+      "bytes": 837650,
+      "sha256": "9c78c85626e28abb6421229963fe0d9de1b7b89f51ff71db41ebce348ad65c31"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/miami-dade-metromover.geojson",
+      "bytes": 13147,
+      "sha256": "ad02b37118eaa477aa8e60d4384becf92dc792851fb61c7045a511799f41b23e"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/miami-dade-metrorail.geojson",
+      "bytes": 12646,
+      "sha256": "5223988f24a6b92b45e1819e55403aa81815b9ee1c19f5ec4074eb2d0f584660"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/milwaukee-dpw-streetcar.geojson",
+      "bytes": 3734,
+      "sha256": "2a85a8b7ab5fa32731054247cd5c6945f7e8132bad2ec6208778d4eec2976776"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/modot-kc-streetcar.geojson",
+      "bytes": 2463,
+      "sha256": "daffb54ff550a74464979a687203f50d68cf03c679a755fbaa622c88efb1fb06"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/modot-stl-metrolink.geojson",
+      "bytes": 54184,
+      "sha256": "63482e125700bf820d2e5a8151a32b294d2dd6e270d4cb65a221bee3313763bd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/mta-rail-branches.geojson",
+      "bytes": 4956139,
+      "sha256": "6e0ea3cb78d20026c870b1b3bb15b54d1224fde821b57773dc80f8a7746fac80"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/mta-subway.geojson",
+      "bytes": 8820870,
+      "sha256": "62b95c1483260f793555cc2b39b46fe88f7ae01f0c9616971ada1d71125199fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/mta.geojson",
+      "bytes": 8820870,
+      "sha256": "62b95c1483260f793555cc2b39b46fe88f7ae01f0c9616971ada1d71125199fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/nctcog-existing-rail-lines.geojson",
+      "bytes": 166121,
+      "sha256": "bed15418449454cdb69fd852c851a10b66a2c1b1adfa277df7819971d06023fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/njt-light.geojson",
+      "bytes": 479338,
+      "sha256": "6330a3fcf729f2043a5f8c7c9c9a982a1773aa8bc6f61548cf0008cad138ba94"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/njt-path.geojson",
+      "bytes": 27126,
+      "sha256": "9382638edebbbf3c2345d0804088667ed6d5aafcea2bd83f058e17ee540ec724"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/njt-rail.geojson",
+      "bytes": 7162968,
+      "sha256": "2bcdd2bac5407b59e8ccd92f0e9d35bcfa099a9d1995d07244a3c81fcb1ac333"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/norta.geojson",
+      "bytes": 2837914,
+      "sha256": "b59d26a9ede987908180886bb1391f0bdaa7a64ef3092594fbd2258807a4ebaf"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/nrcan-nrwn-on.zip",
+      "bytes": 8276441,
+      "sha256": "fda17afffeaa9051edaccc22ecb68a0a7a2537a4e067a7445c1771731811d936"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/ontario-orwn.zip",
+      "bytes": 5341326,
+      "sha256": "ffecfcfd0311f033b6f77b3ef2658a06f83e20e8cd6eeaf7f78612a60cbcab5f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/oregonmetro-rlis-rail-transit.geojson",
+      "bytes": 380332,
+      "sha256": "e09648b5583e7adbb6779436514d8d9158a2aa1e73d3133a0482d2c5da59b3fe"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/ottawa-trillium.geojson",
+      "bytes": 280621,
+      "sha256": "5e65d9247cfe82e49d367ea847d16e2756304b9165edbcbd7a8a53bcc854bd45"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/prt-fixed-guideway-corridors.geojson",
+      "bytes": 311217,
+      "sha256": "eeadf32e71cf3cbe42b368d7e991b27ab137182d2d02291713816cda6506c452"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/quebec-mtq-reseau-ferroviaire.geojson",
+      "bytes": 15418239,
+      "sha256": "fd7489f43f6974989dd8dbfd98b313d9801f8349cd2fb1961dc010f616168f99"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/rta-metra-rail-lines.geojson",
+      "bytes": 351494,
+      "sha256": "1d721c4797c1e0703ef3ac9c2e2e2eb22cbf27843679e48c38f82d7b5d0a592f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/septa-high-speed.geojson",
+      "bytes": 46268,
+      "sha256": "30e03f3cf830a371f20809f88add49f3c238788e50852430c4a300cd34ff3b11"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/septa-regional-rail.geojson",
+      "bytes": 477228,
+      "sha256": "fd2c8a5ed3a25e5b95f7b5f085209b86620e3f33df6a4c0b18f117081f562925"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/septa-trolley.geojson",
+      "bytes": 90763,
+      "sha256": "3fc3441fb15d59bdc323aa49f86efb2295e3fae14dddd1866f435cb15f61cdc9"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/sfmta.geojson",
+      "bytes": 562509,
+      "sha256": "6bb8aaa24dcc1e27de08b2683ef20bd8ada5dc12ae0a9079b30997f671d40e13"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/sunmetro-streetcar.geojson",
+      "bytes": 27446,
+      "sha256": "cd842fcc2fe114ea622a1166aab8c486ff741f011c227dd9d9342dc5c8debe46"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/toronto-topo-railway-subway.geojson",
+      "bytes": 259660,
+      "sha256": "980e99124277a5f8248f0324629dfe040f20ba02c0931a3959e8deb8b7fb3f37"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/toronto-ttc-route-view.geojson",
+      "bytes": 172873,
+      "sha256": "253bf52fa93a6471f4bb25e0ba51c257715585ff5a7f2317c7f2257359e496f6"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/toronto-ttc-track.geojson",
+      "bytes": 532009,
+      "sha256": "182fce43e42d05e99b83101cdc2e0c9c59734da27945f9bd448ce230b9ec94f0"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/translink-system-map.geojson",
+      "bytes": 3581010,
+      "sha256": "9a12cc006f019e432a896dd2bc67a470d3ef7ba5a85aafc04d138bdf16a3bea7"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/ttc.zip",
+      "bytes": 20796,
+      "sha256": "365f94de0493cb120c938450c2cde58bc009ae0eb69876d83145751f43a82b09"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/utah-railroads.geojson",
+      "bytes": 403032,
+      "sha256": "e91c77bd1171d8b4ac3aba1f28a8b4454fdbf1af421a29c9e44455fa0761e93f"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/virginia-drpt-vre.geojson",
+      "bytes": 95079,
+      "sha256": "3d9f08a3ebb72f53e329385bebf6c5961bf268456703ced6abb7914ab08c8088"
+    },
+    {
+      "path": "app/data/raw/na-rail/official-raw/vta.geojson",
+      "bytes": 16200,
+      "sha256": "1a4a12bfd4eee842d586942f47109a819a7a85aac877c78fdf980bb950eafa64"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+021.322-0158.062.json.gz",
+      "bytes": 37721,
+      "sha256": "8b8016186767d04059ddab2503b0b55bdd70465dbb51c722c662e9ab8f8fb1b9"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+025.675-0080.333.json.gz",
+      "bytes": 280644,
+      "sha256": "d720ee7bb307403ff354804ec90f7034638c07f976eace7c7f50e70d8580df0f"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+027.931-0082.467.json.gz",
+      "bytes": 18581,
+      "sha256": "3785ca3a22590b2799ded62fb6dcafdca3154b18930c4f104a28f5fc92ab6c36"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+027.954-0082.549.json.gz",
+      "bytes": 6681,
+      "sha256": "d6fda756cc40980e10f0422579bf926881cbcb6970586a0f82ab481394d40e40"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+028.248-0081.494.json.gz",
+      "bytes": 176770,
+      "sha256": "9cb3c0ca503d15af31bc2b28d085b769a25b622d586e43511964593c86fee8f9"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+029.664-0095.416.json.gz",
+      "bytes": 281963,
+      "sha256": "bf246dcd2bc38d1061e44554432b0a1e4d64780509e344f971c3d198ed3e48c7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+029.916-0090.144.json.gz",
+      "bytes": 228569,
+      "sha256": "5c478a66ea6867cc98b2044fc6e16109870e4a07ff8f04c1795cdf7e1d1342bd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+029.936-0089.077.json.gz",
+      "bytes": 84242,
+      "sha256": "532e259a6fd9322fed82d5d84d1b482e21bc497df1c4a2604299dcf0de936730"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+030.249-0097.866.json.gz",
+      "bytes": 53935,
+      "sha256": "ecca7fe8f92559088bd00b4b39178bc8623a92121ae48940b692aae97534f482"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+031.000-0089.500-corridor.json.gz",
+      "bytes": 9531,
+      "sha256": "57af4b24efb10a8f5d6d4d74f841cd900595f7b4e339217a37f59b68c3143c97"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+031.250-0089.500-corridor.json.gz",
+      "bytes": 22637,
+      "sha256": "2c1c6d15b98de3c6d8ec40bca0be2c03a1cfe7c3ba542143000dc153ed948111"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+032.644-0097.349.json.gz",
+      "bytes": 611226,
+      "sha256": "d90c8602b3330c0338f729f21b98332a608e1219c940b8195d8907160fde28ac"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+032.707-0117.388.json.gz",
+      "bytes": 165873,
+      "sha256": "9722e000ab897db0e7f69b95245185c64eb72a0ed6077a568b97770d05407640"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.183-0118.389.json.gz",
+      "bytes": 1888252,
+      "sha256": "3865ad16ad5c4c5efe9795ae924b29b0a0e805ea647702c9b34735c9e8e34354"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.500-0085.000-corridor.json.gz",
+      "bytes": 14934,
+      "sha256": "f5632276d4acd30fd2ca6f1b90215655ab29d8b142ccb62ec400164e808ae6a5"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.500-0085.250-corridor.json.gz",
+      "bytes": 25503,
+      "sha256": "69708b16aca4246a022c127cf29a629122f0a690e9085253f86cb0a46a1aa095"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.500-0085.500-corridor.json.gz",
+      "bytes": 9674,
+      "sha256": "11de3fca280beb2ca6812fd96ac03d8a0c556901465d1b0e60c041e2a4b4b2f9"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.500-0085.750-corridor.json.gz",
+      "bytes": 16183,
+      "sha256": "b186fd2e8c9a5b953ed52de1e769aedd3558751d9369e37c782e4e82e365f167"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.500-0086.000-corridor.json.gz",
+      "bytes": 58400,
+      "sha256": "e0f4e2bb2cd08eb8fa45647b162f37f04e69500e99d0ceb3112c94dfd2a2a3dd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.631-0084.479.json.gz",
+      "bytes": 421047,
+      "sha256": "0f734200598060e2bc1d7fd296658334a1ff6f604b4286afdc94281ebd0b7bfd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.750-0085.000-corridor.json.gz",
+      "bytes": 15810,
+      "sha256": "5b43b81a0e91005d30caa5083842fadfe6581877ac916b4a4762b91654025589"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.750-0085.250-corridor.json.gz",
+      "bytes": 17385,
+      "sha256": "21c547a4d786ed4493aae8160b8e9cc34149e2a7aa5ca815391e3f547af95bb6"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.750-0085.500-corridor.json.gz",
+      "bytes": 3324,
+      "sha256": "61b30910afa5a218e78a89e84bdae13f35cfaa2365dab1ea18cde82f01c262cd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.885-0118.552.json.gz",
+      "bytes": 734509,
+      "sha256": "4c28399f4b6814ee9ca14e5cf1fc4a75ef72921a72b8f518074e25808caee7d2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+033.885-0119.215.json.gz",
+      "bytes": 651750,
+      "sha256": "c800c31a35790f520c1ca8d792813a40feae76e44fbe3aff1f9a4d3fe1a0efa2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.000-0084.000-corridor.json.gz",
+      "bytes": 25488,
+      "sha256": "99f74b5a3e60b876d5a5c951046d40be9a6a35d96fd463ae574c0534f9beffef"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.000-0084.250-corridor.json.gz",
+      "bytes": 8565,
+      "sha256": "d3fa6b02357cc07d1115475cc190cc0dddc88f49dd45e5e28e01bb948a88b1cf"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.040-0118.244.json.gz",
+      "bytes": 428885,
+      "sha256": "e33a6656f87a8de81bcfd49831de03c8a5789d49e1975ce2f7d4511794fbb642"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.250-0084.000-corridor.json.gz",
+      "bytes": 22327,
+      "sha256": "53a1d36c0d65f8c3bdb49dc55b46305f7522538f12133022a2b252469f93a8a7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.250-0117.500-corridor.json.gz",
+      "bytes": 65538,
+      "sha256": "70626ceddd366bd549ba9b3a68624add3ef0c8c0a00c43f441b9ccc76d152382"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.250-0117.750-corridor.json.gz",
+      "bytes": 4069,
+      "sha256": "b99950b49abc93fb98a1246aabbd659aaa2d9a5b16baed9ccf79d555923c575a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+034.500-0117.500-corridor.json.gz",
+      "bytes": 41546,
+      "sha256": "6dc7a384274a1fb56fdf1c7cf816b6e0d9b2d2388f3db8990319fc592b868024"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+036.146-0086.784.json.gz",
+      "bytes": 63880,
+      "sha256": "f132ed90f4654967d7aa96ef35730c9cae734d63b1d0f793a4b522cf3ec3146b"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+036.994-0122.445.json.gz",
+      "bytes": 1082175,
+      "sha256": "b8af27d50c7bbec33eca65958d55d7730d6a3bf2000b95b4e41eac860890a3df"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.358-0122.481.json.gz",
+      "bytes": 803190,
+      "sha256": "346beedd9f80927b7b9fe26dec1b3eb69126e494f5087bc21d43e11c57130e4a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.500-0077.500-corridor.json.gz",
+      "bytes": 98788,
+      "sha256": "74c9648635b21495e79f620c34f323edd99a56a8c1e2fa064d414e1be25c28f5"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.500-0077.750-corridor.json.gz",
+      "bytes": 26562,
+      "sha256": "c2b3abbfb7ab52210756257250be99f36ab2b502f76d0df4564b8a9608684877"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.750-0077.500-corridor.json.gz",
+      "bytes": 29853,
+      "sha256": "5b552b44beabbc0991be499635eacfcf255cb9069b56e17cc1a03754ba719341"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.750-0077.750-corridor.json.gz",
+      "bytes": 4675,
+      "sha256": "61a881bf9d12b8c944c3760259f35eabde6b9e8c91deeb0e1bb26a22cdfc8e6a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+037.938-0122.828.json.gz",
+      "bytes": 42138,
+      "sha256": "faa0c1be251e4f03f41f6656eaf772393cebf6acc5f148a8abc1e24a29633429"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.000-0077.500-corridor.json.gz",
+      "bytes": 21408,
+      "sha256": "da9097a2746c8e69529f107532c5c6b5f12879eb360b5616f0d1e509e3b7ae27"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.250-0077.500-corridor.json.gz",
+      "bytes": 25857,
+      "sha256": "771b5ae85f0d3a1c380cf0f0f95fed2fcb8d28f723a827bd5f23a4d937f9733b"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.250-0078.000-corridor.json.gz",
+      "bytes": 6752,
+      "sha256": "56554393169a480c861bda623ab0e5a15fe4ebef8bf9fa158d298e4467a9fa58"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.250-0078.250-corridor.json.gz",
+      "bytes": 5838,
+      "sha256": "ac9c479c9ab35dabe0710711fb2336bf0e7dcc14e1b2356243ccfcbf01a38f9c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.500-0090.250-corridor.json.gz",
+      "bytes": 479558,
+      "sha256": "3eb50a424e93bb58a4bb21c497528d1c13f35eaf8a8dd94acfb67496bfa77703"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.750-0090.250-corridor.json.gz",
+      "bytes": 84686,
+      "sha256": "502e446f5d27e62c3759fc28430b67617c5c140873dc860428deaeea7669c986"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.757-0077.971.json.gz",
+      "bytes": 604799,
+      "sha256": "de12d7a6f7db80ddc74bcdd38b82290eec578f2ff99842cd96c0e1a64d7a3c7d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.859-0077.516.json.gz",
+      "bytes": 314947,
+      "sha256": "f58c25e006a66f88912e47c809d7a6c06c119ff2b3212ae268f6a680e89a7df1"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+038.889-0077.017.json.gz",
+      "bytes": 687503,
+      "sha256": "6ab0e46e43aa68498fc9de25ab29593426ad49a6439017a16eb63aa98ff09ef3"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.000-0090.000-corridor.json.gz",
+      "bytes": 13835,
+      "sha256": "45ed2395eb6aa3290021d56055a00b871a6b8ad245b21bf73eada161dfa67cb0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.000-0090.250-corridor.json.gz",
+      "bytes": 6454,
+      "sha256": "65546d9ba206681176be45a4de2ad3bf46959ad83642b58c27a5b0d92d962d58"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.088-0084.530.json.gz",
+      "bytes": 11493,
+      "sha256": "b4c0118b58c826b2b7e940bc03585d5c49c6b2c60361434ba590e787544b2857"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.250-0089.750-corridor.json.gz",
+      "bytes": 5940,
+      "sha256": "d1ab43d412d37595b1c5c124c55b3c57fa4947d9994fd9f4efe25fb5982c203e"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.250-0090.000-corridor.json.gz",
+      "bytes": 10952,
+      "sha256": "ea7f1f9ace9f3dccc4a68939a2bb25fb7c3c6b259a67864f7a5392229458ef87"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.353-0075.404.json.gz",
+      "bytes": 1078423,
+      "sha256": "6212c66ebed1aac875fbebb8735a48b2f03bbd032f501ee0d1ce9b7be5eabd33"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.500-0089.750-corridor.json.gz",
+      "bytes": 10642,
+      "sha256": "bf229ddc3cf61a982b8c9c4acb91d0811ed014ec3224ebb2bf7a2bd50326c7aa"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.500-0090.000-corridor.json.gz",
+      "bytes": 16007,
+      "sha256": "9ad57466c28ea2f4a29151e679e5782f63df5e01954870b24330e651c0663527"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.750-0089.500-corridor.json.gz",
+      "bytes": 7955,
+      "sha256": "f176a6362ab80d536d5029cc23f3c2371348a73d32b21efbf025f2341f948866"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.750-0089.750-corridor.json.gz",
+      "bytes": 31938,
+      "sha256": "0437aa4918a60849a3394e5e1713a7e2baf65273eab55c23dc8a14058d79d8b4"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+039.885-0075.281.json.gz",
+      "bytes": 595557,
+      "sha256": "5837305ee3809a6883f093ef073cc1def49957b8f4e983382050a0078a6ea01c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.000-0089.250-corridor.json.gz",
+      "bytes": 8018,
+      "sha256": "79dfc0b9b9e875634f49868aa08e13178fd5c38fa285e809cbcc38a42e3ef72d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.000-0089.500-corridor.json.gz",
+      "bytes": 17699,
+      "sha256": "ff50ac9211950ba3704033a67568ef2c50793f625b056907cd1a3d0051c0351e"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.000-0089.750-corridor.json.gz",
+      "bytes": 3848,
+      "sha256": "919db687fe823c7b455e9d24c9a079e4f80872ade11e9ec8dad34a0f4f8a6938"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.067-0074.906.json.gz",
+      "bytes": 2346864,
+      "sha256": "b62b88512fe39f0e548f2e95bbac38a96a476292d2a87ebe9a10641ec55ca805"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.215-0112.055.json.gz",
+      "bytes": 542800,
+      "sha256": "fec2b2a365a00671b15ccca0e29b733ab39fca67262b9f5be0dd5bab8bcefbe2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.250-0079.750-corridor.json.gz",
+      "bytes": 23305,
+      "sha256": "e44428ea32c56840b6a9504a701814b4d036eaf56b898a40e6e8a9c1979bcca8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.250-0089.000-corridor.json.gz",
+      "bytes": 9747,
+      "sha256": "7215268b03dcccd627ab9677de842a7c084a0a1fd574383496f53814c9ad3706"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.250-0089.250-corridor.json.gz",
+      "bytes": 12403,
+      "sha256": "c91a0e095e662d104748a3123136971075b931d9cb35e80f7e3526c35d92bb0f"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.250-0089.500-corridor.json.gz",
+      "bytes": 2252,
+      "sha256": "b3ca20d29735ad2e6d765964e81bcc25f073d18651052926ce2fb66b9c3353fd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.277-0080.063.json.gz",
+      "bytes": 101061,
+      "sha256": "c0ef9bf50c9c30eb671c0b23813c4a4df8a7d13250d8214ec8dee252e6f5e17e"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.500-0088.750-corridor.json.gz",
+      "bytes": 6178,
+      "sha256": "701fcf86c297bda9d058781562f694411eb711ab4235003de47b7f08d64ed2a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.500-0089.000-corridor.json.gz",
+      "bytes": 12081,
+      "sha256": "6d788cfba9b69504502b89238e3574ba1c4aed6f6a4a46dee252336a542404e8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.500-0089.250-corridor.json.gz",
+      "bytes": 9860,
+      "sha256": "3ea86146cf218ba0112b11523bbcd074d1d358c1dbf0af6b5b17c2d5d3fe35d2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.580-0074.105.json.gz",
+      "bytes": 1937997,
+      "sha256": "d8d667064cf88df3e60008f7e432428f02913898ee8281b7b9d2cff9ba436caf"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.646-0073.116.json.gz",
+      "bytes": 293857,
+      "sha256": "302da89fae5cc9898ea09ca71ec03aac83f3b975303471c864e5d315651f1279"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.725-0074.845.json.gz",
+      "bytes": 1320210,
+      "sha256": "5f58a4194c81a86c29dce670c911611c238e011b8e1675778b3a7f4f9496f456"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.743-0073.987.json.gz",
+      "bytes": 1467466,
+      "sha256": "de209df247d586899ad70efaef4a1f0c4ad78eb9f02eb5bc740f3c3e14f5738d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.750-0088.500-corridor.json.gz",
+      "bytes": 4975,
+      "sha256": "6bbfc6f7498685d8daa17cc2b8c677579ea8c3be37c34e0e9988302f3ac7e5e3"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.750-0088.750-corridor.json.gz",
+      "bytes": 5942,
+      "sha256": "1f720b7206981e9ba3c7fb1e4f7f28ba11cfb5cedfc25d65ac2dab034a967eca"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+040.750-0089.000-corridor.json.gz",
+      "bytes": 969,
+      "sha256": "562d506147a36b38108284fd0407de121b2bab7e1ae59802830302d917ed3a78"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.000-0088.750-corridor.json.gz",
+      "bytes": 14996,
+      "sha256": "53a8a24f515087a69bb22c0316f8a07d55beb54720ec146a4cf9f52b328d79ce"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.287-0072.936.json.gz",
+      "bytes": 246859,
+      "sha256": "4a6bb33721be78459afc9f242718b48067f418395483bc98a983cbcb8d9144f5"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.409-0088.102.json.gz",
+      "bytes": 3195485,
+      "sha256": "9ddc29a85522b6b057e02a8be1f0a99d5f2d3774aedd561348b69dfc87304b41"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.500-0086.000-corridor.json.gz",
+      "bytes": 44385,
+      "sha256": "2f84a12ea1cc241ac8b86919f74bd857e9c4a44446f3995f104b1ae8c365be8a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.500-0089.000-corridor.json.gz",
+      "bytes": 6587,
+      "sha256": "e1ae34b89a2dbe6e54fda87217276bd0ad6223a779dfc88c64fceb7627cf2936"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.500-0089.250-corridor.json.gz",
+      "bytes": 12636,
+      "sha256": "cafaa27f8f0aea009165771ccfa78e871f2743150e5a6c49fdbc3ca6b4193811"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.571-0071.859.json.gz",
+      "bytes": 1256235,
+      "sha256": "12a704a8e277d9a5e49a81406479ea33ea1c76e24e936b74452cd8454c2768f0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.585-0086.958.json.gz",
+      "bytes": 75344,
+      "sha256": "e2a6da4b7df0dfde8d3a0787b5a9b7928b8e29d9fafa2066bd2c0e93e843ecf8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.650-0071.427.json.gz",
+      "bytes": 763956,
+      "sha256": "cecdbfbf1ebafec8a357916da49c559382ee8c17b19ee116a77af65e759800f6"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.696-0074.012.json.gz",
+      "bytes": 232622,
+      "sha256": "d6757d676ec69c882d64144009e731a5c5af2b83f8e30ebff48850254c133278"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.751-0088.627.json.gz",
+      "bytes": 1947797,
+      "sha256": "57e907738e4ec8347c2a636f366b478ab9cac280020f55f40d243851b286d816"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.869-0088.192.json.gz",
+      "bytes": 1157687,
+      "sha256": "851d91643095ce3a0c46e1776cbff76f46fd7627dab29dda6c74df9e7698d871"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+041.941-0072.936.json.gz",
+      "bytes": 173869,
+      "sha256": "a65bbe03d9bb8713af476f8ee1bc4d662668fba8f415dadca424f1570bd9419d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.000-0072.250-corridor.json.gz",
+      "bytes": 11000,
+      "sha256": "a85da0af0e140004312a3321793b1c24c549e6aaa48f296de0156fbe1e78f155"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.000-0072.500-corridor.json.gz",
+      "bytes": 41674,
+      "sha256": "523ead54f7c83c9ae8fcb1f4a93f3d0c538e93d356f723935922d86db01d4b38"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.188-0071.162.json.gz",
+      "bytes": 350993,
+      "sha256": "2fef1a8f70cdcad1a7e78cf44082cce5b96e18de788e44938c8322d9a1ba9fb3"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.250-0072.250-corridor.json.gz",
+      "bytes": 10481,
+      "sha256": "d5f57b2c32df3155905b0cc4e69cd901dcb45e70c8f0165e6ca24fe995459489"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.250-0073.250-corridor.json.gz",
+      "bytes": 33099,
+      "sha256": "041629f3aabc12436f4f546bff91253908578d0f03be21ee2bd4132b116c78a9"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.250-0073.500-corridor.json.gz",
+      "bytes": 16967,
+      "sha256": "13453ff9832f6ea8f9e1651bc0ec1d5326570c16ad457664829cae191d2a8614"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.315-0083.063.json.gz",
+      "bytes": 13113,
+      "sha256": "4ca21b22bd5e760c51e471328003c7397a6eb20775c8bbbc3090815814affe23"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.500-0072.500-corridor.json.gz",
+      "bytes": 21433,
+      "sha256": "d9a70db430d3523b379ca8a492e0a55b6492df006c1e933f7ffe4faedf06c2c5"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.750-0072.500-corridor.json.gz",
+      "bytes": 6133,
+      "sha256": "14ee1cfbd93b101f821c5ee2d7a34391dedb12407436cc72ad51fbe9daa239eb"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.750-0072.750-corridor.json.gz",
+      "bytes": 12444,
+      "sha256": "1a8de3eb32a04433457c11d4681ff725b35ff31fc2d5c0069ced8f9af1b1053f"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.750-0074.000-corridor.json.gz",
+      "bytes": 41875,
+      "sha256": "0ee6eadf4bae61eaac19ee79c8acca039cd6f82e2236017bda0ac04c70124522"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.750-0079.000-corridor.json.gz",
+      "bytes": 245741,
+      "sha256": "ee777f21ce8441b7cf0eac7510a002f3cec97e95f0ed14564429b38089fd4fc8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.971-0080.314.json.gz",
+      "bytes": 746213,
+      "sha256": "dffc7f02a73d8b8f1eff6689aa8dfc69aa9f835dfdc474c0f1df50b5b6273f1c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+042.971-0081.257.json.gz",
+      "bytes": 248398,
+      "sha256": "b12cdde8e1f14831e677f034f972189d3020ba012e8d247eb0c074a46af6c7f7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.000-0088.750-corridor.json.gz",
+      "bytes": 13168,
+      "sha256": "41559aa4aa820dd99c62356acc4a18d871ecd8d9b30e9f6238356ec9134e9852"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.000-0089.000-corridor.json.gz",
+      "bytes": 13343,
+      "sha256": "aef54db45154a4ba3e3f5032c5ca9bb0b5ff7e2c02f71986a99820240f4c77c0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.099-0080.178.json.gz",
+      "bytes": 1221782,
+      "sha256": "f43929d9d677692f7105d5440ac5a702c72bacfedcf27d93960bdc33c34f2e3c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.250-0088.750-corridor.json.gz",
+      "bytes": 22289,
+      "sha256": "afbdab0bbaaf21e61a986994d36b38dbf14ab42b28dc181c9b230d0d66cc2fc1"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.250-0089.000-corridor.json.gz",
+      "bytes": 13502,
+      "sha256": "bccc374aebe40e5d09714f507d5eb5e6063c8b8f45660b57283c753119903dbb"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.250-0089.250-corridor.json.gz",
+      "bytes": 8172,
+      "sha256": "5e8aeb8ad6009696efc6f5ed644d88031b8294a80b94c22736519d732c5a6af7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+043.630-0079.696.json.gz",
+      "bytes": 864104,
+      "sha256": "e4fb1de63c489a7dc88b2241a94e91d643804336eabf3eb8640cdbe688dc1813"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+044.500-0092.750-corridor.json.gz",
+      "bytes": 17732,
+      "sha256": "6e10903b3f39f1b63087f3ff2c3e672c3184929d5fb4873af36d74c21c715b2a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+044.500-0093.000-corridor.json.gz",
+      "bytes": 16718,
+      "sha256": "27186a049fcd8f71c4d6a1f703c2b4800d99ca77582d82f6e18e5dd264bb74e4"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+044.750-0093.000-corridor.json.gz",
+      "bytes": 30874,
+      "sha256": "2ade73962aaef42b67ab5b275ecf31d750c4aace924903c4a5561c7f75fb440d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+044.936-0093.287.json.gz",
+      "bytes": 142808,
+      "sha256": "bec26620999d9431e7da4f89851901a9809f6b4b8068423838360e7ad789a9f0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+045.243-0074.604.json.gz",
+      "bytes": 734935,
+      "sha256": "6d3bc2b183f54cc102664f048893f28c68d15eb96409914fdee26c905c2bd307"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+045.243-0075.745.json.gz",
+      "bytes": 96510,
+      "sha256": "a85c4fd9bf894baf9dc0f1c6a5ee00119b2c7bf8095efe68adecef690b1b210f"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+045.475-0073.679.json.gz",
+      "bytes": 347562,
+      "sha256": "8f16f45dd1f74623a49d069d5bf1ddf8a990d178f52451b9585b1928c4470834"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+045.493-0122.696.json.gz",
+      "bytes": 104270,
+      "sha256": "860efda7f4d2d48e812527d6e88d3862bc107b0bd4f27b4c5a00ef05b6c44507"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+047.143-0122.509.json.gz",
+      "bytes": 498413,
+      "sha256": "84c2b0c7b1d5b6c1f081c23b37b1e30e05d418c0d477c07feb9159ad63fd18dd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+049.120-0123.188.json.gz",
+      "bytes": 457483,
+      "sha256": "189b131cce35d03b3bcd837e39cc72bda42aa676a07530f4361e07bf903463fb"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+053.448-0113.538.json.gz",
+      "bytes": 141902,
+      "sha256": "41a0f2ec8220c8f86825f34c7312635cf67cbf036de8e42491a71d6510d68745"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+060.133-0149.942.json.gz",
+      "bytes": 77388,
+      "sha256": "71057536832c8c7e8e673eb83cd405f426c8d72a734cd73ec156f158434e5365"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.500-0149.250-corridor.json.gz",
+      "bytes": 6711,
+      "sha256": "31a43c55f47f0c9e219ec13b7ad65878d540afec1de632146a2363dc90d7c7ab"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.500-0149.500-corridor.json.gz",
+      "bytes": 10876,
+      "sha256": "50dacf2010443a280e61a11716b6f31caf8a57692d799d3391b53e9b9694f86c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.500-0149.750-corridor.json.gz",
+      "bytes": 4150,
+      "sha256": "6c1049fa417880e677decd81d1c0a344d0688d10965e8ddc74b6a42941678437"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.500-0150.000-corridor.json.gz",
+      "bytes": 5999,
+      "sha256": "2c0d5c7cd7870af4c6c2f75b57cd2fc9f0702bcfca0e4cf12147cef4d5ce0ac8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.500-0150.250-corridor.json.gz",
+      "bytes": 1767,
+      "sha256": "de5e0879e8e63b06f00b4029e51fbce0f9fac6bec8d87ebe0c535f3d415ba03d"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.750-0150.000-corridor.json.gz",
+      "bytes": 235,
+      "sha256": "c59127e1808a9ff284f610b2a2114adac9270b0da982d9cb842017ab3ad43afb"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+061.750-0150.250-corridor.json.gz",
+      "bytes": 3339,
+      "sha256": "b6c78f6934e1406fc70a5e4bb38211da72bb6ed530f12e6fba36610b76974a92"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.000-0150.000-corridor.json.gz",
+      "bytes": 235,
+      "sha256": "9617d5b9fedb0b12d7fa7953528df0937311fceb89a8a4965233a0f1a2a9ed33"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.000-0150.250-corridor.json.gz",
+      "bytes": 2642,
+      "sha256": "bc7b738bdc32538c8674b22ab8ac1caedd71663a7480e192002d9caef02e0244"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.250-0150.250-corridor.json.gz",
+      "bytes": 3764,
+      "sha256": "1b5e0a10cda75688948f33f72bbd01e674333037f2b362054ef721bec65be144"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.500-0149.750-corridor.json.gz",
+      "bytes": 1375,
+      "sha256": "e6a0985f0c11abffb79ab463271c73f52b559fbe6ab41f26e13dfda13b92974a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.500-0150.000-corridor.json.gz",
+      "bytes": 2563,
+      "sha256": "63f13a2393b205788bd6fc3a4e8b74fc3f6e2528f01d11fcb76b570ffa8595a9"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.500-0150.250-corridor.json.gz",
+      "bytes": 3765,
+      "sha256": "b4cff9679b722684cca30fdfd558c6aa74c99fb953c2d0058eae13cabeeda27c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.750-0149.750-corridor.json.gz",
+      "bytes": 8590,
+      "sha256": "d407b819b8bd4341bbbce0cd9d126ddeba4e9e9924566ccc1bc7d39a691d4b11"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+062.750-0150.000-corridor.json.gz",
+      "bytes": 235,
+      "sha256": "9617d5b9fedb0b12d7fa7953528df0937311fceb89a8a4965233a0f1a2a9ed33"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.000-0149.250-corridor.json.gz",
+      "bytes": 236,
+      "sha256": "75419c3718f80a3ae756154fd8324be031cef51edd1052dfe5c9a1d187fd66c0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.000-0149.500-corridor.json.gz",
+      "bytes": 4358,
+      "sha256": "c3c27123f502618ebf9783b64dc0d16ffafc875353657d9c308409ba06277036"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.000-0149.750-corridor.json.gz",
+      "bytes": 6272,
+      "sha256": "dbce1c8e26d25f038056c2555a402a1cb6b9c2faf33813ae4f77a1049b80c72b"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.250-0149.000-corridor.json.gz",
+      "bytes": 6897,
+      "sha256": "eae9b9113f40d5cf32240778f19f739927a30c25f3b924876a5eab2375b4152a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.250-0149.250-corridor.json.gz",
+      "bytes": 3339,
+      "sha256": "591418fbff3ca182651695a8d85d298ad697064fe2c7f4bae27597f959016005"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.250-0149.500-corridor.json.gz",
+      "bytes": 663,
+      "sha256": "104865d9abb9401686962cf98b763f4a430c732e7e937685d008a043e2f9fbdc"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.500-0149.000-corridor.json.gz",
+      "bytes": 7172,
+      "sha256": "eff0d5fc6a644f42d390ee89a247b30896d4138efea5fcb05e15f674bfd343f7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.750-0149.000-corridor.json.gz",
+      "bytes": 10743,
+      "sha256": "304d1b71eee5a152128c5d02fd91ede1c6afa97542bf287c0c0948bc492f3ddd"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+063.750-0149.250-corridor.json.gz",
+      "bytes": 2039,
+      "sha256": "2d45dfbaa3f6240f8c41a1e8531c94cacad5c99abeef6b566e38513c23d95b69"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.000-0149.250-corridor.json.gz",
+      "bytes": 3396,
+      "sha256": "3d989849ed54b03b9490bc0dea37ec206e71edbb0c48020320bf9e835fa978a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.000-0149.500-corridor.json.gz",
+      "bytes": 1868,
+      "sha256": "77df490fe38b2725f62dd663537bbda560575a9065779522acc34ff238a7f0c3"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.250-0149.250-corridor.json.gz",
+      "bytes": 4183,
+      "sha256": "78f0c2c84fdf0436c57b0dbf8b811e88bbfbf8deb7305794522295db059ba5fa"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.250-0149.500-corridor.json.gz",
+      "bytes": 236,
+      "sha256": "75419c3718f80a3ae756154fd8324be031cef51edd1052dfe5c9a1d187fd66c0"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.500-0148.750-corridor.json.gz",
+      "bytes": 235,
+      "sha256": "82883e0bc62f5d6bdf93bb0d2d22448c288c21d0d9bf914c845c1de3c6f1b4a2"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.500-0149.000-corridor.json.gz",
+      "bytes": 1367,
+      "sha256": "fa2a4caaab7c8be3b95f1cc09184cf70428c19dac2454453d7aea2445973575a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.500-0149.250-corridor.json.gz",
+      "bytes": 5337,
+      "sha256": "14f192ccfb6f289719dddde2f195db46f8c20342039530701461e5e0fe6367e8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0147.750-corridor.json.gz",
+      "bytes": 24570,
+      "sha256": "f961ddad1dc2933d1f5292927ea120338f91914ab818c41ff3cac7627d777a87"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0148.000-corridor.json.gz",
+      "bytes": 15579,
+      "sha256": "785f93e8c3b3e513f8fff0e850375d88d039a6321f2571266ea22e801f88204a"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0148.250-corridor.json.gz",
+      "bytes": 2481,
+      "sha256": "f19dda9fbc8a3c18c9cd1642279e3f6b62cc1f0e4760319983684a10c01842b8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0148.500-corridor.json.gz",
+      "bytes": 2008,
+      "sha256": "d07b33a7b6428b2f5eceea55a3880e477673c642e7737a4ef76d5a8dff7a284b"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0148.750-corridor.json.gz",
+      "bytes": 2235,
+      "sha256": "1ebe9758b929da1e8d16b859e080a91c5644984dbcfcc0bae34623d64eee0dab"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-geom/tile-+064.750-0149.000-corridor.json.gz",
+      "bytes": 1891,
+      "sha256": "b1c1c78c111c0a241dafb49804ac299ca7f05040b47c70934d802c00cfd3e62e"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-rem-repair-20260906/rel-0019668643-dad08ff14b.json.gz",
+      "bytes": 155072,
+      "sha256": "59d14003043a79f7d8de90269e41dc966e98a1742ecc03066ed5cd86e04c5066"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-repair-20260906/rel-0000058433-007034bdda.json.gz",
+      "bytes": 40896,
+      "sha256": "3c1d28432e0f3a22a7eaeb63c042ccd0bea89f525797859029aa881d2b21141c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-repair-20260906/rel-0001468867-c4d03f0366.json.gz",
+      "bytes": 181846,
+      "sha256": "7561bd494e516e8b5e6f03c6ae66610bf8b0e05b6d9273e71e9b9259bfeae4b8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-repair-20260906/rel-0006504062-61ba9f7185.json.gz",
+      "bytes": 45373,
+      "sha256": "f549e8221bd09be419e59cf7ec7851412f5c4da53b98403b3085ded2051277e7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-reviewed-repair-20260906/rel-0000058433-007034bdda.json.gz",
+      "bytes": 40896,
+      "sha256": "3c1d28432e0f3a22a7eaeb63c042ccd0bea89f525797859029aa881d2b21141c"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-reviewed-repair-20260906/rel-0001468867-c4d03f0366.json.gz",
+      "bytes": 181846,
+      "sha256": "7561bd494e516e8b5e6f03c6ae66610bf8b0e05b6d9273e71e9b9259bfeae4b8"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-reviewed-repair-20260906/rel-0006504062-61ba9f7185.json.gz",
+      "bytes": 45373,
+      "sha256": "f549e8221bd09be419e59cf7ec7851412f5c4da53b98403b3085ded2051277e7"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-reviewed-repair-20260906/rel-0019668643-dad08ff14b.json.gz",
+      "bytes": 155072,
+      "sha256": "59d14003043a79f7d8de90269e41dc966e98a1742ecc03066ed5cd86e04c5066"
+    },
+    {
+      "path": "app/data/raw/na-rail/osm-routes/ttc-subway-relations.json",
+      "bytes": 397024,
+      "sha256": "3e99551133264ce5ffa19748d34c8ae64a0fdce7df3892447fb61bc375613e73"
+    },
+    {
+      "path": "app/data/raw/na-rail-manifest.json",
+      "bytes": 139266,
+      "sha256": "e8d58a70fc3d0074094c3a7c3556b72c33dba9d20e00dc647309040790d8cf6d"
+    }
+  ]
+}

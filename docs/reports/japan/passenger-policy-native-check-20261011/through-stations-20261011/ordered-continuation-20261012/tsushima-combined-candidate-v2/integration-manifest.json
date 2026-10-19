@@ -1,0 +1,85 @@
+{
+  "status": "candidate-only",
+  "candidateSha256": "147282e4a13d8c43cf9887745f4a9efad3bdb9d2ad7bbec54dd92fb8ea99ab26",
+  "supersedesForReplay": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-combined-candidate-v1/candidate.json",
+  "priorCandidateSha256": "2b080fcfe778a441a4daaebe9cb7f79d7e1851452a04615aca712a8d9b66efb9",
+  "change": {
+    "lineID": "jp-名古屋鉄道-名古屋本線",
+    "intervalIndex": 20,
+    "operation": "swap zero-based control indices 9 and 10",
+    "allOtherCoordinatesAndAliasesExact": true,
+    "controlMultisetUnchanged": true
+  },
+  "productionCAS": [
+    {
+      "file": "app/public/rail/jp-2025.json",
+      "bytes": 9965556,
+      "sha256": "fc1b976887463fcf262235178fdefd8038d954eb12189d07fe63ce1586354455"
+    },
+    {
+      "file": "app/public/rail/display-lanes.json",
+      "bytes": 6454427,
+      "sha256": "cb8e97c73172205778082523cb997b4abf8fbcc1934ead84611f2d284cfdd20b"
+    },
+    {
+      "file": "app/data/station-english-verified-jp-east.json",
+      "bytes": 3359298,
+      "sha256": "65b1864cfb0f9c03c9f7f3db5d5cc9a3701ed2de3d239e217ecebb5d6edce142"
+    },
+    {
+      "file": "app/data/station-name-sources/jp-kana-evidence.json",
+      "bytes": 6234917,
+      "sha256": "76eeacb8df0f7566aa131ff56cef6862713b724ec70940f0e7b5d91cdd2bc1b5"
+    },
+    {
+      "file": "app/data/station-english.json",
+      "bytes": 32381841,
+      "sha256": "a736fe4ad9c58f68fdb22c6835fa0103382e5b7ceccd4e3ee8f449e0b0c27b52"
+    },
+    {
+      "file": "app/data/station-names-coverage.json",
+      "bytes": 5966311,
+      "sha256": "1fea37bfe93171e9318f61bc4a83d2a678c3a3827f46a6569654f21571479ab8"
+    }
+  ],
+  "candidateRowsSha256": {
+    "jp-名古屋鉄道-津島線": "3022e732cd9b3ab9ca6224625565dcaaf49571c157c94cb0138ed1588827f195",
+    "jp-名古屋鉄道-名古屋本線": "ad5c67e7bf956c5e7d0387b1fe9a95edb95912df5620c697b32535e48d7a8139"
+  },
+  "scopeCompleteIntervals": 15,
+  "scopedInternalReversalsAtLeast90Degrees": [],
+  "focusedTest": {
+    "file": "app/tests/display-lanes-parts.test.mjs",
+    "name": "Nishibiwajima own glyph controls remain forward across overlapping native views",
+    "red": "Main#20 goes backwards at vertex 10",
+    "green": "1 passed, 0 failed"
+  },
+  "measureChangeAgainstV1": {
+    "witness29575SameGeo": true,
+    "newMeasure": 29567.4,
+    "unroundedNewMeasure": 29567.368049889577,
+    "cumulativeDeltaMetres": 0.005626533795293653,
+    "suffixDeltaAgainstProductionMetres": -9.822966895233549
+  },
+  "changedDependencies": [
+    "Main#20 display geometry/control order",
+    "complete Main native row",
+    "Main cumulative measures after corrected tail of #20, including #21–23 and unchanged-geography suffix",
+    "Main measured references in byRegion and Nagoya hub ranges",
+    "Main package display override and candidate GeoJSON feature #20"
+  ],
+  "unchangedDependencies": [
+    "all station coordinate aliases",
+    "other 14 complete display interval arrays",
+    "Tsushima complete native row",
+    "physical owner lines and physical intervals",
+    "Main prefix/suffix geographical coordinates outside owned display range"
+  ],
+  "replayReview": [
+    "Main#20 full ON/OFF interval and Nishibiwajima station/join into #21",
+    "Main downstream measured reference endpoints/ranges and station rulers; geographic slices of unchanged intervals may reuse prior evidence after dependency review"
+  ],
+  "productionChanged": false,
+  "nativeAccepted": false,
+  "historicalV1EvidenceRetained": true
+}

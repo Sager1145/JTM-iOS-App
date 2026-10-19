@@ -1,0 +1,64 @@
+{
+  "schema": "cn-physical-junction-build/1",
+  "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "reviewedAt": "2026-10-18",
+  "degreeScope": "Union of verified original-node adjacency on published CN paths only.",
+  "counts": {
+    "publishedLines": 3991,
+    "validatedLines": 3995,
+    "publishedPhysicalSupplementPaths": 6,
+    "sharedOriginalNodes": 36709,
+    "selectedOriginalNodes": 2994,
+    "generatedJunctions": 3699,
+    "appendedJunctions": 3699,
+    "withheld": 4,
+    "replacedGeneratedRows": 3697
+  },
+  "withheld": [
+    {
+      "lineId": "cn-osm-relation-21433548",
+      "nodeId": 5179333449,
+      "reason": "multiple original nodes at one runtime five-decimal coordinate",
+      "originalNodeIds": [
+        5179333449,
+        7180794547
+      ]
+    },
+    {
+      "lineId": "cn-osm-relation-21433548",
+      "nodeId": 7180794547,
+      "reason": "multiple original nodes at one runtime five-decimal coordinate",
+      "originalNodeIds": [
+        5179333449,
+        7180794547
+      ]
+    },
+    {
+      "lineId": "cn-osm-relation-7422204",
+      "nodeId": 5179333449,
+      "reason": "multiple original nodes at one runtime five-decimal coordinate",
+      "originalNodeIds": [
+        5179333449,
+        7180794547
+      ]
+    },
+    {
+      "lineId": "cn-osm-relation-7422204",
+      "nodeId": 7180794547,
+      "reason": "multiple original nodes at one runtime five-decimal coordinate",
+      "originalNodeIds": [
+        5179333449,
+        7180794547
+      ]
+    }
+  ],
+  "reviewedConnections": {
+    "schema": "cn-reviewed-connection-build/1",
+    "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "counts": {
+      "generatedJunctions": 2,
+      "appendedJunctions": 2,
+      "replacedGeneratedRows": 2
+    }
+  }
+}

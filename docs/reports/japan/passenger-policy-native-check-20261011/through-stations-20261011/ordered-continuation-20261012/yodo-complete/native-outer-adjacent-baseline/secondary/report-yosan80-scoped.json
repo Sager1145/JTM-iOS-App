@@ -1,0 +1,14 @@
+{
+  "candidateViewpointCountOver10m": 0,
+  "capturedCount": 15,
+  "displayToDecodedDisplayMaximumMetres": 7.794602713137852e-09,
+  "failedCount": 0,
+  "geometryStatus": "available",
+  "itemID": "jp-四国旅客鉄道-予讃線#80",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "lineName": "予讃線",
+  "pendingCount": 0,
+  "reviewVerdict": "pending",
+  "smoothToDisplayMaximumMetres": 1.2079555601214997,
+  "viewpointCount": 15
+}

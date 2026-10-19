@@ -1,0 +1,660 @@
+{
+  "status": "diagnostic",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "controls": [
+        {
+          "pixel": [
+            510,
+            384
+          ],
+          "coordinate": [
+            139.62129946518718,
+            35.91007893041455
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.91007893041455,
+            "longitude": 139.6213209228593,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9641603604684807,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322834.63680577,
+            "rectY": 105490530.77073863,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            502,
+            384
+          ],
+          "coordinate": [
+            139.6202009474697,
+            35.913117560870866
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.91311756087086,
+            "longitude": 139.62030823583032,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9641238170590662,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322079.52262685,
+            "rectY": 105487733.26122585,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            499,
+            384
+          ],
+          "coordinate": [
+            139.61908058112397,
+            35.91613928017643
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003004/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.916139280176424,
+            "longitude": 139.61922005599274,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9640874743184316,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321268.1169299,
+            "rectY": 105484951.21437709,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 1,
+      "controls": [
+        {
+          "pixel": [
+            480,
+            384
+          ],
+          "coordinate": [
+            139.6166716357705,
+            35.92334125725986
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.92334125725986,
+            "longitude": 139.6170149585244,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9640008440013291,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319623.87708423,
+            "rectY": 105478320.04499471,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            476,
+            384
+          ],
+          "coordinate": [
+            139.61620141012668,
+            35.92646959824609
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.92646959824609,
+            "longitude": 139.6165876482248,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963963209390712,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319305.2514311,
+            "rectY": 105475439.45906872,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            480,
+            384
+          ],
+          "coordinate": [
+            139.61604898858707,
+            35.929610992632476
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.92961099263247,
+            "longitude": 139.61639231134092,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9639254148313721,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319159.59769362,
+            "rectY": 105472546.73885329,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            483,
+            384
+          ],
+          "coordinate": [
+            139.61622770150893,
+            35.93275565840645
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000004/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003005/000004/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.93275565840645,
+            "longitude": 139.61653883775466,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9638875779893645,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319268.85570663,
+            "rectY": 105469650.89109984,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 7,
+      "controls": [
+        {
+          "pixel": [
+            516,
+            384
+          ],
+          "coordinate": [
+            139.62415842718315,
+            35.974135341088186
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003013/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003013/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.974135341088186,
+            "longitude": 139.62411551183888,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9633894222196252,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238324918.433381,
+            "rectY": 105431534.59014153,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            535,
+            384
+          ],
+          "coordinate": [
+            139.62456552735716,
+            35.97727242741481
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003013/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003013/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.97727242741481,
+            "longitude": 139.6243187641278,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9633516352654082,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238325069.98927224,
+            "rectY": 105428644.09354897,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 8,
+      "controls": [
+        {
+          "pixel": [
+            529,
+            384
+          ],
+          "coordinate": [
+            139.624484603526,
+            35.98269397054721
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.98269397054721,
+            "longitude": 139.624302213313,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963286324623105,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238325057.64809024,
+            "rectY": 105423648.4383362,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            522,
+            384
+          ],
+          "coordinate": [
+            139.6239430310465,
+            35.9858102966798
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.985810296679816,
+            "longitude": 139.62383574268588,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9632487798536787,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238324709.8223805,
+            "rectY": 105420776.75905412,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            520,
+            384
+          ],
+          "coordinate": [
+            139.62308075223774,
+            35.98888178359898
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003014/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.98888178359896,
+            "longitude": 139.6229949215492,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963211772486963,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238324082.86069933,
+            "rectY": 105417946.28790152,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 9,
+      "controls": [
+        {
+          "pixel": [
+            516,
+            384
+          ],
+          "coordinate": [
+            139.62085582945008,
+            35.99396262740348
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.99396262740348,
+            "longitude": 139.62081291410584,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9631505488966828,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322455.83802414,
+            "rectY": 105413263.88967907,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            519,
+            384
+          ],
+          "coordinate": [
+            139.6191631809075,
+            35.99678200064592
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.99678200064592,
+            "longitude": 139.61908807905508,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963116572477089,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321169.70779255,
+            "rectY": 105410665.48479375,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            523,
+            384
+          ],
+          "coordinate": [
+            139.61715061864186,
+            35.99945200269509
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003015/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.99945200269507,
+            "longitude": 139.61703260144523,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9630843939714202,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319637.03259948,
+            "rectY": 105408204.65850031,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 10,
+      "controls": [
+        {
+          "pixel": [
+            535,
+            384
+          ],
+          "coordinate": [
+            139.61496202827868,
+            36.00198297191334
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 36.00198297191334,
+            "longitude": 139.61471526504934,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9630538891250459,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238317909.10134354,
+            "rectY": 105405871.89587855,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            549,
+            384
+          ],
+          "coordinate": [
+            139.61250478363155,
+            36.004317021143116
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 36.00431702114312,
+            "longitude": 139.6121078166973,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9630257560049194,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238315964.8469342,
+            "rectY": 105403720.56558062,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            544,
+            384
+          ],
+          "coordinate": [
+            139.60967618784963,
+            36.006519778957404
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003006/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 36.006519778957404,
+            "longitude": 139.6093328650957,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9629992039095674,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238313895.6930493,
+            "rectY": 105401690.19025722,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 11,
+      "controls": [
+        {
+          "pixel": [
+            553,
+            384
+          ],
+          "coordinate": [
+            139.60617976157334,
+            36.00936009388211
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003007/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003007/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 36.00936009388211,
+            "longitude": 139.60573987929493,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9629649645685344,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238311216.5686553,
+            "rectY": 105399072.067766,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        },
+        {
+          "pixel": [
+            553,
+            384
+          ],
+          "coordinate": [
+            139.603376173043,
+            36.01154234796785
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003007/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003007/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 36.01154234796786,
+            "longitude": 139.60293629076455,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9629386563791921,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238309126.0615287,
+            "rectY": 105397060.46318716,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Western/southwestern named Ina strand; adjacent blue Joetsu excluded. Manual native grid reading.",
+          "uncertaintyNativePixels": 3,
+          "status": "diagnostic-needs-reprojection-review"
+        }
+      ]
+    }
+  ]
+}

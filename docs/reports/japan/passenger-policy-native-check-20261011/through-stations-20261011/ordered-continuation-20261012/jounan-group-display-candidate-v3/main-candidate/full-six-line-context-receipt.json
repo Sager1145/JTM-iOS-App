@@ -1,0 +1,12 @@
+{
+  "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+  "actualMapBounds": [
+    132.747895,
+    33.822797,
+    132.801105,
+    33.869797
+  ],
+  "completeSixLineGeometryInsideActualMap": true,
+  "renderStatus": "87 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:12;overlays:7;rides:0;budgetDrops:0;vertices:3472;camera:14.31;lod:13.16;backbones:0;networkStations:46;distance:10311.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.846300;centerLon:132.774500;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1586.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:12;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "pixelReview": "pending"
+}

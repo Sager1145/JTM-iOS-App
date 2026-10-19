@@ -1,0 +1,114 @@
+{
+  "caseIndex": 26,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 26,
+  "source": {
+    "caseIndex": 26,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 26,
+    "fromStationID": "002456",
+    "toStationID": "002470",
+    "camera": [
+      36.266985,
+      137.90292499999998,
+      0.031878000000007775
+    ],
+    "effectiveCoordinates": [
+      [
+        137.9033,
+        36.273885
+      ],
+      [
+        137.90329,
+        36.27331
+      ],
+      [
+        137.90327,
+        36.27221
+      ],
+      [
+        137.90326,
+        36.27156
+      ],
+      [
+        137.90322,
+        36.26944
+      ],
+      [
+        137.90312,
+        36.26872
+      ],
+      [
+        137.90218,
+        36.26516
+      ],
+      [
+        137.90198,
+        36.2644
+      ],
+      [
+        137.90193,
+        36.26422
+      ],
+      [
+        137.90189,
+        36.26399
+      ],
+      [
+        137.90187,
+        36.26378
+      ],
+      [
+        137.90187,
+        36.26353
+      ],
+      [
+        137.90193,
+        36.26326
+      ],
+      [
+        137.90211,
+        36.2627
+      ],
+      [
+        137.9023,
+        36.2623
+      ],
+      [
+        137.9025,
+        36.2619
+      ],
+      [
+        137.90275,
+        36.26152
+      ],
+      [
+        137.9029,
+        36.26132
+      ],
+      [
+        137.9031,
+        36.26109
+      ],
+      [
+        137.90351,
+        36.26064
+      ],
+      [
+        137.90398,
+        36.260085
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t33 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:14.82;lod:13.68;backbones:0;networkStations:5;distance:6997.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.266985;centerLon:137.902925;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2144.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:13;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.266985;centerLon:137.902925;distance:6997.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-26.jpg",
+  "observation": "Nakagaya to Hitoichiba curves retained; changing local east-side offset and own midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

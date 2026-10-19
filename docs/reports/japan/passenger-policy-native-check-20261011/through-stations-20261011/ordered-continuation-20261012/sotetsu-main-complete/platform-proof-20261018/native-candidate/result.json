@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/candidate-tasks.json",
+  "capturedCount" : 7,
+  "captureIndexPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "7859a6aeb6b7b3d6499ececd23147352c1951f1945ac6ee54c7851f284096cbc",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment",
+    "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-相模鉄道-相鉄本線#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "7\/7 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-own-platform-candidate-20261018\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "yokohama-own-platform-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-platform-proof-20261018\/yokohama-candidate\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T05:16:18Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

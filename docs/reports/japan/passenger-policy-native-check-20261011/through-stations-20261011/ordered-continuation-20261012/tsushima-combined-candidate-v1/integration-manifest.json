@@ -1,0 +1,50 @@
+{
+  "status": "candidate-only-geometry-frozen-native-derivation-pending",
+  "candidateSha256": "2b080fcfe778a441a4daaebe9cb7f79d7e1851452a04615aca712a8d9b66efb9",
+  "inputs": [
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/proposal-sukaguchi/candidate.json",
+      "sha256": "7187d2d86e1309179999e8110d823fa293e4c81fe99270472d42cc6f886700cb"
+    },
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-display-proposal-v5/candidate-v5.json",
+      "sha256": "26329b9a37fb29a7a6b091742203e03139c1224e215295c8af33fe9642f68e41"
+    },
+    {
+      "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/tsushima-mainline-own-glyph-proposal-v4/candidate.json",
+      "sha256": "d8ab8bf76e484725ceb876bea467fcf5e8cbdca9225fafa69f8f7c7d451afe27"
+    }
+  ],
+  "owners": {
+    "Tsushima": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "Main": [
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ]
+  },
+  "literalInputArraysPreserved": true,
+  "allAdjacentBoundariesExact": true,
+  "sharedStemExactReverse": true,
+  "totalCompleteIntervals": 15,
+  "warnings": [
+    "ShinKiyosu multitrackgroup guard",
+    "MeitetsuNagoya underground source-preserved endpoint andunsupportedspan",
+    "Tsushima terminal warning fromV5",
+    "Actual native3Inspector/Main replay pending"
+  ],
+  "productionChanged": false
+}

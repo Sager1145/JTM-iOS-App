@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : false,
+  "invocationID" : "AA2450F0-DE63-4833-AD27-B29A6812BCF3",
+  "message" : "批量计划读取失败：所选范围的原始证据依赖或收据已变化。保留原目录并使用新的证据目录。",
+  "requestID" : "hokuriku-eastern-arc-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/result.json",
+  "schemaVersion" : 1,
+  "state" : "failed",
+  "updatedAt" : "2026-10-18T04:18:56Z"
+}

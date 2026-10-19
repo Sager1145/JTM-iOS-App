@@ -1,0 +1,46 @@
+{
+  "ordinal": 28,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "status": "complete-baseline-analysis-repairs-and-platforms-open",
+  "productionChanges": false,
+  "native": {
+    "primary": {
+      "captured": 268,
+      "failed": 0,
+      "rootPixelReviewed": 268,
+      "reviewSheets": "00..66"
+    },
+    "secondary": {
+      "captured": 268,
+      "failed": 0,
+      "rootPixelReviewed": 268,
+      "reviewSheets": "00..66"
+    },
+    "third": {
+      "captureStarted": true,
+      "rootPixelReviewed": 268,
+      "captured": 268,
+      "failed": 0,
+      "captureCompleteUIConfirmed": true,
+      "reviewSheets": "00..66"
+    }
+  },
+  "main": {
+    "capturedPairs": 18,
+    "rootPixelReviewedPairs": 18,
+    "frames": 36,
+    "budgetDrops": 0,
+    "fullIntervalsReviewed": 18,
+    "rejectedInitialTightCameraCases": [
+      1,
+      2
+    ]
+  },
+  "platformMidpointAccepted": false,
+  "notes": [
+    "All 804 dedicated-app composite viewpoints opened by root; 18 original Main ON/OFF pairs (36 images) actually reviewed.",
+    "Main initial cases 1 and 2 preserved under rejected-initial-tight-camera; wider camera receipts are the accepted full-interval evidence.",
+    "No production repair applied; all 19 own longitudinal platform midpoints remain unresolved.",
+    "Official JR East timetable establishes station order and through-service identity only, not track geometry."
+  ]
+}

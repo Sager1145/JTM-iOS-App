@@ -1,0 +1,692 @@
+[
+  {
+    "name": "yodo-interval-0",
+    "camera": [
+      33.172137500000005,
+      133.09029,
+      0.04613175000000247
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.149069,
+        "lon": 133.064379
+      },
+      {
+        "lat": 33.149069,
+        "lon": 133.116201
+      },
+      {
+        "lat": 33.1952,
+        "lon": 133.116201
+      },
+      {
+        "lat": 33.1952,
+        "lon": 133.064379
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 104,
+    "onStatus": "17 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:2040;camera:14.35;lod:13.20;backbones:0;networkStations:6;distance:10120.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.172137;centerLon:133.090290;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1875.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "review-open: complete interval captured; visible own-rail separation at Kawauku/Iejigawa loop, correlate original Inspector views9-15 before alignment decision; tunnel/terrain limits retained"
+  },
+  {
+    "name": "yodo-interval-1",
+    "camera": [
+      33.167615,
+      133.052245,
+      0.06525000000002308
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.134984,
+        "lon": 133.015598
+      },
+      {
+        "lat": 33.134984,
+        "lon": 133.088892
+      },
+      {
+        "lat": 33.200234,
+        "lon": 133.088892
+      },
+      {
+        "lat": 33.200234,
+        "lon": 133.015598
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 108,
+    "onStatus": "18 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:2193;camera:13.85;lod:12.70;backbones:0;networkStations:6;distance:14314.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.167615;centerLon:133.052245;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1958.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main interval reviewed: continuous river corridor and station joins, no gross fragment; thin-guide/tunnel precision WARNING, detailed Inspector review separate"
+  },
+  {
+    "name": "yodo-interval-2",
+    "camera": [
+      33.1850745,
+      133.0020675,
+      0.08026474999998783
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.144933,
+        "lon": 132.956979
+      },
+      {
+        "lat": 33.144933,
+        "lon": 133.047156
+      },
+      {
+        "lat": 33.225198,
+        "lon": 133.047156
+      },
+      {
+        "lat": 33.225198,
+        "lon": 132.956979
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 160,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1290;camera:13.55;lod:12.40;backbones:0;networkStations:3;distance:17608.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.185074;centerLon:133.002068;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1756.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main interval reviewed: connected station joins and river/tunnel corridor; hidden tunnel straight spans remain precision WARNING"
+  },
+  {
+    "name": "yodo-interval-3",
+    "camera": [
+      33.207399499999994,
+      132.9369455,
+      0.1149400500000155
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.149911,
+        "lon": 132.872361
+      },
+      {
+        "lat": 33.149911,
+        "lon": 133.00153
+      },
+      {
+        "lat": 33.264851,
+        "lon": 133.00153
+      },
+      {
+        "lat": 33.264851,
+        "lon": 132.872361
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 194,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1419;camera:13.03;lod:11.88;backbones:0;networkStations:4;distance:25215.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.207399;centerLon:132.936945;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1769.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:3;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main risk interval reviewed: both endpoints and full mountain/river span inside bounds, connected stroke; wooded/tunnel thin-guide precision WARNING"
+  },
+  {
+    "name": "yodo-interval-4",
+    "camera": [
+      33.228217,
+      132.8766255,
+      0.05998794999999717
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.198218,
+        "lon": 132.84291
+      },
+      {
+        "lat": 33.198218,
+        "lon": 132.910341
+      },
+      {
+        "lat": 33.258206,
+        "lon": 132.910341
+      },
+      {
+        "lat": 33.258206,
+        "lon": 132.84291
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 110,
+    "onStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1032;camera:13.97;lod:12.82;backbones:0;networkStations:2;distance:13160.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.228217;centerLon:132.876626;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1749.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main interval reviewed: river-side curves and both station joins continuous; wooded/tunnel thin-guide precision WARNING"
+  },
+  {
+    "name": "yodo-interval-5",
+    "camera": [
+      33.218345,
+      132.82395,
+      0.09277100000002178
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.171947,
+        "lon": 132.771816
+      },
+      {
+        "lat": 33.171947,
+        "lon": 132.876084
+      },
+      {
+        "lat": 33.264718,
+        "lon": 132.876084
+      },
+      {
+        "lat": 33.264718,
+        "lon": 132.771816
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 140,
+    "onStatus": "21 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1677;camera:13.34;lod:12.19;backbones:0;networkStations:7;distance:20352.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.218345;centerLon:132.823950;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1625.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main interval reviewed: both endpoints, full river bends and tunnel bypass connected; terrain thin-guide precision WARNING"
+  },
+  {
+    "name": "yodo-interval-6",
+    "camera": [
+      33.18951,
+      132.78927499999998,
+      0.03561200000000148
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.171702,
+        "lon": 132.769269
+      },
+      {
+        "lat": 33.171702,
+        "lon": 132.809281
+      },
+      {
+        "lat": 33.207314,
+        "lon": 132.809281
+      },
+      {
+        "lat": 33.207314,
+        "lon": 132.769269
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 79,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1419;camera:14.72;lod:13.57;backbones:0;networkStations:3;distance:7812.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.189510;centerLon:132.789275;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1720.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: river-side bends, bridge and station joins connected; local thin-guide/station precision WARNING"
+  },
+  {
+    "name": "yodo-interval-7",
+    "camera": [
+      33.18156,
+      132.774285,
+      0.02579549999998676
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.168661,
+        "lon": 132.759795
+      },
+      {
+        "lat": 33.168661,
+        "lon": 132.788775
+      },
+      {
+        "lat": 33.194457,
+        "lon": 132.788775
+      },
+      {
+        "lat": 33.194457,
+        "lon": 132.759795
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 54,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1290;camera:15.18;lod:14.03;backbones:0;networkStations:3;distance:5659.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.181560;centerLon:132.774285;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1510.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: full river-side bend and station joins continuous; lane/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-8",
+    "camera": [
+      33.20577,
+      132.75635,
+      0.05312799999999775
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.179202,
+        "lon": 132.726498
+      },
+      {
+        "lat": 33.179202,
+        "lon": 132.786202
+      },
+      {
+        "lat": 33.23233,
+        "lon": 132.786202
+      },
+      {
+        "lat": 33.23233,
+        "lon": 132.726498
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 98,
+    "onStatus": "19 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1806;camera:14.14;lod:12.99;backbones:0;networkStations:6;distance:11655.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.205770;centerLon:132.756350;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1647.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+    "rootPixelReview": "complete Main interval reviewed: full meandering river corridor and joins connected; thin-guide/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-9",
+    "camera": [
+      33.22413,
+      132.7372325,
+      0.022960749999973017
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.212649,
+        "lon": 132.724328
+      },
+      {
+        "lat": 33.212649,
+        "lon": 132.750137
+      },
+      {
+        "lat": 33.23561,
+        "lon": 132.750137
+      },
+      {
+        "lat": 33.23561,
+        "lon": 132.724328
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 42,
+    "onStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1161;camera:15.35;lod:14.20;backbones:0;networkStations:2;distance:5037.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.224130;centerLon:132.737233;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1901.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: full S curve and both station joins connected; thin-guide/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-10",
+    "camera": [
+      33.227667499999995,
+      132.71910000000003,
+      0.029623500000006686
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.212854,
+        "lon": 132.702451
+      },
+      {
+        "lat": 33.212854,
+        "lon": 132.735749
+      },
+      {
+        "lat": 33.242478,
+        "lon": 132.735749
+      },
+      {
+        "lat": 33.242478,
+        "lon": 132.702451
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 47,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1290;camera:14.98;lod:13.83;backbones:0;networkStations:4;distance:6498.8;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.227667;centerLon:132.719100;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1874.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: bridge and station-side curves continuous; cartographic/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-11",
+    "camera": [
+      33.2400225,
+      132.70041,
+      0.034140249999997964
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.222951,
+        "lon": 132.68122
+      },
+      {
+        "lat": 33.222951,
+        "lon": 132.7196
+      },
+      {
+        "lat": 33.257091,
+        "lon": 132.7196
+      },
+      {
+        "lat": 33.257091,
+        "lon": 132.68122
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 73,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1032;camera:14.78;lod:13.63;backbones:0;networkStations:4;distance:7489.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.240023;centerLon:132.700410;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1823.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: full hill-side curves and station joins continuous; thin-guide precision WARNING"
+  },
+  {
+    "name": "yodo-interval-12",
+    "camera": [
+      33.2537275,
+      132.6841625,
+      0.02254025000000439
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.242457,
+        "lon": 132.671491
+      },
+      {
+        "lat": 33.242457,
+        "lon": 132.696834
+      },
+      {
+        "lat": 33.264997,
+        "lon": 132.696834
+      },
+      {
+        "lat": 33.264997,
+        "lon": 132.671491
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 25,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:903;camera:15.38;lod:14.23;backbones:0;networkStations:3;distance:4944.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.253727;centerLon:132.684162;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2453.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "complete Main interval reviewed: full urban railway curve and station joins connected, no gross fragment; own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-13",
+    "camera": [
+      33.261647499999995,
+      132.66839249999998,
+      0.023192750000005445
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.25005,
+        "lon": 132.655352
+      },
+      {
+        "lat": 33.25005,
+        "lon": 132.681433
+      },
+      {
+        "lat": 33.273243,
+        "lon": 132.681433
+      },
+      {
+        "lat": 33.273243,
+        "lon": 132.655352
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 29,
+    "onStatus": "13 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:903;camera:15.34;lod:14.19;backbones:0;networkStations:3;distance:5088.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.261647;centerLon:132.668393;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1913.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "complete Main interval reviewed: bridge, valley curve and station joins continuous; lane/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-14",
+    "camera": [
+      33.277474999999995,
+      132.65107749999999,
+      0.028536000000001494
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.263206,
+        "lon": 132.63503
+      },
+      {
+        "lat": 33.263206,
+        "lon": 132.667125
+      },
+      {
+        "lat": 33.291742,
+        "lon": 132.667125
+      },
+      {
+        "lat": 33.291742,
+        "lon": 132.63503
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 48,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:15.04;lod:13.89;backbones:0;networkStations:4;distance:6260.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.277475;centerLon:132.651078;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2228.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "complete Main interval reviewed: full S bend and both station joins connected; cartographic/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-15",
+    "camera": [
+      33.2896675,
+      132.63539250000002,
+      0.018465749999988644
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.280434,
+        "lon": 132.625007
+      },
+      {
+        "lat": 33.280434,
+        "lon": 132.645778
+      },
+      {
+        "lat": 33.2989,
+        "lon": 132.645778
+      },
+      {
+        "lat": 33.2989,
+        "lon": 132.625007
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 22,
+    "onStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:15.66;lod:14.52;backbones:0;networkStations:2;distance:4051.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.289668;centerLon:132.635393;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1890.0;rebuilds:5;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "complete Main interval reviewed: both station joins and intervening bend continuous; own-frame/lane precision WARNING"
+  },
+  {
+    "name": "yodo-interval-16",
+    "camera": [
+      33.29015750000001,
+      132.61744,
+      0.03359650000003143
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.273358,
+        "lon": 132.598544
+      },
+      {
+        "lat": 33.273358,
+        "lon": 132.636336
+      },
+      {
+        "lat": 33.306954,
+        "lon": 132.636336
+      },
+      {
+        "lat": 33.306954,
+        "lon": 132.598544
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 25,
+    "onStatus": "15 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:1032;camera:14.80;lod:13.65;backbones:0;networkStations:4;distance:7370.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.290157;centerLon:132.617440;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2431.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete Main interval reviewed: full field corridor and west station curve connected; thin-guide/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-17",
+    "camera": [
+      33.2858325,
+      132.6032325,
+      0.008620250000005924
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.281522,
+        "lon": 132.598384
+      },
+      {
+        "lat": 33.281522,
+        "lon": 132.608081
+      },
+      {
+        "lat": 33.290143,
+        "lon": 132.608081
+      },
+      {
+        "lat": 33.290143,
+        "lon": 132.598384
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 19,
+    "onStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:516;camera:16.76;lod:15.61;backbones:0;networkStations:2;distance:1891.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.285833;centerLon:132.603232;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2641.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "complete Main interval reviewed: station frames in full view, bridge and approach curve continuous; lane/own-frame precision WARNING"
+  },
+  {
+    "name": "yodo-interval-18",
+    "camera": [
+      33.26105,
+      132.58506,
+      0.0632489999999958
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.22942,
+        "lon": 132.549499
+      },
+      {
+        "lat": 33.22942,
+        "lon": 132.620621
+      },
+      {
+        "lat": 33.292669,
+        "lon": 132.620621
+      },
+      {
+        "lat": 33.292669,
+        "lon": 132.549499
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 133,
+    "onStatus": "26 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1784;camera:13.89;lod:12.74;backbones:0;networkStations:10;distance:13875.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.261050;centerLon:132.585060;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1723.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+    "rootPixelReview": "complete Main interval reviewed: full Muden tail and forward southbound Kita-Uwajima/Yosan continuation, no reverse hook; tunnel/junction precision WARNING"
+  },
+  {
+    "name": "wakai-station",
+    "camera": [
+      33.188045,
+      133.105835,
+      0.0018
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.187145,
+        "lon": 133.104824
+      },
+      {
+        "lat": 33.187145,
+        "lon": 133.106846
+      },
+      {
+        "lat": 33.188945,
+        "lon": 133.106846
+      },
+      {
+        "lat": 33.188945,
+        "lon": 133.104824
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "10 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:387;camera:19.03;lod:17.88;backbones:0;networkStations:2;distance:394.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.188045;centerLon:133.105835;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1918.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "review-open: Wakai shared station long-face chainage appears near midpoint but common product rail/dot is NW of own ticked rail; request lane/raw-alias independent adjudication, no terminal cap assumed"
+  },
+  {
+    "name": "kawakoku-junction",
+    "camera": [
+      33.15744,
+      133.09589,
+      0.006
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.15444,
+        "lon": 133.092521
+      },
+      {
+        "lat": 33.15444,
+        "lon": 133.099259
+      },
+      {
+        "lat": 33.16044,
+        "lon": 133.099259
+      },
+      {
+        "lat": 33.16044,
+        "lon": 133.092521
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "7 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:1290;camera:17.29;lod:16.14;backbones:0;networkStations:0;distance:1316.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.157440;centerLon:133.095890;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:1810.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+    "rootPixelReview": "complete junction context reviewed: NE approach flows into west/south arms without source reverse hook; visible loop cartographic departures remain OPEN, grade crossing is not inferred as interchange"
+  },
+  {
+    "name": "kita-uwajima-junction",
+    "camera": [
+      33.2418,
+      132.5698,
+      0.008
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.2378,
+        "lon": 132.565303
+      },
+      {
+        "lat": 33.2378,
+        "lon": 132.574297
+      },
+      {
+        "lat": 33.2458,
+        "lon": 132.574297
+      },
+      {
+        "lat": 33.2458,
+        "lon": 132.565303
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 2,
+    "onStatus": "10 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:729;camera:16.87;lod:15.72;backbones:0;networkStations:2;distance:1755.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.241800;centerLon:132.569800;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2159.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+    "rootPixelReview": "junction context reviewed: northeast Yodo arm merges forward into southbound Yosan corridor toward Uwajima, no reverse hook; source/tunnel/frame precision WARNING"
+  },
+  {
+    "name": "kita-uwajima-station",
+    "camera": [
+      33.23924,
+      132.569715,
+      0.0018
+    ],
+    "actualCorners": [
+      {
+        "lat": 33.23834,
+        "lon": 132.568703
+      },
+      {
+        "lat": 33.23834,
+        "lon": 132.570727
+      },
+      {
+        "lat": 33.24014,
+        "lon": 132.570727
+      },
+      {
+        "lat": 33.24014,
+        "lon": 132.568703
+      }
+    ],
+    "allIntervalPointsInside": true,
+    "pointCount": 1,
+    "onStatus": "10 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:243;camera:19.02;lod:17.88;backbones:0;networkStations:2;distance:394.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.239240;centerLon:132.569715;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2467.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+    "rootPixelReview": "review-open: own narrow shared platform midpoint is approximately 65–70 m south of current dot; independent actual native slot/lane adjudication confirms cannot be intentional lane offset. Include Yodo18 and Yosan87/88, precise raw-frame alias remains unfrozen."
+  }
+]

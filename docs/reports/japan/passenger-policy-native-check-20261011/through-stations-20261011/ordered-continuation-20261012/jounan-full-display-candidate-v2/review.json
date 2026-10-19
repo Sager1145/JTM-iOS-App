@@ -1,0 +1,61 @@
+{
+  "format": "jtm-jounan-full-display-candidate-review-v2",
+  "candidateSHA256": "659e3c97f7fa906696b166ace66070147ae6dd692bd6b3d49974a3f9758073bf",
+  "frozen": true,
+  "verdict": "accepted-at-raw-cartographic-proposal-level",
+  "scope": {
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndexes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "actualRawAssociationsReviewed": 29
+  },
+  "structuralReview": {
+    "finiteCoordinates": true,
+    "zeroLengthEdges": 0,
+    "exactAdjacentIntervalJoins": "10/10",
+    "sharedWestArmPointCount": 12,
+    "sharedWestArmExactReverse": true,
+    "maximumLocalDeflectionDegreesByInterval": [
+      174.048723,
+      21.801508,
+      30.526369,
+      27.809513,
+      0.798814,
+      4.39379,
+      15.541513,
+      0.498395,
+      29.970878,
+      18.258671,
+      9.400786
+    ],
+    "interval0DerivedParts": {
+      "honmachi1ToJunctionMaxDeflectionDegrees": 2e-06,
+      "junctionSerializedReversalDegrees": 174.048723,
+      "reversedWestArmMaxDeflectionDegrees": 21.801387
+    },
+    "dogoOnsenTerminalApproachMaxDeflectionDegrees": 7.275005
+  },
+  "directionWarning": "The 174.05-degree turn in interval 0 is the explicit legal-inventory transition at the literal south-facing junction: Honmachi 1-chome to J, then back along the west arm toward Nishihoribata. The two rail-derived parts are individually continuous. Preserve the serialized reversal and exact shared-arm retrace; do not redraw it as a U bypass or claim a train-passable Honmachi 1-chome-to-west movement.",
+  "cartographicFindings": [
+    "The west-arm junction is the literal black-glyph join, not the former virtual tangent intersection.",
+    "Intervals 3, 9, and 10 use literal own-glyph support; the Dogo Onsen approach enters the own frame smoothly with no residual corner near raw view-1 pixel (516,380).",
+    "Station representatives are own-rail/frame selections; Minamimachi remains an explicit Apple-POI-on-own-rail fallback because no defensible platform rectangle is drawn."
+  ],
+  "pending": [
+    "Native Primary, Secondary, Third, and Main acceptance are not established by this receipt.",
+    "Complete Johoku line and Renraku branch guard evidence is required before integration because Furu Otemachi and Kamiichiman share identities across distinct display frames."
+  ],
+  "productionSourceModified": false,
+  "physicalTopologyChanged": false
+}

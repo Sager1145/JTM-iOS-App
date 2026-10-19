@@ -1,0 +1,694 @@
+{
+  "schema": "cn-dingzhoudong-topology-review/1",
+  "scope": "G671 DOP identity only; no production edits; no global generation or native jobs",
+  "verdict": "reviewed DOP binding justified",
+  "reviewedBinding": {
+    "officialTelecode": "DOP",
+    "markerNodeId": 8401357513,
+    "markerVersion": 2,
+    "sourceRelations": [
+      {
+        "id": 12265072,
+        "version": 185
+      }
+    ],
+    "evidence": [
+      "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G67100&leftTicketDTO.train_date=2026-10-18&rand_code=",
+      "https://kyfw.12306.cn/mormhweb/zxdt/202205/t20220514_37392.html",
+      "https://kyfw.12306.cn/otn/resources/js/framework/station_name.js",
+      "https://www.openstreetmap.org/relation/12265072",
+      "https://www.openstreetmap.org/node/8401357513"
+    ],
+    "reviewedAt": "2026-10-19",
+    "reason": "Official 12306 station table binds Dingzhoudong to DOP. The official Beijing-Guangzhou HSR fare publication explicitly lists Dingzhoudong and its Beijing West/Shijiazhuang passenger pairs. Original node8401357513 is an explicit station member of Jingguang HSR relation12265072 between Baodingdong and Zhengdingjichang, with source railway reference22516 and mileage196.400. Same-name node3915753122 belongs instead to Shuohuang relation3028521 between Dingzhouxi and Anguo. Selection uses independent official corridor identity and exact original relation membership, not geographic distance."
+  },
+  "markerCandidates": [
+    {
+      "marker": {
+        "id": 8401357513,
+        "coordinate": [
+          115.0690547,
+          38.5077647
+        ],
+        "tags": {
+          "name": "定州东",
+          "public_transport": "station",
+          "railway": "station",
+          "railway:position:exact": "196.400",
+          "railway:ref": "22516",
+          "wikidata": "Q5278295",
+          "wikipedia": "zh:定州东站"
+        },
+        "version": 2
+      },
+      "originalMembership": {
+        "id": 12265072,
+        "version": 185,
+        "tags": {
+          "from": "北京丰台",
+          "name": "京广高速线",
+          "name:de": "SFS Beijing - Guangzhou",
+          "name:en": "Beijing–Guangzhou High-Speed Line",
+          "name:zh": "京广高速线",
+          "name:zh-Hans": "京广高速线",
+          "network": "中国铁路",
+          "ref": "3001",
+          "route": "railway",
+          "start_date": "2009-12-26",
+          "to": "广州南",
+          "type": "route",
+          "wikidata": "Q22712677",
+          "wikipedia": "zh:京广高速铁路"
+        },
+        "stationMemberIndex": 6,
+        "member": [
+          "n",
+          8401357513,
+          ""
+        ],
+        "neighboringStationMarkers": [
+          {
+            "id": 3823793489,
+            "coordinate": [
+              115.75474,
+              39.0459742
+            ],
+            "tags": {
+              "name": "徐水东",
+              "name:en": "Xushuidong",
+              "network": "北京市郊铁路",
+              "network:en": "Beijing Suburban Railway",
+              "network:wikidata": "Q4881191",
+              "network:zh": "北京市郊铁路",
+              "operator": "中国铁路北京局集团有限公司",
+              "operator:en": "China Railway Beijing Group",
+              "operator:short": "京局",
+              "operator:wikidata": "Q4881184",
+              "operator:zh": "中国铁路北京局集团有限公司",
+              "public_transport": "no",
+              "railway": "station",
+              "railway:position:exact": "110.404",
+              "railway:ref": "22510",
+              "train": "yes"
+            },
+            "version": 7
+          },
+          {
+            "id": 8401357514,
+            "coordinate": [
+              115.5957278,
+              38.8634576
+            ],
+            "tags": {
+              "name": "保定东",
+              "name:en": "Baoding East",
+              "public_transport": "station",
+              "railway": "station",
+              "railway:position:exact": "134.951",
+              "railway:ref": "22513",
+              "start_date": "2012-12-26",
+              "wikidata": "Q4857448"
+            },
+            "version": 4
+          },
+          {
+            "id": 8401357513,
+            "coordinate": [
+              115.0690547,
+              38.5077647
+            ],
+            "tags": {
+              "name": "定州东",
+              "public_transport": "station",
+              "railway": "station",
+              "railway:position:exact": "196.400",
+              "railway:ref": "22516",
+              "wikidata": "Q5278295",
+              "wikipedia": "zh:定州东站"
+            },
+            "version": 2
+          },
+          {
+            "id": 8401357512,
+            "coordinate": [
+              114.7033248,
+              38.2513059
+            ],
+            "tags": {
+              "alt_name": "Zhengding Airport",
+              "name": "正定机场",
+              "public_transport": "station",
+              "railway": "station",
+              "railway:position:exact": "239.980",
+              "railway:ref": "22519",
+              "wikidata": "Q2274418",
+              "wikipedia": "zh:正定机场站"
+            },
+            "version": 4
+          },
+          {
+            "id": 7735515019,
+            "coordinate": [
+              114.4781291,
+              38.0095033
+            ],
+            "tags": {
+              "alt_name": "石家庄站;石家庄火车站;Shijiazhuang Railway Station",
+              "name": "石家庄",
+              "name:en": "Shijiazhuang",
+              "name:zh": "石家庄",
+              "public_transport": "station",
+              "railway": "station",
+              "railway:ref": "20372",
+              "train": "yes",
+              "wikidata": "Q987999"
+            },
+            "version": 4
+          }
+        ],
+        "memberWayCount": 4185
+      },
+      "officialTelecodeDecision": "DOP"
+    },
+    {
+      "marker": {
+        "id": 3915753122,
+        "coordinate": [
+          115.1248048,
+          38.4638621
+        ],
+        "tags": {
+          "name": "定州东",
+          "name:en": "Dingzhou East",
+          "name:zh": "定州东",
+          "public_transport": "station",
+          "railway": "station"
+        },
+        "version": 4
+      },
+      "originalMembership": {
+        "id": 3028521,
+        "version": 98,
+        "tags": {
+          "alt_name:en": "Shuohuang Line",
+          "from": "神池南",
+          "name": "朔黄线",
+          "name:en": "Shuohuang Line",
+          "name:zh": "朔黄线",
+          "network": "中国铁路",
+          "ref": "2302",
+          "route": "railway",
+          "to": "黄骅港",
+          "type": "route",
+          "wikidata": "Q11092295",
+          "wikipedia": "zh:朔黄铁路"
+        },
+        "stationMemberIndex": 21,
+        "member": [
+          "n",
+          3915753122,
+          ""
+        ],
+        "neighboringStationMarkers": [
+          {
+            "id": 3628302020,
+            "coordinate": [
+              114.7105532,
+              38.4916249
+            ],
+            "tags": {
+              "name": "新曲",
+              "name:en": "Xinqu",
+              "name:zh": "新曲",
+              "railway": "station"
+            },
+            "version": 3
+          },
+          {
+            "id": 3628302022,
+            "coordinate": [
+              114.8587159,
+              38.4914578
+            ],
+            "tags": {
+              "name": "定州西",
+              "name:en": "Dingzhou West",
+              "name:zh": "定州西",
+              "public_transport": "station",
+              "railway": "station"
+            },
+            "version": 4
+          },
+          {
+            "id": 3915753122,
+            "coordinate": [
+              115.1248048,
+              38.4638621
+            ],
+            "tags": {
+              "name": "定州东",
+              "name:en": "Dingzhou East",
+              "name:zh": "定州东",
+              "public_transport": "station",
+              "railway": "station"
+            },
+            "version": 4
+          },
+          {
+            "id": 3915737872,
+            "coordinate": [
+              115.3150013,
+              38.441606
+            ],
+            "tags": {
+              "name": "安国",
+              "name:en": "Anguo",
+              "name:zh": "安国",
+              "public_transport": "station",
+              "railway": "station"
+            },
+            "version": 5
+          },
+          {
+            "id": 3915760736,
+            "coordinate": [
+              115.4541471,
+              38.440921
+            ],
+            "tags": {
+              "name": "博野",
+              "name:en": "Boye",
+              "railway": "station",
+              "railway:position:exact:朔黄": "372.447"
+            },
+            "version": 3
+          }
+        ],
+        "memberWayCount": 947
+      },
+      "officialTelecodeDecision": "Do not assign DOP; preserve separate original OSM identity"
+    }
+  ],
+  "officialIdentity": {
+    "name": "定州东",
+    "telecode": "DOP",
+    "pinyin": "dingzhoudong",
+    "initials": "dzd",
+    "rawFields": [
+      "dzd",
+      "定州东",
+      "DOP",
+      "dingzhoudong",
+      "dzd",
+      "420",
+      "0326",
+      "保定",
+      "",
+      "",
+      ""
+    ],
+    "source": "12306-station_name.js"
+  },
+  "officialServiceCase": {
+    "id": "CN-REAL-G671-20261018",
+    "trainNumber": "G671",
+    "trainNo": "240000G67100",
+    "serviceDate": "2026-10-18",
+    "completeness": "full",
+    "sourceURLs": [
+      "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+      "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G67100&leftTicketDTO.train_date=2026-10-18&rand_code="
+    ],
+    "from": "BXP",
+    "to": "XNO",
+    "knownStops": [
+      "BXP",
+      "DOP",
+      "SJP",
+      "HPP",
+      "ADF",
+      "ZAF",
+      "LLF",
+      "EAY",
+      "YEY",
+      "BBY",
+      "TIJ",
+      "TWJ",
+      "LAJ",
+      "XNO"
+    ],
+    "observedStops": [
+      {
+        "name": "北京西",
+        "code": "BXP"
+      },
+      {
+        "name": "定州东",
+        "code": "DOP"
+      },
+      {
+        "name": "石家庄",
+        "code": "SJP"
+      },
+      {
+        "name": "邯郸东",
+        "code": "HPP"
+      },
+      {
+        "name": "安阳东",
+        "code": "ADF"
+      },
+      {
+        "name": "郑州东",
+        "code": "ZAF"
+      },
+      {
+        "name": "洛阳龙门",
+        "code": "LLF"
+      },
+      {
+        "name": "西安北",
+        "code": "EAY"
+      },
+      {
+        "name": "杨陵南",
+        "code": "YEY"
+      },
+      {
+        "name": "宝鸡南",
+        "code": "BBY"
+      },
+      {
+        "name": "天水南",
+        "code": "TIJ"
+      },
+      {
+        "name": "通渭",
+        "code": "TWJ"
+      },
+      {
+        "name": "兰州西",
+        "code": "LAJ"
+      },
+      {
+        "name": "西宁",
+        "code": "XNO"
+      }
+    ]
+  },
+  "primaryCorridorEvidence": {
+    "url": "https://kyfw.12306.cn/mormhweb/zxdt/202205/t20220514_37392.html",
+    "publisher": "China Railway 12306; JingShi railway passenger company and others",
+    "publishedDate": "2022-05-13",
+    "review": "The primary fare announcement scopes Jingguang HSR Beijing-Wuhan. Its table includes Beijing West-Dingzhoudong, Baodingdong-Dingzhoudong, Dingzhoudong-Zhengding Airport, and Dingzhoudong-Shijiazhuang. This supplies corridor identity independently of OSM coordinates. Fares are not asserted as current.",
+    "retrieval": "Primary page text returned by web search. Direct www.12306.cn open failed; indexed kyfw.12306.cn mirror returned the official table."
+  },
+  "exactWithheldLines": [
+    {
+      "lineId": "cn-osm-relation-12265072-branch-5",
+      "name": "京广高速线",
+      "stationGroups": [
+        "cn-official-12306-bmp",
+        "cn-official-12306-dop"
+      ],
+      "stationNames": [
+        "保定东",
+        "定州东"
+      ],
+      "intervalOriginalEdgeCounts": [
+        66
+      ],
+      "DOPSourceBindings": [
+        {
+          "groupId": "cn-official-12306-dop",
+          "stationCode": "CN-12306-DOP",
+          "markerNodeId": 8401357513,
+          "markerVersion": 2,
+          "markerCoordinate": [
+            115.0690547,
+            38.5077647
+          ],
+          "markerTags": {
+            "name": "定州东",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:position:exact": "196.400",
+            "railway:ref": "22516",
+            "wikidata": "Q5278295",
+            "wikipedia": "zh:定州东站"
+          },
+          "anchorNodeId": 4907644162,
+          "anchorVersion": 2,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            4907644162,
+            4907644178
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 8401357513,
+              "anchorNodeIds": [],
+              "stopAreaIds": []
+            }
+          ],
+          "stopAreaIds": [],
+          "officialTelecode": "DOP",
+          "officialPinyin": "dingzhoudong",
+          "nameTraditional": "",
+          "nameEnglish": "",
+          "englishSourceType": "missing",
+          "englishSource": ""
+        }
+      ]
+    },
+    {
+      "lineId": "cn-osm-relation-12265072-branch-6",
+      "name": "京广高速线",
+      "stationGroups": [
+        "cn-official-12306-dop",
+        "cn-official-12306-zhp"
+      ],
+      "stationNames": [
+        "定州东",
+        "正定机场"
+      ],
+      "intervalOriginalEdgeCounts": [
+        67
+      ],
+      "DOPSourceBindings": [
+        {
+          "groupId": "cn-official-12306-dop",
+          "stationCode": "CN-12306-DOP",
+          "markerNodeId": 8401357513,
+          "markerVersion": 2,
+          "markerCoordinate": [
+            115.0690547,
+            38.5077647
+          ],
+          "markerTags": {
+            "name": "定州东",
+            "public_transport": "station",
+            "railway": "station",
+            "railway:position:exact": "196.400",
+            "railway:ref": "22516",
+            "wikidata": "Q5278295",
+            "wikipedia": "zh:定州东站"
+          },
+          "anchorNodeId": 4907644178,
+          "anchorVersion": 2,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            4907644162,
+            4907644178
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 8401357513,
+              "anchorNodeIds": [],
+              "stopAreaIds": []
+            }
+          ],
+          "stopAreaIds": [],
+          "officialTelecode": "DOP",
+          "officialPinyin": "dingzhoudong",
+          "nameTraditional": "",
+          "nameEnglish": "",
+          "englishSourceType": "missing",
+          "englishSource": ""
+        }
+      ]
+    },
+    {
+      "lineId": "cn-osm-relation-3028521",
+      "name": "朔黄线",
+      "stationGroups": [
+        "cn-osm-node-2361435771",
+        "cn-osm-node-3699706417",
+        "cn-osm-node-2757833092",
+        "cn-osm-node-3914534097",
+        "cn-osm-node-3914539770",
+        "cn-osm-node-3914544154",
+        "cn-osm-node-2351995606",
+        "cn-osm-node-3914518061",
+        "cn-osm-node-2351944582",
+        "cn-osm-node-2351943512",
+        "cn-osm-node-2351995607",
+        "cn-osm-node-3915744472",
+        "cn-osm-node-3628286804",
+        "cn-osm-node-3628286816",
+        "cn-osm-node-1630423910",
+        "cn-osm-node-3628302019",
+        "cn-osm-node-3628302020",
+        "cn-osm-node-3628302022",
+        "cn-official-12306-dop",
+        "cn-osm-node-3915737872",
+        "cn-osm-node-3915760736",
+        "cn-osm-node-3915759032",
+        "cn-osm-node-3915762569",
+        "cn-osm-node-3915694961",
+        "cn-osm-node-6101985312",
+        "cn-osm-node-3915765886",
+        "cn-osm-node-3915767506",
+        "cn-osm-node-8404257187",
+        "cn-osm-node-8404270933",
+        "cn-osm-node-3916235183",
+        "cn-osm-node-1668282547",
+        "cn-osm-node-4021619844",
+        "cn-osm-node-4021619860"
+      ],
+      "stationNames": [
+        "神池南",
+        "宁武西",
+        "龙宫",
+        "北大牛",
+        "原平南",
+        "回凤",
+        "东冶",
+        "南湾",
+        "滴流磴",
+        "猴刎",
+        "小觉",
+        "古月",
+        "西柏坡",
+        "三汲",
+        "灵寿",
+        "行唐",
+        "新曲",
+        "定州西",
+        "定州东",
+        "安国",
+        "博野",
+        "蠡县",
+        "肃宁北",
+        "太师庄",
+        "河间",
+        "行别营",
+        "黎民居",
+        "杜生",
+        "沧州北",
+        "李天木",
+        "黄骅南",
+        "段庄",
+        "黄骅港"
+      ],
+      "intervalOriginalEdgeCounts": [
+        122,
+        96,
+        215,
+        103,
+        106,
+        72,
+        31,
+        113,
+        138,
+        86,
+        86,
+        92,
+        31,
+        54,
+        56,
+        41,
+        23,
+        80,
+        63,
+        64,
+        52,
+        111,
+        79,
+        50,
+        95,
+        76,
+        38,
+        126,
+        164,
+        88,
+        88,
+        126
+      ],
+      "DOPSourceBindings": [
+        {
+          "groupId": "cn-official-12306-dop",
+          "stationCode": "CN-12306-DOP",
+          "markerNodeId": 3915753122,
+          "markerVersion": 4,
+          "markerCoordinate": [
+            115.1248048,
+            38.4638621
+          ],
+          "markerTags": {
+            "name": "定州东",
+            "name:en": "Dingzhou East",
+            "name:zh": "定州东",
+            "public_transport": "station",
+            "railway": "station"
+          },
+          "anchorNodeId": 11221518480,
+          "anchorVersion": 1,
+          "membershipEvidence": "explicit-route-member",
+          "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+          "anchorSelection": "joint-ordered-original-source-path",
+          "anchorCandidates": [
+            11221518480
+          ],
+          "bindingEvidence": [
+            {
+              "method": "explicit-route-member",
+              "markerNodeId": 3915753122,
+              "anchorNodeIds": [],
+              "stopAreaIds": []
+            }
+          ],
+          "stopAreaIds": [],
+          "officialTelecode": "DOP",
+          "officialPinyin": "dingzhoudong",
+          "nameTraditional": "",
+          "nameEnglish": "Dingzhou East",
+          "englishSourceType": "original-OSM",
+          "englishSource": "https://www.openstreetmap.org/node/3915753122"
+        }
+      ]
+    }
+  ],
+  "targetCompilationProposal": {
+    "relationId": 12265072,
+    "relationVersion": 185,
+    "restoreLineIDs": [
+      "cn-osm-relation-12265072-branch-5",
+      "cn-osm-relation-12265072-branch-6"
+    ],
+    "preserveExistingOtherBranches": true,
+    "doNotPromoteRelation3028521": "Included only to diagnose identity collision; no passenger-service or G671 use asserted for Shuohuang.",
+    "remainingPhysicalQuestion": "Branch5 chooses DOP anchor4907644162 and branch6 chooses4907644178. Identity correction restores genuine memberships but does not prove same-train physical continuity across the platform strands. Retain source adjacency and runtime restrictions."
+  },
+  "checks": {
+    "performed": "Targeted existing compile_route calls for original relations12265072 and3028521 only; no build() or artifact publication. Returned the exact three withheld identities recorded above.",
+    "durationSecondsApprox": 4.3,
+    "productionEdits": false
+  }
+}

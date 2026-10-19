@@ -1,0 +1,46 @@
+{
+  "scope": "jp-東急電鉄-田園都市線#3 駒沢大学→桜新町",
+  "productionChanged": false,
+  "officialArchive": "mlit-N02-25_GML.zip",
+  "officialOwnIdentity": {
+    "N02_001": "12",
+    "N02_002": "4",
+    "N02_003": "田園都市線",
+    "N02_004": "東急電鉄"
+  },
+  "repoSource": "app/data/rail-sections.json",
+  "repoSourceAttribution": "国土数値情報（鉄道データ N02）2025年度（令和7年度）版（国土交通省）を加工して作成",
+  "repoCRS": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:EPSG::6668"
+    }
+  },
+  "exactOfficialFeatureMatchesInRepo": 1,
+  "captureViewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004299/000002/view.json",
+  "captureLineID": "jp-東急電鉄-田園都市線",
+  "captureIntervalIndex": 3,
+  "officialFragmentApexZeroBased": 8,
+  "capturedIntervalApexZeroBased": 7,
+  "literalThreeControls": [
+    [
+      139.65464,
+      35.63056
+    ],
+    [
+      139.65374,
+      35.63029
+    ],
+    [
+      139.65329,
+      35.63035
+    ]
+  ],
+  "localEquirectangularDeflectionDegrees": 29.57501009593383,
+  "incomingEdgeMetres": 86.80152298849237,
+  "outgoingEdgeMetres": 41.26006148451134,
+  "sourceMatchesAtApexWithin1e9Degrees": [
+    7
+  ],
+  "limits": "No coordinates derived from engineering diagram; no Apple nearest-neighbour snapping; no current native acceptance."
+}

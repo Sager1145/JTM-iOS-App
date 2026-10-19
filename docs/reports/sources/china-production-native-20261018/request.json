@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "requestID": "cn-production-gsh-20261018",
+  "workspace": "route",
+  "action": "solve",
+  "sessionDirectory": "/private/tmp/railmap-cn-native-20261018/session",
+  "inputPath": "/private/tmp/railmap-cn-native-20261018/journeys.json"
+}

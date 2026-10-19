@@ -1,0 +1,94 @@
+{
+  "caseIndex": 4,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 4,
+  "source": {
+    "caseIndex": 4,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 4,
+    "fromStationID": "001946",
+    "toStationID": "001992",
+    "camera": [
+      36.6833075,
+      137.85702750000002,
+      0.058685549999998234
+    ],
+    "effectiveCoordinates": [
+      [
+        137.863895,
+        36.69601
+      ],
+      [
+        137.86349,
+        36.69528
+      ],
+      [
+        137.86293,
+        36.69429
+      ],
+      [
+        137.86279,
+        36.69401
+      ],
+      [
+        137.85856,
+        36.68614
+      ],
+      [
+        137.85835,
+        36.68575
+      ],
+      [
+        137.85604,
+        36.68137
+      ],
+      [
+        137.85572,
+        36.68074
+      ],
+      [
+        137.85556,
+        36.68044
+      ],
+      [
+        137.85505,
+        36.67948
+      ],
+      [
+        137.85451,
+        36.67848
+      ],
+      [
+        137.85309,
+        36.67586
+      ],
+      [
+        137.85175,
+        36.67344
+      ],
+      [
+        137.85159,
+        36.67314
+      ],
+      [
+        137.85036,
+        36.6709
+      ],
+      [
+        137.85016,
+        36.670605
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:774;camera:13.93;lod:12.79;backbones:0;networkStations:6;distance:12882.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.683307;centerLon:137.857028;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2302.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.683307;centerLon:137.857028;distance:12882.7;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-04.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Hakuba to Iimori long straight continuous with varying east-side bias; own platform midpoint unresolved."
+}

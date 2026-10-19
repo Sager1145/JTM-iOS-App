@@ -1,0 +1,47 @@
+{
+  "caseIndex": 16,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 16,
+  "source": {
+    "caseIndex": 16,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 16,
+    "fromStationID": "003689",
+    "toStationID": "003700",
+    "camera": [
+      35.6918235,
+      139.702379,
+      0.0065
+    ],
+    "effectiveCoordinates": [
+      [
+        139.70421,
+        35.69118
+      ],
+      [
+        139.70353,
+        35.69149
+      ],
+      [
+        139.70213,
+        35.69209
+      ],
+      [
+        139.7013,
+        35.69235
+      ],
+      [
+        139.70068,
+        35.69246
+      ],
+      [
+        139.700548,
+        35.692467
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "41 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:10;overlays:9;rides:0;budgetDrops:0;vertices:2927;camera:17.13;lod:15.98;backbones:0;networkStations:14;distance:1426.5;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.691823;centerLon:139.702379;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3238.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:17;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideC",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.691823;centerLon:139.702379;distance:1426.5;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

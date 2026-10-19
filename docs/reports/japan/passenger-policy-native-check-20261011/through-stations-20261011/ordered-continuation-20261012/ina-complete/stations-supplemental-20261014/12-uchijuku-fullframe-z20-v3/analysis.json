@@ -1,0 +1,396 @@
+{
+  "format" : "jtm-apple-map-extraction-v1",
+  "height" : 654,
+  "intervalIndex" : 11,
+  "lineID" : "jp-埼玉新都市交通-伊奈線",
+  "mapRect" : {
+    "height" : 653.99970179796219,
+    "width" : 998.99954444169998,
+    "x" : 238310272.12575668,
+    "y" : 105397493.83775318
+  },
+  "metresPerPixel" : 0.12036349806989072,
+  "platformCandidates" : [
+    {
+      "ambiguity" : 0,
+      "axisPixels" : [
+        [
+          675.84831625673701,
+          245.12419606119695
+        ],
+        [
+          786.97674569539834,
+          352.76478672502179
+        ]
+      ],
+      "midpointCoordinate" : [
+        139.59996101879881,
+        36.014080434119137
+      ],
+      "midpointPixel" : [
+        731.41253097606761,
+        298.94449139310939
+      ],
+      "polygonPixels" : [
+        [
+          687.44225373972904,
+          233.15458445325982
+        ],
+        [
+          798.57068317839037,
+          340.79517511708468
+        ],
+        [
+          775.3828082124063,
+          364.73439833295896
+        ],
+        [
+          664.25437877374497,
+          257.09380766913409
+        ],
+        [
+          687.44225373972904,
+          233.15458445325982
+        ]
+      ],
+      "reason" : "no_supported_parallel_rail_at_midpoint",
+      "representation" : "platform_cartography_midpoint_candidate",
+      "status" : "unresolved",
+      "support" : 0,
+      "supportingRailPixels" : [
+
+      ]
+    }
+  ],
+  "reason" : "search_radius_clipped",
+  "representation" : "physical_rail_glyph_candidate",
+  "samples" : [
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        912.70224394836407,
+        649.64119474893675
+      ],
+      "seed" : [
+        999,
+        555.107088202927
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        909.74805311880141,
+        646.94438987232331
+      ],
+      "seed" : [
+        996.04580917043722,
+        552.41028332631333
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        906.7938622892384,
+        644.24758499570942
+      ],
+      "seed" : [
+        993.09161834087445,
+        549.71347844969978
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        903.83967145967563,
+        641.55078011909586
+      ],
+      "seed" : [
+        990.13742751131156,
+        547.01667357308611
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        900.88548063011319,
+        638.85397524248265
+      ],
+      "seed" : [
+        987.18323668174878,
+        544.31986869647255
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        897.93128980055008,
+        636.15717036586864
+      ],
+      "seed" : [
+        984.229045852186,
+        541.62306381985888
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        894.97709897098719,
+        633.46036548925508
+      ],
+      "seed" : [
+        981.27485502262311,
+        538.92625894324522
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        892.02290814142407,
+        630.76356061264119
+      ],
+      "seed" : [
+        978.32066419306034,
+        536.22945406663166
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        889.06871731186163,
+        628.06675573602774
+      ],
+      "seed" : [
+        975.36647336349756,
+        533.53264919001799
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        886.11452648229886,
+        625.3699508594143
+      ],
+      "seed" : [
+        972.41228253393479,
+        530.83584431340444
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        883.16033565273574,
+        622.67314598280029
+      ],
+      "seed" : [
+        969.45809170437201,
+        528.13903943679077
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        880.20614482317319,
+        619.97634110618685
+      ],
+      "seed" : [
+        966.50390087480912,
+        525.4422345601771
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        877.25195399361041,
+        617.2795362295733
+      ],
+      "seed" : [
+        963.54971004524634,
+        522.74542968356354
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        874.29776316404764,
+        614.58273135295963
+      ],
+      "seed" : [
+        960.59551921568357,
+        520.04862480694987
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        871.34357233448463,
+        611.88592647634584
+      ],
+      "seed" : [
+        957.64132838612068,
+        517.35181993033621
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        868.38938150492163,
+        609.18912159973218
+      ],
+      "seed" : [
+        954.6871375565579,
+        514.65501505372265
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        865.43519067535931,
+        606.49231672311885
+      ],
+      "seed" : [
+        951.73294672699512,
+        511.95821017710898
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        862.48099984579642,
+        603.79551184650518
+      ],
+      "seed" : [
+        948.77875589743235,
+        509.26140530049537
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        859.52680901623341,
+        601.0987069698914
+      ],
+      "seed" : [
+        945.82456506786957,
+        506.56460042388176
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        856.57261818667075,
+        598.40190209327795
+      ],
+      "seed" : [
+        942.87037423830668,
+        503.86779554726814
+      ],
+      "supported" : false
+    },
+    {
+      "ambiguity" : 1,
+      "contrast" : 0,
+      "offsetMetres" : -15.406527752946012,
+      "pixel" : [
+        853.6184273571082,
+        595.70509721666451
+      ],
+      "seed" : [
+        939.9161834087439,
+        501.17099067065453
+      ],
+      "supported" : false
+    }
+  ],
+  "scope" : "Selected visible smoothed centreline against independent snapshot glyph candidates; unsupported\/ambiguous gaps excluded. Platform frames are cartographic, unassigned review evidence, not surveyed coordinates; unresolved shapes have no rail midpoint. POI is not a platform centre. No source geometry writes.",
+  "stations" : [
+    {
+      "appleMatches" : [
+        {
+          "coordinate" : [
+            139.6002403,
+            36.013863700000002
+          ],
+          "distanceMetres" : 0.25501272760296034,
+          "name" : "Uchijuku Station"
+        }
+      ],
+      "constructedCoordinate" : [
+        139.6002401742744,
+        36.013861408871328
+      ],
+      "name" : "内宿",
+      "note" : "Apple 车站 POI；不等于站台中心",
+      "stationID" : "002742"
+    }
+  ],
+  "status" : "no_candidate",
+  "supportFraction" : 0,
+  "textMasks" : [
+    [
+      12.984999999999999,
+      626,
+      52.951000000000001,
+      18.999999999999982
+    ]
+  ],
+  "width" : 999
+}

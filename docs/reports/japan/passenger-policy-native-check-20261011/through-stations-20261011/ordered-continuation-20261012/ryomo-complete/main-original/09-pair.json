@@ -1,0 +1,126 @@
+{
+  "caseIndex": 9,
+  "lineID": "jp-東日本旅客鉄道-両毛線",
+  "intervalIndex": 9,
+  "source": {
+    "caseIndex": 9,
+    "lineID": "jp-東日本旅客鉄道-両毛線",
+    "intervalIndex": 9,
+    "fromStationID": "002354",
+    "toStationID": "002308",
+    "camera": [
+      36.36118999999999,
+      139.39284750000002,
+      0.04553999999999938
+    ],
+    "effectiveCoordinates": [
+      [
+        139.41127,
+        36.34739
+      ],
+      [
+        139.41069,
+        36.34779
+      ],
+      [
+        139.4093,
+        36.34875
+      ],
+      [
+        139.4073,
+        36.35016
+      ],
+      [
+        139.40421,
+        36.35233
+      ],
+      [
+        139.40122,
+        36.35443
+      ],
+      [
+        139.40092,
+        36.35465
+      ],
+      [
+        139.3987,
+        36.35622
+      ],
+      [
+        139.39576,
+        36.3583
+      ],
+      [
+        139.39295,
+        36.36031
+      ],
+      [
+        139.39257,
+        36.36058
+      ],
+      [
+        139.39241,
+        36.36069
+      ],
+      [
+        139.39221,
+        36.36083
+      ],
+      [
+        139.39102,
+        36.36169
+      ],
+      [
+        139.39027,
+        36.36223
+      ],
+      [
+        139.38828,
+        36.3638
+      ],
+      [
+        139.38603,
+        36.3656
+      ],
+      [
+        139.38567,
+        36.36589
+      ],
+      [
+        139.38313,
+        36.36793
+      ],
+      [
+        139.37993,
+        36.3705
+      ],
+      [
+        139.37816,
+        36.37195
+      ],
+      [
+        139.37777,
+        36.37226
+      ],
+      [
+        139.37495,
+        36.37456
+      ],
+      [
+        139.374425,
+        36.37499
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t52 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:5;overlays:5;rides:0;budgetDrops:0;vertices:2536;camera:13.82;lod:12.67;backbones:0;networkStations:15;distance:13995.0;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.361190;centerLon:139.392848;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1644.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCa",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.361190;centerLon:139.392848;distance:13995.0;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-09.jpg",
+  "observation": "Yamamae–Omata mainly straight, with smaller local offset; platform midpoint unresolved.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

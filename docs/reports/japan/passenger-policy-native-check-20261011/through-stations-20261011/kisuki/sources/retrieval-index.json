@@ -1,0 +1,185 @@
+{
+  "publisher": "GSI",
+  "retrievedUTC": "2026-10-11T07:54:16.939157+00:00",
+  "datasetAsOf": "2026-07-01",
+  "crs": "WGS84 from MVT inverse WebMercator",
+  "licence": "https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html",
+  "tiles": [
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25933.pbf",
+      "file": "gsi-16-56999-25933.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25934.pbf",
+      "file": "gsi-16-56999-25934.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25935.pbf",
+      "file": "gsi-16-56999-25935.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25936.pbf",
+      "file": "gsi-16-56999-25936.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25937.pbf",
+      "file": "gsi-16-56999-25937.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25938.pbf",
+      "file": "gsi-16-56999-25938.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25939.pbf",
+      "file": "gsi-16-56999-25939.pbf",
+      "railFeatures": 3
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25933.pbf",
+      "file": "gsi-16-57000-25933.pbf",
+      "railFeatures": 4
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25934.pbf",
+      "file": "gsi-16-57000-25934.pbf",
+      "railFeatures": 17
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25935.pbf",
+      "file": "gsi-16-57000-25935.pbf",
+      "railFeatures": 21
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25936.pbf",
+      "file": "gsi-16-57000-25936.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25937.pbf",
+      "file": "gsi-16-57000-25937.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25938.pbf",
+      "file": "gsi-16-57000-25938.pbf",
+      "railFeatures": 4
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25939.pbf",
+      "file": "gsi-16-57000-25939.pbf",
+      "railFeatures": 7
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25933.pbf",
+      "file": "gsi-16-57001-25933.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25934.pbf",
+      "file": "gsi-16-57001-25934.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25935.pbf",
+      "file": "gsi-16-57001-25935.pbf",
+      "railFeatures": 28
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25936.pbf",
+      "file": "gsi-16-57001-25936.pbf",
+      "railFeatures": 2
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25937.pbf",
+      "file": "gsi-16-57001-25937.pbf",
+      "railFeatures": 2
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25938.pbf",
+      "file": "gsi-16-57001-25938.pbf",
+      "railFeatures": 14
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25939.pbf",
+      "file": "gsi-16-57001-25939.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25933.pbf",
+      "file": "gsi-16-57002-25933.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25934.pbf",
+      "file": "gsi-16-57002-25934.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25935.pbf",
+      "file": "gsi-16-57002-25935.pbf",
+      "railFeatures": 7
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25936.pbf",
+      "file": "gsi-16-57002-25936.pbf",
+      "railFeatures": 2
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25937.pbf",
+      "file": "gsi-16-57002-25937.pbf",
+      "railFeatures": 15
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25938.pbf",
+      "file": "gsi-16-57002-25938.pbf",
+      "railFeatures": 21
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57002/25939.pbf",
+      "file": "gsi-16-57002-25939.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25933.pbf",
+      "file": "gsi-16-57003-25933.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25934.pbf",
+      "file": "gsi-16-57003-25934.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25935.pbf",
+      "file": "gsi-16-57003-25935.pbf",
+      "railFeatures": 12
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25936.pbf",
+      "file": "gsi-16-57003-25936.pbf",
+      "railFeatures": 6
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25937.pbf",
+      "file": "gsi-16-57003-25937.pbf",
+      "railFeatures": 12
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25938.pbf",
+      "file": "gsi-16-57003-25938.pbf",
+      "railFeatures": 8
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57003/25939.pbf",
+      "file": "gsi-16-57003-25939.pbf",
+      "railFeatures": 8
+    }
+  ],
+  "limits": "Feature survey date unestablished; reference not proof of selected-date track use."
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "requestID": "ordered-32-sotetsu-targeted-z19-20261017",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "lineRender": "2a6c8ff21cc19e157df5b8c0f48bce1b2a76bd17578564515eb58c6ee25a3ca5",
+    "packageVersion": "2025.5.2"
+  },
+  "notes": [
+    {
+      "id": "jp-相模鉄道-相鉄本線#0/stationApproach",
+      "conclusion": "needsRepair",
+      "note": "Owning-source terminal hook remains visible at Yokohama: the short end segment turns away from the incoming Sotetsu tangent. This is a concrete shape candidate, not evidence that neighboring railways caused it. Repair direction must come from Sotetsu own platform/approach; complete platform caps remain obscured.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000000/basemap.png": "030828a595971abe695d52f9bdb53bac22f4437092d5b485fcd679f24b955f45",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000000/smooth.png": "6b9bdb2da0d6fc3643232566c3bd0f964d392644cec691811140638e4b532914",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000001/basemap.png": "db36a5cda0d57b26b654fa24328325c5f9ed7ac55d5c375526b2d6fa0af4f9c8",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000001/smooth.png": "a88d29fd3b097f090fe6774a40603ab3e1435147baafcd908a9fdf54b38fa720"
+      }
+    },
+    {
+      "id": "jp-相模鉄道-相鉄本線/station/004633",
+      "conclusion": "insufficientEvidence",
+      "note": "Yokohama own complete passenger platform caps are obscured by station/building/access cartography. JR/Keikyu/Tokyu, Minatomirai and purple transfer passages cannot supply the own-line longitudinal midpoint.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000000/basemap.png": "030828a595971abe695d52f9bdb53bac22f4437092d5b485fcd679f24b955f45",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000000/000000/smooth.png": "6b9bdb2da0d6fc3643232566c3bd0f964d392644cec691811140638e4b532914"
+      }
+    },
+    {
+      "id": "jp-相模鉄道-相鉄本線#1/lineOffset",
+      "conclusion": "needsRepair",
+      "note": "The complete Nishi-Yokohama approach shows a visible local bend/chord difference and a persistent transverse displacement relative to the labelled Sotetsu corridor. The red path remains continuous in these frames; this is a geometry repair candidate, not a physical disconnection. Follow the owning Sotetsu curve, excluding the farther-south JR corridor, road and river.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000005/basemap.png": "0335a194e434244eea2b504ceaec351aed0bdbfd8f4720a976006cb90d79646c",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000005/smooth.png": "110bcad10977b4b6af8a9604d040d26a468de5d00dbaf7cafdd5861dbe877cfa",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000006/basemap.png": "d2b10cfa05b0cab766c2c67964f8df1a8955b5d69aa3d7d1bc52f04b6b941988",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000006/smooth.png": "bcdbec35c9fb692788e84ec9202c386b3cdf85ef851134991822bc9991787c5b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000007/basemap.png": "c4c08691c7bbbc45d80fe984caa2c3e2bc6b5d92e2399833a398e79cf5d66be4",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000007/smooth.png": "bcbd157717b28c2a8536c24c192e10796a6b254944f6a3182722c5ea17fe8ced",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000008/basemap.png": "2928ba2f1f204c303a34d16e02241864b1adbe1e28f3397fb262fde0f5c0888d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000008/smooth.png": "30b401e77f299be8bda55a635ec65bb43ac79a9e52000cd67436b0794c203ca1",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000009/basemap.png": "eb3afae1987b819b7b5a714f8285b9a9e66c4b83c7c0d3d306c4e0969afd901b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000009/smooth.png": "e7bfa4e5cfd48f97512cfa9b92f215ef92d2681b444552590fcda2da964c4c9b"
+      }
+    },
+    {
+      "id": "jp-相模鉄道-相鉄本線/station/004669",
+      "conclusion": "insufficientEvidence",
+      "note": "Nishi-Yokohama own station band is visible, but exact passenger-platform end-cap identity and longitudinal midpoint remain unmeasured. Access bridge and broad rail casing are not platform caps.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000008/basemap.png": "2928ba2f1f204c303a34d16e02241864b1adbe1e28f3397fb262fde0f5c0888d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000008/smooth.png": "30b401e77f299be8bda55a635ec65bb43ac79a9e52000cd67436b0794c203ca1",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000009/basemap.png": "eb3afae1987b819b7b5a714f8285b9a9e66c4b83c7c0d3d306c4e0969afd901b",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000001/000009/smooth.png": "e7bfa4e5cfd48f97512cfa9b92f215ef92d2681b444552590fcda2da964c4c9b"
+      }
+    },
+    {
+      "id": "jp-相模鉄道-相鉄本線/station/004672",
+      "conclusion": "insufficientEvidence",
+      "note": "Ebina approach stays on the eastern terminal corridor instead of continuing onto the western Odakyu fan. The source endpoint lies along the eastern blue band; its relation to the complete own passenger platform longitudinal extent remains unresolved. Basemap labels and shared station access coverage alone do not establish own caps.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000022/basemap.png": "911d51756337f9292064a5952580b3079141d5f0c21c28450fc0498dc9659230",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000022/smooth.png": "876715a7356faa57c73b23f55baf49a8572d5a5da69ea328082d2c5f83c006b6",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000023/basemap.png": "e0b751330aff68723feaa6d396091ff982a39b7444e56ce2df4c4d2f61bee1cf",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000023/smooth.png": "eb60a631b0e7b4a071ba8940f0124778df2ab19cb36c290c6cb7dfaeaba59c52",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000024/basemap.png": "5369754dcc129fa44a5326fc060a872ba6bd8c971af19dfc1d4326206f2ccb0d",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sotetsu-main-complete/targeted-refinement-20261017/unified-session/alignment/captures/000002/000024/smooth.png": "dc89b11649100b35bda144ce075c46fe70c3f16ea1f495766e6ae555d0edd21f"
+      }
+    }
+  ]
+}

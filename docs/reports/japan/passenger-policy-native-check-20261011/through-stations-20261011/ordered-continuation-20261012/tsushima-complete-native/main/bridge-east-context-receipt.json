@@ -1,0 +1,16 @@
+{
+  "lineID": "jp-名古屋鉄道-津島線",
+  "lineObjectSha256": "d9901cb2d4c2cddbd573aca7b4926eba701097d180eea3bc18c63f3575e182b0",
+  "plannedCamera": [
+    35.19374,
+    136.7471,
+    0.003
+  ],
+  "actualCenter": [
+    35.19374,
+    136.7471
+  ],
+  "renderStatus": "9 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:129;camera:18.25;lod:17.10;backbones:0;networkStations:1;distance:658.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.193740;centerLon:136.747100;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:757.0;rebuilds:4;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:24;annotationReuses:5;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCacheM",
+  "scope": "regional context; not complete-interval certification",
+  "pixelReview": "Root reviewed actual ON/OFF pair; whole baseline REPAIR REQUIRED; see Main-review.md"
+}

@@ -1,0 +1,22 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "imagery",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "intervalIndices" : [
+    7
+  ],
+  "lineID" : "jp-西日本旅客鉄道-大糸線",
+  "requestID" : "itoigawa-own-platform-imagery",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/private\/tmp\/jtm-platform-proof-20261018\/itoigawa-imagery",
+  "workspace" : "alignment"
+}

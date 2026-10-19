@@ -1,0 +1,65 @@
+{
+  "caseIndex": 1,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 1,
+  "source": {
+    "caseIndex": 1,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 1,
+    "fromStationID": "003112",
+    "toStationID": "003117",
+    "camera": [
+      35.7895775,
+      139.65781249999998,
+      0.010734621019452615
+    ],
+    "effectiveCoordinates": [
+      [
+        139.65433,
+        35.79022
+      ],
+      [
+        139.65529,
+        35.79004
+      ],
+      [
+        139.65539,
+        35.79002
+      ],
+      [
+        139.6559,
+        35.78992
+      ],
+      [
+        139.65731,
+        35.78966
+      ],
+      [
+        139.65857,
+        35.78945
+      ],
+      [
+        139.65956,
+        35.78927
+      ],
+      [
+        139.66023,
+        35.78913
+      ],
+      [
+        139.66035,
+        35.78912
+      ],
+      [
+        139.661295,
+        35.788935
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:258;camera:16.40;lod:15.25;backbones:0;networkStations:3;distance:2356.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.789577;centerLon:139.657812;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3780.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.789577;centerLon:139.657812;distance:2356.1;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/00.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

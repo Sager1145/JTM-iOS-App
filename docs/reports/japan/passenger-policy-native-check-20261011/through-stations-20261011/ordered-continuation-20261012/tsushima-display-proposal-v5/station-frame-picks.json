@@ -1,0 +1,100 @@
+{
+  "format": "jtm-tsushima-station-frame-picks-v5",
+  "picks": {
+    "005352": {
+      "pixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.845755,
+        35.19893
+      ],
+      "status": "preserved-physical-shared-main17-source-anchor",
+      "warning": "RGB review places the old pixel on own/shared platform fill, not proved black rail. Normal projection, platform face, and switch identity remain unresolved; no direct cross-track lead-in is proposed."
+    },
+    "005368": {
+      "pixel": [
+        490,
+        315
+      ],
+      "coordinate": [
+        136.82580403802893,
+        35.19600760468442
+      ],
+      "uncertaintyPixels": 2,
+      "basis": "reviewed own-frame chainage and own-rail normal projection"
+    },
+    "005370": {
+      "pixel": [
+        547.5,
+        321
+      ],
+      "coordinate": [
+        136.80649149206545,
+        35.19582130239827
+      ],
+      "uncertaintyPixels": 1.5,
+      "basis": "reviewed own black rail, not lower platform fill"
+    },
+    "005372": {
+      "pixel": [
+        505,
+        318
+      ],
+      "coordinate": [
+        136.78803950429938,
+        35.19533945383461
+      ],
+      "uncertaintyPixels": 1,
+      "basis": "reviewed own black rail"
+    },
+    "005355": {
+      "pixel": [
+        547.5,
+        323
+      ],
+      "coordinate": [
+        136.76719249206542,
+        35.19872253430495
+      ],
+      "uncertaintyPixels": 1.5,
+      "basis": "reviewed own black rail, not lower platform fill"
+    },
+    "005375": {
+      "pixel": [
+        511.132,
+        307.877
+      ],
+      "coordinate": [
+        136.75043740125818,
+        35.19532882996651
+      ],
+      "uncertaintyPixels": 2,
+      "basis": "short lower true narrow face selected; long upper face retained as direction warning"
+    },
+    "005396": {
+      "pixel": [
+        506.375,
+        316.625
+      ],
+      "coordinate": [
+        136.73895188037397,
+        35.18887548512419
+      ],
+      "uncertaintyPixels": 1.5,
+      "basis": "two true narrow faces have same longitudinal chainage; normal projection to own black rail"
+    },
+    "005420": {
+      "pixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.73107,
+        35.17803
+      ],
+      "status": "unchanged-warning-shared-bisai-frame-obscured"
+    }
+  }
+}

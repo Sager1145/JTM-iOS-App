@@ -1,0 +1,2965 @@
+{
+  "status": "candidate-only-79-required-nativepending",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 80,
+  "fromStationID": "009291",
+  "toStationID": "009319",
+  "coordinates": [
+    [
+      132.45784664285196,
+      33.424626519353936
+    ],
+    [
+      132.45791950429924,
+      33.42444961145903
+    ],
+    [
+      132.45795705522545,
+      33.42436006716493
+    ],
+    [
+      132.45799460615166,
+      33.42427052277849
+    ],
+    [
+      132.45804825033196,
+      33.424136206025636
+    ],
+    [
+      132.45813944543846,
+      33.42391234430905
+    ],
+    [
+      132.45823064054497,
+      33.42368848201522
+    ],
+    [
+      132.45832183565147,
+      33.423464619144134
+    ],
+    [
+      132.45841303075798,
+      33.423240755695794
+    ],
+    [
+      132.4585042258645,
+      33.42301689167021
+    ],
+    [
+      132.45864017039952,
+      33.42268999891844
+    ],
+    [
+      132.45878493611934,
+      33.42244911699257
+    ],
+    [
+      132.4589556950092,
+      33.42221954433494
+    ],
+    [
+      132.45912757383087,
+      33.421994512437486
+    ],
+    [
+      132.45930971846497,
+      33.42177357645875
+    ],
+    [
+      132.45949847629504,
+      33.42154999814705
+    ],
+    [
+      132.4596580751064,
+      33.42131573209674
+    ],
+    [
+      132.45981446699295,
+      33.42108038390568
+    ],
+    [
+      132.4599363575477,
+      33.420826681266945
+    ],
+    [
+      132.46007557226318,
+      33.4205855166766
+    ],
+    [
+      132.4602178255118,
+      33.42034358841542
+    ],
+    [
+      132.46035530296797,
+      33.42009962032681
+    ],
+    [
+      132.46049510621503,
+      33.41985604346461
+    ],
+    [
+      132.4606264813765,
+      33.41960986487296
+    ],
+    [
+      132.46076271988545,
+      33.41936557509825
+    ],
+    [
+      132.46089409504685,
+      33.419119395116006
+    ],
+    [
+      132.46102217055943,
+      33.41887194203373
+    ],
+    [
+      132.46117159557645,
+      33.418632913986464
+    ],
+    [
+      132.4613113491326,
+      33.418390008706425
+    ],
+    [
+      132.46145801391611,
+      33.41814944930791
+    ],
+    [
+      132.46159589999615,
+      33.417905759135145
+    ],
+    [
+      132.46173073742625,
+      33.41765773898409
+    ],
+    [
+      132.4618391509539,
+      33.41740388291329
+    ],
+    [
+      132.46192725206538,
+      33.417139102492804
+    ],
+    [
+      132.46198803184853,
+      33.41686857521096
+    ],
+    [
+      132.46201704559058,
+      33.41660019815692
+    ],
+    [
+      132.46200827976224,
+      33.41632616651047
+    ],
+    [
+      132.46199313036504,
+      33.41605500065125
+    ],
+    [
+      132.46196922137045,
+      33.415786233344555
+    ],
+    [
+      132.46194538576884,
+      33.41551752280005
+    ],
+    [
+      132.46192235332563,
+      33.415248700503426
+    ],
+    [
+      132.46189932088237,
+      33.414979877374634
+    ],
+    [
+      132.46188164481032,
+      33.41471080824813
+    ],
+    [
+      132.46184789962473,
+      33.41444247378698
+    ],
+    [
+      132.46184629266628,
+      33.41417266749422
+    ],
+    [
+      132.4618256354625,
+      33.41390361827544
+    ],
+    [
+      132.46179450759735,
+      33.41363532421015
+    ],
+    [
+      132.46177331708566,
+      33.4133663905486
+    ],
+    [
+      132.46174213858563,
+      33.413098253455956
+    ],
+    [
+      132.4617106157442,
+      33.41282965199813
+    ],
+    [
+      132.46164667924677,
+      33.412562856142266
+    ],
+    [
+      132.46154097392963,
+      33.41230819065554
+    ],
+    [
+      132.46141333008035,
+      33.41205843213222
+    ],
+    [
+      132.46126996700366,
+      33.41181697849518
+    ],
+    [
+      132.4610846301942,
+      33.41159398076924
+    ],
+    [
+      132.46088111435205,
+      33.41138582875121
+    ],
+    [
+      132.4606569159584,
+      33.41119192736834
+    ],
+    [
+      132.46040494161605,
+      33.411024173733686
+    ],
+    [
+      132.46013433957603,
+      33.41087904086221
+    ],
+    [
+      132.45984877907364,
+      33.41076086808947
+    ],
+    [
+      132.45955465517363,
+      33.410648332204744
+    ],
+    [
+      132.45925486432532,
+      33.41054823920089
+    ],
+    [
+      132.45895623589695,
+      33.41044585246092
+    ],
+    [
+      132.45865760746858,
+      33.41034346560025
+    ],
+    [
+      132.4583589790402,
+      33.41024107861889
+    ],
+    [
+      132.45806439518725,
+      33.41013113852439
+    ],
+    [
+      132.45777851407445,
+      33.41000561867392
+    ],
+    [
+      132.4575018695927,
+      33.40986862090561
+    ],
+    [
+      132.45723440429975,
+      33.40971710735748
+    ],
+    [
+      132.4569696588456,
+      33.409568022056746
+    ],
+    [
+      132.45670647576924,
+      33.40941165726548
+    ],
+    [
+      132.45645630627615,
+      33.409241261375044
+    ],
+    [
+      132.4562145664948,
+      33.409062965573796
+    ],
+    [
+      132.45600345128707,
+      33.40885829697491
+    ],
+    [
+      132.4558245490054,
+      33.408638395028795
+    ],
+    [
+      132.45566241495436,
+      33.408410531505154
+    ],
+    [
+      132.4555343643437,
+      33.408164340240184
+    ],
+    [
+      132.4554297951728,
+      33.40790933522759
+    ],
+    [
+      132.45535961113205,
+      33.407648296248624
+    ],
+    [
+      132.45532628868335,
+      33.40738452587663
+    ],
+    [
+      132.4553194912424,
+      33.407114753994804
+    ],
+    [
+      132.4553406072676,
+      33.40684584386938
+    ],
+    [
+      132.45539411926967,
+      33.40658109756864
+    ],
+    [
+      132.4554935927057,
+      33.40632533326836
+    ],
+    [
+      132.45561457767303,
+      33.40607557271877
+    ],
+    [
+      132.4557585346625,
+      33.40583434881197
+    ],
+    [
+      132.455902491652,
+      33.40559312423537
+    ],
+    [
+      132.45604644864147,
+      33.40535189898895
+    ],
+    [
+      132.45619040563093,
+      33.405110673072734
+    ],
+    [
+      132.45633436262045,
+      33.404869446486714
+    ],
+    [
+      132.45648146692542,
+      33.404629546848845
+    ],
+    [
+      132.45662869950309,
+      33.40438970065733
+    ],
+    [
+      132.4567759320807,
+      33.40414985380367
+    ],
+    [
+      132.4569231646583,
+      33.40391000628787
+    ],
+    [
+      132.4570687575232,
+      33.40366946318626
+    ],
+    [
+      132.45721380327853,
+      33.403428687548534
+    ],
+    [
+      132.45735884903388,
+      33.40318791124355
+    ],
+    [
+      132.4575042255633,
+      33.402947273797416
+    ],
+    [
+      132.4576503643271,
+      33.402706957209006
+    ],
+    [
+      132.45779650309095,
+      33.40246663995591
+    ],
+    [
+      132.45794137910758,
+      33.40222579976556
+    ],
+    [
+      132.45808456574207,
+      33.401984262523946
+    ],
+    [
+      132.45823118525806,
+      33.401744147442436
+    ],
+    [
+      132.458377804774,
+      33.4015040316974
+    ],
+    [
+      132.45852442428992,
+      33.40126391528877
+    ],
+    [
+      132.4586710438059,
+      33.401023798216606
+    ],
+    [
+      132.45881617016374,
+      33.40078305056516
+    ],
+    [
+      132.458960756247,
+      33.400542074321464
+    ],
+    [
+      132.4591053423303,
+      33.400301097409454
+    ],
+    [
+      132.45924992841356,
+      33.400060119829156
+    ],
+    [
+      132.45939720789494,
+      33.39982029054256
+    ],
+    [
+      132.45954640180173,
+      33.39958127726058
+    ],
+    [
+      132.4597146245834,
+      33.39935054201084
+    ],
+    [
+      132.45986857570892,
+      33.399113597114734
+    ],
+    [
+      132.4600367984906,
+      33.39888286062317
+    ],
+    [
+      132.46019074961612,
+      33.3986459144518
+    ],
+    [
+      132.46034401430808,
+      33.39841029248573
+    ],
+    [
+      132.4605015009284,
+      33.398175012684916
+    ],
+    [
+      132.4606589875487,
+      33.39793973224707
+    ],
+    [
+      132.4608117913358,
+      33.39770226641892
+    ],
+    [
+      132.4609645951229,
+      33.39746479994186
+    ],
+    [
+      132.4611220817432,
+      33.39722951758114
+    ],
+    [
+      132.46126349466346,
+      33.39698765928859
+    ],
+    [
+      132.46141303792052,
+      33.39674811960388
+    ],
+    [
+      132.46158936424746,
+      33.39652242283701
+    ],
+    [
+      132.4617700327281,
+      33.39629905110475
+    ],
+    [
+      132.46195070120882,
+      33.39607567879837
+    ],
+    [
+      132.4621500361452,
+      33.395864227670835
+    ],
+    [
+      132.46235692530593,
+      33.39565726775071
+    ],
+    [
+      132.4625638144667,
+      33.395450307337725
+    ],
+    [
+      132.4627812493335,
+      33.3952498291704
+    ],
+    [
+      132.46301126843406,
+      33.39506070273578
+    ],
+    [
+      132.4632563439156,
+      33.39488434018214
+    ],
+    [
+      132.46348636301616,
+      33.39469521295215
+    ],
+    [
+      132.46373380174612,
+      33.394523296167286
+    ],
+    [
+      132.463995525075,
+      33.39436549246702
+    ],
+    [
+      132.46425724840384,
+      33.39420768848021
+    ],
+    [
+      132.4645334736012,
+      33.39406826326629
+    ],
+    [
+      132.46481723223923,
+      33.39394076871797
+    ],
+    [
+      132.46511292555505,
+      33.39383258821376
+    ],
+    [
+      132.4654086352104,
+      33.393722929279825
+    ],
+    [
+      132.46570820576943,
+      33.39362206062035
+    ],
+    [
+      132.46601138200202,
+      33.39352701188924
+    ],
+    [
+      132.46631755275928,
+      33.393441528703754
+    ],
+    [
+      132.46662372351653,
+      33.39335604543421
+    ],
+    [
+      132.4669298942738,
+      33.39327056208057
+    ],
+    [
+      132.46723776633036,
+      33.393189326256596
+    ],
+    [
+      132.4675439370876,
+      33.393103842739
+    ],
+    [
+      132.4678467052463,
+      33.39300986389298
+    ],
+    [
+      132.46815287600356,
+      33.39292438019887
+    ],
+    [
+      132.46845734546156,
+      33.392834648789844
+    ],
+    [
+      132.46876351621881,
+      33.39274916492342
+    ],
+    [
+      132.46906968697607,
+      33.392663680972916
+    ],
+    [
+      132.46937585773333,
+      33.39257819693834
+    ],
+    [
+      132.46968210702408,
+      33.39249283130134
+    ],
+    [
+      132.4699883403324,
+      33.392407503429595
+    ],
+    [
+      132.47029627182877,
+      33.39232642399776
+    ],
+    [
+      132.4706025051371,
+      33.39224109596265
+    ],
+    [
+      132.47091043663346,
+      33.392160016375605
+    ],
+    [
+      132.4712200663178,
+      33.39208318524848
+    ],
+    [
+      132.47144835680007,
+      33.39198414286345
+    ],
+    [
+      132.47171657770156,
+      33.39191248065757
+    ],
+    [
+      132.47198479860305,
+      33.3918408183926
+    ],
+    [
+      132.47225301950454,
+      33.39176915606856
+    ],
+    [
+      132.47252124040602,
+      33.391697493685434
+    ],
+    [
+      132.4727894613075,
+      33.39162583124323
+    ],
+    [
+      132.47312395885416,
+      33.3915364611264
+    ]
+  ],
+  "headAlias": [
+    132.45784664285196,
+    33.424626519353936
+  ],
+  "tailAlias": [
+    132.47312395885416,
+    33.3915364611264
+  ],
+  "preciseHeadControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        505,
+        280
+      ],
+      "coordinate": [
+        132.45791950429924,
+        33.42444961145903
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        512,
+        300
+      ],
+      "coordinate": [
+        132.45795705522545,
+        33.42436006716493
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        519,
+        320
+      ],
+      "coordinate": [
+        132.45799460615166,
+        33.42427052277849
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        529,
+        350
+      ],
+      "coordinate": [
+        132.45804825033196,
+        33.424136206025636
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        546,
+        400
+      ],
+      "coordinate": [
+        132.45813944543846,
+        33.42391234430905
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        563,
+        450
+      ],
+      "coordinate": [
+        132.45823064054497,
+        33.42368848201522
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        580,
+        500
+      ],
+      "coordinate": [
+        132.45832183565147,
+        33.423464619144134
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        597,
+        550
+      ],
+      "coordinate": [
+        132.45841303075798,
+        33.423240755695794
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+      "pixel": [
+        614,
+        600
+      ],
+      "coordinate": [
+        132.4585042258645,
+        33.42301689167021
+      ]
+    }
+  ],
+  "bodyPixelControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        430.9187522791326,
+        245.33533124811947
+      ],
+      "coordinate": [
+        132.45864017039952,
+        33.42268999891844
+      ],
+      "sourceAlongMetres": 190.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        444.41189533313496,
+        272.2356308305996
+      ],
+      "coordinate": [
+        132.45878493611934,
+        33.42244911699257
+      ],
+      "sourceAlongMetres": 219.99999999999997,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        460.32777744091237,
+        297.8729073189996
+      ],
+      "coordinate": [
+        132.4589556950092,
+        33.42221954433494
+      ],
+      "sourceAlongMetres": 250.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        476.34804476071093,
+        323.0030335656029
+      ],
+      "coordinate": [
+        132.45912757383087,
+        33.421994512437486
+      ],
+      "sourceAlongMetres": 280.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        493.32515514577125,
+        347.67569038258006
+      ],
+      "coordinate": [
+        132.45930971846497,
+        33.42177357645875
+      ],
+      "sourceAlongMetres": 310.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        510.91866007373187,
+        372.6433614087281
+      ],
+      "coordinate": [
+        132.45949847629504,
+        33.42154999814705
+      ],
+      "sourceAlongMetres": 340.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        525.7943474675268,
+        398.8044957803137
+      ],
+      "coordinate": [
+        132.4596580751064,
+        33.42131573209674
+      ],
+      "sourceAlongMetres": 370.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        540.3711278093982,
+        425.08640470666126
+      ],
+      "coordinate": [
+        132.45981446699295,
+        33.42108038390568
+      ],
+      "sourceAlongMetres": 400.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        551.7321509504437,
+        453.4179199704942
+      ],
+      "coordinate": [
+        132.4599363575477,
+        33.420826681266945
+      ],
+      "sourceAlongMetres": 429.99999999999994,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        564.707902906321,
+        480.3492078562085
+      ],
+      "coordinate": [
+        132.46007557226318,
+        33.4205855166766
+      ],
+      "sourceAlongMetres": 460.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000001/view.json",
+      "pixel": [
+        577.9668666788361,
+        507.3657010925246
+      ],
+      "coordinate": [
+        132.4602178255118,
+        33.42034358841542
+      ],
+      "sourceAlongMetres": 490.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        436.43028459902746,
+        218.97373406534774
+      ],
+      "coordinate": [
+        132.46035530296797,
+        33.42009962032681
+      ],
+      "sourceAlongMetres": 520.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        449.4608916754063,
+        246.1741765826566
+      ],
+      "coordinate": [
+        132.46049510621503,
+        33.41985604346461
+      ],
+      "sourceAlongMetres": 550.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        461.70594423279437,
+        273.66507898612866
+      ],
+      "coordinate": [
+        132.4606264813765,
+        33.41960986487296
+      ],
+      "sourceAlongMetres": 580.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        474.40429363414916,
+        300.94497908807347
+      ],
+      "coordinate": [
+        132.46076271988545,
+        33.41936557509825
+      ],
+      "sourceAlongMetres": 609.9999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        486.6493461915372,
+        328.4358814915455
+      ],
+      "coordinate": [
+        132.46089409504685,
+        33.419119395116006
+      ],
+      "sourceAlongMetres": 639.9999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        498.58684918284416,
+        356.06887234561145
+      ],
+      "coordinate": [
+        132.46102217055943,
+        33.41887194203373
+      ],
+      "sourceAlongMetres": 670.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        512.5142702215298,
+        382.76096799535964
+      ],
+      "coordinate": [
+        132.46117159557645,
+        33.418632913986464
+      ],
+      "sourceAlongMetres": 700.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        525.5402457655355,
+        409.8859562569699
+      ],
+      "coordinate": [
+        132.4613113491326,
+        33.418390008706425
+      ],
+      "sourceAlongMetres": 730.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        539.2103943913635,
+        436.748907505891
+      ],
+      "coordinate": [
+        132.46145801391611,
+        33.41814944930791
+      ],
+      "sourceAlongMetres": 760.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        552.0623085488821,
+        463.9613923134546
+      ],
+      "coordinate": [
+        132.46159589999615,
+        33.417905759135145
+      ],
+      "sourceAlongMetres": 790.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        564.6300679339871,
+        491.657320330154
+      ],
+      "coordinate": [
+        132.46173073742625,
+        33.41765773898409
+      ],
+      "sourceAlongMetres": 820.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000002/view.json",
+      "pixel": [
+        574.7349411018832,
+        520.0048522395392
+      ],
+      "coordinate": [
+        132.4618391509539,
+        33.41740388291329
+      ],
+      "sourceAlongMetres": 850.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        512.3121853956605,
+        211.753343691761
+      ],
+      "coordinate": [
+        132.46192725206538,
+        33.417139102492804
+      ],
+      "sourceAlongMetres": 879.9999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        517.9772717878849,
+        241.9623286158877
+      ],
+      "coordinate": [
+        132.46198803184853,
+        33.41686857521096
+      ],
+      "sourceAlongMetres": 909.9999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        520.6815485507876,
+        271.9311109439569
+      ],
+      "coordinate": [
+        132.46201704559058,
+        33.41660019815692
+      ],
+      "sourceAlongMetres": 940.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        519.864514131099,
+        302.5312274284661
+      ],
+      "coordinate": [
+        132.46200827976224,
+        33.41632616651047
+      ],
+      "sourceAlongMetres": 970.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        518.4524879673983,
+        332.8112368314826
+      ],
+      "coordinate": [
+        132.46199313036504,
+        33.41605500065125
+      ],
+      "sourceAlongMetres": 1000.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        516.2240081579442,
+        362.82331614579374
+      ],
+      "coordinate": [
+        132.46196922137045,
+        33.415786233344555
+      ],
+      "sourceAlongMetres": 1029.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        514.002369065428,
+        392.8289642162812
+      ],
+      "coordinate": [
+        132.46194538576884,
+        33.41551752280005
+      ],
+      "sourceAlongMetres": 1060.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        511.85558975758687,
+        422.84699822300706
+      ],
+      "coordinate": [
+        132.46192235332563,
+        33.415248700503426
+      ],
+      "sourceAlongMetres": 1090.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        509.7088104497458,
+        452.865032229733
+      ],
+      "coordinate": [
+        132.46189932088237,
+        33.414979877374634
+      ],
+      "sourceAlongMetres": 1120.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        508.0612811233665,
+        482.91044243254913
+      ],
+      "coordinate": [
+        132.46188164481032,
+        33.41471080824813
+      ],
+      "sourceAlongMetres": 1150.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        504.91600185632706,
+        512.8737240508199
+      ],
+      "coordinate": [
+        132.46184789962473,
+        33.41444247378698
+      ],
+      "sourceAlongMetres": 1180.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000003/view.json",
+      "pixel": [
+        504.7662224743332,
+        543.001262834456
+      ],
+      "coordinate": [
+        132.46184629266628,
+        33.41417266749422
+      ],
+      "sourceAlongMetres": 1210.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        535.0662541645885,
+        224.08797075922703
+      ],
+      "coordinate": [
+        132.4618256354625,
+        33.41390361827544
+      ],
+      "sourceAlongMetres": 1239.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        532.1649268461063,
+        254.0464631775017
+      ],
+      "coordinate": [
+        132.46179450759735,
+        33.41363532421015
+      ],
+      "sourceAlongMetres": 1270.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        530.189828004688,
+        284.07628188468516
+      ],
+      "coordinate": [
+        132.46177331708566,
+        33.4133663905486
+      ],
+      "sourceAlongMetres": 1299.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        527.2837811745703,
+        314.0170611012727
+      ],
+      "coordinate": [
+        132.46174213858563,
+        33.413098253455956
+      ],
+      "sourceAlongMetres": 1330.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        524.3456393953065,
+        344.0095996796009
+      ],
+      "coordinate": [
+        132.4617106157442,
+        33.41282965199813
+      ],
+      "sourceAlongMetres": 1360.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        518.3863259074016,
+        373.8004295597895
+      ],
+      "coordinate": [
+        132.46164667924677,
+        33.412562856142266
+      ],
+      "sourceAlongMetres": 1390.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        508.5338762556819,
+        402.23667866086055
+      ],
+      "coordinate": [
+        132.46154097392963,
+        33.41230819065554
+      ],
+      "sourceAlongMetres": 1420.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        496.6366071963564,
+        430.124929446587
+      ],
+      "coordinate": [
+        132.46141333008035,
+        33.41205843213222
+      ],
+      "sourceAlongMetres": 1450.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        483.2741999516145,
+        457.08577327043713
+      ],
+      "coordinate": [
+        132.46126996700366,
+        33.41181697849518
+      ],
+      "sourceAlongMetres": 1480.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        465.9995572567173,
+        481.98575349538345
+      ],
+      "coordinate": [
+        132.4610846301942,
+        33.41159398076924
+      ],
+      "sourceAlongMetres": 1509.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        447.0305059067905,
+        505.22800068184733
+      ],
+      "coordinate": [
+        132.46088111435205,
+        33.41138582875121
+      ],
+      "sourceAlongMetres": 1540.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000004/view.json",
+      "pixel": [
+        426.13370103389025,
+        526.878972325474
+      ],
+      "coordinate": [
+        132.4606569159584,
+        33.41119192736834
+      ],
+      "sourceAlongMetres": 1569.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        649.0154122300446,
+        318.6095352768898
+      ],
+      "coordinate": [
+        132.46040494161605,
+        33.411024173733686
+      ],
+      "sourceAlongMetres": 1600.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        623.7934740373244,
+        334.8149662890129
+      ],
+      "coordinate": [
+        132.46013433957603,
+        33.41087904086221
+      ],
+      "sourceAlongMetres": 1630.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        597.1773060927652,
+        348.01003225819886
+      ],
+      "coordinate": [
+        132.45984877907364,
+        33.41076086808947
+      ],
+      "sourceAlongMetres": 1660.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        569.7629716447465,
+        360.5756716734203
+      ],
+      "coordinate": [
+        132.45955465517363,
+        33.410648332204744
+      ],
+      "sourceAlongMetres": 1690.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        541.8204393237829,
+        371.75193831697106
+      ],
+      "coordinate": [
+        132.45925486432532,
+        33.41054823920089
+      ],
+      "sourceAlongMetres": 1719.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        513.9862524010241,
+        383.1843075044453
+      ],
+      "coordinate": [
+        132.45895623589695,
+        33.41044585246092
+      ],
+      "sourceAlongMetres": 1750.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        486.15206547454,
+        394.61667669191957
+      ],
+      "coordinate": [
+        132.45865760746858,
+        33.41034346560025
+      ],
+      "sourceAlongMetres": 1779.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        458.3178785480559,
+        406.0490458793938
+      ],
+      "coordinate": [
+        132.4583589790402,
+        33.41024107861889
+      ],
+      "sourceAlongMetres": 1810.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        430.8606733754277,
+        418.32476878911257
+      ],
+      "coordinate": [
+        132.45806439518725,
+        33.41013113852439
+      ],
+      "sourceAlongMetres": 1840.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        404.2146223790354,
+        432.3400816050828
+      ],
+      "coordinate": [
+        132.45777851407445,
+        33.41000561867392
+      ],
+      "sourceAlongMetres": 1870.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000005/view.json",
+      "pixel": [
+        378.42948779158075,
+        447.6369742413444
+      ],
+      "coordinate": [
+        132.4575018695927,
+        33.40986862090561
+      ],
+      "sourceAlongMetres": 1900.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        641.9677988978048,
+        271.68910299274637
+      ],
+      "coordinate": [
+        132.45723440429975,
+        33.40971710735748
+      ],
+      "sourceAlongMetres": 1929.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        617.2917340622135,
+        288.33560850698234
+      ],
+      "coordinate": [
+        132.4569696588456,
+        33.409568022056746
+      ],
+      "sourceAlongMetres": 1960.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        592.7612933985854,
+        305.7948936978817
+      ],
+      "coordinate": [
+        132.45670647576924,
+        33.40941165726548
+      ],
+      "sourceAlongMetres": 1989.9999999999998,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        569.4438066072762,
+        324.8208190817386
+      ],
+      "coordinate": [
+        132.45645630627615,
+        33.409241261375044
+      ],
+      "sourceAlongMetres": 2020.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        546.9120259024203,
+        344.7287863045931
+      ],
+      "coordinate": [
+        132.4562145664948,
+        33.409062965573796
+      ],
+      "sourceAlongMetres": 2050.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        527.2346623388817,
+        367.58140957287594
+      ],
+      "coordinate": [
+        132.45600345128707,
+        33.40885829697491
+      ],
+      "sourceAlongMetres": 2080.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        510.55976110257683,
+        392.1348783374685
+      ],
+      "coordinate": [
+        132.4558245490054,
+        33.408638395028795
+      ],
+      "sourceAlongMetres": 2110.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        495.44777224250146,
+        417.5772429410544
+      ],
+      "coordinate": [
+        132.45566241495436,
+        33.408410531505154
+      ],
+      "sourceAlongMetres": 2140.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        483.5125902736707,
+        445.0659376384519
+      ],
+      "coordinate": [
+        132.4555343643437,
+        33.408164340240184
+      ],
+      "sourceAlongMetres": 2170.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        473.76603712618703,
+        473.53865666805984
+      ],
+      "coordinate": [
+        132.4554297951728,
+        33.40790933522759
+      ],
+      "sourceAlongMetres": 2200.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        467.2244103908666,
+        502.68501482240765
+      ],
+      "coordinate": [
+        132.45535961113205,
+        33.407648296248624
+      ],
+      "sourceAlongMetres": 2229.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000006/view.json",
+      "pixel": [
+        464.11853306321507,
+        532.1362582318933
+      ],
+      "coordinate": [
+        132.45532628868335,
+        33.40738452587663
+      ],
+      "sourceAlongMetres": 2260.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        465.2960849367082,
+        229.43216044455767
+      ],
+      "coordinate": [
+        132.4553194912424,
+        33.407114753994804
+      ],
+      "sourceAlongMetres": 2290.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        467.2642411366105,
+        259.45709699578583
+      ],
+      "coordinate": [
+        132.4553406072676,
+        33.40684584386938
+      ],
+      "sourceAlongMetres": 2320.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        472.25192123278975,
+        289.0170343667269
+      ],
+      "coordinate": [
+        132.45539411926967,
+        33.40658109756864
+      ],
+      "sourceAlongMetres": 2349.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        481.52351747080684,
+        317.57401146925986
+      ],
+      "coordinate": [
+        132.4554935927057,
+        33.40632533326836
+      ],
+      "sourceAlongMetres": 2380.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        492.80013374611735,
+        345.4605677090585
+      ],
+      "coordinate": [
+        132.45561457767303,
+        33.40607557271877
+      ],
+      "sourceAlongMetres": 2410.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        506.21789767593145,
+        372.393904639408
+      ],
+      "coordinate": [
+        132.4557585346625,
+        33.40583434881197
+      ],
+      "sourceAlongMetres": 2439.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        519.6356616057456,
+        399.32724156975746
+      ],
+      "coordinate": [
+        132.455902491652,
+        33.40559312423537
+      ],
+      "sourceAlongMetres": 2470.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        533.0534255318344,
+        426.26057850010693
+      ],
+      "coordinate": [
+        132.45604644864147,
+        33.40535189898895
+      ],
+      "sourceAlongMetres": 2500.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        546.4711894616485,
+        453.1939154304564
+      ],
+      "coordinate": [
+        132.45619040563093,
+        33.405110673072734
+      ],
+      "sourceAlongMetres": 2530.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        559.8889533914626,
+        480.12725236080587
+      ],
+      "coordinate": [
+        132.45633436262045,
+        33.404869446486714
+      ],
+      "sourceAlongMetres": 2559.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        573.6000683903694,
+        506.9123592246324
+      ],
+      "coordinate": [
+        132.45648146692542,
+        33.404629546848845
+      ],
+      "sourceAlongMetres": 2590.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000007/view.json",
+      "pixel": [
+        587.3231392651796,
+        533.6914247963578
+      ],
+      "coordinate": [
+        132.45662869950309,
+        33.40438970065733
+      ],
+      "sourceAlongMetres": 2620.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        442.61778027936816,
+        246.77688014507294
+      ],
+      "coordinate": [
+        132.4567759320807,
+        33.40414985380367
+      ],
+      "sourceAlongMetres": 2649.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        456.3408511504531,
+        273.5559457167983
+      ],
+      "coordinate": [
+        132.4569231646583,
+        33.40391000628787
+      ],
+      "sourceAlongMetres": 2680.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        469.91108971461654,
+        300.41259945742786
+      ],
+      "coordinate": [
+        132.4570687575232,
+        33.40366946318626
+      ],
+      "sourceAlongMetres": 2710.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        483.4303339794278,
+        327.2951414063573
+      ],
+      "coordinate": [
+        132.45721380327853,
+        33.403428687548534
+      ],
+      "sourceAlongMetres": 2740.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        496.9495782405138,
+        354.1776833552867
+      ],
+      "coordinate": [
+        132.45735884903388,
+        33.40318791124355
+      ],
+      "sourceAlongMetres": 2769.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        510.4996528811753,
+        381.04464735649526
+      ],
+      "coordinate": [
+        132.4575042255633,
+        33.402947273797416
+      ],
+      "sourceAlongMetres": 2800.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        524.1207729168236,
+        407.8757136054337
+      ],
+      "coordinate": [
+        132.4576503643271,
+        33.402706957209006
+      ],
+      "sourceAlongMetres": 2830.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        537.7418929561973,
+        434.7067798525095
+      ],
+      "coordinate": [
+        132.45779650309095,
+        33.40246663995591
+      ],
+      "sourceAlongMetres": 2860.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        551.245316427201,
+        461.5961568169296
+      ],
+      "coordinate": [
+        132.45794137910758,
+        33.40222579976556
+      ],
+      "sourceAlongMetres": 2889.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        564.591278064996,
+        488.5632834509015
+      ],
+      "coordinate": [
+        132.45808456574207,
+        33.401984262523946
+      ],
+      "sourceAlongMetres": 2920.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000008/view.json",
+      "pixel": [
+        578.2572074495256,
+        515.3715545851737
+      ],
+      "coordinate": [
+        132.45823118525806,
+        33.401744147442436
+      ],
+      "sourceAlongMetres": 2950.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        433.5557269267738,
+        228.46962118148804
+      ],
+      "coordinate": [
+        132.458377804774,
+        33.4015040316974
+      ],
+      "sourceAlongMetres": 2979.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        447.2216563075781,
+        255.27789231576025
+      ],
+      "coordinate": [
+        132.45852442428992,
+        33.40126391528877
+      ],
+      "sourceAlongMetres": 3010.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        460.8875856921077,
+        282.0861634481698
+      ],
+      "coordinate": [
+        132.4586710438059,
+        33.401023798216606
+      ],
+      "sourceAlongMetres": 3040.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        474.4143426530063,
+        308.96476228162646
+      ],
+      "coordinate": [
+        132.45881617016374,
+        33.40078305056516
+      ],
+      "sourceAlongMetres": 3070.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        487.89074237272143,
+        335.8688080292195
+      ],
+      "coordinate": [
+        132.458960756247,
+        33.400542074321464
+      ],
+      "sourceAlongMetres": 3099.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        501.36714209243655,
+        362.7728537786752
+      ],
+      "coordinate": [
+        132.4591053423303,
+        33.400301097409454
+      ],
+      "sourceAlongMetres": 3130.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        514.8435418121517,
+        389.67689952626824
+      ],
+      "coordinate": [
+        132.45924992841356,
+        33.400060119829156
+      ],
+      "sourceAlongMetres": 3160.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        528.5709844343364,
+        416.4526694510132
+      ],
+      "coordinate": [
+        132.45939720789494,
+        33.39982029054256
+      ],
+      "sourceAlongMetres": 3189.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        542.4768644310534,
+        443.1372629161924
+      ],
+      "coordinate": [
+        132.45954640180173,
+        33.39958127726058
+      ],
+      "sourceAlongMetres": 3220.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        558.156364123062,
+        468.8975873803524
+      ],
+      "coordinate": [
+        132.4597146245834,
+        33.39935054201084
+      ],
+      "sourceAlongMetres": 3250.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        572.5056490463958,
+        495.3511135966737
+      ],
+      "coordinate": [
+        132.45986857570892,
+        33.399113597114734
+      ],
+      "sourceAlongMetres": 3280.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000009/view.json",
+      "pixel": [
+        588.1851487384043,
+        521.1114380608337
+      ],
+      "coordinate": [
+        132.4600367984906,
+        33.39888286062317
+      ],
+      "sourceAlongMetres": 3309.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        436.93867710489945,
+        237.66290095955816
+      ],
+      "coordinate": [
+        132.46019074961612,
+        33.3986459144518
+      ],
+      "sourceAlongMetres": 3340.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        451.22398178717225,
+        263.9685165900119
+      ],
+      "coordinate": [
+        132.46034401430808,
+        33.39841029248573
+      ],
+      "sourceAlongMetres": 3370.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        465.90279870918124,
+        290.23586058796724
+      ],
+      "coordinate": [
+        132.4605015009284,
+        33.398175012684916
+      ],
+      "sourceAlongMetres": 3399.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        480.5816156349155,
+        316.5032045877852
+      ],
+      "coordinate": [
+        132.4606589875487,
+        33.39793973224707
+      ],
+      "sourceAlongMetres": 3430.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        494.8239608656794,
+        343.0144593555935
+      ],
+      "coordinate": [
+        132.4608117913358,
+        33.39770226641892
+      ],
+      "sourceAlongMetres": 3460.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        509.06630609644327,
+        369.5257141234017
+      ],
+      "coordinate": [
+        132.4609645951229,
+        33.39746479994186
+      ],
+      "sourceAlongMetres": 3490.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        523.7451230221775,
+        395.7930581232197
+      ],
+      "coordinate": [
+        132.4611220817432,
+        33.39722951758114
+      ],
+      "sourceAlongMetres": 3519.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        536.9257625086882,
+        422.79447679884424
+      ],
+      "coordinate": [
+        132.46126349466346,
+        33.39698765928859
+      ],
+      "sourceAlongMetres": 3550.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        550.864204313606,
+        449.5369685869664
+      ],
+      "coordinate": [
+        132.46141303792052,
+        33.39674811960388
+      ],
+      "sourceAlongMetres": 3580.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        567.2990091666579,
+        474.73395331948996
+      ],
+      "coordinate": [
+        132.46158936424746,
+        33.39652242283701
+      ],
+      "sourceAlongMetres": 3610.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        584.1385320834816,
+        499.67130472138524
+      ],
+      "coordinate": [
+        132.4617700327281,
+        33.39629905110475
+      ],
+      "sourceAlongMetres": 3639.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000010/view.json",
+      "pixel": [
+        600.9780550003052,
+        524.6086561232805
+      ],
+      "coordinate": [
+        132.46195070120882,
+        33.39607567879837
+      ],
+      "sourceAlongMetres": 3670.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        405.7634227760136,
+        271.53240992873907
+      ],
+      "coordinate": [
+        132.4621500361452,
+        33.395864227670835
+      ],
+      "sourceAlongMetres": 3700.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        425.04689020795513,
+        294.6373641766914
+      ],
+      "coordinate": [
+        132.46235692530593,
+        33.39565726775071
+      ],
+      "sourceAlongMetres": 3729.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        444.3303576398967,
+        317.74231842650636
+      ],
+      "coordinate": [
+        132.4625638144667,
+        33.395450307337725
+      ],
+      "sourceAlongMetres": 3760.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        464.5967561178814,
+        340.1235456347542
+      ],
+      "coordinate": [
+        132.4627812493335,
+        33.3952498291704
+      ],
+      "sourceAlongMetres": 3790.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        486.0360901975046,
+        361.237426878147
+      ],
+      "coordinate": [
+        132.46301126843406,
+        33.39506070273578
+      ],
+      "sourceAlongMetres": 3820.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        508.87878069654107,
+        380.92632013745606
+      ],
+      "coordinate": [
+        132.4632563439156,
+        33.39488434018214
+      ],
+      "sourceAlongMetres": 3849.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        530.3181147798896,
+        402.04020138271153
+      ],
+      "coordinate": [
+        132.46348636301616,
+        33.39469521295215
+      ],
+      "sourceAlongMetres": 3880.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        553.3810759969056,
+        421.23269439674914
+      ],
+      "coordinate": [
+        132.46373380174612,
+        33.394523296167286
+      ],
+      "sourceAlongMetres": 3910.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        577.7754583321512,
+        438.8495935983956
+      ],
+      "coordinate": [
+        132.463995525075,
+        33.39436549246702
+      ],
+      "sourceAlongMetres": 3939.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        602.1698406673968,
+        456.4664928019047
+      ],
+      "coordinate": [
+        132.46425724840384,
+        33.39420768848021
+      ],
+      "sourceAlongMetres": 3970.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000011/view.json",
+      "pixel": [
+        627.9158951155841,
+        472.0315985362977
+      ],
+      "coordinate": [
+        132.4645334736012,
+        33.39406826326629
+      ],
+      "sourceAlongMetres": 4000.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        347.55161963403225,
+        323.7284823153168
+      ],
+      "coordinate": [
+        132.46481723223923,
+        33.39394076871797
+      ],
+      "sourceAlongMetres": 4030.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        375.11223424226046,
+        335.80546660348773
+      ],
+      "coordinate": [
+        132.46511292555505,
+        33.39383258821376
+      ],
+      "sourceAlongMetres": 4059.9999999999995,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        402.67437180122266,
+        348.0474835196932
+      ],
+      "coordinate": [
+        132.4654086352104,
+        33.393722929279825
+      ],
+      "sourceAlongMetres": 4090.0000000000005,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        430.5963716729064,
+        359.3081651242151
+      ],
+      "coordinate": [
+        132.46570820576943,
+        33.39362206062035
+      ],
+      "sourceAlongMetres": 4119.999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        458.8544446732419,
+        369.9191150178954
+      ],
+      "coordinate": [
+        132.46601138200202,
+        33.39352701188924
+      ],
+      "sourceAlongMetres": 4150.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        487.39162760409886,
+        379.46218671815546
+      ],
+      "coordinate": [
+        132.46631755275928,
+        33.393441528703754
+      ],
+      "sourceAlongMetres": 4180.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        515.9288105349558,
+        389.00525841655286
+      ],
+      "coordinate": [
+        132.46662372351653,
+        33.39335604543421
+      ],
+      "sourceAlongMetres": 4210.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        544.4659934620875,
+        398.5483301168129
+      ],
+      "coordinate": [
+        132.4669298942738,
+        33.39327056208057
+      ],
+      "sourceAlongMetres": 4240.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        573.1617489781395,
+        407.6172133134259
+      ],
+      "coordinate": [
+        132.46723776633036,
+        33.393189326256596
+      ],
+      "sourceAlongMetres": 4270.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        601.6989319089964,
+        417.1602850118233
+      ],
+      "coordinate": [
+        132.4675439370876,
+        33.393103842739
+      ],
+      "sourceAlongMetres": 4300.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        629.9189696694632,
+        427.6517337156522
+      ],
+      "coordinate": [
+        132.4678467052463,
+        33.39300986389298
+      ],
+      "sourceAlongMetres": 4329.999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000012/view.json",
+      "pixel": [
+        658.4561526003201,
+        437.1948054140496
+      ],
+      "coordinate": [
+        132.46815287600356,
+        33.39292438019887
+      ],
+      "sourceAlongMetres": 4360.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        353.5729162359856,
+        335.81129742360906
+      ],
+      "coordinate": [
+        132.46845734546156,
+        33.392834648789844
+      ],
+      "sourceAlongMetres": 4390.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        382.11009916311724,
+        345.35436912200646
+      ],
+      "coordinate": [
+        132.46876351621881,
+        33.39274916492342
+      ],
+      "sourceAlongMetres": 4420.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        410.6472820939742,
+        354.89744082040386
+      ],
+      "coordinate": [
+        132.46906968697607,
+        33.392663680972916
+      ],
+      "sourceAlongMetres": 4450.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        439.1844650248311,
+        364.4405125206639
+      ],
+      "coordinate": [
+        132.46937585773333,
+        33.39257819693834
+      ],
+      "sourceAlongMetres": 4480.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        467.72896780620067,
+        373.9703574559365
+      ],
+      "coordinate": [
+        132.46968210702408,
+        33.39249283130134
+      ],
+      "sourceAlongMetres": 4510.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        496.27198092068284,
+        383.4959770894323
+      ],
+      "coordinate": [
+        132.4699883403324,
+        33.392407503429595
+      ],
+      "sourceAlongMetres": 4539.999999999999,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        524.9732766278644,
+        392.5473113438067
+      ],
+      "coordinate": [
+        132.47029627182877,
+        33.39232642399776
+      ],
+      "sourceAlongMetres": 4570.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        553.5162897423465,
+        402.0729309773025
+      ],
+      "coordinate": [
+        132.4706025051371,
+        33.39224109596265
+      ],
+      "sourceAlongMetres": 4600.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        582.2175854495282,
+        411.1242652316769
+      ],
+      "coordinate": [
+        132.47091043663346,
+        33.392160016375605
+      ],
+      "sourceAlongMetres": 4630.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002791/000013/view.json",
+      "pixel": [
+        611.0771637494092,
+        419.7013141069299
+      ],
+      "coordinate": [
+        132.4712200663178,
+        33.39208318524848
+      ],
+      "sourceAlongMetres": 4660.0,
+      "hitSamples": 7,
+      "basis": "Alreadyvisuallyidentifiedunique labelledblueYosan railway in15actualraws; narrow normalrefinement only, notbranchidentification. Greyroads/cyanGotanogawa/Fukegawaexcluded."
+    }
+  ],
+  "preciseTailControls": [
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        200,
+        239
+      ],
+      "coordinate": [
+        132.47144835680007,
+        33.39198414286345
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        250,
+        255
+      ],
+      "coordinate": [
+        132.47171657770156,
+        33.39191248065757
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        300,
+        271
+      ],
+      "coordinate": [
+        132.47198479860305,
+        33.3918408183926
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        350,
+        287
+      ],
+      "coordinate": [
+        132.47225301950454,
+        33.39176915606856
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        400,
+        303
+      ],
+      "coordinate": [
+        132.47252124040602,
+        33.391697493685434
+      ]
+    },
+    {
+      "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+      "pixel": [
+        450,
+        319
+      ],
+      "coordinate": [
+        132.4727894613075,
+        33.39162583124323
+      ]
+    }
+  ],
+  "warnings": [
+    "Futaiwa exactlongownface move requires complete79; currentcoordinatedscope minimum33.",
+    "Ownbluecartography only, includingstraighttunnelcartography; no undergroundsurveyclaim.",
+    "Futaiwa westshortshapeunidentified; notaveraged. Adjacentrailgroup/railpick±3px warning.",
+    "Fullnative/Maincandidateacceptance pending."
+  ],
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true,
+  "nativeAcceptance": false,
+  "turnsOver30": []
+}

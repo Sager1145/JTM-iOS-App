@@ -1,0 +1,11 @@
+# Wakai and Kita-Uwajima station adjudication
+
+Actual Main Wakai ON/OFF originals show a narrow elongated light platform, approximately(922,345)→(823,512), excluding the attached small building bulb. Its long midpoint projects normally onto the black sleeper rail near(849,439), while the product dot is near(828,440): approximately18–20px transverse separation, roughly5m using the actual ruler. Current consumed Main data anchors Yodo at slot[0,0] and Nakamura at[0,80], both raw[133.105835,33.188045], with lane rows−0.5/+0.5. The ordinary2.7point spacing, weight≤1 and laneLOD≤1 give a half-lane offset≤1.35points. The gap is therefore not the intentional lane presentation seen at Sako. The Primary z17 frame is too coarse to freeze a precise replacement alias; its inverse-projected estimate is recorded only as provisional, not an accepted coordinate.
+
+Any Wakai display alias/common-stem correction requires Yodo#0 and Nakamura#0窪川→若井/#1若井→荷稲, sharing the alias byte-for-byte. Outer guards are窪川009500,荷稲009571 and家地川009558. Physical IDs/km remain unchanged. The61literal common supports do not prove a physical turnout; do not move only Yodo’s first point or invent a divergent throat.
+
+Actual Main Kita-Uwajima ON/OFF originals show the own narrow shared platform approximately(850,627)→(878,805), midpoint~(864,716), excluding the separate attached east building near(893,696). Dot~(827,439) is approximately277px north in chainage, roughly65–70m; lane offsets cannot explain it. Third original#18view18 corroborates the south narrow strip around(526,430)→(531,476), with own rail normal~(521,453). Exact camera inverse gives provisional[132.5698115595245,33.23862082757472], coarse±3px and not frozen as final alias.
+
+Kita correction requires Yodo#18務田→北宇和島 and Yosan#87高光→北宇和島/#88北宇和島→宇和島. Actual consumed slots areYodo[0,1517] andYosan[0,4104], both at original[132.569715,33.23924]. Outer guards are務田009423,高光009452 and宇和島009486, subject to their actual interval checks. The passenger line continues south: no terminal cap or topology rewrite is authorized by these observations.
+
+See JSON for exact actual Main native rows and original camera provenance. No source/UI/build/test changes; no formal acceptance. Main frame supports are approximate pixel picks, and coarse Inspector views do not provide surveyed precision.

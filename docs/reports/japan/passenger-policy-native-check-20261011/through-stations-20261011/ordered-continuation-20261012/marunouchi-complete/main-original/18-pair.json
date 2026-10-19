@@ -1,0 +1,75 @@
+{
+  "caseIndex": 18,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 18,
+  "source": {
+    "caseIndex": 18,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 18,
+    "fromStationID": "003662",
+    "toStationID": "003643",
+    "camera": [
+      35.695800000000006,
+      139.6873825,
+      0.015978178899441923
+    ],
+    "effectiveCoordinates": [
+      [
+        139.69256,
+        35.694515
+      ],
+      [
+        139.69192,
+        35.69475
+      ],
+      [
+        139.69161,
+        35.69485
+      ],
+      [
+        139.68905,
+        35.6956
+      ],
+      [
+        139.68782,
+        35.69598
+      ],
+      [
+        139.68666,
+        35.69637
+      ],
+      [
+        139.68661,
+        35.69639
+      ],
+      [
+        139.68617,
+        35.69647
+      ],
+      [
+        139.68508,
+        35.6966
+      ],
+      [
+        139.68361,
+        35.69686
+      ],
+      [
+        139.68291,
+        35.69699
+      ],
+      [
+        139.68284,
+        35.69701
+      ],
+      [
+        139.682205,
+        35.697085
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "71 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:13;overlays:11;rides:0;budgetDrops:0;vertices:4563;camera:15.83;lod:14.68;backbones:0;networkStations:31;distance:3506.7;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.695800;centerLon:139.687383;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:4413.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:22;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.695800;centerLon:139.687383;distance:3506.7;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

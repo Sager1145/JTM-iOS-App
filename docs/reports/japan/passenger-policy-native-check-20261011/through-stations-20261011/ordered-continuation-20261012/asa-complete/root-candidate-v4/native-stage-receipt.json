@@ -1,0 +1,19 @@
+{
+  "lineID": "jp-土佐くろしお鉄道-阿佐線",
+  "status": "candidate-only",
+  "physicalUnchanged": true,
+  "intervalCount": 20,
+  "aliasCount": 21,
+  "nativeRows": [
+    [
+      "jp-土佐くろしお鉄道-阿佐線",
+      0,
+      -1,
+      -1,
+      940,
+      42666.8
+    ]
+  ],
+  "sourceProductionModified": false,
+  "stage": "/Users/sager/Documents/GitHub/JTM-iOS-App/.build/asa-native-candidate-v4/rail"
+}

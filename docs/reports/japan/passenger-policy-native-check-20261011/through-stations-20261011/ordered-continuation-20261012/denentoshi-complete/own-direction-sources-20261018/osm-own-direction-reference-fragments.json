@@ -1,0 +1,267 @@
+{
+  "attribution": "© OpenStreetMap contributors, ODbL 1.0; source ancestryKSJ2 retained",
+  "sourceAPI": "https://api.openstreetmap.org/api/0.6/map?bbox=139.651,35.629,139.657,35.632",
+  "relationIdentity": [
+    {
+      "id": "404834",
+      "version": "98",
+      "timestamp": "2025-07-27T15:27:53Z",
+      "tags": {
+        "alt_name:en": "Tōkyū Den-en-toshi Line",
+        "colour": "#20a288",
+        "duration": "60",
+        "from": "中央林間",
+        "name": "東急田園都市線 (中央林間 -> 渋谷)",
+        "name:en": "Tokyu-Denentoshi Line (Chuo-Rinkan -> Shibuya)",
+        "name:es": "Línea Tokyu-Denentoshi (Chuo-Rinkan -> Shibuya)",
+        "name:ja": "東急田園都市線 (中央林間 -> 渋谷)",
+        "network": "東急電鉄",
+        "network:en": "Tokyu Railways",
+        "network:ja": "東急電鉄",
+        "network:metro": "田園都市線",
+        "network:wikidata": "Q80229029",
+        "note": "Commuter rail",
+        "opening_hours": "Mo-Su 05:00-00:30",
+        "operator": "東急電鉄",
+        "operator:en": "Tokyu Railways",
+        "operator:ja": "東急電鉄",
+        "operator:wikidata": "Q80229029",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "DT",
+        "route": "train",
+        "to": "渋谷",
+        "type": "route",
+        "wikidata": "Q1190086",
+        "wikipedia": "ja:東急田園都市線"
+      },
+      "localRailwayMembers": [
+        {
+          "type": "way",
+          "ref": "671715587",
+          "role": ""
+        }
+      ]
+    },
+    {
+      "id": "9341815",
+      "version": "65",
+      "timestamp": "2026-10-06T08:49:59Z",
+      "tags": {
+        "alt_name:en": "Tōkyū Den-en-toshi Line",
+        "colour": "#20a288",
+        "duration": "60",
+        "from": "渋谷",
+        "name": "東急田園都市線 (渋谷 -> 中央林間)",
+        "name:en": "Tokyu-Denentoshi Line (Shibuya -> Chuo-Rinkan)",
+        "name:es": "Línea Tokyu-Denentoshi (Shibuya -> Chuo-Rinkan)",
+        "name:ja": "東急田園都市線 (渋谷 -> 中央林間)",
+        "network": "東急電鉄",
+        "network:en": "Tokyu Railways",
+        "network:ja": "東急電鉄",
+        "network:metro": "田園都市線",
+        "network:wikidata": "Q80229029",
+        "note": "Commuter rail",
+        "opening_hours": "Mo-Su 05:00-00:30",
+        "operator": "東急電鉄",
+        "operator:en": "Tokyu Railways",
+        "operator:ja": "東急電鉄",
+        "operator:wikidata": "Q80229029",
+        "passenger": "suburban",
+        "public_transport:version": "2",
+        "ref": "DT",
+        "route": "train",
+        "to": "中央林間",
+        "type": "route",
+        "wikidata": "Q1190086",
+        "wikipedia": "ja:東急田園都市線"
+      },
+      "localRailwayMembers": [
+        {
+          "type": "way",
+          "ref": "169057662",
+          "role": ""
+        }
+      ]
+    }
+  ],
+  "fragments": [
+    {
+      "wayID": "169057662",
+      "version": "25",
+      "tags": {
+        "colour": "#20a288",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-2",
+        "name": "東急田園都市線",
+        "name:en": "Tokyu Den-en-toshi Line",
+        "name:es": "Línea Tokyu Den-en-toshi",
+        "name:ja": "東急田園都市線",
+        "name:ja_rm": "Tōkyū Den-en Toshi Sen",
+        "name:ko": "도큐 덴엔토시선",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "oneway": "yes",
+        "operator": "東急電鉄",
+        "operator:ja": "東急電鉄",
+        "railway": "rail",
+        "railway:atc": "P",
+        "ref": "DT",
+        "source": "KSJ2",
+        "tracks": "2",
+        "tunnel": "yes",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinateOrder": "east-to-west, Komazawa-daigaku toward Sakura-shimmachi; reversed from OSM native order for671715587",
+      "directionRelationIDs": [
+        "9341815"
+      ],
+      "nodeIDs": [
+        "266083790",
+        "266083777",
+        "6759205835",
+        "266083778",
+        "6759205831",
+        "266083775",
+        "266083776",
+        "7880412100",
+        "266083819",
+        "266083822"
+      ],
+      "coordinates": [
+        [
+          139.6561896,
+          35.6309022
+        ],
+        [
+          139.6543078,
+          35.630447
+        ],
+        [
+          139.653931,
+          35.6304014
+        ],
+        [
+          139.653755,
+          35.6303862
+        ],
+        [
+          139.6534793,
+          35.6303874
+        ],
+        [
+          139.6533169,
+          35.6303966
+        ],
+        [
+          139.653081,
+          35.630412
+        ],
+        [
+          139.6526107,
+          35.6304945
+        ],
+        [
+          139.6521106,
+          35.6306114
+        ],
+        [
+          139.6513427,
+          35.6308359
+        ]
+      ],
+      "maxLocalPolylineDeflectionDegrees": 8.104833981052234,
+      "status": "exact own OSM cartographic reference fragment only; not integrated candidate; no physical-survey claim"
+    },
+    {
+      "wayID": "671715587",
+      "version": "21",
+      "tags": {
+        "colour": "#20a288",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "-3",
+        "name": "東急田園都市線",
+        "name:en": "Tokyu Den-en-toshi Line",
+        "name:es": "Línea Tokyu Den-en-toshi",
+        "name:ja": "東急田園都市線",
+        "name:ja_rm": "Tōkyū Den-en Toshi Sen",
+        "name:ko": "도큐 덴엔토시선",
+        "oneway": "yes",
+        "operator": "東急電鉄",
+        "operator:ja": "東急電鉄",
+        "railway": "rail",
+        "railway:atc": "P",
+        "ref": "DT",
+        "source": "KSJ2",
+        "tracks": "2",
+        "tunnel": "yes",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinateOrder": "east-to-west, Komazawa-daigaku toward Sakura-shimmachi; reversed from OSM native order for671715587",
+      "directionRelationIDs": [
+        "404834"
+      ],
+      "nodeIDs": [
+        "7880412025",
+        "7880412024",
+        "7880412023",
+        "7880412022",
+        "7880412021",
+        "7880412020",
+        "7880412019",
+        "7880412018",
+        "7880412017",
+        "7880412016"
+      ],
+      "coordinates": [
+        [
+          139.6561621,
+          35.6310491
+        ],
+        [
+          139.6546579,
+          35.6306683
+        ],
+        [
+          139.6538336,
+          35.63049
+        ],
+        [
+          139.6536025,
+          35.6304697
+        ],
+        [
+          139.6534586,
+          35.6304601
+        ],
+        [
+          139.6533248,
+          35.6304627
+        ],
+        [
+          139.6531013,
+          35.6304694
+        ],
+        [
+          139.6526377,
+          35.630512
+        ],
+        [
+          139.6521481,
+          35.6306336
+        ],
+        [
+          139.6513827,
+          35.6308636
+        ]
+      ],
+      "maxLocalPolylineDeflectionDegrees": 10.541467552098355,
+      "status": "exact own OSM cartographic reference fragment only; not integrated candidate; no physical-survey claim"
+    }
+  ]
+}

@@ -1,0 +1,637 @@
+{
+  "format": "jtm-viewed-native-originals-v1",
+  "reviewedAt": "2026-10-18",
+  "scope": "Missing own intervals0,2,6 only; jp-えちぜん鉄道-勝山永平寺線",
+  "requestPath": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/request.json",
+  "captureIndexPath": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/capture-index.json",
+  "resultPath": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/result.json",
+  "processID": 61534,
+  "invocationID": "31E8BB23-C9E3-4665-9797-966DFFB94E09",
+  "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "captureCounts": {
+    "captured": 11,
+    "failed": 0,
+    "pending": 0
+  },
+  "viewedPairCount": 11,
+  "viewedOriginalCount": 22,
+  "viewingMethod": "Every listed original basemap.png and smooth.png actually opened with view_image. No contact sheet or generated overlay.",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromName": "福井",
+      "fromStationID": "002688",
+      "toName": "新福井",
+      "toStationID": "002685",
+      "display": [
+        {
+          "displayVertexIndex": 0,
+          "longitude": 136.224096,
+          "latitude": 36.062333
+        },
+        {
+          "displayVertexIndex": 1,
+          "longitude": 136.22436696365423,
+          "latitude": 36.06274320893385
+        },
+        {
+          "displayVertexIndex": 2,
+          "longitude": 136.22454542322964,
+          "latitude": 36.063020416141114
+        },
+        {
+          "displayVertexIndex": 3,
+          "longitude": 136.22488949329124,
+          "latitude": 36.06346585124146
+        },
+        {
+          "displayVertexIndex": 4,
+          "longitude": 136.22512030100881,
+          "latitude": 36.06370593885703
+        },
+        {
+          "displayVertexIndex": 5,
+          "longitude": 136.22542701353234,
+          "latitude": 36.06397339027393
+        },
+        {
+          "displayVertexIndex": 6,
+          "longitude": 136.22573919881654,
+          "latitude": 36.06422133011097
+        },
+        {
+          "displayVertexIndex": 7,
+          "longitude": 136.22617464018072,
+          "latitude": 36.064502106509565
+        },
+        {
+          "displayVertexIndex": 8,
+          "longitude": 136.2265967000734,
+          "latitude": 36.06474659985315
+        },
+        {
+          "displayVertexIndex": 9,
+          "longitude": 136.226877,
+          "latitude": 36.064942
+        }
+      ]
+    },
+    {
+      "intervalIndex": 2,
+      "fromName": "福井口",
+      "fromStationID": "002677",
+      "toName": "越前開発",
+      "toStationID": "002667",
+      "display": [
+        {
+          "displayVertexIndex": 0,
+          "longitude": 136.232904,
+          "latitude": 36.070148
+        },
+        {
+          "displayVertexIndex": 1,
+          "longitude": 136.2329626872238,
+          "latitude": 36.070390509089634
+        },
+        {
+          "displayVertexIndex": 2,
+          "longitude": 136.23306083999034,
+          "latitude": 36.070684967389184
+        },
+        {
+          "displayVertexIndex": 3,
+          "longitude": 136.23312330084184,
+          "latitude": 36.070940759447296
+        },
+        {
+          "displayVertexIndex": 4,
+          "longitude": 136.2332036076507,
+          "latitude": 36.07131849888202
+        },
+        {
+          "displayVertexIndex": 5,
+          "longitude": 136.23333291747576,
+          "latitude": 36.07175939317665
+        },
+        {
+          "displayVertexIndex": 6,
+          "longitude": 136.23340370644064,
+          "latitude": 36.07196521655379
+        },
+        {
+          "displayVertexIndex": 7,
+          "longitude": 136.23358514034237,
+          "latitude": 36.072244803222134
+        },
+        {
+          "displayVertexIndex": 8,
+          "longitude": 136.23370708771915,
+          "latitude": 36.07240839116639
+        },
+        {
+          "displayVertexIndex": 9,
+          "longitude": 136.23396597307658,
+          "latitude": 36.072638722991826
+        },
+        {
+          "displayVertexIndex": 10,
+          "longitude": 136.23429719404885,
+          "latitude": 36.07284573609945
+        },
+        {
+          "displayVertexIndex": 11,
+          "longitude": 136.23468694976168,
+          "latitude": 36.073002780525826
+        },
+        {
+          "displayVertexIndex": 12,
+          "longitude": 136.23514463115487,
+          "latitude": 36.073103431726395
+        },
+        {
+          "displayVertexIndex": 13,
+          "longitude": 136.23553000000004,
+          "latitude": 36.07316000000003
+        },
+        {
+          "displayVertexIndex": 14,
+          "longitude": 136.23646094898402,
+          "latitude": 36.073302354666566
+        },
+        {
+          "displayVertexIndex": 15,
+          "longitude": 136.2369500000001,
+          "latitude": 36.07337000000001
+        },
+        {
+          "displayVertexIndex": 16,
+          "longitude": 136.23743000000002,
+          "latitude": 36.0734700000001
+        },
+        {
+          "displayVertexIndex": 17,
+          "longitude": 136.23783000000003,
+          "latitude": 36.07357000000002
+        },
+        {
+          "displayVertexIndex": 18,
+          "longitude": 136.23827000000006,
+          "latitude": 36.073730000000126
+        },
+        {
+          "displayVertexIndex": 19,
+          "longitude": 136.23876000000007,
+          "latitude": 36.073980000000006
+        },
+        {
+          "displayVertexIndex": 20,
+          "longitude": 136.23932000000002,
+          "latitude": 36.07427000000007
+        },
+        {
+          "displayVertexIndex": 21,
+          "longitude": 136.24029000000007,
+          "latitude": 36.074790000000064
+        },
+        {
+          "displayVertexIndex": 22,
+          "longitude": 136.2409600000001,
+          "latitude": 36.07514000000009
+        },
+        {
+          "displayVertexIndex": 23,
+          "longitude": 136.24128,
+          "latitude": 36.075305
+        }
+      ]
+    },
+    {
+      "intervalIndex": 6,
+      "fromName": "東藤島",
+      "fromStationID": "002649",
+      "toName": "越前島橋",
+      "toStationID": "002642",
+      "display": [
+        {
+          "displayVertexIndex": 0,
+          "longitude": 136.269855,
+          "latitude": 36.08663
+        },
+        {
+          "displayVertexIndex": 1,
+          "longitude": 136.27019,
+          "latitude": 36.08679
+        },
+        {
+          "displayVertexIndex": 2,
+          "longitude": 136.27031,
+          "latitude": 36.08684
+        },
+        {
+          "displayVertexIndex": 3,
+          "longitude": 136.27101,
+          "latitude": 36.08722
+        },
+        {
+          "displayVertexIndex": 4,
+          "longitude": 136.27161,
+          "latitude": 36.08756
+        },
+        {
+          "displayVertexIndex": 5,
+          "longitude": 136.27202,
+          "latitude": 36.08785
+        },
+        {
+          "displayVertexIndex": 6,
+          "longitude": 136.27277,
+          "latitude": 36.08837
+        },
+        {
+          "displayVertexIndex": 7,
+          "longitude": 136.2733,
+          "latitude": 36.08874
+        },
+        {
+          "displayVertexIndex": 8,
+          "longitude": 136.27404,
+          "latitude": 36.08919
+        },
+        {
+          "displayVertexIndex": 9,
+          "longitude": 136.27444,
+          "latitude": 36.08942
+        },
+        {
+          "displayVertexIndex": 10,
+          "longitude": 136.27487,
+          "latitude": 36.08961
+        },
+        {
+          "displayVertexIndex": 11,
+          "longitude": 136.2754,
+          "latitude": 36.08978
+        },
+        {
+          "displayVertexIndex": 12,
+          "longitude": 136.27591,
+          "latitude": 36.08989
+        },
+        {
+          "displayVertexIndex": 13,
+          "longitude": 136.27684,
+          "latitude": 36.09004
+        },
+        {
+          "displayVertexIndex": 14,
+          "longitude": 136.277265,
+          "latitude": 36.09012
+        }
+      ]
+    }
+  ],
+  "verdict": "No concrete acute/right-angle/wrong-branch defect in reviewed0/2/6; interval6 northward curve/own-platform offset remains a source-review lead, not whole-line acceptance.",
+  "views": [
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000000",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#0",
+      "latitude": 36.062333,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.224096,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#0#point-0",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000000/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000000/smooth.png"
+        }
+      ],
+      "observation": "Interval0 point0 Fukui: continuous own eastern departure alongside Hokuriku; no switch to west-side street tram. Blue station fill does not identify exact own platform face/cap."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000001",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#0",
+      "latitude": 36.06471889100082,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.22654886703768,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#0#point-1",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000001/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000001/smooth.png"
+        }
+      ],
+      "observation": "Interval0 point1: own northeast-going approach remains east of neighboring Hokuriku symbol with a gentle genuine bend; no acute false join."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000002",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#0",
+      "latitude": 36.064942,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.226877,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#0#point-2",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000002/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000000/000002/smooth.png"
+        }
+      ],
+      "observation": "Interval0 point2 Shin-Fukui: continuous own corridor and endpoint, no hook; broad blue rail/station symbology leaves exact own platform unresolved."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000000",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#2",
+      "latitude": 36.070148,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.232904,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#2#point-0",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000000/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000000/smooth.png"
+        }
+      ],
+      "observation": "Interval2 point0 Fukui-guchi: own branch turns east while Mikuni continues north/northwest; broad genuine right-hand bend follows own symbol, no wrong branch."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000001",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#2",
+      "latitude": 36.07290306875379,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.23443948272953,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#2#point-1",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000001/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000001/smooth.png"
+        }
+      ],
+      "observation": "Interval2 point1: large own eastward curve and shallow east-northeast countercurve remain continuous; Mikuni yard/northwest corridor is separate."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000002",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#2",
+      "latitude": 36.07370058663944,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.23818911279213,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#2#point-2",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000002/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000002/smooth.png"
+        }
+      ],
+      "observation": "Interval2 point2: own east-northeast reach toward Echizen-Kaihatsu continuous across Higashi Kanjo Route; no false sharp elbow or nearest-neighbor blending."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000003",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#2",
+      "latitude": 36.075305,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.24128,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#2#point-3",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000003/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000001/000003/smooth.png"
+        }
+      ],
+      "observation": "Interval2 point3 Echizen-Kaihatsu: own station approach and endpoint continuous; genuine further-east bend retained. Exact platform cap/face not proved."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000000",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#6",
+      "latitude": 36.08663,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.269855,
+      "pointOrdinal": 0,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#6#point-0",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000000/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000000/smooth.png"
+        }
+      ],
+      "observation": "Interval6 point0 Higashi-Fujishima: continuous genuine northeast bend; red departs somewhat north of blue fine railway symbol east of station, visible lead not automatic repair."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000001",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#6",
+      "latitude": 36.08850824813023,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.27296803013044,
+      "pointOrdinal": 1,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#6#point-1",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000001/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000001/smooth.png"
+        }
+      ],
+      "observation": "Interval6 point1: red north-side curve differs visibly from blue own railway glyph around decoded5..12; no acute/right-angle hook. Own corridor/source evidence needed before repair."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000002",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#6",
+      "latitude": 36.089961367428316,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.27635247205714,
+      "pointOrdinal": 2,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#6#point-2",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000002/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000002/smooth.png"
+        }
+      ],
+      "observation": "Interval6 point2: same northward curve/endpoint difference toward Echizen-Shimabashi, remaining across canal/expressway context; retain true curve, do not snap to canals or nearest line."
+    },
+    {
+      "directory": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000003",
+      "itemID": "jp-えちぜん鉄道-勝山永平寺線#6",
+      "latitude": 36.09012,
+      "lineDependency": "158b192a6f815be018d071a2cc21a81fc3a2b7a43c57202dab3ddbd66c93b1c2",
+      "longitude": 136.277265,
+      "pointOrdinal": 3,
+      "receiptFiles": [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency": "Apple-only",
+      "status": "captured",
+      "viewpointID": "jp-えちぜん鉄道-勝山永平寺線#6#point-3",
+      "actuallyViewed": [
+        {
+          "mode": "basemap",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000003/basemap.png"
+        },
+        {
+          "mode": "smooth",
+          "path": "/private/tmp/jtm-katsuyama-eiheiji-missing-20261018/alignment/captures/000002/000003/smooth.png"
+        }
+      ],
+      "observation": "Interval6 point3 Echizen-Shimabashi: unchanged own endpoint appears north of fine blue rail symbol within broad station fill; exact own platform centre unresolved."
+    }
+  ]
+}

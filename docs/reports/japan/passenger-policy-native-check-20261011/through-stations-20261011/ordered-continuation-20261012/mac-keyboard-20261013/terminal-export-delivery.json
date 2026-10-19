@@ -1,0 +1,114 @@
+{
+  "status": "built-delivered; actualterminalshortcuttestpending",
+  "buildLog": "/private/tmp/jtm-tsushima-terminal-export-build.log",
+  "apps": [
+    {
+      "app": "/private/tmp/jtm-audit-fixed-alignment-products/RailAlignmentInspector.app",
+      "strictDeepSignature": "PASS",
+      "resourceCopy": "none; existing accepted rail resources preserved",
+      "codeFiles": [
+        "__preview.dylib",
+        "RailAlignmentInspector.debug.dylib",
+        "RailAlignmentInspector"
+      ]
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app",
+      "strictDeepSignature": "PASS",
+      "resourceCopy": "none; existing accepted rail resources preserved",
+      "codeFiles": [
+        "__preview.dylib",
+        "RailAlignmentInspector.debug.dylib",
+        "RailAlignmentInspector"
+      ]
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Hakone Inspector.app",
+      "strictDeepSignature": "PASS",
+      "resourceCopy": "none; existing accepted rail resources preserved",
+      "codeFiles": [
+        "__preview.dylib",
+        "RailAlignmentInspector.debug.dylib",
+        "RailAlignmentInspector"
+      ]
+    }
+  ],
+  "runtimeShortcut": "PASS: true terminal station Alt+Command+S in all three apps",
+  "runtimeReceipts": [
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "stationID": "005420",
+      "mode": "compare",
+      "timestamp": "2026-10-13T22:45:46Z",
+      "app": "primary",
+      "intervalInputPresent": false,
+      "itemID": null,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.17803,
+        "longitude": 136.7310700000001,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48644217515966953,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 236169805.34671652,
+        "rectY": 106163160.80846646,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      }
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "stationID": "005420",
+      "mode": "compare",
+      "timestamp": "2026-10-13T22:51:09Z",
+      "app": "secondary",
+      "intervalInputPresent": false,
+      "itemID": null,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.17803,
+        "longitude": 136.7310700000001,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48644217515966953,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 236169805.34671652,
+        "rectY": 106163160.80846646,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      }
+    },
+    {
+      "lineID": "jp-名古屋鉄道-津島線",
+      "stationID": "005420",
+      "mode": "compare",
+      "timestamp": "2026-10-13T22:52:01Z",
+      "app": "third",
+      "intervalInputPresent": false,
+      "itemID": null,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.17803,
+        "longitude": 136.7310700000001,
+        "mapPointsPerPoint": 4,
+        "metresPerPoint": 0.48644217515966953,
+        "pitch": 0,
+        "rectHeight": 2616,
+        "rectWidth": 3996,
+        "rectX": 236169805.34671652,
+        "rectY": 106163160.80846646,
+        "viewportHeightPoints": 654,
+        "viewportWidthPoints": 999,
+        "zoom256": 18
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Parent adjudication: normalized station identity omission is merged into P03. Imported production PINS are an oracle-independence limitation, not a separate confirmed defect. Platform count misuse is P04.
+
+# Python Tests 1 — full iOS audit evidence
+
+Cumulative scope and parent-adjudicated priorities are in the [main audit](/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/integration/full-ios-code-audit-2026-10-11.md). Local reviewer IDs refer to this evidence file only. Source review does not establish an executed pass.
+
+## Confirmed finding
+
+### P2 — Correct the platform fixture count assertion before zip discards extra rows
+
+Anchor: [ios/tools/tests/test_hokkaido_ozora1_tokachi1_sapporo_platforms_20260930_source_pinned.py:38](/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/tests/test_hokkaido_ozora1_tokachi1_sapporo_platforms_20260930_source_pinned.py:38) (zip at40). `assertEqual(len(candidate["platforms"]), len(overrides), 2)` treats2 as the optional failure message, so it only compares the two lengths. If an extra third candidate platform and corresponding third override are introduced, both lengths3 satisfy the assertion; facts and EXPECTED still have2 entries, and zip checks just the first2. The materialized test checks only EXPECTED and can accept an unrelated valid third override. Thus the purported two-platform scope is not protected. Independent oracle is already EXPECTED (two literal source-pinned rows). Compare both lengths to2 or compare `(len(candidate["platforms"]), len(overrides), len(facts))` with `(2,2,2)` before zip. This conclusion is from language/API and code inspection, not a mutation execution.
+
+## Concrete test-quality gaps for parent adjudication
+
+### P2 candidate — Normalized stop assertions discard station identity
+
+Anchor: [ios/tools/tests/test_west_haruka45_52_thunderbird47_50_20260930_source_pinned.py:77](/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/tests/test_west_haruka45_52_thunderbird47_50_20260930_source_pinned.py:77) (analogous West/Hokkaido/Kyushu staged tests). Candidate stop names are pinned against printed literals at73, but the normalized row projection at77 contains only arrival/departure/platform. Changing one normalized interior stop station_id to another existing valid station while preserving clocks and source therefore leaves these assertions unchanged; the second test checks only call count and date scope. With route identities intentionally absent, an arbitrary interior station need not fail generic dataset validation. The independently reviewed stop-column oracle includes names, but that dimension is discarded at the normalized seam. Resolve normalized station IDs through reviewed identities and compare the full printed names/clock/platform chain, preferably pin exact reviewed IDs where interchange identity matters. Not a claim the current shipped station is wrong; a concrete regression gap in the stated source-pinning test.
+
+### P2 candidate — Source-pin tests use the normalizer under test as their oracle
+
+Anchor: [ios/tools/tests/test_sonic43_49_uwakai23_31_20260930_source_pinned.py:45](/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/tests/test_sonic43_49_uwakai23_31_20260930_source_pinned.py:45) and52. The test loops over `self.normalizer.PINS` and computes candidate hashes using `self.normalizer.stop_pin`; production normalizer uses precisely those same symbols at [ios/tools/normalize-reviewed-sonic43-49-uwakai23-31-20260930.py:75](/Users/sager/Documents/GitHub/JTM-iOS-App/ios/tools/normalize-reviewed-sonic43-49-uwakai23-31-20260930.py:75) and88 to authorize promotion. Changing an interior candidate clock and updating its production PINS digest, then regenerating normalized clocks, keeps this test green: it compares the same pin and algorithm and compares normalized clocks back to that changed candidate. Inventory checks do not constrain interior clocks. Similar imports occur in other Sonic/Uwakai batches and West route tests. An independent reviewed literal clock matrix or separately frozen evidence digest at the test seam is needed if the regression claim is that production source pins themselves have not drifted. If the intentional contract is only artifact consistency with editable production pins, document that narrower claim instead. This is code-inspected failure sensitivity; no mutations executed.
+
+No other concrete test-code defect was identified. Dates and after-midnight semantics, unknown clock sides/platforms, coupled range boundaries, planned versus actual equipment and absent physical route claims were reviewed across all variants. This read-only pass does not establish runtime pass, data truth, pixel, leak or performance correctness.

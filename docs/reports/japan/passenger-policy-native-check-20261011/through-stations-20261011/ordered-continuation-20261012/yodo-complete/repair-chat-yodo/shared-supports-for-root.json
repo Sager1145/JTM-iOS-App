@@ -1,0 +1,106 @@
+{
+  "status": "candidate-only-retain-Root-approved-aliases",
+  "wakai": {
+    "stationID": "009535",
+    "alias": [
+      133.10591991458483,
+      33.188092451537244
+    ],
+    "yodo0FirstThree": [
+      [
+        133.10591991458483,
+        33.188092451537244
+      ],
+      [
+        133.10585377546056,
+        33.1879866382192
+      ],
+      [
+        133.10568479629518,
+        33.18767687118462
+      ]
+    ],
+    "mustEqual": "Root Nakamura1 first3; Nakamura0 last coordinate equals alias",
+    "replacementProposed": false
+  },
+  "kita": {
+    "stationID": "009471",
+    "alias": [
+      132.56978339632985,
+      33.238689923845335
+    ],
+    "yodo18LastFour": [
+      [
+        132.5697391398811,
+        33.23902463617553
+      ],
+      [
+        132.5697552331352,
+        33.23891246730684
+      ],
+      [
+        132.56976864418027,
+        33.23880029829422
+      ],
+      [
+        132.56978339632985,
+        33.238689923845335
+      ]
+    ],
+    "mustEqual": "Root Yosan87 last4; Yosan88 first coordinate equals alias",
+    "replacementProposed": false,
+    "qualification": "Approved group normal retained. No individual Yodo/Yosan platform assignment inferred."
+  },
+  "muden": {
+    "stationID": "009423",
+    "alias": [
+      132.60047485675528,
+      33.28290206443831
+    ],
+    "incoming17LastFive": [
+      [
+        132.60141734491344,
+        33.283052833326956
+      ],
+      [
+        132.60114912401195,
+        33.28300798840522
+      ],
+      [
+        132.60088090311046,
+        33.28296090121259
+      ],
+      [
+        132.60061268220898,
+        33.28291829849262
+      ],
+      [
+        132.60047485675528,
+        33.28290206443831
+      ]
+    ],
+    "outgoing18FirstFive": [
+      [
+        132.60047485675528,
+        33.28290206443831
+      ],
+      [
+        132.60034446130754,
+        33.28288018025185
+      ],
+      [
+        132.60007624040605,
+        33.282844304245344
+      ],
+      [
+        132.59980801950456,
+        33.28280170146845
+      ],
+      [
+        132.59959388754038,
+        33.282759332672015
+      ]
+    ],
+    "warning": "Former18 acute corner addressed by inherited explicit forward sleeper supports; actual final native smoothing/lane remains Root review."
+  }
+}

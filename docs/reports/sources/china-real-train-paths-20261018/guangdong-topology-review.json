@@ -1,0 +1,1843 @@
+{
+  "schema": "cn-guangdong-topology-review/1",
+  "reviewedAt": "2026-10-19",
+  "scope": "G6045 2026-10-18; bounded original-source forensics, no production writes, no native execution or national generation",
+  "inputs": {
+    "database": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "sourceURL": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+    "package": "app/public/rail/cn-2025.json",
+    "sourceCompanion": "app/public/rail/cn-2025.sources.json",
+    "coverage": "app/public/rail/cn-coverage.json",
+    "cases": "docs/reports/sources/china-real-train-paths-20261018/inputs/cases.json",
+    "nativeResult": "railway-sources/local/china/comparisons/real-trains-20261018/native-source-anchor-final-session/result.json",
+    "nativeRouteReport": "railway-sources/local/china/comparisons/real-trains-20261018/native-source-anchor-final-session/route-report.json"
+  },
+  "observedFailure": {
+    "endpointOnly": "route unavailable",
+    "forcedKnownStops": {
+      "expectedSectionCount": 11,
+      "resolvedSectionCount": 4,
+      "availableSections": [
+        "XJA→NZQ",
+        "NZQ→IOQ",
+        "IOQ→IUQ",
+        "IUQ→IZQ"
+      ]
+    },
+    "publishedStopMembershipMissing": [
+      "PUQ",
+      "PVQ",
+      "PXQ",
+      "WRQ"
+    ]
+  },
+  "rootCause": {
+    "suppressedLine": "cn-osm-relation-8381929",
+    "relation": {
+      "relationId": 8381929,
+      "version": 75,
+      "tags": {
+        "from": "西丽",
+        "name": "深湛线",
+        "operator": "中国铁路",
+        "operator:en": "China Railway",
+        "operator:wikidata": "Q1073489",
+        "operator:zh": "中国铁路",
+        "owner": "江门至茂名（不含）属广东深茂铁路有限责任公司，茂名（不含）至湛江西属茂湛铁路有限责任公司",
+        "ref": "3071",
+        "route": "railway",
+        "to": "湛江西",
+        "type": "route"
+      }
+    },
+    "mechanism": "ChinaBuilder.build aggregates markers by official identity using a unique matching name. Two distant source markers named 阳江 map to WRQ. The >3000m ambiguity guard withholds every line containing the identity, including the otherwise continuous 深湛线. compile_route alone does not run this global guard and must not be treated as production eligibility.",
+    "conflictingMarkers": [
+      {
+        "nodeId": 5485730495,
+        "version": 4,
+        "coordinate": [
+          111.9859931,
+          21.8131032
+        ],
+        "tags": {
+          "name": "阳江",
+          "name:en": "Yangjiang",
+          "name:zh": "阳江",
+          "public_transport": "station",
+          "railway": "station"
+        }
+      },
+      {
+        "nodeId": 9192805744,
+        "version": 2,
+        "coordinate": [
+          111.8772515,
+          21.863512
+        ],
+        "tags": {
+          "electrified": "no",
+          "name": "阳江",
+          "railway": "station"
+        }
+      }
+    ],
+    "markerDistanceMeters": 12545.608258007202,
+    "otherMarkerRelation": {
+      "relationId": 13354149,
+      "version": 7,
+      "tags": {
+        "from": "阳春",
+        "name": "阳阳线",
+        "operator": "中国铁路",
+        "operator:en": "China Railway",
+        "operator:wikidata": "Q1073489",
+        "operator:zh": "中国铁路",
+        "owner": "广东阳江铁路有限公司",
+        "route": "railway",
+        "to": "阳江港",
+        "type": "route",
+        "wikidata": "Q18668968",
+        "wikipedia": "zh:阳阳铁路"
+      }
+    },
+    "otherMarkerAssessment": "Original 阳阳线 station marker has no explicit telecode or passenger marker tag. Non-electrified branch-way context differs from 深湛线. Absence of passenger tags does not establish freight-only status; preserve its original OSM identity and geometry.",
+    "officialRosterRecord": {
+      "name": "阳江",
+      "telecode": "WRQ",
+      "pinyin": "yangjiang",
+      "initials": "yj",
+      "rawFields": [
+        "yji",
+        "阳江",
+        "WRQ",
+        "yangjiang",
+        "yj",
+        "1501",
+        "1529",
+        "阳江",
+        "",
+        "",
+        ""
+      ],
+      "source": "12306-station_name.js"
+    },
+    "reviewedBindingProposal": {
+      "schema": "cn-reviewed-station-identity-bindings/1",
+      "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+      "bindings": [
+        {
+          "stationCode": "CN-12306-WRQ",
+          "groupId": "cn-official-12306-wrq",
+          "markerNodeId": 5485730495,
+          "markerVersion": 4,
+          "markerCoordinate": [
+            111.9859931,
+            21.8131032
+          ],
+          "ownerRelationId": 8381929,
+          "ownerRelationVersion": 75,
+          "membership": "explicit original relation node member",
+          "decision": "retain official identity on this reviewed marker only"
+        },
+        {
+          "markerNodeId": 9192805744,
+          "markerVersion": 2,
+          "markerCoordinate": [
+            111.8772515,
+            21.863512
+          ],
+          "ownerRelationId": 13354149,
+          "ownerRelationVersion": 7,
+          "decision": "retain cn-osm-node-9192805744 original identity; do not infer WRQ from name"
+        }
+      ],
+      "validation": "Pin source SHA, marker coordinates/version and exact owner-relation member/version; confirm official code exists and requested same-train passenger evidence includes WRQ on a continuous source-owned chain with PUQ/PVQ/PXQ/MDQ. Override inference before identity_markers is populated; retain the ambiguity guard for unreviewed cases. Source binding changes no graph edge and authorizes no cross-station identity merge.",
+      "passengerEvidence": {
+        "trainNumber": "G6045",
+        "trainNo": "6x000G604806",
+        "serviceDate": "2026-10-18",
+        "rawStops": "railway-sources/local/china/evidence/real-train-paths-20261018/highspeed-raw/stops-G6045.json",
+        "retainedRecord": "docs/reports/sources/china-real-train-paths-20261018/highspeed-sources.json",
+        "stationCodes": [
+          "IZQ",
+          "JOQ",
+          "PUQ",
+          "PVQ",
+          "PXQ",
+          "WRQ",
+          "MDQ",
+          "ZWQ"
+        ],
+        "limits": "Official record supports same-train ordered passenger stops; it does not choose a unique platform or create geometry.",
+        "urls": [
+          "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "scope": "Official G6045 2026-10-18 same-train Guangzhou South to Jiangmen passenger continuity supports this corridor, without assigning a unique intermediate track. Original way154395107 passenger_lines=2 and exact consecutive nodes supply geometry and local passenger eligibility."
+      },
+      "officialEvidence": [
+        {
+          "url": "https://www.yjlz.gov.cn/zhyw/content/post_14930.html",
+          "publisher": "Yangjiang Discipline Inspection Commission / Supervisory Commission",
+          "publishedAt": "2021-12-21",
+          "access": "Search indexed full content; direct fetch failed",
+          "supports": "Reports D9741 arriving at Yangjiang on the Jiangzhan railway on 2018-07-01; corroborates passenger corridor ownership."
+        },
+        {
+          "url": "https://www.12306.cn/mormhweb/zxdtzz/201806/t20180629_421954.html",
+          "publisher": "China Railway 12306",
+          "publishedAt": "2018-06-29",
+          "access": "Search indexed content; direct fetch cache miss",
+          "supports": "Announces passenger service on the Shenzhan railway Jiangmen to Zhanjiang West segment from 2018-07-01."
+        },
+        {
+          "url": "https://www.yangjiang.gov.cn/yj/ywdt/bmzx/content/post_981160.html",
+          "publisher": "Yangjiang Municipal Government",
+          "publishedAt": "2026-09-18",
+          "access": "Search indexed full content",
+          "supports": "Identifies current passenger service at Yangjiang on Jiangzhan railway with trains to Zhanjiang West and Guangzhou South."
+        }
+      ]
+    }
+  },
+  "isolatedSourceCompile": {
+    "method": "ChinaBuilder.compile_route for relation 8381929 only, followed by original-node path inspection; global identity guard explicitly not bypassed for production",
+    "candidateFile": "/private/tmp/cn-guangdong-repair/shenzhan-candidate-line.json",
+    "stationCount": 16,
+    "intervalCount": 15,
+    "originalSourceGraphNodeCount": 2693,
+    "originalSourceGraphComponents": 1,
+    "missingMemberWays": [
+      1193275975,
+      1244598621,
+      1093586127,
+      1093586125,
+      1093586123,
+      1193275976,
+      1244915801,
+      1540302295
+    ],
+    "missingMemberWayEffect": "The retained original graph still connects the 16 evidenced stations; missing ways are never inserted or inferred.",
+    "stations": [
+      {
+        "groupId": "cn-official-12306-joq",
+        "stationCode": "CN-12306-JOQ",
+        "markerNodeId": 2414867084,
+        "markerVersion": 13,
+        "markerCoordinate": [
+          113.0653353,
+          22.4910006
+        ],
+        "markerTags": {
+          "alt_name": "江门站;江门火车站;Jiangmen Railway Station",
+          "name": "江门",
+          "name:en": "Jiangmen",
+          "name:zh": "江门",
+          "name:zh-Hans": "江门",
+          "name:zh-Hant": "江門",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q17025373",
+          "wikipedia": "en:Jiangmen railway station"
+        },
+        "anchorNodeId": 11469965754,
+        "anchorVersion": 3,
+        "anchorCandidates": [
+          11469965754,
+          11597704831
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 2414867084,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-pqq",
+        "stationCode": "CN-12306-PQQ",
+        "markerNodeId": 7114221876,
+        "markerVersion": 2,
+        "markerCoordinate": [
+          112.9515121,
+          22.4283501
+        ],
+        "markerTags": {
+          "name": "双水镇",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes"
+        },
+        "anchorNodeId": 5486921033,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          5486921033,
+          5926619934
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 7114221876,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-puq",
+        "stationCode": "CN-12306-PUQ",
+        "markerNodeId": 5485730430,
+        "markerVersion": 3,
+        "markerCoordinate": [
+          112.8103423,
+          22.3021203
+        ],
+        "markerTags": {
+          "name": "台山",
+          "name:en": "Taishan",
+          "name:zh": "台山",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q53225818"
+        },
+        "anchorNodeId": 5485730433,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          5485730433,
+          5926620063
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 5485730430,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-pvq",
+        "stationCode": "CN-12306-PVQ",
+        "markerNodeId": 8020545908,
+        "markerVersion": 7,
+        "markerCoordinate": [
+          112.6706712,
+          22.3219819
+        ],
+        "markerTags": {
+          "name": "开平南",
+          "name:en": "Kaipingnan",
+          "name:zh": "开平南",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q54802425"
+        },
+        "anchorNodeId": 5485730499,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          5485730499,
+          8977226085
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8020545908,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-pxq",
+        "stationCode": "CN-12306-PXQ",
+        "markerNodeId": 5485730496,
+        "markerVersion": 3,
+        "markerCoordinate": [
+          112.3908341,
+          22.1881799
+        ],
+        "markerTags": {
+          "name": "恩平",
+          "name:en": "Enping",
+          "name:zh": "恩平",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q55346605"
+        },
+        "anchorNodeId": 13584639909,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          13584639908,
+          13584639909
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 5485730496,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-osm-node-9192805738",
+        "stationCode": "CN-OSM-N9192805738",
+        "markerNodeId": 9192805738,
+        "markerVersion": 3,
+        "markerCoordinate": [
+          112.2403918,
+          22.0860164
+        ],
+        "markerTags": {
+          "name": "大槐",
+          "name:en": "Dahuai",
+          "name:yue-Hans": "大槐",
+          "name:zh": "大槐",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes"
+        },
+        "anchorNodeId": 13994851558,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          13994851557,
+          13994851558
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 9192805738,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-wlq",
+        "stationCode": "CN-12306-WLQ",
+        "markerNodeId": 8868075261,
+        "markerVersion": 3,
+        "markerCoordinate": [
+          112.1492725,
+          21.9569582
+        ],
+        "markerTags": {
+          "name": "阳东",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes"
+        },
+        "anchorNodeId": 8976561086,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          8976561085,
+          8976561086
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8868075261,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-wrq",
+        "stationCode": "CN-12306-WRQ",
+        "markerNodeId": 5485730495,
+        "markerVersion": 4,
+        "markerCoordinate": [
+          111.9859931,
+          21.8131032
+        ],
+        "markerTags": {
+          "name": "阳江",
+          "name:en": "Yangjiang",
+          "name:zh": "阳江",
+          "public_transport": "station",
+          "railway": "station"
+        },
+        "anchorNodeId": 8976452216,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          8976452216,
+          8976473517
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 5485730495,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-wmq",
+        "stationCode": "CN-12306-WMQ",
+        "markerNodeId": 9192805737,
+        "markerVersion": 4,
+        "markerCoordinate": [
+          111.6387338,
+          21.7988151
+        ],
+        "markerTags": {
+          "name": "阳西",
+          "public_transport": "station",
+          "railway": "station",
+          "railway:position:exact:广湛高速": "246.564"
+        },
+        "anchorNodeId": 11893466632,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          11893466631,
+          11893466632
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 9192805737,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-pwq",
+        "stationCode": "CN-12306-PWQ",
+        "markerNodeId": 8976366466,
+        "markerVersion": 4,
+        "markerCoordinate": [
+          111.3608215,
+          21.6840348
+        ],
+        "markerTags": {
+          "name": "马踏",
+          "public_transport": "station",
+          "railway": "station",
+          "railway:position:exact:广湛高速": "278.685",
+          "train": "yes"
+        },
+        "anchorNodeId": 5485661825,
+        "anchorVersion": 2,
+        "anchorCandidates": [
+          5485661825,
+          5926620453
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8976366466,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-nwq",
+        "stationCode": "CN-12306-NWQ",
+        "markerNodeId": 9192805736,
+        "markerVersion": 2,
+        "markerCoordinate": [
+          111.1388846,
+          21.7067481
+        ],
+        "markerTags": {
+          "name": "电白",
+          "public_transport": "station",
+          "railway": "station"
+        },
+        "anchorNodeId": 8976325791,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          5926620419,
+          8976325791
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 9192805736,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-mdq",
+        "stationCode": "CN-12306-MDQ",
+        "markerNodeId": 1641859651,
+        "markerVersion": 12,
+        "markerCoordinate": [
+          110.9241263,
+          21.6453937
+        ],
+        "markerTags": {
+          "alt_name": "茂名站;茂名火车站;Maoming Railway Station",
+          "name": "茂名",
+          "name:en": "Maoming",
+          "name:zh": "茂名",
+          "operator": "中国铁路广州局集团有限公司",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q15953532",
+          "wikipedia": "zh:茂名站"
+        },
+        "anchorNodeId": 621873334,
+        "anchorVersion": 5,
+        "anchorCandidates": [
+          621873334,
+          5085257426
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 1641859651,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-waq",
+        "stationCode": "CN-12306-WAQ",
+        "markerNodeId": 8513056250,
+        "markerVersion": 7,
+        "markerCoordinate": [
+          110.7652507,
+          21.5119087
+        ],
+        "markerTags": {
+          "alt_name": "吴川站;吴川火车站",
+          "alt_name:en": "Wuchuan Railway Station",
+          "alt_name:zh": "吴川站;吴川火车站",
+          "name": "吴川",
+          "name:en": "Wuchuan",
+          "name:zh": "吴川",
+          "public_transport": "station",
+          "railway": "station",
+          "railway:position:exact:广湛高速": "344.449",
+          "train": "yes",
+          "wikidata": "Q15895595"
+        },
+        "anchorNodeId": 8976022092,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          8976022092,
+          8976022093
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8513056250,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-osm-node-9192805735",
+        "stationCode": "CN-OSM-N9192805735",
+        "markerNodeId": 9192805735,
+        "markerVersion": 2,
+        "markerCoordinate": [
+          110.5615461,
+          21.4508169
+        ],
+        "markerTags": {
+          "name": "塘缀",
+          "public_transport": "station",
+          "railway": "station"
+        },
+        "anchorNodeId": 2482489829,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          2482489829,
+          5926717652
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 9192805735,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-osm-node-8269111608",
+        "stationCode": "CN-OSM-N8269111608",
+        "markerNodeId": 8269111608,
+        "markerVersion": 2,
+        "markerCoordinate": [
+          110.3257641,
+          21.3664667
+        ],
+        "markerTags": {
+          "name": "黄略",
+          "public_transport": "no",
+          "railway": "station",
+          "train": "yes"
+        },
+        "anchorNodeId": 2693092762,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          2693092762,
+          5926717507
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8269111608,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      },
+      {
+        "groupId": "cn-official-12306-zwq",
+        "stationCode": "CN-12306-ZWQ",
+        "markerNodeId": 7285032809,
+        "markerVersion": 5,
+        "markerCoordinate": [
+          110.2838474,
+          21.2456349
+        ],
+        "markerTags": {
+          "name": "湛江西",
+          "name:en": "Zhanjiangxi",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q17498915"
+        },
+        "anchorNodeId": 7237575836,
+        "anchorVersion": 1,
+        "anchorCandidates": [
+          7237575836
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 7285032809,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand"
+      }
+    ],
+    "intervals": [
+      {
+        "from": "CN-12306-JOQ",
+        "to": "CN-12306-PQQ",
+        "firstNodeId": 11469965754,
+        "lastNodeId": 5486921033,
+        "vertexCount": 80,
+        "wayVersions": {
+          "570583586": 11,
+          "570736671": 12,
+          "570736676": 18,
+          "1235551728": 3,
+          "1235551729": 3,
+          "1235551730": 3
+        }
+      },
+      {
+        "from": "CN-12306-PQQ",
+        "to": "CN-12306-PUQ",
+        "firstNodeId": 5486921033,
+        "lastNodeId": 5485730433,
+        "vertexCount": 62,
+        "wayVersions": {
+          "570583581": 9,
+          "570583582": 9,
+          "570583583": 9,
+          "570583584": 9,
+          "570583585": 9,
+          "570583587": 12,
+          "570736671": 12,
+          "909825605": 7,
+          "909825606": 5,
+          "909825607": 6,
+          "919656919": 6,
+          "919656920": 5,
+          "1337008101": 3,
+          "1498207928": 2,
+          "1498207931": 2,
+          "1498207932": 2,
+          "1498207934": 2,
+          "1562008900": 2,
+          "1562008901": 1
+        }
+      },
+      {
+        "from": "CN-12306-PUQ",
+        "to": "CN-12306-PVQ",
+        "firstNodeId": 5485730433,
+        "lastNodeId": 5485730499,
+        "vertexCount": 117,
+        "wayVersions": {
+          "570583587": 12,
+          "666912084": 9,
+          "864884818": 5,
+          "864884820": 5,
+          "864884822": 5,
+          "864884824": 5,
+          "864884826": 5,
+          "864884828": 5,
+          "864884830": 5,
+          "864884832": 5,
+          "864884834": 5,
+          "864884836": 5,
+          "864884838": 5,
+          "970101891": 6,
+          "970101892": 5,
+          "970101894": 5,
+          "970101896": 5
+        }
+      },
+      {
+        "from": "CN-12306-PVQ",
+        "to": "CN-12306-PXQ",
+        "firstNodeId": 5485730499,
+        "lastNodeId": 13584639909,
+        "vertexCount": 163,
+        "wayVersions": {
+          "570573116": 15,
+          "570583588": 9,
+          "570583589": 9,
+          "570583590": 11,
+          "666912083": 15,
+          "970101892": 5,
+          "1151272596": 3,
+          "1151272599": 3,
+          "1151272601": 3,
+          "1151272603": 3,
+          "1151272609": 3,
+          "1151272611": 3,
+          "1482568743": 2,
+          "1482821141": 2,
+          "1482821143": 2,
+          "1482821145": 2,
+          "1482821147": 2,
+          "1482821148": 2,
+          "1493418059": 2,
+          "1493418061": 2,
+          "1493418063": 2,
+          "1493418065": 2,
+          "1493418067": 2,
+          "1493418069": 2,
+          "1493418071": 2,
+          "1493418073": 2,
+          "1493418075": 2,
+          "1493418077": 2
+        }
+      },
+      {
+        "from": "CN-12306-PXQ",
+        "to": "CN-OSM-N9192805738",
+        "firstNodeId": 13584639909,
+        "lastNodeId": 13994851558,
+        "vertexCount": 73,
+        "wayVersions": {
+          "570573115": 9,
+          "570573117": 9,
+          "570573118": 12,
+          "570573120": 17,
+          "1028827602": 6,
+          "1028827603": 6,
+          "1028827606": 5,
+          "1028827607": 5,
+          "1372403012": 3,
+          "1372403013": 3,
+          "1482568735": 2,
+          "1482568738": 2,
+          "1482568740": 2,
+          "1482568743": 2,
+          "1482821136": 2,
+          "1482821138": 2
+        }
+      },
+      {
+        "from": "CN-OSM-N9192805738",
+        "to": "CN-12306-WLQ",
+        "firstNodeId": 13994851558,
+        "lastNodeId": 8976561086,
+        "vertexCount": 80,
+        "wayVersions": {
+          "570573119": 9,
+          "570573120": 17,
+          "570573122": 13,
+          "958441653": 5,
+          "958441654": 5,
+          "958441657": 5,
+          "958441658": 5,
+          "958441661": 6,
+          "958441662": 6,
+          "1426185894": 2,
+          "1426185896": 2,
+          "1473278776": 3,
+          "1473278777": 3
+        }
+      },
+      {
+        "from": "CN-12306-WLQ",
+        "to": "CN-12306-WRQ",
+        "firstNodeId": 8976561086,
+        "lastNodeId": 8976452216,
+        "vertexCount": 90,
+        "wayVersions": {
+          "570573121": 9,
+          "570573122": 13,
+          "570573123": 12,
+          "952972903": 5,
+          "952972904": 5,
+          "952972905": 5,
+          "952972906": 5,
+          "958441637": 5,
+          "958441638": 5,
+          "970025057": 5,
+          "970025060": 5,
+          "1511176890": 1,
+          "1511176893": 1,
+          "1511176894": 1
+        }
+      },
+      {
+        "from": "CN-12306-WRQ",
+        "to": "CN-12306-WMQ",
+        "firstNodeId": 8976452216,
+        "lastNodeId": 11893466632,
+        "vertexCount": 94,
+        "wayVersions": {
+          "570573123": 12,
+          "880574713": 5,
+          "880574714": 8,
+          "880574715": 6,
+          "880574716": 7,
+          "880840873": 5,
+          "880840875": 5,
+          "881541930": 6,
+          "881541932": 5,
+          "881541934": 5,
+          "995265599": 5,
+          "995265624": 5,
+          "995265625": 5,
+          "995265629": 5,
+          "995265632": 5,
+          "995265633": 5,
+          "995265636": 5,
+          "995265638": 5,
+          "995265639": 5,
+          "995265641": 6,
+          "1115868220": 4,
+          "1534787920": 1,
+          "1534787922": 1,
+          "1534787924": 1
+        }
+      },
+      {
+        "from": "CN-12306-WMQ",
+        "to": "CN-12306-PWQ",
+        "firstNodeId": 11893466632,
+        "lastNodeId": 5485661825,
+        "vertexCount": 82,
+        "wayVersions": {
+          "523814684": 17,
+          "880574705": 5,
+          "880574706": 5,
+          "880574707": 5,
+          "880574708": 6,
+          "880574709": 5,
+          "880574710": 6,
+          "880574711": 5,
+          "880574712": 7,
+          "970008782": 5,
+          "970008783": 5,
+          "1115868220": 4,
+          "1115868222": 3,
+          "1115868225": 3,
+          "1115868226": 3,
+          "1554791487": 1,
+          "1554791488": 1,
+          "1554791493": 1,
+          "1554791494": 1,
+          "1554791495": 1,
+          "1554791498": 1
+        }
+      },
+      {
+        "from": "CN-12306-PWQ",
+        "to": "CN-12306-NWQ",
+        "firstNodeId": 5485661825,
+        "lastNodeId": 8976325791,
+        "vertexCount": 66,
+        "wayVersions": {
+          "523814684": 17,
+          "775812326": 9,
+          "775812327": 7,
+          "775819476": 7,
+          "775819477": 9,
+          "880574703": 5,
+          "880574704": 5,
+          "970008771": 5,
+          "970008773": 5,
+          "970008778": 5,
+          "970008779": 5,
+          "1375539976": 3,
+          "1375539978": 3,
+          "1526470269": 1,
+          "1526470271": 1,
+          "1526470290": 1,
+          "1526470292": 1
+        }
+      },
+      {
+        "from": "CN-12306-NWQ",
+        "to": "CN-12306-MDQ",
+        "firstNodeId": 8976325791,
+        "lastNodeId": 621873334,
+        "vertexCount": 132,
+        "wayVersions": {
+          "669130195": 10,
+          "775819477": 9,
+          "775819484": 7,
+          "775819485": 7,
+          "775819488": 7,
+          "775819491": 7,
+          "775819493": 7,
+          "775819494": 8,
+          "775819496": 7,
+          "775819499": 11,
+          "824546612": 7,
+          "969734913": 6,
+          "969734915": 5,
+          "969734917": 5,
+          "969734919": 5,
+          "1160489660": 3,
+          "1160489661": 3,
+          "1160489668": 3,
+          "1160489669": 3,
+          "1162365500": 3,
+          "1162365501": 3,
+          "1165526296": 3,
+          "1165526297": 3
+        }
+      },
+      {
+        "from": "CN-12306-MDQ",
+        "to": "CN-12306-WAQ",
+        "firstNodeId": 621873334,
+        "lastNodeId": 8976022092,
+        "vertexCount": 91,
+        "wayVersions": {
+          "240520788": 16,
+          "495353580": 12,
+          "495353588": 11,
+          "495353591": 13,
+          "513279122": 12,
+          "513279123": 14,
+          "513279124": 11,
+          "513279125": 12,
+          "513279126": 11,
+          "513279127": 12,
+          "513279128": 13,
+          "513279129": 13,
+          "627793871": 10,
+          "824546612": 7
+        }
+      },
+      {
+        "from": "CN-12306-WAQ",
+        "to": "CN-OSM-N9192805735",
+        "firstNodeId": 8976022092,
+        "lastNodeId": 2482489829,
+        "vertexCount": 68,
+        "wayVersions": {
+          "513279129": 13,
+          "513279130": 14,
+          "521142291": 12,
+          "775819519": 8,
+          "775819520": 12,
+          "952512417": 6,
+          "952512418": 7,
+          "1052625241": 8,
+          "1052625243": 6,
+          "1120479838": 3,
+          "1417014207": 3,
+          "1417014209": 3,
+          "1417014242": 3,
+          "1417014244": 3,
+          "1420724497": 3,
+          "1420724498": 3
+        }
+      },
+      {
+        "from": "CN-OSM-N9192805735",
+        "to": "CN-OSM-N8269111608",
+        "firstNodeId": 2482489829,
+        "lastNodeId": 2693092762,
+        "vertexCount": 81,
+        "wayVersions": {
+          "346587564": 11,
+          "346587578": 13,
+          "346587586": 11,
+          "346587591": 11,
+          "346587597": 13,
+          "346587598": 12,
+          "513179554": 11,
+          "513179555": 11,
+          "513179558": 11,
+          "513179559": 11,
+          "513179560": 11,
+          "513179561": 11,
+          "513179562": 12,
+          "513179563": 11,
+          "513279132": 11,
+          "513279134": 12,
+          "629892912": 9,
+          "629892915": 9,
+          "775819525": 8,
+          "775819526": 8,
+          "824535594": 7
+        }
+      },
+      {
+        "from": "CN-OSM-N8269111608",
+        "to": "CN-12306-ZWQ",
+        "firstNodeId": 2693092762,
+        "lastNodeId": 7237575836,
+        "vertexCount": 70,
+        "wayVersions": {
+          "775819570": 11,
+          "824535586": 8,
+          "824535587": 8,
+          "824535588": 8,
+          "824535589": 8,
+          "824535590": 8,
+          "824535591": 8,
+          "824535592": 8,
+          "824535593": 8,
+          "824535594": 7
+        }
+      }
+    ]
+  },
+  "reviewedLeadInProposals": [
+    {
+      "scope": "Xiaolan existing source vertices",
+      "fromLineId": "cn-osm-relation-5496304-branch-5",
+      "toLineId": "cn-osm-relation-5456788",
+      "fromSourceStation": {
+        "groupId": "cn-official-12306-eaq",
+        "stationCode": "CN-12306-EAQ",
+        "markerNodeId": 7710011721,
+        "markerVersion": 4,
+        "markerCoordinate": [
+          113.2645825,
+          22.6505591
+        ],
+        "markerTags": {
+          "alt_name": "小榄站;小榄火车站;Xiaolan Railway Station",
+          "name": "小榄",
+          "name:en": "Xiaolan",
+          "operator": "中国铁路广州局集团有限公司",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wheelchair": "yes"
+        },
+        "anchorNodeId": 7710011723,
+        "anchorVersion": 3,
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+        "anchorSelection": "joint-ordered-original-source-path",
+        "anchorCandidates": [
+          7710011723,
+          7710011725
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 7710011721,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "stopAreaIds": [],
+        "officialTelecode": "EAQ",
+        "officialPinyin": "xiaolan",
+        "nameTraditional": "",
+        "nameEnglish": "Xiaolan",
+        "englishSourceType": "original-OSM",
+        "englishSource": "https://www.openstreetmap.org/node/7710011721"
+      },
+      "fromSegmentIndex": 0,
+      "fromVertexIndex": 0,
+      "toSourceVertex": {
+        "segmentIndex": 6,
+        "vertexIndex": 30
+      },
+      "path": {
+        "ownerRelationId": 5496304,
+        "relationVersion": 15,
+        "nodeIds": [
+          7710011723,
+          7710011722
+        ],
+        "coordinates": [
+          [
+            113.265173,
+            22.6511385
+          ],
+          [
+            113.266232,
+            22.6524813
+          ]
+        ],
+        "nodeVersions": {
+          "7710011723": 3,
+          "7710011722": 2
+        },
+        "edgeWayIds": [
+          154395107
+        ],
+        "wayVersions": {
+          "154395107": 15
+        },
+        "wayTags": {
+          "154395107": {
+            "alt_name": "广珠城际江门支线",
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "2",
+            "maxspeed": "200",
+            "name": "江门线",
+            "operator": "中国铁路广州局集团有限公司",
+            "passenger_lines": "2",
+            "railway": "rail",
+            "ref": "0720",
+            "start_date": "2011-01-07",
+            "usage": "main",
+            "voltage": "25000"
+          }
+        },
+        "lengthMeters": 184.67253535350278
+      },
+      "status": "Original passenger_lines=2 edge is real and source-owned, but existing reviewed connector validator requires railway:traffic_mode=passenger. Proposal only.",
+      "manifestReadyPendingPassengerTagRule": {
+        "id": "cn-reviewed-xiaolan-jiangmen-guangzhu-lead-in",
+        "reviewedAt": "2026-10-19",
+        "station": "Xiaolan",
+        "stationCode": "CN-12306-EAQ",
+        "from": {
+          "lineId": "cn-osm-relation-5496304-branch-5",
+          "identity": {
+            "operatorName": "中国铁路",
+            "lineName": "江门线",
+            "railwayClassCode": "12",
+            "trackID": "cn-osm-relation-5496304-branch-5"
+          },
+          "nodeId": 7710011723,
+          "segmentIndex": 0,
+          "vertexIndex": 0,
+          "sourceStation": {
+            "groupId": "cn-official-12306-eaq",
+            "markerNodeId": 7710011721,
+            "markerVersion": 4,
+            "anchorNodeId": 7710011723,
+            "anchorVersion": 3
+          }
+        },
+        "to": {
+          "lineId": "cn-osm-relation-5456788",
+          "identity": {
+            "operatorName": "中国铁路广州局集团有限公司",
+            "lineName": "广珠城际铁路",
+            "railwayClassCode": "12",
+            "trackID": "cn-osm-relation-5456788"
+          },
+          "nodeId": 7710011722,
+          "segmentIndex": 6,
+          "vertexIndex": 30
+        },
+        "ownerRelationId": 5496304,
+        "relationVersions": {
+          "5496304": 15,
+          "5456788": 31
+        },
+        "nodeIds": [
+          7710011723,
+          7710011722
+        ],
+        "coordinates": [
+          [
+            113.265173,
+            22.6511385
+          ],
+          [
+            113.266232,
+            22.6524813
+          ]
+        ],
+        "nodeVersions": {
+          "7710011723": 3,
+          "7710011722": 2
+        },
+        "edgeWayIds": [
+          154395107
+        ],
+        "wayVersions": {
+          "154395107": 15
+        },
+        "attachMeters": {
+          "from": 0,
+          "to": 0
+        },
+        "reviewReason": "Exact original member-way continuation from the clipped Jiangmen Branch Xiaolan anchor to an existing Guangzhou-Zhuhai source vertex. No station-anchor modification or geometric gap filling. Original passenger_lines=2 evidences passenger eligibility; current validator does not accept that tag yet.",
+        "passengerEvidence": {
+          "trainNumber": "G6045",
+          "trainNo": "6x000G604806",
+          "serviceDate": "2026-10-18",
+          "rawStops": "railway-sources/local/china/evidence/real-train-paths-20261018/highspeed-raw/stops-G6045.json",
+          "retainedRecord": "docs/reports/sources/china-real-train-paths-20261018/highspeed-sources.json",
+          "stationCodes": [
+            "IZQ",
+            "JOQ",
+            "PUQ",
+            "PVQ",
+            "PXQ",
+            "WRQ",
+            "MDQ",
+            "ZWQ"
+          ],
+          "limits": "Official record supports same-train ordered passenger stops; it does not choose a unique platform or create geometry.",
+          "urls": [
+            "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+            "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code="
+          ],
+          "scope": "Official G6045 2026-10-18 same-train Guangzhou South to Jiangmen passenger continuity supports this corridor, without assigning a unique intermediate track. Original way154395107 passenger_lines=2 and exact consecutive nodes supply geometry and local passenger eligibility."
+        }
+      }
+    },
+    {
+      "scope": "Xinhui upper strand to Shenzhan source endpoint",
+      "fromLineId": "cn-osm-relation-5496304-branch-3",
+      "toLineId": "cn-osm-relation-8381929",
+      "fromSourceStation": {
+        "groupId": "cn-official-12306-efq",
+        "stationCode": "CN-12306-EFQ",
+        "markerNodeId": 8401400286,
+        "markerVersion": 5,
+        "markerCoordinate": [
+          113.0658947,
+          22.5203259
+        ],
+        "markerTags": {
+          "alt_name": "新会站;新会火车站;Xinhui Railway Station",
+          "name": "新会",
+          "name:en": "Xinhui",
+          "operator": "中国铁路广州局集团有限公司",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q8044600"
+        },
+        "anchorNodeId": 1831762682,
+        "anchorVersion": 14,
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+        "anchorSelection": "joint-ordered-original-source-path",
+        "anchorCandidates": [
+          1831762682,
+          5926619799
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 8401400286,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "stopAreaIds": [],
+        "officialTelecode": "EFQ",
+        "officialPinyin": "xinhui",
+        "nameTraditional": "",
+        "nameEnglish": "Xinhui",
+        "englishSourceType": "original-OSM",
+        "englishSource": "https://www.openstreetmap.org/node/8401400286"
+      },
+      "toSourceStation": {
+        "groupId": "cn-official-12306-joq",
+        "stationCode": "CN-12306-JOQ",
+        "markerNodeId": 2414867084,
+        "markerVersion": 13,
+        "markerCoordinate": [
+          113.0653353,
+          22.4910006
+        ],
+        "markerTags": {
+          "alt_name": "江门站;江门火车站;Jiangmen Railway Station",
+          "name": "江门",
+          "name:en": "Jiangmen",
+          "name:zh": "江门",
+          "name:zh-Hans": "江门",
+          "name:zh-Hant": "江門",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q17025373",
+          "wikipedia": "en:Jiangmen railway station"
+        },
+        "anchorNodeId": 11469965754,
+        "anchorVersion": 3,
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+        "anchorSelection": "joint-ordered-original-source-path",
+        "anchorCandidates": [
+          11469965754,
+          11597704831
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 2414867084,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "stopAreaIds": [],
+        "officialTelecode": "JOQ",
+        "officialPinyin": "jiangmen",
+        "nameTraditional": "",
+        "nameEnglish": "Jiangmen",
+        "englishSourceType": "original-OSM",
+        "englishSource": "https://www.openstreetmap.org/node/2414867084"
+      },
+      "path": {
+        "ownerRelationId": 5496304,
+        "relationVersion": 15,
+        "nodeIds": [
+          1831762682,
+          1831762696,
+          11597823683,
+          5486919674,
+          14026388665,
+          5486919675,
+          5486919676,
+          11469965746,
+          11597704868,
+          11597741573,
+          11597741584,
+          11469965745,
+          11469965752,
+          11469977672,
+          11597704834,
+          11597704843,
+          11597704841,
+          11597704836,
+          11597704835,
+          11469965754
+        ],
+        "coordinates": [
+          [
+            113.0660001,
+            22.520347
+          ],
+          [
+            113.0663127,
+            22.5160922
+          ],
+          [
+            113.0664286,
+            22.5145989
+          ],
+          [
+            113.0665451,
+            22.5129816
+          ],
+          [
+            113.0665821,
+            22.5121823
+          ],
+          [
+            113.0666031,
+            22.5112581
+          ],
+          [
+            113.066565,
+            22.5100998
+          ],
+          [
+            113.0659903,
+            22.5018426
+          ],
+          [
+            113.0657527,
+            22.4988971
+          ],
+          [
+            113.0655082,
+            22.4954422
+          ],
+          [
+            113.0654834,
+            22.495092
+          ],
+          [
+            113.0650642,
+            22.4891689
+          ],
+          [
+            113.0650471,
+            22.4887224
+          ],
+          [
+            113.0650383,
+            22.4882117
+          ],
+          [
+            113.0650408,
+            22.4876877
+          ],
+          [
+            113.0650599,
+            22.4861299
+          ],
+          [
+            113.0650783,
+            22.4846275
+          ],
+          [
+            113.0650925,
+            22.483469
+          ],
+          [
+            113.0650888,
+            22.483163
+          ],
+          [
+            113.0650735,
+            22.4826588
+          ]
+        ],
+        "nodeVersions": {
+          "1831762682": 14,
+          "1831762696": 4,
+          "11597823683": 3,
+          "5486919674": 3,
+          "14026388665": 1,
+          "5486919675": 2,
+          "5486919676": 2,
+          "11469965746": 3,
+          "11597704868": 1,
+          "11597741573": 1,
+          "11597741584": 1,
+          "11469965745": 2,
+          "11469965752": 2,
+          "11469977672": 2,
+          "11597704834": 1,
+          "11597704843": 1,
+          "11597704841": 1,
+          "11597704836": 1,
+          "11597704835": 1,
+          "11469965754": 3
+        },
+        "edgeWayIds": [
+          164295943,
+          1082539566,
+          1082539566,
+          1082539566,
+          1082539566,
+          1082539566,
+          1082539566,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733,
+          1235551733
+        ],
+        "wayVersions": {
+          "1235551733": 4,
+          "1082539566": 9,
+          "164295943": 22
+        },
+        "wayTags": {
+          "1235551733": {
+            "alt_name": "广珠城际江门支线",
+            "alt_name:zh": "广珠城际江门支线",
+            "alt_name:zh-Hans": "广珠城际江门支线",
+            "alt_name:zh-Hant": "廣珠城際江門支線",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "maxspeed": "200",
+            "name": "江门线",
+            "name:zh": "江门线",
+            "name:zh-Hans": "江门线",
+            "name:zh-Hant": "江門線",
+            "old_name": "深茂铁路江茂段",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "ref": "0720",
+            "source": "Setinel-2",
+            "start_date": "2018-07-01",
+            "usage": "main",
+            "voltage": "25000",
+            "wikidata": "Q15921445",
+            "wikipedia": "zh:深湛铁路"
+          },
+          "1082539566": {
+            "alt_name": "广珠城际江门支线",
+            "alt_name:zh": "广珠城际江门支线",
+            "alt_name:zh-Hans": "广珠城际江门支线",
+            "alt_name:zh-Hant": "廣珠城際江門支線",
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "1",
+            "maxspeed": "200",
+            "name": "江门线",
+            "name:zh": "江门线",
+            "name:zh-Hans": "江门线",
+            "name:zh-Hant": "江門線",
+            "old_name": "深茂铁路江茂段",
+            "operator": "中国铁路广州局集团有限公司",
+            "railway": "rail",
+            "ref": "0720",
+            "source": "Setinel-2",
+            "start_date": "2018-07-01",
+            "usage": "main",
+            "voltage": "25000",
+            "wikidata": "Q15921445",
+            "wikipedia": "zh:深湛铁路"
+          },
+          "164295943": {
+            "alt_name": "广珠城际江门支线",
+            "alt_name:zh": "广珠城际江门支线",
+            "alt_name:zh-Hans": "广珠城际江门支线",
+            "alt_name:zh-Hant": "廣珠城際江門支線",
+            "bridge": "yes",
+            "electrified": "contact_line",
+            "frequency": "50",
+            "gauge": "1435",
+            "highspeed": "yes",
+            "layer": "2",
+            "maxspeed": "200",
+            "name": "江门线",
+            "name:zh": "江门线",
+            "name:zh-Hans": "江门线",
+            "name:zh-Hant": "江門線",
+            "operator": "中国铁路广州局集团有限公司",
+            "passenger_lines": "2",
+            "railway": "rail",
+            "ref": "0720",
+            "start_date": "2011-01-07",
+            "usage": "main",
+            "voltage": "25000"
+          }
+        },
+        "lengthMeters": 4198.02557185712
+      },
+      "status": "Do not promote: target is unpublished, and two of three original ways lack explicit passenger_lines/traffic_mode evidence. Corridor-level passenger service alone does not satisfy the existing per-way rule."
+    }
+  ],
+  "remainingGuangzhouSouthBlocker": {
+    "fromLineId": "cn-guangshengan-hsr",
+    "fromStation": {
+      "groupId": "cn-official-12306-izq",
+      "stationCode": "CN-12306-IZQ",
+      "markerNodeId": 3677030154,
+      "markerVersion": 10,
+      "markerCoordinate": [
+        113.2640375,
+        22.9914143
+      ],
+      "markerTags": {
+        "alt_name": "广州南站;Guangzhou South;Guangzhou South Railway Station;Guangzhounan Railway Station",
+        "name": "广州南",
+        "name:en": "Guangzhounan",
+        "name:zh": "广州南",
+        "operator": "中国铁路广州局集团有限公司",
+        "public_transport": "station",
+        "railway": "station",
+        "railway:ref": "65848",
+        "train": "yes",
+        "wikidata": "Q1073420",
+        "wikipedia": "zh:广州南站"
+      },
+      "anchorNodeId": 3676493382,
+      "anchorVersion": 3,
+      "membershipEvidence": "official-corridor-membership-and-order",
+      "anchorEvidence": "exact-member-node",
+      "anchorSelection": "joint-ordered-original-source-path",
+      "anchorCandidates": [
+        3676493382,
+        3676500715
+      ],
+      "bindingEvidence": [
+        {
+          "method": "official-corridor-membership-and-order",
+          "markerNodeId": 3677030154,
+          "anchorNodeIds": [
+            3676493382,
+            3676500715
+          ],
+          "stopAreaIds": [
+            13696629
+          ]
+        }
+      ],
+      "stopAreaIds": [
+        13696629
+      ],
+      "officialTelecode": "IZQ",
+      "officialPinyin": "guangzhounan",
+      "nameTraditional": "廣州南",
+      "nameEnglish": "Guangzhounan",
+      "englishSourceType": "official-corridor",
+      "englishSource": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf"
+    },
+    "toLineId": "cn-osm-relation-5456788",
+    "toStation": {
+      "groupId": "cn-official-12306-izq",
+      "stationCode": "CN-12306-IZQ",
+      "markerNodeId": 3677030154,
+      "markerVersion": 10,
+      "markerCoordinate": [
+        113.2640375,
+        22.9914143
+      ],
+      "markerTags": {
+        "alt_name": "广州南站;Guangzhou South;Guangzhou South Railway Station;Guangzhounan Railway Station",
+        "name": "广州南",
+        "name:en": "Guangzhounan",
+        "name:zh": "广州南",
+        "operator": "中国铁路广州局集团有限公司",
+        "public_transport": "station",
+        "railway": "station",
+        "railway:ref": "65848",
+        "train": "yes",
+        "wikidata": "Q1073420",
+        "wikipedia": "zh:广州南站"
+      },
+      "anchorNodeId": 3676506337,
+      "anchorVersion": 3,
+      "membershipEvidence": "explicit-route-member",
+      "anchorEvidence": "exact-member-node",
+      "anchorSelection": "joint-ordered-original-source-path",
+      "anchorCandidates": [
+        3676506337,
+        3676506338
+      ],
+      "bindingEvidence": [
+        {
+          "method": "explicit-route-member",
+          "markerNodeId": 3677030154,
+          "anchorNodeIds": [
+            3676506337,
+            3676506338
+          ],
+          "stopAreaIds": [
+            13696629
+          ]
+        },
+        {
+          "method": "actual-route-track-node",
+          "markerNodeId": 3676506337,
+          "anchorNodeIds": [
+            3676506337
+          ],
+          "stopAreaIds": [
+            13696629
+          ]
+        },
+        {
+          "method": "stop-area-original-track-node-membership",
+          "markerNodeId": 3677030154,
+          "anchorNodeIds": [
+            3676506337,
+            3676506338
+          ],
+          "stopAreaIds": [
+            13696629
+          ]
+        },
+        {
+          "method": "actual-route-track-node",
+          "markerNodeId": 3676506338,
+          "anchorNodeIds": [
+            3676506338
+          ],
+          "stopAreaIds": [
+            13696629
+          ]
+        }
+      ],
+      "stopAreaIds": [
+        13696629
+      ],
+      "officialTelecode": "IZQ",
+      "officialPinyin": "guangzhounan",
+      "nameTraditional": "",
+      "nameEnglish": "Guangzhounan",
+      "englishSourceType": "original-OSM",
+      "englishSource": "https://www.openstreetmap.org/node/3677030154"
+    },
+    "finding": "No published shared source node. Neither inventory contains any vertex of the other published line. Existing reviewed connector owner-way invariant cannot attach the two corridors. Shared station identity, 150m separation and timetable passenger continuity do not supply a rail connection.",
+    "decision": "Leave unresolved unless original adjacent passenger track geometry and corridor ownership for a lead-in are separately evidenced. Do not add station chords or coordinate snaps."
+  },
+  "outcome": "Evidence proposal only. Reviewed WRQ identity scoping can recover eligible source-owned 深湛 geometry but cannot by itself repair the complete G6045 route. Two actual Jiang门 owner-way lead-ins are documented with explicit current validator blockers; GuangzhouSouth remains unproven."
+}

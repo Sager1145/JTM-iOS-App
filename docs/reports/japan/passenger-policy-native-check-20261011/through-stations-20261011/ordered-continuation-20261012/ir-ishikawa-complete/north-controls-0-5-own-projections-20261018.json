@@ -1,0 +1,121 @@
+{
+  "lineID": "jp-IRいしかわ鉄道-IRいしかわ鉄道線",
+  "interval": 3,
+  "policy": "Read-only projections of retained old decoded controls 0...5 onto already identified own way834273931 v5, north-to-south. No new candidate or source changes.",
+  "sourcePath": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ir-ishikawa-complete/kanazawa-own-source/identified-osm-live.json",
+  "wayID": 834273931,
+  "version": 5,
+  "nodeCount": 52,
+  "chainFirst": [
+    136.6740969,
+    36.5972037
+  ],
+  "chainLast": [
+    136.6533852,
+    36.5833821
+  ],
+  "rows": [
+    {
+      "index": 0,
+      "coordinate": [
+        136.66948,
+        36.59345
+      ],
+      "distanceM": 6.491946029968011,
+      "insertIndex": 11,
+      "point": [
+        136.66952949888562,
+        36.59340723087063
+      ],
+      "sourceSegmentNodeIDs": [
+        3977860982,
+        3977860979
+      ]
+    },
+    {
+      "index": 1,
+      "coordinate": [
+        136.66887,
+        36.59301
+      ],
+      "distanceM": 9.954051864731161,
+      "insertIndex": 13,
+      "point": [
+        136.66895093184243,
+        36.59294842648297
+      ],
+      "sourceSegmentNodeIDs": [
+        3977863461,
+        3977860975
+      ]
+    },
+    {
+      "index": 2,
+      "coordinate": [
+        136.66863,
+        36.59284
+      ],
+      "distanceM": 14.046443830357745,
+      "insertIndex": 14,
+      "point": [
+        136.6687515130676,
+        36.592759756223764
+      ],
+      "sourceSegmentNodeIDs": [
+        3977860975,
+        3977860974
+      ]
+    },
+    {
+      "index": 3,
+      "coordinate": [
+        136.6657,
+        36.59079
+      ],
+      "distanceM": 42.57182754758714,
+      "insertIndex": 20,
+      "point": [
+        136.66601427680988,
+        36.59050206668785
+      ],
+      "sourceSegmentNodeIDs": [
+        3977860965,
+        7947347323
+      ]
+    },
+    {
+      "index": 4,
+      "coordinate": [
+        136.66344,
+        36.58926
+      ],
+      "distanceM": 19.047338020658042,
+      "insertIndex": 25,
+      "point": [
+        136.66354936851315,
+        36.589112925132675
+      ],
+      "sourceSegmentNodeIDs": [
+        3977860957,
+        7947347325
+      ]
+    },
+    {
+      "index": 5,
+      "coordinate": [
+        136.65912,
+        36.58681
+      ],
+      "distanceM": 3.6673385522406603,
+      "insertIndex": 34,
+      "point": [
+        136.65909660136217,
+        36.58683710652589
+      ],
+      "sourceSegmentNodeIDs": [
+        3977860932,
+        3977860910
+      ]
+    }
+  ]
+}

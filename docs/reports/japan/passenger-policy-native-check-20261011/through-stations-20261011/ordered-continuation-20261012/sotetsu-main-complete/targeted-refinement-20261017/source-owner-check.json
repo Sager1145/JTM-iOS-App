@@ -1,0 +1,61 @@
+{
+  "scope": "Selected Sotetsu row and native manifest only; no whole-tree hash custody",
+  "ownerChecks": [
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    }
+  ],
+  "currentMainLineManifest": {
+    "bounds": {
+      "maxLat": 35.4781119,
+      "maxLon": 139.62052,
+      "minLat": 35.45282,
+      "minLon": 139.392235
+    },
+    "chainCount": 1,
+    "chunk": {
+      "length": 15155,
+      "offset": 8961108,
+      "sha256": "f53c6cbe7450079aef35d293e1b7fbab680bec69cf2837f1d33e7e335161e5a7"
+    },
+    "color": "#041452",
+    "colorDark": "#1946f4",
+    "dependsOn": [],
+    "displayLabel": "相鉄本線",
+    "id": "jp-相模鉄道-相鉄本線",
+    "kind": "private",
+    "lodMinZoomMapLibre": 6,
+    "logo": "/rail/logos/jp-相模鉄道-相鉄本線.png",
+    "minZoomMapLibre": 6,
+    "name": "相鉄本線",
+    "nameKey": "相鉄本線",
+    "nameRoma": "Sotetsu Main Line",
+    "operator": "相模鉄道",
+    "operatorLogo": null,
+    "operatorShort": "相鉄",
+    "overview": {
+      "length": 2523,
+      "offset": 13163072,
+      "sha256": "73a363e6d75fe16e9f242486ff451fd8d9d4d8cd486698370f826920c339ec90",
+      "vertexCount": 58
+    },
+    "rank": 2,
+    "region": "jp",
+    "renderGroup": null,
+    "stationCount": 18,
+    "vertexCount": 393,
+    "visibilityLengthKm": 24.245
+  },
+  "sourceTerminalFirstEdgeMetres": 22.14411676210678,
+  "sourceTerminalFirstTurnDegrees": 49.67452980202179,
+  "conclusion": "Terminal hook already exists in owning source; not evidence of neighbor-induced production direction. Platform extent remains unresolved until own-frame caps are identified."
+}

@@ -1,0 +1,1 @@
+2026-10-13 ACCEPT for raw candidate review only. Root inspected all5 changed full panels (Hanazono3, Miyata2), reused8 exact unchanged V1 raw panels. Hanazono follows ownblackcurve and ends directly at ownrail longitudinalframechainage503302; Minami southarm only; Miyata rounded bend correct. Native3/Main complete group acceptance pending. No surveyed accuracy claim.

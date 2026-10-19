@@ -1,0 +1,10 @@
+{
+  "status": "planned-not-runtime-evidence",
+  "lineID": "jp-名古屋市-1号線東山線",
+  "lineObjectSha256": "551e25913d9dce4e3ff22c0d9968893b23ba0072c47bf7ffee7609b97e59820e",
+  "plannedCamera": [
+    35.16082,
+    136.93723749999998,
+    0.2526225000000153
+  ]
+}

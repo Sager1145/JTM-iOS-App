@@ -1,0 +1,21 @@
+{
+  "format": "jtm-native-batch-view-state-v1",
+  "intervalDependency": "28c2bfb0a265ca34821b7230766b303066360774ac0212466882bf3c1375d668",
+  "lineDependency": "ddf0d6e85cf60a0a6821ef09f963634a7cf8f0f342c36e2b6797d900c51007af",
+  "planDigest": "9ecc5284090aa0caf82b303849068bfa1a1f9d1e409427da7bd07f8f1099d6d9",
+  "progress": {
+    "evidencePaths": [],
+    "note": "The operation couldn’t be completed. (MKErrorDomain error 2.)",
+    "status": "failed",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.531365,
+        "longitude": 139.69681
+      },
+      "distanceMetres": 3935.269533468162,
+      "itemID": "jp-東日本旅客鉄道-東海道線#9",
+      "pointOrdinal": 12
+    }
+  },
+  "referenceDependency": "Apple-only"
+}

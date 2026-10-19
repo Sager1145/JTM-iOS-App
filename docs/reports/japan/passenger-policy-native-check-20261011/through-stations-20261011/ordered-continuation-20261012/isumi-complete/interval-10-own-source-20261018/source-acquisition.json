@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-18",
+  "cachePath": "railway-sources/local/osm/degree-cells/E140N35.json",
+  "cacheFetchedAt": "2026-08-18T10:43:41.438Z",
+  "requests": [
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/1236719220/full.json",
+      "file": "way-1236719220-full.json"
+    },
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/287004073/full.json",
+      "file": "way-287004073-full.json"
+    },
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/287004072/full.json",
+      "file": "way-287004072-full.json"
+    },
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/way/1236719220/relations.json",
+      "file": "way-1236719220-relations.json"
+    }
+  ],
+  "wayChecks": [
+    {
+      "id": 1236719220,
+      "version": 2,
+      "timestamp": "2024-10-08T05:56:13Z",
+      "cacheMatchesCurrent": true
+    },
+    {
+      "id": 287004073,
+      "version": 3,
+      "timestamp": "2020-05-02T08:35:41Z",
+      "cacheMatchesCurrent": true
+    },
+    {
+      "id": 287004072,
+      "version": 4,
+      "timestamp": "2024-01-03T23:03:49Z",
+      "cacheMatchesCurrent": true
+    }
+  ]
+}

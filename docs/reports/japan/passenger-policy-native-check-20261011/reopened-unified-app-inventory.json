@@ -1,0 +1,230 @@
+[
+  {
+    "displayName": "Rail Alignment Inspector",
+    "id": "com.JRM.RailAlignmentInspector",
+    "isRunning": true
+  },
+  {
+    "displayName": "Microsoft Edge",
+    "id": "com.microsoft.edgemac",
+    "isRunning": true,
+    "lastUsedDate": 813369600,
+    "useCount": 4877
+  },
+  {
+    "displayName": "WeChat",
+    "id": "com.tencent.xinWeChat",
+    "isRunning": true,
+    "lastUsedDate": 813369600,
+    "useCount": 3874
+  },
+  {
+    "displayName": "ChatGPT",
+    "id": "com.openai.codex",
+    "isRunning": true,
+    "lastUsedDate": 813369600,
+    "useCount": 385
+  },
+  {
+    "displayName": "Grok",
+    "id": "com.grokapp.desktop",
+    "isRunning": true,
+    "lastUsedDate": 813369600,
+    "useCount": 77
+  },
+  {
+    "displayName": "Xcode",
+    "id": "com.apple.dt.Xcode",
+    "isRunning": true,
+    "lastUsedDate": 813283200,
+    "useCount": 499
+  },
+  {
+    "displayName": "Device Hub",
+    "id": "com.apple.dt.Devices",
+    "isRunning": true,
+    "lastUsedDate": 813283200,
+    "useCount": 108
+  },
+  {
+    "displayName": "Messages",
+    "id": "com.apple.MobileSMS",
+    "isRunning": true,
+    "lastUsedDate": 813283200,
+    "useCount": 4
+  },
+  {
+    "displayName": "QQ",
+    "id": "com.tencent.qq",
+    "isRunning": true,
+    "lastUsedDate": 813196800,
+    "useCount": 2658
+  },
+  {
+    "displayName": "System Settings",
+    "id": "com.apple.systempreferences",
+    "isRunning": true,
+    "lastUsedDate": 813196800,
+    "useCount": 9
+  },
+  {
+    "displayName": "Finder",
+    "id": "com.apple.finder",
+    "isRunning": true,
+    "lastUsedDate": 813196800,
+    "useCount": 2
+  },
+  {
+    "displayName": "Claude",
+    "id": "com.anthropic.claudefordesktop",
+    "isRunning": true,
+    "lastUsedDate": 813196800,
+    "useCount": 1
+  },
+  {
+    "displayName": "Hakone Inspector",
+    "id": "com.JRM.RailAlignmentInspector.parallel.hakone",
+    "isRunning": true
+  },
+  {
+    "displayName": "Kisuki Keiyo Inspector",
+    "id": "com.JRM.RailAlignmentInspector.parallel.kisuki-keiyo",
+    "isRunning": true
+  },
+  {
+    "displayName": "RouteWorkbench",
+    "id": "com.JRM.RouteWorkbench",
+    "isRunning": true
+  },
+  {
+    "displayName": "Safari",
+    "id": "com.apple.Safari",
+    "isRunning": true
+  },
+  {
+    "displayName": "Goodnotes",
+    "id": "com.goodnotesapp.x",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 236
+  },
+  {
+    "displayName": "Preview",
+    "id": "com.apple.Preview",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 26
+  },
+  {
+    "displayName": "Assignment1",
+    "id": "local.cs3gc.assignment1",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 6
+  },
+  {
+    "displayName": "RailMap",
+    "id": "com.JRM.RailMap",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 6
+  },
+  {
+    "displayName": "Archive Utility",
+    "id": "com.apple.archiveutility",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 3
+  },
+  {
+    "displayName": "Discord",
+    "id": "com.hnc.Discord",
+    "isRunning": false,
+    "lastUsedDate": 813283200,
+    "useCount": 3
+  },
+  {
+    "displayName": "BambuStudio",
+    "id": "com.bambulab.bambu-studio",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 163
+  },
+  {
+    "displayName": "OneDrive",
+    "id": "com.microsoft.OneDrive-mac",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 58
+  },
+  {
+    "displayName": "Microsoft Outlook",
+    "id": "com.microsoft.Outlook",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 25
+  },
+  {
+    "displayName": "Microsoft Word",
+    "id": "com.microsoft.Word",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 12
+  },
+  {
+    "displayName": "Instruments",
+    "id": "com.apple.dt.Instruments",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 5
+  },
+  {
+    "displayName": "QuickTime Player",
+    "id": "com.apple.QuickTimePlayerX",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 5
+  },
+  {
+    "displayName": "Activity Monitor",
+    "id": "com.apple.ActivityMonitor",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 4
+  },
+  {
+    "displayName": "Microsoft PowerPoint",
+    "id": "com.microsoft.Powerpoint",
+    "isRunning": false,
+    "lastUsedDate": 813196800,
+    "useCount": 3
+  },
+  {
+    "displayName": "Phone",
+    "id": "com.apple.mobilephone",
+    "isRunning": false,
+    "lastUsedDate": 813110400,
+    "useCount": 2
+  },
+  {
+    "displayName": "Music",
+    "id": "com.apple.Music",
+    "isRunning": false,
+    "lastUsedDate": 812937600,
+    "useCount": 3
+  },
+  {
+    "displayName": "GitHub Copilot",
+    "id": "com.github.githubapp",
+    "isRunning": false,
+    "lastUsedDate": 812419200,
+    "useCount": 17
+  },
+  {
+    "displayName": "RealVNC Connect Viewer",
+    "id": "com.realvnc.rvncconnect",
+    "isRunning": false,
+    "lastUsedDate": 812246400,
+    "useCount": 57
+  }
+]

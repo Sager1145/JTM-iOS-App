@@ -1,0 +1,286 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 1200,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1600,
+    "zoom" : 19
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 116.48452767826103,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.633035,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.660965,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.632423283003817,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65991873346792,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631822595519708,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65886279612161,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631340957514183,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.6577270028956,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631037487807667,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65649344615062,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.630722326806648,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65526432340505,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.630381745580571,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65404581541725,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.630480496603958,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65280929660938,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.630825993262043,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65159315364602,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631229163294577,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.65040368595129,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631648838612598,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.64922299786053,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631763494991674,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.64795495864379,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631760000342972,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.64666611222091,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-denentoshi-curve3-20261018\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-東急電鉄-田園都市線#3",
+      "latitude" : 35.631729,
+      "lineDependency" : "661e187a27caee6d57cf67c9a65ecfb3d9bac6e1e2ff54e562f238a0c7bfeaad",
+      "longitude" : 139.645465,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-東急電鉄-田園都市線#3#point-13"
+    }
+  ]
+}

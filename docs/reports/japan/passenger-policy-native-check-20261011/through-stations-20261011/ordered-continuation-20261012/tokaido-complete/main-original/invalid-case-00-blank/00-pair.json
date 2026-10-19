@@ -1,0 +1,66 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 0,
+    "fromStationID": "003766",
+    "toStationID": "003795",
+    "camera": [
+      35.678077,
+      139.76522135,
+      0.014092847999996962
+    ],
+    "effectiveCoordinates": [
+      [
+        139.7671827,
+        35.6811274
+      ],
+      [
+        139.7667069,
+        35.6799004
+      ],
+      [
+        139.7664108,
+        35.6793424
+      ],
+      [
+        139.7657912,
+        35.6779064
+      ],
+      [
+        139.7653497,
+        35.6770529
+      ],
+      [
+        139.7650634,
+        35.676565
+      ],
+      [
+        139.7646829,
+        35.6760934
+      ],
+      [
+        139.7642079,
+        35.6756127
+      ],
+      [
+        139.7639711,
+        35.6754047
+      ],
+      [
+        139.7635118,
+        35.6750266
+      ],
+      [
+        139.76326,
+        35.67504
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "\t\t\t\t94 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:20;overlays:20;rides:0;budgetDrops:0;vertices:7532;camera:16.01;lod:14.86;backbones:2;networkStations:54;distance:3093.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.678077;centerLon:139.765221;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3300.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:22;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:12;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.678077;centerLon:139.765221;distance:3093.1;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0"
+}

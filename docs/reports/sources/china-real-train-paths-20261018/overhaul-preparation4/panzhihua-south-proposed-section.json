@@ -1,0 +1,178 @@
+{
+  "status": "UNPUBLISHED; builder direct-mode contract incomplete; no native replay",
+  "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+  "proposedSection": {
+    "id": "cn-reviewed-physical-eguang-panzhihua-south-mainline-1",
+    "region": "cn",
+    "identity": {
+      "trackID": "cn-reviewed-physical-eguang-panzhihua-south-mainline-1",
+      "lineName": "峨广线",
+      "operatorName": "中国铁路成都局集团",
+      "railwayClassCode": "11"
+    },
+    "institutionTypeCode": "2",
+    "sourceOwnership": {
+      "mode": "original-way-identity",
+      "ref": "0084"
+    },
+    "sourceRelations": [
+      {
+        "id": 10259709,
+        "version": 159,
+        "name": "峨广线",
+        "ref": "0084",
+        "operator": "中国铁路"
+      }
+    ],
+    "nodeIds": [
+      5230617665,
+      9147886743,
+      9147883563,
+      9160116433,
+      9147886523,
+      9147883544,
+      9160115812,
+      9147886574,
+      5230023398,
+      10079583404,
+      10079583407,
+      10079583409,
+      10079583411,
+      10079583413,
+      14072871985,
+      14072871990
+    ],
+    "edgeWayIds": [
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      742037844,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978,
+      1101437978
+    ],
+    "coordinates": [
+      [
+        101.7358267,
+        26.4808022
+      ],
+      [
+        101.7360611,
+        26.4806426
+      ],
+      [
+        101.7363668,
+        26.4804201
+      ],
+      [
+        101.7367637,
+        26.4801105
+      ],
+      [
+        101.7371447,
+        26.4797862
+      ],
+      [
+        101.7375853,
+        26.4793899
+      ],
+      [
+        101.7379582,
+        26.4790446
+      ],
+      [
+        101.73839,
+        26.4785894
+      ],
+      [
+        101.7390985,
+        26.4778035
+      ],
+      [
+        101.7391454,
+        26.4777542
+      ],
+      [
+        101.7403976,
+        26.4764365
+      ],
+      [
+        101.7405026,
+        26.4763259
+      ],
+      [
+        101.7408696,
+        26.4759397
+      ],
+      [
+        101.7416386,
+        26.4751305
+      ],
+      [
+        101.743726,
+        26.4729384
+      ],
+      [
+        101.745703,
+        26.4707994
+      ]
+    ],
+    "nodeVersions": {
+      "5230617665": 3,
+      "9147886743": 2,
+      "9147883563": 3,
+      "9160116433": 2,
+      "9147886523": 3,
+      "9147883544": 3,
+      "9160115812": 2,
+      "9147886574": 2,
+      "5230023398": 7,
+      "10079583404": 2,
+      "10079583407": 2,
+      "10079583409": 2,
+      "10079583411": 2,
+      "10079583413": 2,
+      "14072871985": 1,
+      "14072871990": 1
+    },
+    "wayVersions": {
+      "742037844": 20,
+      "1101437978": 9
+    },
+    "operatorEvidence": {
+      "kind": "original-way-operator",
+      "urls": [
+        "https://www.openstreetmap.org/way/742037844/history/20",
+        "https://www.openstreetmap.org/way/1101437978/history/9"
+      ],
+      "support": "Every original path way explicitly and exactly names operator 中国铁路成都局集团, name 峨广线 and ref 0084. This independent physical identity keeps that precise operating-agency string. Context relation10259709v159 retains its separate generic 中国铁路 operator; no relation membership is invented for omitted way742037844. Legal infrastructure ownership is not asserted."
+    },
+    "passengerEvidence": {
+      "kind": "reviewed-official-corridor",
+      "sourceRelationIds": [
+        10259709
+      ],
+      "sourceNames": [
+        "峨广线"
+      ],
+      "urls": [
+        "https://www.thepaper.cn/newsDetail_forward_21310477",
+        "https://www.ndrc.gov.cn/fggz/zcssfz/dffz/202302/t20230228_1350104.html"
+      ],
+      "support": "China Railway official institutional publication dated2022-12-26 explicitly enumerates operating Miyi East–Panzhihua South and Panzhihua South–Yongren portions and CR200J passenger service on the new Chengdu–Kunming railway. NDRC corroborates corridor passenger operation. Original active mainline ways742037844v20 and1101437978v9 exactly name 峨广线 ref0084 and the same operating bureau, and contain no siding/yard/spur/crossover/freight/inactive exclusion. This is reviewed corridor-level passenger evidence, not a direct passenger_lines way tag or train-specific dispatch/platform proof. May2020 source start_date is not asserted as passenger opening."
+    },
+    "reviewedAt": "2026-10-19",
+    "validFrom": null,
+    "validTo": null,
+    "temporalEvidence": "Snapshot-pinned original nodes/ways; no individual-track opening date or legal ownership inferred. Both existing PNE anchors unchanged; 15 real adjacent original edges only."
+  }
+}

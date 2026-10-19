@@ -1,0 +1,57 @@
+{
+  "format": "jtm-shingai-main-georeference-v1",
+  "lineID": "jp-四国旅客鉄道-土讃線",
+  "stationID": "008946",
+  "reviewedAt": "2026-10-12",
+  "viewport": [
+    1211,
+    865
+  ],
+  "mapRegion": {
+    "west": 133.69276,
+    "east": 133.697217,
+    "north": 33.650993,
+    "south": 33.648343
+  },
+  "stationFrame": {
+    "passengerPlatformLongAxisPixels": [
+      [
+        798,
+        453
+      ],
+      [
+        721,
+        637
+      ]
+    ],
+    "centreRailPixel": [
+      777,
+      545
+    ],
+    "selection": "Longitudinal middle of narrow passenger platform projected transversely onto identified station spur; forecourt/buildings excluded"
+  },
+  "inverseMercatorCoordinate": [
+    133.69561969364162,
+    33.649323356329006
+  ],
+  "displayAnchor": [
+    133.69564329614758,
+    33.64931317260064
+  ],
+  "projectionTransverseMetres": 2.460763643724816,
+  "status": "candidate pending full native comparison, not production acceptance",
+  "sources": [
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-shingai-station-frame-detail-before-basemap.png",
+      "sha256": "b948f2bcaa2d4a7f27613f2abe2fb19403446fe96465cde4c8b947fa320a8be6"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-shingai-station-frame-detail-before-basemap.ax.txt",
+      "sha256": "0347c344bf54cbadf516a9565711e0f6b82728dea0ea386bed3afbcaa5f4feee"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-shingai-station-frame-detail-before-overlay.png",
+      "sha256": "5ffe1d59f190ce684f19c324ef8bc29505dd153ce3b80a19fb12953ebfbf0198"
+    }
+  ]
+}

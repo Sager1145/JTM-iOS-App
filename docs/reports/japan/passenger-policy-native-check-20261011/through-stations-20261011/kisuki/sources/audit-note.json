@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-11",
+  "currentPassengerEvidence": {
+    "publisher": "JR West",
+    "published": "2026-03-16",
+    "url": "https://www.westjr.co.jp/press/article/items/260316_00_press_kisukisen_bingoochiai_daikoubus.pdf",
+    "scope": "2026 announced passenger timetable including Izumo-Sakane/Miinohara; specific maintenance bus windows, not blanket permanent suspension. Current daily disruption not certified."
+  },
+  "nativeEvidence": "../../../parallel-instance-kisuki-keiyo/current-kisuki15-reverse-bends-view4-z19-*",
+  "finding": "Source, display and smooth paths jointly bow west of original labelled Kisuki Line black track. GSI ftCode2801 orgGILvl25000 coordinates near35.0833 reproduce coarse source to about1m; no independent track-level positioning established. Do not nearest-track snap or erase the reverse curve.",
+  "scope": "Only selected high-risk station/reversal/bend views; whole line unresolved."
+}

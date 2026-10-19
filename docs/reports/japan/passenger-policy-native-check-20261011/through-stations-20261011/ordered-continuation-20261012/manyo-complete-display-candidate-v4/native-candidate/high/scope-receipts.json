@@ -1,0 +1,110 @@
+{
+  "format": "jtm-manual-native-scope-v1",
+  "lineID": "jp-万葉線-高岡軌道線",
+  "intervalCount": 17,
+  "viewCount": 50,
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000423",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 1,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000424",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 2,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000432",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 3,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000433",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 4,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000434",
+      "viewpointCount": 4,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 5,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000435",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 6,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000436",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 7,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000437",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 8,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000438",
+      "viewpointCount": 2,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 9,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000439",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 10,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000425",
+      "viewpointCount": 2,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 11,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000426",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 12,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000427",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 13,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000428",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 14,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000429",
+      "viewpointCount": 2,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 15,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000430",
+      "viewpointCount": 2,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    },
+    {
+      "intervalIndex": 16,
+      "captureDirectory": "/private/tmp/jtm-manyo-takaoka-complete-native-candidate-v4/captures/000431",
+      "viewpointCount": 3,
+      "wholeLineRenderDependency": "984f76db9ce0aa3646ced7f35a2ce722b6f748ded5a803ff79b838053ad82568"
+    }
+  ]
+}

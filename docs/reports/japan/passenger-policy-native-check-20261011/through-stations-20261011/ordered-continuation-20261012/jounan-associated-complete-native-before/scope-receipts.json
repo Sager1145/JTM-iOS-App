@@ -1,0 +1,303 @@
+[
+  {
+    "path": "captures/001601/000001/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-本町線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001601/000000/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-本町線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001600/000001/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-本町線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001600/000000/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-本町線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001576/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-城北線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001576/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-城北線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001582/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 6,
+    "itemID": "jp-伊予鉄道-城北線#6",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001582/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 6,
+    "itemID": "jp-伊予鉄道-城北線#6",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001578/000002/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-城北線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001578/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-城北線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001578/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-城北線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001579/000002/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-城北線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001579/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-城北線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001579/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-城北線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001583/000002/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 7,
+    "itemID": "jp-伊予鉄道-城北線#7",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001583/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 7,
+    "itemID": "jp-伊予鉄道-城北線#7",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001583/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 7,
+    "itemID": "jp-伊予鉄道-城北線#7",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001577/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-城北線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001577/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-城北線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001599/000001/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-本町線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001599/000000/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-本町線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001597/000002/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-大手町線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001597/000001/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-大手町線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001597/000000/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "itemID": "jp-伊予鉄道-大手町線#2",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001596/000001/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-大手町線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001596/000000/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 1,
+    "itemID": "jp-伊予鉄道-大手町線#1",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001598/000002/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-大手町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001598/000001/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-大手町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001598/000000/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-大手町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001602/000002/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-本町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001602/000001/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-本町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001602/000000/view.json",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "itemID": "jp-伊予鉄道-本町線#3",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001581/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 5,
+    "itemID": "jp-伊予鉄道-城北線#5",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001581/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 5,
+    "itemID": "jp-伊予鉄道-城北線#5",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001580/000001/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 4,
+    "itemID": "jp-伊予鉄道-城北線#4",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001580/000000/view.json",
+    "lineID": "jp-伊予鉄道-城北線",
+    "intervalIndex": 4,
+    "itemID": "jp-伊予鉄道-城北線#4",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001595/000001/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-大手町線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001595/000000/view.json",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-大手町線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001617/000002/view.json",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-花園線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001617/000001/view.json",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-花園線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001617/000000/view.json",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-花園線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001618/000001/view.json",
+    "lineID": "jp-伊予鉄道-連絡線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-連絡線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  },
+  {
+    "path": "captures/001618/000000/view.json",
+    "lineID": "jp-伊予鉄道-連絡線",
+    "intervalIndex": 0,
+    "itemID": "jp-伊予鉄道-連絡線#0",
+    "intervalIdentityPlan": "identity-plan-78f1a13e621eda0bab622ab49fbc2897263d85ed7c01bcf9f1bfdb34bb004350.json"
+  }
+]

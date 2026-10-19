@@ -1,0 +1,100 @@
+[
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 0,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000000",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.24078,
+        "longitude": 139.12106
+      },
+      "distanceMetres": 0,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 0
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 1,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000001",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23886868912537,
+        "longitude": 139.11802733176754
+      },
+      "distanceMetres": 350,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 1
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 2,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000002",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23690267609489,
+        "longitude": 139.11503085775
+      },
+      "distanceMetres": 700,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 2
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 3,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000003",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23458200996093,
+        "longitude": 139.11244592491394
+      },
+      "distanceMetres": 1050,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 3
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 4,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000004",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23402688652164,
+        "longitude": 139.10883868108323
+      },
+      "distanceMetres": 1400,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 4
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 5,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000005",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23385369606093,
+        "longitude": 139.10501264792583
+      },
+      "distanceMetres": 1750,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 5
+    }
+  },
+  {
+    "itemID": "jp-小田急箱根-鉄道線#3",
+    "ordinal": 6,
+    "directory": "/private/tmp/jtm-hakone-yamasaki-final-evidence/captures/003416/000006",
+    "viewpoint": {
+      "coordinate": {
+        "latitude": 35.23354,
+        "longitude": 139.10395
+      },
+      "distanceMetres": 1854.931671970429,
+      "itemID": "jp-小田急箱根-鉄道線#3",
+      "pointOrdinal": 6
+    }
+  }
+]

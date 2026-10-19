@@ -1,0 +1,47 @@
+{
+  "action" : "capture",
+  "candidateTasksPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/candidate-tasks.json",
+  "capturedCount" : 20,
+  "captureIndexPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/capture-index.json",
+  "captureSettings" : {
+    "appearance" : "light",
+    "basemapStyle" : "standard",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "currentReviewerObservationCount" : 0,
+  "dependencies" : {
+    "diagnosticContract" : "rail-diagnostics-v1",
+    "lineRender" : "cb74e6046abff6d4e8650924b8e2c08f5f5cebf70a27098ee4878221e0f235f3",
+    "packageVersion" : "2025.5.2"
+  },
+  "dependenciesVerified" : true,
+  "evidencePaths" : [
+    "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment",
+    "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/alignment-geometry.json"
+  ],
+  "failedCount" : 0,
+  "itemIDs" : [
+    "jp-東日本旅客鉄道-京葉線-2#0"
+  ],
+  "mainFinalCheck" : "pending — separate production composition evidence required",
+  "message" : "20\/20 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "packageInputPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-candidate-20261018\/jp-2025.json",
+  "packageInputSource" : "request",
+  "pendingCount" : 0,
+  "requestID" : "keiyo-ebigawa-candidate",
+  "requestPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/request.json",
+  "reviewMessage" : "",
+  "reviewNotesPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/review-notes.json",
+  "runStatusPath" : "\/private\/tmp\/jtm-keiyo-ebigawa-native-20261018\/run-status.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:38:21Z",
+  "verdict" : "pendingReview",
+  "workspace" : "alignment"
+}

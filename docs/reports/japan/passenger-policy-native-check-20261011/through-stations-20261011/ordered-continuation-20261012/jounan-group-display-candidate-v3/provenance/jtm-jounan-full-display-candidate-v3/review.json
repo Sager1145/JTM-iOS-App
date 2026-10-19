@@ -1,0 +1,49 @@
+{
+  "format": "jtm-jounan-full-display-candidate-review-v3",
+  "verdict": "draft-for-root-raw-review",
+  "baseCandidateSHA256": "659e3c97f7fa906696b166ace66070147ae6dd692bd6b3d49974a3f9758073bf",
+  "changedIntervals": [
+    7,
+    8
+  ],
+  "unchangedIntervalsExactV2Reuse": {
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true,
+    "4": true,
+    "5": true,
+    "6": true,
+    "9": true,
+    "10": true
+  },
+  "actualChangedRawAssociationsReviewed": 7,
+  "finiteCoordinates": true,
+  "zeroLengthEdges": 0,
+  "exactAdjacentIntervalJoins": "10/10",
+  "kamiichiman": {
+    "v2Pixel": [
+      500,
+      374
+    ],
+    "v3Pixel": [
+      500,
+      365
+    ],
+    "alongRailCorrectionPixels": 9,
+    "v3Coordinate": [
+      132.77543768220903,
+      33.84664069810837
+    ],
+    "sharedWithRenraku": true
+  },
+  "continuity": "Interval 7 retains its V2 own-rail tail and extends straight to the midpoint. Interval 8 replaces only its old start, and its next point remains north of the new midpoint; no translation hook or reversal is introduced.",
+  "identityCorrection": "The diagonal frame is Heiwadori 1-chome on Renraku. The north-south frame is Kamiichiman, shared exactly between Renraku and Jounan.",
+  "pending": [
+    "Root raw-cartographic acceptance of the five changed Jounan and two Renraku projections",
+    "Johoku Heiwadori 1-chome horizontal-frame selection",
+    "Native Inspector and Main acceptance"
+  ],
+  "productionSourceModified": false,
+  "physicalTopologyChanged": false
+}

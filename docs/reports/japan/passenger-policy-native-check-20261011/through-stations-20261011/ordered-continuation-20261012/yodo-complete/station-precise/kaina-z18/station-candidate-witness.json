@@ -1,0 +1,224 @@
+{
+  "format": "jtm-kaina-station-candidate-witness-v1",
+  "status": "candidate-only",
+  "stationID": "009571",
+  "lineID": "jp-土佐くろしお鉄道-中村線",
+  "rawPhysicalCoordinate": [
+    133.11607,
+    33.13303
+  ],
+  "view": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/station-precise/kaina-z18/view.json",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.13302999999995,
+    "longitude": 133.11607000000004,
+    "mapPointsPerPoint": 3.9999999962747097,
+    "metresPerPoint": 0.4982020470338276,
+    "pitch": 0,
+    "rectHeight": 2616,
+    "rectWidth": 3996.0000000298023,
+    "rectX": 233474265.97604984,
+    "rectY": 108006045.93390131,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.000000001343615
+  },
+  "mapRect": {
+    "height": 2616,
+    "width": 3996.0000000298023,
+    "x": 233474265.97604984,
+    "y": 108006045.93390131
+  },
+  "actualDimensions": [
+    999,
+    654
+  ],
+  "panelsActuallyOpened": [
+    "basemap.png",
+    "display.png",
+    "smooth.png"
+  ],
+  "ownLightWestFaceEndsApprox": [
+    [
+      504,
+      305
+    ],
+    [
+      527,
+      370
+    ]
+  ],
+  "faceLongMidpoint": [
+    515.5,
+    337.5
+  ],
+  "excluded": "Separate long gray east road; broad purple casing beyond own narrow light face not used for chainage.",
+  "ownBlackSleeperRailSupports": [
+    [
+      524,
+      330
+    ],
+    [
+      527,
+      340
+    ],
+    [
+      530,
+      350
+    ],
+    [
+      533,
+      360
+    ],
+    [
+      539.5,
+      380
+    ],
+    [
+      546,
+      400
+    ]
+  ],
+  "normalFit": {
+    "xIntercept": 419.95588235294116,
+    "xPerY": 0.31470588235294117,
+    "candidatePixel": [
+      525.2076718431471,
+      334.44493856700956
+    ]
+  },
+  "candidateDisplayAlias": [
+    133.11620790669843,
+    33.13299655596097
+  ],
+  "uncertainty": {
+    "normalPixelsApprox": 1,
+    "chainagePixelsApprox": 2,
+    "cartographyNotSurvey": true
+  },
+  "northApproachPixels": [
+    [
+      508,
+      280
+    ],
+    [
+      518,
+      310
+    ],
+    [
+      525.2076718431471,
+      334.44493856700956
+    ]
+  ],
+  "northApproachCoordinates": [
+    [
+      133.1161155975534,
+      33.13324113238581
+    ],
+    [
+      133.1161692417337,
+      33.13310636709176
+    ],
+    [
+      133.11620790669843,
+      33.13299655596097
+    ]
+  ],
+  "southApproachPixels": [
+    [
+      525.2076718431471,
+      334.44493856700956
+    ],
+    [
+      530,
+      350
+    ],
+    [
+      539.5,
+      380
+    ],
+    [
+      546,
+      400
+    ],
+    [
+      552,
+      420
+    ],
+    [
+      561,
+      450
+    ],
+    [
+      587,
+      550
+    ],
+    [
+      596,
+      600
+    ],
+    [
+      599,
+      625
+    ]
+  ],
+  "southApproachCoordinates": [
+    [
+      133.11620790669843,
+      33.13299655596097
+    ],
+    [
+      133.11623361475006,
+      33.132926679711176
+    ],
+    [
+      133.11628457672134,
+      33.13279191393436
+    ],
+    [
+      133.11631944543853,
+      33.132702069968204
+    ],
+    [
+      133.1163516319467,
+      33.132612225910094
+    ],
+    [
+      133.11639991170898,
+      33.13247745965052
+    ],
+    [
+      133.11653938657776,
+      33.132028237291
+    ],
+    [
+      133.11658766634002,
+      33.131803625249184
+    ],
+    [
+      133.1166037595941,
+      33.13169131901276
+    ]
+  ],
+  "supportWarnings": [
+    "North(518,310) interpolates the locally occluded rail between supported flanks, not a ranked dark road/text pixel.",
+    "South450→550 spans Nakamura label; inferred continuity from clear sleeper flanks, no label pixels used.",
+    "All interval bodies outside this precise raw need complete own-native review."
+  ],
+  "requiredIntervals": [
+    1,
+    2
+  ],
+  "southResumeOriginalIndex": 4,
+  "southResumeOriginalCoordinate": [
+    133.11663,
+    33.13151
+  ],
+  "southResumeOriginalPixelApprox": [
+    603.8915661975407,
+    665.3625647351146
+  ],
+  "forwardPolicy": "Both Naka1 end/Naka2 start equal candidate alias literally. Naka2 drops old prefix0..3 and uses south controls, then original index4; never return to old raw station. Physical coords/IDs/km stay unchanged.",
+  "formalAcceptance": false
+}

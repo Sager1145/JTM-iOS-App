@@ -1,0 +1,76 @@
+{
+  "instances": [
+    {
+      "app": "/private/tmp/jtm-rail-alignment-inspector/Build/Products/Debug-maccatalyst/RailAlignmentInspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector",
+      "version": "0.1",
+      "build": "2",
+      "revision": "20261011-instance-isolation-v5",
+      "uuid": "E187A5AA-9713-34E4-9F22-DE078340C46B",
+      "icon": "8211578acee3cb27a86801029220084157e22ca1db0ece1555ccc8d67277c24b",
+      "assets": "98ee95f0bf71d4d6317be99bf30676570b62f97277096f0773c06da6aa2547bd",
+      "output": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence",
+      "planKeys": [
+        "format",
+        "items",
+        "packageVersion",
+        "spacingMetres"
+      ],
+      "mode": "full-batch-running",
+      "reviewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/reviews.json",
+      "windowTitle": "Rail Alignment Inspector",
+      "packageSHA256": "a63358b8729444f213597370d16a2b99ab72cfa7d117df2bc56138ead3b831d6",
+      "logoObserved": true
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector.parallel.kisuki-keiyo",
+      "version": "0.1",
+      "build": "2",
+      "revision": "20261011-instance-isolation-v5",
+      "uuid": "E187A5AA-9713-34E4-9F22-DE078340C46B",
+      "icon": "8211578acee3cb27a86801029220084157e22ca1db0ece1555ccc8d67277c24b",
+      "assets": "98ee95f0bf71d4d6317be99bf30676570b62f97277096f0773c06da6aa2547bd",
+      "output": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence",
+      "planKeys": [
+        "format",
+        "items",
+        "packageVersion",
+        "spacingMetres"
+      ],
+      "mode": "manual",
+      "reviewPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-kisuki-keiyo/evidence/reviews.json",
+      "windowTitle": "Kisuki Keiyo Inspector",
+      "packageSHA256": "a63358b8729444f213597370d16a2b99ab72cfa7d117df2bc56138ead3b831d6",
+      "logoObserved": true
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Hakone Inspector.app",
+      "bundleID": "com.JRM.RailAlignmentInspector.parallel.hakone",
+      "version": "0.1",
+      "build": "2",
+      "revision": "20261011-instance-isolation-v5",
+      "uuid": "E187A5AA-9713-34E4-9F22-DE078340C46B",
+      "icon": "8211578acee3cb27a86801029220084157e22ca1db0ece1555ccc8d67277c24b",
+      "assets": "98ee95f0bf71d4d6317be99bf30676570b62f97277096f0773c06da6aa2547bd",
+      "output": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence",
+      "planKeys": [
+        "format",
+        "items",
+        "packageVersion",
+        "spacingMetres"
+      ],
+      "mode": "manual",
+      "reviewPath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/parallel-instance-hakone/evidence/reviews.json",
+      "windowTitle": "Hakone Inspector",
+      "packageSHA256": "a63358b8729444f213597370d16a2b99ab72cfa7d117df2bc56138ead3b831d6",
+      "logoObserved": true
+    }
+  ],
+  "build": "bash ios/verify.sh build --target alignment: BUILD SUCCEEDED",
+  "snapshot": "Native restart preserved 1773 receipts; resumed beyond 1780/92218, zero failures. Partial capture, no alignment PASS.",
+  "defaultHistory": "Original /Users/sager/Library/Application Support/RailAlignmentInspector/reviews.json retained; no copying/deletion/rewrite by packaging",
+  "versionMarking": "Metadata only after the single successful compile; no extra compile",
+  "iconAndAssetsEqual": true,
+  "packageEqual": true
+}

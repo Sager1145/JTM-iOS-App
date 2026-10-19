@@ -1,0 +1,798 @@
+{
+  "status": "rejected-baseline-body-departures-endpoint-precision-pending",
+  "reviewScope": [
+    "jp-土佐くろしお鉄道-中村線#3",
+    "jp-四国旅客鉄道-予讃線#86"
+  ],
+  "actualReviewedViews": 24,
+  "actualReviewedPanels": 72,
+  "method": "All24 actualview JSON identity/camera records read. All72 original panels opened via labeled triptychs; rescaled3072x792 to2048x528 by tool. Fulloriginal basemap/display additionally opened Naka3view8,Yosan86view0 and3.",
+  "findings": [
+    {
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "body": "Ownlabeledblue passengerband follows Iyoki–Kumai–Nakakado–Sakaori–Saga, distinct road56/river. Modestvarying body offsets aroundIyoki0–1,forest2–4,Sakaori6–7; completefit needed to eliminateoffsets and integrate newIyoki guard. Straight sections close; no wrongroad corridor observed.",
+      "outerEndpoint": "TosaSaga009586 atview8 sourcecentre inside mappedstationextent. Glyph atz17 insufficient exact narrowface longitudinalmidpoint or ownrailnormal allocation; retainpendinghighzoomdecision, noNaka4scope claim."
+    },
+    {
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "body": "Concrete varying larger departures onChinaga broadcurve3–4, eaststraight5–9,Takagushi11–13. Labeled ownblue distinct fromroad56/274 andriver. Fullbodyfit needed, no uniformtranslation or nearbyroad trace.",
+      "outerEndpoint": "IyoYoshida009434 atview0 sourcecentre inside mappedplatformgroup extent. Precise lightface endpoints/group normal cannot be certified fromz17 sourcecentre; pendinghighzoomdecision, noYosan85scope claim."
+    }
+  ],
+  "records": [
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 0,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.105009,
+        "longitude": 133.098333,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9967175776330405,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233458942.31026348,
+        "rectY": 108029228.84684606,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.10188227985276,
+        "longitude": 133.09843179524535,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9967525427176357,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233459015.97733772,
+        "rectY": 108032012.05186027,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.09892002415544,
+        "longitude": 133.09969943512286,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9967856659014821,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233459961.1981393,
+        "rectY": 108034648.76986542,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.095940914698126,
+        "longitude": 133.10091193525423,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9968189748422374,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233460865.30376613,
+        "rectY": 108037300.39986186,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.092837603676955,
+        "longitude": 133.10129336089935,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9968536695837606,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233461149.71534112,
+        "rectY": 108040062.48296975,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.08971292372286,
+        "longitude": 133.1016835865876,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9968886002620772,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233461440.68870378,
+        "rectY": 108042843.4868608,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.086619270239346,
+        "longitude": 133.1023702432538,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9969231811645661,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233461952.6970241,
+        "rectY": 108045596.77944706,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000007/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.08356785791753,
+        "longitude": 133.1019959522342,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9969572870366843,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233461673.60541156,
+        "rectY": 108048312.38331924,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-土佐くろしお鉄道-中村線",
+      "intervalIndex": 3,
+      "viewOrdinal": 8,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002970/000008/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.081189,
+        "longitude": 133.101395,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9969838737470663,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233461225.50294757,
+        "rectY": 108050429.38215604,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-土佐くろしお鉄道-中村線#3",
+      "fromStation": "009579",
+      "toStation": "009586",
+      "wholeLineRenderDependency": "f143cbcd820ef98fd024f368385be6b73ce037f757dc7d54cddfa52f4fa7998d",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 0,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.27341,
+        "longitude": 132.544315,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9948300050164769,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233045836.54786843,
+        "rectY": 107879182.41481626,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.270386739023266,
+        "longitude": 132.54341,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.994863968244163,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233045161.73095822,
+        "rectY": 107881878.70716889,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26741398043189,
+        "longitude": 132.54409632263722,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.994897361417577,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233045673.49020845,
+        "rectY": 107884529.86799583,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.264508631265386,
+        "longitude": 132.54294198326656,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949299947785564,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233044812.7523881,
+        "rectY": 107887120.82466057,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26356572023359,
+        "longitude": 132.54618503037463,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949405851586871,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233047230.94358054,
+        "rectY": 107887961.68324988,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26337270507232,
+        "longitude": 132.5499321301117,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949427529904548,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233050024.9836544,
+        "rectY": 107888133.80701914,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.263746897299285,
+        "longitude": 132.55362768610286,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949385502750981,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233052780.58992568,
+        "rectY": 107887800.11590955,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000007/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26537828331304,
+        "longitude": 132.55682327705273,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949202269726998,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233055163.39524186,
+        "rectY": 107886345.28809665,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 8,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000008/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.265668763009515,
+        "longitude": 132.56054172183278,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.994916964295541,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233057936.06863117,
+        "rectY": 107886086.24297342,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 9,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000009/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26552206954647,
+        "longitude": 132.56430211224654,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.994918611964371,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233060740.01895183,
+        "rectY": 107886217.06195304,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 10,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000010/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26487449592818,
+        "longitude": 132.56789637235568,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949258854676912,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233063420.09353903,
+        "rectY": 107886794.55554421,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 11,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000011/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.26223773589697,
+        "longitude": 132.56971112844332,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949555000613701,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233064773.27375543,
+        "rectY": 107889145.9227832,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 12,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000012/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.25945050526218,
+        "longitude": 132.57114899459523,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9949868023553042,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233065845.424467,
+        "rectY": 107891631.39709598,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 13,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000013/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.25692030449088,
+        "longitude": 132.5732282052237,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9950152160004984,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233067395.79628137,
+        "rectY": 107893887.59992084,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "lineID": "jp-四国旅客鉄道-予讃線",
+      "intervalIndex": 86,
+      "viewOrdinal": 14,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000014/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.25598,
+        "longitude": 132.573505,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9950257749340276,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233067602.18942583,
+        "rectY": 107894726.06125385,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "intervalID": "jp-四国旅客鉄道-予讃線#86",
+      "fromStation": "009434",
+      "toStation": "009452",
+      "wholeLineRenderDependency": "122c4dedbdc19ea07ae204e941d33f3511569227a7ffb5b505da2e9989e51787",
+      "intervalIdentityPlan": "identity-plan-f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b.json",
+      "actualPanelsOpened": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    }
+  ],
+  "limits": [
+    "Baseline review only; no candidate/native/Main acceptance.",
+    "Actual recordidentities/wholeLineRenderDependency hashes recorded, but old namedplanf28a does not itself prove newlyexpandedcandidate arrays; frozen integration requires owner dependency binding.",
+    "No exact ownpixel residual measured in this bounded baseline review; visual bodyoffsets are decisive directions, not surveying.",
+    "Tunnel/label cartography not physical individualrailproof. Additional neighboringinterval scope only on concrete endpoint witness."
+  ]
+}

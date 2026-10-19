@@ -1,0 +1,105 @@
+{
+  "caseIndex": 3,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 3,
+  "source": {
+    "caseIndex": 3,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 3,
+    "fromStationID": "003128",
+    "toStationID": "003140",
+    "camera": [
+      35.7855675,
+      139.67591,
+      0.009956805544128516
+    ],
+    "effectiveCoordinates": [
+      [
+        139.67268,
+        35.78708
+      ],
+      [
+        139.67367,
+        35.78699
+      ],
+      [
+        139.67381,
+        35.78697
+      ],
+      [
+        139.67523,
+        35.78685
+      ],
+      [
+        139.67593,
+        35.78679
+      ],
+      [
+        139.67693,
+        35.78667
+      ],
+      [
+        139.67741,
+        35.78662
+      ],
+      [
+        139.67778,
+        35.78655
+      ],
+      [
+        139.67797,
+        35.78649
+      ],
+      [
+        139.67822,
+        35.78642
+      ],
+      [
+        139.67846,
+        35.78629
+      ],
+      [
+        139.67863,
+        35.78617
+      ],
+      [
+        139.67876,
+        35.78606
+      ],
+      [
+        139.67898,
+        35.78578
+      ],
+      [
+        139.67907,
+        35.78553
+      ],
+      [
+        139.67913,
+        35.78534
+      ],
+      [
+        139.67914,
+        35.78511
+      ],
+      [
+        139.67914,
+        35.78477
+      ],
+      [
+        139.67914,
+        35.78469
+      ],
+      [
+        139.67906,
+        35.784055
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:1032;camera:16.51;lod:15.36;backbones:1;networkStations:3;distance:2185.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.785568;centerLon:139.675910;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:5512.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:4;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.785568;centerLon:139.675910;distance:2185.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/01.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

@@ -1,0 +1,27 @@
+{
+  "lineID": "jp-伊予鉄道-城北線",
+  "intervalIndex": 6,
+  "plannedCamera": [
+    33.852360459154255,
+    132.75741275463105,
+    0.004
+  ],
+  "actualCenter": [
+    33.85236,
+    132.757413
+  ],
+  "actualMapBounds": [
+    132.755148,
+    33.85036,
+    132.759677,
+    33.85436
+  ],
+  "completeIntervalInsideActualMap": true,
+  "displayBranchLeadInsInsideActualMap": true,
+  "renderStatus": "16 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1161;camera:17.86;lod:16.71;backbones:0;networkStations:5;distance:877.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:33.852360;centerLon:132.757413;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3150.0;rebuilds:4;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "pixelReview": "pending",
+  "pair": [
+    "johoku-interval-06-overlay.png",
+    "johoku-interval-06-basemap.png"
+  ]
+}

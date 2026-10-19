@@ -1,0 +1,72 @@
+{
+  "schema": "cn-boundary-d271-native-context/1",
+  "buildLog": "/private/tmp/cn-boundary-20261019/release-arm64-build.log",
+  "initialDefaultMultiArchBuildInterrupted": {
+    "exitCode": 75,
+    "log": "/private/tmp/cn-boundary-20261019/release-build.log",
+    "reason": "default included unnecessary x86_64; corrected to arm64 and reused incremental products"
+  },
+  "sourceApp": "/private/tmp/jtm-rail-diagnostics/Build/Products/Release-maccatalyst/RailDiagnostics.app",
+  "isolatedApp": "/private/tmp/cn-boundary-20261019/ChinaRailComparison.app",
+  "bundleIdentifier": "com.JRM.RailDiagnostics.ChinaComparison.BoundaryD27120261019",
+  "compiledUUID": "UUID: B8FD2EEC-47F0-3FB3-AE63-7370C4FC356A (arm64) /private/tmp/cn-boundary-20261019/ChinaRailComparison.app/Contents/MacOS/RailDiagnostics",
+  "binaryHashBeforeResign": "4117d6b88c8795947c4929b07a71a1bade9297159c826327129572069aa4ffe9",
+  "binaryHashAfterResign": "4cf7c8885f3e804fed24e2322ff9b39b91fd4df48e7a400fd0c8e5b50932e230",
+  "executableBytesIdenticalBeforeResign": true,
+  "resourceInputHashes": {
+    "cn-2025.json": "7101bb0e5e3f5076e0ab31d49e9e9abd63235cce2471df5c212723e54c8a24ba",
+    "rail-sections-cn.json": "65e737b631a1d56dd8764d669b66849303925bb9011a721cca4c861a08729b8d",
+    "stations-cn.json": "9a2f7c12a1aad928efff26f0447f7bc5e1b4057647b8065779906cbbf765ed4c",
+    "station-readings-cn.json": "03083c114739497ffa7f00feba6cb01b3156af13104c9f1ebe7b8884a17f1607",
+    "station-names-cn.json": "dedfb53e8496b74d206ef9d6f701355fd7331e8cf13a03b89a46bec4bf9496e2",
+    "physical-rail-junctions.json": "8d06d65c54c68800fc8995743a88aa46b3a205b54f468fcae49452a1c322f99e"
+  },
+  "frozenInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+  "bundledCNRevision": "0f6ce85ec6d41ecc9db431a31d8ae04ac907bf89cefb2c5ac86943f9455ce2d6",
+  "graphCacheMode": "standard",
+  "shippingDefaultUnchanged": "bounded100000",
+  "status": "final176completed",
+  "initialResourceContext": "execution-context-before-gpm.json",
+  "resourceOnlyUpdate": {
+    "noCodeChangeOrRebuild": true,
+    "reusedCompiledUUID": "B8FD2EEC-47F0-3FB3-AE63-7370C4FC356A",
+    "addedOriginalEdges": 3,
+    "generator": "existing rail_resource_revisions.build_manifest; existing bundled timetable retained"
+  },
+  "binaryHashAfterResourceUpdate": "5793f2113b98132174e527c9b997f6a9d3b24e63d40dbd88001f0706f066776b",
+  "builtAppMatchScope": "Initial13pathsourceapp matched6CNassets before copiedisolatedapp signing; GPM3edge update reused unchanged compiledUUID and refreshed only3runtimeassets plus existing resource revision manifest. Currentisolatedbundle hashes correspond to currentproduction sources.",
+  "completedAt": "2026-10-19T08:50:40Z",
+  "nativeRows": 176,
+  "processID": 18257,
+  "invocationID": "1D8AB45E-B552-4F6E-818D-E71B223327F4",
+  "nativeDependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "fallbackGraphCacheMaximumNodes": "not-applicable",
+    "fallbackGraphCacheMode": "standard",
+    "journeyInputSHA256": "67dd98c13ecfd536517ef34d591eaceb088fb717aa5d41cf19e021f78a023335",
+    "rail/cn": "cn:0f6ce85ec6d41ecc9db431a31d8ae04ac907bf89cefb2c5ac86943f9455ce2d6"
+  },
+  "finalSession": "railway-sources/local/china/comparisons/real-trains-20261018/native-boundary-d271-final-session",
+  "originalExecutionSession": "/private/tmp/cn-boundary-20261019/native-boundary-d271-session",
+  "completedOwnProcessStoppedAfterExactPathAndInactiveCheck": true,
+  "structuralFailures": 0,
+  "remainingReviews": 714,
+  "baselineReuse": {
+    "baselineCommit": "d75307df9c812abf1259b86b75202ba7b0048679",
+    "verifiedFiles": [
+      "server.py",
+      "build_graph.py",
+      "data/rail_graph.pkl",
+      "data/stations.json",
+      "data/station_names.json",
+      "data/station_lanes.json",
+      "LICENSE"
+    ],
+    "result": "unchanged original inputs/implementation; reuse immutable original88-case results",
+    "noOriginalEngineRerun": true
+  },
+  "heavyNativeWindowReturned": true,
+  "focusedPSAfterExit": "No RailDiagnostics/Main/ChinaRailComparison/xcodebuild process",
+  "independentOutputReview": "boundary-d271-independent-output-review.json",
+  "finalResultReview": "boundary-d271-result-review.json"
+}

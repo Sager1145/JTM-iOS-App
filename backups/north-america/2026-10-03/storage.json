@@ -1,0 +1,24 @@
+{
+  "status": "local-and-verified-draft-github-backup",
+  "payload_files": 1002,
+  "payload_bytes": 1219923843,
+  "archive_files": 1006,
+  "package": {
+    "path": "backups/north-america/north-america-2026-10-03.tar.gz",
+    "name": "north-america-2026-10-03.tar.gz",
+    "bytes": 864038006,
+    "sha256": "51730f1dc783f19b1fa099611219acd5479f9a30f0c77a0d6335372ef486cb31"
+  },
+  "remote": {
+    "release_url": "https://github.com/Sager1145/JTM-iOS-App/releases/tag/untagged-842c18b341826f8983c5",
+    "release_id": 402645059,
+    "tag": "north-america-backup-2026-10-03",
+    "draft": true,
+    "asset_id": 608336899,
+    "asset_url": "https://github.com/Sager1145/JTM-iOS-App/releases/download/untagged-842c18b341826f8983c5/north-america-2026-10-03.tar.gz",
+    "size": 864038006,
+    "digest": "sha256:51730f1dc783f19b1fa099611219acd5479f9a30f0c77a0d6335372ef486cb31",
+    "state": "uploaded"
+  },
+  "note": "Original archive directory and complete compressed package preserved locally. User-authorized draft GitHub asset verified uploaded with matching byte count and server SHA-256. Draft remains unpublished; authenticated release access is required. Package contains 1002 payloads, README and three manifests; current storage metadata is separate."
+}

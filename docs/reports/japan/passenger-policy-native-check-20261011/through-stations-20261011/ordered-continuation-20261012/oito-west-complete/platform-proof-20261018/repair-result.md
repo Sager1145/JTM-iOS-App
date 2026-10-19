@@ -1,0 +1,11 @@
+# Own-platform display repair - 2026-10-18
+
+Applied app/scripts/railway/repair-yokohama-itoigawa-own-platform-display.mjs from frozen own-line evidence. Canonical station coordinates, IDs, mileage, segments and physical connectivity stay unchanged. Display parts, measured lane ranges and dependency references were updated for these owners only; no new follows or shared-family ownership.
+
+Five focused Node regressions passed (0.20s); repeated apply was idempotent. Initial 4/5 failure was a missing format identifier in the test fixture, corrected without weakening actual Web endpoint assertions. Independent read-only review found no blocker; removed an unused temporary field.
+
+Unified diagnostics now accepts captureSettings.basemapStyle=imagery, exposed by the human Basemap picker through the same request and native snapshotter. Standard contract stays unchanged; imagery receipts cannot reuse standard ones. Focused Swift round-trip 1/1 passed; diagnostic incremental build succeeded. Both baseline and candidate scopes completed without capture failure.
+
+Main incremental build succeeded: /private/tmp/jtm-own-platform-main-build.log. Actual same-camera network ON/OFF screenshots and AX are in main-final/. Bundled compact owner rows equal production. Own native chunk is retained there. This verifies the two reviewed display faults, not all hidden rails or whole-line platform acceptance.
+
+Itoigawa: official JR West Oito platform3/4 diagram, GSI2022-10 imagery and explicitly named own OSM bay track/platform cut-edge identify the correct platform. Old display anchor lay on the Shinkansen roof edge. New own anchor [137.86120633114302,37.043370483849635] moves about29.65m. Keep interval7 prefix through guard32; append frozen ownDisplayTail (17points including guard), yielding49points. Overlapping mapped railway does not grant physical/shared ownership. Baseline29/29 and candidate29/29. Parent inspected baseline23/25/26/27/28 and candidate23/26/28 approach/platform frames. Main rendered3lines/3overlays,3station annotations,budgetDrops0. Native own station exactly equals new anchor; native endpoint differs only by coordinate serialization rounding. Mapped platform-side108.57m is not official usable length. East cap is occluded: reference-assisted placement, not complete hidden-track pixel extraction.

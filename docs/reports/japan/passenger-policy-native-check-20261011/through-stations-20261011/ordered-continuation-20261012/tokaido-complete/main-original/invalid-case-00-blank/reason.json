@@ -1,0 +1,4 @@
+{
+  "reason": "Root pixel review found blank basemap grid in both frames, with no railway ink. AX network:rendered is insufficient. Not counted as valid pair.",
+  "rootReviewed": true
+}

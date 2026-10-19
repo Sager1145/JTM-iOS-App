@@ -1,0 +1,29 @@
+Window: "Untitled", App: Rail Diagnostics.
+0 sheet Secondary Actions: Raise
+	1 container
+		2 container Secondary Actions: Cancel
+			3 container ID: New diagnostic task, Secondary Actions: Cancel
+				4 button Description: Cancel  Esc, Secondary Actions: Cancel
+				5 button Description: Start task, Command Return, Secondary Actions: Cancel
+				6 heading Description: New diagnostic task, Secondary Actions: Cancel
+			7 container Secondary Actions: Cancel, Scroll Down, Scroll Up
+				8 heading Secondary Actions: Cancel
+					9 heading Description: Task, Secondary Actions: Cancel
+				10 pop up button Description: Workspace, Alignment & screenshots, Secondary Actions: Cancel
+				11 pop up button Description: Action, Capture screenshots, Secondary Actions: Cancel
+				12 text field (settable) Value: task-de6950d2, Placeholder: Task ID, Secondary Actions: Cancel
+				13 text field (settable) Placeholder: Session directory · absolute path, Secondary Actions: Cancel, Value: /Users/sager/Library/Application Support/RailDiagnostics/Sessions/98302b6f-5f60-48c3-a2f1-db1f8278f00e
+				14 text Secondary Actions: Cancel, Description: Each task keeps its request, progress, screenshots and results together. Use a new directory when requirements change.
+				15 heading Secondary Actions: Cancel
+					16 heading Description: Owning railway, Secondary Actions: Cancel
+				17 text field (settable) Placeholder: Search line name, operator or ID, Secondary Actions: Cancel
+				18 text field (settable) Placeholder: Exact line ID, Secondary Actions: Cancel
+				19 text field (settable) Placeholder: Intervals · optional, zero-based, comma-separated, Secondary Actions: Cancel
+20 menu bar
+	21 RailDiagnostics, ID: com.apple.menu.application
+	22 File, ID: com.apple.menu.file
+	23 Edit, ID: com.apple.menu.edit
+	24 View, ID: com.apple.menu.view
+	25 Diagnostics, ID: com.apple.menu.dynamic.50193402-FA15-47BF-B451-366EF7215DA3
+	26 Window, ID: com.apple.menu.window
+	27 Help, ID: com.apple.menu.help

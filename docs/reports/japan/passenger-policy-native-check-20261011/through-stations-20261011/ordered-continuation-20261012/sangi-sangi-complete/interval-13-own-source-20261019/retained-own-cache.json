@@ -1,0 +1,274 @@
+{
+  "path": "railway-sources/local/osm/degree-cells/E136N35.json",
+  "fetchedAt": "2026-08-18T10:17:07.262Z",
+  "elements": [
+    {
+      "id": 25888550,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.1675469,
+          "lon": 136.4820961
+        },
+        {
+          "lat": 35.1675954,
+          "lon": 136.4819471
+        },
+        {
+          "lat": 35.1677902,
+          "lon": 136.4813673
+        },
+        {
+          "lat": 35.1679341,
+          "lon": 136.4809917
+        },
+        {
+          "lat": 35.1681217,
+          "lon": 136.4806397
+        },
+        {
+          "lat": 35.1683199,
+          "lon": 136.4803204
+        },
+        {
+          "lat": 35.1685862,
+          "lon": 136.4799814
+        },
+        {
+          "lat": 35.168808,
+          "lon": 136.47973
+        },
+        {
+          "lat": 35.1692698,
+          "lon": 136.4792168
+        },
+        {
+          "lat": 35.1694567,
+          "lon": 136.4790083
+        },
+        {
+          "lat": 35.1697687,
+          "lon": 136.4786399
+        },
+        {
+          "lat": 35.1699594,
+          "lon": 136.4784254
+        }
+      ]
+    },
+    {
+      "id": 25888551,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.163805,
+          "lon": 136.4883667
+        },
+        {
+          "lat": 35.1642053,
+          "lon": 136.487782
+        }
+      ]
+    },
+    {
+      "id": 25888573,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.1642053,
+          "lon": 136.487782
+        },
+        {
+          "lat": 35.1646006,
+          "lon": 136.4871943
+        },
+        {
+          "lat": 35.1647514,
+          "lon": 136.4869665
+        }
+      ]
+    },
+    {
+      "id": 687369019,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年 国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.1647959,
+          "lon": 136.4868993
+        },
+        {
+          "lat": 35.164882,
+          "lon": 136.4867693
+        },
+        {
+          "lat": 35.1655522,
+          "lon": 136.4857766
+        },
+        {
+          "lat": 35.1660918,
+          "lon": 136.4849876
+        },
+        {
+          "lat": 35.1666457,
+          "lon": 136.4841697
+        },
+        {
+          "lat": 35.1669643,
+          "lon": 136.4836498
+        },
+        {
+          "lat": 35.1671452,
+          "lon": 136.4832752
+        },
+        {
+          "lat": 35.1672788,
+          "lon": 136.4829035
+        },
+        {
+          "lat": 35.167407,
+          "lon": 136.4825322
+        }
+      ]
+    },
+    {
+      "id": 687369023,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.1647514,
+          "lon": 136.4869665
+        },
+        {
+          "lat": 35.1647959,
+          "lon": 136.4868993
+        }
+      ]
+    },
+    {
+      "id": 1106728076,
+      "tags": {
+        "KSJ2:LIN": "三岐線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "name": "三岐鉄道三岐線",
+        "name:en": "Sangi Railway Sangi Line",
+        "name:ja": "三岐鉄道三岐線",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "三岐鉄道",
+        "operator:en": "Sangi Railway",
+        "operator:ja": "三岐鉄道",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.167407,
+          "lon": 136.4825322
+        },
+        {
+          "lat": 35.1675469,
+          "lon": 136.4820961
+        }
+      ]
+    }
+  ]
+}

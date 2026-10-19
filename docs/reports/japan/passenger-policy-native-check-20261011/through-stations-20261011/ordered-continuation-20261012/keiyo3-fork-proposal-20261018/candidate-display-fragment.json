@@ -1,0 +1,195 @@
+{
+  "format": "jtm-scoped-display-proposal-v1",
+  "status": "proposed-one-own-directional-track-support-pending-representative-native-review",
+  "lineID": "jp-東日本旅客鉄道-京葉線-3",
+  "interval": 0,
+  "operation": "replace only fork approach display window with explicitly own departure route support",
+  "baselineWindowIndicesInclusive": [
+    22,
+    34
+  ],
+  "baselineWindow": [
+    [
+      139.9556,
+      35.69726
+    ],
+    [
+      139.95562,
+      35.69702
+    ],
+    [
+      139.95566,
+      35.69677
+    ],
+    [
+      139.95579,
+      35.6962
+    ],
+    [
+      139.95595,
+      35.69561
+    ],
+    [
+      139.95622,
+      35.69479
+    ],
+    [
+      139.95624,
+      35.69475
+    ],
+    [
+      139.95631,
+      35.69447
+    ],
+    [
+      139.95623,
+      35.69376
+    ],
+    [
+      139.95617,
+      35.69336
+    ],
+    [
+      139.95602,
+      35.69278
+    ],
+    [
+      139.95564,
+      35.69183
+    ],
+    [
+      139.95546,
+      35.69147
+    ]
+  ],
+  "candidateWindow": [
+    [
+      139.95552343445306,
+      35.69725620960064
+    ],
+    [
+      139.9555323,
+      35.6971381
+    ],
+    [
+      139.9555554,
+      35.6969805
+    ],
+    [
+      139.9555908,
+      35.6967662
+    ],
+    [
+      139.9556465,
+      35.6965189
+    ],
+    [
+      139.955698,
+      35.6963381
+    ],
+    [
+      139.9558601,
+      35.6958314
+    ],
+    [
+      139.956138,
+      35.6947695
+    ],
+    [
+      139.9561601,
+      35.6946494
+    ],
+    [
+      139.9561837,
+      35.6943297
+    ],
+    [
+      139.9561998,
+      35.6941227
+    ],
+    [
+      139.9562016,
+      35.6937774
+    ],
+    [
+      139.956176,
+      35.6934965
+    ],
+    [
+      139.9561581,
+      35.693283
+    ],
+    [
+      139.9561129,
+      35.6930577
+    ],
+    [
+      139.9560874,
+      35.6929376
+    ],
+    [
+      139.9560374,
+      35.6927377
+    ],
+    [
+      139.9559677,
+      35.6925432
+    ],
+    [
+      139.9558888,
+      35.6922791
+    ],
+    [
+      139.9557735,
+      35.6919936
+    ],
+    [
+      139.9556161,
+      35.6917104
+    ],
+    [
+      139.95546769259715,
+      35.69146690730617
+    ]
+  ],
+  "boundaryProjectionOnSelectedOwnTrack": {
+    "start": {
+      "distanceMetres": 6.934699196210703,
+      "segment": 19,
+      "t": 0.6336550848551905,
+      "coordinate": [
+        139.95552343445306,
+        35.69725620960064
+      ]
+    },
+    "end": {
+      "distanceMetres": 0.7760409847488438,
+      "segment": 39,
+      "t": 0.5808508917749635,
+      "coordinate": [
+        139.95546769259715,
+        35.69146690730617
+      ]
+    }
+  },
+  "orderedSourceWayIDs": [
+    229030139,
+    180845372,
+    180845377,
+    180845376
+  ],
+  "ownRouteRelation": 14656632,
+  "keepOutsideWindow": true,
+  "direction": "Nishi-Funabashi southbound toward Ichikawa-Shiohama/Tokyo; west arm at split",
+  "competingEastArms": {
+    "180845369": {
+      "route": 14656663,
+      "destination": "Minami-Funabashi reverse service"
+    },
+    "229030138": {
+      "route": 14656664,
+      "destination": "Minami-Funabashi departure"
+    }
+  },
+  "limits": "Candidate uses one identified passenger direction as a geometric support, not a surveyed same-company corridor centre or final production representative. Resolve literal own blue corridor and display transition on native candidate; do not average opposite tracks automatically. Own station aliases, physical source/mileage/topology and lower shared trunk fork39 remain unchanged."
+}

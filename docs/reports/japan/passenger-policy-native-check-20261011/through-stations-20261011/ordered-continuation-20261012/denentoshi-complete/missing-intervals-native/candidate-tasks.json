@@ -1,0 +1,215 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東急電鉄-田園都市線#7\/lineOffset",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東急電鉄-田園都市線#7\/stationApproach",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東急電鉄-田園都市線#7\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004198",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004198"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004230",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004230"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#6\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#6",
+      "jp-東急電鉄-田園都市線#7"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004198"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#7\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#7",
+      "jp-東急電鉄-田園都市線#8"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004230"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東急電鉄-田園都市線#9\/lineOffset",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東急電鉄-田園都市線#9\/stationApproach",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東急電鉄-田園都市線#9\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004238",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004238"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004257",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004257"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#8\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#8",
+      "jp-東急電鉄-田園都市線#9"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004238"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#9\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#9",
+      "jp-東急電鉄-田園都市線#10"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004257"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東急電鉄-田園都市線#12\/lineOffset",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東急電鉄-田園都市線#12\/stationApproach",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東急電鉄-田園都市線#12\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004274",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004274"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東急電鉄-田園都市線\/station\/004290",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004290"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#11\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#11",
+      "jp-東急電鉄-田園都市線#12"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004274"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東急電鉄-田園都市線#12\/seam",
+    "itemIDs" : [
+      "jp-東急電鉄-田園都市線#12",
+      "jp-東急電鉄-田園都市線#13"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004290"
+  }
+]

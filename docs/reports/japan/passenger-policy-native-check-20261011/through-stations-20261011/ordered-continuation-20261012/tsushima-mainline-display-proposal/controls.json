@@ -1,0 +1,301 @@
+{
+  "format": "jtm-mainline-display-controls-v1",
+  "status": "proposal-only",
+  "lineID": "jp-名古屋鉄道-名古屋本線",
+  "sourceIntervals": {
+    "16": [
+      [
+        136.83595,
+        35.21093
+      ],
+      [
+        136.83798,
+        35.20912
+      ],
+      [
+        136.83835,
+        35.2088
+      ],
+      [
+        136.83968,
+        35.2076
+      ],
+      [
+        136.83985,
+        35.20745
+      ],
+      [
+        136.84012,
+        35.20721
+      ],
+      [
+        136.84056,
+        35.20677
+      ],
+      [
+        136.84092,
+        35.20634
+      ],
+      [
+        136.84128,
+        35.20589
+      ],
+      [
+        136.84159,
+        35.20538
+      ],
+      [
+        136.84181,
+        35.20493
+      ],
+      [
+        136.84214,
+        35.204205
+      ]
+    ],
+    "17": [
+      [
+        136.84247,
+        35.20348
+      ],
+      [
+        136.84326,
+        35.20165
+      ],
+      [
+        136.8436,
+        35.20087
+      ],
+      [
+        136.84381,
+        35.20038
+      ],
+      [
+        136.844,
+        35.2001
+      ],
+      [
+        136.84438,
+        35.19976
+      ],
+      [
+        136.84472,
+        35.19948
+      ],
+      [
+        136.84497,
+        35.19937
+      ],
+      [
+        136.845755,
+        35.19893
+      ]
+    ],
+    "18": [
+      [
+        136.84654,
+        35.19849
+      ],
+      [
+        136.84749,
+        35.19799
+      ],
+      [
+        136.84796,
+        35.19773
+      ],
+      [
+        136.85094,
+        35.19614
+      ],
+      [
+        136.85169,
+        35.19573
+      ],
+      [
+        136.85206,
+        35.19554
+      ],
+      [
+        136.85262,
+        35.19525
+      ]
+    ],
+    "19": [
+      [
+        136.85318,
+        35.19496
+      ],
+      [
+        136.85365,
+        35.19482
+      ],
+      [
+        136.85374,
+        35.1948
+      ],
+      [
+        136.85411,
+        35.19473
+      ],
+      [
+        136.85464,
+        35.19468
+      ],
+      [
+        136.85881,
+        35.19465
+      ],
+      [
+        136.859706,
+        35.19466
+      ]
+    ],
+    "20": [
+      [
+        136.85975,
+        35.19466
+      ],
+      [
+        136.85998,
+        35.19466
+      ],
+      [
+        136.8606,
+        35.19467
+      ],
+      [
+        136.8616,
+        35.19471
+      ],
+      [
+        136.86258,
+        35.19476
+      ],
+      [
+        136.86354,
+        35.19486
+      ],
+      [
+        136.8649,
+        35.19503
+      ],
+      [
+        136.86528,
+        35.195085
+      ]
+    ]
+  },
+  "displayStationCoordinates": {
+    "005323": [
+      136.83536,
+      35.21146
+    ],
+    "005337": [
+      136.84200320734033,
+      35.204625793777495
+    ],
+    "005352": [
+      136.845755,
+      35.19893
+    ],
+    "005374": [
+      136.85237591897993,
+      35.19550425786567
+    ],
+    "005377": [
+      136.8596121226845,
+      35.19473890827177
+    ],
+    "005376": [
+      136.86528,
+      35.195085
+    ]
+  },
+  "operations": [
+    {
+      "intervalIndex": 16,
+      "operation": "replace destination endpoint only",
+      "stationID": "005337",
+      "bodyDisposition": "source body retained after 4-view visual support"
+    },
+    {
+      "intervalIndex": 17,
+      "operation": "replace origin endpoint only",
+      "stationID": "005337",
+      "bodyDisposition": "source body retained; final three vertices frozen exact reverse of Tsushima #0 first three"
+    },
+    {
+      "intervalIndex": 18,
+      "operation": "replace destination endpoint only",
+      "stationID": "005374",
+      "bodyDisposition": "source body retained after 4-view visual support"
+    },
+    {
+      "intervalIndex": 19,
+      "operation": "replace both station endpoints",
+      "stationIDs": [
+        "005374",
+        "005377"
+      ],
+      "bodyDisposition": "source body retained; measured smooth residual 1.78m does not justify broad translation"
+    },
+    {
+      "intervalIndex": 20,
+      "operation": "replace origin endpoint only",
+      "stationID": "005377",
+      "bodyDisposition": "source body retained after 3-view visual support"
+    }
+  ],
+  "unresolvedWarnings": [
+    {
+      "stationID": "005323",
+      "reason": "Shin-Kiyosu multi-track platform identity unresolved; source alias retained"
+    },
+    {
+      "stationID": "005352",
+      "reason": "Sukaguchi shared multi-track face unresolved; source alias retained"
+    }
+  ],
+  "sharedStem": {
+    "mainInterval": 17,
+    "mainLast3": [
+      [
+        136.84472,
+        35.19948
+      ],
+      [
+        136.84497,
+        35.19937
+      ],
+      [
+        136.845755,
+        35.19893
+      ]
+    ],
+    "tsushimaInterval": 0,
+    "tsushimaFirst3": [
+      [
+        136.845755,
+        35.19893
+      ],
+      [
+        136.84497,
+        35.19937
+      ],
+      [
+        136.84472,
+        35.19948
+      ]
+    ],
+    "relation": "exact-reverse",
+    "integrationPending": true,
+    "physicalAlignmentNotInferred": true
+  },
+  "constraints": {
+    "physicalStationsKmTopologyUnchanged": true,
+    "noBranchLeadIns": true,
+    "noConstantTranslation": true,
+    "notSurveyed": true
+  }
+}

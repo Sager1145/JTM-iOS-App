@@ -1,0 +1,4059 @@
+{
+  "queueOrdinal": 87,
+  "canonicalQueuePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json",
+  "lineID": "jp-上田電鉄-別所線",
+  "packageVersion": "2025.5.2",
+  "currentDisplayInterface": "app/public/rail-network.js: decodeIntervals(current own compactLine), displayPartsForLine(current own compactLine)",
+  "currentDisplayAliasesPresent": false,
+  "currentDisplayPartsSummary": [
+    {
+      "count": 141,
+      "start": [
+        138.25026,
+        36.39575
+      ],
+      "end": [
+        138.16188,
+        36.3532
+      ]
+    }
+  ],
+  "stations": [
+    [
+      "002275",
+      "上田",
+      138.25026,
+      36.39575,
+      "Ueda",
+      1
+    ],
+    [
+      "002284",
+      "城下",
+      138.242645,
+      36.392465,
+      "Shiroshita",
+      1
+    ],
+    [
+      "002285",
+      "三好町",
+      138.23554,
+      36.39168,
+      "Miyoshicho",
+      1
+    ],
+    [
+      "002286",
+      "赤坂上",
+      138.22717,
+      36.391345,
+      "Akasakaue",
+      1
+    ],
+    [
+      "002289",
+      "上田原",
+      138.221715,
+      36.39039,
+      "Uedahara",
+      1
+    ],
+    [
+      "002295",
+      "寺下",
+      138.216315,
+      36.383895,
+      "Terashita",
+      1
+    ],
+    [
+      "002305",
+      "神畑",
+      138.216945,
+      36.377845,
+      "Kabatake",
+      1
+    ],
+    [
+      "002316",
+      "大学前",
+      138.215135,
+      36.371305,
+      "Daigakumae",
+      1
+    ],
+    [
+      "002326",
+      "下之郷",
+      138.217195,
+      36.363235,
+      "Shimonogo",
+      1
+    ],
+    [
+      "002327",
+      "中塩田",
+      138.204665,
+      36.36323,
+      "Naka-Shioda",
+      1
+    ],
+    [
+      "002330",
+      "塩田町",
+      138.19843,
+      36.360905,
+      "Shioda-machi",
+      1
+    ],
+    [
+      "002331",
+      "中野",
+      138.193325,
+      36.36051,
+      "Nakano",
+      1
+    ],
+    [
+      "002333",
+      "舞田",
+      138.182785,
+      36.359645,
+      "Maita",
+      1
+    ],
+    [
+      "002338",
+      "八木沢",
+      138.17576,
+      36.358385,
+      "Yagisawa",
+      1
+    ],
+    [
+      "002346",
+      "別所温泉",
+      138.16188,
+      36.3532,
+      "Bessho-onsen",
+      1
+    ]
+  ],
+  "intervalCount": 14,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 14,
+  "plannedViewCount": 53,
+  "actualCompletedViewCount": 53,
+  "matchingCompleteViewCount": 53,
+  "missingViewCount": 0,
+  "ownCaptureStates": {
+    "captured": 53
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "002275",
+        "上田"
+      ],
+      "toStation": [
+        "002284",
+        "城下"
+      ],
+      "legacySortedSlot": 548,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 18,
+      "displayControlCount": 18
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "002284",
+        "城下"
+      ],
+      "toStation": [
+        "002285",
+        "三好町"
+      ],
+      "legacySortedSlot": 549,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 9,
+      "displayControlCount": 9
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "002285",
+        "三好町"
+      ],
+      "toStation": [
+        "002286",
+        "赤坂上"
+      ],
+      "legacySortedSlot": 554,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 8,
+      "displayControlCount": 8
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "002286",
+        "赤坂上"
+      ],
+      "toStation": [
+        "002289",
+        "上田原"
+      ],
+      "legacySortedSlot": 555,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 5,
+      "displayControlCount": 5
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "002289",
+        "上田原"
+      ],
+      "toStation": [
+        "002295",
+        "寺下"
+      ],
+      "legacySortedSlot": 556,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 15,
+      "displayControlCount": 15
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "002295",
+        "寺下"
+      ],
+      "toStation": [
+        "002305",
+        "神畑"
+      ],
+      "legacySortedSlot": 557,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 8,
+      "displayControlCount": 8
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "002305",
+        "神畑"
+      ],
+      "toStation": [
+        "002316",
+        "大学前"
+      ],
+      "legacySortedSlot": 558,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 9,
+      "displayControlCount": 9
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "002316",
+        "大学前"
+      ],
+      "toStation": [
+        "002326",
+        "下之郷"
+      ],
+      "legacySortedSlot": 559,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 13,
+      "displayControlCount": 13
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "002326",
+        "下之郷"
+      ],
+      "toStation": [
+        "002327",
+        "中塩田"
+      ],
+      "legacySortedSlot": 560,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 5,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 24,
+      "displayControlCount": 24
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "002327",
+        "中塩田"
+      ],
+      "toStation": [
+        "002330",
+        "塩田町"
+      ],
+      "legacySortedSlot": 561,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 11,
+      "displayControlCount": 11
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "002330",
+        "塩田町"
+      ],
+      "toStation": [
+        "002331",
+        "中野"
+      ],
+      "legacySortedSlot": 550,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 6,
+      "displayControlCount": 6
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "002331",
+        "中野"
+      ],
+      "toStation": [
+        "002333",
+        "舞田"
+      ],
+      "legacySortedSlot": 551,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 7,
+      "displayControlCount": 7
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "002333",
+        "舞田"
+      ],
+      "toStation": [
+        "002338",
+        "八木沢"
+      ],
+      "legacySortedSlot": 552,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 4,
+      "displayControlCount": 4
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "002338",
+        "八木沢"
+      ],
+      "toStation": [
+        "002346",
+        "別所温泉"
+      ],
+      "legacySortedSlot": 553,
+      "plannedViewCount": 6,
+      "completedViewCount": 6,
+      "matchingCompleteViewCount": 6,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 17,
+      "displayControlCount": 17
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39378626373948,
+          "longitude": 138.2447797507412
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#0",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/basemap.png",
+          "recordedByteCount": 403819,
+          "actualByteCount": 403819
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 18987,
+          "actualByteCount": 18987
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/display.png",
+          "recordedByteCount": 456906,
+          "actualByteCount": 456906
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/distance-samples.json",
+          "recordedByteCount": 75248,
+          "actualByteCount": 75248
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/smooth.png",
+          "recordedByteCount": 457865,
+          "actualByteCount": 457865
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000002/view.json",
+          "recordedByteCount": 169171,
+          "actualByteCount": 169171
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.392465,
+          "longitude": 138.242645
+        },
+        "distanceMetres": 945.344703447317,
+        "itemID": "jp-上田電鉄-別所線#0",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/basemap.png",
+          "recordedByteCount": 408659,
+          "actualByteCount": 408659
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 15052,
+          "actualByteCount": 15052
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/display.png",
+          "recordedByteCount": 455866,
+          "actualByteCount": 455866
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/distance-samples.json",
+          "recordedByteCount": 32115,
+          "actualByteCount": 32115
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/smooth.png",
+          "recordedByteCount": 457022,
+          "actualByteCount": 457022
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000003/view.json",
+          "recordedByteCount": 83776,
+          "actualByteCount": 83776
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39629939628382,
+          "longitude": 138.2471249718705
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/basemap.png",
+          "recordedByteCount": 437629,
+          "actualByteCount": 437629
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 12504,
+          "actualByteCount": 12504
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/display.png",
+          "recordedByteCount": 495637,
+          "actualByteCount": 495637
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/distance-samples.json",
+          "recordedByteCount": 62818,
+          "actualByteCount": 62818
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/smooth.png",
+          "recordedByteCount": 496614,
+          "actualByteCount": 496614
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000001/view.json",
+          "recordedByteCount": 136607,
+          "actualByteCount": 136607
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39575,
+          "longitude": 138.25026
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/basemap.png",
+          "recordedByteCount": 456568,
+          "actualByteCount": 456568
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 10616,
+          "actualByteCount": 10616
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/display.png",
+          "recordedByteCount": 512824,
+          "actualByteCount": 512824
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/distance-samples.json",
+          "recordedByteCount": 53917,
+          "actualByteCount": 53917
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/smooth.png",
+          "recordedByteCount": 513450,
+          "actualByteCount": 513450
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000548/000000/view.json",
+          "recordedByteCount": 117120,
+          "actualByteCount": 117120
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39168,
+          "longitude": 138.23554
+        },
+        "distanceMetres": 657.1108511836492,
+        "itemID": "jp-上田電鉄-別所線#1",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/basemap.png",
+          "recordedByteCount": 382560,
+          "actualByteCount": 382560
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13798,
+          "actualByteCount": 13798
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/display.png",
+          "recordedByteCount": 420107,
+          "actualByteCount": 420107
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/distance-samples.json",
+          "recordedByteCount": 22358,
+          "actualByteCount": 22358
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/smooth.png",
+          "recordedByteCount": 420575,
+          "actualByteCount": 420575
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000002/view.json",
+          "recordedByteCount": 63143,
+          "actualByteCount": 63143
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39158070983649,
+          "longitude": 138.23896807041695
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#1",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/basemap.png",
+          "recordedByteCount": 419393,
+          "actualByteCount": 419393
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 14902,
+          "actualByteCount": 14902
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/display.png",
+          "recordedByteCount": 462645,
+          "actualByteCount": 462645
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/distance-samples.json",
+          "recordedByteCount": 29485,
+          "actualByteCount": 29485
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/smooth.png",
+          "recordedByteCount": 463136,
+          "actualByteCount": 463136
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000001/view.json",
+          "recordedByteCount": 78601,
+          "actualByteCount": 78601
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.392465,
+          "longitude": 138.242645
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#1",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/basemap.png",
+          "recordedByteCount": 408651,
+          "actualByteCount": 408651
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 15052,
+          "actualByteCount": 15052
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/display.png",
+          "recordedByteCount": 455884,
+          "actualByteCount": 455884
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/distance-samples.json",
+          "recordedByteCount": 32115,
+          "actualByteCount": 32115
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/smooth.png",
+          "recordedByteCount": 457033,
+          "actualByteCount": 457033
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000549/000000/view.json",
+          "recordedByteCount": 83687,
+          "actualByteCount": 83687
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.391447675769705,
+          "longitude": 138.2277581846983
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#2",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/basemap.png",
+          "recordedByteCount": 398313,
+          "actualByteCount": 398313
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13564,
+          "actualByteCount": 13564
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/display.png",
+          "recordedByteCount": 440546,
+          "actualByteCount": 440546
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/distance-samples.json",
+          "recordedByteCount": 18582,
+          "actualByteCount": 18582
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/smooth.png",
+          "recordedByteCount": 440581,
+          "actualByteCount": 440581
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000002/view.json",
+          "recordedByteCount": 55197,
+          "actualByteCount": 55197
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.391345,
+          "longitude": 138.22717
+        },
+        "distanceMetres": 753.8857224067101,
+        "itemID": "jp-上田電鉄-別所線#2",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/basemap.png",
+          "recordedByteCount": 404351,
+          "actualByteCount": 404351
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 13999,
+          "actualByteCount": 13999
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/display.png",
+          "recordedByteCount": 446553,
+          "actualByteCount": 446553
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/distance-samples.json",
+          "recordedByteCount": 19022,
+          "actualByteCount": 19022
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/smooth.png",
+          "recordedByteCount": 446759,
+          "actualByteCount": 446759
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000003/view.json",
+          "recordedByteCount": 56870,
+          "actualByteCount": 56870
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39178466941894,
+          "longitude": 138.2316322371876
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#2",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/basemap.png",
+          "recordedByteCount": 384291,
+          "actualByteCount": 384291
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 13684,
+          "actualByteCount": 13684
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/display.png",
+          "recordedByteCount": 423308,
+          "actualByteCount": 423308
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/distance-samples.json",
+          "recordedByteCount": 18504,
+          "actualByteCount": 18504
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/smooth.png",
+          "recordedByteCount": 423753,
+          "actualByteCount": 423753
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000001/view.json",
+          "recordedByteCount": 55644,
+          "actualByteCount": 55644
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39168,
+          "longitude": 138.23554
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#2",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/basemap.png",
+          "recordedByteCount": 382585,
+          "actualByteCount": 382585
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13798,
+          "actualByteCount": 13798
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/display.png",
+          "recordedByteCount": 420135,
+          "actualByteCount": 420135
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/distance-samples.json",
+          "recordedByteCount": 22358,
+          "actualByteCount": 22358
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/smooth.png",
+          "recordedByteCount": 420601,
+          "actualByteCount": 420601
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000554/000000/view.json",
+          "recordedByteCount": 63044,
+          "actualByteCount": 63044
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39039,
+          "longitude": 138.221715
+        },
+        "distanceMetres": 499.8128759686546,
+        "itemID": "jp-上田電鉄-別所線#3",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/basemap.png",
+          "recordedByteCount": 398714,
+          "actualByteCount": 398714
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 16170,
+          "actualByteCount": 16170
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/display.png",
+          "recordedByteCount": 443785,
+          "actualByteCount": 443785
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/distance-samples.json",
+          "recordedByteCount": 35842,
+          "actualByteCount": 35842
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/smooth.png",
+          "recordedByteCount": 444581,
+          "actualByteCount": 444581
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000002/view.json",
+          "recordedByteCount": 91263,
+          "actualByteCount": 91263
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39070288124728,
+          "longitude": 138.2233422036547
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#3",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/basemap.png",
+          "recordedByteCount": 403512,
+          "actualByteCount": 403512
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 17189,
+          "actualByteCount": 17189
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/display.png",
+          "recordedByteCount": 448966,
+          "actualByteCount": 448966
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/distance-samples.json",
+          "recordedByteCount": 37708,
+          "actualByteCount": 37708
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/smooth.png",
+          "recordedByteCount": 449819,
+          "actualByteCount": 449819
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000001/view.json",
+          "recordedByteCount": 96060,
+          "actualByteCount": 96060
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.391345,
+          "longitude": 138.22717
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#3",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/basemap.png",
+          "recordedByteCount": 404355,
+          "actualByteCount": 404355
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13999,
+          "actualByteCount": 13999
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/display.png",
+          "recordedByteCount": 446553,
+          "actualByteCount": 446553
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/distance-samples.json",
+          "recordedByteCount": 19022,
+          "actualByteCount": 19022
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/smooth.png",
+          "recordedByteCount": 446760,
+          "actualByteCount": 446760
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000555/000000/view.json",
+          "recordedByteCount": 56720,
+          "actualByteCount": 56720
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.3862052117285,
+          "longitude": 138.21720033290202
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#4",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/basemap.png",
+          "recordedByteCount": 397285,
+          "actualByteCount": 397285
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 10739,
+          "actualByteCount": 10739
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/display.png",
+          "recordedByteCount": 440421,
+          "actualByteCount": 440421
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/distance-samples.json",
+          "recordedByteCount": 33722,
+          "actualByteCount": 33722
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/smooth.png",
+          "recordedByteCount": 441309,
+          "actualByteCount": 441309
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000002/view.json",
+          "recordedByteCount": 79009,
+          "actualByteCount": 79009
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.383895,
+          "longitude": 138.216315
+        },
+        "distanceMetres": 972.2992839515134,
+        "itemID": "jp-上田電鉄-別所線#4",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/basemap.png",
+          "recordedByteCount": 345403,
+          "actualByteCount": 345403
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 10412,
+          "actualByteCount": 10412
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/display.png",
+          "recordedByteCount": 385316,
+          "actualByteCount": 385316
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/distance-samples.json",
+          "recordedByteCount": 34496,
+          "actualByteCount": 34496
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/smooth.png",
+          "recordedByteCount": 385833,
+          "actualByteCount": 385833
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000003/view.json",
+          "recordedByteCount": 79860,
+          "actualByteCount": 79860
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.38916618449873,
+          "longitude": 138.2185266064481
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#4",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/basemap.png",
+          "recordedByteCount": 394608,
+          "actualByteCount": 394608
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 14110,
+          "actualByteCount": 14110
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/display.png",
+          "recordedByteCount": 438099,
+          "actualByteCount": 438099
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/distance-samples.json",
+          "recordedByteCount": 33325,
+          "actualByteCount": 33325
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/smooth.png",
+          "recordedByteCount": 439384,
+          "actualByteCount": 439384
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000001/view.json",
+          "recordedByteCount": 84254,
+          "actualByteCount": 84254
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.39039,
+          "longitude": 138.221715
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#4",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/basemap.png",
+          "recordedByteCount": 398714,
+          "actualByteCount": 398714
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 16170,
+          "actualByteCount": 16170
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/display.png",
+          "recordedByteCount": 443796,
+          "actualByteCount": 443796
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/distance-samples.json",
+          "recordedByteCount": 35842,
+          "actualByteCount": 35842
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/smooth.png",
+          "recordedByteCount": 444583,
+          "actualByteCount": 444583
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000556/000000/view.json",
+          "recordedByteCount": 91801,
+          "actualByteCount": 91801
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.377845,
+          "longitude": 138.216945
+        },
+        "distanceMetres": 679.714637735901,
+        "itemID": "jp-上田電鉄-別所線#5",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/basemap.png",
+          "recordedByteCount": 295525,
+          "actualByteCount": 295525
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 10904,
+          "actualByteCount": 10904
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/display.png",
+          "recordedByteCount": 328783,
+          "actualByteCount": 328783
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/distance-samples.json",
+          "recordedByteCount": 24805,
+          "actualByteCount": 24805
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/smooth.png",
+          "recordedByteCount": 329084,
+          "actualByteCount": 329084
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000002/view.json",
+          "recordedByteCount": 63647,
+          "actualByteCount": 63647
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.3807963614409,
+          "longitude": 138.21699347376338
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#5",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/basemap.png",
+          "recordedByteCount": 317850,
+          "actualByteCount": 317850
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 10724,
+          "actualByteCount": 10724
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/display.png",
+          "recordedByteCount": 354293,
+          "actualByteCount": 354293
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/distance-samples.json",
+          "recordedByteCount": 23855,
+          "actualByteCount": 23855
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/smooth.png",
+          "recordedByteCount": 354806,
+          "actualByteCount": 354806
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000001/view.json",
+          "recordedByteCount": 61942,
+          "actualByteCount": 61942
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.383895,
+          "longitude": 138.216315
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/basemap.png",
+          "recordedByteCount": 345399,
+          "actualByteCount": 345399
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 10412,
+          "actualByteCount": 10412
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/display.png",
+          "recordedByteCount": 385300,
+          "actualByteCount": 385300
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/distance-samples.json",
+          "recordedByteCount": 34496,
+          "actualByteCount": 34496
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/smooth.png",
+          "recordedByteCount": 385823,
+          "actualByteCount": 385823
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000557/000000/view.json",
+          "recordedByteCount": 79834,
+          "actualByteCount": 79834
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.3717863446131,
+          "longitude": 138.21514912684063
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#6",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/basemap.png",
+          "recordedByteCount": 304865,
+          "actualByteCount": 304865
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 10631,
+          "actualByteCount": 10631
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/display.png",
+          "recordedByteCount": 344410,
+          "actualByteCount": 344410
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/distance-samples.json",
+          "recordedByteCount": 31084,
+          "actualByteCount": 31084
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/smooth.png",
+          "recordedByteCount": 343522,
+          "actualByteCount": 343522
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000002/view.json",
+          "recordedByteCount": 74950,
+          "actualByteCount": 74950
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.371305,
+          "longitude": 138.215135
+        },
+        "distanceMetres": 753.6100655270961,
+        "itemID": "jp-上田電鉄-別所線#6",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/basemap.png",
+          "recordedByteCount": 315527,
+          "actualByteCount": 315527
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 10813,
+          "actualByteCount": 10813
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/display.png",
+          "recordedByteCount": 356009,
+          "actualByteCount": 356009
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/distance-samples.json",
+          "recordedByteCount": 32749,
+          "actualByteCount": 32749
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/smooth.png",
+          "recordedByteCount": 355177,
+          "actualByteCount": 355177
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000003/view.json",
+          "recordedByteCount": 78476,
+          "actualByteCount": 78476
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.374854081676744,
+          "longitude": 138.21586934961078
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#6",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/basemap.png",
+          "recordedByteCount": 288727,
+          "actualByteCount": 288727
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 11173,
+          "actualByteCount": 11173
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/display.png",
+          "recordedByteCount": 326232,
+          "actualByteCount": 326232
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/distance-samples.json",
+          "recordedByteCount": 26700,
+          "actualByteCount": 26700
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/smooth.png",
+          "recordedByteCount": 326313,
+          "actualByteCount": 326313
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000001/view.json",
+          "recordedByteCount": 67982,
+          "actualByteCount": 67982
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.377845,
+          "longitude": 138.216945
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#6",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/basemap.png",
+          "recordedByteCount": 295502,
+          "actualByteCount": 295502
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 10904,
+          "actualByteCount": 10904
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/display.png",
+          "recordedByteCount": 328770,
+          "actualByteCount": 328770
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/distance-samples.json",
+          "recordedByteCount": 24805,
+          "actualByteCount": 24805
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/smooth.png",
+          "recordedByteCount": 329061,
+          "actualByteCount": 329061
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000558/000000/view.json",
+          "recordedByteCount": 63547,
+          "actualByteCount": 63547
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36521158182236,
+          "longitude": 138.217050223312
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#7",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/basemap.png",
+          "recordedByteCount": 288548,
+          "actualByteCount": 288548
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 17820,
+          "actualByteCount": 17820
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/display.png",
+          "recordedByteCount": 325784,
+          "actualByteCount": 325784
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/distance-samples.json",
+          "recordedByteCount": 52369,
+          "actualByteCount": 52369
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/smooth.png",
+          "recordedByteCount": 327085,
+          "actualByteCount": 327085
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000002/view.json",
+          "recordedByteCount": 125860,
+          "actualByteCount": 125860
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.363235,
+          "longitude": 138.217195
+        },
+        "distanceMetres": 923.9985850612303,
+        "itemID": "jp-上田電鉄-別所線#7",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/basemap.png",
+          "recordedByteCount": 273493,
+          "actualByteCount": 273493
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 14276,
+          "actualByteCount": 14276
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/display.png",
+          "recordedByteCount": 307813,
+          "actualByteCount": 307813
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/distance-samples.json",
+          "recordedByteCount": 42548,
+          "actualByteCount": 42548
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/smooth.png",
+          "recordedByteCount": 309195,
+          "actualByteCount": 309195
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000003/view.json",
+          "recordedByteCount": 102236,
+          "actualByteCount": 102236
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36825452367482,
+          "longitude": 138.21605162695886
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#7",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/basemap.png",
+          "recordedByteCount": 336568,
+          "actualByteCount": 336568
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 10641,
+          "actualByteCount": 10641
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/display.png",
+          "recordedByteCount": 375104,
+          "actualByteCount": 375104
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/distance-samples.json",
+          "recordedByteCount": 29921,
+          "actualByteCount": 29921
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/smooth.png",
+          "recordedByteCount": 374922,
+          "actualByteCount": 374922
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000001/view.json",
+          "recordedByteCount": 73027,
+          "actualByteCount": 73027
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.371305,
+          "longitude": 138.215135
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#7",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/basemap.png",
+          "recordedByteCount": 315516,
+          "actualByteCount": 315516
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 10813,
+          "actualByteCount": 10813
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/display.png",
+          "recordedByteCount": 356018,
+          "actualByteCount": 356018
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/distance-samples.json",
+          "recordedByteCount": 32749,
+          "actualByteCount": 32749
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/smooth.png",
+          "recordedByteCount": 355185,
+          "actualByteCount": 355185
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000559/000000/view.json",
+          "recordedByteCount": 78315,
+          "actualByteCount": 78315
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36252783929904,
+          "longitude": 138.21036807650046
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#8",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/basemap.png",
+          "recordedByteCount": 260298,
+          "actualByteCount": 260298
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 15458,
+          "actualByteCount": 15458
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/display.png",
+          "recordedByteCount": 291950,
+          "actualByteCount": 291950
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/distance-samples.json",
+          "recordedByteCount": 55080,
+          "actualByteCount": 55080
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/smooth.png",
+          "recordedByteCount": 293762,
+          "actualByteCount": 293762
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000002/view.json",
+          "recordedByteCount": 128105,
+          "actualByteCount": 128105
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.363919340831586,
+          "longitude": 138.20691033193867
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-上田電鉄-別所線#8",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/basemap.png",
+          "recordedByteCount": 340026,
+          "actualByteCount": 340026
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 17079,
+          "actualByteCount": 17079
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/display.png",
+          "recordedByteCount": 379245,
+          "actualByteCount": 379245
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/distance-samples.json",
+          "recordedByteCount": 75889,
+          "actualByteCount": 75889
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/smooth.png",
+          "recordedByteCount": 380367,
+          "actualByteCount": 380367
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000003/view.json",
+          "recordedByteCount": 168358,
+          "actualByteCount": 168358
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36323,
+          "longitude": 138.204665
+        },
+        "distanceMetres": 1267.2099352645687,
+        "itemID": "jp-上田電鉄-別所線#8",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/basemap.png",
+          "recordedByteCount": 353617,
+          "actualByteCount": 353617
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 17116,
+          "actualByteCount": 17116
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/display.png",
+          "recordedByteCount": 393781,
+          "actualByteCount": 393781
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/distance-samples.json",
+          "recordedByteCount": 72401,
+          "actualByteCount": 72401
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/smooth.png",
+          "recordedByteCount": 394629,
+          "actualByteCount": 394629
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000004/view.json",
+          "recordedByteCount": 161730,
+          "actualByteCount": 161730
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36201918596578,
+          "longitude": 138.21422541005853
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#8",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/basemap.png",
+          "recordedByteCount": 256169,
+          "actualByteCount": 256169
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 16852,
+          "actualByteCount": 16852
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/display.png",
+          "recordedByteCount": 291825,
+          "actualByteCount": 291825
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/distance-samples.json",
+          "recordedByteCount": 60518,
+          "actualByteCount": 60518
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/smooth.png",
+          "recordedByteCount": 293438,
+          "actualByteCount": 293438
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000001/view.json",
+          "recordedByteCount": 140240,
+          "actualByteCount": 140240
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.363235,
+          "longitude": 138.217195
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#8",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/basemap.png",
+          "recordedByteCount": 273493,
+          "actualByteCount": 273493
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 14276,
+          "actualByteCount": 14276
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/display.png",
+          "recordedByteCount": 307813,
+          "actualByteCount": 307813
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/distance-samples.json",
+          "recordedByteCount": 42548,
+          "actualByteCount": 42548
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/smooth.png",
+          "recordedByteCount": 309195,
+          "actualByteCount": 309195
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000560/000000/view.json",
+          "recordedByteCount": 102489,
+          "actualByteCount": 102489
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.360905,
+          "longitude": 138.19843
+        },
+        "distanceMetres": 643.499987582732,
+        "itemID": "jp-上田電鉄-別所線#9",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/basemap.png",
+          "recordedByteCount": 343142,
+          "actualByteCount": 343142
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 15475,
+          "actualByteCount": 15475
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/display.png",
+          "recordedByteCount": 382925,
+          "actualByteCount": 382925
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/distance-samples.json",
+          "recordedByteCount": 38637,
+          "actualByteCount": 38637
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/smooth.png",
+          "recordedByteCount": 383816,
+          "actualByteCount": 383816
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000002/view.json",
+          "recordedByteCount": 95576,
+          "actualByteCount": 95576
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36144268372461,
+          "longitude": 138.20163802929483
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#9",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/basemap.png",
+          "recordedByteCount": 360605,
+          "actualByteCount": 360605
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 16124,
+          "actualByteCount": 16124
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/display.png",
+          "recordedByteCount": 403733,
+          "actualByteCount": 403733
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/distance-samples.json",
+          "recordedByteCount": 53546,
+          "actualByteCount": 53546
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/smooth.png",
+          "recordedByteCount": 404510,
+          "actualByteCount": 404510
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000001/view.json",
+          "recordedByteCount": 124774,
+          "actualByteCount": 124774
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36323,
+          "longitude": 138.204665
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#9",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/basemap.png",
+          "recordedByteCount": 353618,
+          "actualByteCount": 353618
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 17116,
+          "actualByteCount": 17116
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/display.png",
+          "recordedByteCount": 393781,
+          "actualByteCount": 393781
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/distance-samples.json",
+          "recordedByteCount": 72401,
+          "actualByteCount": 72401
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/smooth.png",
+          "recordedByteCount": 394629,
+          "actualByteCount": 394629
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000561/000000/view.json",
+          "recordedByteCount": 161471,
+          "actualByteCount": 161471
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36051,
+          "longitude": 138.193325
+        },
+        "distanceMetres": 459.43095252001217,
+        "itemID": "jp-上田電鉄-別所線#10",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/basemap.png",
+          "recordedByteCount": 276677,
+          "actualByteCount": 276677
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13553,
+          "actualByteCount": 13553
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/display.png",
+          "recordedByteCount": 309795,
+          "actualByteCount": 309795
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/distance-samples.json",
+          "recordedByteCount": 17349,
+          "actualByteCount": 17349
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/smooth.png",
+          "recordedByteCount": 310048,
+          "actualByteCount": 310048
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000002/view.json",
+          "recordedByteCount": 52322,
+          "actualByteCount": 52322
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36056847206364,
+          "longitude": 138.1945446348289
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#10",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/basemap.png",
+          "recordedByteCount": 295543,
+          "actualByteCount": 295543
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 13627,
+          "actualByteCount": 13627
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/display.png",
+          "recordedByteCount": 330288,
+          "actualByteCount": 330288
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/distance-samples.json",
+          "recordedByteCount": 17672,
+          "actualByteCount": 17672
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/smooth.png",
+          "recordedByteCount": 330801,
+          "actualByteCount": 330801
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000001/view.json",
+          "recordedByteCount": 53088,
+          "actualByteCount": 53088
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.360905,
+          "longitude": 138.19843
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#10",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/basemap.png",
+          "recordedByteCount": 343143,
+          "actualByteCount": 343143
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 15475,
+          "actualByteCount": 15475
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/display.png",
+          "recordedByteCount": 382935,
+          "actualByteCount": 382935
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/distance-samples.json",
+          "recordedByteCount": 38637,
+          "actualByteCount": 38637
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/smooth.png",
+          "recordedByteCount": 383826,
+          "actualByteCount": 383826
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000550/000000/view.json",
+          "recordedByteCount": 95276,
+          "actualByteCount": 95276
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36012742909889,
+          "longitude": 138.1855293901583
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#11",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/basemap.png",
+          "recordedByteCount": 233162,
+          "actualByteCount": 233162
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13668,
+          "actualByteCount": 13668
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/display.png",
+          "recordedByteCount": 265253,
+          "actualByteCount": 265253
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/distance-samples.json",
+          "recordedByteCount": 17380,
+          "actualByteCount": 17380
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/smooth.png",
+          "recordedByteCount": 265402,
+          "actualByteCount": 265402
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000002/view.json",
+          "recordedByteCount": 52095,
+          "actualByteCount": 52095
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.359645,
+          "longitude": 138.182785
+        },
+        "distanceMetres": 951.5656287366854,
+        "itemID": "jp-上田電鉄-別所線#11",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/basemap.png",
+          "recordedByteCount": 233560,
+          "actualByteCount": 233560
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 13770,
+          "actualByteCount": 13770
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/display.png",
+          "recordedByteCount": 265852,
+          "actualByteCount": 265852
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/distance-samples.json",
+          "recordedByteCount": 16765,
+          "actualByteCount": 16765
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/smooth.png",
+          "recordedByteCount": 266061,
+          "actualByteCount": 266061
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000003/view.json",
+          "recordedByteCount": 50948,
+          "actualByteCount": 50948
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36036402991861,
+          "longitude": 138.189420652648
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#11",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/basemap.png",
+          "recordedByteCount": 260646,
+          "actualByteCount": 260646
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 13695,
+          "actualByteCount": 13695
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/display.png",
+          "recordedByteCount": 294085,
+          "actualByteCount": 294085
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/distance-samples.json",
+          "recordedByteCount": 18858,
+          "actualByteCount": 18858
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/smooth.png",
+          "recordedByteCount": 293725,
+          "actualByteCount": 293725
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000001/view.json",
+          "recordedByteCount": 55331,
+          "actualByteCount": 55331
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.36051,
+          "longitude": 138.193325
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#11",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/basemap.png",
+          "recordedByteCount": 276646,
+          "actualByteCount": 276646
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13553,
+          "actualByteCount": 13553
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/display.png",
+          "recordedByteCount": 309759,
+          "actualByteCount": 309759
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/distance-samples.json",
+          "recordedByteCount": 17349,
+          "actualByteCount": 17349
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/smooth.png",
+          "recordedByteCount": 310007,
+          "actualByteCount": 310007
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000551/000000/view.json",
+          "recordedByteCount": 52090,
+          "actualByteCount": 52090
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.358385,
+          "longitude": 138.17576
+        },
+        "distanceMetres": 644.5072931411665,
+        "itemID": "jp-上田電鉄-別所線#12",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/basemap.png",
+          "recordedByteCount": 277591,
+          "actualByteCount": 277591
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13419,
+          "actualByteCount": 13419
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/display.png",
+          "recordedByteCount": 311798,
+          "actualByteCount": 311798
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/distance-samples.json",
+          "recordedByteCount": 19841,
+          "actualByteCount": 19841
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/smooth.png",
+          "recordedByteCount": 312276,
+          "actualByteCount": 312276
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000002/view.json",
+          "recordedByteCount": 56814,
+          "actualByteCount": 56814
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.358959608486764,
+          "longitude": 138.1789703508289
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#12",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/basemap.png",
+          "recordedByteCount": 245547,
+          "actualByteCount": 245547
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 13841,
+          "actualByteCount": 13841
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/display.png",
+          "recordedByteCount": 279429,
+          "actualByteCount": 279429
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/distance-samples.json",
+          "recordedByteCount": 16029,
+          "actualByteCount": 16029
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/smooth.png",
+          "recordedByteCount": 279833,
+          "actualByteCount": 279833
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000001/view.json",
+          "recordedByteCount": 49992,
+          "actualByteCount": 49992
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.359645,
+          "longitude": 138.182785
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#12",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/basemap.png",
+          "recordedByteCount": 233560,
+          "actualByteCount": 233560
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13770,
+          "actualByteCount": 13770
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/display.png",
+          "recordedByteCount": 265852,
+          "actualByteCount": 265852
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/distance-samples.json",
+          "recordedByteCount": 16765,
+          "actualByteCount": 16765
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/smooth.png",
+          "recordedByteCount": 266061,
+          "actualByteCount": 266061
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000552/000000/view.json",
+          "recordedByteCount": 50744,
+          "actualByteCount": 50744
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.3532,
+          "longitude": 138.16188
+        },
+        "distanceMetres": 1480.9447262234307,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 5
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/basemap.png",
+          "recordedByteCount": 269017,
+          "actualByteCount": 269017
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/display-stage-distance-samples.json",
+          "recordedByteCount": 7643,
+          "actualByteCount": 7643
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/display.png",
+          "recordedByteCount": 302306,
+          "actualByteCount": 302306
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/distance-samples.json",
+          "recordedByteCount": 23101,
+          "actualByteCount": 23101
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/smooth.png",
+          "recordedByteCount": 302825,
+          "actualByteCount": 302825
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000005/view.json",
+          "recordedByteCount": 56663,
+          "actualByteCount": 56663
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.3576822142863,
+          "longitude": 138.1681419724831
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/basemap.png",
+          "recordedByteCount": 277250,
+          "actualByteCount": 277250
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 16244,
+          "actualByteCount": 16244
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/display.png",
+          "recordedByteCount": 316660,
+          "actualByteCount": 316660
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/distance-samples.json",
+          "recordedByteCount": 38089,
+          "actualByteCount": 38089
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/smooth.png",
+          "recordedByteCount": 317232,
+          "actualByteCount": 317232
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000002/view.json",
+          "recordedByteCount": 95775,
+          "actualByteCount": 95775
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.356167416258884,
+          "longitude": 138.16471613155645
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/basemap.png",
+          "recordedByteCount": 264690,
+          "actualByteCount": 264690
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 14050,
+          "actualByteCount": 14050
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/display.png",
+          "recordedByteCount": 303287,
+          "actualByteCount": 303287
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/distance-samples.json",
+          "recordedByteCount": 35035,
+          "actualByteCount": 35035
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/smooth.png",
+          "recordedByteCount": 304131,
+          "actualByteCount": 304131
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000003/view.json",
+          "recordedByteCount": 87418,
+          "actualByteCount": 87418
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.353833535556504,
+          "longitude": 138.16232091184847
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/basemap.png",
+          "recordedByteCount": 272582,
+          "actualByteCount": 272582
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 9347,
+          "actualByteCount": 9347
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/display.png",
+          "recordedByteCount": 307718,
+          "actualByteCount": 307718
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/distance-samples.json",
+          "recordedByteCount": 25134,
+          "actualByteCount": 25134
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/smooth.png",
+          "recordedByteCount": 308353,
+          "actualByteCount": 308353
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000004/view.json",
+          "recordedByteCount": 62382,
+          "actualByteCount": 62382
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.358244746438366,
+          "longitude": 138.1718713536937
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/basemap.png",
+          "recordedByteCount": 275295,
+          "actualByteCount": 275295
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 14614,
+          "actualByteCount": 14614
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/display.png",
+          "recordedByteCount": 310893,
+          "actualByteCount": 310893
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/distance-samples.json",
+          "recordedByteCount": 26292,
+          "actualByteCount": 26292
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/smooth.png",
+          "recordedByteCount": 311560,
+          "actualByteCount": 311560
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000001/view.json",
+          "recordedByteCount": 71849,
+          "actualByteCount": 71849
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    },
+    {
+      "intervalIndex": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.358385,
+          "longitude": 138.17576
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-上田電鉄-別所線#13",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/basemap.png",
+          "recordedByteCount": 277590,
+          "actualByteCount": 277590
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13419,
+          "actualByteCount": 13419
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/display.png",
+          "recordedByteCount": 311799,
+          "actualByteCount": 311799
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/distance-samples.json",
+          "recordedByteCount": 19841,
+          "actualByteCount": 19841
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/smooth.png",
+          "recordedByteCount": 312277,
+          "actualByteCount": 312277
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000553/000000/view.json",
+          "recordedByteCount": 57013,
+          "actualByteCount": 57013
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2d3f486d67e63f17487523eb6ae68847780ffd0b02da07d208fb5fbc3512388a"
+    }
+  ],
+  "requestPath": null,
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval."
+  ],
+  "nextCompleteIntervalReview": [
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "002284",
+        "城下"
+      ],
+      "toStation": [
+        "002285",
+        "三好町"
+      ],
+      "legacySortedSlot": 549,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 9,
+      "displayControlCount": 9
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "002286",
+        "赤坂上"
+      ],
+      "toStation": [
+        "002289",
+        "上田原"
+      ],
+      "legacySortedSlot": 555,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 5,
+      "displayControlCount": 5
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "002295",
+        "寺下"
+      ],
+      "toStation": [
+        "002305",
+        "神畑"
+      ],
+      "legacySortedSlot": 557,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 3,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 8,
+      "displayControlCount": 8
+    }
+  ],
+  "receiptFileCount": 371,
+  "staleOrBadCompletedViewCount": 0,
+  "originalViewpointsActuallyReviewedThisPass": 0,
+  "originalPNGsActuallyReviewedThisPass": 0
+}

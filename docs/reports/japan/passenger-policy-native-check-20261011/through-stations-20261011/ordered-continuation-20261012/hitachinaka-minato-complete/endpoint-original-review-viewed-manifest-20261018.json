@@ -1,0 +1,618 @@
+{
+  "format": "bounded-endpoint-original-pixel-review-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-ひたちなか海浜鉄道-湊線",
+  "actualReviewedIntervals": [
+    0,
+    9
+  ],
+  "actualPairsViewed": 7,
+  "actualOriginalPNGsViewed": 14,
+  "unviewedPairsWithinRequestedEndpointIntervals": 0,
+  "unviewedOtherLegacyPairs": 46,
+  "adjacentIntervals1And8": "Not expanded: current endpoint evidence establishes no supported station-direction change requiring them; adjacent context in the saved whole-line views is not counted as complete adjacent-interval review.",
+  "currentOwnAliasesPresent": {
+    "displayStationCoordinates": false,
+    "displayIntervalCoordinates": false
+  },
+  "currentSourceIdentity": [
+    {
+      "intervalIndex": 0,
+      "currentDecodedControls": [
+        [
+          140.612345,
+          36.383434
+        ],
+        [
+          140.612262,
+          36.383119
+        ],
+        [
+          140.612202,
+          36.382891
+        ],
+        [
+          140.612145,
+          36.382462
+        ],
+        [
+          140.612189,
+          36.382068
+        ],
+        [
+          140.612274,
+          36.381719
+        ],
+        [
+          140.6125,
+          36.381284
+        ],
+        [
+          140.612804,
+          36.380872
+        ],
+        [
+          140.61308,
+          36.380586
+        ],
+        [
+          140.613371,
+          36.380357
+        ],
+        [
+          140.613731,
+          36.380157
+        ],
+        [
+          140.614142,
+          36.379991
+        ],
+        [
+          140.614715,
+          36.379831
+        ],
+        [
+          140.61623,
+          36.379499
+        ],
+        [
+          140.616997,
+          36.379226
+        ],
+        [
+          140.617337,
+          36.378997
+        ],
+        [
+          140.617698,
+          36.378671
+        ],
+        [
+          140.617882,
+          36.378408
+        ],
+        [
+          140.617946,
+          36.378196
+        ],
+        [
+          140.617942,
+          36.378047
+        ],
+        [
+          140.617934,
+          36.37775
+        ]
+      ],
+      "rawKm": 0.922,
+      "sourceBitsMatchNamedPlan": true,
+      "displayBitsMatchNamedPlan": true,
+      "stationIDsMatch": true
+    },
+    {
+      "intervalIndex": 9,
+      "currentDecodedControls": [
+        [
+          140.52465,
+          36.388127
+        ],
+        [
+          140.524398,
+          36.388382
+        ],
+        [
+          140.52403,
+          36.388851
+        ],
+        [
+          140.523823,
+          36.389195
+        ],
+        [
+          140.523761,
+          36.389417
+        ],
+        [
+          140.523744,
+          36.389781
+        ],
+        [
+          140.523903,
+          36.391076
+        ],
+        [
+          140.524298,
+          36.39294
+        ],
+        [
+          140.524367,
+          36.393267
+        ]
+      ],
+      "rawKm": 0.599,
+      "sourceBitsMatchNamedPlan": true,
+      "displayBitsMatchNamedPlan": true,
+      "stationIDsMatch": true
+    }
+  ],
+  "targetedN02Provenance": [
+    {
+      "intervalIndex": 0,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 21315,
+      "direction": "reverse",
+      "decodedControlIndices": [
+        1,
+        19
+      ],
+      "exactRawCoordinates": [
+        [
+          140.612262,
+          36.383119
+        ],
+        [
+          140.612202,
+          36.382891
+        ],
+        [
+          140.612145,
+          36.382462
+        ],
+        [
+          140.612189,
+          36.382068
+        ],
+        [
+          140.612274,
+          36.381719
+        ],
+        [
+          140.6125,
+          36.381284
+        ],
+        [
+          140.612804,
+          36.380872
+        ],
+        [
+          140.61308,
+          36.380586
+        ],
+        [
+          140.613371,
+          36.380357
+        ],
+        [
+          140.613731,
+          36.380157
+        ],
+        [
+          140.614142,
+          36.379991
+        ],
+        [
+          140.614715,
+          36.379831
+        ],
+        [
+          140.61623,
+          36.379499
+        ],
+        [
+          140.616997,
+          36.379226
+        ],
+        [
+          140.617337,
+          36.378997
+        ],
+        [
+          140.617698,
+          36.378671
+        ],
+        [
+          140.617882,
+          36.378408
+        ],
+        [
+          140.617946,
+          36.378196
+        ],
+        [
+          140.617942,
+          36.378047
+        ]
+      ],
+      "properties": {
+        "N02_001": "12",
+        "N02_002": "5",
+        "N02_003": "湊線",
+        "N02_004": "ひたちなか海浜鉄道"
+      },
+      "meaning": "Exact source list equality for interior controls; both physical station endpoints are separate compact anchors."
+    },
+    {
+      "intervalIndex": 9,
+      "sourceFile": "app/data/rail-sections.json",
+      "featureIndex": 21329,
+      "direction": "reverse",
+      "decodedControlIndices": [
+        1,
+        7
+      ],
+      "exactRawCoordinates": [
+        [
+          140.524398,
+          36.388382
+        ],
+        [
+          140.52403,
+          36.388851
+        ],
+        [
+          140.523823,
+          36.389195
+        ],
+        [
+          140.523761,
+          36.389417
+        ],
+        [
+          140.523744,
+          36.389781
+        ],
+        [
+          140.523903,
+          36.391076
+        ],
+        [
+          140.524298,
+          36.39294
+        ]
+      ],
+      "properties": {
+        "N02_001": "12",
+        "N02_002": "5",
+        "N02_003": "湊線",
+        "N02_004": "ひたちなか海浜鉄道"
+      },
+      "meaning": "Exact source list equality for interior controls; both physical station endpoints are separate compact anchors."
+    }
+  ],
+  "sharedKatsutaStationIDRows": [
+    {
+      "lineID": "jp-ひたちなか海浜鉄道-湊線",
+      "station": [
+        "002280",
+        "勝田",
+        140.524367,
+        36.393267
+      ]
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-常磐線",
+      "station": [
+        "002280",
+        "勝田",
+        140.524214,
+        36.394073
+      ]
+    }
+  ],
+  "verdict": "No confirmed isolated false corner; sustained/terminal alignment and own platform-cap leads remain unresolved. No repair candidate, alias or whole-line acceptance.",
+  "views": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#0",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#0#point-0",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.383434,
+        "longitude": 140.612345,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9584347810404037,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239061795.74806756,
+        "rectY": 105053431.88381192,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 239061795.74806756,
+        "y": 105053431.88381192
+      },
+      "timestamp": "2026-10-11T04:51:46Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Ajigaura terminal rail/station group is visible. Red starts toward the southern station-frame context and leaves southward continuously. Full usable passenger-platform longitudinal caps/centre are not established; do not extend to buffer/storage tips."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#0",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#0#point-1",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.38051822490186,
+        "longitude": 140.61316612496,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9584702517313145,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239062408.023215,
+        "rectY": 105056132.4332304,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 239062408.023215,
+        "y": 105056132.4332304
+      },
+      "timestamp": "2026-10-11T04:51:47Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Genuine broad southeast compound curve is retained and continuous. Modest red/blue lateral difference, especially toward Isozaki, is visible; no isolated V or neighboring road substitution."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#0",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#0#point-2",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.379320186367984,
+        "longitude": 140.61673238332145,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9584848252626038,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239065067.21818575,
+        "rectY": 105057242.01013018,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 239065067.21818575,
+        "y": 105057242.01013018
+      },
+      "timestamp": "2026-10-11T04:51:47Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own curve into Isozaki is continuous but red lies east of the blue rail in the northern approach; no isolated hook/gap. Actual own representative rail/platform needs attribution before any shift."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#0",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#0#point-3",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000003/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000275/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.37775,
+        "longitude": 140.617934,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9585039251438695,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 239065963.20852193,
+        "rectY": 105058696.23006298,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 239065963.20852193,
+        "y": 105058696.23006298
+      },
+      "timestamp": "2026-10-11T04:51:47Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Isozaki station and southward continuation remain continuous with a small eastward difference. Full platform caps/centre unverified; no evidence sufficient for deleting a control or altering adjacent interval1."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 0,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#9",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#9#point-0",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.388127,
+        "longitude": 140.52465,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9583776849785415,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238996405.61664003,
+        "rectY": 105049085.08130787,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 238996405.61664003,
+        "y": 105049085.08130787
+      },
+      "timestamp": "2026-10-11T04:51:58Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Kokimae departure curves north beside the distinct western JR Joban corridor. The own bend is retained; no false V or direct transfer onto the JR rail. Exact rail-band alignment unresolved."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 1,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#9",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#9#point-1",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.39106774049718,
+        "longitude": 140.52390198588202,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.958341903984416,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238995847.85688767,
+        "rectY": 105046361.1423128,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 238995847.85688767,
+        "y": 105046361.1423128
+      },
+      "timestamp": "2026-10-11T04:51:58Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own northern approach remains continuous east of the JR multi-track group; red increasingly lies east of depicted railway/station context. Positive own passenger-track/platform binding is required; nearest JR rail is not a valid support."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 2,
+      "itemID": "jp-ひたちなか海浜鉄道-湊線#9",
+      "viewpointID": "jp-ひたちなか海浜鉄道-湊線#9#point-2",
+      "actualOriginalFilesViewed": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG individually opened with view_image detail=original; no composites.",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000284/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.393267,
+        "longitude": 140.524367,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9583151431793202,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 238996194.59654543,
+        "rectY": 105044323.95243737,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "mapRect": {
+        "height": 6144,
+        "width": 8192,
+        "x": 238996194.59654543,
+        "y": 105044323.95243737
+      },
+      "timestamp": "2026-10-11T04:51:59Z",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "49112c1b23b07114e7a51f8b6e31c568523a215b49fa2f220d0afe5b650a056d",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Katsuta own endpoint is at frame centre(512,384), east of the multi-track blue band and south of the main shared station structure. Own short platform/rail band is not independently bound in this z17 frame; do not replace it with the nearby JR box or average shared station positions."
+    }
+  ],
+  "constraints": [
+    "Own Katsuta passenger rail/short platform must be positively bound before fitting; exclude nearest JR Joban substitution.",
+    "Ajigaura usable platform caps must be separated from rail casing, buffers and storage tails.",
+    "No native/app/build/tests or source/production changes.",
+    "Legacy fixed-z17-v2 isolated rendering is not current Main lane/follow/join evidence."
+  ]
+}

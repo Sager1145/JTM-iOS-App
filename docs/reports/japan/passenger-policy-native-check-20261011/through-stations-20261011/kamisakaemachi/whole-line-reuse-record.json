@@ -1,0 +1,151 @@
+{
+  "freshInterval": "jp-京阪電気鉄道-京津線#4",
+  "lineDependency": "203ad00cfc837546938a779b63af95016fe0ec5fc69c9bbdb008ab2a9bff9d03",
+  "reusedViewpoints": [
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000000"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000001"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000002"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000003"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000004"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#0",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001470/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001470/000005"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#1",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001471/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001471/000000"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#1",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001471/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001471/000001"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#1",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001471/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001471/000002"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#2",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001472/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001472/000000"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#2",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001472/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001472/000001"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#2",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001472/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001472/000002"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#2",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001472/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001472/000003"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#2",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001472/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001472/000004"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000000"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000001"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000002"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000003"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 4,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000004",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000004"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#3",
+      "ordinal": 5,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001473/000005",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001473/000005"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "ordinal": 0,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001475/000000",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001475/000000"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "ordinal": 1,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001475/000001",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001475/000001"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "ordinal": 2,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001475/000002",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001475/000002"
+    },
+    {
+      "itemID": "jp-京阪電気鉄道-京津線#5",
+      "ordinal": 3,
+      "source": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/001475/000003",
+      "destination": "/private/tmp/jtm-remaining-lines-manual-evidence/captures/001475/000003"
+    }
+  ],
+  "policy": "Exact native line dependency, interval identity and viewpoint equality; native configure validates receipts."
+}

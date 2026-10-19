@@ -1,0 +1,259 @@
+{
+  "scopeLineID": "jp-東日本旅客鉄道-京葉線-2",
+  "fromStation": [
+    "003547",
+    "西船橋",
+    139.95953,
+    35.707218,
+    "Nishi-Funabashi",
+    1
+  ],
+  "toStation": [
+    "003761",
+    "南船橋",
+    139.9957,
+    35.681665,
+    "Minami-Funabashi",
+    1
+  ],
+  "physicalChanges": "none proposed",
+  "rawSourcePath": "app/data/rail-sections.json",
+  "rawDataset": "MLIT N02-25",
+  "rawFeatures": [
+    {
+      "featureIndex": 14135,
+      "feature": {
+        "type": "Feature",
+        "properties": {
+          "N02_001": "11",
+          "N02_002": "2",
+          "N02_003": "京葉線",
+          "N02_004": "東日本旅客鉄道"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.99497,
+              35.68202
+            ],
+            [
+              139.99483,
+              35.68208
+            ],
+            [
+              139.9937,
+              35.68261
+            ],
+            [
+              139.99249,
+              35.68318
+            ],
+            [
+              139.98988,
+              35.68445
+            ],
+            [
+              139.98957,
+              35.68459
+            ],
+            [
+              139.98923,
+              35.6847
+            ],
+            [
+              139.98891,
+              35.68477
+            ],
+            [
+              139.98762,
+              35.6851
+            ],
+            [
+              139.98358,
+              35.68614
+            ],
+            [
+              139.98291,
+              35.68632
+            ],
+            [
+              139.97817,
+              35.68756
+            ],
+            [
+              139.97303,
+              35.6889
+            ],
+            [
+              139.97297,
+              35.68892
+            ],
+            [
+              139.96838,
+              35.69013
+            ],
+            [
+              139.96535,
+              35.69091
+            ],
+            [
+              139.96381,
+              35.69131
+            ],
+            [
+              139.96337,
+              35.6914
+            ],
+            [
+              139.96244,
+              35.69156
+            ],
+            [
+              139.96202,
+              35.69163
+            ],
+            [
+              139.96187,
+              35.69164
+            ],
+            [
+              139.96166,
+              35.69165
+            ],
+            [
+              139.96147,
+              35.69165
+            ],
+            [
+              139.9611,
+              35.69164
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "osmSource": {
+    "publisher": "OpenStreetMap contributors",
+    "license": "ODbL1.0",
+    "attribution": "https://www.openstreetmap.org/copyright",
+    "cachePath": "railway-sources/local/osm/degree-cells/E139N35.json",
+    "fetchedAt": "2026-08-18T10:37:59.411Z",
+    "geometryFreshness": "cached geometry; live relation membership independently retrieved2026-10-18"
+  },
+  "selectedWays": [
+    {
+      "id": 1436589310,
+      "tags": {
+        "bridge": "viaduct",
+        "colour": "#c9242f",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "100",
+        "name": "JR京葉線",
+        "name:en": "JR Keiyo Line",
+        "name:es": "Línea JR Keiyo",
+        "name:ja": "JR京葉線",
+        "name:ja_rm": "JR Keiyō Sen",
+        "name:ru": "Линия JR Кэйё",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "source": "Bing, 2010/7-2011/6",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "geometry": [
+        {
+          "lat": 35.6830748,
+          "lon": 139.9932124
+        },
+        {
+          "lat": 35.6834049,
+          "lon": 139.9926424
+        },
+        {
+          "lat": 35.6836058,
+          "lon": 139.9922927
+        },
+        {
+          "lat": 35.6837969,
+          "lon": 139.9919184
+        },
+        {
+          "lat": 35.6839238,
+          "lon": 139.9916207
+        },
+        {
+          "lat": 35.6842436,
+          "lon": 139.9908212
+        },
+        {
+          "lat": 35.6844799,
+          "lon": 139.9901447
+        },
+        {
+          "lat": 35.6846646,
+          "lon": 139.989566
+        },
+        {
+          "lat": 35.6848371,
+          "lon": 139.9889705
+        },
+        {
+          "lat": 35.6850998,
+          "lon": 139.9879815
+        },
+        {
+          "lat": 35.685471,
+          "lon": 139.9865736
+        }
+      ]
+    }
+  ],
+  "routeMemberships": [
+    {
+      "url": "https://api.openstreetmap.org/api/0.6/relation/14656663.json",
+      "retrievedAt": "2026-10-18",
+      "id": 14656663,
+      "version": 3,
+      "timestamp": "2025-10-09T01:09:57Z",
+      "tags": {
+        "from": "南船橋",
+        "name": "京葉線 (南船橋->西船橋)",
+        "name:en": "Keiyo Line (Minami Funabashi -> Nishi Funabashi)",
+        "name:ja": "京葉線 (南船橋->西船橋)",
+        "note": "二俣支線 branch",
+        "operator": "東日本旅客鉄道",
+        "route": "train",
+        "to": "西船橋",
+        "type": "route"
+      },
+      "selectedOrderedMembers": [
+        {
+          "ordinal": 14,
+          "type": "way",
+          "ref": 1436589310,
+          "role": ""
+        }
+      ]
+    }
+  ],
+  "officialSources": [
+    {
+      "url": "https://www.jreast.co.jp/chiba/news/pdf/pre1508_netrains.pdf",
+      "page": 2,
+      "claim": "JR East lists both Nishi-Funabashi passenger arms separately; schematic service identity, not engineering track geometry."
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/train/130/132751.html",
+      "claim": "JR East Oct2026 train459E Nishi-Funabashi platform12 to Minami-Funabashi platform3."
+    }
+  ]
+}

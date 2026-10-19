@@ -1,0 +1,10 @@
+{
+  "url": "https://mobile.12306.cn/wxxcx/wechat/bigScreen/getStationAddress",
+  "method": "POST",
+  "form": {
+    "stationCode": "IZQ"
+  },
+  "observedAtUtc": "2026-10-18T20:24:37Z",
+  "purpose": "Read-only original station coordinate transport probe; not a train timetable query",
+  "error": "HTTPError: HTTP Error 502: Bad Gateway"
+}

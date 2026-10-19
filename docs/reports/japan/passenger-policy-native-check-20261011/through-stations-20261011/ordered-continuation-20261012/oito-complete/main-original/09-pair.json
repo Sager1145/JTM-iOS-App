@@ -1,0 +1,162 @@
+{
+  "caseIndex": 9,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 9,
+  "source": {
+    "caseIndex": 9,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 9,
+    "fromStationID": "002109",
+    "toStationID": "002120",
+    "camera": [
+      36.559895,
+      137.8430075,
+      0.026726699999997622
+    ],
+    "effectiveCoordinates": [
+      [
+        137.841845,
+        36.56568
+      ],
+      [
+        137.84205,
+        36.56542
+      ],
+      [
+        137.84241,
+        36.56497
+      ],
+      [
+        137.84317,
+        36.56403
+      ],
+      [
+        137.84341,
+        36.56373
+      ],
+      [
+        137.84359,
+        36.56348
+      ],
+      [
+        137.84367,
+        36.56337
+      ],
+      [
+        137.84378,
+        36.56318
+      ],
+      [
+        137.84391,
+        36.5629
+      ],
+      [
+        137.84405,
+        36.5626
+      ],
+      [
+        137.84411,
+        36.56243
+      ],
+      [
+        137.84416,
+        36.56216
+      ],
+      [
+        137.84417,
+        36.5619
+      ],
+      [
+        137.84414,
+        36.56166
+      ],
+      [
+        137.8441,
+        36.56143
+      ],
+      [
+        137.84386,
+        36.56064
+      ],
+      [
+        137.84377,
+        36.56027
+      ],
+      [
+        137.8437,
+        36.55997
+      ],
+      [
+        137.84369,
+        36.55967
+      ],
+      [
+        137.8437,
+        36.55902
+      ],
+      [
+        137.84364,
+        36.55869
+      ],
+      [
+        137.84352,
+        36.55824
+      ],
+      [
+        137.84338,
+        36.55793
+      ],
+      [
+        137.84323,
+        36.55763
+      ],
+      [
+        137.84289,
+        36.55701
+      ],
+      [
+        137.84287,
+        36.55697
+      ],
+      [
+        137.84278,
+        36.55675
+      ],
+      [
+        137.8427,
+        36.55651
+      ],
+      [
+        137.84266,
+        36.55627
+      ],
+      [
+        137.84264,
+        36.55599
+      ],
+      [
+        137.84262,
+        36.55524
+      ],
+      [
+        137.84262,
+        36.55444
+      ],
+      [
+        137.842615,
+        36.55411
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t29 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:1;overlays:1;rides:0;budgetDrops:0;vertices:645;camera:15.07;lod:13.92;backbones:0;networkStations:3;distance:5866.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.559895;centerLon:137.843007;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1373.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:1;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:8;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.559895;centerLon:137.843007;distance:5866.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-09.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Uminokuchi to Inao lakeside corridor continuous, changing local curve offset; both own platform midpoints unresolved."
+}

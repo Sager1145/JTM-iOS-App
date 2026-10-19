@@ -1,0 +1,183 @@
+Command: swift test --package-path /Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit --scratch-path /private/tmp/railkit-build-bis --jobs 2 --filter DirectionalAlignmentSelectionTests.hokurikuLoopUsesUpDirection
+Building for debugging...
+[Pre-planning 1 / 298]
+[Planning deferred tasks]
+[75 / 158] RailKit_RailCore
+[83 / 158]
+[84 / 159] RailCore
+[88 / 205]
+[92 / 205]
+[94 / 205]
+[97 / 205]
+[102 / 205]
+[104 / 205]
+[108 / 205]
+[109 / 205]
+[111 / 205]
+[113 / 205]
+[116 / 205]
+[118 / 205]
+[119 / 205]
+[122 / 205] RailCore
+[124 / 205] RailCore
+[130 / 205] RailCore
+[131 / 205] RailPresentation
+[132 / 205] RailPresentation
+[134 / 205] RailCore
+[136 / 205] RailCore
+[136 / 205] RailApplication
+[139 / 206]
+[141 / 217] RailPresentation
+[143 / 217] RailPresentation
+[150 / 217] RailPresentation
+[150 / 217] RailCore
+[152 / 217] RailPresentationTests-product
+[154 / 217] RailPresentation
+[155 / 217] RailPresentation
+[156 / 217] RailPresentation
+[167 / 219] RailCoreTests-product
+[167 / 219] RailApplication
+[170 / 226] RailApplication
+[173 / 226] RailApplication
+[179 / 226] RailApplication
+[181 / 274]
+[183 / 274]
+[187 / 274]
+[193 / 274]
+[195 / 274]
+[199 / 274]
+[202 / 274]
+[207 / 274]
+[209 / 274] RailApplication
+[210 / 274] RailApplicationTests-product
+[211 / 274] RailApplicationTests-product
+[214 / 274] RailApplication-product
+[215 / 274]
+[223 / 275] RailPresentationTests-product
+[226 / 286] RailPresentationTests-product
+[226 / 286]
+[228 / 286]
+[234 / 286] RailPresentationTests-product
+[235 / 286]
+[238 / 286] RailPresentationTests-product
+[240 / 286] RailPresentationTests-product
+[241 / 286] RailPresentationTests-product
+[242 / 286] RailPresentationTests-product
+[243 / 286] RailPresentationTests-product
+[245 / 286] RailPresentationTests-product
+[250 / 286] RailCoreTests-product
+[251 / 286] RailCoreTests-product
+[253 / 286] RailCoreTests-product
+[255 / 286] RailCoreTests-product
+[255 / 286] RailPresentationTests-product
+[257 / 286] RailCoreTests-product
+[258 / 286] RailCoreTests-product
+[259 / 286] RailCoreTests-product
+[260 / 286] RailCoreTests-product
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/PhysicalEndpointTrimTests.swift:416:25: warning: expression of type 'RouteGeometry' is unused [#NoUsage]
+414 |                 }
+415 |                 if !isAutomatic {
+416 |                     try #require(sourceResult)
+    |                         `- warning: expression of type 'RouteGeometry' is unused [#NoUsage]
+417 |                     let exact = try #require(exactResult)
+418 |                     try #require(sourceResult?.lines.count == exact.geometry.lines.count)
+
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/PhysicalEndpointTrimTests.swift:446:21: warning: expression of type 'RouteSolver.SolvedSection' is unused [#NoUsage]
+444 |             }
+445 |             if !isAutomatic {
+446 |                 try #require(solved)
+    |                     `- warning: expression of type 'RouteSolver.SolvedSection' is unused [#NoUsage]
+447 |                 try #require((solved?.coordinates.count ?? 0) >= 2)
+448 |             }
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[261 / 286] RailCoreTests-product
+[261 / 286]
+[263 / 286]
+[269 / 287] RailApplicationTests-product
+[272 / 295] RailApplicationTests-product
+[274 / 295] RailApplicationTests-product
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/ReviewedChayamachiRoutingTests.swift:16:13: warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+ 14 |             $0.id == "kojima-honshi-bisan-operator-boundary"
+ 15 |         })
+ 16 |         let independent = RouteGraph.build(from: sections)
+    |             `- warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+ 17 |         let joined = RouteGraph.build(from: sections, junctions: [junction])
+ 18 |         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
+
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/ReviewedChayamachiRoutingTests.swift:67:13: warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+ 65 |             $0.id == "chayamachi-uno-honshi-bisan"
+ 66 |         })
+ 67 |         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
+    |             `- warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+ 68 |         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: [junction])
+ 69 |         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
+
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/ReviewedHimejiRoutingTests.swift:32:13: warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+30 |         #expect(!himeji.evidence.isEmpty)
+31 | 
+32 |         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
+   |             `- warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+33 |         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
+34 |         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
+
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/ReviewedKobeRoutingTests.swift:31:13: warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+29 |         #expect(kobe.validFrom == nil)
+30 | 
+31 |         let independent = RouteGraph.build(from: sections, policy: .physicalRailway)
+   |             `- warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+32 |         let joined = RouteGraph.build(from: sections, policy: .physicalRailway, junctions: junctions)
+33 |         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
+
+/Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit/Tests/RailCoreTests/ReviewedShiojiriRoutingTests.swift:14:13: warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+12 |             }
+13 |         let junction = try #require(snapshot.junctions.first { $0.id == "shiojiri-chuo-shinonoi" })
+14 |         let independent = RouteGraph.build(from: sections)
+   |             `- warning: initialization of immutable value 'independent' was never used; consider replacing with assignment to '_' or removing it [#NoUsage]
+15 |         let joined = RouteGraph.build(from: sections, junctions: [junction])
+16 |         #expect(joined.rejectedPhysicalJunctionIDs.isEmpty)
+
+[#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+[281 / 295] RailApplicationTests-product
+[283 / 295] RailApplicationTests-product
+[285 / 295] RailApplicationTests-product
+[285 / 295] RailCoreTests-product
+[289 / 295] RailApplication-product
+[293 / 295] RailApplicationTests-product
+Build complete! (87.37 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DirectionalAlignmentSelectionTests started.
+◇ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" started.
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:46:9: Expectation failed: loop.alignmentDirection == "up"
+↳ loop.alignmentDirection == "up" → false
+↳   loop.alignmentDirection → "down"
+↳     some → "down"
+↳     some → "up"
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:47:9: Expectation failed: base.alignmentPairs.first { $0.with == loop.id }?.direction == "down"
+↳ base.alignmentPairs.first { $0.with == loop.id }?.direction == "down" → false
+↳   base.alignmentPairs.first { $0.with == loop.id }?.direction → "up"
+↳     some → "up"
+↳     some → "down"
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:48:9: Expectation failed: RailwayDirection.allowedDirections(for: loop, intervalIndex: 0) == [1]
+↳ RailwayDirection.allowedDirections(for: loop, intervalIndex: 0) == [1] → false
+↳   RailwayDirection.allowedDirections(for: loop, intervalIndex: 0) → [-1]
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:51:9: Expectation failed: up.contains { $0.lineIDs.contains(loop.id) }
+↳ up.contains { $0.lineIDs.contains(loop.id) } → <not evaluated>
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:52:9: Expectation failed: !down.contains { $0.lineIDs.contains(loop.id) }
+↳ !down.contains { $0.lineIDs.contains(loop.id) } → <not evaluated>
+↳   down.contains { $0.lineIDs.contains(loop.id) } → <not evaluated>
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:59:13: Expectation failed: result.displayLineIds.contains(loop.id) == usesLoop
+↳ result.displayLineIds.contains(loop.id) == usesLoop → false
+↳   result.displayLineIds.contains(loop.id) → false
+↳   usesLoop → true
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" recorded an issue at DirectionalAlignmentSelectionTests.swift:59:13: Expectation failed: result.displayLineIds.contains(loop.id) == usesLoop
+↳ result.displayLineIds.contains(loop.id) == usesLoop → false
+↳   result.displayLineIds.contains(loop.id) → true
+↳   usesLoop → false
+✘ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" failed after 0.359 seconds with 7 issues.
+✘ Suite DirectionalAlignmentSelectionTests failed after 0.360 seconds with 7 issues.
+✘ Test run with 1 test in 1 suite failed after 0.360 seconds with 7 issues.
+Note: Some test targets reported failures:
+  - RailCoreTests (Swift Testing)

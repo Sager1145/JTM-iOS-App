@@ -1,0 +1,9 @@
+{
+  "schema": "cn-reviewed-connection-build/1",
+  "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "counts": {
+    "generatedJunctions": 1,
+    "appendedJunctions": 1,
+    "replacedGeneratedRows": 0
+  }
+}

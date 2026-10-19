@@ -1,0 +1,1282 @@
+{
+  "schema": "cn-chuxiong-lijiang-continuation4-evidence/1",
+  "reviewedAt": "2026-10-19T09:10:52.678178+00:00",
+  "scope": "Source-only bounded investigation of D239 forced-known-stops sectionIndex4 楚雄→丽江. No production edits, native execution, routing success or actual train-track claim.",
+  "outcome": "No admissible repair established. Existing endpoint station bindings and all edges on both sides of the smallest missing link already exist. Original connecting ways at 大理东 lack owning-relation/operator/passenger evidence required by the unchanged physical-section builder.",
+  "manifestReady": false,
+  "proposedPhysicalManifest": null,
+  "proposedStationBindings": [],
+  "baseline": {
+    "nativeReport": "railway-sources/local/china/comparisons/real-trains-20261018/native-boundary-d271-final-session/route-report.json",
+    "comparison": "docs/reports/sources/china-real-train-paths-20261018/comparison.json",
+    "nativeRowId": "CN-REAL-D239-20261018-forced-known-stops",
+    "resolvedSectionCount": 5,
+    "expectedSectionCount": 7,
+    "returnedGeometryParts": 6,
+    "missingSection": {
+      "from": "楚雄",
+      "isBoundary": false,
+      "sectionIndex": 4,
+      "to": "丽江"
+    },
+    "separateBoundary": {
+      "from": "攀枝花南",
+      "isBoundary": true,
+      "sectionIndex": 2,
+      "to": "广通北"
+    },
+    "currentFormalPhysicalSectionCount": 14
+  },
+  "sources": {
+    "originalDatabase": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+    "snapshot": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+    "sourceByLine": "app/public/rail/cn-2025.sources.json",
+    "package": "app/public/rail/cn-2025.json",
+    "formalPhysicalManifest": "railway-sources/china-reviewed-physical-sections.json",
+    "officialCases": "docs/reports/sources/china-real-train-paths-20261018/inputs/cases.json",
+    "officialStationRaw": "railway-sources/local/china/evidence/official-20261018/12306-station_name.js",
+    "officialStationRecords": "railway-sources/local/china/evidence/official-20261018/12306-national-stations.json",
+    "officialStationURL": "https://kyfw.12306.cn/otn/resources/js/framework/station_name.js",
+    "officialStationRetrievedDate": "2026-10-18"
+  },
+  "officialStopConstraint": {
+    "trainNumber": "D239",
+    "trainNo": "760000D23901",
+    "serviceDate": "2026-10-18",
+    "sectionIndex": 4,
+    "from": {
+      "code": "CUM",
+      "name": "楚雄"
+    },
+    "to": {
+      "code": "LHM",
+      "name": "丽江"
+    },
+    "insertedViaStops": [],
+    "note": "大理东 is a source corridor location in this investigation, not an inserted timetable stop or virtual station."
+  },
+  "stationBindingReview": [
+    {
+      "officialRecord": {
+        "name": "楚雄",
+        "telecode": "CUM",
+        "pinyin": "chuxiong",
+        "initials": "cx",
+        "rawFields": [
+          "cxi",
+          "楚雄",
+          "CUM",
+          "chuxiong",
+          "cx",
+          "323",
+          "1905",
+          "楚雄",
+          "",
+          "",
+          ""
+        ],
+        "source": "12306-station_name.js"
+      },
+      "originalRetained12306TextContainsExactRecord": true,
+      "publishedLineId": "cn-osm-relation-13345565-branch-2",
+      "currentSourceStationBinding": {
+        "groupId": "cn-official-12306-cum",
+        "stationCode": "CN-12306-CUM",
+        "markerNodeId": 5599437418,
+        "markerVersion": 6,
+        "markerCoordinate": [
+          101.5427023,
+          25.0853037
+        ],
+        "markerTags": {
+          "alt_name": "楚雄站;楚雄火车站;Chuxiong Railway Station",
+          "name": "楚雄",
+          "name:en": "Chuxiong",
+          "name:zh": "楚雄",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q83548839",
+          "wikipedia": "zh:楚雄站"
+        },
+        "anchorNodeId": 6940483644,
+        "anchorVersion": 1,
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+        "anchorSelection": "joint-ordered-original-source-path",
+        "anchorCandidates": [
+          6940483644
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 5599437418,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "stopAreaIds": [],
+        "officialTelecode": "CUM",
+        "officialPinyin": "chuxiong",
+        "nameTraditional": "",
+        "nameEnglish": "Chuxiong",
+        "englishSourceType": "original-OSM",
+        "englishSource": "https://www.openstreetmap.org/node/5599437418"
+      },
+      "anchorIsAlreadyInPublishedSourceIntervals": true,
+      "newBindingRequired": false
+    },
+    {
+      "officialRecord": {
+        "name": "丽江",
+        "telecode": "LHM",
+        "pinyin": "lijiang",
+        "initials": "lj",
+        "rawFields": [
+          "lji",
+          "丽江",
+          "LHM",
+          "lijiang",
+          "lj",
+          "812",
+          "6927",
+          "丽江",
+          "",
+          "",
+          ""
+        ],
+        "source": "12306-station_name.js"
+      },
+      "originalRetained12306TextContainsExactRecord": true,
+      "publishedLineId": "cn-osm-relation-3431754",
+      "currentSourceStationBinding": {
+        "groupId": "cn-official-12306-lhm",
+        "stationCode": "CN-12306-LHM",
+        "markerNodeId": 1530613773,
+        "markerVersion": 9,
+        "markerCoordinate": [
+          100.2512118,
+          26.8143271
+        ],
+        "markerTags": {
+          "alt_name": "丽江站;丽江火车站;Lijiang Railway Station",
+          "name": "丽江",
+          "name:en": "Lijiang",
+          "name:zh": "丽江",
+          "operator": "中国铁路昆明局集团有限公司",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes",
+          "wikidata": "Q10877547",
+          "wikipedia": "zh:丽江站"
+        },
+        "anchorNodeId": 7701441509,
+        "anchorVersion": 1,
+        "membershipEvidence": "explicit-route-member",
+        "anchorEvidence": "nearest-original-node-per-own-route-local-source-strand",
+        "anchorSelection": "joint-ordered-original-source-path",
+        "anchorCandidates": [
+          7701441509
+        ],
+        "bindingEvidence": [
+          {
+            "method": "explicit-route-member",
+            "markerNodeId": 1530613773,
+            "anchorNodeIds": [],
+            "stopAreaIds": []
+          }
+        ],
+        "stopAreaIds": [],
+        "officialTelecode": "LHM",
+        "officialPinyin": "lijiang",
+        "nameTraditional": "",
+        "nameEnglish": "Lijiang",
+        "englishSourceType": "original-OSM",
+        "englishSource": "https://www.openstreetmap.org/node/1530613773"
+      },
+      "anchorIsAlreadyInPublishedSourceIntervals": true,
+      "newBindingRequired": false
+    }
+  ],
+  "sourceTopologyReview": {
+    "relations": [
+      {
+        "id": 13345565,
+        "version": 13,
+        "tags": {
+          "from": "广通北",
+          "name": "楚大线",
+          "operator": "中国铁路",
+          "operator:en": "China Railway",
+          "operator:wikidata": "Q1073489",
+          "operator:zh": "中国铁路",
+          "owner": "滇西铁路有限责任公司",
+          "ref": "3075",
+          "route": "railway",
+          "to": "大理",
+          "type": "route"
+        },
+        "directWayMemberCount": 293,
+        "directWayMembersAbsentFromStoredSQLite": [
+          1529392955,
+          1529392947,
+          1529392948,
+          1417169738,
+          1417169739,
+          1381950756,
+          1381950757,
+          1529392946,
+          1381950759,
+          1381950758,
+          1529392956
+        ],
+        "absenceHandling": "No fabricated way geometry, membership or version; omitted from graph and retained as an explicit source limitation."
+      },
+      {
+        "id": 3431754,
+        "version": 56,
+        "tags": {
+          "from": "大理",
+          "name": "滇藏铁路",
+          "name:en": "Yunnan-Tibet railway",
+          "old_name": "大丽铁路",
+          "operator": "中国铁路",
+          "operator:en": "China Railway",
+          "operator:wikidata": "Q1073489",
+          "operator:zh": "中国铁路",
+          "owner": "滇西铁路有限责任公司",
+          "route": "railway",
+          "to": "波密",
+          "type": "route",
+          "wikidata": "Q17039014",
+          "wikipedia": "en:Yunnan-Tibet railway"
+        },
+        "directWayMemberCount": 375,
+        "directWayMembersAbsentFromStoredSQLite": [
+          1443961531,
+          1443961530,
+          1514782440,
+          1514782417,
+          1514782418,
+          1514782419,
+          1514782420,
+          1514782421,
+          1514782422,
+          1514782423,
+          1514782424,
+          1514782425,
+          1514782426,
+          1514782427,
+          1514782428,
+          1514782429,
+          1514782430,
+          1514782431,
+          1514782432,
+          1514782433,
+          1514782434,
+          1514782435,
+          1514782436,
+          1514782437,
+          1514782438,
+          1250776284,
+          1514782439,
+          1527143083,
+          1250745257,
+          1527143084,
+          1527143082,
+          1527143081,
+          1527143080,
+          1527143079,
+          1527143078,
+          1527143077,
+          1527143076,
+          1527143075,
+          1527143073,
+          1527143074,
+          1527143072,
+          1527143071,
+          1527143070,
+          1527143069,
+          1527143068,
+          1527143067,
+          1527143065,
+          1527143066,
+          1527143062,
+          1527143064,
+          1527143063,
+          1527143060,
+          1250745256,
+          1527143061,
+          1527143059,
+          1527143058,
+          1527143057,
+          1527143056,
+          1527143055,
+          1527143054,
+          1527143053,
+          1527143052,
+          1527143051,
+          1527143050,
+          1527143049,
+          1527143048,
+          1527143044,
+          1527143046,
+          1527143045,
+          1527143047,
+          1527143043,
+          1527143042,
+          1527143041,
+          1527143040,
+          1527143039,
+          1527143038,
+          1527143036,
+          1527143037,
+          1527143035,
+          1527143034,
+          1527143032,
+          1527143033,
+          1443961532,
+          1271749455
+        ],
+        "absenceHandling": "No fabricated way geometry, membership or version; omitted from graph and retained as an explicit source limitation."
+      },
+      {
+        "id": 2190221,
+        "version": 62,
+        "tags": {
+          "alt_name:en": "Guangtong–Dali Railway",
+          "name": "广大铁路",
+          "name:en": "Guangda Railway",
+          "name:zh": "广大铁路",
+          "network": "中国铁路",
+          "owner": "滇西铁路有限责任公司",
+          "route": "railway",
+          "type": "route",
+          "wikipedia": "en:Guangtong–Dali Railway"
+        },
+        "directWayMemberCount": 292,
+        "directWayMembersAbsentFromStoredSQLite": [],
+        "absenceHandling": "No fabricated way geometry, membership or version; omitted from graph and retained as an explicit source limitation."
+      }
+    ],
+    "method": "Exact original node identity and consecutive original rail-way edges only. Graph includes all stored railway=rail member ways of the three identified corridors, even ways that would later fail strict activity or service gates; thus absence of a path in this stored-source superset cannot be fixed by filtering it more permissively. No rounded coordinate/proximity connection was added.",
+    "fromAnchor": 6940483644,
+    "toAnchor": 7701441509,
+    "storedRelationGraphPathExists": false,
+    "fromComponentVertexCount": 747,
+    "toComponentVertexCount": 1633,
+    "existingPublishedSides": [
+      {
+        "label": "楚雄→大理东楚大线原始节点",
+        "startNode": {
+          "id": 6940483644,
+          "version": 1,
+          "coordinate": [
+            101.54651,
+            25.0834293
+          ],
+          "tags": {}
+        },
+        "endNode": {
+          "id": 9265421518,
+          "version": 2,
+          "coordinate": [
+            100.3165563,
+            25.5739486
+          ],
+          "tags": {
+            "railway": "switch"
+          }
+        },
+        "distanceMetersApproximate": 140435.487,
+        "vertexCount": 555,
+        "edgeCount": 554,
+        "missingPublishedOriginalEdges": 0,
+        "publishedTrackIds": [
+          "cn-osm-relation-13345565",
+          "cn-osm-relation-13345565-branch-2"
+        ],
+        "scratchExactPath": "/private/tmp/cn-fourth-20261019/chuxiong/side-6940483644-9265421518.json"
+      },
+      {
+        "label": "大理东滇藏铁路原始节点→丽江",
+        "startNode": {
+          "id": 2215382233,
+          "version": 3,
+          "coordinate": [
+            100.3159893,
+            25.5745909
+          ],
+          "tags": {
+            "railway": "switch"
+          }
+        },
+        "endNode": {
+          "id": 7701441509,
+          "version": 1,
+          "coordinate": [
+            100.2512245,
+            26.8134284
+          ],
+          "tags": {}
+        },
+        "distanceMetersApproximate": 158403.593,
+        "vertexCount": 1078,
+        "edgeCount": 1077,
+        "missingPublishedOriginalEdges": 0,
+        "publishedTrackIds": [
+          "cn-osm-relation-3431754"
+        ],
+        "scratchExactPath": "/private/tmp/cn-fourth-20261019/chuxiong/side-2215382233-7701441509.json"
+      }
+    ],
+    "interpretation": "The stored source relation inventories do not provide an owned original way across these two components. This is an evidence limitation, not a statement that real rail infrastructure or train service is physically disconnected."
+  },
+  "smallestCandidate": {
+    "wayId": 1004183415,
+    "version": 2,
+    "nodeIds": [
+      2215382233,
+      9265421518
+    ],
+    "nodeProofs": [
+      {
+        "id": 2215382233,
+        "version": 3,
+        "coordinate": [
+          100.3159893,
+          25.5745909
+        ],
+        "tags": {
+          "railway": "switch"
+        }
+      },
+      {
+        "id": 9265421518,
+        "version": 2,
+        "coordinate": [
+          100.3165563,
+          25.5739486
+        ],
+        "tags": {
+          "railway": "switch"
+        }
+      }
+    ],
+    "tags": {
+      "gauge": "1435",
+      "railway": "rail",
+      "service": "crossover"
+    },
+    "owningRelationMemberships": [],
+    "originalConsecutiveEdgeCount": 1,
+    "bothEndpointsAlreadyPublishedOriginalSourceNodes": true,
+    "admissible": false,
+    "failsCurrentBuilderGates": [
+      "physical path outside original relation member inventory",
+      "missing exact operator evidence",
+      "crossover requires explicit original passenger membership or passenger way tags"
+    ],
+    "stationBindingWouldNotSupplyMissingEdge": true
+  },
+  "boundedAlternativeReview": {
+    "boundsWGS84": [
+      100.24,
+      25.55,
+      100.34,
+      25.62
+    ],
+    "queryScope": "Original ways incident to the 289 already-read corridor source nodes in this rectangle; exact relation memberships checked per additional original way. No national regeneration or native route run.",
+    "incidentOriginalNodeCount": 289,
+    "additionalRailWayCount": 30,
+    "bridgesBetweenStoredCorridorComponents": [
+      {
+        "wayId": 211549794,
+        "version": 2,
+        "nodeIds": [
+          2215382077,
+          2215382104
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382077,
+            "version": 3,
+            "coordinate": [
+              100.322271,
+              25.5664977
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382104,
+            "version": 4,
+            "coordinate": [
+              100.321794,
+              25.5671948
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "railway": "rail"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          0
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 211549795,
+        "version": 3,
+        "nodeIds": [
+          2215382282,
+          2215382278
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382282,
+            "version": 4,
+            "coordinate": [
+              100.313059,
+              25.5783854
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382278,
+            "version": 5,
+            "coordinate": [
+              100.3135318,
+              25.5776838
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "passenger_lines": "1",
+          "railway": "rail",
+          "service": "crossover",
+          "usage": "main",
+          "voltage": "25000"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": true,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied."
+        ]
+      },
+      {
+        "wayId": 211549801,
+        "version": 2,
+        "nodeIds": [
+          2215382242,
+          2215382251
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382242,
+            "version": 3,
+            "coordinate": [
+              100.3158793,
+              25.5747309
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382251,
+            "version": 4,
+            "coordinate": [
+              100.3153127,
+              25.5753759
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 211561687,
+        "version": 3,
+        "nodeIds": [
+          2215509277,
+          2215509273
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215509277,
+            "version": 5,
+            "coordinate": [
+              100.2554389,
+              25.5941733
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215509273,
+            "version": 5,
+            "coordinate": [
+              100.2549085,
+              25.5939851
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover",
+          "voltage": "25000"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          5,
+          0
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 889448076,
+        "version": 1,
+        "nodeIds": [
+          2215509193,
+          2215509198
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215509193,
+            "version": 4,
+            "coordinate": [
+              100.2596737,
+              25.5958986
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215509198,
+            "version": 4,
+            "coordinate": [
+              100.2590994,
+              25.5956463
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover",
+          "voltage": "25000"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          0,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1004183414,
+        "version": 1,
+        "nodeIds": [
+          2215382302,
+          9265383805
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382302,
+            "version": 3,
+            "coordinate": [
+              100.3129499,
+              25.5785238
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 9265383805,
+            "version": 2,
+            "coordinate": [
+              100.3124932,
+              25.5792244
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          0
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1004183415,
+        "version": 2,
+        "nodeIds": [
+          2215382233,
+          9265421518
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382233,
+            "version": 3,
+            "coordinate": [
+              100.3159893,
+              25.5745909
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 9265421518,
+            "version": 2,
+            "coordinate": [
+              100.3165563,
+              25.5739486
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          0
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1004183418,
+        "version": 2,
+        "nodeIds": [
+          9265421528,
+          9265421529
+        ],
+        "nodeProofs": [
+          {
+            "id": 9265421528,
+            "version": 2,
+            "coordinate": [
+              100.3146333,
+              25.5762589
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 9265421529,
+            "version": 2,
+            "coordinate": [
+              100.314159,
+              25.5769629
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          5,
+          7
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1004183419,
+        "version": 2,
+        "nodeIds": [
+          2215382279,
+          9265421517
+        ],
+        "nodeProofs": [
+          {
+            "id": 2215382279,
+            "version": 3,
+            "coordinate": [
+              100.3140511,
+              25.5770983
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 9265421517,
+            "version": 2,
+            "coordinate": [
+              100.313583,
+              25.5778014
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          0
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1004194553,
+        "version": 2,
+        "nodeIds": [
+          6919410823,
+          9265497435
+        ],
+        "nodeProofs": [
+          {
+            "id": 6919410823,
+            "version": 3,
+            "coordinate": [
+              100.3252197,
+              25.5627397
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 9265497435,
+            "version": 2,
+            "coordinate": [
+              100.3246582,
+              25.5633854
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          0,
+          7
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1421191360,
+        "version": 1,
+        "nodeIds": [
+          9265497430,
+          2215382043,
+          2215382038
+        ],
+        "nodeProofs": [
+          {
+            "id": 9265497430,
+            "version": 2,
+            "coordinate": [
+              100.3237133,
+              25.5646952
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382043,
+            "version": 3,
+            "coordinate": [
+              100.3241063,
+              25.5640973
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382038,
+            "version": 3,
+            "coordinate": [
+              100.3245051,
+              25.5634957
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          0,
+          7,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1421191362,
+        "version": 1,
+        "nodeIds": [
+          13059914296,
+          2215382045
+        ],
+        "nodeProofs": [
+          {
+            "id": 13059914296,
+            "version": 1,
+            "coordinate": [
+              100.3238944,
+              25.5643744
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 2215382045,
+            "version": 3,
+            "coordinate": [
+              100.3233412,
+              25.5650115
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1421191365,
+        "version": 1,
+        "nodeIds": [
+          13059914298,
+          13059914297
+        ],
+        "nodeProofs": [
+          {
+            "id": 13059914298,
+            "version": 1,
+            "coordinate": [
+              100.3228267,
+              25.5657709
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 13059914297,
+            "version": 1,
+            "coordinate": [
+              100.3222723,
+              25.5664143
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          7,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      },
+      {
+        "wayId": 1426709696,
+        "version": 1,
+        "nodeIds": [
+          13115207584,
+          13115207583
+        ],
+        "nodeProofs": [
+          {
+            "id": 13115207584,
+            "version": 1,
+            "coordinate": [
+              100.2607103,
+              25.5962591
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          },
+          {
+            "id": 13115207583,
+            "version": 1,
+            "coordinate": [
+              100.261449,
+              25.5964719
+            ],
+            "tags": {
+              "railway": "switch"
+            }
+          }
+        ],
+        "tags": {
+          "electrified": "contact_line",
+          "frequency": "50",
+          "gauge": "1435",
+          "railway": "rail",
+          "service": "crossover",
+          "voltage": "25000"
+        },
+        "sourceRelations": [],
+        "originalConsecutiveEdges": true,
+        "originalSourceComponents": [
+          0,
+          5
+        ],
+        "hasExplicitOperator": false,
+        "hasExplicitWayPassengerTags": false,
+        "admissibleUnderCurrentBuilder": false,
+        "rejectionReasons": [
+          "No original owning relation membership found for this exact way.",
+          "No explicit original way operator supplied.",
+          "No explicit original passenger way tags or passenger relation membership supplied."
+        ]
+      }
+    ],
+    "admissibleBridgeCount": 0,
+    "notablePassengerTaggedWay": {
+      "id": 211549795,
+      "version": 3,
+      "nodeIds": [
+        2215382282,
+        2215382278
+      ],
+      "passenger_lines": "1",
+      "sourceRelationMemberships": [],
+      "operator": null,
+      "note": "Genuine passenger-tagged original crossover, but it joins the 滇藏 and opposing 楚大/广大 strand. It does not remove the need for another unsupported bridge to the 楚雄 anchor strand and lacks its own relation and operator evidence."
+    }
+  },
+  "rejectedShortcuts": [
+    "No node-coordinate proximity or quantization merge.",
+    "No station identity or 1500m anchor-bound relaxation.",
+    "No 大理 or 大理东 virtual/extra via station.",
+    "No assignment of an unowned crossover to either adjacent corridor.",
+    "No corridor-wide legal ownership, per-track operator or passenger claim from nearby names or timetable stops.",
+    "No builder weakening or direct-way contract extension proposed without the missing source evidence."
+  ],
+  "validation": {
+    "kind": "Targeted original SQLite queries and source/package record review only",
+    "originalNodeCoordinatesAndVersionsChecked": true,
+    "originalWayNodeAdjacencyAndVersionsChecked": true,
+    "originalDirectRelationMembershipChecked": true,
+    "officialEndpointNamesAndTelecodesCheckedAgainstRetained12306JS": true,
+    "bothExistingPublishedSidePathsHaveZeroMissingSourceEdges": true,
+    "productionFilesChanged": false,
+    "heavyBuildsTestsNativeRuns": false,
+    "routeSuccessClaimed": false,
+    "primaryDocumentsUsed": "Pinned original OSM SQLite records and retained official 12306 station/timetable inputs. No secondary narrative used to supply absent operator or passenger evidence."
+  },
+  "remainingEvidenceNeeded": [
+    "An original directly owning relation (with exact stored version and member inventory) for a connecting way, or separately reviewed direct-way contract equivalence approved by the parent without weakening geometry/operator/passenger gates.",
+    "Exact operating agency evidence for the connector.",
+    "Explicit original passenger evidence for any crossover used; 12306 endpoint order alone does not establish a particular crossover.",
+    "If an absent direct member is investigated, its original way nodes/tags/version must first be recovered within source policy; missing rows cannot be guessed."
+  ],
+  "limits": [
+    "Investigation is bounded to the supplied stored original source and the named corridors plus incident ways near 大理东. It is not a national completeness or all-possible-alternatives proof.",
+    "Some relation member IDs have no stored SQLite way record. Their geometry/tags/version remain unproved; this report does not infer that they are nonexistent or irrelevant.",
+    "No new native route solve was performed; baseline section4 and PNE section2 remain unresolved in the last observed native result."
+  ],
+  "scratchArtifacts": [
+    "/private/tmp/cn-fourth-20261019/chuxiong/source.json",
+    "/private/tmp/cn-fourth-20261019/chuxiong/nearby-original-ways.json",
+    "/private/tmp/cn-fourth-20261019/chuxiong/side-6940483644-9265421518.json",
+    "/private/tmp/cn-fourth-20261019/chuxiong/side-2215382233-7701441509.json"
+  ]
+}

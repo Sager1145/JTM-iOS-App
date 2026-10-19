@@ -1,0 +1,3451 @@
+{
+  "queueOrdinal": 79,
+  "canonicalQueuePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json",
+  "lineID": "jp-万葉線-新湊港線",
+  "packageVersion": "2025.5.2",
+  "stations": [
+    [
+      "001802",
+      "六渡寺",
+      137.06597,
+      36.788825,
+      "",
+      1
+    ],
+    [
+      "001807",
+      "庄川口",
+      137.07101,
+      36.78407,
+      "",
+      1
+    ],
+    [
+      "001811",
+      "第一イン新湊クロスベイ前",
+      137.07841,
+      36.781205,
+      "",
+      1
+    ],
+    [
+      "001814",
+      "新町口",
+      137.08432,
+      36.778635,
+      "",
+      1
+    ],
+    [
+      "001819",
+      "中新湊",
+      137.088885,
+      36.775,
+      "",
+      1
+    ],
+    [
+      "001815",
+      "東新湊",
+      137.099055,
+      36.777865,
+      "",
+      1
+    ],
+    [
+      "001817",
+      "海王丸",
+      137.10669,
+      36.776285,
+      "",
+      1
+    ],
+    [
+      "001820",
+      "越ノ潟",
+      137.111935,
+      36.774835,
+      "",
+      1
+    ]
+  ],
+  "intervalCount": 7,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 0,
+  "plannedViewCount": null,
+  "actualCompletedViewCount": 22,
+  "matchingCompleteViewCount": 0,
+  "missingViewCount": null,
+  "ownCaptureStates": {
+    "captured": 22
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "001802",
+        "六渡寺"
+      ],
+      "toStation": [
+        "001807",
+        "庄川口"
+      ],
+      "legacySortedSlot": 416,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 3,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 9,
+      "displayControlCount": 168
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "001807",
+        "庄川口"
+      ],
+      "toStation": [
+        "001811",
+        "第一イン新湊クロスベイ前"
+      ],
+      "legacySortedSlot": 417,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 4,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 6,
+      "displayControlCount": 197
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "001811",
+        "第一イン新湊クロスベイ前"
+      ],
+      "toStation": [
+        "001814",
+        "新町口"
+      ],
+      "legacySortedSlot": 418,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 3,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 7,
+      "displayControlCount": 152
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "001814",
+        "新町口"
+      ],
+      "toStation": [
+        "001819",
+        "中新湊"
+      ],
+      "legacySortedSlot": 419,
+      "plannedViewCount": 3,
+      "completedViewCount": 0,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 3,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 12,
+      "displayControlCount": 172
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "001819",
+        "中新湊"
+      ],
+      "toStation": [
+        "001815",
+        "東新湊"
+      ],
+      "legacySortedSlot": 420,
+      "plannedViewCount": 5,
+      "completedViewCount": 5,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 5,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 19,
+      "displayControlCount": 31
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "001815",
+        "東新湊"
+      ],
+      "toStation": [
+        "001817",
+        "海王丸"
+      ],
+      "legacySortedSlot": 421,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 4,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 4,
+      "displayControlCount": 11
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "001817",
+        "海王丸"
+      ],
+      "toStation": [
+        "001820",
+        "越ノ潟"
+      ],
+      "legacySortedSlot": 422,
+      "plannedViewCount": 3,
+      "completedViewCount": 3,
+      "matchingCompleteViewCount": 0,
+      "missingViewCount": 3,
+      "planIdentityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "sourceControlCount": 6,
+      "displayControlCount": 21
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78407,
+          "longitude": 137.07101
+        },
+        "distanceMetres": 697.4103116583174,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/basemap.png",
+          "recordedByteCount": 386498,
+          "actualByteCount": 386498
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13695,
+          "actualByteCount": 13695
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/display.png",
+          "recordedByteCount": 438348,
+          "actualByteCount": 438348
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/distance-samples.json",
+          "recordedByteCount": 24866,
+          "actualByteCount": 24866
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/smooth.png",
+          "recordedByteCount": 440482,
+          "actualByteCount": 440482
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000002/view.json",
+          "recordedByteCount": 66425,
+          "actualByteCount": 66425
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.786510879840456,
+          "longitude": 137.06858361476193
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/basemap.png",
+          "recordedByteCount": 283806,
+          "actualByteCount": 283806
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 12547,
+          "actualByteCount": 12547
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/display.png",
+          "recordedByteCount": 327912,
+          "actualByteCount": 327912
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/distance-samples.json",
+          "recordedByteCount": 27329,
+          "actualByteCount": 27329
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/smooth.png",
+          "recordedByteCount": 329464,
+          "actualByteCount": 329464
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000001/view.json",
+          "recordedByteCount": 71276,
+          "actualByteCount": 71276
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.788825,
+          "longitude": 137.06597
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/basemap.png",
+          "recordedByteCount": 305074,
+          "actualByteCount": 305074
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 7161,
+          "actualByteCount": 7161
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/display.png",
+          "recordedByteCount": 346413,
+          "actualByteCount": 346413
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/distance-samples.json",
+          "recordedByteCount": 13858,
+          "actualByteCount": 13858
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/smooth.png",
+          "recordedByteCount": 347498,
+          "actualByteCount": 347498
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000416/000000/view.json",
+          "recordedByteCount": 38832,
+          "actualByteCount": 38832
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.781328400392674,
+          "longitude": 137.07805460689622
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/basemap.png",
+          "recordedByteCount": 491841,
+          "actualByteCount": 491841
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 14382,
+          "actualByteCount": 14382
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/display.png",
+          "recordedByteCount": 549188,
+          "actualByteCount": 549188
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/distance-samples.json",
+          "recordedByteCount": 20267,
+          "actualByteCount": 20267
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/smooth.png",
+          "recordedByteCount": 550179,
+          "actualByteCount": 550179
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000002/view.json",
+          "recordedByteCount": 58489,
+          "actualByteCount": 58489
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.781205,
+          "longitude": 137.07841
+        },
+        "distanceMetres": 734.497341744132,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/basemap.png",
+          "recordedByteCount": 492818,
+          "actualByteCount": 492818
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 14582,
+          "actualByteCount": 14582
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/display.png",
+          "recordedByteCount": 550068,
+          "actualByteCount": 550068
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/distance-samples.json",
+          "recordedByteCount": 21073,
+          "actualByteCount": 21073
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/smooth.png",
+          "recordedByteCount": 550978,
+          "actualByteCount": 550978
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000003/view.json",
+          "recordedByteCount": 60400,
+          "actualByteCount": 60400
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.782613940757585,
+          "longitude": 137.07446731569738
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/basemap.png",
+          "recordedByteCount": 482459,
+          "actualByteCount": 482459
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 15637,
+          "actualByteCount": 15637
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/display.png",
+          "recordedByteCount": 539584,
+          "actualByteCount": 539584
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/distance-samples.json",
+          "recordedByteCount": 27281,
+          "actualByteCount": 27281
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/smooth.png",
+          "recordedByteCount": 541402,
+          "actualByteCount": 541402
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000001/view.json",
+          "recordedByteCount": 73949,
+          "actualByteCount": 73949
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78407,
+          "longitude": 137.07101
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/basemap.png",
+          "recordedByteCount": 386558,
+          "actualByteCount": 386558
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13695,
+          "actualByteCount": 13695
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/display.png",
+          "recordedByteCount": 438400,
+          "actualByteCount": 438400
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/distance-samples.json",
+          "recordedByteCount": 24866,
+          "actualByteCount": 24866
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/smooth.png",
+          "recordedByteCount": 440494,
+          "actualByteCount": 440494
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000417/000000/view.json",
+          "recordedByteCount": 66335,
+          "actualByteCount": 66335
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.778635,
+          "longitude": 137.08432
+        },
+        "distanceMetres": 603.2966288725355,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/basemap.png",
+          "recordedByteCount": 493576,
+          "actualByteCount": 493576
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 15221,
+          "actualByteCount": 15221
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/display.png",
+          "recordedByteCount": 551332,
+          "actualByteCount": 551332
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/distance-samples.json",
+          "recordedByteCount": 49518,
+          "actualByteCount": 49518
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/smooth.png",
+          "recordedByteCount": 552145,
+          "actualByteCount": 552145
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000002/view.json",
+          "recordedByteCount": 115327,
+          "actualByteCount": 115327
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.779872288325095,
+          "longitude": 137.08197010050526
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/basemap.png",
+          "recordedByteCount": 510589,
+          "actualByteCount": 510589
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 14734,
+          "actualByteCount": 14734
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/display.png",
+          "recordedByteCount": 570037,
+          "actualByteCount": 570037
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/distance-samples.json",
+          "recordedByteCount": 34070,
+          "actualByteCount": 34070
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/smooth.png",
+          "recordedByteCount": 570814,
+          "actualByteCount": 570814
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000001/view.json",
+          "recordedByteCount": 85968,
+          "actualByteCount": 85968
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.781205,
+          "longitude": 137.07841
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/basemap.png",
+          "recordedByteCount": 492833,
+          "actualByteCount": 492833
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 14582,
+          "actualByteCount": 14582
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/display.png",
+          "recordedByteCount": 550112,
+          "actualByteCount": 550112
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/distance-samples.json",
+          "recordedByteCount": 21073,
+          "actualByteCount": 21073
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/smooth.png",
+          "recordedByteCount": 551004,
+          "actualByteCount": 551004
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000418/000000/view.json",
+          "recordedByteCount": 60455,
+          "actualByteCount": 60455
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77671527213098,
+          "longitude": 137.09534453173086
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/basemap.png",
+          "recordedByteCount": 360445,
+          "actualByteCount": 360445
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 17144,
+          "actualByteCount": 17144
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/display.png",
+          "recordedByteCount": 408912,
+          "actualByteCount": 408912
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/distance-samples.json",
+          "recordedByteCount": 49368,
+          "actualByteCount": 49368
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/smooth.png",
+          "recordedByteCount": 410641,
+          "actualByteCount": 410641
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000002/view.json",
+          "recordedByteCount": 118966,
+          "actualByteCount": 118966
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.777925534154484,
+          "longitude": 137.09870576473097
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/basemap.png",
+          "recordedByteCount": 300416,
+          "actualByteCount": 300416
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 15855,
+          "actualByteCount": 15855
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/display.png",
+          "recordedByteCount": 341791,
+          "actualByteCount": 341791
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/distance-samples.json",
+          "recordedByteCount": 32738,
+          "actualByteCount": 32738
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/smooth.png",
+          "recordedByteCount": 343077,
+          "actualByteCount": 343077
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000003/view.json",
+          "recordedByteCount": 84864,
+          "actualByteCount": 84864
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.777865,
+          "longitude": 137.099055
+        },
+        "distanceMetres": 1081.8239623278473,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 4
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/basemap.png",
+          "recordedByteCount": 295356,
+          "actualByteCount": 295356
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/display-stage-distance-samples.json",
+          "recordedByteCount": 15672,
+          "actualByteCount": 15672
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/display.png",
+          "recordedByteCount": 336221,
+          "actualByteCount": 336221
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/distance-samples.json",
+          "recordedByteCount": 31722,
+          "actualByteCount": 31722
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/smooth.png",
+          "recordedByteCount": 337279,
+          "actualByteCount": 337279
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000004/view.json",
+          "recordedByteCount": 82562,
+          "actualByteCount": 82562
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77450177282422,
+          "longitude": 137.09255423950762
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/basemap.png",
+          "recordedByteCount": 337860,
+          "actualByteCount": 337860
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 15803,
+          "actualByteCount": 15803
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/display.png",
+          "recordedByteCount": 384623,
+          "actualByteCount": 384623
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/distance-samples.json",
+          "recordedByteCount": 41774,
+          "actualByteCount": 41774
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/smooth.png",
+          "recordedByteCount": 386003,
+          "actualByteCount": 386003
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000001/view.json",
+          "recordedByteCount": 102147,
+          "actualByteCount": 102147
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.775,
+          "longitude": 137.088885
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/basemap.png",
+          "recordedByteCount": 420076,
+          "actualByteCount": 420076
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 16916,
+          "actualByteCount": 16916
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/display.png",
+          "recordedByteCount": 471708,
+          "actualByteCount": 471708
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/distance-samples.json",
+          "recordedByteCount": 57667,
+          "actualByteCount": 57667
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/smooth.png",
+          "recordedByteCount": 472949,
+          "actualByteCount": 472949
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000420/000000/view.json",
+          "recordedByteCount": 133590,
+          "actualByteCount": 133590
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77629032116582,
+          "longitude": 137.10666433342595
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/basemap.png",
+          "recordedByteCount": 221772,
+          "actualByteCount": 221772
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 13563,
+          "actualByteCount": 13563
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/display.png",
+          "recordedByteCount": 258995,
+          "actualByteCount": 258995
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/distance-samples.json",
+          "recordedByteCount": 24700,
+          "actualByteCount": 24700
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/smooth.png",
+          "recordedByteCount": 259411,
+          "actualByteCount": 259411
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000002/view.json",
+          "recordedByteCount": 65656,
+          "actualByteCount": 65656
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.776285,
+          "longitude": 137.10669
+        },
+        "distanceMetres": 702.3613245932771,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/basemap.png",
+          "recordedByteCount": 221265,
+          "actualByteCount": 221265
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 13445,
+          "actualByteCount": 13445
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/display.png",
+          "recordedByteCount": 258680,
+          "actualByteCount": 258680
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/distance-samples.json",
+          "recordedByteCount": 24697,
+          "actualByteCount": 24697
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/smooth.png",
+          "recordedByteCount": 259138,
+          "actualByteCount": 259138
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000003/view.json",
+          "recordedByteCount": 65488,
+          "actualByteCount": 65488
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77708370312305,
+          "longitude": 137.1028614794128
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/basemap.png",
+          "recordedByteCount": 261567,
+          "actualByteCount": 261567
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 13760,
+          "actualByteCount": 13760
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/display.png",
+          "recordedByteCount": 300559,
+          "actualByteCount": 300559
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/distance-samples.json",
+          "recordedByteCount": 23959,
+          "actualByteCount": 23959
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/smooth.png",
+          "recordedByteCount": 301373,
+          "actualByteCount": 301373
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000001/view.json",
+          "recordedByteCount": 65323,
+          "actualByteCount": 65323
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.777865,
+          "longitude": 137.099055
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/basemap.png",
+          "recordedByteCount": 295312,
+          "actualByteCount": 295312
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 15672,
+          "actualByteCount": 15672
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/display.png",
+          "recordedByteCount": 336229,
+          "actualByteCount": 336229
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/distance-samples.json",
+          "recordedByteCount": 31722,
+          "actualByteCount": 31722
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/smooth.png",
+          "recordedByteCount": 337279,
+          "actualByteCount": 337279
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000421/000000/view.json",
+          "recordedByteCount": 81981,
+          "actualByteCount": 81981
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.774835,
+          "longitude": 137.111935
+        },
+        "distanceMetres": 501.14329211696537,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/basemap.png",
+          "recordedByteCount": 135446,
+          "actualByteCount": 135446
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 7530,
+          "actualByteCount": 7530
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/display.png",
+          "recordedByteCount": 160675,
+          "actualByteCount": 160675
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/distance-samples.json",
+          "recordedByteCount": 17843,
+          "actualByteCount": 17843
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/smooth.png",
+          "recordedByteCount": 160866,
+          "actualByteCount": 160866
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000002/view.json",
+          "recordedByteCount": 46058,
+          "actualByteCount": 46058
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.775438981984756,
+          "longitude": 137.1104750006157
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/basemap.png",
+          "recordedByteCount": 161047,
+          "actualByteCount": 161047
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 9171,
+          "actualByteCount": 9171
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/display.png",
+          "recordedByteCount": 189675,
+          "actualByteCount": 189675
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/distance-samples.json",
+          "recordedByteCount": 19696,
+          "actualByteCount": 19696
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/smooth.png",
+          "recordedByteCount": 189967,
+          "actualByteCount": 189967
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000001/view.json",
+          "recordedByteCount": 51521,
+          "actualByteCount": 51521
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    },
+    {
+      "intervalIndex": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.776285,
+          "longitude": 137.10669
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": false,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/basemap.png",
+          "recordedByteCount": 221319,
+          "actualByteCount": 221319
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 13445,
+          "actualByteCount": 13445
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/display.png",
+          "recordedByteCount": 258698,
+          "actualByteCount": 258698
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/distance-samples.json",
+          "recordedByteCount": 24697,
+          "actualByteCount": 24697
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/smooth.png",
+          "recordedByteCount": 259165,
+          "actualByteCount": 259165
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000422/000000/view.json",
+          "recordedByteCount": 65686,
+          "actualByteCount": 65686
+        }
+      ],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1"
+    }
+  ],
+  "requestPath": null,
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval.",
+    "Only canonical ordinals 79–81 prepared; no #82, PNG review, runtime acceptance, capture, test or build.",
+    "Historical renderer contracts are recorded verbatim; no new global dependency or content hash computed.",
+    "Legacy matchingCompleteViewCount=0 of 25 is only the superseded Library plan/input comparison. It is not a verdict that the current Manyo repair lacks native/Main evidence, and not a count of fresh captures required.",
+    "V4 archived full input plan is unavailable. Full current own display interval arrays and eight station aliases equal both saved V4/V5 complete candidate inputs; all 23 archived receipts retain their matching recorded file sizes and current own station IDs. Do not claim exact immutable-plan verification for those 23, or replace full-line input with viewport-clipped coordinates."
+  ],
+  "currentDisplayStationCoordinates": {
+    "001802": [
+      137.0663481914712,
+      36.788932402036366
+    ],
+    "001807": [
+      137.07067472387325,
+      36.78444807796112
+    ],
+    "001811": [
+      137.07827187578005,
+      36.78137136196276
+    ],
+    "001814": [
+      137.0841617496681,
+      36.77903888457668
+    ],
+    "001819": [
+      137.0888501312828,
+      36.7750730465768
+    ],
+    "001815": [
+      137.09867144411095,
+      36.77795093393018
+    ],
+    "001817": [
+      137.10527580479294,
+      36.77674666549145
+    ],
+    "001820": [
+      137.11165336805357,
+      36.7749295310544
+    ]
+  },
+  "currentDisplayIntervalOverrideIndices": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ],
+  "newOriginalPNGsViewed": 0,
+  "renderContractsRecorded": [
+    "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings"
+  ],
+  "sourceAuthorityReferences": [
+    "app/scripts/railway/repair-manyo-east-display.mjs",
+    "app/scripts/railway/manyo-east-display-evidence.json",
+    "app/scripts/railway/tests/manyo-east-display.test.mjs",
+    "ios/auxiliary/RailAlignmentInspector/InspectionKit/Tests/RailInspectionTests/AppleMapRailExtractionTests.swift"
+  ],
+  "legacyCurrentSourceMatches": 7,
+  "archivedPriorAcceptedReceipts": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.788932402036366,
+          "longitude": 137.0663481914712
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001802",
+      "toStationID": "001807",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/basemap.png",
+          "recordedByteCount": 302283,
+          "actualByteCount": 302283
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 28346,
+          "actualByteCount": 28346
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/display.png",
+          "recordedByteCount": 340181,
+          "actualByteCount": 340181
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/distance-samples.json",
+          "recordedByteCount": 27859,
+          "actualByteCount": 27859
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/smooth.png",
+          "recordedByteCount": 340288,
+          "actualByteCount": 340288
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000000/view.json",
+          "recordedByteCount": 106861,
+          "actualByteCount": 106861
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78653994183338,
+          "longitude": 137.06886196798916
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001802",
+      "toStationID": "001807",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/basemap.png",
+          "recordedByteCount": 285078,
+          "actualByteCount": 285078
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 53069,
+          "actualByteCount": 53069
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/display.png",
+          "recordedByteCount": 323423,
+          "actualByteCount": 323423
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/distance-samples.json",
+          "recordedByteCount": 53070,
+          "actualByteCount": 53070
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/smooth.png",
+          "recordedByteCount": 323661,
+          "actualByteCount": 323661
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000001/view.json",
+          "recordedByteCount": 199076,
+          "actualByteCount": 199076
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78444807796112,
+          "longitude": 137.07067472387325
+        },
+        "distanceMetres": 633.1805502574754,
+        "itemID": "jp-万葉線-新湊港線#0",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001802",
+      "toStationID": "001807",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/basemap.png",
+          "recordedByteCount": 360899,
+          "actualByteCount": 360899
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 59019,
+          "actualByteCount": 59019
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/display.png",
+          "recordedByteCount": 403936,
+          "actualByteCount": 403936
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/distance-samples.json",
+          "recordedByteCount": 59009,
+          "actualByteCount": 59009
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/smooth.png",
+          "recordedByteCount": 404136,
+          "actualByteCount": 404136
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/00/000002/view.json",
+          "recordedByteCount": 220951,
+          "actualByteCount": 220951
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78444807796112,
+          "longitude": 137.07067472387325
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001807",
+      "toStationID": "001811",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/basemap.png",
+          "recordedByteCount": 360910,
+          "actualByteCount": 360910
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 59019,
+          "actualByteCount": 59019
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/display.png",
+          "recordedByteCount": 403951,
+          "actualByteCount": 403951
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/distance-samples.json",
+          "recordedByteCount": 59009,
+          "actualByteCount": 59009
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/smooth.png",
+          "recordedByteCount": 404152,
+          "actualByteCount": 404152
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000000/view.json",
+          "recordedByteCount": 220791,
+          "actualByteCount": 220791
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78289519485785,
+          "longitude": 137.0740576009484
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001807",
+      "toStationID": "001811",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/basemap.png",
+          "recordedByteCount": 473159,
+          "actualByteCount": 473159
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 65705,
+          "actualByteCount": 65705
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/display.png",
+          "recordedByteCount": 521132,
+          "actualByteCount": 521132
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/distance-samples.json",
+          "recordedByteCount": 65949,
+          "actualByteCount": 65949
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/smooth.png",
+          "recordedByteCount": 521504,
+          "actualByteCount": 521504
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000001/view.json",
+          "recordedByteCount": 246043,
+          "actualByteCount": 246043
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78159541796364,
+          "longitude": 137.07763683247885
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001807",
+      "toStationID": "001811",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/basemap.png",
+          "recordedByteCount": 498290,
+          "actualByteCount": 498290
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 62212,
+          "actualByteCount": 62212
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/display.png",
+          "recordedByteCount": 547976,
+          "actualByteCount": 547976
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/distance-samples.json",
+          "recordedByteCount": 62165,
+          "actualByteCount": 62165
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/smooth.png",
+          "recordedByteCount": 548276,
+          "actualByteCount": 548276
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000002/view.json",
+          "recordedByteCount": 233190,
+          "actualByteCount": 233190
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78137136196276,
+          "longitude": 137.07827187578005
+        },
+        "distanceMetres": 761.800645666443,
+        "itemID": "jp-万葉線-新湊港線#1",
+        "pointOrdinal": 3
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001807",
+      "toStationID": "001811",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/basemap.png",
+          "recordedByteCount": 495302,
+          "actualByteCount": 495302
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 61959,
+          "actualByteCount": 61959
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/display.png",
+          "recordedByteCount": 545327,
+          "actualByteCount": 545327
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/distance-samples.json",
+          "recordedByteCount": 61914,
+          "actualByteCount": 61914
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/smooth.png",
+          "recordedByteCount": 545757,
+          "actualByteCount": 545757
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/01/000003/view.json",
+          "recordedByteCount": 232256,
+          "actualByteCount": 232256
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.78137136196276,
+          "longitude": 137.07827187578005
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001811",
+      "toStationID": "001814",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/basemap.png",
+          "recordedByteCount": 495368,
+          "actualByteCount": 495368
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 61959,
+          "actualByteCount": 61959
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/display.png",
+          "recordedByteCount": 545312,
+          "actualByteCount": 545312
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/distance-samples.json",
+          "recordedByteCount": 61914,
+          "actualByteCount": 61914
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/smooth.png",
+          "recordedByteCount": 545751,
+          "actualByteCount": 545751
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000/view.json",
+          "recordedByteCount": 232239,
+          "actualByteCount": 232239
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.780050455661254,
+          "longitude": 137.08183869623045
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001811",
+      "toStationID": "001814",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/basemap.png",
+          "recordedByteCount": 512696,
+          "actualByteCount": 512696
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 61844,
+          "actualByteCount": 61844
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/display.png",
+          "recordedByteCount": 564981,
+          "actualByteCount": 564981
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/distance-samples.json",
+          "recordedByteCount": 62766,
+          "actualByteCount": 62766
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/smooth.png",
+          "recordedByteCount": 565209,
+          "actualByteCount": 565209
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001/view.json",
+          "recordedByteCount": 234103,
+          "actualByteCount": 234103
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77903888457668,
+          "longitude": 137.0841617496681
+        },
+        "distanceMetres": 586.4058683034674,
+        "itemID": "jp-万葉線-新湊港線#2",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001811",
+      "toStationID": "001814",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/basemap.png",
+          "recordedByteCount": 500875,
+          "actualByteCount": 500875
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 58261,
+          "actualByteCount": 58261
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/display.png",
+          "recordedByteCount": 552019,
+          "actualByteCount": 552019
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/distance-samples.json",
+          "recordedByteCount": 59175,
+          "actualByteCount": 59175
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/smooth.png",
+          "recordedByteCount": 552228,
+          "actualByteCount": 552228
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002/view.json",
+          "recordedByteCount": 220944,
+          "actualByteCount": 220944
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77903888457668,
+          "longitude": 137.0841617496681
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#3",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001814",
+      "toStationID": "001819",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/basemap.png",
+          "recordedByteCount": 501082,
+          "actualByteCount": 501082
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 58261,
+          "actualByteCount": 58261
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/display.png",
+          "recordedByteCount": 552188,
+          "actualByteCount": 552188
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/distance-samples.json",
+          "recordedByteCount": 59175,
+          "actualByteCount": 59175
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/smooth.png",
+          "recordedByteCount": 552374,
+          "actualByteCount": 552374
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000000/view.json",
+          "recordedByteCount": 220990,
+          "actualByteCount": 220990
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.776282602579364,
+          "longitude": 137.08600224152923
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#3",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001814",
+      "toStationID": "001819",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/basemap.png",
+          "recordedByteCount": 472616,
+          "actualByteCount": 472616
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 49410,
+          "actualByteCount": 49410
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/display.png",
+          "recordedByteCount": 522550,
+          "actualByteCount": 522550
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/distance-samples.json",
+          "recordedByteCount": 54115,
+          "actualByteCount": 54115
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/smooth.png",
+          "recordedByteCount": 522725,
+          "actualByteCount": 522725
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000001/view.json",
+          "recordedByteCount": 193366,
+          "actualByteCount": 193366
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7750730465768,
+          "longitude": 137.0888501312828
+        },
+        "distanceMetres": 640.7156614266672,
+        "itemID": "jp-万葉線-新湊港線#3",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001814",
+      "toStationID": "001819",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/basemap.png",
+          "recordedByteCount": 423870,
+          "actualByteCount": 423870
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 43027,
+          "actualByteCount": 43027
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/display.png",
+          "recordedByteCount": 468590,
+          "actualByteCount": 468590
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/distance-samples.json",
+          "recordedByteCount": 63056,
+          "actualByteCount": 63056
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/smooth.png",
+          "recordedByteCount": 469067,
+          "actualByteCount": 469067
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/03/000002/view.json",
+          "recordedByteCount": 195048,
+          "actualByteCount": 195048
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7750730465768,
+          "longitude": 137.0888501312828
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001819",
+      "toStationID": "001815",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/basemap.png",
+          "recordedByteCount": 423901,
+          "actualByteCount": 423901
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 43027,
+          "actualByteCount": 43027
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/display.png",
+          "recordedByteCount": 468693,
+          "actualByteCount": 468693
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/distance-samples.json",
+          "recordedByteCount": 63056,
+          "actualByteCount": 63056
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/smooth.png",
+          "recordedByteCount": 469172,
+          "actualByteCount": 469172
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000000/view.json",
+          "recordedByteCount": 195031,
+          "actualByteCount": 195031
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77455684746995,
+          "longitude": 137.09257629813095
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001819",
+      "toStationID": "001815",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/basemap.png",
+          "recordedByteCount": 339068,
+          "actualByteCount": 339068
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 25434,
+          "actualByteCount": 25434
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/display.png",
+          "recordedByteCount": 379928,
+          "actualByteCount": 379928
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/distance-samples.json",
+          "recordedByteCount": 56508,
+          "actualByteCount": 56508
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/smooth.png",
+          "recordedByteCount": 380874,
+          "actualByteCount": 380874
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000001/view.json",
+          "recordedByteCount": 148276,
+          "actualByteCount": 148276
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77677769231734,
+          "longitude": 137.0953529032966
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001819",
+      "toStationID": "001815",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/basemap.png",
+          "recordedByteCount": 362740,
+          "actualByteCount": 362740
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 20040,
+          "actualByteCount": 20040
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/display.png",
+          "recordedByteCount": 406140,
+          "actualByteCount": 406140
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/distance-samples.json",
+          "recordedByteCount": 59646,
+          "actualByteCount": 59646
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/smooth.png",
+          "recordedByteCount": 407016,
+          "actualByteCount": 407016
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000002/view.json",
+          "recordedByteCount": 142466,
+          "actualByteCount": 142466
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77795093393018,
+          "longitude": 137.09867144411095
+        },
+        "distanceMetres": 1048.65169788846,
+        "itemID": "jp-万葉線-新湊港線#4",
+        "pointOrdinal": 3
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001819",
+      "toStationID": "001815",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/basemap.png",
+          "recordedByteCount": 301006,
+          "actualByteCount": 301006
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/display-stage-distance-samples.json",
+          "recordedByteCount": 18348,
+          "actualByteCount": 18348
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/display.png",
+          "recordedByteCount": 336611,
+          "actualByteCount": 336611
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/distance-samples.json",
+          "recordedByteCount": 44341,
+          "actualByteCount": 44341
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/smooth.png",
+          "recordedByteCount": 337520,
+          "actualByteCount": 337520
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/04/000003/view.json",
+          "recordedByteCount": 110777,
+          "actualByteCount": 110777
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77795093393018,
+          "longitude": 137.09867144411095
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001815",
+      "toStationID": "001817",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/basemap.png",
+          "recordedByteCount": 300964,
+          "actualByteCount": 300964
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 18348,
+          "actualByteCount": 18348
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/display.png",
+          "recordedByteCount": 336509,
+          "actualByteCount": 336509
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/distance-samples.json",
+          "recordedByteCount": 44341,
+          "actualByteCount": 44341
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/smooth.png",
+          "recordedByteCount": 337419,
+          "actualByteCount": 337419
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000000/view.json",
+          "recordedByteCount": 110124,
+          "actualByteCount": 110124
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77724341438016,
+          "longitude": 137.10249913863277
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001815",
+      "toStationID": "001817",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/basemap.png",
+          "recordedByteCount": 264869,
+          "actualByteCount": 264869
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 16120,
+          "actualByteCount": 16120
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/display.png",
+          "recordedByteCount": 298195,
+          "actualByteCount": 298195
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/distance-samples.json",
+          "recordedByteCount": 26340,
+          "actualByteCount": 26340
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/smooth.png",
+          "recordedByteCount": 298432,
+          "actualByteCount": 298432
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000001/view.json",
+          "recordedByteCount": 74068,
+          "actualByteCount": 74068
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77674666549145,
+          "longitude": 137.10527580479294
+        },
+        "distanceMetres": 603.4012969359298,
+        "itemID": "jp-万葉線-新湊港線#5",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001815",
+      "toStationID": "001817",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/basemap.png",
+          "recordedByteCount": 239522,
+          "actualByteCount": 239522
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 15519,
+          "actualByteCount": 15519
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/display.png",
+          "recordedByteCount": 271153,
+          "actualByteCount": 271153
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/distance-samples.json",
+          "recordedByteCount": 30969,
+          "actualByteCount": 30969
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/smooth.png",
+          "recordedByteCount": 271519,
+          "actualByteCount": 271519
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/05/000002/view.json",
+          "recordedByteCount": 81772,
+          "actualByteCount": 81772
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77674666549145,
+          "longitude": 137.10527580479294
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 0
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001817",
+      "toStationID": "001820",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/basemap.png",
+          "recordedByteCount": 239784,
+          "actualByteCount": 239784
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/display-stage-distance-samples.json",
+          "recordedByteCount": 15519,
+          "actualByteCount": 15519
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/display.png",
+          "recordedByteCount": 271465,
+          "actualByteCount": 271465
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/distance-samples.json",
+          "recordedByteCount": 30969,
+          "actualByteCount": 30969
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/smooth.png",
+          "recordedByteCount": 271844,
+          "actualByteCount": 271844
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000000/view.json",
+          "recordedByteCount": 81754,
+          "actualByteCount": 81754
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.77597840976531,
+          "longitude": 137.1090821677874
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 1
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001817",
+      "toStationID": "001820",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/basemap.png",
+          "recordedByteCount": 194191,
+          "actualByteCount": 194191
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/display-stage-distance-samples.json",
+          "recordedByteCount": 12689,
+          "actualByteCount": 12689
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/display.png",
+          "recordedByteCount": 222094,
+          "actualByteCount": 222094
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/distance-samples.json",
+          "recordedByteCount": 31145,
+          "actualByteCount": 31145
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/smooth.png",
+          "recordedByteCount": 222411,
+          "actualByteCount": 222411
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000001/view.json",
+          "recordedByteCount": 78917,
+          "actualByteCount": 78917
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002",
+      "status": "captured",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 36.7749295310544,
+          "longitude": 137.11165336805357
+        },
+        "distanceMetres": 616.0272920505147,
+        "itemID": "jp-万葉線-新湊港線#6",
+        "pointOrdinal": 2
+      },
+      "lineID": "jp-万葉線-新湊港線",
+      "fromStationID": "001817",
+      "toStationID": "001820",
+      "stationIDsMatchCurrent": true,
+      "planDigest": "4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+      "actualNamedPlanAvailable": false,
+      "receiptFiles": [
+        {
+          "name": "README.txt",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/README.txt",
+          "recordedByteCount": 378,
+          "actualByteCount": 378
+        },
+        {
+          "name": "basemap.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/basemap.png",
+          "recordedByteCount": 136623,
+          "actualByteCount": 136623
+        },
+        {
+          "name": "display-stage-distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/display-stage-distance-samples.json",
+          "recordedByteCount": 9062,
+          "actualByteCount": 9062
+        },
+        {
+          "name": "display.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/display.png",
+          "recordedByteCount": 158678,
+          "actualByteCount": 158678
+        },
+        {
+          "name": "distance-samples.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/distance-samples.json",
+          "recordedByteCount": 27520,
+          "actualByteCount": 27520
+        },
+        {
+          "name": "smooth.png",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/smooth.png",
+          "recordedByteCount": 158963,
+          "actualByteCount": 158963
+        },
+        {
+          "name": "view.json",
+          "path": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/06/000002/view.json",
+          "recordedByteCount": 67288,
+          "actualByteCount": 67288
+        }
+      ],
+      "recordedFileSizesMatch": true,
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "2bfbf65fb21d4912de484c6a6dc45ec4a84b50ae82aef72480560ffe51aade38",
+      "sourceCoordinatesScope": "Not substituted for complete immutable plan; viewport/smoothed samples are not full-line source proof."
+    }
+  ],
+  "priorAcceptedArchivedPairCount": 23,
+  "archivedReceiptFileSizesMatch": true,
+  "completeOwnInputComparisons": [
+    {
+      "candidatePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/candidate.json",
+      "completeDisplayIntervalMatches": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "allDisplayStationAliasesMatch": true
+    },
+    {
+      "candidatePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/candidate.json",
+      "completeDisplayIntervalMatches": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "allDisplayStationAliasesMatch": true
+    }
+  ],
+  "priorAcceptedReuseProof": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/manyo-v5-v4-reuse-proof.md",
+  "priorAcceptedReviewReferences": [
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/primary-native-review.md",
+    "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/manyo-v5-third-native-review.md"
+  ],
+  "priorAcceptedReviewContext": "V5 documents reuse of all 23 unchanged own Shinminato V4 views; V5 new native frames concern the other Manyo line. Prior accepted status is retained, not reopened or promoted by this preparation.",
+  "namedPlanSearch": {
+    "filename": "identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+    "originalLibraryAvailable": false,
+    "orderedContinuationAvailable": false,
+    "japanReportArchiveAvailable": false,
+    "boundedContainerFilenameMatches": [],
+    "containerPattern": "/Users/sager/Library/Containers/*/Data/Library/Application Support/RailAlignmentInspector/identity-plan-4c6abd39ef63d0d3997036c5a4d763f2f51e0cf5c88bd17f25537270c44f3869.json",
+    "originalSessionDirectory": "/private/tmp/jtm-manyo-shinminato-complete-native-candidate-v4",
+    "originalSessionDirectoryAvailable": false
+  },
+  "archivedExactNamedPlanReverifiedPairCount": 0,
+  "currentCaptureMissingCount": null,
+  "requestDecision": "No new capture request: retain prior accepted 23 own pairs and exact current complete candidate arrays/8 aliases equality; exact receipt-named plan recovery remains a metadata/provenance gap. Legacy 25-view plan must not trigger recapture of accepted V5 geometry.",
+  "legacyPlannedViewCount": 25,
+  "legacyMissingOrChangedViewCount": 25,
+  "countScope": "Current exact receipt-named plan unavailable: do not treat legacy 25-view plan as a current capture request. Retain prior accepted 23 archived own pairs.",
+  "nextShortCompleteInterval": {
+    "intervalIndex": 2,
+    "fromStation": [
+      "001811",
+      "第一イン新湊クロスベイ前"
+    ],
+    "toStation": [
+      "001814",
+      "新町口"
+    ],
+    "pairCount": 3,
+    "recordedLengthMetres": 586.4058683034674,
+    "directories": [
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000000",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000001",
+      "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v4/native-candidate/shin/02/000002"
+    ],
+    "modes": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "reviewStatus": "Prior accepted archived complete interval; exact receipt-named plan not recovered, no PNGs viewed in this preparation."
+  }
+}

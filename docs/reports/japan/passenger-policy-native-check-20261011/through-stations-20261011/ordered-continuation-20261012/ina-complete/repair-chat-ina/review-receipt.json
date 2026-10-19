@@ -1,0 +1,24 @@
+{
+  "intervalArrays": 12,
+  "combinedPoints": 90,
+  "exactSharedSeams": 11,
+  "diagnosticAnchorsMatchingEndpoints": 13,
+  "finiteCoordinates": true,
+  "maximumRawTurnDegrees": 24.4439547846047,
+  "maximumRawTurnCombinedIndex": 22,
+  "sourceLineMatchesCurrentPackage": true,
+  "primaryReprojectionPairsActuallyOpened": 56,
+  "stationReprojectionPairsActuallyOpened": 13,
+  "finalAliasesApproved": 0,
+  "nativeAfterAcceptance": false,
+  "mainAcceptance": false,
+  "seamCorrection": "Ina-Chuo anchor corrected to own guideway screen witness [521.5,327]; interval9 near-endpoint control omitted after observed short hook. A 107-degree raw turn reduced; maximum remaining turn is in the visible Omiya loop.",
+  "platformMidpointAdjudication": {
+    "screenshotSupported": 7,
+    "unresolved": 6,
+    "cameraInverseMatches": 7,
+    "maximumLongitudinalLandingResidualPixels": 1.157227489759541,
+    "uncertaintyBoundsSatisfied": true,
+    "nativeAfterAccepted": false
+  }
+}

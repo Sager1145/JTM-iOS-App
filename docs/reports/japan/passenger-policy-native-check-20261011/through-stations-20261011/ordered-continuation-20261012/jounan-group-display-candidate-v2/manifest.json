@@ -1,0 +1,472 @@
+{
+  "format": "jtm-jounan-west-display-candidate-manifest-v2",
+  "status": "candidate-only",
+  "baseManifestSha256": "f1de35161f289629c66b89f9a172687f2825ec4e9ad9215344cc3a8815a3a8a7",
+  "files": [
+    {
+      "path": "candidate.json",
+      "sha256": "77c40476e70a1744668d8401874cbb42f4e3e193cb32e953f7233073a76951ae",
+      "bytes": 201740
+    },
+    {
+      "path": "proposal-delta.json",
+      "sha256": "ca2301bc4fd5531478b48ba57df027be759390d2ea558aa325c74d7180ecc1a3",
+      "bytes": 5629
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/README.md",
+      "sha256": "e7a285c23bce058baebf8a09c5705de9dbceff530ab3c9b63d152e7936e18b63",
+      "bytes": 299
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/candidate.json",
+      "sha256": "0b23104e72983370c36cef640b69afa4b98c78350bf871bee6ae3628560f37da",
+      "bytes": 15771
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/derivation-constraints.md",
+      "sha256": "20b8799e46f1ca16cbb2461e4b1bf1bde564012d195d34cd4257bda78320d39b",
+      "bytes": 837
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/honmachi-interval-0.geojson",
+      "sha256": "3d943f8b9ec23bee92501355c7b59fe18122f3adf9430a59d808977e3a174d81",
+      "bytes": 4150
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/honmachi-interval-1.geojson",
+      "sha256": "b4b58eeb2fb2d7c03b262bcc6b09960d6498fc42652c4f8b2f0da6f4298a138d",
+      "bytes": 4088
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/honmachi-interval-2.geojson",
+      "sha256": "8f8b90d72f6e715b0aa0caf2a0389e9eeb1786649952a27d53b0a39c05bd93b3",
+      "bytes": 4434
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/honmachi-interval-3.geojson",
+      "sha256": "e07c7f28cc9bdb6f7657bc5a18d03a09a7f66e023c815a226c1c58c1f8748bdd",
+      "bytes": 6671
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-0-view-0-honmachi-interval0-view0-z18-before.png",
+      "sha256": "0415bd43f4843439ff86252c4ee210dee5ae99e8c69aee3408e565f778406489",
+      "bytes": 183010
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-0-view-1-honmachi-interval0-view1-z18-before.png",
+      "sha256": "ae29338a4be85500d008a4a69c2e2bf6846ba94f026b41736d86c80dad29e915",
+      "bytes": 166496
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-1-view-0-honmachi-interval1-view0-z18-before.png",
+      "sha256": "68b0f506b526b4adc8925206bb9115740534a8a1fb30f90c43abc8e85c456172",
+      "bytes": 167328
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-1-view-1-honmachi-interval1-view1-z18-before.png",
+      "sha256": "0fc1ddf2cb9dff6a231e555997363341adff4c5d8124e1dc8f2f75e0c4caf721",
+      "bytes": 158268
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-2-view-0-honmachi-interval2-view0-z18-before.png",
+      "sha256": "83adb77055c3475877958c58901b91703e9c850d875b9c792f44fbee1ced4230",
+      "bytes": 159023
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-2-view-1-honmachi-interval2-view1-z18-before.png",
+      "sha256": "f99ab8c17ef1d01c91b5ed44bb3705899486aaa24251a431a39577998c0a0231",
+      "bytes": 131131
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-3-view-0-honmachi-interval3-view0-z18-before.png",
+      "sha256": "bc910110b44bf4588a65bc365c25ec004031edc551ff7452f6d5192eb4b05717",
+      "bytes": 130372
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-3-view-1-honmachi-interval3-view1-z18-before.png",
+      "sha256": "0fb1ad1f6fe56d9e414928417697387865cf64e95e579a8fca004ddd6abc371e",
+      "bytes": 103869
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/raw-reprojections/honmachi-interval-3-view-2-honmachi-interval3-view2-z18-before.png",
+      "sha256": "7a15d4bf8c3f780f641fed965a299cf5a267f8225717ca8791d4ff0d7782af51",
+      "bytes": 116271
+    },
+    {
+      "path": "provenance/jtm-honmachi-full-display-candidate-v1/review.json",
+      "sha256": "535444fda7b3e00cde655aceff05f04fb1a7645fd9db0c59b99fdb23088279bf",
+      "bytes": 1913
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/README.md",
+      "sha256": "00d4eec2c749d618005965df1e0c64e2cf06865df17db378efb1e88e758a8e2a",
+      "bytes": 386
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/candidate.json",
+      "sha256": "f1d207a2e1df2b7aaa3d43431f4e67b4f987f1c0f6ea1970ce5cc43f94f12895",
+      "bytes": 76941
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/contact/page-1.jpg",
+      "sha256": "01f2378d395d4523bacf969cd0a9dec1bef569d7e7a995580f0a625c653b9f52",
+      "bytes": 589697
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/contact/page-2.jpg",
+      "sha256": "ec110ac5d16dbd80a23de60caea01b128ce543e5f39301d3a1605fa59078f8ad",
+      "bytes": 668909
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/contact/page-3.jpg",
+      "sha256": "7174d5b1ccf910d344a620ba6f6a3a674a759e7b64d0d1896ed669220935ce08",
+      "bytes": 621323
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/contact/page-4.jpg",
+      "sha256": "85b682fb3ba10cca585b5e637622f1882a4009691484b0797b88cce293856045",
+      "bytes": 350811
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/johoku-complete.geojson",
+      "sha256": "749eca71eaa9f04a1caa1dc3f644b136d890f9db9dad362910f6d681946a6672",
+      "bytes": 93202
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-0-view-0.png",
+      "sha256": "883f1928b249048746bc25373768433b55d5c4f126136ac55e801f343ba0e93d",
+      "bytes": 170665
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-0-view-1.png",
+      "sha256": "bb653c6f7f90b0430c32e96f5c32863db97daddc53e03c785d7ab02e3c09b94a",
+      "bytes": 145136
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-1-view-0.png",
+      "sha256": "dd1e9e63657c52205ed429afef70750d2f82b60e190abba435ca1d11fb1a7b35",
+      "bytes": 143498
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-1-view-1.png",
+      "sha256": "253e9354523e9bcb733ea711650809a8cae42d63b1485f396d7fa0760ce4397b",
+      "bytes": 151101
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-2-view-0.png",
+      "sha256": "3b681576ff75487a051968e2decaf96690ec5b09c486e07fcddc4dc3d42118e6",
+      "bytes": 151918
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-2-view-1.png",
+      "sha256": "e3c1bc289f57caeafc94443b17c1880b534dd10a42618f63b19edebb8202326b",
+      "bytes": 185891
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-2-view-2.png",
+      "sha256": "3b82782b3785993bc5cdfbb910bbe469f11b3cb575d5cd7ec0a2221968850118",
+      "bytes": 184646
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-3-view-0.png",
+      "sha256": "f950eb2647680061633bc19a6e615588baa8bdc91848a0083bfb1960e6f457e7",
+      "bytes": 185229
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-3-view-1.png",
+      "sha256": "6d36a0b8008b025fff7ec6da28829f6a5ce4d3d065073fa0b3380d05c06a5bf0",
+      "bytes": 191664
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-3-view-2.png",
+      "sha256": "37efd592032f59958f72f04580a59800464c1122eba50dc7337e6f61c798f803",
+      "bytes": 181561
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-4-view-0.png",
+      "sha256": "803cbf2044322a2fd5e7a1f2c009439eb7d1e11e5348de2359e96f8ffccd0843",
+      "bytes": 182811
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-4-view-1.png",
+      "sha256": "f959bc22ce68887c68471081e70652d6a0f6858ae17d1b9b5ea84bfdd012b109",
+      "bytes": 192169
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-5-view-0.png",
+      "sha256": "478b31305a00543ea6c2938b0acc20f5fc53bd62e51d6fa996440c4ebdcf1b36",
+      "bytes": 188606
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-5-view-1.png",
+      "sha256": "af033a2c144dfc0534b43a1015ad831c2884537dc46c9d87f7e20656b36ba444",
+      "bytes": 177803
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-6-view-0.png",
+      "sha256": "aeb6b64a98a07d895e2d09f3beb8156916d9744c2248110ef97aa6419d660bfe",
+      "bytes": 176696
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-6-view-1.png",
+      "sha256": "f6dc07b747a07f4490b7dc0862b55459343e6431bb351975236b2a3c33116141",
+      "bytes": 180701
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-7-view-0.png",
+      "sha256": "d4fc269ba9956d3a2753611b089d5c2cf85fd4316b1927adc693701bb7c4058f",
+      "bytes": 182391
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-7-view-1.png",
+      "sha256": "f795d7f3a25818dc6ca56bda6d0e2e9b2552b21cca86ac6a5783c6ccfd6f1d3e",
+      "bytes": 205586
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/raw-reprojections/johoku-interval-7-view-2.png",
+      "sha256": "9a582a19fa1d8e781d3731b63eed587fe0f283d3b04da10e32041567a0bd4f70",
+      "bytes": 174206
+    },
+    {
+      "path": "provenance/jtm-johoku-display-candidate-v2/review.json",
+      "sha256": "d39981df1278b0cbac1af25f122c421519d5ee5747950f65bc1503acdf71bb85",
+      "bytes": 852
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/README.md",
+      "sha256": "f0a70dfc09b83e8a713a719d42cbf2a7092f6e85899900490a3cdcb067d2b124",
+      "bytes": 732
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/candidate.json",
+      "sha256": "dc7633845a456cbfe89083f276353daf1a6eab1412a1685f75b829d33fc3e3c1",
+      "bytes": 26618
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/hanazono-interval-0.geojson",
+      "sha256": "648f0cff72c0e76179dbc9314432cfb12295d027f172d0913c498837d1f4210d",
+      "bytes": 6357
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/otemachi-interval-0.geojson",
+      "sha256": "f5b0d2a6c5bc93464f07217e161582c917776a9f89b91250bd28a645c0c25c8e",
+      "bytes": 3944
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/otemachi-interval-1.geojson",
+      "sha256": "4d4888cc9d603f71e6e7469af2bb550c8f7db4a2facaa8c22172e5e728b1e29c",
+      "bytes": 5107
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/otemachi-interval-2.geojson",
+      "sha256": "3b9ebecc6aa9d23e99cf9d7ae83fa59aeb35d6c5f1a37e5b6d670188e4f86052",
+      "bytes": 4607
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/otemachi-interval-3.geojson",
+      "sha256": "d1343d06cd28ad4ebe3fbe79b0f71860a8e0f5370ef286edb64bdea0cbce9bf6",
+      "bytes": 6358
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/hanazono-interval-0-view-0.png",
+      "sha256": "0aff9cd17b1bf76f0dddd36478766fb53beb314ee6dc79aa6ccd0a1e092de252",
+      "bytes": 227865
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/hanazono-interval-0-view-1.png",
+      "sha256": "da813f6c5959e359c04041988e6fe67adec2f65ab6ce3c4057ec80edec21c51c",
+      "bytes": 138637
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/hanazono-interval-0-view-2.png",
+      "sha256": "eba585b0a68dc2b82a9f26f62a2689aaf92bd68d4467521fdcedddc41a991ed8",
+      "bytes": 115007
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-0-view-0.png",
+      "sha256": "72f25d6a971b7ec36bc5a34ed9bd933c752ca62cdbda8ab69c834df6cb6ee04d",
+      "bytes": 129256
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-0-view-1.png",
+      "sha256": "7ad852c5746ac30b34ff894ae2905733288a417e4ee7cd2c5a135c8a3a77ef44",
+      "bytes": 160157
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-1-view-0.png",
+      "sha256": "a5420a7d6708144a08b9c23e1d3c98b7865dc4f1e9a26d8e6c93d27fcd59ae26",
+      "bytes": 160848
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-1-view-1.png",
+      "sha256": "cfe305bc0469019d4fa892d793a4716166fe2c16df74e2add0274639a37ca923",
+      "bytes": 133268
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-2-view-0.png",
+      "sha256": "81a6c434898e972ba16f7197bfbf7852e9892d009553ce90674b8cecae6151f5",
+      "bytes": 133362
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-2-view-1.png",
+      "sha256": "4bb71509b761bb8ab96f439c7e356e4351ca1c784a93e72b66d0ffb5350c9828",
+      "bytes": 182801
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-2-view-2.png",
+      "sha256": "cd97c0035f8a24e59ff9108047fcaac835c57266154fc8f81fefc9baebcb12ce",
+      "bytes": 179300
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-3-view-0.png",
+      "sha256": "a105eb0c050f4646d9aa8124c56adddd3f8a57de2a4b8ccbba1277bceaf337bf",
+      "bytes": 180347
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-3-view-1.png",
+      "sha256": "339dadbac2b33730bc4a2a0b95e7c2e8467c684a2b77fb801764cdca2ed33da5",
+      "bytes": 170680
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/raw-reprojections/otemachi-interval-3-view-2.png",
+      "sha256": "105d3b9ca8415e665e79e604182d39c97b3f25783a1032fd75507de53d70574a",
+      "bytes": 175418
+    },
+    {
+      "path": "provenance/jtm-jounan-associated-display-candidate-v2/review.json",
+      "sha256": "cb765cfa9068a5e3402ea452f1fd3ad0cddd51dff29835e6e7423ae564b71fa5",
+      "bytes": 3865
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/README.md",
+      "sha256": "e77739c99f13b7f023c11d2e962e833540ed7678d20febcfec876b89902d2952",
+      "bytes": 403
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/candidate.json",
+      "sha256": "9bc54caf9551610f8240709dc8a8aaaf602f8e35703ef167a320208e480d2dff",
+      "bytes": 45832
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/jounan-interval-7.geojson",
+      "sha256": "165611358e31a5949eaa224b81332b34616e3e472aa2b156a577f9027b410317",
+      "bytes": 3873
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/jounan-interval-8.geojson",
+      "sha256": "7f2ff9fd7dc250402a0898dde84e9424ab606177f0bbd1c236bf49913fa4ae59",
+      "bytes": 7018
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/jounan-interval-7-view-0.png",
+      "sha256": "90a295a659ec712be0ae6d3fb0d4dfcaddf85a2ee0f4a20fa8ca90862f8c2da7",
+      "bytes": 182173
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/jounan-interval-7-view-1.png",
+      "sha256": "20ef65e87013958845020513208d94adf54015d326646d914499525c41079150",
+      "bytes": 193787
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/jounan-interval-8-view-0.png",
+      "sha256": "05ed1562f795e79fea5326fd68cb1e4e20adddb8b0377f70fc42992e1daeddab",
+      "bytes": 194066
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/jounan-interval-8-view-1.png",
+      "sha256": "fba2a0687cc3ab40e21ca2f1fa1eeac5e5ed4a664aeff5da97158ab00313ba13",
+      "bytes": 156269
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/jounan-interval-8-view-2.png",
+      "sha256": "86a93a2ce120aac480ee55030cc4fce42359b366d2a1178a3ff3da19d6360fc1",
+      "bytes": 159723
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/renraku-interval-0-view-0.png",
+      "sha256": "839182245085f6c40b7099593d434e609fed4cbbbefc263c97e5e94391e9bb3b",
+      "bytes": 171149
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/raw-reprojections/renraku-interval-0-view-1.png",
+      "sha256": "9dc38573681ca30a997b25de8ce9f6c87ca0256948b113499a2b654b3b87c480",
+      "bytes": 195243
+    },
+    {
+      "path": "provenance/jtm-jounan-full-display-candidate-v3/review.json",
+      "sha256": "313846df68d46563ecd6bcc3fc1cd4df9ba458ddacd76cf62bf7c759332b1b8b",
+      "bytes": 1503
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/README.md",
+      "sha256": "e02e2f092b37b0f5d40c10897c61ee91b4f1985d8652a961c074c374ce799513",
+      "bytes": 458
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/candidate.json",
+      "sha256": "34c516bf2625125799ba7d6998a25864cc43d0d9d880786ad001c3007a59cc40",
+      "bytes": 6169
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/raw-reprojections/renraku-interval-0-view-0.png",
+      "sha256": "e89e29e4b8900abe62b5e890f3969ce15b57fa6084f58f3c247a973823b8ce09",
+      "bytes": 170811
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/raw-reprojections/renraku-interval-0-view-1.png",
+      "sha256": "d698e7602b3935c241ba7e782c267207c972b154de8e9a95addbc50f03033b8a",
+      "bytes": 194774
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/renraku-interval-0.geojson",
+      "sha256": "23dda6807b3f4444cdb328fced950074215c32f834da3b08c78478bfe2a83f97",
+      "bytes": 5688
+    },
+    {
+      "path": "provenance/jtm-renraku-display-candidate-v2/review.json",
+      "sha256": "d031dd4a9d7030706d17a444770c9ea87b1d726aab61347501efee7db8e2b267",
+      "bytes": 970
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval0-view0.png",
+      "sha256": "876a8140532fc8ce42e21b6702cd9a68813e4707099e5939eb4d31ddf703b785",
+      "bytes": 226931
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval0-view1.png",
+      "sha256": "dbc0ca3985f089508c3c1e12657bb5c7ce25a9dbef2fe614330c35372343ebf5",
+      "bytes": 135976
+    },
+    {
+      "path": "raw-reprojections/hanazono-interval0-view2.png",
+      "sha256": "401924fc523a9bfa60d5d48f6f0581cdc699347024c8b155f62217c0ae7a7e83",
+      "bytes": 112755
+    },
+    {
+      "path": "raw-reprojections/jounan-interval2-view0.png",
+      "sha256": "7b66445cac3d529a58f197a1e2ef056d1f7d3c6c6652b2e5d5137b9d55ad005f",
+      "bytes": 114319
+    },
+    {
+      "path": "raw-reprojections/jounan-interval2-view1.png",
+      "sha256": "df52923b38e8d47eda092a9d579c39c17ed1920e2a43bbdb36a5738ae024763a",
+      "bytes": 110913
+    },
+    {
+      "path": "raw-reprojections/jounan-interval2-view2.png",
+      "sha256": "09b03e7aeca15a0ff1ebc81512200bc145728b75b445b08adc39d39e46382ca9",
+      "bytes": 104835
+    },
+    {
+      "path": "v1-manifest.json",
+      "sha256": "f1de35161f289629c66b89f9a172687f2825ec4e9ad9215344cc3a8815a3a8a7",
+      "bytes": 17972
+    },
+    {
+      "path": "v1-owner-review.json",
+      "sha256": "458e6eb80e7c669dcdb2449bb93a7d1157fbc0a46230283645045e3676ece520",
+      "bytes": 3264
+    }
+  ]
+}

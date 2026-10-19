@@ -1,0 +1,1875 @@
+{
+  "reviewedAt": "2026-10-19",
+  "lineID": "jp-ハピラインふくい-ハピラインふくい線",
+  "scope": "Complete interval 0 敦賀→南今庄 only; original pixel review. Interval 18 not expanded because interval 0 has 49 pairs.",
+  "existingEvidencePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/hapi-fukui-complete/existing-evidence-20261019.json",
+  "sourceReuse": "Reuse prior exact own current source/display/station-ID and recorded receipt file-size preparation; no new whole-line re-verification or hashing.",
+  "counts": {
+    "actuallyViewedPairs": 49,
+    "actuallyViewedOriginalPNGs": 98,
+    "interval0ViewedPairs": 49,
+    "interval0PlannedPairs": 49,
+    "interval18ViewedPairs": 0,
+    "interval18PlannedPairs": 17,
+    "allOtherPairsNotViewed": 219,
+    "allOtherOriginalPNGsNotViewed": 438,
+    "wholeLinePlannedPairs": 268
+  },
+  "unviewedIntervalIndices": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "confirmedIsolatedFalseV": false,
+  "geometryCandidate": null,
+  "stationCoordinateCandidate": null,
+  "ownSourceResearchLeads": [
+    {
+      "viewpointOrdinals": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "kind": "Sustained south/southeast offset of conventional departure; do not select separate northeast Shinkansen corridor."
+    },
+    {
+      "viewpointOrdinals": [
+        47,
+        48
+      ],
+      "kind": "南今庄 approach/station band offset; own full platform caps and adjoining interval 1 continuity are unresolved."
+    }
+  ],
+  "views": [
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-0",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.644927,
+        "longitude": 136.076737,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9673386192456623,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235679801.29885298,
+        "rectY": 105734230.47245212,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:55Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "敦賀: red starts in the conventional station-group context and departs northeast, then east; no isolated hook. Broad station fill and roof/building casing do not establish the full own platform caps or an exact platform pair."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-1",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.64676676118058,
+        "longitude": 136.0798595885835,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9673166386581347,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235682129.66965944,
+        "rectY": 105732542.3518633,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:55Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Conventional route diverges eastward from the straighter northeast diagonal rail corridor. Red remains on the conventional direction, but lies south/southeast of its own labelled blue band. No isolated V."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-2",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000002",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.64836207345724,
+        "longitude": 136.0831986132986,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672975778161854,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235684619.4269427,
+        "rectY": 105731078.50023672,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:55Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Own conventional eastward departure remains distinct from the northwest diagonal rail corridor. Red is consistently south of its own blue band; no wrong-branch transfer or local reversal."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-3",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000003",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.64992651967156,
+        "longitude": 136.0865597620101,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672788850293883,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235687125.68107343,
+        "rectY": 105729642.94278532,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:55Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "At the Route 8 crossing the red conventional curve crosses south of the own blue curve by roughly a few tens of pixels. Continuous offset is a concrete own-source investigation lead, not authority to snap to the separate diagonal railway."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-4",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000004",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000004/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.651138887070175,
+        "longitude": 136.09009775671367,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672643985570685,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235689763.8011334,
+        "rectY": 105728530.43838176,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:55Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Near Okura/Igawa the red shallow eastward curve runs south of the own blue band, toward the river-side open strip. The real broad curve is preserved; no isolated false apex identified."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-5",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000005",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000005/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000005/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.651521653872464,
+        "longitude": 136.09393241512788,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672598248193117,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235692623.129689,
+        "rectY": 105728179.19666633,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:56Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Near the Hokuriku Expressway crossing and Kawakita/Taniguchi, the red remains south of the own conventional curve before gradually approaching the thin blue hill alignment. No short shoulder or foldback."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-6",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000006",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000006/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000006/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.652709565011875,
+        "longitude": 136.09751869400043,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672456300147003,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235695297.2530348,
+        "rectY": 105727089.11245269,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:56Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Transition from the surface corridor to the thin labelled hill alignment remains continuous. Red changes from south of the blue near the expressway to near/north of the thin line farther northeast. Exact tunnel portal/track position cannot be determined from this standard map."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-7",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000007",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000007/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000007/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000007/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.65396256899694,
+        "longitude": 136.10107223614165,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672306569369015,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235697946.96610454,
+        "rectY": 105725939.27835414,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:56Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Thin own labelled hill alignment: red continuous with a small lateral difference; no isolated hook or V. Cartographic line under green terrain is not visible physical-track evidence."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-8",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000008",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000008/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000008/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000008/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.655204524811424,
+        "longitude": 136.1046317084119,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9672158154222149,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235700601.10099894,
+        "rectY": 105724799.5649408,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:56Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Broad shallow change of direction under hill terrain is retained; red stays near the thin own blue alignment. Underground position is unverified."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-9",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000009",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000009/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000009/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000009/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.65652900578836,
+        "longitude": 136.10814284308154,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671999872179721,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235703219.1927659,
+        "rectY": 105723584.10061333,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:57Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Own hill alignment gradually turns northeast; red is continuous and slightly northwest of the blue at places. No isolated false corner. Underground alignment is not surveyed by these pixels."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-10",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 10,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000010",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000010/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000010/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000010/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.65820257564295,
+        "longitude": 136.11142138766525,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.967179986484114,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235705663.85279468,
+        "rectY": 105722048.2517225,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:57Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Gradual northeast turn is retained across the viewport; no gap, local return, or transfer to the winding surface access roads."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-11",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 11,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000011",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000011/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000011/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000011/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.66015170371096,
+        "longitude": 136.114457510445,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671566915227919,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235707927.7500248,
+        "rectY": 105720259.48020856,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:57Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Thin own railway alignment passes separately from Kashimagaridasan road-tunnel context. Red retains the gradual northeast turn; no isolated V."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-12",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 12,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000012",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000012/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000012/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000012/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.662419992279084,
+        "longitude": 136.11713869616327,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9671295807024559,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235709926.9869995,
+        "rectY": 105718177.75084886,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:57Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Own gradual turn under hill terrain remains continuous; road/ridge line is not used as a rail reference."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-13",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 13,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000013",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000013/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000013/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000013/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.66497378071623,
+        "longitude": 136.11939983392654,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.967099055730986,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235711613.01351777,
+        "rectY": 105715833.93226364,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:58Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Transition toward the long north-northeast section is continuous; no local shoulder, gap or foldback."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-14",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 14,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000014",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000014/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000014/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000014/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.66771835250856,
+        "longitude": 136.1212936653435,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9670662482032014,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235713025.15657333,
+        "rectY": 105713314.93275033,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:58Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Own long north-northeast alignment is continuous; small red/blue side differences cannot identify an underground track centre."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-15",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 15,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000015",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000015/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000015/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000015/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.67054231453689,
+        "longitude": 136.12299770138836,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9670324893429268,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235714295.77794206,
+        "rectY": 105710722.97756772,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:58Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Small gentle change in tangent near the lower half remains smooth; no isolated V, return or detached cap."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-16",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 16,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000016",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000016/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000016/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000016/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.67339369334155,
+        "longitude": 136.12463848154215,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9669984003300098,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235715519.23229975,
+        "rectY": 105708105.76503512,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:58Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-17",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 17,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000017",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000017/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000017/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000017/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.6762445933984,
+        "longitude": 136.12628071644676,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966964314629065,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235716743.77139834,
+        "rectY": 105705488.89845455,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:59Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-18",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 18,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000018",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000018/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000018/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000018/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.67907988279681,
+        "longitude": 136.127963399351,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9669304131794594,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235717998.47071135,
+        "rectY": 105702886.26831852,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:59Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-19",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 19,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000019",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000019/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000019/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000019/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.681908711577925,
+        "longitude": 136.12966249446953,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9668965866024419,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235719265.40785843,
+        "rectY": 105700289.47649139,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:59Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-20",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 20,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000020",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000020/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000020/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000020/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.68475707077454,
+        "longitude": 136.13131102535453,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9668625240859445,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235720494.64158022,
+        "rectY": 105697674.66322276,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:59Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-21",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 21,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000021",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000021/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000021/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000021/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.68760011542929,
+        "longitude": 136.13297377818685,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9668285227241068,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235721734.47995454,
+        "rectY": 105695064.63564397,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:53:59Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-22",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 22,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000022",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000022/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000022/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000022/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.690440624823694,
+        "longitude": 136.13464325276402,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9667945492881564,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235722979.33042508,
+        "rectY": 105692456.84263684,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:00Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-23",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 23,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000023",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000023/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000023/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000023/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.693275013102564,
+        "longitude": 136.13632868099825,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9667606466770893,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235724236.07680458,
+        "rectY": 105689854.57668698,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:00Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-24",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 24,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000024",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000024/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000024/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000024/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.69610756144399,
+        "longitude": 136.13801874650218,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9667267636931474,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235725496.28098297,
+        "rectY": 105687253.90760042,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:00Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-25",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 25,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000025",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000025/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000025/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000025/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.69895439008011,
+        "longitude": 136.1396721821406,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9666927074902367,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235726729.17195398,
+        "rectY": 105684640.03416349,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:00Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-26",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 26,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000026",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000026/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000026/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000026/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.70180006255702,
+        "longitude": 136.1413286598094,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966658662715945,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235727964.33122724,
+        "rectY": 105682027.1290122,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:01Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-27",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 27,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000027",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000027/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000027/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000027/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.704635903277264,
+        "longitude": 136.14301061629405,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9666247331764549,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235729218.4888826,
+        "rectY": 105679423.15863311,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:01Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-28",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 28,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000028",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000028/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000028/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000028/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.70747513400206,
+        "longitude": 136.1446839386465,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9665907606876625,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235730466.2084624,
+        "rectY": 105676815.9826352,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:01Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-29",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 29,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000029",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000029/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000029/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000029/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.71032060106805,
+        "longitude": 136.14634114900835,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9665567111799687,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235731701.91407114,
+        "rectY": 105674202.98683193,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:01Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-30",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 30,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000030",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000030/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000030/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000030/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.71316222010773,
+        "longitude": 136.14800803347933,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9665227053223092,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235732944.83321857,
+        "rectY": 105671593.43157965,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:02Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-31",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 31,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000031",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000031/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000031/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000031/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.715998471130106,
+        "longitude": 136.14968917422055,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9664887613161761,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235734198.38261154,
+        "rectY": 105668988.71317717,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:02Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-32",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 32,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000032",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000032/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000032/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000032/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.7188334315541,
+        "longitude": 136.15137359667136,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9664548303718685,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235735454.37902457,
+        "rectY": 105666385.08737253,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:02Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-33",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 33,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000033",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000033/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000033/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000033/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.72167698945973,
+        "longitude": 136.15303563871757,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.96642079413228,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235736693.68739837,
+        "rectY": 105663773.47258787,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:02Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-34",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 34,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000034",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000034/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000034/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000034/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.724519275339176,
+        "longitude": 136.15470141650414,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966386770722238,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235737935.7813421,
+        "rectY": 105661162.93292296,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:02Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-35",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 35,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000035",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000035/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000035/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000035/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.72736393245061,
+        "longitude": 136.156361098276,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966352716529001,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235739173.32976767,
+        "rectY": 105658550.12210613,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:03Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-36",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 36,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000036",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000036/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000036/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000036/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.730203396310515,
+        "longitude": 136.1580340346802,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9663187221128063,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235740420.76156363,
+        "rectY": 105655941.98822318,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:03Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-37",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 37,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000037",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000037/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000037/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000037/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.733040113852944,
+        "longitude": 136.1597133538912,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9662847581887517,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235741672.95272526,
+        "rectY": 105653336.28406785,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:03Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-38",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 38,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000038",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000038/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000038/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000038/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.7358727297923,
+        "longitude": 136.16140259943967,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9662508409923494,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235742932.5455005,
+        "rectY": 105650734.25487854,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:04Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-39",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 39,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000039",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000039/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000039/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000039/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.73870915357627,
+        "longitude": 136.1630835384719,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9662168758178001,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235744185.94448838,
+        "rectY": 105648128.63507098,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:04Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-40",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 40,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000040",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000040/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000040/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000040/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.741547715116056,
+        "longitude": 136.1647590784509,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9661828826564579,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235745435.31765035,
+        "rectY": 105645520.95853168,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:04Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-41",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 41,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000041",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000041/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000041/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000041/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.7443870140936,
+        "longitude": 136.16643288595878,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9661488782742479,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235746683.3989882,
+        "rectY": 105642912.5115243,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:04Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-42",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 42,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000042",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000042/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000042/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000042/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.747236411180126,
+        "longitude": 136.16808061020544,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9661147505510379,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235747912.03123686,
+        "rectY": 105640294.69390991,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:05Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Long north-northeast thin hill alignment: the red stroke is continuous, with no visible isolated V, short transverse shoulder, gap or foldback. Physical rails are hidden; this is not underground-track survey evidence. Surface paths, road tunnels and river linework are not borrowed as own rails."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-43",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 43,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000043",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000043/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000043/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000043/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.750070781826274,
+        "longitude": 136.1697659499463,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966080800414232,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235749168.71163085,
+        "rectY": 105637690.58851598,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:05Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Northern broad bend begins in the thin hill alignment; red stays continuous, with a small lateral difference. No independent underground-track position claim."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-44",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 44,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000044",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000044/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000044/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000044/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.752745448676954,
+        "longitude": 136.17179353907753,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9660487610280446,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235750680.59166703,
+        "rectY": 105635233.12747619,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:05Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Broad turn toward east-northeast is retained; no chord that cuts away from the depicted own bend or isolated hook. Thin underground line is only a cartographic comparison."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-45",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 45,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000045",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000045/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000045/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000045/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.75474777631135,
+        "longitude": 136.1747500974726,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.966024774092689,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235752885.16139197,
+        "rectY": 105633393.35190043,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:05Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Northern broad curve remains continuous beneath hill context south of Kahiru River; red slightly south of the own blue line. No isolated V."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-46",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 46,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000046",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000046/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000046/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000046/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.75620766438357,
+        "longitude": 136.1781785251238,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9660072845768459,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235755441.5823362,
+        "rectY": 105632051.95062211,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:06Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "Curve approaches the northern surface/station context; red lies south of the thin blue and gradually farther south toward the station. Exact portal boundary is not established."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-47",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 47,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000047",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000047/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000047/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000047/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.756968852169464,
+        "longitude": 136.1819357564036,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9659981652670581,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235758243.17703587,
+        "rectY": 105631352.5322633,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:06Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "南今庄 approach: red runs south of the own blue rail/station band. A sustained lateral/anchor investigation lead is visible; no independently fixed platform caps or coordinate candidate."
+    },
+    {
+      "viewpointID": "jp-ハピラインふくい-ハピラインふくい線#0#point-48",
+      "itemID": "jp-ハピラインふくい-ハピラインふくい線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 48,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000048",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000048/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000048/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000346/000048/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.757465,
+        "longitude": 136.184795,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9659922211409862,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 235760375.18358758,
+        "rectY": 105630896.6426004,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:54:06Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "7fce632777c37c53f5bd86e7e5cbdc962afa136576546cce88e3c47e526908b1",
+      "finding": "南今庄 endpoint: current camera/own endpoint at approximately (512,384) lies south of the depicted own blue track/platform band. Red continues smoothly into the following interval context; full own platform caps/centres are not independently identified. Do not move the anchor from a merged fill midpoint."
+    }
+  ]
+}

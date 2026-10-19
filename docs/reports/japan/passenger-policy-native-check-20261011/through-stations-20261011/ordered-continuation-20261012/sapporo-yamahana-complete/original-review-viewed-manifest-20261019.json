@@ -1,0 +1,838 @@
+{
+  "format": "jtm-scoped-original-pixel-review-v1",
+  "reviewDate": "2026-10-19",
+  "lineID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線",
+  "queueOrdinal": 76,
+  "scope": "All 28 historical planned viewpoints for this named 11-interval Yamahana line record only.",
+  "sourcePreparation": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sapporo-yamahana-complete/existing-evidence-20261019.json",
+  "identityEvidenceReuse": "Existing preparation established current source/display/station-ID equality to the immutable named plans for all 11 intervals; no repeated all-line source audit in this pixel review.",
+  "plannedPairs": 28,
+  "actuallyViewedPairs": 28,
+  "actuallyViewedOriginalPNGs": 56,
+  "unviewedPairsInNamedRecord": 0,
+  "newCapturePairs": 0,
+  "otherSapporoLinePairsViewedInThisReview": 0,
+  "result": "No confirmed isolated false V, short hook or wrong-line transfer in the reviewed originals; no geometry candidate proposed.",
+  "platformCentreWGS84": null,
+  "limits": [
+    "Historical fixed-z17 isolated centreline rendering; no Main lanes/follows/joins/family collapse acceptance.",
+    "Road/track glyphs are cartography, not an independent physical track or platform survey.",
+    "Exact complete own platform caps remain unresolved; no station-coordinate alias is justified.",
+    "Overlapping endpoint cameras were opened separately but are not additional geographic coverage.",
+    "Adjacent line boundaries and depot continuation are outside this isolated named-record review."
+  ],
+  "views": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#0#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:27Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.05556,
+          "longitude": 141.35273
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "すすきの own record departs west along 南4条 toward 西7丁目通. Red remains in its own street corridor; no direct south transfer to the separate east-side subway corridor."
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#0#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000394/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:28Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.055115,
+          "longitude": 141.34926
+        },
+        "distanceMetres": 286.26239919331374,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "資生館小学校前 west-to-south street corner is genuine and rounded continuously. No isolated V, shortcut or station-end hook."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:28Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.055115,
+          "longitude": 141.34926
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Same corner area as #0 p1, opened separately. Genuine west-to-south turn remains continuous; overlapping camera is not additional geographic coverage."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:28Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.052394273861644,
+          "longitude": 141.34918682378486
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Southbound 西7丁目通 own street body remains continuous. Red lies slightly west of thin blue cartographic stroke; no independent track/platform survey is resolved."
+    },
+    {
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000395/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:29Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.05171,
+          "longitude": 141.349355
+        },
+        "distanceMetres": 427.3056622794789,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#1",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "東本願寺前 approach stays on own north–south street. No V, gap or short endpoint hook; exact usable platform caps unresolved."
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#2#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:29Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.05171,
+          "longitude": 141.349355
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#2",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "東本願寺前 shared endpoint camera opened separately; own southbound corridor remains continuous."
+    },
+    {
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#2#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000397/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:30Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.049015,
+          "longitude": 141.349765
+        },
+        "distanceMetres": 301.58274004255054,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#2",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "山鼻9条 approach remains straight on own street corridor, without a short shoulder or borrowed east-side subway direction."
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#3#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:30Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.049015,
+          "longitude": 141.349765
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#3",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "山鼻9条 own departure continues south, with no isolated corner at the shared station."
+    },
+    {
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#3#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000398/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:30Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.045905,
+          "longitude": 141.350145
+        },
+        "distanceMetres": 347.1955471891147,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#3",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "中島公園通 own arrival is continuous on 西7丁目通, separate from the subway corridor farther east near the park."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:30Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.045905,
+          "longitude": 141.350145
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "中島公園通 own departure remains south in the street corridor. No abrupt station connector."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:31Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.042770555800715,
+          "longitude": 141.3505384837325
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Straight own street body; mild west-side cartographic separation is visible, with no isolated false apex."
+    },
+    {
+      "intervalIndex": 4,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000399/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:31Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.04167,
+          "longitude": 141.35067
+        },
+        "distanceMetres": 472.8488347910277,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#4",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "行啓通 approach remains continuous. Intersection/road fill does not identify full platform caps or an exact track-pair centre."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:31Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.04167,
+          "longitude": 141.35067
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "行啓通 own departure stays on the same street direction, without a short hook."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:31Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03853742529478,
+          "longitude": 141.35108898288487
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Own north–south street body remains continuous; no V or apparent jump to the park/river corridor."
+    },
+    {
+      "intervalIndex": 5,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000400/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:32Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03831,
+          "longitude": 141.351115
+        },
+        "distanceMetres": 375.37693363033424,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#5",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "静修学園前 approach is continuous. Exact platform caps and survey centre remain unestablished."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:32Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03831,
+          "longitude": 141.351115
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "静修学園前 own departure is continuous southward."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:32Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.035178298029834,
+          "longitude": 141.35154699815885
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Own straight street segment has a small west-side difference from thin blue stroke, without an isolated V or shoulder."
+    },
+    {
+      "intervalIndex": 6,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000401/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:32Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03506,
+          "longitude": 141.351565
+        },
+        "distanceMetres": 363.23527986322426,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#6",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "山鼻19条 approach remains in its own street corridor. No wrong-branch lead or station-end hook observed."
+    },
+    {
+      "intervalIndex": 7,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#7#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:33Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03506,
+          "longitude": 141.351565
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#7",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "山鼻19条 southbound continuation is straight; no short local jog."
+    },
+    {
+      "intervalIndex": 7,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#7#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000402/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:33Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.032295,
+          "longitude": 141.35191
+        },
+        "distanceMetres": 308.749271569492,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#7",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "幌南小学校前 approach remains north–south before the genuine west turn farther south. No premature shortcut."
+    },
+    {
+      "intervalIndex": 8,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:33Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.032295,
+          "longitude": 141.35191
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "幌南小学校前 own south-to-west turn onto 南22条 is genuine. Red follows the rounded street turn continuously; it must not be flattened."
+    },
+    {
+      "intervalIndex": 8,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:33Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03106869928988,
+          "longitude": 141.34914309046718
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Westbound body after the real corner stays in the own tram street corridor; no V or discontinuity at the turn join."
+    },
+    {
+      "intervalIndex": 8,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000403/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:33Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.031045,
+          "longitude": 141.348835
+        },
+        "distanceMetres": 375.18042730518556,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#8",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "東屯田通 approach continues west on 南22条. Slight cartographic side separation does not establish a coordinate repair."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:34Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.031045,
+          "longitude": 141.348835
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "東屯田通 departure remains west on the same own street corridor."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:34Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03073148844911,
+          "longitude": 141.344550422754
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "Westbound body across 石山通 / Route230 intersection remains continuous. No isolated V or short shoulder."
+    },
+    {
+      "intervalIndex": 9,
+      "pointOrdinal": 2,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9#point-2",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000002",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000002/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000002/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000404/000002/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:34Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03071,
+          "longitude": 141.34422
+        },
+        "distanceMetres": 376.9636880537968,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#9",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "石山通 endpoint remains continuous and has no terminal hook. Full own platform caps are not independently visible."
+    },
+    {
+      "intervalIndex": 10,
+      "pointOrdinal": 0,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#10#point-0",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000000",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000000/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000000/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000000/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:29Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03071,
+          "longitude": 141.34422
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#10",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "石山通 shared endpoint camera opened separately; own westward departure is continuous on 南22条."
+    },
+    {
+      "intervalIndex": 10,
+      "pointOrdinal": 1,
+      "viewpointID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#10#point-1",
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000001",
+      "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000001/basemap.png",
+      "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000001/smooth.png",
+      "viewJSON": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000396/000001/view.json",
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "viewImageDetail": "original",
+      "viewedOn": "2026-10-19",
+      "captureTimestamp": "2026-10-11T04:55:29Z",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 43.03042,
+          "longitude": 141.34008
+        },
+        "distanceMetres": 338.05259902747264,
+        "itemID": "jp-一般社団法人札幌市交通事業振興公社-山鼻線#10",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "recordedRenderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "cc3190494cf3de753c655762d2eca9a144a553db56457b6e16426b92e686a1c0",
+      "finding": "中央図書館前 record ends on the east–west own corridor, east of the visible north-turn continuation toward the depot-side street. No false hook at this endpoint. This isolated record does not establish the adjacent line/depot join, nor exact platform caps."
+    }
+  ]
+}

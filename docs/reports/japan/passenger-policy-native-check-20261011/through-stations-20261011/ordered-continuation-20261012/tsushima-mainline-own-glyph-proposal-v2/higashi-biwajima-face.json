@@ -1,0 +1,102 @@
+{
+  "status": "raw-provisional-parent-adjudication-and-native-pending",
+  "stationID": "005393",
+  "view": "meitetsu-main-21-view3-z18-before",
+  "westCappedOwnFace": {
+    "ends": [
+      [
+        538,
+        170
+      ],
+      [
+        446,
+        400
+      ]
+    ],
+    "midpoint": [
+      492,
+      285
+    ]
+  },
+  "eastCappedOwnFace": {
+    "ends": [
+      [
+        555,
+        175
+      ],
+      [
+        473,
+        408
+      ]
+    ],
+    "midpoint": [
+      514,
+      291.5
+    ]
+  },
+  "completeFrameLongitudinalCentrePixels": [
+    503,
+    289
+  ],
+  "ownRailNormalPixels": [
+    503,
+    289
+  ],
+  "ownRailNormalCoordinate": [
+    136.8703337754631,
+    35.19010659371747
+  ],
+  "chainageUncertaintyPixels": 3,
+  "normalUncertaintyPixels": 1.5,
+  "glyphSupports": [
+    [
+      543,
+      186
+    ],
+    [
+      530,
+      220
+    ],
+    [
+      514,
+      260
+    ],
+    [
+      501,
+      293
+    ],
+    [
+      499,
+      300
+    ],
+    [
+      497,
+      304
+    ],
+    [
+      460,
+      400
+    ],
+    [
+      458,
+      406
+    ]
+  ],
+  "rejected": [
+    {
+      "pixel": [
+        516,
+        298
+      ],
+      "reason": "approximately15px transverse off own rail"
+    },
+    {
+      "pixel": [
+        499.5,
+        327
+      ],
+      "reason": "physical guard is about27–38px longitudinal south of full own-face centre; cannot use a return bend"
+    }
+  ],
+  "boundsMethod": "Actual capped pale own face bands identified within same blue station frame by continuity around own single sleeper glyph. Colour samples only corroborate visual regions; road arrows/buildings/casing excluded. Do not infer platform numbers."
+}

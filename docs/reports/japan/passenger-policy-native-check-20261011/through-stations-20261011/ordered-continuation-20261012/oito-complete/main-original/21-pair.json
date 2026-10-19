@@ -1,0 +1,110 @@
+{
+  "caseIndex": 21,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 21,
+  "source": {
+    "caseIndex": 21,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 21,
+    "fromStationID": "002332",
+    "toStationID": "002366",
+    "camera": [
+      36.3495295,
+      137.8803,
+      0.048419909999999504
+    ],
+    "effectiveCoordinates": [
+      [
+        137.87825,
+        36.36001
+      ],
+      [
+        137.87852,
+        36.35927
+      ],
+      [
+        137.87907,
+        36.35783
+      ],
+      [
+        137.8802,
+        36.35484
+      ],
+      [
+        137.88098,
+        36.35279
+      ],
+      [
+        137.88133,
+        36.35187
+      ],
+      [
+        137.88168,
+        36.35096
+      ],
+      [
+        137.88193,
+        36.35032
+      ],
+      [
+        137.88202,
+        36.35007
+      ],
+      [
+        137.88225,
+        36.34899
+      ],
+      [
+        137.8823,
+        36.34876
+      ],
+      [
+        137.88235,
+        36.34822
+      ],
+      [
+        137.88204,
+        36.34499
+      ],
+      [
+        137.88188,
+        36.34297
+      ],
+      [
+        137.88179,
+        36.34203
+      ],
+      [
+        137.8817,
+        36.34107
+      ],
+      [
+        137.88167,
+        36.34025
+      ],
+      [
+        137.88172,
+        36.33984
+      ],
+      [
+        137.88177,
+        36.3394
+      ],
+      [
+        137.881877,
+        36.339049
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:774;camera:14.22;lod:13.07;backbones:0;networkStations:6;distance:10628.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.349530;centerLon:137.880300;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3672.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.349530;centerLon:137.880300;distance:10628.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-21.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Ariake to Hotaka Hotaka/Karasu river bridge and approaches continuous; own station longitudinal frame unresolved."
+}

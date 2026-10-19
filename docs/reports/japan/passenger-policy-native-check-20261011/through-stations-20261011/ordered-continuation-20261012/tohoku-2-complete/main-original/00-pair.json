@@ -1,0 +1,134 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-東日本旅客鉄道-東北線-2",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-東日本旅客鉄道-東北線-2",
+    "intervalIndex": 0,
+    "fromStationID": "003155",
+    "toStationID": "003210",
+    "camera": [
+      35.770832999999996,
+      139.72377899999998,
+      0.032326140000008864
+    ],
+    "effectiveCoordinates": [
+      [
+        139.720846,
+        35.777721
+      ],
+      [
+        139.72111,
+        35.77783
+      ],
+      [
+        139.72135,
+        35.77748
+      ],
+      [
+        139.72158,
+        35.77707
+      ],
+      [
+        139.72173,
+        35.77679
+      ],
+      [
+        139.72187,
+        35.7765
+      ],
+      [
+        139.72203,
+        35.77612
+      ],
+      [
+        139.72215,
+        35.7757
+      ],
+      [
+        139.72222,
+        35.77501
+      ],
+      [
+        139.72226,
+        35.77443
+      ],
+      [
+        139.72228,
+        35.77366
+      ],
+      [
+        139.72232,
+        35.77299
+      ],
+      [
+        139.72234,
+        35.77265
+      ],
+      [
+        139.72228,
+        35.77219
+      ],
+      [
+        139.72228,
+        35.77192
+      ],
+      [
+        139.72239,
+        35.7715
+      ],
+      [
+        139.72272,
+        35.77076
+      ],
+      [
+        139.72308,
+        35.7701
+      ],
+      [
+        139.72342,
+        35.76952
+      ],
+      [
+        139.72383,
+        35.7688
+      ],
+      [
+        139.72442,
+        35.76774
+      ],
+      [
+        139.725,
+        35.76677
+      ],
+      [
+        139.72539,
+        35.76602
+      ],
+      [
+        139.72603,
+        35.76487
+      ],
+      [
+        139.72663,
+        35.76395
+      ],
+      [
+        139.726712,
+        35.763836
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t101 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:14;overlays:11;rides:0;budgetDrops:0;vertices:5094;camera:14.81;lod:13.66;backbones:1;networkStations:42;distance:7095.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.770833;centerLon:139.723779;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3610.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:19;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;ride",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.770833;centerLon:139.723779;distance:7095.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-00.jpg",
+  "observation": "赤羽 88° 横向短钩在三套复现；Main 宽铁路走廊连续，但共享锚点不等于京浜東北自身纵向站台中心。東十条南部车场扇形独立。",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

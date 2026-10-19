@@ -1,0 +1,15 @@
+{
+  "order": 34,
+  "lineID": "jp-西日本旅客鉄道-大糸線",
+  "stationCount": 9,
+  "intervalCount": 8,
+  "state": "prepared-not-captured",
+  "source": "app/public/rail/jp-2025.json",
+  "packageVersion": "2025.5.2",
+  "cautions": [
+    "Exact endpoints are source continuity only.",
+    "Itoigawa terminal shares five source supports with Hisui but independent passenger track identity remains unresolved.",
+    "Own blue passenger platform caps only; exclude purple transfer passages.",
+    "Minami-Otari JR East identity remains separate despite shared source station anchor."
+  ]
+}

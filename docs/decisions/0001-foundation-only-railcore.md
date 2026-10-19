@@ -36,6 +36,15 @@ in the app target. Enforce these imports in `ios/verify.sh`.
 - Split every domain area into its own package: rejected until build time or
   ownership pressure justifies the additional public boundaries.
 
+## Amendment (2026-10-15)
+
+`RideLedger` moved from RailPresentation to RailCore. It is the journey-level
+reading of `Statistics.isRideSegment` and does not format text or consult a
+clock. `RegionClock` and `JourneyClock` stay in RailPresentation: their names
+are `PresentationText`, and JourneyClock's zone correction stays out of the
+JavaScript-parity date layer. The RailApplication product stays. Its six use
+cases are snapshot policies with their own tests, not empty forwards.
+
 ## Validation
 
 `SCRATCH=/tmp/jtm-rail-core ./ios/verify.sh --core` must pass, including the

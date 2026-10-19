@@ -1,0 +1,72 @@
+[
+  {
+    "intervalIndex": 2,
+    "oldCandidateIndex": 3,
+    "stationWitness": 2,
+    "coordinate": [
+      133.67093471804787,
+      33.57065754447051
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 3,
+    "oldCandidateIndex": 1,
+    "stationWitness": 3,
+    "coordinate": [
+      133.69776559127098,
+      33.561955675762725
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 4,
+    "oldCandidateIndex": 1,
+    "stationWitness": 4,
+    "coordinate": [
+      133.71033351682894,
+      33.54591080799241
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 8,
+    "oldCandidateIndex": 3,
+    "stationWitness": 8,
+    "coordinate": [
+      133.79090898643193,
+      33.517730595608064
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 8,
+    "oldCandidateIndex": 4,
+    "stationWitness": 8,
+    "coordinate": [
+      133.79090893338224,
+      33.51772565451402
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 15,
+    "oldCandidateIndex": 57,
+    "stationWitness": 16,
+    "coordinate": [
+      133.947928416,
+      33.458523947
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  },
+  {
+    "intervalIndex": 17,
+    "oldCandidateIndex": 3,
+    "stationWitness": 17,
+    "coordinate": [
+      133.966465438,
+      33.445966206
+    ],
+    "reason": "Audited residual endpoint beside literal own-rail controls; tiny reversal or transverse connector in saved station reprojection."
+  }
+]

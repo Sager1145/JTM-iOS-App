@@ -1,0 +1,1179 @@
+{
+  "queueOrdinal": 74,
+  "lineID": "jp-一畑電車-大社線",
+  "reviewedAt": "2026-10-19",
+  "scope": "Complete own 大社線 four named intervals 川跡→出雲大社前; historical original basemap/smooth review, not Main/network acceptance.",
+  "existingEvidencePath": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ichibata-taisha-complete/existing-evidence-20261019.json",
+  "counts": {
+    "pairsActuallyViewed": 30,
+    "originalPNGsActuallyViewed": 60,
+    "intervalPairsActuallyViewed": {
+      "0": 10,
+      "1": 7,
+      "2": 6,
+      "3": 7
+    },
+    "ownPairsUnviewed": 0,
+    "plannedOwnPairs": 30
+  },
+  "currentInputIdentity": "Reuse completed existing-evidence own source/display/station-ID + receipt-size preparation; no repeated all-line source campaign or hash recomputation.",
+  "confirmedIsolatedFalseVOrWrongBranch": false,
+  "sourcePlacementLeads": [
+    "Persistent south-side red/own-blue differences through portions of #0/#1/#2 and own station bands; full own passenger-track/usable-platform attribution needed before correction.",
+    "#3 浜山公園北口 departure/broad curve p0..3 has a more visible south-side difference; not an accepted frozen replacement window."
+  ],
+  "terminalPlatformFrame": {
+    "ownStation": "出雲大社前",
+    "viewIDs": [
+      "jp-一畑電車-大社線#3#point-5",
+      "jp-一畑電車-大社線#3#point-6"
+    ],
+    "fullUsableCapsUnambiguouslyVisible": false,
+    "exactWGS84CentreCandidate": null,
+    "reason": "Historical standard-map multi-track glyph and merged station fill do not distinguish complete usable passenger-platform ends from track/casing ends."
+  },
+  "geometryCandidate": null,
+  "stationCoordinateCandidate": null,
+  "views": [
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-0",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.395145,
+        "longitude": 132.77641,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.970313560217637,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233218899.12331378,
+        "rectY": 105963064.99603519,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:17Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "川跡 station: red departs southwest in the own station context. Broad multi-track/merged station fill does not independently resolve the own platform pair or complete usable caps."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-1",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.392803324242806,
+        "longitude": 132.7738299602689,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703413621554388,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233216975.3062535,
+        "rectY": 105965206.92951395,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:18Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "川跡 southern fork: red takes the west-curving 大社線 arm rather than the 北松江線 arm continuing south. The real broad divergence is preserved without a sharp V or reversal."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-2",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000002",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39094210009908,
+        "longitude": 132.7707664939873,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703634586869399,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233214691.0202306,
+        "rectY": 105966909.34899248,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:18Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own west branch curves smoothly out of the fork toward the east–west rural section, remaining separate from the south branch. No local false apex or wrong-neighbor snap is visible."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-3",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000003",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.390445878941506,
+        "longitude": 132.7669962045042,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703693496713873,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233211879.6886288,
+        "rectY": 105967363.22458847,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:18Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own curve joins the long westbound body continuously. Small south-side red/blue difference, no isolated sharp return or gap."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-4",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000004",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000004/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.390544192576364,
+        "longitude": 132.76313726423302,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.970368182528071,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233209002.25420833,
+        "rectY": 105967273.30087431,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:18Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own east–west rural body continuous; red slightly south of its depicted own rail corridor. No isolated false V."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-5",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000005",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000005/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000005/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39058462308364,
+        "longitude": 132.75927657203798,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703677025511243,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233206123.51345867,
+        "rectY": 105967236.32060689,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:19Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own westbound body remains continuous across the field/road grid, with a small persistent south-side difference. No shortcut to roads/canals."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-6",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000006",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000006/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000006/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39064378475077,
+        "longitude": 132.75541622183178,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703670002034722,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233203245.02771446,
+        "rectY": 105967182.20761724,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:19Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Long westbound own line, smooth and continuous; red south of the blue own stroke. Full physical centre cannot be obtained from the blue casing alone."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-7",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 7,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000007",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000007/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000007/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000007/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39070558199278,
+        "longitude": 132.7515559251354,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703662665660593,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233200366.58187005,
+        "rectY": 105967125.68392229,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:19Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Approach toward 高浜 remains continuous; small south-side difference persists, no local hook or foldback."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-8",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 8,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000008",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000008/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000008/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000008/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39076383145084,
+        "longitude": 132.74769558259425,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703655750457478,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233197488.10184133,
+        "rectY": 105967072.40521695,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:19Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "高浜 approach and station band show a gentle change in bearing; red on the south side of the own band, no isolated corner. Full platform caps unproved."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#0#point-9",
+      "itemID": "jp-一畑電車-大社線#0",
+      "intervalIndex": 0,
+      "pointOrdinal": 9,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000009",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000009/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000009/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000387/000009/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.390724,
+        "longitude": 132.746704,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703660479130434,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233196748.72426954,
+        "rectY": 105967108.83763102,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:20Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "高浜 endpoint: red passes through the station context without a detached cap or reversal; south-side offset relative to the own blue band is visible. No exact own platform-centre candidate."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-0",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.390724,
+        "longitude": 132.746704,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703660479130434,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233196748.72426954,
+        "rectY": 105967108.83763102,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:20Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Same 高浜 camera as #0 p9; separate original pair actually opened. The westward departure is continuous; overlap is not additional geographic coverage."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-1",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39024094357165,
+        "longitude": 132.74288895229097,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.970371782579458,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233193904.01851553,
+        "rectY": 105967550.67076524,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:20Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own shallow westbound curve remains continuous; a south-side band difference persists. No new branch or isolated false apex."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-2",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000002",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.389739492757016,
+        "longitude": 132.7390772573274,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703777355437395,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233191061.81274977,
+        "rectY": 105968009.32573767,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:20Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own gentle change of bearing through Hiranocho is retained; no V, short transverse shoulder or shortcut onto the nearby road."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-3",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000003",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38950883506082,
+        "longitude": 132.73523021341683,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703804737672667,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233188193.24889866,
+        "rectY": 105968220.29721494,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:21Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Long westbound own body continuous, with slight south-side displacement. No isolated false corner."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-4",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000004",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000004/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38939308983256,
+        "longitude": 132.73137182439876,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703818478160848,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233185316.2255223,
+        "rectY": 105968326.16356911,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:21Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own rural straight through fields is continuous; red slightly south of its blue corridor. No road/canal transfer."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-5",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000005",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000005/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000005/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38926744458657,
+        "longitude": 132.7275139152755,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703833393866671,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233182439.55998147,
+        "rectY": 105968441.08480088,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:21Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "遥堪 station approach stays on the own corridor and crosses the road without a hook; full usable platform caps unresolved."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#1#point-6",
+      "itemID": "jp-一畑電車-大社線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000006",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000006/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000006/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000388/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38922,
+        "longitude": 132.72629,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703839026136566,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233181526.94260624,
+        "rectY": 105968484.47987275,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:21Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "遥堪 endpoint/departure context is continuous and slightly south of the blue rail/station band. No coordinate replacement supported."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-0",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38922,
+        "longitude": 132.72629,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703839026136566,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233181526.94260624,
+        "rectY": 105968484.47987275,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:21Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Same 遥堪 camera as #1 p6; separate original pair actually viewed, no extra geographic coverage claim. Own westward continuation is continuous."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-1",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.389119057462395,
+        "longitude": 132.72243118822556,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703851009265211,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233178649.60399985,
+        "rectY": 105968576.80662616,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:22Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own westbound body continuous; red south of own blue line. No isolated V or jump to nearby roads/canals."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-2",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000002",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38901434683461,
+        "longitude": 132.7185723477292,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.970386343968067,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233175772.2439769,
+        "rectY": 105968672.5797285,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:22Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Shallow own curve through Nyunannishi is preserved. No gap, reversal or isolated false apex."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-3",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000003",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38896015992481,
+        "longitude": 132.71471314327334,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703869872308231,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233172894.61256602,
+        "rectY": 105968722.14149177,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:22Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own curve and crossing over the Konatogawa corridor remain continuous; roads/river lines are not substituted as railway controls."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-4",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000004",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000004/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38901928364226,
+        "longitude": 132.71085297465493,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703862853622696,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233170016.26222348,
+        "rectY": 105968668.06430249,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:22Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Bridge-side and 浜山公園北口 approach stay on the own rail direction. Sustained red south-side difference is visible; no short isolated shoulder established."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#2#point-5",
+      "itemID": "jp-一畑電車-大社線#2",
+      "intervalIndex": 2,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000005",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000005/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000005/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000389/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38907,
+        "longitude": 132.708135,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703856832982528,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233167989.59342933,
+        "rectY": 105968621.67682785,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:23Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "浜山公園北口 endpoint: station/curve context continuous, but red runs south of the own blue rail and station band. Complete own platform caps/centre unresolved."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-0",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000000",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000000/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.38907,
+        "longitude": 132.708135,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703856832982528,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233167989.59342933,
+        "rectY": 105968621.67682785,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:23Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Same 浜山公園北口 camera as #2 p5; separate original pair opened. Own northwest departure is continuous with a visible south-side position difference."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-1",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000001",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000001/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.3894425508305,
+        "longitude": 132.70432019843034,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703812606491481,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233165145.07121015,
+        "rectY": 105968280.92409399,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:23Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own northwest broad departure curve is retained, but red cuts farther south of the depicted own gradual curve before the station-side tangent. Concrete own-source placement lead; no one-point deletion is justified."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-2",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000002",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000002/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39012704533175,
+        "longitude": 132.70055158168023,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703731347269118,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233162334.98688847,
+        "rectY": 105967654.84871861,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:23Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own northwest body remains continuous, persistently south of its blue rail band by roughly several to low tens of pixels. No isolated V or neighbor route transfer."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-3",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000003",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000003/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.39087327885417,
+        "longitude": 132.69680357403885,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703642757159103,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233159540.2698321,
+        "rectY": 105966972.29746985,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:24Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own northwest body remains continuous; visible south-side offset from its blue corridor. No road, river or nearby rail borrowed."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-4",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 4,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000004",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000004/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000004/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.391830006393164,
+        "longitude": 132.69312521609558,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703529175545909,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233156797.4873548,
+        "rectY": 105966097.20615965,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:24Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Approach toward 堀川 bridge/terminal remains on the own northwest corridor; red slightly south. No false corner or reversal."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-5",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000005",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000005/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000005/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.392800696115266,
+        "longitude": 132.6894522673808,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703413933574175,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233154058.7382906,
+        "rectY": 105965209.33343026,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:24Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "Own terminal approach crosses 堀川 and follows the southeast-to-northwest 大社線 fan, with no hook or detached end. Multi-track station casing cannot identify complete usable platform caps."
+    },
+    {
+      "viewpointID": "jp-一畑電車-大社線#3#point-6",
+      "itemID": "jp-一畑電車-大社線#3",
+      "intervalIndex": 3,
+      "pointOrdinal": 6,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000006",
+      "originalPNGs": {
+        "basemap": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000006/basemap.png",
+        "smooth": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000006/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000390/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.393265,
+        "longitude": 132.68766,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9703358809618196,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233152722.32686934,
+        "rectY": 105964784.63909616,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "timestamp": "2026-10-11T04:55:24Z",
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "60f41512ec1f936579151a33a505ea0eed6664cfdd7599fa5f259a29a479e497",
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "finding": "出雲大社前 endpoint at camera centre follows own terminal approach, without a reversed tail. Station multi-track/merged fill prevents an independent whole usable platform frame and exact midpoint. No coordinate/cap estimate proposed."
+    }
+  ]
+}

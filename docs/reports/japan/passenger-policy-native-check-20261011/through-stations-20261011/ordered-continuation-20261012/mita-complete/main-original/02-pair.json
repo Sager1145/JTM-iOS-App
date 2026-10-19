@@ -1,0 +1,85 @@
+{
+  "caseIndex": 2,
+  "lineID": "jp-東京都-6号線三田線",
+  "intervalIndex": 2,
+  "source": {
+    "caseIndex": 2,
+    "lineID": "jp-東京都-6号線三田線",
+    "intervalIndex": 2,
+    "fromStationID": "003117",
+    "toStationID": "003128",
+    "camera": [
+      35.788007500000006,
+      139.6669875,
+      0.017547175105167
+    ],
+    "effectiveCoordinates": [
+      [
+        139.661295,
+        35.788935
+      ],
+      [
+        139.66224,
+        35.78875
+      ],
+      [
+        139.66232,
+        35.78874
+      ],
+      [
+        139.66373,
+        35.78842
+      ],
+      [
+        139.66482,
+        35.7882
+      ],
+      [
+        139.66593,
+        35.78799
+      ],
+      [
+        139.66704,
+        35.78775
+      ],
+      [
+        139.6676,
+        35.78764
+      ],
+      [
+        139.66782,
+        35.7876
+      ],
+      [
+        139.66833,
+        35.78747
+      ],
+      [
+        139.66844,
+        35.78745
+      ],
+      [
+        139.66908,
+        35.78737
+      ],
+      [
+        139.6716,
+        35.78718
+      ],
+      [
+        139.67169,
+        35.78717
+      ],
+      [
+        139.67268,
+        35.78708
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-full-interval; geographic-and-platform-limits-retained",
+  "actualOnStatus": "\t\t\t\t33 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:1290;camera:15.69;lod:14.55;backbones:1;networkStations:5;distance:3851.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.788008;centerLon:139.666988;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:4875.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:8;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.788008;centerLon:139.666988;distance:3851.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "reviewEvidence": "root-review-sheets/01.jpg",
+  "fullIntervalVisible": true,
+  "platformMidpointAccepted": false
+}

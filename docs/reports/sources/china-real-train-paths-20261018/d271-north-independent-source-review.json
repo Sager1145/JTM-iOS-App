@@ -1,0 +1,443 @@
+{
+  "schema": "cn-d271-north-independent-source-review/1",
+  "reviewedAt": "2026-10-19T08:23:47.127651+00:00",
+  "candidate": "/private/tmp/cn-boundary-20261019/d271/north-physical-sections-candidate.json",
+  "bindingsProposal": "/private/tmp/cn-boundary-20261019/d271/north-station-bindings-proposal.json",
+  "scope": "Independent targeted originalSQLite object,source station marker/12306 identity and exact strand composition review. No tests/builds/regeneration/production edits; parent reviewed primary passenger corridor URLs.",
+  "verdict": "No source, station identity, or same-strand topology defect found",
+  "sourcePaths": [
+    {
+      "sectionId": "cn-reviewed-physical-10286390-chengdu-north",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-10286390-chengdu-north",
+        "lineName": "成昆线",
+        "operatorName": "中国铁路成都局集团",
+        "railwayClassCode": "11"
+      },
+      "sourceRelations": [
+        {
+          "id": 10286390,
+          "version": 190,
+          "tags": {
+            "from": "成都",
+            "name": "成昆线",
+            "name:de": "Chengdu-Kunming-Bahn",
+            "name:en": "Chengdu–Kunming railway",
+            "name:ja": "成昆線",
+            "name:no": "Chengdu–Kunming-jernbanen",
+            "ref": "0085",
+            "route": "railway",
+            "to": "昆明",
+            "type": "route",
+            "wikidata": "Q171748",
+            "wikipedia": "zh:成昆铁路"
+          }
+        }
+      ],
+      "nodes": 627,
+      "edges": 626,
+      "uniqueWays": 106,
+      "sourceWayAgencies": {
+        "中国铁路成都局集团": 106
+      },
+      "sourceWayNames": {
+        "成昆线": 106
+      },
+      "sourceServices": {
+        "None": 106
+      },
+      "hardExcludedWays": [],
+      "maximumTurnDegrees": 8.775091662187421,
+      "allExactSourceChecksPass": true,
+      "findings": []
+    },
+    {
+      "sectionId": "cn-reviewed-physical-10259709-chengdu-north",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-10259709-chengdu-north",
+        "lineName": "峨广线",
+        "operatorName": "中国铁路成都局集团",
+        "railwayClassCode": "11"
+      },
+      "sourceRelations": [
+        {
+          "id": 10259709,
+          "version": 159,
+          "tags": {
+            "alt_name": "峨广铁路",
+            "description:en": "Chengkun Railway double track Yangang to Guangtong North section",
+            "from": "燕岗",
+            "name": "峨广线",
+            "name:en": "Emei-Guangtong Railway",
+            "network": "中国铁路",
+            "operator": "中国铁路",
+            "operator:en": "China Railway",
+            "operator:wikidata": "Q1073489",
+            "operator:zh": "中国铁路",
+            "railway:traffic_mode": "mixed",
+            "ref": "0084",
+            "route": "railway",
+            "to": "广通北",
+            "tracks": "2",
+            "type": "route",
+            "wikidata": "Q109658267",
+            "wikipedia": "zh:峨广铁路"
+          }
+        }
+      ],
+      "nodes": 1050,
+      "edges": 1049,
+      "uniqueWays": 173,
+      "sourceWayAgencies": {
+        "中国铁路成都局集团": 173
+      },
+      "sourceWayNames": {
+        "峨广线": 173
+      },
+      "sourceServices": {
+        "None": 173
+      },
+      "hardExcludedWays": [],
+      "maximumTurnDegrees": 7.752957661181498,
+      "allExactSourceChecksPass": true,
+      "findings": []
+    }
+  ],
+  "stationBindings": [
+    {
+      "stationName": "成都南",
+      "officialTelecode": "CNW",
+      "original12306RawFields": [
+        "cdn",
+        "成都南",
+        "CNW",
+        "chengdunan",
+        "cdn",
+        "37",
+        "1707",
+        "成都",
+        "",
+        "",
+        ""
+      ],
+      "uniqueExactNameAndTelecodeRecord": true,
+      "directSourceMarkerMemberships": [
+        {
+          "id": 10286390,
+          "version": 190,
+          "roles": [
+            ""
+          ]
+        }
+      ],
+      "sourceMarker": {
+        "id": 9334658569,
+        "coordinate": [
+          104.066049,
+          30.6090447
+        ],
+        "tags": {
+          "name": "成都南",
+          "name:en": "Chengdunan",
+          "name:zh": "成都南",
+          "name:zh-Hans": "成都南",
+          "name:zh-Hant": "成都南",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q11074637",
+          "wikipedia": "zh:成都南站"
+        },
+        "version": 3
+      },
+      "sourceAnchor": {
+        "id": 5617675902,
+        "coordinate": [
+          104.0660506,
+          30.6087887
+        ],
+        "tags": {
+          "name": "成都南站",
+          "name:en": "Chengdunan Railway Station",
+          "name:zh": "成都南站",
+          "name:zh-Hans": "成都南站",
+          "name:zh-Hant": "成都南站",
+          "public_transport": "stop_position",
+          "railway": "stop",
+          "train": "yes"
+        },
+        "version": 4
+      },
+      "ownedPhysicalSectionId": "cn-reviewed-physical-10286390-chengdu-north",
+      "anchorNodeIndexInPath": 0,
+      "adjacentPathNodes": [
+        5617675902,
+        14005714640
+      ],
+      "originalAnchorWayIds": [
+        666838821
+      ],
+      "markerToAnchorMeters": 28.46631305101297,
+      "nearestSelectedPathNodeId": 5617675902,
+      "nearestSelectedPathNodeMeters": 28.46631305101297,
+      "actualStopPosition": true,
+      "originalD271Stop": {
+        "station_name": "成都南",
+        "is_start": "Y",
+        "start_station_name": "成都南",
+        "station_train_code": "D271",
+        "arrive_day_str": "当日到达",
+        "arrive_day_diff": "0",
+        "station_no": "01",
+        "arrive_time": "----",
+        "start_time": "08:16",
+        "train_class_name": "动车",
+        "service_type": "2",
+        "end_station_name": "西双版纳",
+        "running_time": "00:00",
+        "wz_num": "--"
+      },
+      "allStationProofChecksPass": true,
+      "findings": []
+    },
+    {
+      "stationName": "彭山",
+      "officialTelecode": "PSW",
+      "original12306RawFields": [
+        "psh",
+        "彭山",
+        "PSW",
+        "pengshan",
+        "ps",
+        "2591",
+        "6711",
+        "眉山",
+        "",
+        "",
+        ""
+      ],
+      "uniqueExactNameAndTelecodeRecord": true,
+      "directSourceMarkerMemberships": [
+        {
+          "id": 10286390,
+          "version": 190,
+          "roles": [
+            ""
+          ]
+        }
+      ],
+      "sourceMarker": {
+        "id": 1588514469,
+        "coordinate": [
+          103.8571009,
+          30.1949749
+        ],
+        "tags": {
+          "alt_name": "彭山站;彭山火车站;Pengshan Railway Station",
+          "name": "彭山",
+          "name:en": "Pengshan",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes"
+        },
+        "version": 6
+      },
+      "sourceAnchor": {
+        "id": 10779177796,
+        "coordinate": [
+          103.8558058,
+          30.1926378
+        ],
+        "tags": {},
+        "version": 1
+      },
+      "ownedPhysicalSectionId": "cn-reviewed-physical-10286390-chengdu-north",
+      "anchorNodeIndexInPath": 274,
+      "adjacentPathNodes": [
+        10779177797,
+        10779177796,
+        10779177795
+      ],
+      "originalAnchorWayIds": [
+        1159106260
+      ],
+      "markerToAnchorMeters": 288.14457905575466,
+      "nearestSelectedPathNodeId": 10779177796,
+      "nearestSelectedPathNodeMeters": 288.14457905575466,
+      "actualStopPosition": false,
+      "originalD271Stop": {
+        "station_name": "彭山",
+        "start_time": "08:48",
+        "station_train_code": "D271",
+        "OT": [],
+        "arrive_day_str": "当日到达",
+        "running_time": "00:29",
+        "arrive_day_diff": "0",
+        "station_no": "02",
+        "wz_num": "--",
+        "arrive_time": "08:45"
+      },
+      "allStationProofChecksPass": true,
+      "findings": []
+    },
+    {
+      "stationName": "西昌西",
+      "officialTelecode": "XCE",
+      "original12306RawFields": [
+        "xcx",
+        "西昌西",
+        "XCE",
+        "xichangxi",
+        "xcx",
+        "1368",
+        "1710",
+        "西昌",
+        "",
+        "",
+        ""
+      ],
+      "uniqueExactNameAndTelecodeRecord": true,
+      "directSourceMarkerMemberships": [
+        {
+          "id": 10259709,
+          "version": 159,
+          "roles": [
+            ""
+          ]
+        }
+      ],
+      "sourceMarker": {
+        "id": 5230058264,
+        "coordinate": [
+          102.1590116,
+          27.8718658
+        ],
+        "tags": {
+          "name": "西昌西",
+          "name:en": "Xichang West",
+          "name:zh": "西昌西",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q110109733"
+        },
+        "version": 5
+      },
+      "sourceAnchor": {
+        "id": 10244648816,
+        "coordinate": [
+          102.1589272,
+          27.8737548
+        ],
+        "tags": {},
+        "version": 2
+      },
+      "ownedPhysicalSectionId": "cn-reviewed-physical-10259709-chengdu-north",
+      "anchorNodeIndexInPath": 1049,
+      "adjacentPathNodes": [
+        8397617440,
+        10244648816
+      ],
+      "originalAnchorWayIds": [
+        949368264
+      ],
+      "markerToAnchorMeters": 210.21098515892078,
+      "nearestSelectedPathNodeId": 10244648816,
+      "nearestSelectedPathNodeMeters": 210.21098515892078,
+      "actualStopPosition": false,
+      "originalD271Stop": {
+        "station_name": "西昌西",
+        "start_time": "11:29",
+        "station_train_code": "D271",
+        "OT": [],
+        "arrive_day_str": "当日到达",
+        "running_time": "03:06",
+        "arrive_day_diff": "0",
+        "station_no": "03",
+        "wz_num": "--",
+        "arrive_time": "11:22"
+      },
+      "allStationProofChecksPass": true,
+      "findings": []
+    }
+  ],
+  "exactSharedJunction": {
+    "node": {
+      "id": 10727275580,
+      "coordinate": [
+        103.5244559,
+        29.5469747
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 1
+    },
+    "leftNodeId": 10727275580,
+    "rightNodeId": 10727275580,
+    "originalWayIds": [
+      1566756581,
+      1153416419
+    ],
+    "headingChangeDegrees": 0.786857781462437,
+    "adjacentOriginalWayOwners": [
+      {
+        "wayId": 1566756581,
+        "originalRelations": [
+          {
+            "id": 10286390,
+            "version": 190
+          }
+        ]
+      },
+      {
+        "wayId": 1153416419,
+        "originalRelations": [
+          {
+            "id": 10259709,
+            "version": 159
+          }
+        ]
+      }
+    ]
+  },
+  "existingXCEAndCommonStrandContinuation": {
+    "nodeId": 10244648816,
+    "commonStrandFirstNode": 10244648816,
+    "sameOriginalNode": true,
+    "headingChangeDegrees": 1.2156333791111373,
+    "existingPublishedXCEStationAnchors": [
+      {
+        "lineId": "cn-osm-relation-10259709-branch-16",
+        "markerNodeId": 5230058264,
+        "anchorNodeId": 10244642105,
+        "sameNorthEndpoint": false
+      },
+      {
+        "lineId": "cn-osm-relation-10259709-branch-17",
+        "markerNodeId": 5230058264,
+        "anchorNodeId": 10244648816,
+        "sameNorthEndpoint": true
+      }
+    ],
+    "targetCommonStrandIdentity": {
+      "trackID": "cn-osm-relation-10259709-branch-17",
+      "lineName": "峨广线",
+      "operatorName": "中国铁路",
+      "railwayClassCode": "11"
+    }
+  },
+  "actionableFindings": [],
+  "requiredProofCarriage": [
+    "Retain original marker and anchor IDs/coordinates/tags/versions, exact owning relation version and direct marker membership roles.",
+    "Retain original12306 identity record/name/code plus official group and N02 station code; this mapping is exact-name within directly owned relation context, never location-derived identity.",
+    "Retain actualStopPosition=false for untagged PSW/XCE rail anchors; bounded projection selects an existing own-source graph node and creates no graph edge.",
+    "Keep sourceRelations per north section; use each original way agency, not relation10259709 generic China Railway operator to overwrite its bureaus.",
+    "Join north sections at exact original switch10727275580 and north→common at exact10244648816, with explicit junction identities in integration.",
+    "Preserve public compact station anchors: CNW existing Chenggui anchor10221424435 and XCE alternate branch16 anchor10244642105 are distinct from the new raw bindings; do not weld them by group."
+  ],
+  "limits": [
+    "Passenger evidence is parent-reviewed official corridor evidence; neither raw OSM relation nor this read-only review independently proves exact D271 platform assignment.",
+    "CNW source stop_position is explicit; PSW/XCE anchors are real original own-track nodes within existing1500m bound, not explicit platform stops.",
+    "The common-strand review remains separate; Panzhihua South and other raw platform boundaries are not erased by these station bindings.",
+    "This review validates source eligibility and topology, not runtime registration/solver behavior or a full train solve."
+  ]
+}

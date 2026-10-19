@@ -1,0 +1,175 @@
+{
+  "status": "candidate-only-unaccepted",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 88,
+  "coordinates": [
+    [
+      132.56978339632985,
+      33.238689923845335
+    ],
+    [
+      132.56979814847944,
+      33.23857595983728
+    ],
+    [
+      132.5698115595245,
+      33.238463790392935
+    ],
+    [
+      132.5698276527786,
+      33.23835162080468
+    ],
+    [
+      132.56984106382367,
+      33.23823945107252
+    ],
+    [
+      132.56991,
+      33.23766
+    ],
+    [
+      132.57021,
+      33.23555
+    ],
+    [
+      132.57043,
+      33.23398
+    ],
+    [
+      132.57047,
+      33.23369
+    ],
+    [
+      132.5705,
+      33.23343
+    ],
+    [
+      132.57077,
+      33.23147
+    ],
+    [
+      132.57083,
+      33.23102
+    ],
+    [
+      132.57084,
+      33.23052
+    ],
+    [
+      132.57078,
+      33.22988
+    ],
+    [
+      132.57064,
+      33.22931
+    ],
+    [
+      132.57042,
+      33.22879
+    ],
+    [
+      132.57019,
+      33.22836
+    ],
+    [
+      132.57012,
+      33.22823
+    ],
+    [
+      132.56997,
+      33.22804
+    ],
+    [
+      132.56966,
+      33.22773
+    ],
+    [
+      132.5693220076181,
+      33.22758506092888
+    ],
+    [
+      132.5690537867166,
+      33.22736518104845
+    ],
+    [
+      132.56878556581512,
+      33.22714081325373
+    ],
+    [
+      132.56851734491363,
+      33.22692541962933
+    ],
+    [
+      132.56824912401214,
+      33.226705538090634
+    ],
+    [
+      132.56798090311065,
+      33.22651706776039
+    ],
+    [
+      132.56771268220916,
+      33.226342059232955
+    ],
+    [
+      132.567495423279,
+      33.22617153776686
+    ],
+    [
+      132.56745730153767,
+      33.22614187322736
+    ]
+  ],
+  "localSplices": [],
+  "turnsOver30": [],
+  "warnings": [
+    "Retained middle source body needs full-resolution own-band comparison.",
+    "Terminal passenger group choice is Root-approved cartographic representative; no unique operator track/platform assignment. ±2px normal and endpoint chainage remains a warning."
+  ],
+  "physicalIDsKmSegmentsRoutingUnchanged": true,
+  "nativeAcceptance": false,
+  "manualCorrections": {
+    "cutOldPrefixAfterIndex": 19,
+    "pixelControls": [
+      [
+        800,
+        15
+      ],
+      [
+        750,
+        64
+      ],
+      [
+        700,
+        114
+      ],
+      [
+        650,
+        162
+      ],
+      [
+        600,
+        211
+      ],
+      [
+        550,
+        253
+      ],
+      [
+        500,
+        292
+      ],
+      [
+        459.5,
+        330
+      ]
+    ],
+    "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-uwajima-009486/view.json",
+    "basis": "Actual paired passenger railway group normal, excludes separate northwest yard and southeast building. Group controls progressively replace displaced old SE path.",
+    "alias": [
+      132.56745730153767,
+      33.22614187322736
+    ]
+  },
+  "terminalEndEqualsStation": true
+}

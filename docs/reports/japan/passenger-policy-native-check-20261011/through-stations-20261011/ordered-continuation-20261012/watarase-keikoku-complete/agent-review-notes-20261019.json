@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "requestID": "watarase-keikoku-missing-own-intervals",
+  "dependencies": {
+    "diagnosticContract": "rail-diagnostics-v1",
+    "lineRender": "d2d5de20749bc89ecb46760604887da0bd9e344fa5e6be739be6de86bf458c08",
+    "packageVersion": "2025.5.2"
+  },
+  "notes": [
+    {
+      "id": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8/displayVertex/3/sharpTurn",
+      "conclusion": "insufficientEvidence",
+      "note": "Agent original-pixel review: all 40 missing-only viewpoint pairs / 80 original PNGs were separately viewed; legacy109 were not viewed this pass. This note is only own interval #8 花轮→中野 display vertex 3 [139.30915, 36.52161]. p0/p1 show short red shoulder geometry near 花轮 station; the two visible short-shoulder groups must be localized separately and must not be conflated or used as evidence for each other. The selected v3/v4/v5 cluster is an inspection lead, not a confirmed false corner. Angle magnitude and 2–5m edges alone cannot justify deleting vertices. The added own-source report establishes N02 feature269 and attributed own OSM railway ways24373800/925516063 sharing stop264461333, with railway relation1949287 (not directional train proof). It separates A v2→v3 (4.604m) from B v4→v5→v6 (2.681m east then2.105m NE). Do not conflate these groups. Exact minimal deletion remains unresolved at z17; complete passenger-platform geometry and uniquely resolved original own departure direction / deletion joins remain unproved. The two-view z19 request is prepared but has not run. Preserve the broader genuine river-gorge curve; no geometry repair or full-line/platform/physical-centre/Main acceptance is recorded.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-original-review-20261019.md": "c810adf67b4281e32ecab8dffa3b7056ad3be9057963b32098af35112ffb77ce",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-viewed-originals-20261019.json": "9b8b927dd764efebf4dacdffb6799021f8e3832c3626c48542d16cbf97e90990",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/basemap.png": "b7b08d22edb3df445ff79f8a1727f02762587750ddd829e9563186333d8eceee",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/smooth.png": "a55b7a34f53b4c2aa616fa5dd6cc3ae60ced517589c312a934f8b1d6d7b9a0c9",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/basemap.png": "83e6cff6b5fea7036f5381794c40503612aab732ffc368b22858fc208157d7fd",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/smooth.png": "bbdf3f03af32026ed7fd3a7979bd90b4fa75be80193110b09dd5036254dc4e17",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/hanawa-step-own-source-review-20261019.md": "cd43b8752110111f0cbbe3a7e38a7be0344deaf28718fd920e6ad6fd71c3f439"
+      }
+    },
+    {
+      "id": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8/displayVertex/4/sharpTurn",
+      "conclusion": "insufficientEvidence",
+      "note": "Agent original-pixel review: all 40 missing-only viewpoint pairs / 80 original PNGs were separately viewed; legacy109 were not viewed this pass. This note is only own interval #8 花轮→中野 display vertex 4 [139.30938, 36.52174]. p0/p1 show short red shoulder geometry near 花轮 station; the two visible short-shoulder groups must be localized separately and must not be conflated or used as evidence for each other. The selected v3/v4/v5 cluster is an inspection lead, not a confirmed false corner. Angle magnitude and 2–5m edges alone cannot justify deleting vertices. The added own-source report establishes N02 feature269 and attributed own OSM railway ways24373800/925516063 sharing stop264461333, with railway relation1949287 (not directional train proof). It separates A v2→v3 (4.604m) from B v4→v5→v6 (2.681m east then2.105m NE). Do not conflate these groups. Exact minimal deletion remains unresolved at z17; complete passenger-platform geometry and uniquely resolved original own departure direction / deletion joins remain unproved. The two-view z19 request is prepared but has not run. Preserve the broader genuine river-gorge curve; no geometry repair or full-line/platform/physical-centre/Main acceptance is recorded.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-original-review-20261019.md": "c810adf67b4281e32ecab8dffa3b7056ad3be9057963b32098af35112ffb77ce",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-viewed-originals-20261019.json": "9b8b927dd764efebf4dacdffb6799021f8e3832c3626c48542d16cbf97e90990",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/basemap.png": "b7b08d22edb3df445ff79f8a1727f02762587750ddd829e9563186333d8eceee",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/smooth.png": "a55b7a34f53b4c2aa616fa5dd6cc3ae60ced517589c312a934f8b1d6d7b9a0c9",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/basemap.png": "83e6cff6b5fea7036f5381794c40503612aab732ffc368b22858fc208157d7fd",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/smooth.png": "bbdf3f03af32026ed7fd3a7979bd90b4fa75be80193110b09dd5036254dc4e17",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/hanawa-step-own-source-review-20261019.md": "cd43b8752110111f0cbbe3a7e38a7be0344deaf28718fd920e6ad6fd71c3f439"
+      }
+    },
+    {
+      "id": "jp-わたらせ渓谷鐵道-わたらせ渓谷線#8/displayVertex/5/sharpTurn",
+      "conclusion": "insufficientEvidence",
+      "note": "Agent original-pixel review: all 40 missing-only viewpoint pairs / 80 original PNGs were separately viewed; legacy109 were not viewed this pass. This note is only own interval #8 花轮→中野 display vertex 5 [139.30941, 36.52174]. p0/p1 show short red shoulder geometry near 花轮 station; the two visible short-shoulder groups must be localized separately and must not be conflated or used as evidence for each other. The selected v3/v4/v5 cluster is an inspection lead, not a confirmed false corner. Angle magnitude and 2–5m edges alone cannot justify deleting vertices. The added own-source report establishes N02 feature269 and attributed own OSM railway ways24373800/925516063 sharing stop264461333, with railway relation1949287 (not directional train proof). It separates A v2→v3 (4.604m) from B v4→v5→v6 (2.681m east then2.105m NE). Do not conflate these groups. Exact minimal deletion remains unresolved at z17; complete passenger-platform geometry and uniquely resolved original own departure direction / deletion joins remain unproved. The two-view z19 request is prepared but has not run. Preserve the broader genuine river-gorge curve; no geometry repair or full-line/platform/physical-centre/Main acceptance is recorded.",
+      "evidenceSHA256": {
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-original-review-20261019.md": "c810adf67b4281e32ecab8dffa3b7056ad3be9057963b32098af35112ffb77ce",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/missing-viewed-originals-20261019.json": "9b8b927dd764efebf4dacdffb6799021f8e3832c3626c48542d16cbf97e90990",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/basemap.png": "b7b08d22edb3df445ff79f8a1727f02762587750ddd829e9563186333d8eceee",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/smooth.png": "a55b7a34f53b4c2aa616fa5dd6cc3ae60ced517589c312a934f8b1d6d7b9a0c9",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/basemap.png": "83e6cff6b5fea7036f5381794c40503612aab732ffc368b22858fc208157d7fd",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/smooth.png": "bbdf3f03af32026ed7fd3a7979bd90b4fa75be80193110b09dd5036254dc4e17",
+        "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/hanawa-step-own-source-review-20261019.md": "cd43b8752110111f0cbbe3a7e38a7be0344deaf28718fd920e6ad6fd71c3f439"
+      }
+    }
+  ]
+}

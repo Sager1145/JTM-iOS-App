@@ -1,0 +1,46 @@
+{
+  "ordinal": 26,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "stationCount": 25,
+  "intervalCount": 24,
+  "intervalIndices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23
+  ],
+  "associatedBranch": {
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線分岐線",
+    "stationCount": 4,
+    "intervalCount": 3,
+    "intervalIndices": [
+      0,
+      1,
+      2
+    ]
+  },
+  "status": "complete-baseline-analysis; repair-and-own-platform-acceptance-pending",
+  "rootOnly": true,
+  "guide": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "productionChanges": false
+}

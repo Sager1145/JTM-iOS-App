@@ -1,0 +1,36 @@
+{
+  "ordinal": 21,
+  "lineID": "jp-埼玉新都市交通-伊奈線",
+  "intervals": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "stationIDs": [
+    "002914",
+    "002881",
+    "002857",
+    "002844",
+    "002835",
+    "002824",
+    "002812",
+    "002802",
+    "002787",
+    "002770",
+    "002756",
+    "002747",
+    "002742"
+  ],
+  "status": "applied-complete-corridor-review-with-declared-occluded-omiya-reference",
+  "evidence": "root-candidate-v2/delivery-receipt.json",
+  "limitation": "Omiya passenger platform is hidden by Apple building/rail coverage. Its endpoint is reference-assisted, not an Apple pixel-fit claim."
+}

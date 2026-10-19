@@ -1,0 +1,40 @@
+{
+  "publisher": "GSI",
+  "retrievedUTC": "2026-10-11T07:55:13.388844+00:00",
+  "datasetAsOf": "2026-07-01",
+  "crs": "WGS84 from MVT inverse WebMercator",
+  "licence": "https://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html",
+  "tiles": [
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25939.pbf",
+      "file": "gsi-16-56999-25939.pbf",
+      "railFeatures": 3
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/56999/25940.pbf",
+      "file": "gsi-16-56999-25940.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25939.pbf",
+      "file": "gsi-16-57000-25939.pbf",
+      "railFeatures": 7
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57000/25940.pbf",
+      "file": "gsi-16-57000-25940.pbf",
+      "railFeatures": 4
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25939.pbf",
+      "file": "gsi-16-57001-25939.pbf",
+      "railFeatures": 0
+    },
+    {
+      "url": "https://cyberjapandata.gsi.go.jp/xyz/experimental_bvmap/16/57001/25940.pbf",
+      "file": "gsi-16-57001-25940.pbf",
+      "railFeatures": 0
+    }
+  ],
+  "limits": "Feature survey date unestablished; reference not proof of selected-date track use."
+}

@@ -1,0 +1,117 @@
+{
+  "metadataComparison": {
+    "secondary": {
+      "recordsCompared": 56,
+      "matchingFields": {
+        "lineID": 56,
+        "intervalIndex": 56,
+        "fromStationID": 56,
+        "toStationID": 56,
+        "sourceCoordinates": 56
+      },
+      "viewportPoints": [
+        1024,
+        768
+      ],
+      "pixelAcceptance": false
+    },
+    "third": {
+      "recordsCompared": 56,
+      "matchingFields": {
+        "lineID": 56,
+        "intervalIndex": 56,
+        "fromStationID": 56,
+        "toStationID": 56,
+        "sourceCoordinates": 56
+      },
+      "viewportPoints": [
+        1024,
+        768
+      ],
+      "pixelAcceptance": false
+    }
+  },
+  "basemapsActuallyOpened": [
+    {
+      "inspector": "secondary",
+      "intervalIndex": 7,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003013/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003013/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "secondary",
+      "intervalIndex": 8,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003014/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003014/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "secondary",
+      "intervalIndex": 9,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003015/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003015/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "secondary",
+      "intervalIndex": 10,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003006/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003006/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "secondary",
+      "intervalIndex": 11,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003007/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/secondary/captures/003007/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "third",
+      "intervalIndex": 7,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003013/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003013/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "third",
+      "intervalIndex": 8,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003014/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003014/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "third",
+      "intervalIndex": 9,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003015/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003015/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "third",
+      "intervalIndex": 10,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003006/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003006/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    },
+    {
+      "inspector": "third",
+      "intervalIndex": 11,
+      "raw": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003007/000002/basemap.png",
+      "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/third/captures/003007/000002/view.json",
+      "actuallyOpened": true,
+      "conclusion": "Own western/southwestern Ina-labelled corridor separation corroborates primary; does not establish platform face allocation."
+    }
+  ],
+  "scope": "Selected baseline corroboration only; no complete secondary/third pixel acceptance and no candidate-after capture."
+}

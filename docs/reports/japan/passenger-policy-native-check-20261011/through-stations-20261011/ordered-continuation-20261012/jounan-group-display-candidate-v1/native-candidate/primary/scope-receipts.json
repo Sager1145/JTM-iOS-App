@@ -1,0 +1,40 @@
+{
+  "status": "actual-capture-not-pixel-acceptance",
+  "lineIDs": [
+    "jp-伊予鉄道-城南線",
+    "jp-伊予鉄道-城北線",
+    "jp-伊予鉄道-大手町線",
+    "jp-伊予鉄道-本町線",
+    "jp-伊予鉄道-花園線",
+    "jp-伊予鉄道-連絡線"
+  ],
+  "intervalCount": 29,
+  "viewpointCount": 71,
+  "panelCount": 213,
+  "lines": {
+    "jp-伊予鉄道-城南線": {
+      "intervals": 11,
+      "viewpoints": 27
+    },
+    "jp-伊予鉄道-城北線": {
+      "intervals": 8,
+      "viewpoints": 20
+    },
+    "jp-伊予鉄道-大手町線": {
+      "intervals": 4,
+      "viewpoints": 10
+    },
+    "jp-伊予鉄道-本町線": {
+      "intervals": 4,
+      "viewpoints": 9
+    },
+    "jp-伊予鉄道-花園線": {
+      "intervals": 1,
+      "viewpoints": 3
+    },
+    "jp-伊予鉄道-連絡線": {
+      "intervals": 1,
+      "viewpoints": 2
+    }
+  }
+}

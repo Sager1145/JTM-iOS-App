@@ -1,0 +1,38 @@
+{
+  "status": "formal-resource-delivered",
+  "sourceCompactSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+  "sourceVsReviewedCandidateConsumedGeometry": "exact; only audit metadata status changed",
+  "lanesExactReviewedCandidate": true,
+  "signatures": "all six strict deep verified in formal-update.log",
+  "apps": [
+    {
+      "app": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app",
+      "formalCompactMatchesSource": true,
+      "historyRetained": true
+    },
+    {
+      "app": "/private/tmp/jtm-route-workbench-build/Build/Products/Debug-maccatalyst/RouteWorkbench.app",
+      "formalCompactMatchesSource": true,
+      "historyRetained": true
+    },
+    {
+      "app": "/private/tmp/jtm-through-workbench/Build/Products/Debug-maccatalyst/ThroughWorkbench.app",
+      "formalCompactMatchesSource": true,
+      "historyRetained": true
+    },
+    {
+      "app": "/private/tmp/jtm-audit-fixed-alignment-products/RailAlignmentInspector.app",
+      "formalCompactMatchesSource": true
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Kisuki Keiyo Inspector.app",
+      "formalCompactMatchesSource": true
+    },
+    {
+      "app": "/private/tmp/jtm-parallel-inspectors/Hakone Inspector.app",
+      "formalCompactMatchesSource": true
+    }
+  ],
+  "actualNativeReview": "V2 Main8 full intervals plus station close; reused exact Tsushima7 and unchanged station contexts; no additional runtime claim after metadata-only formal delivery",
+  "candidateOnlyTempOutputNote": "/private/tmp/jtm-tsushima-combined-candidate-v2 was reused for formal status/dependency copies; historical candidate ffac0a7c… SHA receipt reflects pre-apply output. Frozen candidate.json and native screenshots preserved."
+}

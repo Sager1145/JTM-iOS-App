@@ -1,0 +1,29 @@
+{
+  "lineID": "jp-名古屋市-1号線東山線",
+  "intervalIndex": 16,
+  "lineObjectSha256": "551e25913d9dce4e3ff22c0d9968893b23ba0072c47bf7ffee7609b97e59820e",
+  "plannedCamera": [
+    35.174845000000005,
+    136.86477,
+    0.007425000000012005
+  ],
+  "actualCenter": [
+    35.174845,
+    136.86477
+  ],
+  "actualMapBounds": [
+    136.860499,
+    35.171132,
+    136.869041,
+    35.178557
+  ],
+  "completeIntervalInsideActualMap": true,
+  "displayBranchLeadInsInsideActualMap": true,
+  "overlayKey": "Shift-Command-L",
+  "renderStatus": "11 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:4;overlays:4;rides:0;budgetDrops:0;vertices:645;camera:16.95;lod:15.80;backbones:1;networkStations:2;distance:1629.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.174845;centerLon:136.864770;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2655.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:5;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "pixelReview": "pending",
+  "pair": [
+    "higashiyama-interval-16-overlay.png",
+    "higashiyama-interval-16-basemap.png"
+  ]
+}

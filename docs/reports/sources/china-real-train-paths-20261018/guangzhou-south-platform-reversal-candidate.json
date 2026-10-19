@@ -1,0 +1,1610 @@
+{
+  "schema": "cn-guangzhou-south-single-platform-reversal-candidate-v1",
+  "reviewedAt": "2026-10-19",
+  "decision": "Evidence only; rejected for current formal integration requirements. Do not relax original route inventory or siding exclusion.",
+  "source": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+  "searchScope": {
+    "reusedLocalWaysFile": "/private/tmp/cn-gzjm-evidence2/gzs-ways.json",
+    "bbox": [
+      113.2,
+      22.925,
+      113.29,
+      23.02
+    ],
+    "originalWays": 676,
+    "search": "Original active rail edges; every >90-degree heading reversal allowed only once at an explicit stop-role member of stop_area13696629, and only back along the actual incoming original edge.",
+    "limits": "No national graph, PBF scan, build, native solve, or production edit."
+  },
+  "attachments": {
+    "arrival": {
+      "lineId": "cn-guangshengan-hsr",
+      "nodeId": 3676482861,
+      "coordinate": [
+        113.270501,
+        22.9833818
+      ],
+      "nodeVersion": 3,
+      "segmentIndex": 0,
+      "vertexIndex": 6,
+      "existingSourceTrackIdentity": "cn-guangshengan-hsr",
+      "incomingPublishedVertexIndex": 7,
+      "incomingPublishedCoordinate": [
+        113.2710825,
+        22.9825873
+      ],
+      "headingChangeIntoCandidateDegrees": 2.739362812258727
+    },
+    "departure": {
+      "lineId": "cn-osm-relation-5456788",
+      "nodeId": 1682325875,
+      "coordinate": [
+        113.2652126,
+        22.9572481
+      ],
+      "nodeVersion": 6,
+      "segmentIndex": 0,
+      "vertexIndex": 54,
+      "existingSourceTrackIdentity": "cn-osm-relation-5456788",
+      "outgoingPublishedVertexIndex": 55,
+      "outgoingPublishedCoordinate": [
+        113.263038,
+        22.9559815
+      ],
+      "headingChangeOutOfCandidateDegrees": 2.1481085907320874
+    }
+  },
+  "platformReversal": {
+    "nodeId": 11832431941,
+    "nodeVersion": 2,
+    "coordinate": [
+      113.263903,
+      22.9913254
+    ],
+    "nodeTags": {
+      "name": "广州南",
+      "name:de": "Guangzhou Süd",
+      "name:en": "Guangzhounan",
+      "name:zh": "广州南",
+      "public_transport": "stop_position",
+      "railway": "stop",
+      "train": "yes"
+    },
+    "stationRelation": {
+      "id": 13696629,
+      "version": 4,
+      "tags": {
+        "description": "Train station",
+        "name": "广州南",
+        "name:en": "Guangzhounan",
+        "name:zh": "广州南",
+        "name:zh-Hans": "广州南",
+        "name:zh-Hant": "廣州南",
+        "operator": "中国铁路广州局集团有限公司",
+        "public_transport": "stop_area",
+        "type": "public_transport"
+      },
+      "member": [
+        "n",
+        11832431941,
+        "stop"
+      ]
+    },
+    "sourceTrack": {
+      "wayId": 845559683,
+      "version": 3,
+      "railwayTrackRef": "15",
+      "railwayTrafficMode": "passenger",
+      "service": "siding"
+    },
+    "originalNodeSequenceAtReversal": [
+      3676457629,
+      11832431941,
+      3676457629
+    ],
+    "originalEdgeWayIdsAtReversal": [
+      845559683,
+      845559683
+    ],
+    "headingChangesAbove90Degrees": [
+      {
+        "nodeId": 11832431941,
+        "headingChangeDegrees": 180.0
+      }
+    ],
+    "interpretation": "One reversal along the same original passenger platform track at an explicit station stop_position. No track-to-track station/group weld. Track_ref15 is original OSM track identity; no claim that G6045 uses this platform."
+  },
+  "arrivalOriginalPath": {
+    "nodeIds": [
+      3676482861,
+      3676452315,
+      3676452316,
+      3676451881,
+      3676451882,
+      3676451884,
+      3676451888,
+      3676452324,
+      3676457627,
+      3676457629,
+      11832431941
+    ],
+    "coordinates": [
+      [
+        113.270501,
+        22.9833818
+      ],
+      [
+        113.2698202,
+        22.9842223
+      ],
+      [
+        113.2693345,
+        22.9848744
+      ],
+      [
+        113.2685822,
+        22.9857795
+      ],
+      [
+        113.2682231,
+        22.986198
+      ],
+      [
+        113.2675628,
+        22.9869973
+      ],
+      [
+        113.2666779,
+        22.9879051
+      ],
+      [
+        113.2658538,
+        22.9887873
+      ],
+      [
+        113.2654395,
+        22.9892578
+      ],
+      [
+        113.2651737,
+        22.9895906
+      ],
+      [
+        113.263903,
+        22.9913254
+      ]
+    ],
+    "nodeVersions": {
+      "3676482861": 3,
+      "3676452315": 4,
+      "3676452316": 3,
+      "3676451881": 4,
+      "3676451882": 2,
+      "3676451884": 2,
+      "3676451888": 3,
+      "3676452324": 2,
+      "3676457627": 2,
+      "3676457629": 3,
+      "11832431941": 2
+    },
+    "edgeWayIds": [
+      363487311,
+      363483748,
+      469938251,
+      916051582,
+      469938255,
+      469938255,
+      845559682,
+      845559682,
+      845559682,
+      845559683
+    ],
+    "wayVersions": {
+      "363487311": 3,
+      "363483748": 5,
+      "469938251": 1,
+      "916051582": 3,
+      "469938255": 3,
+      "845559682": 1,
+      "845559683": 3
+    },
+    "lengthMeters": 1113.1360690625286,
+    "allEdgesOriginalConsecutiveNodes": true,
+    "maxHeadingChangeDegrees": 4.6508755267622135
+  },
+  "departureOriginalPath": {
+    "nodeIds": [
+      11832431941,
+      3676457629,
+      3676457627,
+      3676452324,
+      3676451888,
+      3676451884,
+      3676451882,
+      3676451881,
+      3676448656,
+      2323956974,
+      2323957008,
+      2323956961,
+      2323956982,
+      2323956953,
+      1682326179,
+      1682326170,
+      1682326154,
+      1682326140,
+      1682326093,
+      1682326075,
+      1682326056,
+      1682326018,
+      5402949234,
+      1682326014,
+      2323974704,
+      2323974782,
+      2323974893,
+      2323974647,
+      1682325967,
+      1682325954,
+      2323974858,
+      1682325928,
+      2323974866,
+      2323974776,
+      2323974765,
+      1682325899,
+      2323974711,
+      2323974852,
+      1682325889,
+      2323974649,
+      2323974737,
+      2323974775,
+      2323974780,
+      2323974700,
+      1682325875
+    ],
+    "coordinates": [
+      [
+        113.263903,
+        22.9913254
+      ],
+      [
+        113.2651737,
+        22.9895906
+      ],
+      [
+        113.2654395,
+        22.9892578
+      ],
+      [
+        113.2658538,
+        22.9887873
+      ],
+      [
+        113.2666779,
+        22.9879051
+      ],
+      [
+        113.2675628,
+        22.9869973
+      ],
+      [
+        113.2682231,
+        22.986198
+      ],
+      [
+        113.2685822,
+        22.9857795
+      ],
+      [
+        113.2693409,
+        22.9847641
+      ],
+      [
+        113.2698345,
+        22.9841024
+      ],
+      [
+        113.2708024,
+        22.9828173
+      ],
+      [
+        113.2718209,
+        22.9814486
+      ],
+      [
+        113.2728294,
+        22.9800386
+      ],
+      [
+        113.2731298,
+        22.9795373
+      ],
+      [
+        113.2733576,
+        22.9791478
+      ],
+      [
+        113.2737343,
+        22.9784293
+      ],
+      [
+        113.2744347,
+        22.9767304
+      ],
+      [
+        113.2747755,
+        22.9755586
+      ],
+      [
+        113.2749608,
+        22.9746557
+      ],
+      [
+        113.2750681,
+        22.9735306
+      ],
+      [
+        113.2751003,
+        22.9723158
+      ],
+      [
+        113.2750814,
+        22.9716326
+      ],
+      [
+        113.2750001,
+        22.9709617
+      ],
+      [
+        113.2748434,
+        22.969877
+      ],
+      [
+        113.274709,
+        22.9692242
+      ],
+      [
+        113.2744542,
+        22.9684611
+      ],
+      [
+        113.2743801,
+        22.968245
+      ],
+      [
+        113.2740516,
+        22.9670778
+      ],
+      [
+        113.2737752,
+        22.9664629
+      ],
+      [
+        113.2730022,
+        22.9649178
+      ],
+      [
+        113.2725192,
+        22.9641242
+      ],
+      [
+        113.2717081,
+        22.9628291
+      ],
+      [
+        113.2713852,
+        22.9623757
+      ],
+      [
+        113.2710539,
+        22.9619334
+      ],
+      [
+        113.2706942,
+        22.9615039
+      ],
+      [
+        113.2703883,
+        22.961166
+      ],
+      [
+        113.2700502,
+        22.9608025
+      ],
+      [
+        113.2696632,
+        22.9604234
+      ],
+      [
+        113.2693201,
+        22.9601107
+      ],
+      [
+        113.2688725,
+        22.9597195
+      ],
+      [
+        113.2686029,
+        22.959495
+      ],
+      [
+        113.2683132,
+        22.9592727
+      ],
+      [
+        113.267927,
+        22.9589961
+      ],
+      [
+        113.2674549,
+        22.9586652
+      ],
+      [
+        113.2652126,
+        22.9572481
+      ]
+    ],
+    "nodeVersions": {
+      "11832431941": 2,
+      "3676457629": 3,
+      "3676457627": 2,
+      "3676452324": 2,
+      "3676451888": 3,
+      "3676451884": 2,
+      "3676451882": 2,
+      "3676451881": 4,
+      "3676448656": 3,
+      "2323956974": 5,
+      "2323957008": 3,
+      "2323956961": 2,
+      "2323956982": 3,
+      "2323956953": 2,
+      "1682326179": 3,
+      "1682326170": 2,
+      "1682326154": 3,
+      "1682326140": 3,
+      "1682326093": 3,
+      "1682326075": 3,
+      "1682326056": 3,
+      "1682326018": 5,
+      "5402949234": 2,
+      "1682326014": 2,
+      "2323974704": 2,
+      "2323974782": 2,
+      "2323974893": 2,
+      "2323974647": 2,
+      "1682325967": 2,
+      "1682325954": 1,
+      "2323974858": 1,
+      "1682325928": 2,
+      "2323974866": 1,
+      "2323974776": 1,
+      "2323974765": 1,
+      "1682325899": 1,
+      "2323974711": 1,
+      "2323974852": 1,
+      "1682325889": 2,
+      "2323974649": 1,
+      "2323974737": 1,
+      "2323974775": 1,
+      "2323974780": 1,
+      "2323974700": 1,
+      "1682325875": 6
+    },
+    "edgeWayIds": [
+      845559683,
+      845559682,
+      845559682,
+      845559682,
+      469938255,
+      469938255,
+      916051582,
+      916051581,
+      363483747,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983
+    ],
+    "wayVersions": {
+      "845559683": 3,
+      "845559682": 1,
+      "469938255": 3,
+      "916051582": 3,
+      "916051581": 3,
+      "363483747": 9,
+      "155878386": 9,
+      "223504991": 8,
+      "223504983": 8
+    },
+    "lengthMeters": 4498.964525416819,
+    "allEdgesOriginalConsecutiveNodes": true,
+    "maxHeadingChangeDegrees": 7.955613200704848
+  },
+  "combinedOriginalWalk": {
+    "nodeIds": [
+      3676482861,
+      3676452315,
+      3676452316,
+      3676451881,
+      3676451882,
+      3676451884,
+      3676451888,
+      3676452324,
+      3676457627,
+      3676457629,
+      11832431941,
+      3676457629,
+      3676457627,
+      3676452324,
+      3676451888,
+      3676451884,
+      3676451882,
+      3676451881,
+      3676448656,
+      2323956974,
+      2323957008,
+      2323956961,
+      2323956982,
+      2323956953,
+      1682326179,
+      1682326170,
+      1682326154,
+      1682326140,
+      1682326093,
+      1682326075,
+      1682326056,
+      1682326018,
+      5402949234,
+      1682326014,
+      2323974704,
+      2323974782,
+      2323974893,
+      2323974647,
+      1682325967,
+      1682325954,
+      2323974858,
+      1682325928,
+      2323974866,
+      2323974776,
+      2323974765,
+      1682325899,
+      2323974711,
+      2323974852,
+      1682325889,
+      2323974649,
+      2323974737,
+      2323974775,
+      2323974780,
+      2323974700,
+      1682325875
+    ],
+    "edgeWayIds": [
+      363487311,
+      363483748,
+      469938251,
+      916051582,
+      469938255,
+      469938255,
+      845559682,
+      845559682,
+      845559682,
+      845559683,
+      845559683,
+      845559682,
+      845559682,
+      845559682,
+      469938255,
+      469938255,
+      916051582,
+      916051581,
+      363483747,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      155878386,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504991,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983,
+      223504983
+    ],
+    "lengthMeters": 5612.100594479348,
+    "repeatedReverseEdges": [
+      {
+        "arrivalEdgeIndex": 3,
+        "departureEdgeIndex": 6,
+        "arrivalNodes": [
+          3676451881,
+          3676451882
+        ],
+        "departureNodes": [
+          3676451882,
+          3676451881
+        ],
+        "wayId": 916051582,
+        "wayVersion": 3
+      },
+      {
+        "arrivalEdgeIndex": 4,
+        "departureEdgeIndex": 5,
+        "arrivalNodes": [
+          3676451882,
+          3676451884
+        ],
+        "departureNodes": [
+          3676451884,
+          3676451882
+        ],
+        "wayId": 469938255,
+        "wayVersion": 3
+      },
+      {
+        "arrivalEdgeIndex": 5,
+        "departureEdgeIndex": 4,
+        "arrivalNodes": [
+          3676451884,
+          3676451888
+        ],
+        "departureNodes": [
+          3676451888,
+          3676451884
+        ],
+        "wayId": 469938255,
+        "wayVersion": 3
+      },
+      {
+        "arrivalEdgeIndex": 6,
+        "departureEdgeIndex": 3,
+        "arrivalNodes": [
+          3676451888,
+          3676452324
+        ],
+        "departureNodes": [
+          3676452324,
+          3676451888
+        ],
+        "wayId": 845559682,
+        "wayVersion": 1
+      },
+      {
+        "arrivalEdgeIndex": 7,
+        "departureEdgeIndex": 2,
+        "arrivalNodes": [
+          3676452324,
+          3676457627
+        ],
+        "departureNodes": [
+          3676457627,
+          3676452324
+        ],
+        "wayId": 845559682,
+        "wayVersion": 1
+      },
+      {
+        "arrivalEdgeIndex": 8,
+        "departureEdgeIndex": 1,
+        "arrivalNodes": [
+          3676457627,
+          3676457629
+        ],
+        "departureNodes": [
+          3676457629,
+          3676457627
+        ],
+        "wayId": 845559682,
+        "wayVersion": 1
+      },
+      {
+        "arrivalEdgeIndex": 9,
+        "departureEdgeIndex": 0,
+        "arrivalNodes": [
+          3676457629,
+          11832431941
+        ],
+        "departureNodes": [
+          11832431941,
+          3676457629
+        ],
+        "wayId": 845559683,
+        "wayVersion": 3
+      }
+    ]
+  },
+  "sourceWays": {
+    "155878386": {
+      "id": 155878386,
+      "nodes": [
+        1682326018,
+        1682326056,
+        1682326075,
+        1682326093,
+        1682326140,
+        1682326154,
+        1682326170,
+        1682326179,
+        2323956953,
+        2323956982,
+        2323956961,
+        2323957008,
+        2323956974
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 9,
+      "sourceOwnerRelations": []
+    },
+    "223504983": {
+      "id": 223504983,
+      "nodes": [
+        1682325875,
+        2323974700,
+        2323974780,
+        2323974775,
+        2323974737,
+        2323974649,
+        1682325889,
+        2323974852,
+        2323974711,
+        1682325899,
+        2323974765,
+        2323974776,
+        2323974866,
+        1682325928,
+        2323974858,
+        1682325954
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 8,
+      "sourceOwnerRelations": []
+    },
+    "223504991": {
+      "id": 223504991,
+      "nodes": [
+        1682325954,
+        1682325967,
+        2323974647,
+        2323974893,
+        2323974782,
+        2323974704,
+        1682326014,
+        5402949234,
+        1682326018
+      ],
+      "tags": {
+        "bridge": "viaduct",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "2",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 8,
+      "sourceOwnerRelations": []
+    },
+    "363483747": {
+      "id": 363483747,
+      "nodes": [
+        2323956974,
+        3676448656
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 9,
+      "sourceOwnerRelations": []
+    },
+    "363483748": {
+      "id": 363483748,
+      "nodes": [
+        3676452315,
+        3676452316,
+        3676452317,
+        3676452318,
+        3676452319,
+        3676452321,
+        3676457625
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 5,
+      "sourceOwnerRelations": []
+    },
+    "363487311": {
+      "id": 363487311,
+      "nodes": [
+        3676452315,
+        3676482861
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "sourceOwnerRelations": []
+    },
+    "469938251": {
+      "id": 469938251,
+      "nodes": [
+        3676451881,
+        3676452316
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 1,
+      "sourceOwnerRelations": []
+    },
+    "469938255": {
+      "id": 469938255,
+      "nodes": [
+        3676451882,
+        3676451884,
+        3676451888
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "sourceOwnerRelations": []
+    },
+    "845559682": {
+      "id": 845559682,
+      "nodes": [
+        3676457629,
+        3676457627,
+        3676452324,
+        3676451888
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 1,
+      "sourceOwnerRelations": []
+    },
+    "845559683": {
+      "id": 845559683,
+      "nodes": [
+        3676457632,
+        11832431941,
+        3676457629
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "layer": "1",
+        "railway": "rail",
+        "railway:track_ref": "15",
+        "railway:traffic_mode": "passenger",
+        "service": "siding",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "sourceOwnerRelations": []
+    },
+    "916051581": {
+      "id": 916051581,
+      "nodes": [
+        3676448656,
+        3676451881
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "sourceOwnerRelations": []
+    },
+    "916051582": {
+      "id": 916051582,
+      "nodes": [
+        3676451881,
+        3676451882
+      ],
+      "tags": {
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "operator": "中国铁路广州局集团有限公司",
+        "railway": "rail",
+        "railway:traffic_mode": "passenger",
+        "usage": "main",
+        "voltage": "25000"
+      },
+      "version": 3,
+      "sourceOwnerRelations": []
+    }
+  },
+  "sourceNodes": {
+    "3676482861": {
+      "id": 3676482861,
+      "coordinate": [
+        113.270501,
+        22.9833818
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 3
+    },
+    "3676452315": {
+      "id": 3676452315,
+      "coordinate": [
+        113.2698202,
+        22.9842223
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 4
+    },
+    "3676452316": {
+      "id": 3676452316,
+      "coordinate": [
+        113.2693345,
+        22.9848744
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 3
+    },
+    "3676451881": {
+      "id": 3676451881,
+      "coordinate": [
+        113.2685822,
+        22.9857795
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 4
+    },
+    "3676451882": {
+      "id": 3676451882,
+      "coordinate": [
+        113.2682231,
+        22.986198
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 2
+    },
+    "3676451884": {
+      "id": 3676451884,
+      "coordinate": [
+        113.2675628,
+        22.9869973
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "3676451888": {
+      "id": 3676451888,
+      "coordinate": [
+        113.2666779,
+        22.9879051
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 3
+    },
+    "3676452324": {
+      "id": 3676452324,
+      "coordinate": [
+        113.2658538,
+        22.9887873
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "3676457627": {
+      "id": 3676457627,
+      "coordinate": [
+        113.2654395,
+        22.9892578
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "3676457629": {
+      "id": 3676457629,
+      "coordinate": [
+        113.2651737,
+        22.9895906
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "11832431941": {
+      "id": 11832431941,
+      "coordinate": [
+        113.263903,
+        22.9913254
+      ],
+      "tags": {
+        "name": "广州南",
+        "name:de": "Guangzhou Süd",
+        "name:en": "Guangzhounan",
+        "name:zh": "广州南",
+        "public_transport": "stop_position",
+        "railway": "stop",
+        "train": "yes"
+      },
+      "version": 2
+    },
+    "3676448656": {
+      "id": 3676448656,
+      "coordinate": [
+        113.2693409,
+        22.9847641
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 3
+    },
+    "2323956974": {
+      "id": 2323956974,
+      "coordinate": [
+        113.2698345,
+        22.9841024
+      ],
+      "tags": {
+        "railway": "switch"
+      },
+      "version": 5
+    },
+    "2323957008": {
+      "id": 2323957008,
+      "coordinate": [
+        113.2708024,
+        22.9828173
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "2323956961": {
+      "id": 2323956961,
+      "coordinate": [
+        113.2718209,
+        22.9814486
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323956982": {
+      "id": 2323956982,
+      "coordinate": [
+        113.2728294,
+        22.9800386
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "2323956953": {
+      "id": 2323956953,
+      "coordinate": [
+        113.2731298,
+        22.9795373
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "1682326179": {
+      "id": 1682326179,
+      "coordinate": [
+        113.2733576,
+        22.9791478
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326170": {
+      "id": 1682326170,
+      "coordinate": [
+        113.2737343,
+        22.9784293
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "1682326154": {
+      "id": 1682326154,
+      "coordinate": [
+        113.2744347,
+        22.9767304
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326140": {
+      "id": 1682326140,
+      "coordinate": [
+        113.2747755,
+        22.9755586
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326093": {
+      "id": 1682326093,
+      "coordinate": [
+        113.2749608,
+        22.9746557
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326075": {
+      "id": 1682326075,
+      "coordinate": [
+        113.2750681,
+        22.9735306
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326056": {
+      "id": 1682326056,
+      "coordinate": [
+        113.2751003,
+        22.9723158
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "1682326018": {
+      "id": 1682326018,
+      "coordinate": [
+        113.2750814,
+        22.9716326
+      ],
+      "tags": {},
+      "version": 5
+    },
+    "5402949234": {
+      "id": 5402949234,
+      "coordinate": [
+        113.2750001,
+        22.9709617
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "1682326014": {
+      "id": 1682326014,
+      "coordinate": [
+        113.2748434,
+        22.969877
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974704": {
+      "id": 2323974704,
+      "coordinate": [
+        113.274709,
+        22.9692242
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974782": {
+      "id": 2323974782,
+      "coordinate": [
+        113.2744542,
+        22.9684611
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974893": {
+      "id": 2323974893,
+      "coordinate": [
+        113.2743801,
+        22.968245
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974647": {
+      "id": 2323974647,
+      "coordinate": [
+        113.2740516,
+        22.9670778
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "1682325967": {
+      "id": 1682325967,
+      "coordinate": [
+        113.2737752,
+        22.9664629
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "1682325954": {
+      "id": 1682325954,
+      "coordinate": [
+        113.2730022,
+        22.9649178
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974858": {
+      "id": 2323974858,
+      "coordinate": [
+        113.2725192,
+        22.9641242
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "1682325928": {
+      "id": 1682325928,
+      "coordinate": [
+        113.2717081,
+        22.9628291
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974866": {
+      "id": 2323974866,
+      "coordinate": [
+        113.2713852,
+        22.9623757
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974776": {
+      "id": 2323974776,
+      "coordinate": [
+        113.2710539,
+        22.9619334
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974765": {
+      "id": 2323974765,
+      "coordinate": [
+        113.2706942,
+        22.9615039
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "1682325899": {
+      "id": 1682325899,
+      "coordinate": [
+        113.2703883,
+        22.961166
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974711": {
+      "id": 2323974711,
+      "coordinate": [
+        113.2700502,
+        22.9608025
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974852": {
+      "id": 2323974852,
+      "coordinate": [
+        113.2696632,
+        22.9604234
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "1682325889": {
+      "id": 1682325889,
+      "coordinate": [
+        113.2693201,
+        22.9601107
+      ],
+      "tags": {},
+      "version": 2
+    },
+    "2323974649": {
+      "id": 2323974649,
+      "coordinate": [
+        113.2688725,
+        22.9597195
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974737": {
+      "id": 2323974737,
+      "coordinate": [
+        113.2686029,
+        22.959495
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974775": {
+      "id": 2323974775,
+      "coordinate": [
+        113.2683132,
+        22.9592727
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974780": {
+      "id": 2323974780,
+      "coordinate": [
+        113.267927,
+        22.9589961
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "2323974700": {
+      "id": 2323974700,
+      "coordinate": [
+        113.2674549,
+        22.9586652
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "1682325875": {
+      "id": 1682325875,
+      "coordinate": [
+        113.2652126,
+        22.9572481
+      ],
+      "tags": {
+        "railway": "switch",
+        "railway:turnout_side": "left"
+      },
+      "version": 6
+    }
+  },
+  "evidenceGaps": {
+    "noSourceOwnerRelationMemberWays": [
+      155878386,
+      223504983,
+      223504991,
+      363483747,
+      363483748,
+      363487311,
+      469938251,
+      469938255,
+      845559682,
+      845559683,
+      916051581,
+      916051582
+    ],
+    "explicitSidingWays": [
+      363483748,
+      363487311,
+      469938251,
+      469938255,
+      845559682,
+      845559683
+    ],
+    "missingOwnOperatorTagWays": [
+      363483748,
+      363487311,
+      469938251,
+      469938255,
+      845559682,
+      845559683
+    ],
+    "explicitOperatorTagWays": {
+      "155878386": "中国铁路广州局集团有限公司",
+      "223504983": "中国铁路广州局集团有限公司",
+      "223504991": "中国铁路广州局集团有限公司",
+      "363483747": "中国铁路广州局集团有限公司",
+      "916051581": "中国铁路广州局集团有限公司",
+      "916051582": "中国铁路广州局集团有限公司"
+    },
+    "explicitPassengerWays": [
+      155878386,
+      223504983,
+      223504991,
+      363483747,
+      363483748,
+      363487311,
+      469938251,
+      469938255,
+      845559682,
+      845559683,
+      916051581,
+      916051582
+    ],
+    "limits": [
+      "All 12 candidate ways lack membership in any original local OSM relation record; neither attachment line identity establishes owner inventory membership for these ways.",
+      "The original station stop_area identifies operator and stop membership, but cannot substitute for missing per-way route ownership.",
+      "Six ways have service=siding, excluded by the current formal physical supplement rule.",
+      "Six ways lack their own operator tag; a nearby corridor operator or station operator alone does not certify each track.",
+      "No primary service record assigns G6045 to stop_position11832431941 / track15."
+    ]
+  },
+  "strictAnchorLimitation": {
+    "gsh": {
+      "nodeId": 3676493382,
+      "wayIds": [
+        845559692,
+        845559693
+      ],
+      "railwayTrackRef": "X"
+    },
+    "guangzhu": {
+      "nodeId": 3676506337,
+      "wayIds": [
+        845559667
+      ],
+      "railwayTrackRef": "XXIV"
+    },
+    "result": "No path in the bounded original source graph, even with one explicit station stop-position reversal. Only the GSH X-track stop3676493382 is directionally reachable from its precise arriving path.",
+    "whyAlternativeDoesNotRepair": "G6045 consecutive forced sections currently require the distinct published Guangzhou South station anchors on GSH X and Guangzhu XXIV. This candidate branches from HSR source vertex6 before that X stop, visits original track15 stop, and joins Guangzhu source vertex54 after the XXIV stop. Adding this other-platform physical walk does not prove the two strict station anchors connect and cannot silently replace their bindings.",
+    "forbiddenInferences": [
+      "Do not connect the three stop positions by common stop_area, group ID, name, or distance.",
+      "Do not relabel the unnamed candidate ways as members of GSH or Guangzhu source relation inventories.",
+      "Do not turn the source station15 evidence into a G6045 platform assignment."
+    ]
+  }
+}

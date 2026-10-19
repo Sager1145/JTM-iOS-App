@@ -1,0 +1,212 @@
+{
+  "source": "railway-sources/local/osm/degree-cells/E139N36.json",
+  "fetchedAt": "2026-08-18T10:38:38.423Z",
+  "elements": [
+    {
+      "id": 24373800,
+      "tags": {
+        "KSJ2:LIN": "わたらせ渓谷線",
+        "electrified": "no",
+        "gauge": "1067",
+        "name": "わたらせ渓谷線",
+        "name:en": "Watarase Keikoku Line",
+        "name:ja": "わたらせ渓谷線",
+        "name:ja-Latn": "Watarase Keikoku-sen",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "わたらせ渓谷鐵道",
+        "operator:ja": "わたらせ渓谷鐵道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch"
+      },
+      "geometry": [
+        {
+          "lat": 36.5241563,
+          "lon": 139.3171762
+        },
+        {
+          "lat": 36.5240541,
+          "lon": 139.3170977
+        },
+        {
+          "lat": 36.5239532,
+          "lon": 139.3170127
+        },
+        {
+          "lat": 36.5238611,
+          "lon": 139.3169281
+        },
+        {
+          "lat": 36.5237071,
+          "lon": 139.3167759
+        },
+        {
+          "lat": 36.5235595,
+          "lon": 139.3166096
+        },
+        {
+          "lat": 36.523332,
+          "lon": 139.316353
+        },
+        {
+          "lat": 36.523236,
+          "lon": 139.316185
+        },
+        {
+          "lat": 36.523134,
+          "lon": 139.315955
+        },
+        {
+          "lat": 36.523039,
+          "lon": 139.315662
+        },
+        {
+          "lat": 36.522881,
+          "lon": 139.315097
+        },
+        {
+          "lat": 36.522813,
+          "lon": 139.314748
+        },
+        {
+          "lat": 36.52274,
+          "lon": 139.314183
+        },
+        {
+          "lat": 36.5226538,
+          "lon": 139.3132303
+        },
+        {
+          "lat": 36.5226139,
+          "lon": 139.3127276
+        },
+        {
+          "lat": 36.5225586,
+          "lon": 139.3119315
+        },
+        {
+          "lat": 36.5225424,
+          "lon": 139.3117698
+        },
+        {
+          "lat": 36.522432,
+          "lon": 139.3111665
+        },
+        {
+          "lat": 36.5223632,
+          "lon": 139.3108846
+        },
+        {
+          "lat": 36.5223025,
+          "lon": 139.3106328
+        },
+        {
+          "lat": 36.5222603,
+          "lon": 139.3104717
+        },
+        {
+          "lat": 36.5222268,
+          "lon": 139.3103436
+        },
+        {
+          "lat": 36.5221333,
+          "lon": 139.3101058
+        },
+        {
+          "lat": 36.5219852,
+          "lon": 139.309803
+        },
+        {
+          "lat": 36.5216739,
+          "lon": 139.3092532
+        },
+        {
+          "lat": 36.5211917,
+          "lon": 139.3083345
+        },
+        {
+          "lat": 36.5210259,
+          "lon": 139.3080558
+        }
+      ]
+    },
+    {
+      "id": 925516063,
+      "tags": {
+        "KSJ2:LIN": "わたらせ渓谷線",
+        "electrified": "no",
+        "gauge": "1067",
+        "name": "わたらせ渓谷線",
+        "name:en": "Watarase Keikoku Line",
+        "name:ja": "わたらせ渓谷線",
+        "name:ja-Latn": "Watarase Keikoku-sen",
+        "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+        "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+        "operator": "わたらせ渓谷鐵道",
+        "operator:ja": "わたらせ渓谷鐵道",
+        "passenger_lines": "1",
+        "railway": "rail",
+        "source": "KSJ2",
+        "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+        "usage": "branch"
+      },
+      "geometry": [
+        {
+          "lat": 36.517039,
+          "lon": 139.30384
+        },
+        {
+          "lat": 36.5173254,
+          "lon": 139.3040185
+        },
+        {
+          "lat": 36.517716,
+          "lon": 139.304262
+        },
+        {
+          "lat": 36.5180444,
+          "lon": 139.3044862
+        },
+        {
+          "lat": 36.518318,
+          "lon": 139.304673
+        },
+        {
+          "lat": 36.518741,
+          "lon": 139.305001
+        },
+        {
+          "lat": 36.519073,
+          "lon": 139.305301
+        },
+        {
+          "lat": 36.519366,
+          "lon": 139.305608
+        },
+        {
+          "lat": 36.5197032,
+          "lon": 139.3060249
+        },
+        {
+          "lat": 36.519755,
+          "lon": 139.306089
+        },
+        {
+          "lat": 36.5203071,
+          "lon": 139.3069269
+        },
+        {
+          "lat": 36.5205878,
+          "lon": 139.3073499
+        },
+        {
+          "lat": 36.5210259,
+          "lon": 139.3080558
+        }
+      ]
+    }
+  ]
+}

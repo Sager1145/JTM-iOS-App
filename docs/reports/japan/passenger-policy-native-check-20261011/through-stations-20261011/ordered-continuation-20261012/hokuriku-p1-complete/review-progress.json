@@ -1,0 +1,12 @@
+{
+  "state": "baseline-pixel-review-complete-open-candidates",
+  "captured": 34,
+  "failed": 0,
+  "pending": 0,
+  "pairedViewpointsReviewed": 34,
+  "reviewObservations": 5,
+  "productionChanges": false,
+  "mainFinalCheck": "pending",
+  "platformMidpoints": "unresolved; own group/caps required",
+  "observations": "observations.md"
+}

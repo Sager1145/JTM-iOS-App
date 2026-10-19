@@ -1,0 +1,155 @@
+{
+  "manifest": {
+    "repository": "https://github.com/Laide140/CRTrainRoute",
+    "commit": "d75307df9c812abf1259b86b75202ba7b0048679",
+    "sourceRoot": "/private/tmp/jtm-crtrainroute",
+    "files": [
+      {
+        "path": "server.py",
+        "bytes": 38395,
+        "gitBlob": "b9f940e237351b07af20567935e921be466f2ce0",
+        "sha256": "50abc0f44b5c595d038b5055e33d3c76bcb849927be6a088f94b0532c22cbfea"
+      },
+      {
+        "path": "build_graph.py",
+        "bytes": 14567,
+        "gitBlob": "9ba4083f1e023dd5fd2de4e4a6c890f31e9b3311",
+        "sha256": "712b509e980ad886afb6d221c1be2e77245daa126c189c586ea86c7bdfceec51"
+      },
+      {
+        "path": "data/rail_graph.pkl",
+        "bytes": 64770369,
+        "gitBlob": "99b55d52a4d9d2c71d89f224b57bee3434ebe918",
+        "sha256": "8d2ffc0a6a650d1bb76db72bc7be73aa11f552b82d09bcc53b493e94b93f513d"
+      },
+      {
+        "path": "data/stations.json",
+        "bytes": 418743,
+        "gitBlob": "cf37bc4965bd6bfb810868bf55b4953500e04431",
+        "sha256": "8c6ee303e1eb9f8b9060dfc10e74d33022f1bdb7763111ad1cb0d4f3493ab2be"
+      },
+      {
+        "path": "data/station_names.json",
+        "bytes": 63382,
+        "gitBlob": "c0d5d099665cf5da85fd1e69e31c09c5496d9fe1",
+        "sha256": "97405660302ffd8aded4d60a509b42ed464683a810b350d325693c3f26539593"
+      },
+      {
+        "path": "data/station_lanes.json",
+        "bytes": 1340,
+        "gitBlob": "04fac745722da65209e3b4a001455bf2e413b6f5",
+        "sha256": "929498004f9bf71cd32c0df149916f7e002e7a1a3e58c03557bf201d5a96f028"
+      },
+      {
+        "path": "LICENSE",
+        "bytes": 1062,
+        "gitBlob": "fefb8a66727f1d7ce54af3d2c09afa6917012159",
+        "sha256": "4bed0e22d46352e4e38cce58e3dc7979904d92a10333f03f8c424a11728bcef4"
+      }
+    ],
+    "graphMode": "original-committed-pickle-primitive-only",
+    "stationMode": "offline-retained-stations-json-raw-values",
+    "coordinateTreatment": "No datum conversion; original raw coordinates retained",
+    "targetKm": null,
+    "stationTransportDifference": "Original API fetches 12306 live. Replay uses the same commit's stations.json, mapping addr to address; no coordinate repairs.",
+    "originalLiveEndpoint": "https://mobile.12306.cn/wxxcx/wechat/bigScreen/getStationAddress",
+    "originalLiveRequest": {
+      "method": "POST",
+      "form": {
+        "stationCode": "<telecode>"
+      },
+      "responseLongitudeKey": "longitute"
+    },
+    "limitations": [
+      "Geometric shortest path is not evidence of actual train service",
+      "Original nearest-main-component snapping and guessed island/ferry links remain",
+      "Original nearby station inference and cache behavior remain",
+      "Forced known-stop mode concatenates independent original API calls; it is not an upstream train-service or via-station API"
+    ]
+  },
+  "graph": {
+    "loadAndIndexSeconds": 9.281,
+    "coordinateNodes": 1682731,
+    "skeletonNodes": 196848,
+    "directedSkeletonEdges": 490570,
+    "stationNodes": 2879,
+    "graphStations": 2879,
+    "ferryEdges": [
+      {
+        "from": [
+          110.125178,
+          20.230034
+        ],
+        "to": [
+          110.150643,
+          20.042118
+        ],
+        "km": 21.06,
+        "stations": [
+          "老城镇站",
+          "白马井站",
+          "博鳌站",
+          "城西站",
+          "长流站",
+          "银滩站",
+          "凤凰机场站",
+          "福山镇站",
+          "海口东站",
+          "临高南站",
+          "黄流站",
+          "陵水站",
+          "美兰站",
+          "尖峰站",
+          "金月湾站",
+          "棋子湾站",
+          "琼海站",
+          "三亚站",
+          "东方站",
+          "亚龙湾站",
+          "神州站",
+          "乐东站",
+          "海口站",
+          "文昌站",
+          "万宁站",
+          "秀英站",
+          "崖州站"
+        ]
+      },
+      {
+        "from": [
+          119.607366,
+          25.729262
+        ],
+        "to": [
+          119.700704,
+          25.622671
+        ],
+        "km": 15.1,
+        "stations": [
+          "平潭站"
+        ]
+      }
+    ],
+    "primitiveOpcodes": {
+      "PROTO": 1,
+      "FRAME": 989,
+      "EMPTY_DICT": 199735,
+      "MEMOIZE": 1192419,
+      "MARK": 407901,
+      "SHORT_BINUNICODE": 11535,
+      "EMPTY_LIST": 490579,
+      "BINFLOAT": 3864679,
+      "APPENDS": 253286,
+      "BININT": 5025049,
+      "SETITEM": 46006,
+      "BININT1": 189390,
+      "BININT2": 223020,
+      "SETITEMS": 154615,
+      "TUPLE2": 490570,
+      "APPEND": 240667,
+      "LONG_BINGET": 23058,
+      "STOP": 1
+    }
+  },
+  "cases": []
+}

@@ -1,0 +1,14 @@
+{
+  "initialTargetFailure": {
+    "intervalIndex": 18,
+    "pointOrdinal": 4,
+    "error": "MKErrorDomain error 2"
+  },
+  "retryButtonObservedBehavior": "Reset failure then resumed global pending priority queue; immediately paused on observation. UI global counter must not be used as target evidence.",
+  "extraCapturedViewsExcludedFromThisLine": 102,
+  "correctRecovery": "current-line keyboard command re-captured only the one pending Hibiya viewpoint",
+  "finalTargetCaptured": 89,
+  "finalTargetPending": 0,
+  "finalTargetFailed": 0,
+  "productionPatch": "not yet applied; use current-line scope for remaining capture"
+}

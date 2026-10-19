@@ -1,0 +1,36 @@
+{
+  "inspectors": {
+    "primary": {
+      "completeIntervals": 20,
+      "viewpointsReviewed": 153,
+      "stationAndDirectionViews": 9
+    },
+    "secondary": {
+      "completeIntervals": 20,
+      "viewpointsReviewed": 153,
+      "stationAndDirectionViews": 9
+    },
+    "third": {
+      "completeIntervals": 20,
+      "viewpointsReviewed": 153,
+      "stationAndDirectionViews": 9
+    }
+  },
+  "main": {
+    "completeIntervals": 20,
+    "stationAndDirectionViews": 9,
+    "onOffViews": 58,
+    "renderBudgetDrops": 0,
+    "manualPixelReview": true
+  },
+  "stations": [
+    "009057",
+    "009112",
+    "009193",
+    "009242",
+    "009240"
+  ],
+  "terminal": "009290",
+  "physicalIdentity": "Yoshikawa inherited physical rail restored; labelled transit schematic is not the own rail witness",
+  "limitations": "Visual alignment review at saved scales; no claim of zero measured Apple pixel residual or train operations simulation."
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "viewpointID": "jp-長崎電気軌道-本線#21#point-0",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/009069/000000",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 32.74372,
+      "longitude": 129.87604,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 1.0007380104172532,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 231056226.50242844,
+      "rectY": 108350173.58886492,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent original functions.view_image; point0 previous continuation, point1 this continuation"
+  },
+  {
+    "viewpointID": "jp-長崎電気軌道-本線#21#point-1",
+    "path": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/009069/000001",
+    "reviewedFiles": [
+      "basemap.png",
+      "smooth.png"
+    ],
+    "camera": {
+      "displayScale": 1,
+      "heading": 0,
+      "latitude": 32.743415,
+      "longitude": 129.877785,
+      "mapPointsPerPoint": 8,
+      "metresPerPoint": 1.0007413876177005,
+      "pitch": 0,
+      "rectHeight": 6144,
+      "rectWidth": 8192,
+      "rectX": 231057527.66873604,
+      "rectY": 108350443.97829938,
+      "viewportHeightPoints": 768,
+      "viewportWidthPoints": 1024,
+      "zoom256": 17
+    },
+    "method": "parent original functions.view_image; point0 previous continuation, point1 this continuation"
+  }
+]

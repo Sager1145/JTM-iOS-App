@@ -1,0 +1,62 @@
+{
+  "caseIndex": 31,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 31,
+  "source": {
+    "caseIndex": 31,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 31,
+    "fromStationID": "002501",
+    "toStationID": "002506",
+    "camera": [
+      36.234297857499186,
+      137.96238032980318,
+      0.012128158353731565
+    ],
+    "effectiveCoordinates": [
+      [
+        137.961089,
+        36.236923
+      ],
+      [
+        137.96113,
+        36.23687
+      ],
+      [
+        137.96126,
+        36.2367
+      ],
+      [
+        137.96147,
+        36.23639
+      ],
+      [
+        137.9619,
+        36.23561
+      ],
+      [
+        137.9624,
+        36.23464
+      ],
+      [
+        137.9635,
+        36.23249
+      ],
+      [
+        137.96367165960635,
+        36.23167271499838
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t35 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:3;overlays:3;rides:0;budgetDrops:0;vertices:826;camera:16.22;lod:15.07;backbones:0;networkStations:7;distance:2662.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.234298;centerLon:137.962380;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1900.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:3;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.234298;centerLon:137.962380;distance:2662.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-31.jpg",
+  "observation": "Kita-Matsumoto to Matsumoto retains existing interval31/station002506 display correction without former acute short hook. Existing accepted cartography preserved; no new whole-frame midpoint acceptance.",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false
+}

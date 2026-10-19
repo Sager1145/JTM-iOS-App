@@ -1,0 +1,241 @@
+{
+  "date": "2026-10-19",
+  "lineID": "jp-三岐鉄道-北勢線",
+  "intervalIndex": 11,
+  "stations": [
+    [
+      "005798",
+      "馬道",
+      136.676405,
+      35.06061,
+      "Umamichi",
+      1
+    ],
+    [
+      "005785",
+      "西桑名",
+      136.683795,
+      35.06539,
+      "Nishi-Kuwana",
+      1
+    ]
+  ],
+  "actualViewpointCount": 4,
+  "actualOriginalPNGCount": 8,
+  "legacyViewsActuallyViewedThisPass": 0,
+  "legacyTotalViewCountExcluded": 71,
+  "reviewMethod": "Agent actually opened all eight original PNGs separately with functions.view_image; no image alterations. Parent also reported actual review of the same eight originals.",
+  "currentDisplayInterface": "app/public/rail-network.js decodeIntervals(current own line) + displayPartsForLine(current own line)",
+  "ownDisplayAliasesPresent": false,
+  "currentOwnDisplayParts": [
+    {
+      "count": 466,
+      "start": [
+        136.519035,
+        35.146275
+      ],
+      "end": [
+        136.683795,
+        35.06539
+      ]
+    }
+  ],
+  "currentSourceControlCount": 27,
+  "currentDisplayControlCount": 27,
+  "receiptFileCountActualBytesChecked": 24,
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "runStatus": {
+    "active": false,
+    "dependenciesVerified": true,
+    "executablePath": "/private/tmp/jtm-rail-diagnostics/Build/Products/Debug-maccatalyst/RailDiagnostics.app/Contents/MacOS/RailDiagnostics",
+    "invocationID": "E79E923E-38CD-43B2-86B3-DA7D8ABE5752",
+    "message": "4/4 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+    "processID": 20655,
+    "requestID": "sangi-hokusei-missing-own-intervals",
+    "resultPath": "/private/tmp/jtm-sangi-hokusei-missing-20261019/result.json",
+    "schemaVersion": 1,
+    "state": "evidenceReady",
+    "updatedAt": "2026-10-19T08:54:59Z"
+  },
+  "confirmedSourceReadyRepairs": [],
+  "views": [
+    {
+      "itemID": "jp-三岐鉄道-北勢線#11",
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000000",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000000/basemap.png",
+          "actualByteCount": 1087442,
+          "recordedByteCount": 1087442,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000000/smooth.png",
+          "actualByteCount": 1198729,
+          "recordedByteCount": 1198729,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/identity-plan-75a6a028eef0e143ba59dfab11004cfdc5611197fe99fb1ea51f28673d3209b2.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.06061,
+        "longitude": 136.676405,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9742688267381965,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 236124642.1683769,
+        "rectY": 106266709.71515553,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "自身东行宽S经近铁走廊后转北，沿近铁东侧独立自身轨带入西桑名；曲线连续无孤立V，持续南/东偏移未确权，平台完整caps未证。"
+    },
+    {
+      "itemID": "jp-三岐鉄道-北勢線#11",
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000001",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000001/basemap.png",
+          "actualByteCount": 1131696,
+          "recordedByteCount": 1131696,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000001/smooth.png",
+          "actualByteCount": 1245414,
+          "recordedByteCount": 1245414,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/identity-plan-75a6a028eef0e143ba59dfab11004cfdc5611197fe99fb1ea51f28673d3209b2.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.06025000002028,
+        "longitude": 136.68016380011852,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9742730650985748,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 236127444.93288752,
+        "rectY": 106267037.65669113,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "自身东行宽S经近铁走廊后转北，沿近铁东侧独立自身轨带入西桑名；曲线连续无孤立V，持续南/东偏移未确权，平台完整caps未证。"
+    },
+    {
+      "itemID": "jp-三岐鉄道-北勢線#11",
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000002",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000002/basemap.png",
+          "actualByteCount": 1147749,
+          "recordedByteCount": 1147749,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000002/smooth.png",
+          "actualByteCount": 1264374,
+          "recordedByteCount": 1264374,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/identity-plan-75a6a028eef0e143ba59dfab11004cfdc5611197fe99fb1ea51f28673d3209b2.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.06252411092743,
+        "longitude": 136.68244402049353,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9742462908314928,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 236129145.1884324,
+        "rectY": 106264966.03389221,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "自身东行宽S经近铁走廊后转北，沿近铁东侧独立自身轨带入西桑名；曲线连续无孤立V，持续南/东偏移未确权，平台完整caps未证。"
+    },
+    {
+      "itemID": "jp-三岐鉄道-北勢線#11",
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000003",
+      "originals": [
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000003/basemap.png",
+          "actualByteCount": 1106802,
+          "recordedByteCount": 1106802,
+          "actuallyViewed": true
+        },
+        {
+          "path": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/captures/000000/000003/smooth.png",
+          "actualByteCount": 1218177,
+          "recordedByteCount": 1218177,
+          "actuallyViewed": true
+        }
+      ],
+      "namedIdentityPlan": "/private/tmp/jtm-sangi-hokusei-missing-20261019/alignment/identity-plan-75a6a028eef0e143ba59dfab11004cfdc5611197fe99fb1ea51f28673d3209b2.json",
+      "exactCurrentIdentityMatches": {
+        "sourceIEEEBits": true,
+        "displayIEEEBits": true,
+        "stationIDs": true
+      },
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.06539,
+        "longitude": 136.683795,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9742125470585703,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 236130152.55176535,
+        "rectY": 106262355.24299787,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observation": "自身东行宽S经近铁走廊后转北，沿近铁东侧独立自身轨带入西桑名；曲线连续无孤立V，持续南/东偏移未确权，平台完整caps未证。"
+    }
+  ]
+}

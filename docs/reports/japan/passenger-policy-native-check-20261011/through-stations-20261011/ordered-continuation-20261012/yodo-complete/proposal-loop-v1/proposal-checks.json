@@ -1,0 +1,33 @@
+{
+  "status": "candidate-only-not-native-accepted",
+  "candidateCoordinatesSha256": "0fadd89e8479b14252414987dc83db33bc06871534b66f0e59b531d99de93e5c",
+  "sourcePackageSha256": "5b6f1bf4821f8e1a7fbc74660e7170935ce3aa627e24c478674e2902f8eb2e55",
+  "sourceSupportCount": 104,
+  "candidateSupportCount": 143,
+  "actualWitnessControls": 79,
+  "sharedNakamuraSupportsIdentified": 61,
+  "sharedPrefixLiteralPreserved": true,
+  "retainedFarGuard101To103LiteralPreserved": true,
+  "stationRowsEndpointsAndMileagePreserved": true,
+  "maximumTurnDegrees": 16.842170733944577,
+  "modifiedTurnsAbove30Degrees": [],
+  "unsupportedSampleCount": 1,
+  "unsupportedControlID": "C069",
+  "neighbourWitnessIDs": [
+    "C068",
+    "C070"
+  ],
+  "neighbourSourceChainageGapMetres": 50,
+  "all18ReprojectionsActuallyViewed": true,
+  "focusedOriginalReprojectionsViewed": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+  ]
+}

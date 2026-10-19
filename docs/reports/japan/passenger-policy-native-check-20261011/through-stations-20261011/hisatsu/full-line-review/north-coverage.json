@@ -1,0 +1,3530 @@
+[
+  {
+    "interval": 0,
+    "directory": "000940",
+    "planned": 16,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.504414,
+          "longitude": 130.621182
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.502780381105886,
+          "longitude": 130.62437073306558
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.5010701239662,
+          "longitude": 130.62750351800827
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.498994059479465,
+          "longitude": 130.63025817253396
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.496232544087015,
+          "longitude": 130.63203691658876
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.493201495251434,
+          "longitude": 130.63274997079492
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.49005658783702,
+          "longitude": 130.6327446780643
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.486947546756106,
+          "longitude": 130.63230542265794
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.4838147779924,
+          "longitude": 130.63212000884099
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.48067480278285,
+          "longitude": 130.63194406122258
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.477565417331114,
+          "longitude": 130.63244900776138
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.475042648329485,
+          "longitude": 130.6344090171813
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.47424785473103,
+          "longitude": 130.63797598756364
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.472995678892985,
+          "longitude": 130.64134724349347
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.47067471817624,
+          "longitude": 130.64374552603985
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46818,
+          "longitude": 130.645765
+        },
+        "distanceMetres": 5236.125787480725,
+        "itemID": "jp-九州旅客鉄道-肥薩線#0",
+        "pointOrdinal": 15
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 1,
+    "directory": "000941",
+    "planned": 18,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.46818,
+          "longitude": 130.645765
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46555727981402,
+          "longitude": 130.6478266173621
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46338489367468,
+          "longitude": 130.6505001804156
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46256703476115,
+          "longitude": 130.65403217210087
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46228209731019,
+          "longitude": 130.65774353719394
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.46123838461224,
+          "longitude": 130.66123572451514
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.458730450082044,
+          "longitude": 130.66307884767147
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.45602310603945,
+          "longitude": 130.66140638141113
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.45430142180509,
+          "longitude": 130.65834340244942
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.45370361223551,
+          "longitude": 130.65469083647153
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.451188789502524,
+          "longitude": 130.65309582463544
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.448362988004526,
+          "longitude": 130.65467279285534
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.44649505692007,
+          "longitude": 130.65755681507153
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.44490257548037,
+          "longitude": 130.66075428075172
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.44198636068126,
+          "longitude": 130.66160490261393
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.43935592651776,
+          "longitude": 130.65974271591259
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 15
+      },
+      {
+        "coordinate": {
+          "latitude": 32.436594879834786,
+          "longitude": 130.6582403896015
+        },
+        "distanceMetres": 5600,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 16
+      },
+      {
+        "coordinate": {
+          "latitude": 32.435125,
+          "longitude": 130.657955
+        },
+        "distanceMetres": 5765.915779877531,
+        "itemID": "jp-九州旅客鉄道-肥薩線#1",
+        "pointOrdinal": 17
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 2,
+    "directory": "000952",
+    "planned": 11,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.435125,
+          "longitude": 130.657955
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.43222128283786,
+          "longitude": 130.656539907316
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.42976459811929,
+          "longitude": 130.65437436284935
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.42841290146774,
+          "longitude": 130.65101999066033
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.426305081585866,
+          "longitude": 130.6483676202257
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.42323808677137,
+          "longitude": 130.64771525605295
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.42009911711542,
+          "longitude": 130.64783234813905
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.41738279858191,
+          "longitude": 130.64624962250787
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.41550135450898,
+          "longitude": 130.64342658687886
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.41251276610605,
+          "longitude": 130.6439453052394
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.41035,
+          "longitude": 130.645405
+        },
+        "distanceMetres": 3427.248322309399,
+        "itemID": "jp-九州旅客鉄道-肥薩線#2",
+        "pointOrdinal": 10
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
+  },
+  {
+    "interval": 3,
+    "directory": "000960",
+    "planned": 8,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.41035,
+          "longitude": 130.645405
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.407782928392244,
+          "longitude": 130.64754976306722
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.405393911052904,
+          "longitude": 130.6499684927932
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.40253975671261,
+          "longitude": 130.65149890712343
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.399516872902,
+          "longitude": 130.65244745935328
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.3964755276439,
+          "longitude": 130.65310620607784
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.393390883907564,
+          "longitude": 130.65265802067967
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.39105,
+          "longitude": 130.65462
+        },
+        "distanceMetres": 2424.8992520672673,
+        "itemID": "jp-九州旅客鉄道-肥薩線#3",
+        "pointOrdinal": 7
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  {
+    "interval": 4,
+    "directory": "000961",
+    "planned": 10,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.39105,
+          "longitude": 130.65462
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.3883827017594,
+          "longitude": 130.6564458405893
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.38548880918504,
+          "longitude": 130.65599633260507
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.38390001658739,
+          "longitude": 130.65280377246367
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.38119879609893,
+          "longitude": 130.65098248069873
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.37818913035664,
+          "longitude": 130.65106208897592
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.37531203038203,
+          "longitude": 130.65233265602865
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.37307426531447,
+          "longitude": 130.65001740321551
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.37178007796343,
+          "longitude": 130.64662130157015
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.371565,
+          "longitude": 130.64609
+        },
+        "distanceMetres": 2855.332512869222,
+        "itemID": "jp-九州旅客鉄道-肥薩線#4",
+        "pointOrdinal": 9
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "interval": 5,
+    "directory": "000962",
+    "planned": 12,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.371565,
+          "longitude": 130.64609
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.36955056917909,
+          "longitude": 130.64326507627877
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.366745640935626,
+          "longitude": 130.64184956240487
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.36361316350242,
+          "longitude": 130.64154704322164
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.360569857475326,
+          "longitude": 130.6406663949639
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.357837881487356,
+          "longitude": 130.6388254202935
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.355855753918384,
+          "longitude": 130.63598150775186
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.35432904281535,
+          "longitude": 130.63274201582195
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.35334854878829,
+          "longitude": 130.62920482595752
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.352238199908186,
+          "longitude": 130.6257249597221
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.35086635202654,
+          "longitude": 130.62237328242534
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.349385,
+          "longitude": 130.619235
+        },
+        "distanceMetres": 3838.6278275680297,
+        "itemID": "jp-九州旅客鉄道-肥薩線#5",
+        "pointOrdinal": 11
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 6,
+    "directory": "000963",
+    "planned": 11,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.349385,
+          "longitude": 130.619235
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.348140000021225,
+          "longitude": 130.61592785118322
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.34845209387846,
+          "longitude": 130.61222161366038
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.3478769577335,
+          "longitude": 130.60861255627117
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.34543991931246,
+          "longitude": 130.60628691307784
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.34334628338139,
+          "longitude": 130.60355628336586
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.340491888468556,
+          "longitude": 130.60206053956162
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.33736894737868,
+          "longitude": 130.60172
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.33422723730642,
+          "longitude": 130.60164708615395
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.331262515158606,
+          "longitude": 130.60068251502796
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.33084,
+          "longitude": 130.600305
+        },
+        "distanceMetres": 3208.901791860286,
+        "itemID": "jp-九州旅客鉄道-肥薩線#6",
+        "pointOrdinal": 10
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 7,
+    "directory": "000964",
+    "planned": 11,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.33084,
+          "longitude": 130.600305
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.327904104385695,
+          "longitude": 130.5994737977905
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.32497070859499,
+          "longitude": 130.6007369874851
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.32235283700961,
+          "longitude": 130.6027979985162
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.319643246434104,
+          "longitude": 130.60468546060886
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.317042748228495,
+          "longitude": 130.60673370727295
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.31463055749416,
+          "longitude": 130.6090320864583
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.312089959923334,
+          "longitude": 130.61119502409122
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.309091836988465,
+          "longitude": 130.61103181563587
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.30641091823672,
+          "longitude": 130.60911992560887
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.30574,
+          "longitude": 130.60836
+        },
+        "distanceMetres": 3253.3570017559596,
+        "itemID": "jp-九州旅客鉄道-肥薩線#7",
+        "pointOrdinal": 10
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 8,
+    "directory": "000965",
+    "planned": 16,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.30574,
+          "longitude": 130.60836
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.303532654786316,
+          "longitude": 130.60570543122387
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.30120262571269,
+          "longitude": 130.60322325632586
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.29884474122792,
+          "longitude": 130.6008266392322
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.29672475455557,
+          "longitude": 130.5981027734868
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.29366576446882,
+          "longitude": 130.59817852969016
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2916533623257,
+          "longitude": 130.60099810779732
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.28946467877594,
+          "longitude": 130.60356766072155
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.286352453150855,
+          "longitude": 130.60394873074046
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.283501695435014,
+          "longitude": 130.60267731139015
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.28050449212353,
+          "longitude": 130.60211143272295
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.277610943357494,
+          "longitude": 130.60356033214995
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.27473909482314,
+          "longitude": 130.60508406258774
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.27184506028365,
+          "longitude": 130.606538313241
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.26885990949642,
+          "longitude": 130.60771183193978
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.26796,
+          "longitude": 130.608165
+        },
+        "distanceMetres": 5008.797119227387,
+        "itemID": "jp-九州旅客鉄道-肥薩線#8",
+        "pointOrdinal": 15
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 9,
+    "directory": "000966",
+    "planned": 16,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.26796,
+          "longitude": 130.608165
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.265285053726075,
+          "longitude": 130.61007839576268
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.265024316076335,
+          "longitude": 130.61356302868083
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.26549502330178,
+          "longitude": 130.6171906855294
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.26456759434995,
+          "longitude": 130.62068329839406
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2627654626939,
+          "longitude": 130.62371453736685
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.26020376949124,
+          "longitude": 130.6258662315215
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2583355064403,
+          "longitude": 130.6288095358149
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.257996448918696,
+          "longitude": 130.63249968744577
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.25631100804516,
+          "longitude": 130.63561798441282
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.254663730957326,
+          "longitude": 130.6387568487919
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.253049549713836,
+          "longitude": 130.64192225164965
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.25273804182325,
+          "longitude": 130.6455729647155
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.25067780924895,
+          "longitude": 130.64833394335636
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.250106835259444,
+          "longitude": 130.65185071370757
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.250215,
+          "longitude": 130.652495
+        },
+        "distanceMetres": 4961.7713030285695,
+        "itemID": "jp-九州旅客鉄道-肥薩線#9",
+        "pointOrdinal": 15
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 10,
+    "directory": "000942",
+    "planned": 9,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.250215,
+          "longitude": 130.652495
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.25035189011426,
+          "longitude": 130.65612026596543
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2481046542636,
+          "longitude": 130.65844239363923
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24517499528555,
+          "longitude": 130.65727294110178
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24218223968848,
+          "longitude": 130.65652576284862
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2408200000025,
+          "longitude": 130.65961532211554
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.242348657152014,
+          "longitude": 130.6627645347635
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24347861159416,
+          "longitude": 130.66610029479992
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.243645,
+          "longitude": 130.66746
+        },
+        "distanceMetres": 2579.5039692214414,
+        "itemID": "jp-九州旅客鉄道-肥薩線#10",
+        "pointOrdinal": 8
+      }
+    ],
+    "captureRoot": "/private/tmp/jtm-remaining-lines-manual-evidence",
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  {
+    "interval": 11,
+    "directory": "000943",
+    "planned": 10,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.243645,
+          "longitude": 130.66746
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24378048969301,
+          "longitude": 130.67115807611853
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2439723338081,
+          "longitude": 130.6748122402674
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.243963114370175,
+          "longitude": 130.67851807820588
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24360496565837,
+          "longitude": 130.68218307573554
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.24154130635736,
+          "longitude": 130.6849160810725
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.240376373955776,
+          "longitude": 130.6883124069511
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.238765434481934,
+          "longitude": 130.6913306203426
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.2370303188438,
+          "longitude": 130.69435452173727
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.23668,
+          "longitude": 130.69484
+        },
+        "distanceMetres": 2860.0210443786386,
+        "itemID": "jp-九州旅客鉄道-肥薩線#11",
+        "pointOrdinal": 9
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 12,
+    "directory": "000944",
+    "planned": 10,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.23668,
+          "longitude": 130.69484
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.23470992157948,
+          "longitude": 130.6977411511634
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.232881555520834,
+          "longitude": 130.70075226374325
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.231639566881356,
+          "longitude": 130.704167823543
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.23047666703875,
+          "longitude": 130.70761133036052
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22973991349165,
+          "longitude": 130.71122536975327
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22941639568567,
+          "longitude": 130.71492092834762
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22948578759662,
+          "longitude": 130.7186401312168
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.229161870083345,
+          "longitude": 130.72232089094854
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.228448,
+          "longitude": 130.72575
+        },
+        "distanceMetres": 3132.3058071993714,
+        "itemID": "jp-九州旅客鉄道-肥薩線#12",
+        "pointOrdinal": 9
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 13,
+    "directory": "000945",
+    "planned": 11,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.228448,
+          "longitude": 130.72575
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.227554573159466,
+          "longitude": 130.72930551388538
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22546619627813,
+          "longitude": 130.73204018448092
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22316696033582,
+          "longitude": 130.73458125091224
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.22087105427773,
+          "longitude": 130.7371260425393
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21858305201843,
+          "longitude": 130.73967802818515
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21629564628795,
+          "longitude": 130.74223362900113
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21408936399575,
+          "longitude": 130.74487325911068
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21360074015307,
+          "longitude": 130.74838184995426
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.215092533421206,
+          "longitude": 130.7516569985132
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21614,
+          "longitude": 130.753815
+        },
+        "distanceMetres": 3384.0671254993663,
+        "itemID": "jp-九州旅客鉄道-肥薩線#13",
+        "pointOrdinal": 10
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 14,
+    "directory": "000946",
+    "planned": 31,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.21614,
+          "longitude": 130.753815
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21771656030224,
+          "longitude": 130.75703492236468
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.218597286946476,
+          "longitude": 130.76054177212038
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21855617816984,
+          "longitude": 130.7642618380312
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21844721609193,
+          "longitude": 130.76797939001847
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21717619757658,
+          "longitude": 130.77124904195838
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21416975043839,
+          "longitude": 130.7723175873768
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.21109086038515,
+          "longitude": 130.77269724557297
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.20802749715894,
+          "longitude": 130.77184961491872
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.204902923820946,
+          "longitude": 130.77221468354819
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.201956286171,
+          "longitude": 130.77337506169195
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.199320691817434,
+          "longitude": 130.7754061428062
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.196582863271374,
+          "longitude": 130.77718879832287
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.1934486236917,
+          "longitude": 130.77730611339467
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.191068309239945,
+          "longitude": 130.77500952801358
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.18809150640142,
+          "longitude": 130.77438089406482
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 15
+      },
+      {
+        "coordinate": {
+          "latitude": 32.184957417937405,
+          "longitude": 130.77434016081952
+        },
+        "distanceMetres": 5600,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 16
+      },
+      {
+        "coordinate": {
+          "latitude": 32.18187072604719,
+          "longitude": 130.7736602989594
+        },
+        "distanceMetres": 5950,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 17
+      },
+      {
+        "coordinate": {
+          "latitude": 32.17975082363191,
+          "longitude": 130.77099128094693
+        },
+        "distanceMetres": 6300,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 18
+      },
+      {
+        "coordinate": {
+          "latitude": 32.177278293481834,
+          "longitude": 130.76879196052582
+        },
+        "distanceMetres": 6650,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 19
+      },
+      {
+        "coordinate": {
+          "latitude": 32.17424281380329,
+          "longitude": 130.7679082429884
+        },
+        "distanceMetres": 7000,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 20
+      },
+      {
+        "coordinate": {
+          "latitude": 32.17189590243562,
+          "longitude": 130.76544322443067
+        },
+        "distanceMetres": 7350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 21
+      },
+      {
+        "coordinate": {
+          "latitude": 32.169087174380365,
+          "longitude": 130.76438836194964
+        },
+        "distanceMetres": 7700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 22
+      },
+      {
+        "coordinate": {
+          "latitude": 32.1661659267585,
+          "longitude": 130.7657520531692
+        },
+        "distanceMetres": 8050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 23
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16461000000281,
+          "longitude": 130.76870020437295
+        },
+        "distanceMetres": 8400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 24
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16568817278027,
+          "longitude": 130.7721750107792
+        },
+        "distanceMetres": 8750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 25
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16559121650487,
+          "longitude": 130.7757074237961
+        },
+        "distanceMetres": 9100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 26
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16339008035922,
+          "longitude": 130.77836120386203
+        },
+        "distanceMetres": 9450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 27
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16217935352929,
+          "longitude": 130.78165588487434
+        },
+        "distanceMetres": 9800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 28
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16356787617937,
+          "longitude": 130.7848959884159
+        },
+        "distanceMetres": 10150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 29
+      },
+      {
+        "coordinate": {
+          "latitude": 32.164965,
+          "longitude": 130.787805
+        },
+        "distanceMetres": 10468.823923398284,
+        "itemID": "jp-九州旅客鉄道-肥薩線#14",
+        "pointOrdinal": 30
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 15,
+    "directory": "000947",
+    "planned": 28,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.164965,
+          "longitude": 130.787805
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16427572941174,
+          "longitude": 130.78545687774044
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16717999622361,
+          "longitude": 130.7857754306439
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.168583533493425,
+          "longitude": 130.7827256346399
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.166714297833096,
+          "longitude": 130.77997230878452
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16361694622221,
+          "longitude": 130.78007673650052
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.16069067141518,
+          "longitude": 130.77871861184911
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.157609321179685,
+          "longitude": 130.77857136226768
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.15507537735434,
+          "longitude": 130.7807695635022
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.15210052585879,
+          "longitude": 130.78072372270128
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.150576607862796,
+          "longitude": 130.77770908370923
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.15015362592133,
+          "longitude": 130.7741336185523
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.1473821289863,
+          "longitude": 130.77279052359708
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.14517524478437,
+          "longitude": 130.77515213345524
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.142397645535965,
+          "longitude": 130.7764054176698
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.13933583879359,
+          "longitude": 130.77679472042104
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 15
+      },
+      {
+        "coordinate": {
+          "latitude": 32.136236468678106,
+          "longitude": 130.77645218520829
+        },
+        "distanceMetres": 5600,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 16
+      },
+      {
+        "coordinate": {
+          "latitude": 32.133179426438446,
+          "longitude": 130.77595941924773
+        },
+        "distanceMetres": 5950,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 17
+      },
+      {
+        "coordinate": {
+          "latitude": 32.130224418571,
+          "longitude": 130.77472636447501
+        },
+        "distanceMetres": 6300,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 18
+      },
+      {
+        "coordinate": {
+          "latitude": 32.127404961194635,
+          "longitude": 130.77310465373205
+        },
+        "distanceMetres": 6650,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 19
+      },
+      {
+        "coordinate": {
+          "latitude": 32.12469038219903,
+          "longitude": 130.7712252865084
+        },
+        "distanceMetres": 7000,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 20
+      },
+      {
+        "coordinate": {
+          "latitude": 32.12189545119956,
+          "longitude": 130.76997145614416
+        },
+        "distanceMetres": 7350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 21
+      },
+      {
+        "coordinate": {
+          "latitude": 32.11889273955282,
+          "longitude": 130.77090982881336
+        },
+        "distanceMetres": 7700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 22
+      },
+      {
+        "coordinate": {
+          "latitude": 32.11591942685439,
+          "longitude": 130.7720392083868
+        },
+        "distanceMetres": 8050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 23
+      },
+      {
+        "coordinate": {
+          "latitude": 32.11279742312403,
+          "longitude": 130.77245601805686
+        },
+        "distanceMetres": 8400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 24
+      },
+      {
+        "coordinate": {
+          "latitude": 32.109726840308845,
+          "longitude": 130.77178781750584
+        },
+        "distanceMetres": 8750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 25
+      },
+      {
+        "coordinate": {
+          "latitude": 32.10682285308412,
+          "longitude": 130.77044493836715
+        },
+        "distanceMetres": 9100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 26
+      },
+      {
+        "coordinate": {
+          "latitude": 32.10427,
+          "longitude": 130.76982
+        },
+        "distanceMetres": 9389.912078920246,
+        "itemID": "jp-九州旅客鉄道-肥薩線#15",
+        "pointOrdinal": 27
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 16,
+    "directory": "000948",
+    "planned": 21,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.10427,
+          "longitude": 130.76982
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.10125540946895,
+          "longitude": 130.76881270472532
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.098591819270155,
+          "longitude": 130.76684318270352
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.095523881171516,
+          "longitude": 130.76635321409324
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.09237695028605,
+          "longitude": 130.76627637895064
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.08923016747369,
+          "longitude": 130.76619067738966
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.086083314991846,
+          "longitude": 130.7661115038299
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.08304459900817,
+          "longitude": 130.76531794347332
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.08076086248946,
+          "longitude": 130.7629076855115
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.08044430016379,
+          "longitude": 130.7592721655449
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.080546967124505,
+          "longitude": 130.75555929103677
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07997614984654,
+          "longitude": 130.75199623251754
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07783890889478,
+          "longitude": 130.7492709029955
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.075681746138486,
+          "longitude": 130.74656689846012
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07383510090265,
+          "longitude": 130.74359040349964
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07449521194435,
+          "longitude": 130.74000923201154
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 15
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07550620652455,
+          "longitude": 130.7364915347998
+        },
+        "distanceMetres": 5600,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 16
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07637785170882,
+          "longitude": 130.73293291539807
+        },
+        "distanceMetres": 5950,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 17
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07525615780449,
+          "longitude": 130.7295830049613
+        },
+        "distanceMetres": 6300,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 18
+      },
+      {
+        "coordinate": {
+          "latitude": 32.072564544314446,
+          "longitude": 130.72795006601322
+        },
+        "distanceMetres": 6650,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 19
+      },
+      {
+        "coordinate": {
+          "latitude": 32.074525,
+          "longitude": 130.72911
+        },
+        "distanceMetres": 6939.042986517777,
+        "itemID": "jp-九州旅客鉄道-肥薩線#16",
+        "pointOrdinal": 20
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  },
+  {
+    "interval": 17,
+    "directory": "000949",
+    "planned": 24,
+    "present": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "viewpoints": [
+      {
+        "coordinate": {
+          "latitude": 32.074525,
+          "longitude": 130.72911
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 0
+      },
+      {
+        "coordinate": {
+          "latitude": 32.07164967125516,
+          "longitude": 130.72787808142917
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 1
+      },
+      {
+        "coordinate": {
+          "latitude": 32.06860955146068,
+          "longitude": 130.72694620760993
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 2
+      },
+      {
+        "coordinate": {
+          "latitude": 32.06556388143703,
+          "longitude": 130.72690689492674
+        },
+        "distanceMetres": 1050,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 3
+      },
+      {
+        "coordinate": {
+          "latitude": 32.064014369960326,
+          "longitude": 130.729965277393
+        },
+        "distanceMetres": 1400,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 4
+      },
+      {
+        "coordinate": {
+          "latitude": 32.06308030616982,
+          "longitude": 130.73347723354442
+        },
+        "distanceMetres": 1750,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 5
+      },
+      {
+        "coordinate": {
+          "latitude": 32.06062998647854,
+          "longitude": 130.73559621013075
+        },
+        "distanceMetres": 2100,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 6
+      },
+      {
+        "coordinate": {
+          "latitude": 32.057522660227875,
+          "longitude": 130.73618116418726
+        },
+        "distanceMetres": 2450,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 7
+      },
+      {
+        "coordinate": {
+          "latitude": 32.0543980989404,
+          "longitude": 130.73641557766766
+        },
+        "distanceMetres": 2800,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 8
+      },
+      {
+        "coordinate": {
+          "latitude": 32.05128935014164,
+          "longitude": 130.73583582841235
+        },
+        "distanceMetres": 3150,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 9
+      },
+      {
+        "coordinate": {
+          "latitude": 32.04818541876532,
+          "longitude": 130.73521959383638
+        },
+        "distanceMetres": 3500,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 10
+      },
+      {
+        "coordinate": {
+          "latitude": 32.04508387700258,
+          "longitude": 130.7345875969038
+        },
+        "distanceMetres": 3850,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 11
+      },
+      {
+        "coordinate": {
+          "latitude": 32.041972357882926,
+          "longitude": 130.7340340420606
+        },
+        "distanceMetres": 4200,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 12
+      },
+      {
+        "coordinate": {
+          "latitude": 32.03883399743149,
+          "longitude": 130.73375567193696
+        },
+        "distanceMetres": 4550,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 13
+      },
+      {
+        "coordinate": {
+          "latitude": 32.03571624674456,
+          "longitude": 130.7333639356447
+        },
+        "distanceMetres": 4900,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 14
+      },
+      {
+        "coordinate": {
+          "latitude": 32.033224174688705,
+          "longitude": 130.7311370872996
+        },
+        "distanceMetres": 5250,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 15
+      },
+      {
+        "coordinate": {
+          "latitude": 32.03012268202379,
+          "longitude": 130.7312328775338
+        },
+        "distanceMetres": 5600,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 16
+      },
+      {
+        "coordinate": {
+          "latitude": 32.027003032840646,
+          "longitude": 130.73172084743982
+        },
+        "distanceMetres": 5950,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 17
+      },
+      {
+        "coordinate": {
+          "latitude": 32.02388506331801,
+          "longitude": 130.73222643939874
+        },
+        "distanceMetres": 6300,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 18
+      },
+      {
+        "coordinate": {
+          "latitude": 32.02118095727918,
+          "longitude": 130.73398570199768
+        },
+        "distanceMetres": 6650,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 19
+      },
+      {
+        "coordinate": {
+          "latitude": 32.01866834575347,
+          "longitude": 130.73618962414923
+        },
+        "distanceMetres": 7000,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 20
+      },
+      {
+        "coordinate": {
+          "latitude": 32.01566320100434,
+          "longitude": 130.73727986970795
+        },
+        "distanceMetres": 7350,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 21
+      },
+      {
+        "coordinate": {
+          "latitude": 32.012569262055756,
+          "longitude": 130.73796208785888
+        },
+        "distanceMetres": 7700,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 22
+      },
+      {
+        "coordinate": {
+          "latitude": 32.011865,
+          "longitude": 130.738135
+        },
+        "distanceMetres": 7779.990247721253,
+        "itemID": "jp-九州旅客鉄道-肥薩線#17",
+        "pointOrdinal": 23
+      }
+    ],
+    "visuallyReviewedDisplayOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "visuallyReviewedSmoothOrdinals": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "captureRoot": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence"
+  }
+]

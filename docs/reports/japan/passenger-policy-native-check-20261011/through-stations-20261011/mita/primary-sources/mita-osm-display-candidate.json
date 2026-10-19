@@ -1,0 +1,7138 @@
+{
+  "format": "jtm-osm-display-candidate-v1",
+  "generatedDate": "2026-10-12",
+  "purpose": "read-only candidate for visual comparison; not production geometry or automatic geodetic truth",
+  "lineId": "jp-東京都-6号線三田線",
+  "direction": "西高島平→目黒",
+  "stationCount": 27,
+  "intervalCount": 26,
+  "coordinateOrder": "longitude,latitude WGS84",
+  "source": {
+    "kind": "identified OSM public_transport route relations",
+    "rawFile": "overpass-mita-passenger-relations-20261012.json",
+    "rawSHA256": "5fcc4e3c91b9dc4bf8b9a21d3c05069d8beed910adb3831158a5781a563c9fc2",
+    "osmBaseTimestamp": "2026-10-12T07:49:36Z",
+    "license": "OpenStreetMap contributors, ODbL",
+    "relations": [
+      443286,
+      8019910
+    ]
+  },
+  "method": {
+    "sourceIdentity": "only role-empty railway=subway ways belonging to the two retained ref=I passenger route relations",
+    "excludedGeometry": "platform ways, unrelated nearest rail/road, service/yard branches, and relation 443286 post-terminal way 834672582",
+    "stationBinding": "27 exact named stop_position pairs, projected monotonically onto their own direction chain",
+    "trackPairing": "within each station interval, sample both direction tracks at equal normalized passenger distance and average the pair",
+    "denseSampleTargetMetres": 10.0,
+    "simplifyToleranceMetres": 0.5,
+    "stationCentre": "midpoint of the opposing stop_position coordinates",
+    "selectedMeguroBoundaryOption": "linear displacement taper over 白金台–目黒 to the retained registered shared display anchor [139.71566,35.632485]"
+  },
+  "boundaryOptions": {
+    "rawOsmMidpoint": {
+      "meguro": [
+        139.7157636,
+        35.6325057
+      ],
+      "description": "unmodified midpoint of OSM stop positions; retained in interval 25 rawOsmMidpointCoordinates"
+    },
+    "registeredSharedDisplayAnchor": {
+      "meguro": [
+        139.71566,
+        35.632485
+      ],
+      "description": "selected candidate option; preserves the registered Namboku/Mita/Tokyu shared display anchor and tapers the delta only over interval 25"
+    }
+  },
+  "sourceChains": [
+    {
+      "relationId": 443286,
+      "name": "都営三田線 : 目黒→西高島平",
+      "originalFrom": "目黒",
+      "originalTo": "西高島平",
+      "candidateOrientation": "西高島平→目黒",
+      "reversedForCandidate": true,
+      "usedWayIds": [
+        664537127,
+        1378889434,
+        409233306,
+        24372343,
+        1378889439,
+        1378889442,
+        678481167,
+        661299592,
+        1379013574,
+        660716140,
+        663041995,
+        668656031,
+        296847776,
+        296847777,
+        184555271,
+        240734137
+      ],
+      "excludedWayIds": [
+        834672582
+      ],
+      "usedLengthMetres": 26448.219,
+      "wayJoinErrors": [],
+      "maximumStopProjectionOffsetMetres": 0.0,
+      "strictlyIncreasingStopMeasures": true
+    },
+    {
+      "relationId": 8019910,
+      "name": "都営三田線 : 西高島平→目黒",
+      "originalFrom": "西高島平",
+      "originalTo": "目黒",
+      "candidateOrientation": "西高島平→目黒",
+      "reversedForCandidate": false,
+      "usedWayIds": [
+        834672581,
+        240734136,
+        296847779,
+        1565131728,
+        296847770,
+        663041994,
+        687230734,
+        1379013575,
+        862542327,
+        661299593,
+        1378889441,
+        1378889440,
+        409233314,
+        409233325
+      ],
+      "excludedWayIds": [],
+      "usedLengthMetres": 26444.778,
+      "wayJoinErrors": [],
+      "maximumStopProjectionOffsetMetres": 0.0,
+      "strictlyIncreasingStopMeasures": true
+    }
+  ],
+  "stations": [
+    {
+      "index": 0,
+      "stationCode": "003104",
+      "name": "西高島平",
+      "nameRoma": "Nishi-takashimadaira",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2467422033,
+          "role": "stop_exit_only",
+          "coordinate": [
+            139.6457556,
+            35.7918972
+          ],
+          "projectedMeasureMetres": 0.0,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6457556,
+            35.7918972
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605926,
+          "role": "stop",
+          "coordinate": [
+            139.6457664,
+            35.791927
+          ],
+          "projectedMeasureMetres": 0.0,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6457664,
+            35.791927
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 3.454,
+      "osmMidpoint": [
+        139.645761,
+        35.7919121
+      ],
+      "selectedDisplayAnchor": [
+        139.645761,
+        35.7919121
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 1,
+      "stationCode": "003112",
+      "name": "新高島平",
+      "nameRoma": "Shin-takashimadaira",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6190332147,
+          "role": "stop",
+          "coordinate": [
+            139.6543429,
+            35.7902113
+          ],
+          "projectedMeasureMetres": 797.674,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6543429,
+            35.7902113
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 6190332146,
+          "role": "stop",
+          "coordinate": [
+            139.6543497,
+            35.7902371
+          ],
+          "projectedMeasureMetres": 797.433,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6543497,
+            35.7902371
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 2.934,
+      "osmMidpoint": [
+        139.6543463,
+        35.7902242
+      ],
+      "selectedDisplayAnchor": [
+        139.6543463,
+        35.7902242
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 2,
+      "stationCode": "003117",
+      "name": "高島平",
+      "nameRoma": "Takashimadaira",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2533991660,
+          "role": "stop",
+          "coordinate": [
+            139.6612689,
+            35.7888074
+          ],
+          "projectedMeasureMetres": 1442.284,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6612689,
+            35.7888074
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605924,
+          "role": "stop",
+          "coordinate": [
+            139.6613225,
+            35.7890259
+          ],
+          "projectedMeasureMetres": 1441.471,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6613225,
+            35.7890259
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 24.773,
+      "osmMidpoint": [
+        139.6612957,
+        35.7889166
+      ],
+      "selectedDisplayAnchor": [
+        139.6612957,
+        35.7889166
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 3,
+      "stationCode": "003128",
+      "name": "西台",
+      "nameRoma": "Nishidai",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102280543,
+          "role": "stop",
+          "coordinate": [
+            139.6740086,
+            35.786948
+          ],
+          "projectedMeasureMetres": 2613.052,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6740086,
+            35.786948
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605922,
+          "role": "stop",
+          "coordinate": [
+            139.6740114,
+            35.7869821
+          ],
+          "projectedMeasureMetres": 2612.052,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6740114,
+            35.7869821
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 3.8,
+      "osmMidpoint": [
+        139.67401,
+        35.786965
+      ],
+      "selectedDisplayAnchor": [
+        139.67401,
+        35.786965
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 4,
+      "stationCode": "003140",
+      "name": "蓮根",
+      "nameRoma": "Hasune",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102280542,
+          "role": "stop",
+          "coordinate": [
+            139.678984,
+            35.7841688
+          ],
+          "projectedMeasureMetres": 3278.499,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.678984,
+            35.7841688
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605920,
+          "role": "stop",
+          "coordinate": [
+            139.6791122,
+            35.7841524
+          ],
+          "projectedMeasureMetres": 3284.802,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6791122,
+            35.7841524
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 11.718,
+      "osmMidpoint": [
+        139.6790481,
+        35.7841606
+      ],
+      "selectedDisplayAnchor": [
+        139.6790481,
+        35.7841606
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 5,
+      "stationCode": "003158",
+      "name": "志村三丁目",
+      "nameRoma": "Shimura-sanchome",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102280544,
+          "role": "stop",
+          "coordinate": [
+            139.6859899,
+            35.7774881
+          ],
+          "projectedMeasureMetres": 4457.646,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6859899,
+            35.7774881
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605918,
+          "role": "stop",
+          "coordinate": [
+            139.685974,
+            35.7775163
+          ],
+          "projectedMeasureMetres": 4455.35,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.685974,
+            35.7775163
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 3.449,
+      "osmMidpoint": [
+        139.685982,
+        35.7775022
+      ],
+      "selectedDisplayAnchor": [
+        139.685982,
+        35.7775022
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 6,
+      "stationCode": "003165",
+      "name": "志村坂上",
+      "nameRoma": "Shimura-sakaue",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2036734429,
+          "role": "stop",
+          "coordinate": [
+            139.6954813,
+            35.7756747
+          ],
+          "projectedMeasureMetres": 5463.304,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6954813,
+            35.7756747
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605916,
+          "role": "stop",
+          "coordinate": [
+            139.6955271,
+            35.7757065
+          ],
+          "projectedMeasureMetres": 5466.279,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.6955271,
+            35.7757065
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 5.441,
+      "osmMidpoint": [
+        139.6955042,
+        35.7756906
+      ],
+      "selectedDisplayAnchor": [
+        139.6955042,
+        35.7756906
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 7,
+      "stationCode": "003193",
+      "name": "本蓮沼",
+      "nameRoma": "Motohasunuma",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102289119,
+          "role": "stop",
+          "coordinate": [
+            139.7024273,
+            35.7685127
+          ],
+          "projectedMeasureMetres": 6479.643,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7024273,
+            35.7685127
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8036354485,
+          "role": "stop",
+          "coordinate": [
+            139.7024692,
+            35.7685309
+          ],
+          "projectedMeasureMetres": 6483.455,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7024692,
+            35.7685309
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.29,
+      "osmMidpoint": [
+        139.7024483,
+        35.7685218
+      ],
+      "selectedDisplayAnchor": [
+        139.7024483,
+        35.7685218
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 8,
+      "stationCode": "003216",
+      "name": "板橋本町",
+      "nameRoma": "Itabashihoncho",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 7791591073,
+          "role": "stop",
+          "coordinate": [
+            139.7054985,
+            35.7614278
+          ],
+          "projectedMeasureMetres": 7316.843,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7054985,
+            35.7614278
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 2102289118,
+          "role": "stop",
+          "coordinate": [
+            139.7055511,
+            35.761435
+          ],
+          "projectedMeasureMetres": 7322.074,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7055511,
+            35.761435
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.816,
+      "osmMidpoint": [
+        139.7055248,
+        35.7614314
+      ],
+      "selectedDisplayAnchor": [
+        139.7055248,
+        35.7614314
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 9,
+      "stationCode": "003245",
+      "name": "板橋区役所前",
+      "nameRoma": "Itabashi-kuyakushomae",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102289120,
+          "role": "stop",
+          "coordinate": [
+            139.7100156,
+            35.7513354
+          ],
+          "projectedMeasureMetres": 8524.332,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7100156,
+            35.7513354
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8036354556,
+          "role": "stop",
+          "coordinate": [
+            139.7100535,
+            35.7513643
+          ],
+          "projectedMeasureMetres": 8526.87,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7100535,
+            35.7513643
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.694,
+      "osmMidpoint": [
+        139.7100346,
+        35.7513499
+      ],
+      "selectedDisplayAnchor": [
+        139.7100346,
+        35.7513499
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 10,
+      "stationCode": "003268",
+      "name": "新板橋",
+      "nameRoma": "Shin-itabashi",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102289122,
+          "role": "stop",
+          "coordinate": [
+            139.7199957,
+            35.748744
+          ],
+          "projectedMeasureMetres": 9499.95,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7199957,
+            35.748744
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 7791605914,
+          "role": "stop",
+          "coordinate": [
+            139.720003,
+            35.748846
+          ],
+          "projectedMeasureMetres": 9498.959,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.720003,
+            35.748846
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 11.361,
+      "osmMidpoint": [
+        139.7199993,
+        35.748795
+      ],
+      "selectedDisplayAnchor": [
+        139.7199993,
+        35.748795
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 11,
+      "stationCode": "003293",
+      "name": "西巣鴨",
+      "nameRoma": "Nishi-sugamo",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 2102289121,
+          "role": "stop",
+          "coordinate": [
+            139.7286561,
+            35.743529
+          ],
+          "projectedMeasureMetres": 10497.62,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7286561,
+            35.743529
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8037420270,
+          "role": "stop",
+          "coordinate": [
+            139.7287504,
+            35.7435859
+          ],
+          "projectedMeasureMetres": 10502.159,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7287504,
+            35.7435859
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 10.608,
+      "osmMidpoint": [
+        139.7287032,
+        35.7435574
+      ],
+      "selectedDisplayAnchor": [
+        139.7287032,
+        35.7435574
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 12,
+      "stationCode": "003354",
+      "name": "巣鴨",
+      "nameRoma": "Sugamo",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6206716683,
+          "role": "stop",
+          "coordinate": [
+            139.7381841,
+            35.7337434
+          ],
+          "projectedMeasureMetres": 11884.917,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7381841,
+            35.7337434
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 3010262703,
+          "role": "stop",
+          "coordinate": [
+            139.7383039,
+            35.7338271
+          ],
+          "projectedMeasureMetres": 11889.364,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7383039,
+            35.7338271
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 14.269,
+      "osmMidpoint": [
+        139.738244,
+        35.7337853
+      ],
+      "selectedDisplayAnchor": [
+        139.738244,
+        35.7337853
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 13,
+      "stationCode": "003415",
+      "name": "千石",
+      "nameRoma": "Sengoku",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 264440323,
+          "role": "stop",
+          "coordinate": [
+            139.7449457,
+            35.7276828
+          ],
+          "projectedMeasureMetres": 12795.76,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7449457,
+            35.7276828
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8037420232,
+          "role": "stop",
+          "coordinate": [
+            139.745043,
+            35.7277509
+          ],
+          "projectedMeasureMetres": 12800.477,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.745043,
+            35.7277509
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 11.598,
+      "osmMidpoint": [
+        139.7449944,
+        35.7277169
+      ],
+      "selectedDisplayAnchor": [
+        139.7449944,
+        35.7277169
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 14,
+      "stationCode": "003461",
+      "name": "白山",
+      "nameRoma": "Hakusan",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 264440831,
+          "role": "stop",
+          "coordinate": [
+            139.7521258,
+            35.7215191
+          ],
+          "projectedMeasureMetres": 13813.096,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7521258,
+            35.7215191
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8037420245,
+          "role": "stop",
+          "coordinate": [
+            139.7521715,
+            35.7215167
+          ],
+          "projectedMeasureMetres": 13819.559,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7521715,
+            35.7215167
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.135,
+      "osmMidpoint": [
+        139.7521487,
+        35.7215179
+      ],
+      "selectedDisplayAnchor": [
+        139.7521487,
+        35.7215179
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 15,
+      "stationCode": "003529",
+      "name": "春日",
+      "nameRoma": "Kasuga",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 1926709967,
+          "role": "stop",
+          "coordinate": [
+            139.7531498,
+            35.7099084
+          ],
+          "projectedMeasureMetres": 15128.132,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7531498,
+            35.7099084
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8037420248,
+          "role": "stop",
+          "coordinate": [
+            139.7531961,
+            35.7099161
+          ],
+          "projectedMeasureMetres": 15133.058,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7531961,
+            35.7099161
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.267,
+      "osmMidpoint": [
+        139.753173,
+        35.7099123
+      ],
+      "selectedDisplayAnchor": [
+        139.753173,
+        35.7099123
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 16,
+      "stationCode": "003580",
+      "name": "水道橋",
+      "nameRoma": "Suidobashi",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6441550157,
+          "role": "stop",
+          "coordinate": [
+            139.7551113,
+            35.7035224
+          ],
+          "projectedMeasureMetres": 15860.434,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7551113,
+            35.7035224
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 1926709968,
+          "role": "stop",
+          "coordinate": [
+            139.7552679,
+            35.7035315
+          ],
+          "projectedMeasureMetres": 15867.388,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7552679,
+            35.7035315
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 14.175,
+      "osmMidpoint": [
+        139.7551896,
+        35.703527
+      ],
+      "selectedDisplayAnchor": [
+        139.7551896,
+        35.703527
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 17,
+      "stationCode": "003651",
+      "name": "神保町",
+      "nameRoma": "Jimbocho",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6186032726,
+          "role": "stop",
+          "coordinate": [
+            139.7582452,
+            35.6949878
+          ],
+          "projectedMeasureMetres": 16860.989,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7582452,
+            35.6949878
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 6186032727,
+          "role": "stop",
+          "coordinate": [
+            139.7583761,
+            35.6950136
+          ],
+          "projectedMeasureMetres": 16868.167,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7583761,
+            35.6950136
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 12.162,
+      "osmMidpoint": [
+        139.7583107,
+        35.6950007
+      ],
+      "selectedDisplayAnchor": [
+        139.7583107,
+        35.6950007
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 18,
+      "stationCode": "003719",
+      "name": "大手町",
+      "nameRoma": "Otemachi",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 1926709961,
+          "role": "stop",
+          "coordinate": [
+            139.7626682,
+            35.6839724
+          ],
+          "projectedMeasureMetres": 18346.131,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7626682,
+            35.6839724
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 6191069607,
+          "role": "stop",
+          "coordinate": [
+            139.7628105,
+            35.6839383
+          ],
+          "projectedMeasureMetres": 18357.42,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7628105,
+            35.6839383
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 13.396,
+      "osmMidpoint": [
+        139.7627394,
+        35.6839554
+      ],
+      "selectedDisplayAnchor": [
+        139.7627394,
+        35.6839554
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 19,
+      "stationCode": "003802",
+      "name": "日比谷",
+      "nameRoma": "Hibiya",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6192966787,
+          "role": "stop",
+          "coordinate": [
+            139.7601265,
+            35.6762873
+          ],
+          "projectedMeasureMetres": 19231.437,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7601265,
+            35.6762873
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 6193465466,
+          "role": "stop",
+          "coordinate": [
+            139.7602621,
+            35.6762604
+          ],
+          "projectedMeasureMetres": 19242.001,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7602621,
+            35.6762604
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 12.603,
+      "osmMidpoint": [
+        139.7601943,
+        35.6762739
+      ],
+      "selectedDisplayAnchor": [
+        139.7601943,
+        35.6762739
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 20,
+      "stationCode": "003842",
+      "name": "内幸町",
+      "nameRoma": "Uchisaiwaicho",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 1926709957,
+          "role": "stop",
+          "coordinate": [
+            139.7553001,
+            35.6694851
+          ],
+          "projectedMeasureMetres": 20109.394,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7553001,
+            35.6694851
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8039179591,
+          "role": "stop",
+          "coordinate": [
+            139.7554597,
+            35.6694261
+          ],
+          "projectedMeasureMetres": 20122.448,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7554597,
+            35.6694261
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 15.833,
+      "osmMidpoint": [
+        139.7553799,
+        35.6694556
+      ],
+      "selectedDisplayAnchor": [
+        139.7553799,
+        35.6694556
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 21,
+      "stationCode": "003911",
+      "name": "御成門",
+      "nameRoma": "Onarimon",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6352945234,
+          "role": "stop",
+          "coordinate": [
+            139.7512869,
+            35.6608276
+          ],
+          "projectedMeasureMetres": 21138.05,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7512869,
+            35.6608276
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 1926709965,
+          "role": "stop",
+          "coordinate": [
+            139.751397,
+            35.6607828
+          ],
+          "projectedMeasureMetres": 21152.018,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.751397,
+            35.6607828
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 11.119,
+      "osmMidpoint": [
+        139.751342,
+        35.6608052
+      ],
+      "selectedDisplayAnchor": [
+        139.751342,
+        35.6608052
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 22,
+      "stationCode": "003962",
+      "name": "芝公園",
+      "nameRoma": "Shibakoen",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 1926709982,
+          "role": "stop",
+          "coordinate": [
+            139.7498714,
+            35.6542309
+          ],
+          "projectedMeasureMetres": 21886.459,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7498714,
+            35.6542309
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 8025512624,
+          "role": "stop",
+          "coordinate": [
+            139.7499211,
+            35.6542283
+          ],
+          "projectedMeasureMetres": 21896.522,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7499211,
+            35.6542283
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 4.497,
+      "osmMidpoint": [
+        139.7498963,
+        35.6542296
+      ],
+      "selectedDisplayAnchor": [
+        139.7498963,
+        35.6542296
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 23,
+      "stationCode": "003986",
+      "name": "三田",
+      "nameRoma": "Mita",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 6355611757,
+          "role": "stop",
+          "coordinate": [
+            139.7485807,
+            35.6480843
+          ],
+          "projectedMeasureMetres": 22582.119,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7485807,
+            35.6480843
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 264440562,
+          "role": "stop",
+          "coordinate": [
+            139.7485807,
+            35.6480842
+          ],
+          "projectedMeasureMetres": 22592.764,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7485807,
+            35.6480842
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 0.011,
+      "osmMidpoint": [
+        139.7485807,
+        35.6480842
+      ],
+      "selectedDisplayAnchor": [
+        139.7485807,
+        35.6480842
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 24,
+      "stationCode": "004025",
+      "name": "白金高輪",
+      "nameRoma": "Shirokane-takanawa",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 4111329881,
+          "role": "stop",
+          "coordinate": [
+            139.7340053,
+            35.6429669
+          ],
+          "projectedMeasureMetres": 24210.432,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7340053,
+            35.6429669
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 4111329878,
+          "role": "stop",
+          "coordinate": [
+            139.7342895,
+            35.6429161
+          ],
+          "projectedMeasureMetres": 24189.86,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7342895,
+            35.6429161
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 26.274,
+      "osmMidpoint": [
+        139.7341474,
+        35.6429415
+      ],
+      "selectedDisplayAnchor": [
+        139.7341474,
+        35.6429415
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 25,
+      "stationCode": "004044",
+      "name": "白金台",
+      "nameRoma": "Shirokanedai",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 4111329877,
+          "role": "stop",
+          "coordinate": [
+            139.7265558,
+            35.6381169
+          ],
+          "projectedMeasureMetres": 25129.247,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7265558,
+            35.6381169
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 4111329876,
+          "role": "stop",
+          "coordinate": [
+            139.7265681,
+            35.6380925
+          ],
+          "projectedMeasureMetres": 25132.062,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7265681,
+            35.6380925
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 2.932,
+      "osmMidpoint": [
+        139.726562,
+        35.6381047
+      ],
+      "selectedDisplayAnchor": [
+        139.726562,
+        35.6381047
+      ],
+      "anchorPolicy": "opposing-stop-position-midpoint"
+    },
+    {
+      "index": 26,
+      "stationCode": "004072",
+      "name": "目黒",
+      "nameRoma": "Meguro",
+      "opposingStopPair": {
+        "relation443286": {
+          "nodeId": 4111329882,
+          "role": "stop_entry_only",
+          "coordinate": [
+            139.7156838,
+            35.6324892
+          ],
+          "projectedMeasureMetres": 26448.219,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7156838,
+            35.6324892
+          ]
+        },
+        "relation8019910": {
+          "nodeId": 4111329883,
+          "role": "stop_exit_only",
+          "coordinate": [
+            139.7158434,
+            35.6325222
+          ],
+          "projectedMeasureMetres": 26444.778,
+          "projectionOffsetMetres": 0.0,
+          "projectedCoordinate": [
+            139.7158434,
+            35.6325222
+          ]
+        }
+      },
+      "stopPairDistanceMetres": 14.87,
+      "osmMidpoint": [
+        139.7157636,
+        35.6325057
+      ],
+      "selectedDisplayAnchor": [
+        139.71566,
+        35.632485
+      ],
+      "anchorPolicy": "registered-shared-display-anchor"
+    }
+  ],
+  "intervals": [
+    {
+      "index": 0,
+      "from": {
+        "stationCode": "003104",
+        "name": "西高島平"
+      },
+      "to": {
+        "stationCode": "003112",
+        "name": "新高島平"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 81
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2467422033,
+          "toStopNodeId": 6190332147,
+          "fromMeasureMetres": 0.0,
+          "toMeasureMetres": 797.674,
+          "lengthMetres": 797.674,
+          "wayIds": [
+            240734137,
+            184555271
+          ],
+          "nodeIds": [
+            2467422033,
+            1950503888,
+            1950503881,
+            6190332147
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605926,
+          "toStopNodeId": 6190332146,
+          "fromMeasureMetres": 0.0,
+          "toMeasureMetres": 797.433,
+          "lengthMetres": 797.433,
+          "wayIds": [
+            834672581,
+            240734136
+          ],
+          "nodeIds": [
+            7791605926,
+            1950503890,
+            1950503884,
+            2118880739,
+            6190332146
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 2.503,
+        "median": 3.299,
+        "p95": 3.882,
+        "maximum": 3.962,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 797.552,
+      "selectedDisplayLengthMetres": 797.552,
+      "denseVertexCount": 81,
+      "simplifiedVertexCount": 2,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.268,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.645761,
+          35.7919121
+        ],
+        [
+          139.6543463,
+          35.7902242
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "from": {
+        "stationCode": "003112",
+        "name": "新高島平"
+      },
+      "to": {
+        "stationCode": "003117",
+        "name": "高島平"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 66
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6190332147,
+          "toStopNodeId": 2533991660,
+          "fromMeasureMetres": 797.674,
+          "toMeasureMetres": 1442.284,
+          "lengthMetres": 644.609,
+          "wayIds": [
+            184555271
+          ],
+          "nodeIds": [
+            6190332147,
+            1950503877,
+            1950503873,
+            1950503838,
+            1950503779,
+            8039368688,
+            1950503596,
+            2533991660
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 6190332146,
+          "toStopNodeId": 7791605924,
+          "fromMeasureMetres": 797.433,
+          "toMeasureMetres": 1441.471,
+          "lengthMetres": 644.039,
+          "wayIds": [
+            240734136
+          ],
+          "nodeIds": [
+            6190332146,
+            1950503879,
+            1950503875,
+            1950503871,
+            1950503867,
+            1950503856,
+            1950503846,
+            8039368690,
+            1950503748,
+            7791605924
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 2.934,
+        "median": 12.768,
+        "p95": 25.761,
+        "maximum": 26.124,
+        "samplesOver20Metres": 16,
+        "fractionOver20Metres": 0.242424
+      },
+      "rawOsmMidpointLengthMetres": 644.117,
+      "selectedDisplayLengthMetres": 644.117,
+      "denseVertexCount": 66,
+      "simplifiedVertexCount": 5,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.321,
+      "boundaryAdjustment": null,
+      "flags": [
+        "TRACK_PAIR_DISAGREEMENT_GT_20M"
+      ],
+      "coordinates": [
+        [
+          139.6543463,
+          35.7902242
+        ],
+        [
+          139.6559484,
+          35.7899148
+        ],
+        [
+          139.6572371,
+          35.7896957
+        ],
+        [
+          139.6592651,
+          35.7893005
+        ],
+        [
+          139.6612957,
+          35.7889166
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "from": {
+        "stationCode": "003117",
+        "name": "高島平"
+      },
+      "to": {
+        "stationCode": "003128",
+        "name": "西台"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 119
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2533991660,
+          "toStopNodeId": 2102280543,
+          "fromMeasureMetres": 1442.284,
+          "toMeasureMetres": 2613.052,
+          "lengthMetres": 1170.768,
+          "wayIds": [
+            184555271
+          ],
+          "nodeIds": [
+            2533991660,
+            1950503508,
+            1950503473,
+            8039368686,
+            1950503436,
+            1950503376,
+            1950503127,
+            1950503070,
+            1950503050,
+            1950503040,
+            1950503029,
+            1950503020,
+            1950503017,
+            1950503016,
+            1950503012,
+            2102280543
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605924,
+          "toStopNodeId": 7791605922,
+          "fromMeasureMetres": 1441.471,
+          "toMeasureMetres": 2612.052,
+          "lengthMetres": 1170.581,
+          "wayIds": [
+            240734136
+          ],
+          "nodeIds": [
+            7791605924,
+            1950503679,
+            1950503587,
+            1950503497,
+            1950503468,
+            1950503431,
+            1950503081,
+            1950503059,
+            1950503046,
+            1950503036,
+            1950503019,
+            1950503018,
+            1950503014,
+            7791605922
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.509,
+        "median": 12.768,
+        "p95": 23.403,
+        "maximum": 24.773,
+        "samplesOver20Metres": 11,
+        "fractionOver20Metres": 0.092437
+      },
+      "rawOsmMidpointLengthMetres": 1170.444,
+      "selectedDisplayLengthMetres": 1170.444,
+      "denseVertexCount": 119,
+      "simplifiedVertexCount": 11,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.345,
+      "boundaryAdjustment": null,
+      "flags": [
+        "TRACK_PAIR_DISAGREEMENT_GT_20M"
+      ],
+      "coordinates": [
+        [
+          139.6612957,
+          35.7889166
+        ],
+        [
+          139.661828,
+          35.7888061
+        ],
+        [
+          139.6640706,
+          35.788371
+        ],
+        [
+          139.6671636,
+          35.7877488
+        ],
+        [
+          139.6679113,
+          35.7876022
+        ],
+        [
+          139.6685561,
+          35.7874915
+        ],
+        [
+          139.6692058,
+          35.7874029
+        ],
+        [
+          139.6696415,
+          35.7873565
+        ],
+        [
+          139.6712803,
+          35.7872136
+        ],
+        [
+          139.6725891,
+          35.7870842
+        ],
+        [
+          139.67401,
+          35.786965
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "from": {
+        "stationCode": "003128",
+        "name": "西台"
+      },
+      "to": {
+        "stationCode": "003140",
+        "name": "蓮根"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 69
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102280543,
+          "toStopNodeId": 2102280542,
+          "fromMeasureMetres": 2613.052,
+          "toMeasureMetres": 3278.499,
+          "lengthMetres": 665.447,
+          "wayIds": [
+            184555271
+          ],
+          "nodeIds": [
+            2102280543,
+            1950502996,
+            1950502991,
+            1950502987,
+            1950502981,
+            1950502979,
+            1950502975,
+            1950502971,
+            1950502967,
+            1950502963,
+            1950502961,
+            1950502957,
+            1950502953,
+            1950502949,
+            1950502942,
+            1950502940,
+            1950502937,
+            1950502932,
+            1950502929,
+            1950502925,
+            2102280542
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605922,
+          "toStopNodeId": 7791605920,
+          "fromMeasureMetres": 2612.052,
+          "toMeasureMetres": 3284.802,
+          "lengthMetres": 672.75,
+          "wayIds": [
+            240734136
+          ],
+          "nodeIds": [
+            7791605922,
+            1950503002,
+            1950503000,
+            1950502998,
+            1950502993,
+            1950502989,
+            1950502982,
+            1950502980,
+            1950502977,
+            1950502973,
+            1950502969,
+            1950502965,
+            1950502959,
+            1950502955,
+            1950502951,
+            3158327518,
+            1950502943,
+            1950502941,
+            3158327515,
+            3158308606,
+            1950502934,
+            1950502931,
+            1950502927,
+            1950502922,
+            7791605920
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 1.305,
+        "median": 4.207,
+        "p95": 11.052,
+        "maximum": 11.718,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 668.871,
+      "selectedDisplayLengthMetres": 668.871,
+      "denseVertexCount": 69,
+      "simplifiedVertexCount": 20,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.498,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.67401,
+          35.786965
+        ],
+        [
+          139.6749824,
+          35.7868619
+        ],
+        [
+          139.6763914,
+          35.7867416
+        ],
+        [
+          139.6774734,
+          35.7866366
+        ],
+        [
+          139.6776875,
+          35.7866036
+        ],
+        [
+          139.677898,
+          35.7865582
+        ],
+        [
+          139.6780986,
+          35.7864894
+        ],
+        [
+          139.6782872,
+          35.7864012
+        ],
+        [
+          139.6785438,
+          35.7862372
+        ],
+        [
+          139.6786952,
+          35.7861099
+        ],
+        [
+          139.6787615,
+          35.7860397
+        ],
+        [
+          139.6788804,
+          35.7858916
+        ],
+        [
+          139.6789307,
+          35.7858132
+        ],
+        [
+          139.6789769,
+          35.7857331
+        ],
+        [
+          139.6790503,
+          35.7855666
+        ],
+        [
+          139.6790984,
+          35.7853941
+        ],
+        [
+          139.6791143,
+          35.7853066
+        ],
+        [
+          139.6791322,
+          35.7850419
+        ],
+        [
+          139.6791048,
+          35.7846006
+        ],
+        [
+          139.6790481,
+          35.7841606
+        ]
+      ]
+    },
+    {
+      "index": 4,
+      "from": {
+        "stationCode": "003140",
+        "name": "蓮根"
+      },
+      "to": {
+        "stationCode": "003158",
+        "name": "志村三丁目"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 119
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102280542,
+          "toStopNodeId": 2102280544,
+          "fromMeasureMetres": 3278.499,
+          "toMeasureMetres": 4457.646,
+          "lengthMetres": 1179.147,
+          "wayIds": [
+            184555271
+          ],
+          "nodeIds": [
+            2102280542,
+            1950502920,
+            1950502916,
+            1950502914,
+            1950502904,
+            1950502902,
+            1950502897,
+            1950502893,
+            1950502889,
+            1950502885,
+            1950502881,
+            1950502877,
+            1950502872,
+            1950502802,
+            1950502796,
+            1950502786,
+            1950502780,
+            1950502775,
+            1950502771,
+            1950502767,
+            1950502761,
+            1950502753,
+            1950502745,
+            1950502732,
+            1950502726,
+            1950502721,
+            6195381670,
+            1950502724,
+            6195381669,
+            1950502728,
+            1950502741,
+            1950502751,
+            1950502759,
+            2102280544
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605920,
+          "toStopNodeId": 7791605918,
+          "fromMeasureMetres": 3284.802,
+          "toMeasureMetres": 4455.35,
+          "lengthMetres": 1170.548,
+          "wayIds": [
+            240734136
+          ],
+          "nodeIds": [
+            7791605920,
+            1950502918,
+            1950502912,
+            1950502910,
+            1950502908,
+            1950502903,
+            1950502901,
+            1950502899,
+            1950502895,
+            1950502891,
+            1950502887,
+            1950502883,
+            1950502879,
+            1950502875,
+            1950502804,
+            1950502798,
+            1950502790,
+            1950502782,
+            1950502778,
+            1950502773,
+            1950502769,
+            1950502763,
+            1950502757,
+            1950502749,
+            1950502743,
+            1950502736,
+            1950502730,
+            1950502734,
+            1950502738,
+            1950502747,
+            1950502755,
+            1950502765,
+            7791605918
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.449,
+        "median": 3.669,
+        "p95": 10.62,
+        "maximum": 11.718,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1174.636,
+      "selectedDisplayLengthMetres": 1174.636,
+      "denseVertexCount": 119,
+      "simplifiedVertexCount": 26,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.479,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.6790481,
+          35.7841606
+        ],
+        [
+          139.6789641,
+          35.7834478
+        ],
+        [
+          139.6789368,
+          35.7829114
+        ],
+        [
+          139.6789421,
+          35.7827324
+        ],
+        [
+          139.6789713,
+          35.782465
+        ],
+        [
+          139.6790103,
+          35.7822889
+        ],
+        [
+          139.6790932,
+          35.7820289
+        ],
+        [
+          139.6791622,
+          35.7818588
+        ],
+        [
+          139.6793982,
+          35.7814544
+        ],
+        [
+          139.6801638,
+          35.7803659
+        ],
+        [
+          139.6817711,
+          35.7780181
+        ],
+        [
+          139.6818871,
+          35.7778658
+        ],
+        [
+          139.6820215,
+          35.7777238
+        ],
+        [
+          139.6821692,
+          35.777591
+        ],
+        [
+          139.6823333,
+          35.7774716
+        ],
+        [
+          139.6825093,
+          35.7773637
+        ],
+        [
+          139.6826961,
+          35.7772691
+        ],
+        [
+          139.6828938,
+          35.7771902
+        ],
+        [
+          139.6831003,
+          35.7771277
+        ],
+        [
+          139.6833127,
+          35.7770797
+        ],
+        [
+          139.6835296,
+          35.7770484
+        ],
+        [
+          139.6838599,
+          35.7770352
+        ],
+        [
+          139.68397,
+          35.7770385
+        ],
+        [
+          139.6842968,
+          35.7770789
+        ],
+        [
+          139.6846158,
+          35.7771494
+        ],
+        [
+          139.685982,
+          35.7775022
+        ]
+      ]
+    },
+    {
+      "index": 5,
+      "from": {
+        "stationCode": "003158",
+        "name": "志村三丁目"
+      },
+      "to": {
+        "stationCode": "003165",
+        "name": "志村坂上"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 103
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102280544,
+          "toStopNodeId": 2036734429,
+          "fromMeasureMetres": 4457.646,
+          "toMeasureMetres": 5463.304,
+          "lengthMetres": 1005.659,
+          "wayIds": [
+            184555271,
+            296847777
+          ],
+          "nodeIds": [
+            2102280544,
+            1741663047,
+            1950502784,
+            1950502792,
+            1950502800,
+            1950502809,
+            1950502813,
+            1950502821,
+            1950502834,
+            1950502849,
+            1950502859,
+            1950502863,
+            1950502861,
+            1950502853,
+            1950502847,
+            1950502838,
+            1950502836,
+            1950502825,
+            1950502823,
+            1950502817,
+            264440815,
+            2036734441,
+            2036734440,
+            2036734436,
+            8036003682,
+            2036734429
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605918,
+          "toStopNodeId": 7791605916,
+          "fromMeasureMetres": 4455.35,
+          "toMeasureMetres": 5466.279,
+          "lengthMetres": 1010.929,
+          "wayIds": [
+            240734136,
+            296847779,
+            1565131728
+          ],
+          "nodeIds": [
+            7791605918,
+            1950502787,
+            1950502794,
+            1950502807,
+            1950502811,
+            1950502815,
+            1950502826,
+            1950502840,
+            1950502855,
+            1950502864,
+            1950502870,
+            1950502865,
+            1950502862,
+            1950502851,
+            1950502844,
+            1950502842,
+            1950502832,
+            1950502830,
+            1950502819,
+            2865616847,
+            2865616846,
+            2865616845,
+            6190332148,
+            2865616844,
+            6190332149,
+            7791605916
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.449,
+        "median": 3.771,
+        "p95": 5.436,
+        "maximum": 6.075,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1008.171,
+      "selectedDisplayLengthMetres": 1008.171,
+      "denseVertexCount": 103,
+      "simplifiedVertexCount": 18,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.468,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.685982,
+          35.7775022
+        ],
+        [
+          139.6882753,
+          35.7781002
+        ],
+        [
+          139.6893924,
+          35.7784654
+        ],
+        [
+          139.6895993,
+          35.7785235
+        ],
+        [
+          139.6899161,
+          35.7785939
+        ],
+        [
+          139.6902399,
+          35.7786383
+        ],
+        [
+          139.6906771,
+          35.7786558
+        ],
+        [
+          139.6910044,
+          35.7786371
+        ],
+        [
+          139.6913278,
+          35.778591
+        ],
+        [
+          139.6916445,
+          35.7785206
+        ],
+        [
+          139.6920507,
+          35.7783883
+        ],
+        [
+          139.6923365,
+          35.7782572
+        ],
+        [
+          139.69261,
+          35.7781095
+        ],
+        [
+          139.6930413,
+          35.7778361
+        ],
+        [
+          139.6934265,
+          35.7775205
+        ],
+        [
+          139.6935695,
+          35.777386
+        ],
+        [
+          139.6946059,
+          35.776469
+        ],
+        [
+          139.6955042,
+          35.7756906
+        ]
+      ]
+    },
+    {
+      "index": 6,
+      "from": {
+        "stationCode": "003165",
+        "name": "志村坂上"
+      },
+      "to": {
+        "stationCode": "003193",
+        "name": "本蓮沼"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 103
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2036734429,
+          "toStopNodeId": 2102289119,
+          "fromMeasureMetres": 5463.304,
+          "toMeasureMetres": 6479.643,
+          "lengthMetres": 1016.339,
+          "wayIds": [
+            296847777
+          ],
+          "nodeIds": [
+            2036734429,
+            8036003683,
+            2329713067,
+            8036003681,
+            2036734426,
+            8036003679,
+            8036003677,
+            2036767587,
+            12769512840,
+            2102289119
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605916,
+          "toStopNodeId": 8036354485,
+          "fromMeasureMetres": 5466.279,
+          "toMeasureMetres": 6483.455,
+          "lengthMetres": 1017.175,
+          "wayIds": [
+            1565131728
+          ],
+          "nodeIds": [
+            7791605916,
+            2036734428,
+            6190332151,
+            6190332152,
+            6190332153,
+            8036003680,
+            8036003678,
+            8036003684,
+            12769512841,
+            8036354485
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.653,
+        "median": 4.146,
+        "p95": 5.184,
+        "maximum": 5.441,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1016.747,
+      "selectedDisplayLengthMetres": 1016.747,
+      "denseVertexCount": 103,
+      "simplifiedVertexCount": 8,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.216,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.6955042,
+          35.7756906
+        ],
+        [
+          139.6977694,
+          35.7737286
+        ],
+        [
+          139.6984852,
+          35.7730461
+        ],
+        [
+          139.6994477,
+          35.7720641
+        ],
+        [
+          139.7005085,
+          35.7709172
+        ],
+        [
+          139.7010974,
+          35.7702675
+        ],
+        [
+          139.7014621,
+          35.7698184
+        ],
+        [
+          139.7024483,
+          35.7685218
+        ]
+      ]
+    },
+    {
+      "index": 7,
+      "from": {
+        "stationCode": "003193",
+        "name": "本蓮沼"
+      },
+      "to": {
+        "stationCode": "003216",
+        "name": "板橋本町"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 85
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102289119,
+          "toStopNodeId": 7791591073,
+          "fromMeasureMetres": 6479.643,
+          "toMeasureMetres": 7316.843,
+          "lengthMetres": 837.2,
+          "wayIds": [
+            296847777,
+            296847776
+          ],
+          "nodeIds": [
+            2102289119,
+            12769512830,
+            12769512831,
+            2036767566,
+            12769512832,
+            12769512833,
+            12769512834,
+            8036003672,
+            8036003674,
+            8036003676,
+            7791591073
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8036354485,
+          "toStopNodeId": 2102289118,
+          "fromMeasureMetres": 6483.455,
+          "toMeasureMetres": 7322.074,
+          "lengthMetres": 838.619,
+          "wayIds": [
+            1565131728,
+            296847770
+          ],
+          "nodeIds": [
+            8036354485,
+            12769512839,
+            12769512838,
+            8036354486,
+            12769512837,
+            12769512836,
+            12769512835,
+            8036003671,
+            8036003673,
+            8036003675,
+            2102289118
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.955,
+        "median": 4.828,
+        "p95": 5.003,
+        "maximum": 5.028,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 837.899,
+      "selectedDisplayLengthMetres": 837.899,
+      "denseVertexCount": 85,
+      "simplifiedVertexCount": 7,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.456,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7024483,
+          35.7685218
+        ],
+        [
+          139.7026767,
+          35.7682146
+        ],
+        [
+          139.7028867,
+          35.767899
+        ],
+        [
+          139.7030335,
+          35.7676577
+        ],
+        [
+          139.7032874,
+          35.7671605
+        ],
+        [
+          139.703397,
+          35.7669066
+        ],
+        [
+          139.7055248,
+          35.7614314
+        ]
+      ]
+    },
+    {
+      "index": 8,
+      "from": {
+        "stationCode": "003216",
+        "name": "板橋本町"
+      },
+      "to": {
+        "stationCode": "003245",
+        "name": "板橋区役所前"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 122
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 7791591073,
+          "toStopNodeId": 2102289120,
+          "fromMeasureMetres": 7316.843,
+          "toMeasureMetres": 8524.332,
+          "lengthMetres": 1207.488,
+          "wayIds": [
+            296847776,
+            668656031
+          ],
+          "nodeIds": [
+            7791591073,
+            1884590704,
+            1884590709,
+            1884590710,
+            8036354545,
+            439982999,
+            4597822563,
+            8036354572,
+            439934584,
+            4597822561,
+            4597822562,
+            4597822560,
+            2102289120
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 2102289118,
+          "toStopNodeId": 8036354556,
+          "fromMeasureMetres": 7322.074,
+          "toMeasureMetres": 8526.87,
+          "lengthMetres": 1204.796,
+          "wayIds": [
+            296847770,
+            663041994
+          ],
+          "nodeIds": [
+            2102289118,
+            8036354549,
+            8036354547,
+            8036354548,
+            8036354546,
+            8036354566,
+            8036354550,
+            8036354551,
+            8036354552,
+            8036354553,
+            8036354554,
+            8036354555,
+            8036354556
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.34,
+        "median": 4.665,
+        "p95": 5.023,
+        "maximum": 5.101,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1206.091,
+      "selectedDisplayLengthMetres": 1206.091,
+      "denseVertexCount": 122,
+      "simplifiedVertexCount": 11,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.381,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7055248,
+          35.7614314
+        ],
+        [
+          139.706114,
+          35.7598903
+        ],
+        [
+          139.7074153,
+          35.7565577
+        ],
+        [
+          139.7079546,
+          35.755098
+        ],
+        [
+          139.7085679,
+          35.7530051
+        ],
+        [
+          139.7086837,
+          35.7527532
+        ],
+        [
+          139.7088284,
+          35.7525113
+        ],
+        [
+          139.7088834,
+          35.7524338
+        ],
+        [
+          139.7090682,
+          35.7522106
+        ],
+        [
+          139.7092767,
+          35.7520017
+        ],
+        [
+          139.7100346,
+          35.7513499
+        ]
+      ]
+    },
+    {
+      "index": 9,
+      "from": {
+        "stationCode": "003245",
+        "name": "板橋区役所前"
+      },
+      "to": {
+        "stationCode": "003268",
+        "name": "新板橋"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 99
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102289120,
+          "toStopNodeId": 2102289122,
+          "fromMeasureMetres": 8524.332,
+          "toMeasureMetres": 9499.95,
+          "lengthMetres": 975.619,
+          "wayIds": [
+            668656031
+          ],
+          "nodeIds": [
+            2102289120,
+            8036354571,
+            8036354570,
+            2329713040,
+            2329713038,
+            2865613604,
+            2865616842,
+            8036354569,
+            8036354568,
+            2329713034,
+            12769512819,
+            12769512814,
+            12769512815,
+            12769512825,
+            12769512816,
+            12769512818,
+            12769512817,
+            4597822557,
+            12769512824,
+            2102289122
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8036354556,
+          "toStopNodeId": 7791605914,
+          "fromMeasureMetres": 8526.87,
+          "toMeasureMetres": 9498.959,
+          "lengthMetres": 972.089,
+          "wayIds": [
+            663041994
+          ],
+          "nodeIds": [
+            8036354556,
+            8036354557,
+            8036354558,
+            8036354559,
+            8036354560,
+            8036354561,
+            8036354562,
+            8036354563,
+            8036354564,
+            12769512811,
+            12769512812,
+            8036354565,
+            12769512813,
+            12769512826,
+            12769512828,
+            7791605914
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.513,
+        "median": 6.921,
+        "p95": 11.161,
+        "maximum": 11.361,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 973.768,
+      "selectedDisplayLengthMetres": 973.768,
+      "denseVertexCount": 99,
+      "simplifiedVertexCount": 13,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.489,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7100346,
+          35.7513499
+        ],
+        [
+          139.7107989,
+          35.7507069
+        ],
+        [
+          139.7112045,
+          35.7504048
+        ],
+        [
+          139.7117357,
+          35.7500868
+        ],
+        [
+          139.7121184,
+          35.7499105
+        ],
+        [
+          139.7124165,
+          35.7497952
+        ],
+        [
+          139.712719,
+          35.7496876
+        ],
+        [
+          139.713031,
+          35.7496001
+        ],
+        [
+          139.7135628,
+          35.7494863
+        ],
+        [
+          139.7138875,
+          35.749438
+        ],
+        [
+          139.7144316,
+          35.7493717
+        ],
+        [
+          139.7149765,
+          35.7493097
+        ],
+        [
+          139.7199993,
+          35.748795
+        ]
+      ]
+    },
+    {
+      "index": 10,
+      "from": {
+        "stationCode": "003268",
+        "name": "新板橋"
+      },
+      "to": {
+        "stationCode": "003293",
+        "name": "西巣鴨"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 102
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102289122,
+          "toStopNodeId": 2102289121,
+          "fromMeasureMetres": 9499.95,
+          "toMeasureMetres": 10497.62,
+          "lengthMetres": 997.669,
+          "wayIds": [
+            668656031,
+            663041995
+          ],
+          "nodeIds": [
+            2102289122,
+            6261716105,
+            6261716104,
+            1668155305,
+            4597822556,
+            4597822555,
+            4597822554,
+            8037420251,
+            8037420253,
+            8037420255,
+            2007117320,
+            8037420257,
+            8037420259,
+            8037420261,
+            2102289121
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 7791605914,
+          "toStopNodeId": 8037420270,
+          "fromMeasureMetres": 9498.959,
+          "toMeasureMetres": 10502.159,
+          "lengthMetres": 1003.2,
+          "wayIds": [
+            663041994
+          ],
+          "nodeIds": [
+            7791605914,
+            6261716103,
+            8037420272,
+            8037420265,
+            8037420266,
+            8037420267,
+            8037420268,
+            8037420252,
+            8037420254,
+            8037420256,
+            8037420269,
+            8037420258,
+            8037420260,
+            8037420262,
+            8037420270
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.52,
+        "median": 5.352,
+        "p95": 10.395,
+        "maximum": 11.361,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1000.294,
+      "selectedDisplayLengthMetres": 1000.294,
+      "denseVertexCount": 102,
+      "simplifiedVertexCount": 15,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.477,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7199993,
+          35.748795
+        ],
+        [
+          139.7203252,
+          35.7487579
+        ],
+        [
+          139.720757,
+          35.7486954
+        ],
+        [
+          139.7210744,
+          35.7486249
+        ],
+        [
+          139.7213876,
+          35.7485431
+        ],
+        [
+          139.7216943,
+          35.7484462
+        ],
+        [
+          139.7222906,
+          35.7482202
+        ],
+        [
+          139.7228497,
+          35.7479382
+        ],
+        [
+          139.7229392,
+          35.7478867
+        ],
+        [
+          139.7235534,
+          35.7475124
+        ],
+        [
+          139.7246784,
+          35.7468007
+        ],
+        [
+          139.727057,
+          35.7452228
+        ],
+        [
+          139.727289,
+          35.7450335
+        ],
+        [
+          139.7282427,
+          35.7440564
+        ],
+        [
+          139.7287032,
+          35.7435574
+        ]
+      ]
+    },
+    {
+      "index": 11,
+      "from": {
+        "stationCode": "003293",
+        "name": "西巣鴨"
+      },
+      "to": {
+        "stationCode": "003354",
+        "name": "巣鴨"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 140
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 2102289121,
+          "toStopNodeId": 6206716683,
+          "fromMeasureMetres": 10497.62,
+          "toMeasureMetres": 11884.917,
+          "lengthMetres": 1387.297,
+          "wayIds": [
+            663041995
+          ],
+          "nodeIds": [
+            2102289121,
+            8039352177,
+            8037420264,
+            2600954674,
+            6206726485,
+            6206716684,
+            8037421459,
+            6206716683
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8037420270,
+          "toStopNodeId": 3010262703,
+          "fromMeasureMetres": 10502.159,
+          "toMeasureMetres": 11889.364,
+          "lengthMetres": 1387.205,
+          "wayIds": [
+            663041994
+          ],
+          "nodeIds": [
+            8037420270,
+            8039352176,
+            8037420263,
+            8037420271,
+            8037420273,
+            6206716680,
+            8037421458,
+            3010262703
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.999,
+        "median": 4.334,
+        "p95": 11.828,
+        "maximum": 14.269,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1387.109,
+      "selectedDisplayLengthMetres": 1387.109,
+      "denseVertexCount": 140,
+      "simplifiedVertexCount": 4,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.454,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7287032,
+          35.7435574
+        ],
+        [
+          139.7327486,
+          35.7392902
+        ],
+        [
+          139.7370512,
+          35.7348441
+        ],
+        [
+          139.738244,
+          35.7337853
+        ]
+      ]
+    },
+    {
+      "index": 12,
+      "from": {
+        "stationCode": "003354",
+        "name": "巣鴨"
+      },
+      "to": {
+        "stationCode": "003415",
+        "name": "千石"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 93
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6206716683,
+          "toStopNodeId": 264440323,
+          "fromMeasureMetres": 11884.917,
+          "toMeasureMetres": 12795.76,
+          "lengthMetres": 910.843,
+          "wayIds": [
+            663041995,
+            660716140
+          ],
+          "nodeIds": [
+            6206716683,
+            8037421457,
+            6206716682,
+            8037420227,
+            2007117307,
+            4597822552,
+            4597822553,
+            8037420225,
+            264440323
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 3010262703,
+          "toStopNodeId": 8037420232,
+          "fromMeasureMetres": 11889.364,
+          "toMeasureMetres": 12800.477,
+          "lengthMetres": 911.112,
+          "wayIds": [
+            663041994,
+            687230734
+          ],
+          "nodeIds": [
+            3010262703,
+            8037421456,
+            6206716679,
+            8037420226,
+            8037420228,
+            8037420229,
+            8037420230,
+            8037420231,
+            8037420224,
+            8037420232
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.464,
+        "median": 4.909,
+        "p95": 11.598,
+        "maximum": 14.269,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 910.827,
+      "selectedDisplayLengthMetres": 910.827,
+      "denseVertexCount": 93,
+      "simplifiedVertexCount": 7,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.386,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.738244,
+          35.7337853
+        ],
+        [
+          139.7393682,
+          35.7328113
+        ],
+        [
+          139.7405453,
+          35.7317547
+        ],
+        [
+          139.7412916,
+          35.7311022
+        ],
+        [
+          139.7436189,
+          35.7287368
+        ],
+        [
+          139.7442439,
+          35.728237
+        ],
+        [
+          139.7449944,
+          35.7277169
+        ]
+      ]
+    },
+    {
+      "index": 13,
+      "from": {
+        "stationCode": "003415",
+        "name": "千石"
+      },
+      "to": {
+        "stationCode": "003461",
+        "name": "白山"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 103
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 264440323,
+          "toStopNodeId": 264440831,
+          "fromMeasureMetres": 12795.76,
+          "toMeasureMetres": 13813.096,
+          "lengthMetres": 1017.336,
+          "wayIds": [
+            660716140
+          ],
+          "nodeIds": [
+            264440323,
+            4597822551,
+            4597822550,
+            2007117306,
+            2007117305,
+            8037420223,
+            2600954671,
+            8037420220,
+            1825133094,
+            8037420216,
+            8037420218,
+            1825133093,
+            1825133092,
+            2007117294,
+            8037420214,
+            2600954670,
+            6447980254,
+            2007117287,
+            8037420213,
+            264440831
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8037420232,
+          "toStopNodeId": 8037420245,
+          "fromMeasureMetres": 12800.477,
+          "toMeasureMetres": 13819.559,
+          "lengthMetres": 1019.082,
+          "wayIds": [
+            687230734
+          ],
+          "nodeIds": [
+            8037420232,
+            8037420233,
+            8037420234,
+            8037420235,
+            8037420236,
+            8037420222,
+            8037420237,
+            8037420221,
+            8037420238,
+            8037420217,
+            8037420219,
+            8037420239,
+            8037420240,
+            8037420241,
+            8037420215,
+            8037420242,
+            8037420243,
+            8037420244,
+            8037420212,
+            8037420245
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.135,
+        "median": 5.454,
+        "p95": 10.498,
+        "maximum": 11.598,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1018.008,
+      "selectedDisplayLengthMetres": 1018.008,
+      "denseVertexCount": 103,
+      "simplifiedVertexCount": 21,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.452,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7449944,
+          35.7277169
+        ],
+        [
+          139.7456683,
+          35.7272518
+        ],
+        [
+          139.7461059,
+          35.7269779
+        ],
+        [
+          139.7479598,
+          35.7259995
+        ],
+        [
+          139.7486543,
+          35.7257227
+        ],
+        [
+          139.7493799,
+          35.7255044
+        ],
+        [
+          139.7496835,
+          35.7253959
+        ],
+        [
+          139.7500714,
+          35.7252238
+        ],
+        [
+          139.7503511,
+          35.7250791
+        ],
+        [
+          139.7506104,
+          35.7249112
+        ],
+        [
+          139.7506915,
+          35.7248504
+        ],
+        [
+          139.7511563,
+          35.7244661
+        ],
+        [
+          139.7514139,
+          35.7241745
+        ],
+        [
+          139.7515888,
+          35.7239456
+        ],
+        [
+          139.7518817,
+          35.7234624
+        ],
+        [
+          139.7520104,
+          35.7231192
+        ],
+        [
+          139.7521499,
+          35.7225926
+        ],
+        [
+          139.7521764,
+          35.7224146
+        ],
+        [
+          139.7521836,
+          35.7223252
+        ],
+        [
+          139.752165,
+          35.7216969
+        ],
+        [
+          139.7521487,
+          35.7215179
+        ]
+      ]
+    },
+    {
+      "index": 14,
+      "from": {
+        "stationCode": "003461",
+        "name": "白山"
+      },
+      "to": {
+        "stationCode": "003529",
+        "name": "春日"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 133
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 264440831,
+          "toStopNodeId": 1926709967,
+          "fromMeasureMetres": 13813.096,
+          "toMeasureMetres": 15128.132,
+          "lengthMetres": 1315.036,
+          "wayIds": [
+            660716140
+          ],
+          "nodeIds": [
+            264440831,
+            8039352174,
+            8039352173,
+            8037420211,
+            8037420209,
+            2329712973,
+            8037420203,
+            8037420205,
+            8037420207,
+            4597822549,
+            8037420199,
+            8037420201,
+            1926709967
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8037420245,
+          "toStopNodeId": 8037420248,
+          "fromMeasureMetres": 13819.559,
+          "toMeasureMetres": 15133.058,
+          "lengthMetres": 1313.5,
+          "wayIds": [
+            687230734
+          ],
+          "nodeIds": [
+            8037420245,
+            8039352175,
+            8037420210,
+            8037420208,
+            8037420246,
+            8037420202,
+            8037420204,
+            8037420206,
+            8037420247,
+            8037420198,
+            8037420200,
+            8037420248
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 2.994,
+        "median": 4.635,
+        "p95": 5.107,
+        "maximum": 5.142,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1314.192,
+      "selectedDisplayLengthMetres": 1314.192,
+      "denseVertexCount": 133,
+      "simplifiedVertexCount": 12,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.442,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7521487,
+          35.7215179
+        ],
+        [
+          139.7520932,
+          35.7212531
+        ],
+        [
+          139.7520436,
+          35.7210787
+        ],
+        [
+          139.7516279,
+          35.7198714
+        ],
+        [
+          139.7513871,
+          35.7190897
+        ],
+        [
+          139.7513745,
+          35.7183736
+        ],
+        [
+          139.75138,
+          35.7182844
+        ],
+        [
+          139.7514972,
+          35.7176649
+        ],
+        [
+          139.7517473,
+          35.7161563
+        ],
+        [
+          139.7522622,
+          35.7132312
+        ],
+        [
+          139.7524369,
+          35.7123471
+        ],
+        [
+          139.753173,
+          35.7099123
+        ]
+      ]
+    },
+    {
+      "index": 15,
+      "from": {
+        "stationCode": "003529",
+        "name": "春日"
+      },
+      "to": {
+        "stationCode": "003580",
+        "name": "水道橋"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 75
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 1926709967,
+          "toStopNodeId": 6441550157,
+          "fromMeasureMetres": 15128.132,
+          "toMeasureMetres": 15860.434,
+          "lengthMetres": 732.303,
+          "wayIds": [
+            660716140,
+            1379013574
+          ],
+          "nodeIds": [
+            1926709967,
+            8037420197,
+            6248011566,
+            6441550154,
+            12769486622,
+            12769486621,
+            12769486619,
+            7889084334,
+            12769486615,
+            12769486614,
+            12769486611,
+            12769486610,
+            12769486609,
+            6441550158,
+            6441550157
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8037420248,
+          "toStopNodeId": 1926709968,
+          "fromMeasureMetres": 15133.058,
+          "toMeasureMetres": 15867.388,
+          "lengthMetres": 734.33,
+          "wayIds": [
+            687230734,
+            1379013575
+          ],
+          "nodeIds": [
+            8037420248,
+            8037420196,
+            12769486623,
+            8037420249,
+            8037420250,
+            12769486620,
+            12769486618,
+            12769486617,
+            12769486616,
+            7889084335,
+            12769486613,
+            12769486612,
+            1926709968
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.895,
+        "median": 4.139,
+        "p95": 12.623,
+        "maximum": 14.175,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 733.22,
+      "selectedDisplayLengthMetres": 733.22,
+      "denseVertexCount": 75,
+      "simplifiedVertexCount": 8,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.438,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.753173,
+          35.7099123
+        ],
+        [
+          139.7534329,
+          35.7090464
+        ],
+        [
+          139.7537039,
+          35.7082751
+        ],
+        [
+          139.7541149,
+          35.7071657
+        ],
+        [
+          139.7542262,
+          35.7068209
+        ],
+        [
+          139.7545339,
+          35.705781
+        ],
+        [
+          139.7548015,
+          35.7049167
+        ],
+        [
+          139.7551896,
+          35.703527
+        ]
+      ]
+    },
+    {
+      "index": 16,
+      "from": {
+        "stationCode": "003580",
+        "name": "水道橋"
+      },
+      "to": {
+        "stationCode": "003651",
+        "name": "神保町"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 102
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6441550157,
+          "toStopNodeId": 6186032726,
+          "fromMeasureMetres": 15860.434,
+          "toMeasureMetres": 16860.989,
+          "lengthMetres": 1000.554,
+          "wayIds": [
+            1379013574
+          ],
+          "nodeIds": [
+            6441550157,
+            6441550156,
+            8039352172,
+            12768415878,
+            7889084332,
+            12768415877,
+            12768415876,
+            12768415875,
+            12768415874,
+            12768415873,
+            12768415872,
+            12768415871,
+            7889084329,
+            12768415870,
+            7889084331,
+            12768415869,
+            12768415868,
+            12768415867,
+            12768415866,
+            12768415865,
+            12768415864,
+            12768415863,
+            7889084326,
+            8032234277,
+            6158384283,
+            6186032726
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 1926709968,
+          "toStopNodeId": 6186032727,
+          "fromMeasureMetres": 15867.388,
+          "toMeasureMetres": 16868.167,
+          "lengthMetres": 1000.778,
+          "wayIds": [
+            1379013575
+          ],
+          "nodeIds": [
+            1926709968,
+            2329712909,
+            8039352171,
+            12768415900,
+            12768415899,
+            7889084333,
+            12768415898,
+            12768415897,
+            12768415896,
+            12768415895,
+            12768415894,
+            12768415893,
+            7889084328,
+            12768415892,
+            12768415891,
+            7889084330,
+            12768415890,
+            12768415889,
+            12768415888,
+            12768415887,
+            12768415886,
+            12768415885,
+            12768415884,
+            12768415883,
+            12768415882,
+            12768415881,
+            12768415880,
+            7889084327,
+            12768415879,
+            8032234278,
+            6186032718,
+            6186032727
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.842,
+        "median": 13.295,
+        "p95": 15.5,
+        "maximum": 15.661,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1000.43,
+      "selectedDisplayLengthMetres": 1000.43,
+      "denseVertexCount": 102,
+      "simplifiedVertexCount": 19,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.431,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7551896,
+          35.703527
+        ],
+        [
+          139.7553143,
+          35.7030931
+        ],
+        [
+          139.7554781,
+          35.7025755
+        ],
+        [
+          139.7555402,
+          35.7023132
+        ],
+        [
+          139.7555694,
+          35.7020472
+        ],
+        [
+          139.7555548,
+          35.7014238
+        ],
+        [
+          139.7555618,
+          35.7011567
+        ],
+        [
+          139.7555827,
+          35.7009794
+        ],
+        [
+          139.755617,
+          35.7008034
+        ],
+        [
+          139.7556985,
+          35.7005446
+        ],
+        [
+          139.7558018,
+          35.700291
+        ],
+        [
+          139.7559724,
+          35.6999631
+        ],
+        [
+          139.7572203,
+          35.6977819
+        ],
+        [
+          139.7577438,
+          35.6968988
+        ],
+        [
+          139.7578727,
+          35.696653
+        ],
+        [
+          139.7579461,
+          35.6964851
+        ],
+        [
+          139.7580312,
+          35.6962271
+        ],
+        [
+          139.7581412,
+          35.6957907
+        ],
+        [
+          139.7583107,
+          35.6950007
+        ]
+      ]
+    },
+    {
+      "index": 17,
+      "from": {
+        "stationCode": "003651",
+        "name": "神保町"
+      },
+      "to": {
+        "stationCode": "003719",
+        "name": "大手町"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 150
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6186032726,
+          "toStopNodeId": 1926709961,
+          "fromMeasureMetres": 16860.989,
+          "toMeasureMetres": 18346.131,
+          "lengthMetres": 1485.142,
+          "wayIds": [
+            1379013574,
+            661299592,
+            678481167
+          ],
+          "nodeIds": [
+            6186032726,
+            8032234275,
+            6158384273,
+            7871751786,
+            7871763892,
+            7871767585,
+            7871763993,
+            7871763791,
+            7871765986,
+            7871763789,
+            7871763992,
+            7871763787,
+            6158384272,
+            8036282246,
+            4597822541,
+            8036282247,
+            4597822546,
+            7058819022,
+            8036282248,
+            4597822539,
+            12768415856,
+            4597822540,
+            12768415857,
+            5647022018,
+            12768415858,
+            7058819023,
+            12768415859,
+            5513465465,
+            12768415860,
+            4597822534,
+            12768415861,
+            12768415862,
+            4597822533,
+            8036282249,
+            4597822536,
+            4597822532,
+            4597822537,
+            4597822538,
+            1926709961
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 6186032727,
+          "toStopNodeId": 6191069607,
+          "fromMeasureMetres": 16868.167,
+          "toMeasureMetres": 18357.42,
+          "lengthMetres": 1489.253,
+          "wayIds": [
+            1379013575,
+            862542327,
+            661299593
+          ],
+          "nodeIds": [
+            6186032727,
+            8032234276,
+            6186032717,
+            7871765987,
+            7871763790,
+            7871763893,
+            7871765286,
+            7871751787,
+            7871763788,
+            7871765188,
+            7871763991,
+            7871763891,
+            8036282244,
+            8036282227,
+            8036282228,
+            8036282229,
+            8036282230,
+            8036282231,
+            8036282232,
+            8036282233,
+            8036282234,
+            8036282235,
+            8036282236,
+            12768415845,
+            8036282237,
+            12768415844,
+            12768415843,
+            8036282238,
+            12768415842,
+            8036282239,
+            12768415841,
+            8036282240,
+            12768415840,
+            8036282241,
+            12768415839,
+            8036282242,
+            12768415818,
+            12768415817,
+            8036282243,
+            12768415816,
+            8036282245,
+            6191069608,
+            6191069607
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.628,
+        "median": 5.511,
+        "p95": 12.817,
+        "maximum": 13.396,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1486.725,
+      "selectedDisplayLengthMetres": 1486.725,
+      "denseVertexCount": 150,
+      "simplifiedVertexCount": 28,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.498,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7583107,
+          35.6950007
+        ],
+        [
+          139.7584504,
+          35.6942916
+        ],
+        [
+          139.7585687,
+          35.6935808
+        ],
+        [
+          139.7586088,
+          35.6934043
+        ],
+        [
+          139.7586737,
+          35.693233
+        ],
+        [
+          139.7588134,
+          35.6929888
+        ],
+        [
+          139.7590122,
+          35.6927741
+        ],
+        [
+          139.7591636,
+          35.6926436
+        ],
+        [
+          139.7593314,
+          35.6925267
+        ],
+        [
+          139.7617347,
+          35.6910896
+        ],
+        [
+          139.7621126,
+          35.6909035
+        ],
+        [
+          139.7630951,
+          35.6904922
+        ],
+        [
+          139.7633784,
+          35.6903529
+        ],
+        [
+          139.7636274,
+          35.6901755
+        ],
+        [
+          139.7638339,
+          35.6899653
+        ],
+        [
+          139.7639439,
+          35.6898101
+        ],
+        [
+          139.7640331,
+          35.689646
+        ],
+        [
+          139.7640687,
+          35.689561
+        ],
+        [
+          139.7641212,
+          35.6893869
+        ],
+        [
+          139.7641503,
+          35.6892091
+        ],
+        [
+          139.7641555,
+          35.6891195
+        ],
+        [
+          139.7641461,
+          35.6889403
+        ],
+        [
+          139.7641093,
+          35.6887635
+        ],
+        [
+          139.7636675,
+          35.6873728
+        ],
+        [
+          139.7633113,
+          35.6861499
+        ],
+        [
+          139.763167,
+          35.6856243
+        ],
+        [
+          139.7629815,
+          35.6848312
+        ],
+        [
+          139.7627394,
+          35.6839554
+        ]
+      ]
+    },
+    {
+      "index": 18,
+      "from": {
+        "stationCode": "003719",
+        "name": "大手町"
+      },
+      "to": {
+        "stationCode": "003802",
+        "name": "日比谷"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 90
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 1926709961,
+          "toStopNodeId": 6192966787,
+          "fromMeasureMetres": 18346.131,
+          "toMeasureMetres": 19231.437,
+          "lengthMetres": 885.306,
+          "wayIds": [
+            678481167
+          ],
+          "nodeIds": [
+            1926709961,
+            6191069605,
+            6191069604,
+            8038345780,
+            12768415810,
+            12768415811,
+            8038345774,
+            8038345771,
+            8038345776,
+            8038345778,
+            12768415809,
+            8038345770,
+            12768415808,
+            4597822531,
+            12768415815,
+            8038345766,
+            12768415807,
+            12768415806,
+            12768415805,
+            6193465468,
+            8038345759,
+            6192966787
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 6191069607,
+          "toStopNodeId": 6193465466,
+          "fromMeasureMetres": 18357.42,
+          "toMeasureMetres": 19242.001,
+          "lengthMetres": 884.582,
+          "wayIds": [
+            661299593
+          ],
+          "nodeIds": [
+            6191069607,
+            6191069606,
+            8038345782,
+            8038345779,
+            8038345773,
+            8038345772,
+            8038345775,
+            8038345777,
+            12768415832,
+            8038345769,
+            8038345781,
+            12768415814,
+            8038345765,
+            12768415804,
+            12768415803,
+            8038345783,
+            8038345760,
+            12768415802,
+            6193465466
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.862,
+        "median": 4.451,
+        "p95": 12.603,
+        "maximum": 13.396,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 884.788,
+      "selectedDisplayLengthMetres": 884.788,
+      "denseVertexCount": 90,
+      "simplifiedVertexCount": 10,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.408,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7627394,
+          35.6839554
+        ],
+        [
+          139.7625248,
+          35.6831699
+        ],
+        [
+          139.7624443,
+          35.68291
+        ],
+        [
+          139.7622902,
+          35.6824809
+        ],
+        [
+          139.7619574,
+          35.6816285
+        ],
+        [
+          139.7618683,
+          35.6813702
+        ],
+        [
+          139.761361,
+          35.6798143
+        ],
+        [
+          139.7611311,
+          35.6790316
+        ],
+        [
+          139.7604635,
+          35.6770484
+        ],
+        [
+          139.7601943,
+          35.6762739
+        ]
+      ]
+    },
+    {
+      "index": 19,
+      "from": {
+        "stationCode": "003802",
+        "name": "日比谷"
+      },
+      "to": {
+        "stationCode": "003842",
+        "name": "内幸町"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 90
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6192966787,
+          "toStopNodeId": 1926709957,
+          "fromMeasureMetres": 19231.437,
+          "toMeasureMetres": 20109.394,
+          "lengthMetres": 877.958,
+          "wayIds": [
+            678481167,
+            1378889442
+          ],
+          "nodeIds": [
+            6192966787,
+            6193465462,
+            6193465464,
+            6193587677,
+            12768415801,
+            12768415800,
+            4114726578,
+            4597822529,
+            8038345751,
+            8038345752,
+            12768415771,
+            12768415770,
+            4597822527,
+            12768415769,
+            6193465453,
+            8038345753,
+            8038345756,
+            12768415766,
+            12768415786,
+            4597822526,
+            12768415764,
+            8038345754,
+            1926709957
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 6193465466,
+          "toStopNodeId": 8039179591,
+          "fromMeasureMetres": 19242.001,
+          "toMeasureMetres": 20122.448,
+          "lengthMetres": 880.447,
+          "wayIds": [
+            661299593,
+            1378889441
+          ],
+          "nodeIds": [
+            6193465466,
+            6193465465,
+            12768415775,
+            8039179592,
+            12768415774,
+            11428891777,
+            12768415773,
+            8039162280,
+            8039162282,
+            8039162283,
+            12768415772,
+            8039162284,
+            12768415768,
+            8039179585,
+            12768415767,
+            8039179586,
+            8039179589,
+            12768415765,
+            8039179590,
+            8039179591
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.413,
+        "median": 5.519,
+        "p95": 15.185,
+        "maximum": 15.833,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 878.964,
+      "selectedDisplayLengthMetres": 878.964,
+      "denseVertexCount": 90,
+      "simplifiedVertexCount": 14,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.491,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7601943,
+          35.6762739
+        ],
+        [
+          139.7600599,
+          35.6759357
+        ],
+        [
+          139.7599794,
+          35.6757707
+        ],
+        [
+          139.7598307,
+          35.6755333
+        ],
+        [
+          139.7596614,
+          35.6753052
+        ],
+        [
+          139.7592805,
+          35.6748712
+        ],
+        [
+          139.7590185,
+          35.6745865
+        ],
+        [
+          139.7579112,
+          35.6734857
+        ],
+        [
+          139.7577193,
+          35.6732696
+        ],
+        [
+          139.7575448,
+          35.6730439
+        ],
+        [
+          139.7574366,
+          35.6728895
+        ],
+        [
+          139.7572901,
+          35.672651
+        ],
+        [
+          139.7562537,
+          35.670887
+        ],
+        [
+          139.7553799,
+          35.6694556
+        ]
+      ]
+    },
+    {
+      "index": 20,
+      "from": {
+        "stationCode": "003842",
+        "name": "内幸町"
+      },
+      "to": {
+        "stationCode": "003911",
+        "name": "御成門"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 104
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 1926709957,
+          "toStopNodeId": 6352945234,
+          "fromMeasureMetres": 20109.394,
+          "toMeasureMetres": 21138.05,
+          "lengthMetres": 1028.656,
+          "wayIds": [
+            1378889442,
+            1378889439
+          ],
+          "nodeIds": [
+            1926709957,
+            6352945236,
+            7872774267,
+            7872774269,
+            12768415760,
+            12768415756,
+            12768415755,
+            12768415754,
+            7872774271,
+            6352945235,
+            6352945234
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8039179591,
+          "toStopNodeId": 1926709965,
+          "fromMeasureMetres": 20122.448,
+          "toMeasureMetres": 21152.018,
+          "lengthMetres": 1029.57,
+          "wayIds": [
+            1378889441,
+            1378889440
+          ],
+          "nodeIds": [
+            8039179591,
+            8039179593,
+            7872774268,
+            7872774270,
+            12768415763,
+            12768415762,
+            12768415761,
+            12768415759,
+            12768415758,
+            12768415757,
+            12768415753,
+            7872774272,
+            12768415752,
+            12768415751,
+            7872774273,
+            6352945229,
+            12768415750,
+            1926709965
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 3.845,
+        "median": 4.04,
+        "p95": 12.102,
+        "maximum": 15.833,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1028.944,
+      "selectedDisplayLengthMetres": 1028.944,
+      "denseVertexCount": 104,
+      "simplifiedVertexCount": 9,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.314,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7553799,
+          35.6694556
+        ],
+        [
+          139.7549765,
+          35.6687168
+        ],
+        [
+          139.7547179,
+          35.6682206
+        ],
+        [
+          139.7545966,
+          35.6679698
+        ],
+        [
+          139.7527071,
+          35.6638428
+        ],
+        [
+          139.7520021,
+          35.6623302
+        ],
+        [
+          139.7518543,
+          35.6619915
+        ],
+        [
+          139.7515772,
+          35.6613093
+        ],
+        [
+          139.751342,
+          35.6608052
+        ]
+      ]
+    },
+    {
+      "index": 21,
+      "from": {
+        "stationCode": "003911",
+        "name": "御成門"
+      },
+      "to": {
+        "stationCode": "003962",
+        "name": "芝公園"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 76
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6352945234,
+          "toStopNodeId": 1926709982,
+          "fromMeasureMetres": 21138.05,
+          "toMeasureMetres": 21886.459,
+          "lengthMetres": 748.408,
+          "wayIds": [
+            1378889439
+          ],
+          "nodeIds": [
+            6352945234,
+            7924577870,
+            6352945233,
+            12768415741,
+            7872774276,
+            7924593288,
+            7872774280,
+            7872774278,
+            7872774284,
+            7872774282,
+            12768415719,
+            12768415718,
+            7872848486,
+            1926709982
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 1926709965,
+          "toStopNodeId": 8025512624,
+          "fromMeasureMetres": 21152.018,
+          "toMeasureMetres": 21896.522,
+          "lengthMetres": 744.504,
+          "wayIds": [
+            1378889440
+          ],
+          "nodeIds": [
+            1926709965,
+            7924577869,
+            6352945231,
+            7924593296,
+            7872774275,
+            12768415742,
+            7924593287,
+            12768415743,
+            7872774279,
+            7872774277,
+            12768415722,
+            7872774283,
+            7872774281,
+            7872848485,
+            8025512624
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 4.157,
+        "median": 8.285,
+        "p95": 11.021,
+        "maximum": 11.119,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 746.421,
+      "selectedDisplayLengthMetres": 746.421,
+      "denseVertexCount": 76,
+      "simplifiedVertexCount": 9,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.477,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.751342,
+          35.6608052
+        ],
+        [
+          139.7509201,
+          35.6598822
+        ],
+        [
+          139.7508141,
+          35.6596278
+        ],
+        [
+          139.7506329,
+          35.6591114
+        ],
+        [
+          139.750485,
+          35.6585881
+        ],
+        [
+          139.7503666,
+          35.6579691
+        ],
+        [
+          139.7502204,
+          35.6568116
+        ],
+        [
+          139.7501358,
+          35.6560091
+        ],
+        [
+          139.7498963,
+          35.6542296
+        ]
+      ]
+    },
+    {
+      "index": 22,
+      "from": {
+        "stationCode": "003962",
+        "name": "芝公園"
+      },
+      "to": {
+        "stationCode": "003986",
+        "name": "三田"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 71
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 1926709982,
+          "toStopNodeId": 6355611757,
+          "fromMeasureMetres": 21886.459,
+          "toMeasureMetres": 22582.119,
+          "lengthMetres": 695.66,
+          "wayIds": [
+            1378889439,
+            24372343,
+            409233306
+          ],
+          "nodeIds": [
+            1926709982,
+            6352945232,
+            6190260069,
+            12768415680,
+            12768415682,
+            2329712540,
+            12768415631,
+            12768415632,
+            12768415634,
+            12768415635,
+            12768415636,
+            12768415637,
+            6355611757
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 8025512624,
+          "toStopNodeId": 264440562,
+          "fromMeasureMetres": 21896.522,
+          "toMeasureMetres": 22592.764,
+          "lengthMetres": 696.242,
+          "wayIds": [
+            1378889440,
+            409233314
+          ],
+          "nodeIds": [
+            8025512624,
+            8025512620,
+            12768415679,
+            8025512625,
+            12768415683,
+            12768415681,
+            8025512623,
+            8025512617,
+            12768415627,
+            12768415628,
+            12768415633,
+            12768415626,
+            12768415625,
+            6355601532,
+            12768415624,
+            264440562
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 0.004,
+        "median": 4.276,
+        "p95": 4.657,
+        "maximum": 4.738,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 695.911,
+      "selectedDisplayLengthMetres": 695.911,
+      "denseVertexCount": 71,
+      "simplifiedVertexCount": 7,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.471,
+      "boundaryAdjustment": null,
+      "flags": [],
+      "coordinates": [
+        [
+          139.7498963,
+          35.6542296
+        ],
+        [
+          139.7496998,
+          35.6528079
+        ],
+        [
+          139.7491821,
+          35.6497972
+        ],
+        [
+          139.7490564,
+          35.6492709
+        ],
+        [
+          139.7489004,
+          35.6487497
+        ],
+        [
+          139.7487992,
+          35.6484945
+        ],
+        [
+          139.7485807,
+          35.6480842
+        ]
+      ]
+    },
+    {
+      "index": 23,
+      "from": {
+        "stationCode": "003986",
+        "name": "三田"
+      },
+      "to": {
+        "stationCode": "004025",
+        "name": "白金高輪"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 164
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 6355611757,
+          "toStopNodeId": 4111329881,
+          "fromMeasureMetres": 22582.119,
+          "toMeasureMetres": 24210.432,
+          "lengthMetres": 1628.313,
+          "wayIds": [
+            409233306,
+            1378889434
+          ],
+          "nodeIds": [
+            6355611757,
+            12768415638,
+            12768415639,
+            12768415640,
+            12768415641,
+            12768415642,
+            12768415643,
+            12768415644,
+            12768415645,
+            12768415646,
+            12768415647,
+            12768415648,
+            12768415649,
+            12768415650,
+            12768415651,
+            12768415652,
+            12768415653,
+            12768415654,
+            12768415656,
+            12768415657,
+            12768415658,
+            12768415659,
+            12768415660,
+            12768415661,
+            12768415662,
+            12768415611,
+            12768415664,
+            12768415665,
+            12768415666,
+            12768415667,
+            12768415668,
+            12768415669,
+            12768415670,
+            12768415671,
+            12768415672,
+            12768415673,
+            12768415674,
+            12768415675,
+            12768415676,
+            12768415677,
+            4597822509,
+            12768415678,
+            12768415629,
+            4597822507,
+            12768415630,
+            4597822510,
+            12768415603,
+            2329712539,
+            7908614184,
+            12768415602,
+            2329712538,
+            4111329869,
+            4111329866,
+            4111329863,
+            2329712536,
+            7908619798,
+            264440135,
+            4111329881
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 264440562,
+          "toStopNodeId": 4111329878,
+          "fromMeasureMetres": 22592.764,
+          "toMeasureMetres": 24189.86,
+          "lengthMetres": 1597.096,
+          "wayIds": [
+            409233314
+          ],
+          "nodeIds": [
+            264440562,
+            12768415623,
+            6355601533,
+            6355601534,
+            4597822521,
+            8025512629,
+            12768415622,
+            8025512631,
+            12768415621,
+            12768415620,
+            8025512630,
+            12768415619,
+            12768415618,
+            4597822520,
+            12768415617,
+            12768415616,
+            4597822519,
+            6355601537,
+            4597822517,
+            12768415615,
+            12768415614,
+            12768415613,
+            12768415612,
+            6355601536,
+            4597822518,
+            12768415611,
+            12768415610,
+            4597822513,
+            12768415609,
+            4597822514,
+            12768415608,
+            4597822516,
+            4597822515,
+            12768415607,
+            12768415606,
+            4597822524,
+            12768415605,
+            12768415604,
+            12768415601,
+            4597822512,
+            12768415655,
+            4597822508,
+            4111329873,
+            12768406500,
+            4111329871,
+            12768406499,
+            4111329868,
+            12768406498,
+            4111329867,
+            4111329864,
+            4111329862,
+            12768406497,
+            4111329861,
+            7908619797,
+            4111329859,
+            4111329878
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 0.011,
+        "median": 15.694,
+        "p95": 35.255,
+        "maximum": 37.966,
+        "samplesOver20Metres": 59,
+        "fractionOver20Metres": 0.359756
+      },
+      "rawOsmMidpointLengthMetres": 1611.302,
+      "selectedDisplayLengthMetres": 1611.302,
+      "denseVertexCount": 164,
+      "simplifiedVertexCount": 55,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.472,
+      "boundaryAdjustment": null,
+      "flags": [
+        "TRACK_PAIR_DISAGREEMENT_GT_20M"
+      ],
+      "coordinates": [
+        [
+          139.7485807,
+          35.6480842
+        ],
+        [
+          139.7484802,
+          35.6479262
+        ],
+        [
+          139.7482946,
+          35.6477063
+        ],
+        [
+          139.7481451,
+          35.6475765
+        ],
+        [
+          139.7480637,
+          35.6475174
+        ],
+        [
+          139.7479747,
+          35.6474655
+        ],
+        [
+          139.7477884,
+          35.6473723
+        ],
+        [
+          139.7475907,
+          35.6472958
+        ],
+        [
+          139.7473818,
+          35.6472427
+        ],
+        [
+          139.7471662,
+          35.6472122
+        ],
+        [
+          139.747057,
+          35.6472046
+        ],
+        [
+          139.7469477,
+          35.6471992
+        ],
+        [
+          139.7460713,
+          35.6472132
+        ],
+        [
+          139.7446467,
+          35.6472133
+        ],
+        [
+          139.7444277,
+          35.6472187
+        ],
+        [
+          139.74421,
+          35.6472376
+        ],
+        [
+          139.7439959,
+          35.6472748
+        ],
+        [
+          139.7437881,
+          35.6473309
+        ],
+        [
+          139.7436874,
+          35.6473657
+        ],
+        [
+          139.7433935,
+          35.6474852
+        ],
+        [
+          139.7429113,
+          35.6476963
+        ],
+        [
+          139.7427111,
+          35.6477682
+        ],
+        [
+          139.7423985,
+          35.6478498
+        ],
+        [
+          139.7421836,
+          35.647882
+        ],
+        [
+          139.7420745,
+          35.6478896
+        ],
+        [
+          139.7418556,
+          35.647894
+        ],
+        [
+          139.7416366,
+          35.6478877
+        ],
+        [
+          139.7414184,
+          35.6478727
+        ],
+        [
+          139.7412017,
+          35.6478467
+        ],
+        [
+          139.7409866,
+          35.6478129
+        ],
+        [
+          139.740774,
+          35.6477701
+        ],
+        [
+          139.7404605,
+          35.64769
+        ],
+        [
+          139.7402562,
+          35.6476259
+        ],
+        [
+          139.7399578,
+          35.6475142
+        ],
+        [
+          139.7397643,
+          35.6474308
+        ],
+        [
+          139.7395772,
+          35.6473383
+        ],
+        [
+          139.7393074,
+          35.647186
+        ],
+        [
+          139.7386909,
+          35.6468155
+        ],
+        [
+          139.7385089,
+          35.6467164
+        ],
+        [
+          139.7383197,
+          35.6466269
+        ],
+        [
+          139.7380233,
+          35.6465121
+        ],
+        [
+          139.7378184,
+          35.6464494
+        ],
+        [
+          139.7375062,
+          35.6463674
+        ],
+        [
+          139.7369818,
+          35.6462454
+        ],
+        [
+          139.7366742,
+          35.6461564
+        ],
+        [
+          139.7364778,
+          35.6460799
+        ],
+        [
+          139.7362878,
+          35.6459926
+        ],
+        [
+          139.7360229,
+          35.6458355
+        ],
+        [
+          139.7357904,
+          35.6456473
+        ],
+        [
+          139.7356537,
+          35.6455086
+        ],
+        [
+          139.7355362,
+          35.6453589
+        ],
+        [
+          139.7354294,
+          35.6452042
+        ],
+        [
+          139.7352801,
+          35.6449668
+        ],
+        [
+          139.7346833,
+          35.6439165
+        ],
+        [
+          139.7341474,
+          35.6429415
+        ]
+      ]
+    },
+    {
+      "index": 24,
+      "from": {
+        "stationCode": "004025",
+        "name": "白金高輪"
+      },
+      "to": {
+        "stationCode": "004044",
+        "name": "白金台"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 96
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 4111329881,
+          "toStopNodeId": 4111329877,
+          "fromMeasureMetres": 24210.432,
+          "toMeasureMetres": 25129.247,
+          "lengthMetres": 918.815,
+          "wayIds": [
+            1378889434,
+            664537127
+          ],
+          "nodeIds": [
+            4111329881,
+            7908614183,
+            12768415688,
+            12768415687,
+            4111329856,
+            12768415686,
+            4111329850,
+            7908647157,
+            7908647164,
+            7908647162,
+            7908647159,
+            7908647158,
+            1825132980,
+            7908647167,
+            1825132978,
+            7908647169,
+            1825132977,
+            7908647171,
+            7908647172,
+            2011993600,
+            2011993599,
+            2011993598,
+            2011993597,
+            2011993596,
+            2011993595,
+            4111329877
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 4111329878,
+          "toStopNodeId": 4111329876,
+          "fromMeasureMetres": 24189.86,
+          "toMeasureMetres": 25132.062,
+          "lengthMetres": 942.202,
+          "wayIds": [
+            409233314,
+            409233325
+          ],
+          "nodeIds": [
+            4111329878,
+            7908614182,
+            4111329853,
+            7908704465,
+            4111329847,
+            7908647156,
+            7908647163,
+            7908647161,
+            7908647160,
+            4111329835,
+            4111329829,
+            7908647179,
+            7908647168,
+            4111329825,
+            7908647170,
+            4111329824,
+            7908647173,
+            4111329823,
+            4111329822,
+            4111329821,
+            4111329820,
+            4111329819,
+            4111329876
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 2.833,
+        "median": 13.35,
+        "p95": 22.433,
+        "maximum": 26.274,
+        "samplesOver20Metres": 25,
+        "fractionOver20Metres": 0.260417
+      },
+      "rawOsmMidpointLengthMetres": 929.742,
+      "selectedDisplayLengthMetres": 929.742,
+      "denseVertexCount": 96,
+      "simplifiedVertexCount": 21,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.494,
+      "boundaryAdjustment": null,
+      "flags": [
+        "TRACK_PAIR_DISAGREEMENT_GT_20M"
+      ],
+      "coordinates": [
+        [
+          139.7341474,
+          35.6429415
+        ],
+        [
+          139.7338983,
+          35.642454
+        ],
+        [
+          139.7336208,
+          35.6418815
+        ],
+        [
+          139.7332805,
+          35.6411397
+        ],
+        [
+          139.7331768,
+          35.6409853
+        ],
+        [
+          139.7330538,
+          35.6408402
+        ],
+        [
+          139.7329141,
+          35.6407057
+        ],
+        [
+          139.7327538,
+          35.6405874
+        ],
+        [
+          139.7325736,
+          35.6404901
+        ],
+        [
+          139.7323833,
+          35.6404058
+        ],
+        [
+          139.7321814,
+          35.6403419
+        ],
+        [
+          139.7320767,
+          35.6403191
+        ],
+        [
+          139.7319712,
+          35.6402989
+        ],
+        [
+          139.7317563,
+          35.6402756
+        ],
+        [
+          139.7307853,
+          35.6402043
+        ],
+        [
+          139.7304691,
+          35.6401438
+        ],
+        [
+          139.7300613,
+          35.640025
+        ],
+        [
+          139.7298726,
+          35.6399385
+        ],
+        [
+          139.7296932,
+          35.6398401
+        ],
+        [
+          139.7283204,
+          35.6389779
+        ],
+        [
+          139.726562,
+          35.6381047
+        ]
+      ]
+    },
+    {
+      "index": 25,
+      "from": {
+        "stationCode": "004044",
+        "name": "白金台"
+      },
+      "to": {
+        "stationCode": "004072",
+        "name": "目黒"
+      },
+      "pairing": {
+        "method": "equal normalized monotone passenger distance within this stop pair",
+        "targetSampleSpacingMetres": 10.0,
+        "matchedSampleCount": 133
+      },
+      "sourceTracks": {
+        "meguroToNishiTakashimadairaReversed": {
+          "relationId": 443286,
+          "fromStopNodeId": 4111329877,
+          "toStopNodeId": 4111329882,
+          "fromMeasureMetres": 25129.247,
+          "toMeasureMetres": 26448.219,
+          "lengthMetres": 1318.973,
+          "wayIds": [
+            664537127
+          ],
+          "nodeIds": [
+            4111329877,
+            3860448559,
+            6219771721,
+            1825132976,
+            4111329817,
+            4111329816,
+            4111329815,
+            7880437646,
+            7880437642,
+            4111329814,
+            7880437637,
+            7880437639,
+            7880437638,
+            2011993592,
+            2011993591,
+            1825132973,
+            4111329810,
+            4111329809,
+            7880437636,
+            7880437625,
+            8039211400,
+            8039211399,
+            4111329882
+          ]
+        },
+        "nishiTakashimadairaToMeguro": {
+          "relationId": 8019910,
+          "fromStopNodeId": 4111329876,
+          "toStopNodeId": 4111329883,
+          "fromMeasureMetres": 25132.062,
+          "toMeasureMetres": 26444.778,
+          "lengthMetres": 1312.716,
+          "wayIds": [
+            409233325
+          ],
+          "nodeIds": [
+            4111329876,
+            1928893225,
+            7880437648,
+            6219763734,
+            6219771719,
+            6219771720,
+            6219771729,
+            6219771728,
+            7880437647,
+            2011993594,
+            7880437645,
+            7880437641,
+            7880437640,
+            13413023916,
+            7880437643,
+            7880437644,
+            4111329813,
+            4111329812,
+            4111329811,
+            1825132972,
+            2637442142,
+            7880437635,
+            7880437626,
+            7880437627,
+            8039211398,
+            4111329883
+          ]
+        }
+      },
+      "trackDisagreementMetres": {
+        "minimum": 2.163,
+        "median": 4.263,
+        "p95": 10.65,
+        "maximum": 14.87,
+        "samplesOver20Metres": 0,
+        "fractionOver20Metres": 0.0
+      },
+      "rawOsmMidpointLengthMetres": 1315.204,
+      "selectedDisplayLengthMetres": 1323.236,
+      "denseVertexCount": 133,
+      "simplifiedVertexCount": 26,
+      "simplifyToleranceMetres": 0.5,
+      "simplificationMaxErrorMetres": 0.44,
+      "boundaryAdjustment": {
+        "kind": "linear-displacement-taper-over-interval",
+        "reason": "preserve registered three-company shared display anchor at 目黒",
+        "from": "白金台",
+        "to": "目黒",
+        "endpointDeltaEastMetres": -9.354,
+        "endpointDeltaNorthMetres": -2.302,
+        "endpointDeltaMetres": 9.633
+      },
+      "flags": [],
+      "coordinates": [
+        [
+          139.726562,
+          35.6381047
+        ],
+        [
+          139.7241253,
+          35.6370185
+        ],
+        [
+          139.723459,
+          35.6366921
+        ],
+        [
+          139.7217327,
+          35.6358701
+        ],
+        [
+          139.7210669,
+          35.6355429
+        ],
+        [
+          139.7209666,
+          35.6355054
+        ],
+        [
+          139.7206485,
+          35.6354244
+        ],
+        [
+          139.7203207,
+          35.6353746
+        ],
+        [
+          139.7186534,
+          35.6353429
+        ],
+        [
+          139.7172176,
+          35.6352075
+        ],
+        [
+          139.7168884,
+          35.6351648
+        ],
+        [
+          139.7165665,
+          35.6350938
+        ],
+        [
+          139.7162663,
+          35.6349771
+        ],
+        [
+          139.7161729,
+          35.6349285
+        ],
+        [
+          139.7159101,
+          35.6347629
+        ],
+        [
+          139.7156972,
+          35.634555
+        ],
+        [
+          139.7156364,
+          35.6344798
+        ],
+        [
+          139.7155291,
+          35.6343221
+        ],
+        [
+          139.7154858,
+          35.6342398
+        ],
+        [
+          139.7154246,
+          35.6340669
+        ],
+        [
+          139.7154026,
+          35.6339789
+        ],
+        [
+          139.7153671,
+          35.6338014
+        ],
+        [
+          139.7153597,
+          35.6337125
+        ],
+        [
+          139.715392,
+          35.6334446
+        ],
+        [
+          139.715442,
+          35.6331794
+        ],
+        [
+          139.71566,
+          35.632485
+        ]
+      ],
+      "rawOsmMidpointCoordinates": [
+        [
+          139.726562,
+          35.6381047
+        ],
+        [
+          139.7241449,
+          35.6370224
+        ],
+        [
+          139.7234841,
+          35.6366971
+        ],
+        [
+          139.7217719,
+          35.635878
+        ],
+        [
+          139.7211117,
+          35.6355518
+        ],
+        [
+          139.7210121,
+          35.6355145
+        ],
+        [
+          139.7206963,
+          35.635434
+        ],
+        [
+          139.720371,
+          35.6353846
+        ],
+        [
+          139.7187154,
+          35.6353553
+        ],
+        [
+          139.7172898,
+          35.6352219
+        ],
+        [
+          139.716963,
+          35.6351797
+        ],
+        [
+          139.7166434,
+          35.6351092
+        ],
+        [
+          139.7163456,
+          35.634993
+        ],
+        [
+          139.716253,
+          35.6349445
+        ],
+        [
+          139.7159925,
+          35.6347793
+        ],
+        [
+          139.7157819,
+          35.6345719
+        ],
+        [
+          139.715722,
+          35.6344969
+        ],
+        [
+          139.7156163,
+          35.6343395
+        ],
+        [
+          139.7155737,
+          35.6342574
+        ],
+        [
+          139.7155141,
+          35.6340848
+        ],
+        [
+          139.7154929,
+          35.6339969
+        ],
+        [
+          139.715459,
+          35.6338198
+        ],
+        [
+          139.7154523,
+          35.633731
+        ],
+        [
+          139.715487,
+          35.6334635
+        ],
+        [
+          139.7155394,
+          35.6331989
+        ],
+        [
+          139.7157636,
+          35.6325057
+        ]
+      ]
+    }
+  ],
+  "candidate": {
+    "partCount": 1,
+    "vertexCount": 361,
+    "lengthMetres": 26447.14,
+    "coordinates": [
+      [
+        139.645761,
+        35.7919121
+      ],
+      [
+        139.6543463,
+        35.7902242
+      ],
+      [
+        139.6559484,
+        35.7899148
+      ],
+      [
+        139.6572371,
+        35.7896957
+      ],
+      [
+        139.6592651,
+        35.7893005
+      ],
+      [
+        139.6612957,
+        35.7889166
+      ],
+      [
+        139.661828,
+        35.7888061
+      ],
+      [
+        139.6640706,
+        35.788371
+      ],
+      [
+        139.6671636,
+        35.7877488
+      ],
+      [
+        139.6679113,
+        35.7876022
+      ],
+      [
+        139.6685561,
+        35.7874915
+      ],
+      [
+        139.6692058,
+        35.7874029
+      ],
+      [
+        139.6696415,
+        35.7873565
+      ],
+      [
+        139.6712803,
+        35.7872136
+      ],
+      [
+        139.6725891,
+        35.7870842
+      ],
+      [
+        139.67401,
+        35.786965
+      ],
+      [
+        139.6749824,
+        35.7868619
+      ],
+      [
+        139.6763914,
+        35.7867416
+      ],
+      [
+        139.6774734,
+        35.7866366
+      ],
+      [
+        139.6776875,
+        35.7866036
+      ],
+      [
+        139.677898,
+        35.7865582
+      ],
+      [
+        139.6780986,
+        35.7864894
+      ],
+      [
+        139.6782872,
+        35.7864012
+      ],
+      [
+        139.6785438,
+        35.7862372
+      ],
+      [
+        139.6786952,
+        35.7861099
+      ],
+      [
+        139.6787615,
+        35.7860397
+      ],
+      [
+        139.6788804,
+        35.7858916
+      ],
+      [
+        139.6789307,
+        35.7858132
+      ],
+      [
+        139.6789769,
+        35.7857331
+      ],
+      [
+        139.6790503,
+        35.7855666
+      ],
+      [
+        139.6790984,
+        35.7853941
+      ],
+      [
+        139.6791143,
+        35.7853066
+      ],
+      [
+        139.6791322,
+        35.7850419
+      ],
+      [
+        139.6791048,
+        35.7846006
+      ],
+      [
+        139.6790481,
+        35.7841606
+      ],
+      [
+        139.6789641,
+        35.7834478
+      ],
+      [
+        139.6789368,
+        35.7829114
+      ],
+      [
+        139.6789421,
+        35.7827324
+      ],
+      [
+        139.6789713,
+        35.782465
+      ],
+      [
+        139.6790103,
+        35.7822889
+      ],
+      [
+        139.6790932,
+        35.7820289
+      ],
+      [
+        139.6791622,
+        35.7818588
+      ],
+      [
+        139.6793982,
+        35.7814544
+      ],
+      [
+        139.6801638,
+        35.7803659
+      ],
+      [
+        139.6817711,
+        35.7780181
+      ],
+      [
+        139.6818871,
+        35.7778658
+      ],
+      [
+        139.6820215,
+        35.7777238
+      ],
+      [
+        139.6821692,
+        35.777591
+      ],
+      [
+        139.6823333,
+        35.7774716
+      ],
+      [
+        139.6825093,
+        35.7773637
+      ],
+      [
+        139.6826961,
+        35.7772691
+      ],
+      [
+        139.6828938,
+        35.7771902
+      ],
+      [
+        139.6831003,
+        35.7771277
+      ],
+      [
+        139.6833127,
+        35.7770797
+      ],
+      [
+        139.6835296,
+        35.7770484
+      ],
+      [
+        139.6838599,
+        35.7770352
+      ],
+      [
+        139.68397,
+        35.7770385
+      ],
+      [
+        139.6842968,
+        35.7770789
+      ],
+      [
+        139.6846158,
+        35.7771494
+      ],
+      [
+        139.685982,
+        35.7775022
+      ],
+      [
+        139.6882753,
+        35.7781002
+      ],
+      [
+        139.6893924,
+        35.7784654
+      ],
+      [
+        139.6895993,
+        35.7785235
+      ],
+      [
+        139.6899161,
+        35.7785939
+      ],
+      [
+        139.6902399,
+        35.7786383
+      ],
+      [
+        139.6906771,
+        35.7786558
+      ],
+      [
+        139.6910044,
+        35.7786371
+      ],
+      [
+        139.6913278,
+        35.778591
+      ],
+      [
+        139.6916445,
+        35.7785206
+      ],
+      [
+        139.6920507,
+        35.7783883
+      ],
+      [
+        139.6923365,
+        35.7782572
+      ],
+      [
+        139.69261,
+        35.7781095
+      ],
+      [
+        139.6930413,
+        35.7778361
+      ],
+      [
+        139.6934265,
+        35.7775205
+      ],
+      [
+        139.6935695,
+        35.777386
+      ],
+      [
+        139.6946059,
+        35.776469
+      ],
+      [
+        139.6955042,
+        35.7756906
+      ],
+      [
+        139.6977694,
+        35.7737286
+      ],
+      [
+        139.6984852,
+        35.7730461
+      ],
+      [
+        139.6994477,
+        35.7720641
+      ],
+      [
+        139.7005085,
+        35.7709172
+      ],
+      [
+        139.7010974,
+        35.7702675
+      ],
+      [
+        139.7014621,
+        35.7698184
+      ],
+      [
+        139.7024483,
+        35.7685218
+      ],
+      [
+        139.7026767,
+        35.7682146
+      ],
+      [
+        139.7028867,
+        35.767899
+      ],
+      [
+        139.7030335,
+        35.7676577
+      ],
+      [
+        139.7032874,
+        35.7671605
+      ],
+      [
+        139.703397,
+        35.7669066
+      ],
+      [
+        139.7055248,
+        35.7614314
+      ],
+      [
+        139.706114,
+        35.7598903
+      ],
+      [
+        139.7074153,
+        35.7565577
+      ],
+      [
+        139.7079546,
+        35.755098
+      ],
+      [
+        139.7085679,
+        35.7530051
+      ],
+      [
+        139.7086837,
+        35.7527532
+      ],
+      [
+        139.7088284,
+        35.7525113
+      ],
+      [
+        139.7088834,
+        35.7524338
+      ],
+      [
+        139.7090682,
+        35.7522106
+      ],
+      [
+        139.7092767,
+        35.7520017
+      ],
+      [
+        139.7100346,
+        35.7513499
+      ],
+      [
+        139.7107989,
+        35.7507069
+      ],
+      [
+        139.7112045,
+        35.7504048
+      ],
+      [
+        139.7117357,
+        35.7500868
+      ],
+      [
+        139.7121184,
+        35.7499105
+      ],
+      [
+        139.7124165,
+        35.7497952
+      ],
+      [
+        139.712719,
+        35.7496876
+      ],
+      [
+        139.713031,
+        35.7496001
+      ],
+      [
+        139.7135628,
+        35.7494863
+      ],
+      [
+        139.7138875,
+        35.749438
+      ],
+      [
+        139.7144316,
+        35.7493717
+      ],
+      [
+        139.7149765,
+        35.7493097
+      ],
+      [
+        139.7199993,
+        35.748795
+      ],
+      [
+        139.7203252,
+        35.7487579
+      ],
+      [
+        139.720757,
+        35.7486954
+      ],
+      [
+        139.7210744,
+        35.7486249
+      ],
+      [
+        139.7213876,
+        35.7485431
+      ],
+      [
+        139.7216943,
+        35.7484462
+      ],
+      [
+        139.7222906,
+        35.7482202
+      ],
+      [
+        139.7228497,
+        35.7479382
+      ],
+      [
+        139.7229392,
+        35.7478867
+      ],
+      [
+        139.7235534,
+        35.7475124
+      ],
+      [
+        139.7246784,
+        35.7468007
+      ],
+      [
+        139.727057,
+        35.7452228
+      ],
+      [
+        139.727289,
+        35.7450335
+      ],
+      [
+        139.7282427,
+        35.7440564
+      ],
+      [
+        139.7287032,
+        35.7435574
+      ],
+      [
+        139.7327486,
+        35.7392902
+      ],
+      [
+        139.7370512,
+        35.7348441
+      ],
+      [
+        139.738244,
+        35.7337853
+      ],
+      [
+        139.7393682,
+        35.7328113
+      ],
+      [
+        139.7405453,
+        35.7317547
+      ],
+      [
+        139.7412916,
+        35.7311022
+      ],
+      [
+        139.7436189,
+        35.7287368
+      ],
+      [
+        139.7442439,
+        35.728237
+      ],
+      [
+        139.7449944,
+        35.7277169
+      ],
+      [
+        139.7456683,
+        35.7272518
+      ],
+      [
+        139.7461059,
+        35.7269779
+      ],
+      [
+        139.7479598,
+        35.7259995
+      ],
+      [
+        139.7486543,
+        35.7257227
+      ],
+      [
+        139.7493799,
+        35.7255044
+      ],
+      [
+        139.7496835,
+        35.7253959
+      ],
+      [
+        139.7500714,
+        35.7252238
+      ],
+      [
+        139.7503511,
+        35.7250791
+      ],
+      [
+        139.7506104,
+        35.7249112
+      ],
+      [
+        139.7506915,
+        35.7248504
+      ],
+      [
+        139.7511563,
+        35.7244661
+      ],
+      [
+        139.7514139,
+        35.7241745
+      ],
+      [
+        139.7515888,
+        35.7239456
+      ],
+      [
+        139.7518817,
+        35.7234624
+      ],
+      [
+        139.7520104,
+        35.7231192
+      ],
+      [
+        139.7521499,
+        35.7225926
+      ],
+      [
+        139.7521764,
+        35.7224146
+      ],
+      [
+        139.7521836,
+        35.7223252
+      ],
+      [
+        139.752165,
+        35.7216969
+      ],
+      [
+        139.7521487,
+        35.7215179
+      ],
+      [
+        139.7520932,
+        35.7212531
+      ],
+      [
+        139.7520436,
+        35.7210787
+      ],
+      [
+        139.7516279,
+        35.7198714
+      ],
+      [
+        139.7513871,
+        35.7190897
+      ],
+      [
+        139.7513745,
+        35.7183736
+      ],
+      [
+        139.75138,
+        35.7182844
+      ],
+      [
+        139.7514972,
+        35.7176649
+      ],
+      [
+        139.7517473,
+        35.7161563
+      ],
+      [
+        139.7522622,
+        35.7132312
+      ],
+      [
+        139.7524369,
+        35.7123471
+      ],
+      [
+        139.753173,
+        35.7099123
+      ],
+      [
+        139.7534329,
+        35.7090464
+      ],
+      [
+        139.7537039,
+        35.7082751
+      ],
+      [
+        139.7541149,
+        35.7071657
+      ],
+      [
+        139.7542262,
+        35.7068209
+      ],
+      [
+        139.7545339,
+        35.705781
+      ],
+      [
+        139.7548015,
+        35.7049167
+      ],
+      [
+        139.7551896,
+        35.703527
+      ],
+      [
+        139.7553143,
+        35.7030931
+      ],
+      [
+        139.7554781,
+        35.7025755
+      ],
+      [
+        139.7555402,
+        35.7023132
+      ],
+      [
+        139.7555694,
+        35.7020472
+      ],
+      [
+        139.7555548,
+        35.7014238
+      ],
+      [
+        139.7555618,
+        35.7011567
+      ],
+      [
+        139.7555827,
+        35.7009794
+      ],
+      [
+        139.755617,
+        35.7008034
+      ],
+      [
+        139.7556985,
+        35.7005446
+      ],
+      [
+        139.7558018,
+        35.700291
+      ],
+      [
+        139.7559724,
+        35.6999631
+      ],
+      [
+        139.7572203,
+        35.6977819
+      ],
+      [
+        139.7577438,
+        35.6968988
+      ],
+      [
+        139.7578727,
+        35.696653
+      ],
+      [
+        139.7579461,
+        35.6964851
+      ],
+      [
+        139.7580312,
+        35.6962271
+      ],
+      [
+        139.7581412,
+        35.6957907
+      ],
+      [
+        139.7583107,
+        35.6950007
+      ],
+      [
+        139.7584504,
+        35.6942916
+      ],
+      [
+        139.7585687,
+        35.6935808
+      ],
+      [
+        139.7586088,
+        35.6934043
+      ],
+      [
+        139.7586737,
+        35.693233
+      ],
+      [
+        139.7588134,
+        35.6929888
+      ],
+      [
+        139.7590122,
+        35.6927741
+      ],
+      [
+        139.7591636,
+        35.6926436
+      ],
+      [
+        139.7593314,
+        35.6925267
+      ],
+      [
+        139.7617347,
+        35.6910896
+      ],
+      [
+        139.7621126,
+        35.6909035
+      ],
+      [
+        139.7630951,
+        35.6904922
+      ],
+      [
+        139.7633784,
+        35.6903529
+      ],
+      [
+        139.7636274,
+        35.6901755
+      ],
+      [
+        139.7638339,
+        35.6899653
+      ],
+      [
+        139.7639439,
+        35.6898101
+      ],
+      [
+        139.7640331,
+        35.689646
+      ],
+      [
+        139.7640687,
+        35.689561
+      ],
+      [
+        139.7641212,
+        35.6893869
+      ],
+      [
+        139.7641503,
+        35.6892091
+      ],
+      [
+        139.7641555,
+        35.6891195
+      ],
+      [
+        139.7641461,
+        35.6889403
+      ],
+      [
+        139.7641093,
+        35.6887635
+      ],
+      [
+        139.7636675,
+        35.6873728
+      ],
+      [
+        139.7633113,
+        35.6861499
+      ],
+      [
+        139.763167,
+        35.6856243
+      ],
+      [
+        139.7629815,
+        35.6848312
+      ],
+      [
+        139.7627394,
+        35.6839554
+      ],
+      [
+        139.7625248,
+        35.6831699
+      ],
+      [
+        139.7624443,
+        35.68291
+      ],
+      [
+        139.7622902,
+        35.6824809
+      ],
+      [
+        139.7619574,
+        35.6816285
+      ],
+      [
+        139.7618683,
+        35.6813702
+      ],
+      [
+        139.761361,
+        35.6798143
+      ],
+      [
+        139.7611311,
+        35.6790316
+      ],
+      [
+        139.7604635,
+        35.6770484
+      ],
+      [
+        139.7601943,
+        35.6762739
+      ],
+      [
+        139.7600599,
+        35.6759357
+      ],
+      [
+        139.7599794,
+        35.6757707
+      ],
+      [
+        139.7598307,
+        35.6755333
+      ],
+      [
+        139.7596614,
+        35.6753052
+      ],
+      [
+        139.7592805,
+        35.6748712
+      ],
+      [
+        139.7590185,
+        35.6745865
+      ],
+      [
+        139.7579112,
+        35.6734857
+      ],
+      [
+        139.7577193,
+        35.6732696
+      ],
+      [
+        139.7575448,
+        35.6730439
+      ],
+      [
+        139.7574366,
+        35.6728895
+      ],
+      [
+        139.7572901,
+        35.672651
+      ],
+      [
+        139.7562537,
+        35.670887
+      ],
+      [
+        139.7553799,
+        35.6694556
+      ],
+      [
+        139.7549765,
+        35.6687168
+      ],
+      [
+        139.7547179,
+        35.6682206
+      ],
+      [
+        139.7545966,
+        35.6679698
+      ],
+      [
+        139.7527071,
+        35.6638428
+      ],
+      [
+        139.7520021,
+        35.6623302
+      ],
+      [
+        139.7518543,
+        35.6619915
+      ],
+      [
+        139.7515772,
+        35.6613093
+      ],
+      [
+        139.751342,
+        35.6608052
+      ],
+      [
+        139.7509201,
+        35.6598822
+      ],
+      [
+        139.7508141,
+        35.6596278
+      ],
+      [
+        139.7506329,
+        35.6591114
+      ],
+      [
+        139.750485,
+        35.6585881
+      ],
+      [
+        139.7503666,
+        35.6579691
+      ],
+      [
+        139.7502204,
+        35.6568116
+      ],
+      [
+        139.7501358,
+        35.6560091
+      ],
+      [
+        139.7498963,
+        35.6542296
+      ],
+      [
+        139.7496998,
+        35.6528079
+      ],
+      [
+        139.7491821,
+        35.6497972
+      ],
+      [
+        139.7490564,
+        35.6492709
+      ],
+      [
+        139.7489004,
+        35.6487497
+      ],
+      [
+        139.7487992,
+        35.6484945
+      ],
+      [
+        139.7485807,
+        35.6480842
+      ],
+      [
+        139.7484802,
+        35.6479262
+      ],
+      [
+        139.7482946,
+        35.6477063
+      ],
+      [
+        139.7481451,
+        35.6475765
+      ],
+      [
+        139.7480637,
+        35.6475174
+      ],
+      [
+        139.7479747,
+        35.6474655
+      ],
+      [
+        139.7477884,
+        35.6473723
+      ],
+      [
+        139.7475907,
+        35.6472958
+      ],
+      [
+        139.7473818,
+        35.6472427
+      ],
+      [
+        139.7471662,
+        35.6472122
+      ],
+      [
+        139.747057,
+        35.6472046
+      ],
+      [
+        139.7469477,
+        35.6471992
+      ],
+      [
+        139.7460713,
+        35.6472132
+      ],
+      [
+        139.7446467,
+        35.6472133
+      ],
+      [
+        139.7444277,
+        35.6472187
+      ],
+      [
+        139.74421,
+        35.6472376
+      ],
+      [
+        139.7439959,
+        35.6472748
+      ],
+      [
+        139.7437881,
+        35.6473309
+      ],
+      [
+        139.7436874,
+        35.6473657
+      ],
+      [
+        139.7433935,
+        35.6474852
+      ],
+      [
+        139.7429113,
+        35.6476963
+      ],
+      [
+        139.7427111,
+        35.6477682
+      ],
+      [
+        139.7423985,
+        35.6478498
+      ],
+      [
+        139.7421836,
+        35.647882
+      ],
+      [
+        139.7420745,
+        35.6478896
+      ],
+      [
+        139.7418556,
+        35.647894
+      ],
+      [
+        139.7416366,
+        35.6478877
+      ],
+      [
+        139.7414184,
+        35.6478727
+      ],
+      [
+        139.7412017,
+        35.6478467
+      ],
+      [
+        139.7409866,
+        35.6478129
+      ],
+      [
+        139.740774,
+        35.6477701
+      ],
+      [
+        139.7404605,
+        35.64769
+      ],
+      [
+        139.7402562,
+        35.6476259
+      ],
+      [
+        139.7399578,
+        35.6475142
+      ],
+      [
+        139.7397643,
+        35.6474308
+      ],
+      [
+        139.7395772,
+        35.6473383
+      ],
+      [
+        139.7393074,
+        35.647186
+      ],
+      [
+        139.7386909,
+        35.6468155
+      ],
+      [
+        139.7385089,
+        35.6467164
+      ],
+      [
+        139.7383197,
+        35.6466269
+      ],
+      [
+        139.7380233,
+        35.6465121
+      ],
+      [
+        139.7378184,
+        35.6464494
+      ],
+      [
+        139.7375062,
+        35.6463674
+      ],
+      [
+        139.7369818,
+        35.6462454
+      ],
+      [
+        139.7366742,
+        35.6461564
+      ],
+      [
+        139.7364778,
+        35.6460799
+      ],
+      [
+        139.7362878,
+        35.6459926
+      ],
+      [
+        139.7360229,
+        35.6458355
+      ],
+      [
+        139.7357904,
+        35.6456473
+      ],
+      [
+        139.7356537,
+        35.6455086
+      ],
+      [
+        139.7355362,
+        35.6453589
+      ],
+      [
+        139.7354294,
+        35.6452042
+      ],
+      [
+        139.7352801,
+        35.6449668
+      ],
+      [
+        139.7346833,
+        35.6439165
+      ],
+      [
+        139.7341474,
+        35.6429415
+      ],
+      [
+        139.7338983,
+        35.642454
+      ],
+      [
+        139.7336208,
+        35.6418815
+      ],
+      [
+        139.7332805,
+        35.6411397
+      ],
+      [
+        139.7331768,
+        35.6409853
+      ],
+      [
+        139.7330538,
+        35.6408402
+      ],
+      [
+        139.7329141,
+        35.6407057
+      ],
+      [
+        139.7327538,
+        35.6405874
+      ],
+      [
+        139.7325736,
+        35.6404901
+      ],
+      [
+        139.7323833,
+        35.6404058
+      ],
+      [
+        139.7321814,
+        35.6403419
+      ],
+      [
+        139.7320767,
+        35.6403191
+      ],
+      [
+        139.7319712,
+        35.6402989
+      ],
+      [
+        139.7317563,
+        35.6402756
+      ],
+      [
+        139.7307853,
+        35.6402043
+      ],
+      [
+        139.7304691,
+        35.6401438
+      ],
+      [
+        139.7300613,
+        35.640025
+      ],
+      [
+        139.7298726,
+        35.6399385
+      ],
+      [
+        139.7296932,
+        35.6398401
+      ],
+      [
+        139.7283204,
+        35.6389779
+      ],
+      [
+        139.726562,
+        35.6381047
+      ],
+      [
+        139.7241253,
+        35.6370185
+      ],
+      [
+        139.723459,
+        35.6366921
+      ],
+      [
+        139.7217327,
+        35.6358701
+      ],
+      [
+        139.7210669,
+        35.6355429
+      ],
+      [
+        139.7209666,
+        35.6355054
+      ],
+      [
+        139.7206485,
+        35.6354244
+      ],
+      [
+        139.7203207,
+        35.6353746
+      ],
+      [
+        139.7186534,
+        35.6353429
+      ],
+      [
+        139.7172176,
+        35.6352075
+      ],
+      [
+        139.7168884,
+        35.6351648
+      ],
+      [
+        139.7165665,
+        35.6350938
+      ],
+      [
+        139.7162663,
+        35.6349771
+      ],
+      [
+        139.7161729,
+        35.6349285
+      ],
+      [
+        139.7159101,
+        35.6347629
+      ],
+      [
+        139.7156972,
+        35.634555
+      ],
+      [
+        139.7156364,
+        35.6344798
+      ],
+      [
+        139.7155291,
+        35.6343221
+      ],
+      [
+        139.7154858,
+        35.6342398
+      ],
+      [
+        139.7154246,
+        35.6340669
+      ],
+      [
+        139.7154026,
+        35.6339789
+      ],
+      [
+        139.7153671,
+        35.6338014
+      ],
+      [
+        139.7153597,
+        35.6337125
+      ],
+      [
+        139.715392,
+        35.6334446
+      ],
+      [
+        139.715442,
+        35.6331794
+      ],
+      [
+        139.71566,
+        35.632485
+      ]
+    ]
+  },
+  "validation": {
+    "all27StopPairsFound": true,
+    "all26IntervalsProduced": true,
+    "sourceWayJoinsContinuous": true,
+    "opposingStopMeasuresStrictlyMonotone": true,
+    "candidateIntervalSeamsContinuous": true,
+    "maximumSimplificationErrorMetres": 0.498,
+    "simplificationWithinHalfMetre": true,
+    "oppositeDirectionContinuityErrors": [],
+    "intervalsWithTrackDisagreementOver20Metres": [
+      1,
+      2,
+      23,
+      24
+    ],
+    "flags": []
+  }
+}

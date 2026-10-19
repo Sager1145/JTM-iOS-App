@@ -1,0 +1,672 @@
+{
+  "format": "bounded-original-pixel-review-v1",
+  "date": "2026-10-18",
+  "lineID": "jp-くま川鉄道-湯前線",
+  "captureIndex": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/capture-index.json",
+  "captureSettings": {
+    "appearance": "light",
+    "basemapStyle": "standard",
+    "height": 1200,
+    "outputModes": [
+      "basemap",
+      "smooth"
+    ],
+    "width": 1600,
+    "zoom": 17
+  },
+  "actualPairsViewed": 13,
+  "actualOriginalPNGsViewed": 26,
+  "unviewedPairsInThisCaptureIndex": 0,
+  "unavailableItemIDs": [],
+  "legacyOtherPairsNotViewedInThisTask": 79,
+  "intervalVerdicts": {
+    "2": "No confirmed false corner/wrong corridor in7paired views; retain modest station/lateral discrepancies as unresolved. No repair candidate.",
+    "10": "No confirmed false corner/wrong corridor in6paired views; preserve genuine compound river-crossing curve. No repair candidate."
+  },
+  "preservedServiceAndDisplayMetadata": {
+    "packageVersion": "2025.5.2",
+    "stationCount": 14,
+    "intervalCount": 13,
+    "serviceStatus": "partial_substitute_bus",
+    "serviceSpans": [
+      [
+        10,
+        13,
+        2
+      ]
+    ],
+    "displayStationCoordinatesPresent": false,
+    "displayIntervalCoordinatesPresent": false,
+    "strokeExcludedByRegionJP": [
+      [
+        "jp-くま川鉄道-湯前線",
+        "partial_substitute_bus"
+      ]
+    ],
+    "explicitPartsByRegionJP": [],
+    "byRegionJP": [
+      [
+        "jp-くま川鉄道-湯前線",
+        0,
+        0,
+        18956,
+        -0.5
+      ],
+      [
+        "jp-くま川鉄道-湯前線",
+        1,
+        0,
+        5850.5,
+        -0.5
+      ]
+    ],
+    "scope": "Read-only current package metadata; not independently verified live operations or active Main render evidence."
+  },
+  "views": [
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-0",
+      "intervalIndex": 2,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.272245,
+        "longitude": 130.9508,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0059245269462729,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231855321.64323553,
+        "rectY": 108765322.29474008,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999997745,
+        "centerYPoints": 599.9999999988864,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:11Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "東多良木 station/context and broad eastern curve are continuous. Red lies modestly south of the blue rail in places; no isolated V, gap or wrong corridor. Platform caps/centre unproved."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-1",
+      "intervalIndex": 2,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.2710448186484,
+        "longitude": 130.94735938584878,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.00593764265664,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231852756.13537836,
+        "rectY": 108766380.71268761,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000012228,
+        "centerYPoints": 600.0000000014344,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:11Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own shallow bend across the Niwara River tributary context is continuous; no isolated V or short return hook. Preserve the real river/valley bend."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-2",
+      "intervalIndex": 2,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.26932626692919,
+        "longitude": 130.94424846633484,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.005956422403256,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231850436.46566084,
+        "rectY": 108767896.24759041,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999954239,
+        "centerYPoints": 600.0000000011865,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:11Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own southwest diagonal and gentle approach curve are continuous, with small lateral cartographic differences; no wrong branch or acute false corner established."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-3",
+      "intervalIndex": 2,
+      "pointOrdinal": 3,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000003/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.26751664418855,
+        "longitude": 130.94120294185055,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0059761963619565,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231848165.55801165,
+        "rectY": 108769492.06404236,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000018341,
+        "centerYPoints": 600.0000000008824,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8.000000000000002,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:11Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own southwest diagonal continues through road crossings toward Taragi; no gap or isolated V. Road/river crossings do not create inferred passenger junctions."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-4",
+      "intervalIndex": 2,
+      "pointOrdinal": 4,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000004/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000004/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.26570982394249,
+        "longitude": 130.93815605113693,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.005995938693496,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231845893.63162807,
+        "rectY": 108771085.37736478,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999939846,
+        "centerYPoints": 600.000000001314,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999997,
+        "mapPointsPerPointY": 7.999999999999998,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:12Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Taragi station approaches remain continuous. Lateral red/blue and station-frame differences are visible but not enough at z17 to establish the representative own face/caps/centre."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-5",
+      "intervalIndex": 2,
+      "pointOrdinal": 5,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000005/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000005/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.26390271781111,
+        "longitude": 130.9351088755915,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0060156831453608,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231843621.49285847,
+        "rectY": 108772678.91106148,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999978296,
+        "centerYPoints": 600.0000000009801,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012417,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:20:12Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Taragi station area has a modest north-side difference from the blue rail band. A very slight short shoulder is also visible southwest of the station in neighboring interval context; no confirmed erroneous control or deletion proposed."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#2",
+      "viewpointID": "jp-くま川鉄道-湯前線#2#point-6",
+      "intervalIndex": 2,
+      "pointOrdinal": 6,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000006/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000006/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000001/000006/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.262755,
+        "longitude": 130.93319,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0060282225956019,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231842190.67551288,
+        "rectY": 108773690.96962444,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000024887,
+        "centerYPoints": 600.0000000014758,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:12Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Taragi endpoint is continuous through its own station context. Full caps/representative face are unverified. The slight shoulder southwest of the endpoint belongs to adjacent context, not established as an interval2 false corner."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-0",
+      "intervalIndex": 10,
+      "pointOrdinal": 0,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000000/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.20227,
+        "longitude": 130.808865,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0066884816872257,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231749487.23643732,
+        "rectY": 108827008.60433501,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.999999999837,
+        "centerYPoints": 600.0000000009693,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 7.999999999999999,
+        "mapPointsPerPointY": 7.999999999950328,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17.000000000008956
+      },
+      "timestamp": "2026-10-18T23:20:09Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "肥後西村 station/departure and genuine shallow bend are continuous; modest southward cartographic difference remains. No isolated V or wrong corridor."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-1",
+      "intervalIndex": 10,
+      "pointOrdinal": 1,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000001/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.202856547357264,
+        "longitude": 130.80521106527738,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0066820842897983,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231746762.66523328,
+        "rectY": 108826491.73212525,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000046894,
+        "centerYPoints": 600.0000000009444,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000012417,
+        "mapPointsPerPointY": 8.000000000012419,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.999999999997762,
+        "zoom256Y": 16.999999999997762
+      },
+      "timestamp": "2026-10-18T23:20:09Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own broad compound curve toward the Kuma/Kosade river crossings remains continuous; preserve the real S alignment. No acute hook or gap."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-2",
+      "intervalIndex": 10,
+      "pointOrdinal": 2,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000002/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000002/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.20363708494655,
+        "longitude": 130.8016439398358,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0066735709015262,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231744102.82372072,
+        "rectY": 108825803.90834619,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999969987,
+        "centerYPoints": 599.9999999989395,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018627,
+        "mapPointsPerPointY": 8.000000000018627,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.99999999999664
+      },
+      "timestamp": "2026-10-18T23:20:10Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "River-crossing compound curve is continuous, with modest lateral red/blue differences. Map railway across water does not prove bridge condition or current train operation."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-3",
+      "intervalIndex": 10,
+      "pointOrdinal": 3,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000003/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000003/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.205939749794595,
+        "longitude": 130.79912611842414,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.006648454453453,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231742225.40000197,
+        "rectY": 108823774.72423032,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 799.9999999980954,
+        "centerYPoints": 599.9999999985797,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8,
+        "mapPointsPerPointY": 8.000000000049669,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 16.999999999991044
+      },
+      "timestamp": "2026-10-18T23:20:10Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Own Kuma/Kawabe confluence crossing and turn into the Kawamura straight are continuous. No false V or neighboring railway substitution."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-4",
+      "intervalIndex": 10,
+      "pointOrdinal": 4,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000004/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000004/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000004/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.2072400003295,
+        "longitude": 130.79593050699498,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0066342711764313,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231739842.5794153,
+        "rectY": 108822628.8779355,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000012633,
+        "centerYPoints": 599.999999998158,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000000002,
+        "mapPointsPerPointY": 8,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 17,
+        "zoom256Y": 17
+      },
+      "timestamp": "2026-10-18T23:20:10Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kawamura approach and eastern/southern curve remain continuous. Small rail-band difference does not justify flattening the genuine curve or moving a station from this overview."
+    },
+    {
+      "itemID": "jp-くま川鉄道-湯前線#10",
+      "viewpointID": "jp-くま川鉄道-湯前線#10#point-5",
+      "intervalIndex": 10,
+      "pointOrdinal": 5,
+      "actualOriginalFilesViewed": {
+        "basemap": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000005/basemap.png",
+        "smooth": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000005/smooth.png"
+      },
+      "viewMethod": "Each original PNG viewed separately at view_image detail=original; no composite substituted.",
+      "viewJSON": "/private/tmp/jtm-kumagawa-yunomae-missing-20261018/alignment/captures/000000/000005/view.json",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 32.207235,
+        "longitude": 130.79535,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 1.0066343257215724,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 231739409.72202668,
+        "rectY": 108822633.28450921,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "snapshotProjection": {
+        "centerXPoints": 800.0000000035928,
+        "centerYPoints": 600.0000000016588,
+        "displayScale": 1,
+        "heightPoints": 1200,
+        "mapPointsPerPointX": 8.000000000018629,
+        "mapPointsPerPointY": 8.000000000018625,
+        "scope": "Measured from MKMapSnapshotter returned point mapping; flat north-up camera.",
+        "widthPoints": 1600,
+        "zoom256X": 16.99999999999664,
+        "zoom256Y": 16.999999999996643
+      },
+      "timestamp": "2026-10-18T23:20:10Z",
+      "wholeLineRenderDependency": "42e65800ef49bc0dc643bccdcb865382b95e9a64e5b2ae29ebc352649ec95022",
+      "intervalIdentityPlan": "identity-plan-802ab6ff37a74f725f4514de8f7a80e23b39f14d7febe972b005e6b2821ec607.json",
+      "receiptResultUnchanged": "pending",
+      "reviewFreshUnchanged": false,
+      "finding": "Kawamura endpoint/straight segment is continuous with the own small station frame. Exact platform caps/centre remain unresolved; no false corner candidate established."
+    }
+  ],
+  "limitations": [
+    "Isolated centreline captures omit production lane/follow/join/family composition.",
+    "No train-operation/bridge-condition assertion from basemap railway glyphs.",
+    "No whole-line acceptance;79legacy pairs not visually reviewed in this task.",
+    "HitoyoshiOnsen terminal/own platform and JR relationship are outside intervals2/10; no co-track inference from station names.",
+    "No source/data/native/build/tests/apply mutation."
+  ]
+}

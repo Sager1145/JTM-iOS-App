@@ -1,0 +1,49 @@
+{
+  "status": "seven-actual-native-dates-reviewed",
+  "rows": [
+    {
+      "date": "2020-07-03",
+      "north": true,
+      "south": true,
+      "review": "actual colored northern and southern overlays visible"
+    },
+    {
+      "date": "2020-07-04",
+      "north": false,
+      "south": true,
+      "review": "actual northern product overlays absent, southern historical overlay visible"
+    },
+    {
+      "date": "2025-08-06",
+      "north": false,
+      "south": true,
+      "review": "actual northern product overlays absent, southern historical overlay visible"
+    },
+    {
+      "date": "2025-08-07",
+      "north": false,
+      "south": false,
+      "review": "actual colored Hisatsu overlays absent on both sides of Yoshimatsu"
+    },
+    {
+      "date": "2026-06-28",
+      "north": false,
+      "south": false,
+      "review": "actual no premature recovery on postponed planned date"
+    },
+    {
+      "date": "2026-07-11",
+      "north": false,
+      "south": false,
+      "review": "actual southern overlay still absent before recovery"
+    },
+    {
+      "date": "2026-07-12",
+      "north": false,
+      "south": true,
+      "review": "actual southern solid product overlay and station dots restored; northern overlay absent"
+    }
+  ],
+  "historySha256": "08606e1241fe18b3c1a0a2638e321e948410a54ce48494b86b7091423d4169a6",
+  "scope": "visible Yoshimatsu north/south date filtering, not full-line geometry acceptance"
+}

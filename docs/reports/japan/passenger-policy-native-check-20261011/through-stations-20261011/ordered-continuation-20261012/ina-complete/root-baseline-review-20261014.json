@@ -1,0 +1,46 @@
+{
+  "status": "baseline-reviewed-with-failures-not-accepted",
+  "reviewer": "root-single-chat",
+  "physicalSourceMatchesSavedBaseline": true,
+  "primary": {
+    "wholeViewsActuallyOpened": 56,
+    "intervalsCovered": 12,
+    "sheetsOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  },
+  "secondary": {
+    "wholeViewsActuallyOpened": 20,
+    "sheetsOpened": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "third": {
+    "wholeViewsActuallyOpenedInThisRootReview": 0
+  },
+  "findings": [
+    "South original overlay lies east of own Ina rail near Shinkansen.",
+    "North original overlay lies west of own rail.",
+    "Maruyama station chainage must move north and repartition intervals7/8.",
+    "Shiku dark extraction joins multiple narrow-connected shapes into one 120m frame; no rail-supported placement accepted."
+  ],
+  "productionApplied": false,
+  "nativeAfterAccepted": false
+}

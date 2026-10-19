@@ -1,0 +1,581 @@
+{
+  "intervals": 26,
+  "viewpoints": 115,
+  "manifest": [
+    {
+      "interval": 0,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004146/000000"
+    },
+    {
+      "interval": 0,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004146/000001"
+    },
+    {
+      "interval": 0,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004146/000002"
+    },
+    {
+      "interval": 0,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004146/000003"
+    },
+    {
+      "interval": 1,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004147/000000"
+    },
+    {
+      "interval": 1,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004147/000001"
+    },
+    {
+      "interval": 1,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004147/000002"
+    },
+    {
+      "interval": 2,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004158/000000"
+    },
+    {
+      "interval": 2,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004158/000001"
+    },
+    {
+      "interval": 2,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004158/000002"
+    },
+    {
+      "interval": 2,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004158/000003"
+    },
+    {
+      "interval": 2,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004158/000004"
+    },
+    {
+      "interval": 3,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004165/000000"
+    },
+    {
+      "interval": 3,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004165/000001"
+    },
+    {
+      "interval": 3,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004165/000002"
+    },
+    {
+      "interval": 3,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004165/000003"
+    },
+    {
+      "interval": 4,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004166/000000"
+    },
+    {
+      "interval": 4,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004166/000001"
+    },
+    {
+      "interval": 4,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004166/000002"
+    },
+    {
+      "interval": 4,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004166/000003"
+    },
+    {
+      "interval": 4,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004166/000004"
+    },
+    {
+      "interval": 5,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004167/000000"
+    },
+    {
+      "interval": 5,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004167/000001"
+    },
+    {
+      "interval": 5,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004167/000002"
+    },
+    {
+      "interval": 5,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004167/000003"
+    },
+    {
+      "interval": 6,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004168/000000"
+    },
+    {
+      "interval": 6,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004168/000001"
+    },
+    {
+      "interval": 6,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004168/000002"
+    },
+    {
+      "interval": 6,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004168/000003"
+    },
+    {
+      "interval": 6,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004168/000004"
+    },
+    {
+      "interval": 7,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004169/000000"
+    },
+    {
+      "interval": 7,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004169/000001"
+    },
+    {
+      "interval": 7,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004169/000002"
+    },
+    {
+      "interval": 7,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004169/000003"
+    },
+    {
+      "interval": 8,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004170/000000"
+    },
+    {
+      "interval": 8,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004170/000001"
+    },
+    {
+      "interval": 8,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004170/000002"
+    },
+    {
+      "interval": 8,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004170/000003"
+    },
+    {
+      "interval": 8,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004170/000004"
+    },
+    {
+      "interval": 9,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004171/000000"
+    },
+    {
+      "interval": 9,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004171/000001"
+    },
+    {
+      "interval": 9,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004171/000002"
+    },
+    {
+      "interval": 9,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004171/000003"
+    },
+    {
+      "interval": 10,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004148/000000"
+    },
+    {
+      "interval": 10,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004148/000001"
+    },
+    {
+      "interval": 10,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004148/000002"
+    },
+    {
+      "interval": 10,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004148/000003"
+    },
+    {
+      "interval": 10,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004148/000004"
+    },
+    {
+      "interval": 11,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004149/000000"
+    },
+    {
+      "interval": 11,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004149/000001"
+    },
+    {
+      "interval": 11,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004149/000002"
+    },
+    {
+      "interval": 11,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004149/000003"
+    },
+    {
+      "interval": 11,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004149/000004"
+    },
+    {
+      "interval": 12,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004150/000000"
+    },
+    {
+      "interval": 12,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004150/000001"
+    },
+    {
+      "interval": 12,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004150/000002"
+    },
+    {
+      "interval": 12,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004150/000003"
+    },
+    {
+      "interval": 13,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004151/000000"
+    },
+    {
+      "interval": 13,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004151/000001"
+    },
+    {
+      "interval": 13,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004151/000002"
+    },
+    {
+      "interval": 13,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004151/000003"
+    },
+    {
+      "interval": 13,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004151/000004"
+    },
+    {
+      "interval": 14,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004152/000000"
+    },
+    {
+      "interval": 14,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004152/000001"
+    },
+    {
+      "interval": 14,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004152/000002"
+    },
+    {
+      "interval": 14,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004152/000003"
+    },
+    {
+      "interval": 14,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004152/000004"
+    },
+    {
+      "interval": 15,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004153/000000"
+    },
+    {
+      "interval": 15,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004153/000001"
+    },
+    {
+      "interval": 15,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004153/000002"
+    },
+    {
+      "interval": 15,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004153/000003"
+    },
+    {
+      "interval": 16,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004154/000000"
+    },
+    {
+      "interval": 16,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004154/000001"
+    },
+    {
+      "interval": 16,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004154/000002"
+    },
+    {
+      "interval": 16,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004154/000003"
+    },
+    {
+      "interval": 17,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000000"
+    },
+    {
+      "interval": 17,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000001"
+    },
+    {
+      "interval": 17,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000002"
+    },
+    {
+      "interval": 17,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000003"
+    },
+    {
+      "interval": 17,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000004"
+    },
+    {
+      "interval": 17,
+      "ordinal": 5,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004155/000005"
+    },
+    {
+      "interval": 18,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004156/000000"
+    },
+    {
+      "interval": 18,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004156/000001"
+    },
+    {
+      "interval": 18,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004156/000002"
+    },
+    {
+      "interval": 18,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004156/000003"
+    },
+    {
+      "interval": 19,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004157/000000"
+    },
+    {
+      "interval": 19,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004157/000001"
+    },
+    {
+      "interval": 19,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004157/000002"
+    },
+    {
+      "interval": 19,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004157/000003"
+    },
+    {
+      "interval": 20,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004159/000000"
+    },
+    {
+      "interval": 20,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004159/000001"
+    },
+    {
+      "interval": 20,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004159/000002"
+    },
+    {
+      "interval": 20,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004159/000003"
+    },
+    {
+      "interval": 21,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004160/000000"
+    },
+    {
+      "interval": 21,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004160/000001"
+    },
+    {
+      "interval": 21,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004160/000002"
+    },
+    {
+      "interval": 21,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004160/000003"
+    },
+    {
+      "interval": 22,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004161/000000"
+    },
+    {
+      "interval": 22,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004161/000001"
+    },
+    {
+      "interval": 22,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004161/000002"
+    },
+    {
+      "interval": 23,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000000"
+    },
+    {
+      "interval": 23,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000001"
+    },
+    {
+      "interval": 23,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000002"
+    },
+    {
+      "interval": 23,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000003"
+    },
+    {
+      "interval": 23,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000004"
+    },
+    {
+      "interval": 23,
+      "ordinal": 5,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004162/000005"
+    },
+    {
+      "interval": 24,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004163/000000"
+    },
+    {
+      "interval": 24,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004163/000001"
+    },
+    {
+      "interval": 24,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004163/000002"
+    },
+    {
+      "interval": 24,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004163/000003"
+    },
+    {
+      "interval": 25,
+      "ordinal": 0,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004164/000000"
+    },
+    {
+      "interval": 25,
+      "ordinal": 1,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004164/000001"
+    },
+    {
+      "interval": 25,
+      "ordinal": 2,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004164/000002"
+    },
+    {
+      "interval": 25,
+      "ordinal": 3,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004164/000003"
+    },
+    {
+      "interval": 25,
+      "ordinal": 4,
+      "directory": "/private/tmp/jtm-mita-whole-final-evidence/captures/004164/000004"
+    }
+  ]
+}

@@ -1,0 +1,470 @@
+{
+  "lineID": "jp-とさでん交通-桟橋線",
+  "reviewer": "parent",
+  "reviewedPairs": 17,
+  "originalPNGsActuallyViewed": 34,
+  "retainedPairs": 10,
+  "newPairs": 7,
+  "wholeLineAcceptance": false,
+  "views": [
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000002",
+      "viewpointID": "jp-とさでん交通-桟橋線#1#point-2",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000002/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.544635,
+        "longitude": 133.54995,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917717647897766,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233795692.35285333,
+        "rectY": 107636909.08055255,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#1#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54402116248736,
+        "longitude": 133.55036827321481,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917787114373459,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233796004.23996764,
+        "rectY": 107637458.25053976,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 1,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#1#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000259/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.541285,
+        "longitude": 133.552235,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9918096745218183,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233797396.1723449,
+        "rectY": 107639906.1120088,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#2#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54666,
+        "longitude": 133.548555,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917488475540953,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233794652.1654613,
+        "rectY": 107635097.38579533,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 2,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#2#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000260/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.544635,
+        "longitude": 133.54995,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917717647897766,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233795692.35285333,
+        "rectY": 107636909.08055255,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#3#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54908,
+        "longitude": 133.54691,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917214584107468,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233793425.56455827,
+        "rectY": 107632932.2430405,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 3,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#3#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000261/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54666,
+        "longitude": 133.548555,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917488475540953,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233794652.1654613,
+        "rectY": 107635097.38579533,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000002",
+      "viewpointID": "jp-とさでん交通-桟橋線#5#point-2",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000002/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.554125,
+        "longitude": 133.543495,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916643542556242,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233790879.15599644,
+        "rectY": 107628418.35168177,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#5#point-1",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.5530339077705,
+        "longitude": 133.54423888861106,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916767049398353,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233791433.8395479,
+        "rectY": 107629394.60232353,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "retained named identity plan",
+      "intervalIndex": 5,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#5#point-0",
+      "originalsViewed": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000263/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.550295,
+        "longitude": 133.5461,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917077065798829,
+        "pitch": 0,
+        "rectHeight": 6144,
+        "rectWidth": 8192,
+        "rectX": 233792821.58478224,
+        "rectY": 107631845.17536175,
+        "viewportHeightPoints": 768,
+        "viewportWidthPoints": 1024,
+        "zoom256": 17
+      },
+      "observed": "Own street-aligned north/south corridor continuous; no distinct false V/right-angle/wrong branch identified; exact platform caps unresolved."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 0,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#0#point-0",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.540455,
+        "longitude": 133.55277,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9918190665559172,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233795491.09725866,
+        "rectY": 107638920.6421445,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Southern terminal approach stays on own street rail, without false hook. Exact terminal usable frame caps are not resolved at z17."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 0,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#0#point-1",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000000/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.541285,
+        "longitude": 133.552235,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9918096745218183,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233795092.1723449,
+        "rectY": 107638178.1120088,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Southern terminal approach stays on own street rail, without false hook. Exact terminal usable frame caps are not resolved at z17."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 4,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#4#point-0",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000000/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.54908,
+        "longitude": 133.54691,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917214584107468,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233791121.56455827,
+        "rectY": 107631204.2430405,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Straight own street corridor, broad existing bend follows road; no transverse kink."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 4,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#4#point-1",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000001/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000001/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.550295,
+        "longitude": 133.5461,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9917077065798829,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233790517.58478224,
+        "rectY": 107630117.17536175,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Straight own street corridor, broad existing bend follows road; no transverse kink."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 6,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000000",
+      "viewpointID": "jp-とさでん交通-桟橋線#6#point-0",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000000/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000000/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.554125,
+        "longitude": 133.543495,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916643542556242,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788575.15599644,
+        "rectY": 107626690.35168177,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Own north/south arm crosses Kagamigawa bridge and approaches south side of Harimayabashi. No false turn onto east/west Ino/Gomen crossing or extension into northern branch."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 6,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000001",
+      "viewpointID": "jp-とさでん交通-桟橋線#6#point-1",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000001/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000001/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.55713419742361,
+        "longitude": 133.5425918377627,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916302895922827,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233787901.70942143,
+        "rectY": 107623997.81977874,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Own north/south arm crosses Kagamigawa bridge and approaches south side of Harimayabashi. No false turn onto east/west Ino/Gomen crossing or extension into northern branch."
+    },
+    {
+      "source": "new missing-only capture",
+      "intervalIndex": 6,
+      "directory": "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000002",
+      "viewpointID": "jp-とさでん交通-桟橋線#6#point-2",
+      "originalsViewed": [
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000002/basemap.png",
+        "/private/tmp/jtm-tosaden-sanbashi-missing-20261018/alignment/captures/000002/000002/smooth.png"
+      ],
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 33.559097,
+        "longitude": 133.542788,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9916080688288889,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 233788047.978587,
+        "rectY": 107622241.51737782,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "observed": "Own north/south arm crosses Kagamigawa bridge and approaches south side of Harimayabashi. No false turn onto east/west Ino/Gomen crossing or extension into northern branch."
+    }
+  ]
+}

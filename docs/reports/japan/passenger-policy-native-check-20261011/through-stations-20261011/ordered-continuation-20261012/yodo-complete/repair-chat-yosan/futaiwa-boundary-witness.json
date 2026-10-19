@@ -1,0 +1,115 @@
+{
+  "status": "candidate-only-long-ownface-move-confirmed-79-required",
+  "stationID": "009291",
+  "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-futaiwa-009291/view.json",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.424275000000016,
+    "longitude": 132.45789000000005,
+    "mapPointsPerPoint": 4,
+    "metresPerPoint": 0.4965658307840766,
+    "pitch": 0,
+    "rectHeight": 2551.999999985099,
+    "rectWidth": 3995.9999999701977,
+    "rectX": 232983491.3970774,
+    "rectY": 107746310.74916403,
+    "viewportHeightPoints": 638,
+    "viewportWidthPoints": 999,
+    "zoom256": 18
+  },
+  "rawDimensions": [
+    999,
+    638
+  ],
+  "ownIdentifiedNarrowFace": [
+    [
+      475,
+      154
+    ],
+    [
+      531,
+      319
+    ]
+  ],
+  "faceLongitudinalMidpoint": [
+    503.0,
+    236.5
+  ],
+  "literalOwnAdjacentRailBand": {
+    "y180": [
+      469,
+      473
+    ],
+    "y200": [
+      474.5,
+      479.5
+    ],
+    "y280": [
+      502.5,
+      507.5
+    ],
+    "y300": [
+      509.5,
+      514.5
+    ]
+  },
+  "ownRailSpineFlanks": [
+    [
+      471.0,
+      180.0
+    ],
+    [
+      477.0,
+      200.0
+    ],
+    [
+      505.0,
+      280.0
+    ],
+    [
+      512.0,
+      300.0
+    ]
+  ],
+  "normalPixel": [
+    491.41764178798536,
+    240.48700407682813
+  ],
+  "candidateDisplayAlias": [
+    132.45784664285196,
+    33.424626519353936
+  ],
+  "oldAlias": [
+    132.45789,
+    33.424275
+  ],
+  "oldAliasPixel": [
+    499.5,
+    319
+  ],
+  "excluded": [
+    "North/southbroadcasing",
+    "Eastattachedbulb around515235 doesnotextendface",
+    "Westshortroundedlightshape467241→475261 notindependentlyidentifiedaspassengerface andnotaveraged"
+  ],
+  "qualification": "Use independentlyidentifiedeasternlongface longitudinalmidpoint normallyprojectedontoadjacentownpairedsleeperband. Exactindividualoperationaltrackassignmentnotproved; ±3pxrailpickwarningretained.",
+  "uncertainty": {
+    "capPixels": 3,
+    "railPickPixels": 3,
+    "surveyedPrecision": false
+  },
+  "requiredCompleteIntervals": [
+    79,
+    80
+  ],
+  "requiredInterval79": {
+    "fromStationID": "009272",
+    "fromName": "八幡浜",
+    "toStationID": "009291",
+    "toName": "双岩"
+  },
+  "independentSavedImageReview": "GPT-6.1Solmediumconfirmedlongface475154→531319, rejectedaveragingunidentifiedwestshortshape, oldpointatfaceend; primaryopenedadditionalliteralrailenlargement.",
+  "formalAcceptance": false,
+  "physicalIDsCoordinatesKmSegmentsRoutingUnchanged": true
+}

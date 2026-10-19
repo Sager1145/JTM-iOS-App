@@ -1,0 +1,5 @@
+# Tosaden Ekimae: all original views examined
+
+Parent actually viewed6/6 pairs /12 original basemap+smooth PNGs: retained0/2 each2, newmissing1 two. New task completed2/2,0failed in61534. Exact named-plan own coordinates/station IDs and oldreceipt bytes were compared during preparation; no existing view recaptured. Old1024×768/new1600×1200 contracts remain distinct; see full-original-viewed-manifest-20261018.json.
+
+Own line stays on the north/south street from the tram terminus immediately south of JR Kochi toward Harimayabashi. The adjacent JR Dosan east/west tracks/platforms do not redirect this line. The short street/bridge transitions through Kochibashi and Hasuikemachi-dori remain continuous; no isolated falseV/right-angle connector, false junction turn or gap is identified in this set. At Harimayabashi, own north approach remains separate from the Ino/Gomen east/west stroke and Sanbashi south arm. The retained lateral offsets are not a platform-centre/survey acceptance; precise own terminal frame caps and physical through-switch identity remain unresolved. No production edit is supported from these images.

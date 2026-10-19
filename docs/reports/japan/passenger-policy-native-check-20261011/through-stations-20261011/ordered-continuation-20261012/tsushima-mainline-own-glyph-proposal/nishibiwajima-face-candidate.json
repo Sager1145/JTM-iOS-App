@@ -1,0 +1,54 @@
+{
+  "status": "root-raw-own-frame-adjudicated-native-pending",
+  "stationID": "005376",
+  "stationName": "西枇杷島",
+  "view": "meitetsu-main-20-view2-z18-before",
+  "candidateSouthNarrowTexturedStripEndpointsPixels": [
+    [
+      437,
+      337
+    ],
+    [
+      597,
+      313
+    ]
+  ],
+  "endpointUncertaintyPixels": 5,
+  "longitudinalMidpointPixels": [
+    517,
+    325
+  ],
+  "ownRailNormalCandidatePixels": [
+    515.8,
+    316.6
+  ],
+  "ownRailNormalCandidateCoordinate": [
+    136.86536744001393,
+    35.19513059121669
+  ],
+  "normalUncertaintyPixels": 2,
+  "retainedPhysical": [
+    136.86528,
+    35.195085
+  ],
+  "physicalProjectedPixels": [
+    499.5,
+    327
+  ],
+  "warning": "Root identified capped blue surfaces on both sides of own single Main glyph agreeing at chainage515–517. Exact internal platform numbers need not be inferred. Whole native candidate replay remains pending.",
+  "rootFrameLongitudinalMidpointPixels": [
+    516,
+    325
+  ],
+  "rootOwnRailNormalCandidatePixels": [
+    516,
+    316.5
+  ],
+  "rootOwnRailNormalCandidateCoordinate": [
+    136.86536851289753,
+    35.195131029593654
+  ],
+  "rootChainageUncertaintyPixels": 3,
+  "rootNormalUncertaintyPixels": 1.5,
+  "adoptedByBodyProposal": true
+}

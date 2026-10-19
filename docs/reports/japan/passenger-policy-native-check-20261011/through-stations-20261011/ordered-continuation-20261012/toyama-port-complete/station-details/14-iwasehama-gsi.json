@@ -1,0 +1,211 @@
+{
+  "map": [
+    {
+      "height": 680,
+      "width": 1280,
+      "x": 0,
+      "y": 40
+    }
+  ],
+  "tiles": [
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 452,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231002/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 708,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231003/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 452,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231002/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 708,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231003/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 452,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231002/102252.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 708,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231003/102252.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 196,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231001/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 964,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231004/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 196,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231001/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 964,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231004/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 196,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231001/102252.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 964,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231004/102252.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": -60,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231000/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 1220,
+        "y": 266
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231005/102251.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": -60,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231000/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 1220,
+        "y": 10
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231005/102250.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": -60,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231000/102252.jpg"
+    },
+    {
+      "loaded": true,
+      "opacity": "1",
+      "rect": {
+        "height": 256,
+        "width": 256,
+        "x": 1220,
+        "y": 522
+      },
+      "url": "https://maps.gsi.go.jp/xyz/seamlessphoto/18/231005/102252.jpg"
+    }
+  ],
+  "url": "https://maps.gsi.go.jp/#19/36.76150/137.23398/&base=std&ls=std%7Cseamlessphoto&blend=0&disp=11&vs=c1g1j0h0k0l0u0t0z0r0s0m0f1"
+}

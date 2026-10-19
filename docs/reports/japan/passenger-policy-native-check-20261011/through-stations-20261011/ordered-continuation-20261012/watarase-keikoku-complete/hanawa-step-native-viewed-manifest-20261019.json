@@ -1,0 +1,58 @@
+{
+  "lineID": "jp-わたらせ渓谷鐵道-わたらせ渓谷線",
+  "reviewer": "parent Codex",
+  "pairsViewed": 5,
+  "originalPNGsViewed": 10,
+  "views": [
+    {
+      "session": "/private/tmp/jtm-watarase-hanawa-step-native-20261019",
+      "pointOrdinal": 0,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000000/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-watarase-hanawa-step-native-20261019",
+      "pointOrdinal": 1,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-watarase-hanawa-step-native-20261019",
+      "pointOrdinal": 2,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000002/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000002/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-watarase-hanawa-step-native-20261019",
+      "pointOrdinal": 3,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-step-native-20261019/alignment/captures/000000/000003/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    },
+    {
+      "session": "/private/tmp/jtm-watarase-hanawa-step-detail-native-20261019",
+      "pointOrdinal": 1,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-hanawa-step-detail-native-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-watarase-hanawa-step-detail-native-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "detail": "original"
+    }
+  ]
+}

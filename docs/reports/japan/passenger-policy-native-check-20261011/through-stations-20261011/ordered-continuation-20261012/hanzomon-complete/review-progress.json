@@ -1,0 +1,208 @@
+{
+  "lineID": "jp-東京地下鉄-11号線半蔵門線",
+  "ordinal": 24,
+  "status": "complete-baseline-pixel-review; underground-identity-and-platform-acceptance-pending",
+  "rootOnly": true,
+  "guide": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "inspectors": {
+    "primary": {
+      "capturedViews": 67,
+      "rootReviewedSmoothCompositeViews": 67,
+      "rootReviewedContactSheets": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "coveredIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "targetPending": 0,
+      "targetFailed": 0,
+      "separateBasemapDisplaySmoothPanelsStored": 201,
+      "storedPanelsAreNotAllIndependentlyReviewed": true
+    },
+    "secondary": {
+      "capturedViews": 67,
+      "rootReviewedSmoothCompositeViews": 67,
+      "rootReviewedContactSheets": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "coveredIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "targetPending": 0,
+      "targetFailed": 0,
+      "separateBasemapDisplaySmoothPanelsStored": 201,
+      "storedPanelsAreNotAllIndependentlyReviewed": true
+    },
+    "third": {
+      "capturedViews": 67,
+      "rootReviewedSmoothCompositeViews": 67,
+      "rootReviewedContactSheets": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "coveredIntervals": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "targetPending": 0,
+      "targetFailed": 0,
+      "separateBasemapDisplaySmoothPanelsStored": 201,
+      "storedPanelsAreNotAllIndependentlyReviewed": true
+    }
+  },
+  "main": {
+    "actualApp": "Toyama RailMap Candidate.app; normal production renderer",
+    "pairsCaptured": 13,
+    "rootReviewedCompleteIntervalPairs": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "widenedRecapturesAfterObservedClipping": [
+      0,
+      2,
+      5,
+      7,
+      8,
+      9,
+      10
+    ],
+    "initialCroppedEvidenceDirectory": "main-baseline/initial-framing",
+    "acceptance": "baseline observations only; no repair applied",
+    "additionalEndpointContextReview": "Shibuya and Oshiage actual ON/OFF pairs reviewed in candidate and original"
+  },
+  "productionChanges": false,
+  "mainOriginal": {
+    "actualApp": "RailMap.app; com.JRM.RailMap",
+    "completeIntervalPairsCapturedAndRootReviewed": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "additionalThroughContextCaseIndices": [
+      13,
+      14
+    ],
+    "allActualOnStatusNetworkRendered": true,
+    "allBudgetDropsZero": true,
+    "cameraMatched": true,
+    "note": "Actual pixels reviewed in root-main-contact-NN.jpg. Counters/camera do not establish geographic acceptance."
+  },
+  "nativeMapsTransit": {
+    "rootReviewedRegionalViews": [
+      "aoyama-parallel-own-lines",
+      "kudanshita-crossing",
+      "oshiage-through-corridors",
+      "shibuya-independent-platform-corridors"
+    ],
+    "folder": "apple-maps-transit",
+    "notSurveyEvidence": true
+  },
+  "unacceptedItems": [
+    "Kudanshita preview steps",
+    "underground river bend cartographic difference",
+    "all 14 whole passenger frame midpoints"
+  ]
+}

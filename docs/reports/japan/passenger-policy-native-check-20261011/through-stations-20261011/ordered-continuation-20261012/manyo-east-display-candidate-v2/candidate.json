@@ -1,0 +1,721 @@
+{
+  "format": "jtm-manual-display-candidate-v1",
+  "status": "candidate-v2-kaiwomaru-platform-boundary-awaiting-independent-native-review",
+  "lineID": "jp-万葉線-新湊港線",
+  "intervalIndex": 6,
+  "scope": "Display-only candidate; physical coordinates, topology and mileage unchanged. No production writes.",
+  "dependency": "96ea088dce99c2122d1bf85768b42afbc0a5eb44de6a18ee582f243029199dc1",
+  "coordinates": [
+    [
+      137.10527580479294,
+      36.77674666549145
+    ],
+    [
+      137.10561979860302,
+      36.77668460019432
+    ],
+    [
+      137.106156240406,
+      36.77658147776295
+    ],
+    [
+      137.10668999999996,
+      36.77647835519285
+    ],
+    [
+      137.10722912401195,
+      36.77637523248403
+    ],
+    [
+      137.10776556581493,
+      36.77627210963647
+    ],
+    [
+      137.1083020076179,
+      36.77616898665019
+    ],
+    [
+      137.1088384494209,
+      36.77606586352517
+    ],
+    [
+      137.10913657654282,
+      36.775958886109855
+    ],
+    [
+      137.1096730183458,
+      36.77585576270219
+    ],
+    [
+      137.11020946014878,
+      36.77575263915581
+    ],
+    [
+      137.11047768105027,
+      36.77569248368968
+    ],
+    [
+      137.11061179150101,
+      36.7756495154707
+    ],
+    [
+      137.11074590195176,
+      36.77559795357611
+    ],
+    [
+      137.1108800124025,
+      36.77554209481783
+    ],
+    [
+      137.11101412285325,
+      36.775473345521014
+    ],
+    [
+      137.111148233304,
+      36.77539600248839
+    ],
+    [
+      137.11128234375474,
+      36.775305768851695
+    ],
+    [
+      137.11141645420548,
+      36.77519834771715
+    ],
+    [
+      137.11155056465623,
+      36.775065145301255
+    ],
+    [
+      137.11165336805357,
+      36.7749295310544
+    ]
+  ],
+  "manualPicks": [
+    {
+      "frame": "first",
+      "pixel": [
+        499.5,
+        282
+      ],
+      "coordinate": [
+        137.10668999999996,
+        36.77647835519285
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "first",
+      "pixel": [
+        600,
+        306
+      ],
+      "coordinate": [
+        137.10722912401195,
+        36.77637523248403
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "first",
+      "pixel": [
+        700,
+        330
+      ],
+      "coordinate": [
+        137.10776556581493,
+        36.77627210963647
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "first",
+      "pixel": [
+        800,
+        354
+      ],
+      "coordinate": [
+        137.1083020076179,
+        36.77616898665019
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "first",
+      "pixel": [
+        900,
+        378
+      ],
+      "coordinate": [
+        137.1088384494209,
+        36.77606586352517
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        250,
+        206
+      ],
+      "coordinate": [
+        137.10913657654282,
+        36.775958886109855
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        350,
+        230
+      ],
+      "coordinate": [
+        137.1096730183458,
+        36.77585576270219
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        450,
+        254
+      ],
+      "coordinate": [
+        137.11020946014878,
+        36.77575263915581
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        500,
+        268
+      ],
+      "coordinate": [
+        137.11047768105027,
+        36.77569248368968
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        525,
+        278
+      ],
+      "coordinate": [
+        137.11061179150101,
+        36.7756495154707
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        550,
+        290
+      ],
+      "coordinate": [
+        137.11074590195176,
+        36.77559795357611
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        575,
+        303
+      ],
+      "coordinate": [
+        137.1108800124025,
+        36.77554209481783
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        600,
+        319
+      ],
+      "coordinate": [
+        137.11101412285325,
+        36.775473345521014
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        625,
+        337
+      ],
+      "coordinate": [
+        137.111148233304,
+        36.77539600248839
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        650,
+        358
+      ],
+      "coordinate": [
+        137.11128234375474,
+        36.775305768851695
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        675,
+        383
+      ],
+      "coordinate": [
+        137.11141645420548,
+        36.77519834771715
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "middle",
+      "pixel": [
+        700,
+        414
+      ],
+      "coordinate": [
+        137.11155056465623,
+        36.775065145301255
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    },
+    {
+      "frame": "last",
+      "pixel": [
+        447,
+        305
+      ],
+      "coordinate": [
+        137.11165336805357,
+        36.7749295310544
+      ],
+      "support": "manually identified physical black rail band; longitudinal terminal-platform midpoint for last pick"
+    }
+  ],
+  "displayStations": [
+    {
+      "stationID": "001815",
+      "role": "#4/#5 boundary held exactly",
+      "oldCoordinate": [
+        137.099055,
+        36.777865
+      ],
+      "candidateCoordinate": [
+        137.099055,
+        36.777865
+      ],
+      "moveMetres": 0
+    },
+    {
+      "stationID": "001817",
+      "role": "true platform longitudinal midpoint intersect original candidate rail locus; shared #5/#6 repartition; not source chainage projection",
+      "oldCoordinate": [
+        137.10669,
+        36.776285
+      ],
+      "candidateCoordinate": [
+        137.10527580479294,
+        36.77674666549145
+      ],
+      "moveMetres": 136.16678381559953,
+      "evidencePixel": {
+        "frame": "first",
+        "desiredPlatformMidpoint": [
+          236,
+          219
+        ],
+        "locusProjection": [
+          235.8749060669385,
+          219.55533731616455
+        ],
+        "distancePixels": 0.5692521645225803
+      }
+    },
+    {
+      "stationID": "001820",
+      "role": "terminal platform longitudinal midpoint intersect identified rail band; exclude ferry transverse block",
+      "oldCoordinate": [
+        137.111935,
+        36.774835
+      ],
+      "candidateCoordinate": [
+        137.11165336805357,
+        36.7749295310544
+      ],
+      "moveMetres": 27.227721606428435
+    }
+  ],
+  "maximumCandidateToOldSourcePolylineMetres": 27.631691611279138,
+  "guards": [
+    "#5 start is original 001815 exactly; #4 endpoint remains unchanged. Native smoothing across #4/#5 must still be inspected.",
+    "#5 end and #6 start are literally the same coordinate array.",
+    "Manual picks use physical black rail band; no detector unsupported samples.",
+    "Sparse manual candidate requires native production smoothing, join and endpoint validation.",
+    "Small cross-frame rail-glyph reprojection differences (~few pixels) remain; do not interpret as survey precision.",
+    "Physical coordinates, topology, mileage remain unchanged.",
+    "Revision2 changes #5/#6 segmentation position at001817 platform; candidate geographic locus unchanged exactly. GSI aerial platform identity reviewed and consistent; native candidate still needs acceptance."
+  ],
+  "sourceFrames": {
+    "first": {
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236449887.91889063,
+        "y": 104690410.96444699
+      },
+      "width": 999,
+      "height": 654
+    },
+    "middle": {
+      "mapRect": {
+        "height": 2616,
+        "width": 3996,
+        "x": 236452710.21858487,
+        "y": 104691198.55236962
+      },
+      "width": 999,
+      "height": 654
+    },
+    "last": {
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996,
+        "x": 236453798.8743539,
+        "y": 104691760.79735559
+      },
+      "width": 999,
+      "height": 654
+    },
+    "view0": {
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996.0000000298023,
+        "x": 236444194.8502614,
+        "y": 104688940.08296613
+      },
+      "width": 999,
+      "height": 654
+    },
+    "view1": {
+      "mapRect": {
+        "height": 2615.9999999701977,
+        "width": 3996,
+        "x": 236447033.14712542,
+        "y": 104689667.47215182
+      },
+      "width": 999,
+      "height": 654
+    },
+    "view2": {
+      "mapRect": {
+        "height": 2616.000000014901,
+        "width": 3996.0000000298023,
+        "x": 236449868.78832257,
+        "y": 104690406.01289105
+      },
+      "width": 999,
+      "height": 654
+    },
+    "view3": {
+      "mapRect": {
+        "height": 2616,
+        "width": 3996.0000000298023,
+        "x": 236449887.91889063,
+        "y": 104690410.96444699
+      },
+      "width": 999,
+      "height": 654
+    }
+  },
+  "intervals": [
+    {
+      "intervalIndex": 5,
+      "fromStationID": "001815",
+      "toStationID": "001817",
+      "coordinates": [
+        [
+          137.099055,
+          36.777865
+        ],
+        [
+          137.09932590311064,
+          36.777822032998806
+        ],
+        [
+          137.09959412401213,
+          36.77777691762163
+        ],
+        [
+          137.1003987867166,
+          36.77764157133073
+        ],
+        [
+          137.100718367715,
+          36.77756058989384
+        ],
+        [
+          137.10152303041946,
+          36.77742309485916
+        ],
+        [
+          137.10232769312393,
+          36.77727270938258
+        ],
+        [
+          137.1031323558284,
+          36.777135213831514
+        ],
+        [
+          137.10393701853286,
+          36.77698482779014
+        ],
+        [
+          137.10474168123733,
+          36.77684303496659
+        ],
+        [
+          137.10527580479294,
+          36.77674666549145
+        ]
+      ],
+      "startGuard": "001815 exact original [137.099055,36.777865], 120m visually supported near-straight rail-band approach blends small local offset; no #4/001815 mutation",
+      "maximumCandidateToOldSourcePolylineMetres": 20.83764278634161,
+      "manualPicks": [
+        {
+          "frame": "view0",
+          "pixel": [
+            550,
+            337
+          ],
+          "coordinate": [
+            137.09932590311064,
+            36.777822032998806
+          ]
+        },
+        {
+          "frame": "view0",
+          "pixel": [
+            600,
+            347.5
+          ],
+          "coordinate": [
+            137.09959412401213,
+            36.77777691762163
+          ]
+        },
+        {
+          "frame": "view0",
+          "pixel": [
+            750,
+            379
+          ],
+          "coordinate": [
+            137.1003987867166,
+            36.77764157133073
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            100,
+            216
+          ],
+          "coordinate": [
+            137.100718367715,
+            36.77756058989384
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            250,
+            248
+          ],
+          "coordinate": [
+            137.10152303041946,
+            36.77742309485916
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            400,
+            283
+          ],
+          "coordinate": [
+            137.10232769312393,
+            36.77727270938258
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            550,
+            315
+          ],
+          "coordinate": [
+            137.1031323558284,
+            36.777135213831514
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            700,
+            350
+          ],
+          "coordinate": [
+            137.10393701853286,
+            36.77698482779014
+          ]
+        },
+        {
+          "frame": "view1",
+          "pixel": [
+            850,
+            383
+          ],
+          "coordinate": [
+            137.10474168123733,
+            36.77684303496659
+          ]
+        },
+        {
+          "frame": "first",
+          "pixel": [
+            300,
+            234
+          ],
+          "coordinate": [
+            137.10561979860302,
+            36.77668460019432
+          ]
+        },
+        {
+          "frame": "first",
+          "pixel": [
+            400,
+            258
+          ],
+          "coordinate": [
+            137.106156240406,
+            36.77658147776295
+          ]
+        }
+      ],
+      "maximumCandidateToOldSourcePolylineMetresScope": "Revision1 locus diagnostic before repartition; not station movement or corresponding-segment displacement."
+    },
+    {
+      "intervalIndex": 6,
+      "fromStationID": "001817",
+      "toStationID": "001820",
+      "coordinates": [
+        [
+          137.10527580479294,
+          36.77674666549145
+        ],
+        [
+          137.10561979860302,
+          36.77668460019432
+        ],
+        [
+          137.106156240406,
+          36.77658147776295
+        ],
+        [
+          137.10668999999996,
+          36.77647835519285
+        ],
+        [
+          137.10722912401195,
+          36.77637523248403
+        ],
+        [
+          137.10776556581493,
+          36.77627210963647
+        ],
+        [
+          137.1083020076179,
+          36.77616898665019
+        ],
+        [
+          137.1088384494209,
+          36.77606586352517
+        ],
+        [
+          137.10913657654282,
+          36.775958886109855
+        ],
+        [
+          137.1096730183458,
+          36.77585576270219
+        ],
+        [
+          137.11020946014878,
+          36.77575263915581
+        ],
+        [
+          137.11047768105027,
+          36.77569248368968
+        ],
+        [
+          137.11061179150101,
+          36.7756495154707
+        ],
+        [
+          137.11074590195176,
+          36.77559795357611
+        ],
+        [
+          137.1108800124025,
+          36.77554209481783
+        ],
+        [
+          137.11101412285325,
+          36.775473345521014
+        ],
+        [
+          137.111148233304,
+          36.77539600248839
+        ],
+        [
+          137.11128234375474,
+          36.775305768851695
+        ],
+        [
+          137.11141645420548,
+          36.77519834771715
+        ],
+        [
+          137.11155056465623,
+          36.775065145301255
+        ],
+        [
+          137.11165336805357,
+          36.7749295310544
+        ]
+      ]
+    }
+  ],
+  "revision": 2,
+  "rejectedRevision1": "001817 incorrectly preserved old chainage; Main found true platform approximately140m west. Revision2 repartitions unchanged geographic locus at visible platform longitudinal midpoint.",
+  "maximumCandidateToOldSourcePolylineMetresScope": "Revision1 #6 locus comparison before boundary repartition; retained geographic locus. Do not use as new interval6-to-old interval6 metric, because001817 boundary moved along-track.",
+  "regionalIdentityEvidence": "manyo-kaiwomaru-regional-aerial-z19-loaded.png, GSI2021Jun-Aug, actually reviewed: single longitudinal platform immediately east of north-south crossing, alongside same track; matches Apple platform band first-frame pixel~213..260."
+}

@@ -1,0 +1,39 @@
+# Miyafuku bounded own-display candidate — 2026-10-18
+
+> **Current status correction — interval0 native rejected; active owner is8-only.** Parent and independent actual native review found a visible off-rail shoulder at interval0 point4 and continuing eastward tail displacement at points5..7. The12°/8° source seam angles do not establish acceptance. The combined0+8 implementation/evidence/tests are preserved in `rejected-interval0-candidate-20261018/`; the old combined candidate directory is unchanged. Interval0 source research and all19 reviewed pairs remain historical evidence; own Miyamura platform and intervals0/1 station evidence remain pending. Combined sections below describe the superseded proposal, not active approval.
+>
+> Active owner constructs only interval8 decoded4..32. Existing source, physical/station, measured and external known-reference guards remain. Native part restored to585points/30493.6m and existing lane−0.5. No activeIntervals selector, second owner or fallback was added. Original focused file ran once:4/4 GREEN, `/private/tmp/jtm-miyafuku-gujo-final-green.log`. New six-file candidate exported to `/private/tmp/jtm-miyafuku-gujo-final-candidate-20261018`, export log `/private/tmp/jtm-miyafuku-gujo-final-export.log`. Historical8-only/combined exports were not overwritten. No production apply/native/build.
+
+Source-only implementation/export; no production apply, app/native capture or heavy build. The single owner is `app/scripts/railway/repair-miyafuku-own-display.mjs`; frozen evidence is adjacent `miyafuku-own-display-evidence.json`. Interval12 and its unresolved terminal/platform offset are excluded. Both candidate windows still require actual native rendering/review.
+
+## Windows and attribution
+
+- **Interval8 Gujo–Shimo-Amazu:** replace decoded controls4..32 with projected boundaries and the exact connected nine-way own passenger chain from `interval-8-own-source-20261018/`. Controls0..3 and33..55, both station rows and all physical compact geometry remain exact. Passenger route12018222v19 members105..113 and reverse12030449v9 members60..68 independently establish own passenger identity; railway6014983v39 members61..69 also agree. Actual full-object bytes, ways/versions/tags, nodes/versions, chain adjacency and route members are guarded. RawN02 features19846/19849 frozen;19849 reversed reproduces decoded1..54. The northward raw bulge at v11 disappears; own bridge node135.1244096/35.3699586 is retained. Boundary offsets1.317/3.995m, guard turns1.615/1.100/0.284/5.315 degrees; candidate maximum deflection9.559 degrees. This is KSJ2-derived corridor evidence, not a tunnel survey or platform-centre acceptance.
+- **Interval0 Miyazu–Miyamura:** replace controls5..29 only, retaining0..4 and30..39. Exact twelve-way full-node chain from `miyazu-miyamura-own-source-20261018/` matches train12018222v19 members14..25 and reverse12030449v9 members148..159. Own stop359861083 is on885071738. Side track885071737 and Miyazu neighbor ways885724106/32052901 are excluded. Own rawN02 features19840+19867 reproduce decoded1..38, with their common point included once. Shared geometry with Miyazu feature19801 is not own-track attribution. Boundaries project11.294/20.552m to this own chain. Entry/before/exit/after deflections12.026/8.444/8.433/7.801 degrees. Both existing platform endpoints remain unchanged and unaccepted; this window is explicitly a source-supported rendering proposal.
+
+## Actual native and external dependencies
+
+The baseline own native part is589points/30479.9m, groomed station-approach, lane−0.5. Existing production `partRowsForLine(line, network.displayPartsForLine(line))` supplies the new explicit complex part. **8-only:585points/30493.6m. Combined0+8:583points/30492.2m.** The one own lane retains start0 and slot−0.5; only its total endpoint changes. No new ruler/remapping engine exists.
+
+Current own references: parts1, lanes1; both owner/canonical follow roles0, family0, hub members0, loops0, reversed loop parts0, exclusions0, boundaries0, released intervals0. Guards use the actual schemas (`loopsByRegion` object.lineIds[], reversed `LINE#part` strings, follows both roles, hub object members). Unexpected own measured references, own maps and known operator/line exclusions reject. There is no scan of unknown metadata schemas. Frozen baseline and exact repaired states are accepted; replay is idempotent. Unrelated line/part/lane/metadata content is retained.
+
+The two physical junction registry entries at Miyazu and Fukuchiyama remain exact. Actual external `shared-corridors.json` has no own corridor in `corridors.lineIds` or `corridors.members.lineId`, and no own display landlord in singular/plural tenant or landlord fields. Its display-lane excludedLineIds also has no own entry. `display-releases.json` has no own `releases.lineId` entry. These known-schema empty baselines are now guarded directly; both files are included in the existing apply preflight snapshots and remain unchanged. `station-names.json` and `station-english-coverage.json` remain untouched. Only the four existing package-hash dependency references are refreshed by `refreshDependencyReferences`: station-english-verified-jp-east, jp-kana-evidence, station-english and station-names-coverage. CLI preparation uses the same package/native path for candidate or explicit apply and the existing `applyPreparedWrites` preflight. Production apply was not executed.
+
+A targeted actual export comparison found only `displayIntervalCoordinates` changed on the own line, all other lines exact, and only `partsByRegion`/`byRegion` changed in display-lanes. All physical station IDs/km/segments and all other interval geometry remain unchanged. No extra generator/replay pipeline or automatic hook was added: this owner remains the explicit bounded replay authority.
+
+Interval0 retains the old N02 shared junction coordinate in physical geometry as a physical-topology constraint. That coordinate does not pull the own display back to a neighboring line. Native/Main review must inspect the legal display connection between the Miyafuku south arm and the Miyazu northwest arm. No display gap is inferred from source-only evidence, and no fallback is added.
+
+## Reviewable outputs and focused evidence
+
+- 8-only six-file candidate retained at `/private/tmp/jtm-miyafuku-gujo-candidate-20261018`; its original frozen owner evidence is copied into the directory.
+- Combined six-file candidate at `/private/tmp/jtm-miyafuku-own-candidate-20261018`; active frozen evidence copied alongside. Existing package/lanes and four reference filenames are used.
+- Initial4-test RED: `/private/tmp/jtm-miyafuku-own-display-red.log`; 8-only4/4 GREEN: `/private/tmp/jtm-miyafuku-own-display-green.log`.
+- Interval0 one-test RED confirms absent own display curve: `/private/tmp/jtm-miyafuku-interval0-red.log`; combined5/5 GREEN: `/private/tmp/jtm-miyafuku-interval0-green.log`.
+- Final focused regression5/5 GREEN: `/private/tmp/jtm-miyafuku-own-display-final-green.log`; export result: `/private/tmp/jtm-miyafuku-own-candidate-export.log`.
+- Re-run: `node --test app/scripts/railway/tests/miyafuku-own-display.test.mjs`.
+
+No claim of native-pixel acceptance, platform-centre accuracy, whole-line acceptance or interval12 repair is made.
+
+## Narrow dependency review correction
+
+Removed the unknown-schema metadata scan and its implementation-mirroring assertion. Kept actual source/baseline/route regressions and explicit known exclusion/map checks. Only the affected existing test was rerun: 1/1 passed, `/private/tmp/jtm-miyafuku-known-dependencies-green.log`. Earlier 5/5 evidence remains applicable to unchanged geometry/native generation; neither candidate directory was re-exported. External guard fields and snapshot inputs were inspected in source and by the bounded own-reference query above; the CLI/apply path was not executed again.

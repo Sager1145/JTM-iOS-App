@@ -1,0 +1,11 @@
+# Miyafuku Miyazu departure: parent original review
+
+Viewed original basemap+smooth pairs000041/000000 and000002, exact camera/view IDs in the manifest. First view follows the railway through the broad Miyazu station group, but its own platform caps/face are unresolved. Second view shows the own Miyafuku label continuing south from the Miyazu/Miyafuku split; the red generalized path takes a straighter chord east of the curved own blue band, then returns near the branching approach. The independent Miyato/Miyatoyo west-curving railway is not the southbound continuation and must not determine any correction.
+
+This is a concrete bounded cartographic discrepancy lead, not surveyed residual or permission to snap to a label/nearby line. Existing own passenger source and branch continuity are required before modifying any control. No candidate or production repair, native Main check or whole-interval acceptance yet. Remaining four interval0 views have not been viewed in this parent pass.
+
+Parent subsequently viewed remaining points1/3/4/5 pairs: all6 interval0 original pairs now viewed. East-of-own-band displacement persists south through Miyamura, including its broad platform frame. Frame caps and exact normal/longitudinal station centre remain unresolved. No standalone point deletion is appropriate.
+
+Identified own cache source E135N35.json in sibling Japan-Train-Map outputs/osm-basemap-cache, fetched2026-08-18T10:31:02.971Z. Retained only explicit Miyafuku-tagged nearby own ways; service=siding objects are distinguished, not silently used. Versioned API records now retained for own main32055762v15,885048030v3,885071738v4,32055752v15 and main885071738 memberships in railway6014983v39 and train12018222v19/12030449v9. Complete connected way/node order across all bridge fragments has NOT yet been proved.
+
+Official operator Miyamura page https://trains.willer.co.jp/station/miyamura/ confirms platform1 is the through main used by nonstopping trains in both directions, with platform2 for some stopping movements. This establishes passenger-track selection policy, not a georeferenced cap or an OSMtrack↔platform binding. Before repair: resolve full own main chain/face, shared Miyazu stem and exact registeredjunction measure, native parts/follows and both adjacent intervals0/1. No candidate/production edit yet.

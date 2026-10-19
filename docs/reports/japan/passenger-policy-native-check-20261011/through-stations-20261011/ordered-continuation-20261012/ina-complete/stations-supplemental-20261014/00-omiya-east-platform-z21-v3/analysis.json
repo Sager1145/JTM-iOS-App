@@ -1,0 +1,36 @@
+{
+  "format" : "jtm-apple-map-extraction-v1",
+  "height" : 654,
+  "intervalIndex" : 0,
+  "lineID" : "jp-埼玉新都市交通-伊奈線",
+  "mapRect" : {
+    "height" : 379.02420389652252,
+    "width" : 578.96816468238831,
+    "x" : 238327408.48825544,
+    "y" : 105495483.66308317
+  },
+  "metresPerPixel" : 0.069849075612201217,
+  "platformCandidates" : [
+
+  ],
+  "reason" : "no_visible_corridor_samples",
+  "representation" : "physical_rail_glyph_candidate",
+  "samples" : [
+
+  ],
+  "scope" : "Selected visible smoothed centreline against independent snapshot glyph candidates; unsupported\/ambiguous gaps excluded. Platform frames are cartographic, unassigned review evidence, not surveyed coordinates; unresolved shapes have no rail midpoint. POI is not a platform centre. No source geometry writes.",
+  "stations" : [
+
+  ],
+  "status" : "no_candidate",
+  "supportFraction" : 0,
+  "textMasks" : [
+    [
+      12.984999999999999,
+      626,
+      52.951000000000001,
+      18.999999999999982
+    ]
+  ],
+  "width" : 999
+}

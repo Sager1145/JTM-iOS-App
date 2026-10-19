@@ -1,0 +1,369 @@
+{
+  "format": "jtm-station-frame-picks-v1",
+  "coordinateTransform": "MapKit mapRect affine pixel-to-map-point then inverse Web Mercator; pixels are points in 999x654 capture",
+  "notSurveyed": true,
+  "stations": {
+    "jimokuji": {
+      "stationID": "005368",
+      "face1": [
+        [
+          328,
+          301
+        ],
+        [
+          651,
+          298
+        ]
+      ],
+      "face2": [
+        [
+          329,
+          332
+        ],
+        [
+          653,
+          327
+        ]
+      ],
+      "axisEnds": [
+        [
+          328.5,
+          316.5
+        ],
+        [
+          652,
+          312.5
+        ]
+      ],
+      "longitudinalMidpoint": [
+        490.25,
+        314.5
+      ],
+      "railProjection": [
+        490,
+        315
+      ],
+      "uncertaintyPixels": 4,
+      "note": "uses overlapping narrow platform faces; wide lavender building/casing excluded",
+      "sourceImage": "tsushima-complete-native/tsushima-jimokuji-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.82580403802893,
+        35.19600760468442
+      ]
+    },
+    "shippo": {
+      "stationID": "005370",
+      "face1": [
+        [
+          463,
+          303
+        ],
+        [
+          630,
+          301
+        ]
+      ],
+      "face2": [
+        [
+          464,
+          326
+        ],
+        [
+          632,
+          324
+        ]
+      ],
+      "axisEnds": [
+        [
+          463.5,
+          314.5
+        ],
+        [
+          631,
+          312.5
+        ]
+      ],
+      "longitudinalMidpoint": [
+        547.25,
+        313.5
+      ],
+      "railProjection": [
+        547.5,
+        328
+      ],
+      "uncertaintyPixels": 4,
+      "note": "midpoint projected normally south to black own rail; label fill excluded",
+      "sourceImage": "tsushima-complete-native/tsushima-shippo-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.80649149206545,
+        35.1957906162661
+      ]
+    },
+    "kida": {
+      "stationID": "005372",
+      "face1": [
+        [
+          344,
+          300
+        ],
+        [
+          665,
+          296
+        ]
+      ],
+      "face2": [
+        [
+          345,
+          331
+        ],
+        [
+          667,
+          325
+        ]
+      ],
+      "axisEnds": [
+        [
+          344.5,
+          315.5
+        ],
+        [
+          666,
+          310.5
+        ]
+      ],
+      "longitudinalMidpoint": [
+        505.25,
+        313
+      ],
+      "railProjection": [
+        505,
+        319
+      ],
+      "uncertaintyPixels": 4,
+      "note": "two narrow platform faces bracket own nearly-horizontal rail",
+      "sourceImage": "tsushima-complete-native/tsushima-kida-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.78803950429938,
+        35.19533507007615
+      ]
+    },
+    "aotsuka": {
+      "stationID": "005355",
+      "face1": [
+        [
+          437,
+          297
+        ],
+        [
+          659,
+          335
+        ]
+      ],
+      "face2": [
+        [
+          436,
+          316
+        ],
+        [
+          658,
+          357
+        ]
+      ],
+      "axisEnds": [
+        [
+          436.5,
+          306.5
+        ],
+        [
+          658.5,
+          346
+        ]
+      ],
+      "longitudinalMidpoint": [
+        547.5,
+        326.25
+      ],
+      "railProjection": [
+        547.5,
+        327
+      ],
+      "uncertaintyPixels": 4,
+      "note": "diagonal narrow faces; road and wide blue casing excluded",
+      "sourceImage": "tsushima-complete-native/tsushima-aotsuka-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.76719249206542,
+        35.19870499999999
+      ]
+    },
+    "shobata": {
+      "stationID": "005375",
+      "face1": [
+        [
+          321,
+          405
+        ],
+        [
+          804,
+          160
+        ]
+      ],
+      "face2": [
+        [
+          328,
+          438
+        ],
+        [
+          820,
+          186
+        ]
+      ],
+      "axisEnds": [
+        [
+          324.5,
+          421.5
+        ],
+        [
+          812,
+          173
+        ]
+      ],
+      "longitudinalMidpoint": [
+        568.25,
+        297.25
+      ],
+      "railProjection": [
+        567,
+        297
+      ],
+      "uncertaintyPixels": 6,
+      "note": "uses common longitudinal extent of the two unequal narrow platform faces; not the wide station casing mean",
+      "sourceImage": "tsushima-complete-native/tsushima-shobata-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.7507370982171,
+        35.19537651279657
+      ]
+    },
+    "fujinami": {
+      "stationID": "005396",
+      "face1": [
+        [
+          321,
+          478
+        ],
+        [
+          552,
+          237
+        ]
+      ],
+      "face2": [
+        [
+          338,
+          502
+        ],
+        [
+          575,
+          254
+        ]
+      ],
+      "axisEnds": [
+        [
+          329.5,
+          490
+        ],
+        [
+          563.5,
+          245.5
+        ]
+      ],
+      "longitudinalMidpoint": [
+        446.5,
+        367.75
+      ],
+      "railProjection": [
+        447,
+        369
+      ],
+      "uncertaintyPixels": 6,
+      "note": "explicitly supersedes V4 draft source retention and V3 normal-only displacement; midpoint is along the complete narrow platform axis",
+      "sourceImage": "tsushima-complete-native/tsushima-fujinami-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.73863336805346,
+        35.18864586718895
+      ]
+    },
+    "tsushima": {
+      "stationID": "005420",
+      "face1": null,
+      "face2": null,
+      "axisEnds": null,
+      "longitudinalMidpoint": null,
+      "railProjection": [
+        499.5,
+        327
+      ],
+      "uncertaintyPixels": null,
+      "note": "WARNING: shared Bisai north-south band visible, but labels/building obscure complete longitudinal face; unchanged source point, not asserted midpoint",
+      "sourceImage": "tsushima-complete-native/tsushima-tsushima-z18-before/basemap.png",
+      "imageSize": [
+        999,
+        654
+      ],
+      "oldDotPixel": [
+        499.5,
+        327
+      ],
+      "coordinate": [
+        136.73107,
+        35.17803
+      ]
+    }
+  }
+}

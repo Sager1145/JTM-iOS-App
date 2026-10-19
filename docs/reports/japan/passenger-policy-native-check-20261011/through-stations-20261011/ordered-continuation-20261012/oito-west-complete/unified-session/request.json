@@ -1,0 +1,22 @@
+{
+  "action" : "capture",
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "evidencePaths" : [
+    "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/source-line.json"
+  ],
+  "lineID" : "jp-西日本旅客鉄道-大糸線",
+  "requestID" : "ordered-34-oito-west-baseline-20261017",
+  "schemaVersion" : 1,
+  "sessionDirectory" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/oito-west-complete\/unified-session",
+  "workspace" : "alignment"
+}

@@ -1,0 +1,453 @@
+{
+  "schema": "cn-jiangmen-missing-original-mainline-evidence-v1",
+  "reviewedAt": "2026-10-19",
+  "scope": "Evidence only. Original missing Jianghai–Jiangmen East mainline; no production or identity edits.",
+  "source": "railway-sources/local/china/osm/china-261017-rail.sqlite3",
+  "ownerRelation": {
+    "id": 5496304,
+    "version": 15,
+    "tags": {
+      "from": "小榄",
+      "name": "江门线",
+      "name:en": "Jiangmen Branch",
+      "name:zh": "江门线",
+      "operator": "中国铁路",
+      "operator:en": "China Railway",
+      "operator:wikidata": "Q1073489",
+      "operator:zh": "中国铁路",
+      "owner:note": "小榄至新会属广东广珠城际轨道交通有限责任公司，新会（不含）至江门属广东深茂铁路有限责任公司",
+      "ref": "3016",
+      "route": "railway",
+      "to": "江门",
+      "type": "route"
+    },
+    "exactMemberEntries": [
+      [
+        "w",
+        164295941,
+        ""
+      ],
+      [
+        "w",
+        164295943,
+        ""
+      ]
+    ]
+  },
+  "fromAttachment": {
+    "lineId": "cn-osm-relation-5496304-branch-6",
+    "nodeId": 1759441626,
+    "nodeVersion": 2,
+    "coordinate": [
+      113.1594631,
+      22.5860697
+    ],
+    "publishedCompactVertices": [
+      {
+        "segmentIndex": 0,
+        "vertexIndex": 18
+      }
+    ],
+    "publishedPhysicalVertices": [
+      {
+        "featureIndex": 4314,
+        "geometryLineIndex": 0,
+        "vertexIndex": 18,
+        "identity": {
+          "operatorName": "中国铁路",
+          "lineName": "江门线",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-5496304-branch-6"
+        }
+      }
+    ],
+    "identity": {
+      "operatorName": "中国铁路",
+      "lineName": "江门线",
+      "railwayClassCode": "12",
+      "trackID": "cn-osm-relation-5496304-branch-6"
+    },
+    "adjacentPublishedOriginalNodeId": 1411202320,
+    "joiningHeadingDegrees": 0.3348052814183329
+  },
+  "toAttachment": {
+    "lineId": "cn-osm-relation-5496304-branch-3",
+    "nodeId": 5634096419,
+    "nodeVersion": 1,
+    "coordinate": [
+      113.1000309,
+      22.564645
+    ],
+    "publishedCompactVertices": [
+      {
+        "segmentIndex": 1,
+        "vertexIndex": 15
+      }
+    ],
+    "publishedPhysicalVertices": [
+      {
+        "featureIndex": 4311,
+        "geometryLineIndex": 0,
+        "vertexIndex": 15,
+        "identity": {
+          "operatorName": "中国铁路",
+          "lineName": "江门线",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-5496304-branch-3"
+        }
+      }
+    ],
+    "identity": {
+      "operatorName": "中国铁路",
+      "lineName": "江门线",
+      "railwayClassCode": "12",
+      "trackID": "cn-osm-relation-5496304-branch-3"
+    },
+    "adjacentPublishedOriginalNodeId": 1759460700,
+    "joiningHeadingDegrees": 2.3546004659577817
+  },
+  "nodeIds": [
+    1759441626,
+    1759441602,
+    1759460600,
+    4452848131,
+    1759460592,
+    1759460636,
+    1759460653,
+    1411202319,
+    1759460634,
+    1411202327,
+    1759460602,
+    1759460583,
+    1411202325,
+    1759460580,
+    1759460603,
+    1759460656,
+    1759460645,
+    1759460665,
+    1411202309,
+    1759460588,
+    1759460632,
+    5634096416,
+    1759460649,
+    1759460563,
+    5634096419
+  ],
+  "coordinates": [
+    [
+      113.1594631,
+      22.5860697
+    ],
+    [
+      113.157428,
+      22.585185
+    ],
+    [
+      113.1548622,
+      22.5841242
+    ],
+    [
+      113.1507295,
+      22.5824773
+    ],
+    [
+      113.1489699,
+      22.581764
+    ],
+    [
+      113.1464521,
+      22.5806939
+    ],
+    [
+      113.145353,
+      22.5802214
+    ],
+    [
+      113.142237,
+      22.5789692
+    ],
+    [
+      113.1388816,
+      22.5775496
+    ],
+    [
+      113.1374608,
+      22.5770062
+    ],
+    [
+      113.1361726,
+      22.5765542
+    ],
+    [
+      113.1347448,
+      22.5761421
+    ],
+    [
+      113.1321804,
+      22.5756096
+    ],
+    [
+      113.1294182,
+      22.5751631
+    ],
+    [
+      113.126146,
+      22.5744604
+    ],
+    [
+      113.125046,
+      22.5741943
+    ],
+    [
+      113.1240401,
+      22.5738976
+    ],
+    [
+      113.1225978,
+      22.5734038
+    ],
+    [
+      113.1207805,
+      22.5726586
+    ],
+    [
+      113.1158572,
+      22.570681
+    ],
+    [
+      113.1107234,
+      22.5686126
+    ],
+    [
+      113.1086804,
+      22.5677958
+    ],
+    [
+      113.1065759,
+      22.5670245
+    ],
+    [
+      113.1025234,
+      22.5655869
+    ],
+    [
+      113.1000309,
+      22.564645
+    ]
+  ],
+  "nodeVersions": {
+    "1759441626": 2,
+    "1759441602": 2,
+    "1759460600": 1,
+    "4452848131": 1,
+    "1759460592": 1,
+    "1759460636": 1,
+    "1759460653": 1,
+    "1411202319": 2,
+    "1759460634": 1,
+    "1411202327": 2,
+    "1759460602": 1,
+    "1759460583": 1,
+    "1411202325": 2,
+    "1759460580": 1,
+    "1759460603": 2,
+    "1759460656": 2,
+    "1759460645": 2,
+    "1759460665": 2,
+    "1411202309": 3,
+    "1759460588": 2,
+    "1759460632": 2,
+    "5634096416": 1,
+    "1759460649": 2,
+    "1759460563": 2,
+    "5634096419": 1
+  },
+  "edgeWayIds": [
+    164295941,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943,
+    164295943
+  ],
+  "wayVersions": {
+    "164295941": 11,
+    "164295943": 22
+  },
+  "sourceWays": {
+    "164295941": {
+      "id": 164295941,
+      "version": 11,
+      "nodes": [
+        1759441626,
+        1759441602
+      ],
+      "tags": {
+        "alt_name": "广珠城际江门支线",
+        "alt_name:zh": "广珠城际江门支线",
+        "alt_name:zh-Hans": "广珠城际江门支线",
+        "alt_name:zh-Hant": "廣珠城際江門支線",
+        "bridge": "viaduct",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "1",
+        "maxspeed": "200",
+        "name": "江门线",
+        "name:zh": "江门线",
+        "name:zh-Hans": "江门线",
+        "name:zh-Hant": "江門線",
+        "operator": "中国铁路广州局集团有限公司",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "ref": "0720",
+        "start_date": "2011-01-07",
+        "usage": "main",
+        "voltage": "25000"
+      }
+    },
+    "164295943": {
+      "id": 164295943,
+      "version": 22,
+      "nodes": [
+        1759441602,
+        1759460600,
+        4452848131,
+        1759460592,
+        1759460636,
+        1759460653,
+        1411202319,
+        1759460634,
+        1411202327,
+        1759460602,
+        1759460583,
+        1411202325,
+        1759460580,
+        1759460603,
+        1759460656,
+        1759460645,
+        1759460665,
+        1411202309,
+        1759460588,
+        1759460632,
+        5634096416,
+        1759460649,
+        1759460563,
+        5634096419,
+        1759460700,
+        1759460595,
+        1759460598,
+        1759460676,
+        1759460651,
+        1759460608,
+        1759460684,
+        1759460659,
+        1759460664,
+        1759460644,
+        2071008298,
+        1759460654,
+        2071008295,
+        2071008300,
+        1759460640,
+        1759460555,
+        1759460647,
+        1759460561,
+        1759460585,
+        1759460610,
+        1759460657,
+        1759460638,
+        2071002276,
+        1759460581,
+        14114335195,
+        1759460702,
+        14132723570,
+        1759460597,
+        9654509026,
+        14132723568,
+        9654509028,
+        1759460660,
+        9654493166,
+        1831762682,
+        1831762696
+      ],
+      "tags": {
+        "alt_name": "广珠城际江门支线",
+        "alt_name:zh": "广珠城际江门支线",
+        "alt_name:zh-Hans": "广珠城际江门支线",
+        "alt_name:zh-Hant": "廣珠城際江門支線",
+        "bridge": "yes",
+        "electrified": "contact_line",
+        "frequency": "50",
+        "gauge": "1435",
+        "highspeed": "yes",
+        "layer": "2",
+        "maxspeed": "200",
+        "name": "江门线",
+        "name:zh": "江门线",
+        "name:zh-Hans": "江门线",
+        "name:zh-Hant": "江門線",
+        "operator": "中国铁路广州局集团有限公司",
+        "passenger_lines": "2",
+        "railway": "rail",
+        "ref": "0720",
+        "start_date": "2011-01-07",
+        "usage": "main",
+        "voltage": "25000"
+      }
+    }
+  },
+  "lengthMeters": 6568.694197003384,
+  "maxInternalHeadingChangeDegrees": 4.684091565810902,
+  "originalEdgesVerified": true,
+  "operatorEvidence": {
+    "kind": "original-way-operator",
+    "operatorName": "中国铁路广州局集团有限公司",
+    "exactWayIds": [
+      164295941,
+      164295943
+    ]
+  },
+  "passengerEvidence": {
+    "kind": "original-passenger-mainline-tags",
+    "wayIds": [
+      164295941,
+      164295943
+    ],
+    "originalTag": "passenger_lines=2",
+    "originalRailway": "rail",
+    "originalUsage": "main",
+    "siding": false
+  },
+  "firstDisconnection": {
+    "reachableUpstream": "Exact source-anchor3676506337 on cn-osm-relation-5456788 → reviewed Xiaolan original7710011722/7710011723 lead-in → branch5 → explicit original-node1732229867 junction → branch6 → original node1759441626.",
+    "missing": "Neither the source edge1759441626–1759441602 nor the following original way164295943 prefix through5634096419 is present in the selected published Jiangmen mainline strand. Branch6 and branch3 have no original node intersection or reviewed junction across this interval.",
+    "connectedDownstream": "Branch3 from node5634096419 through1759460640 to1831762682; original-node1831762682 junction to cn-osm-physical-relation-5496304-xinhui; new20-node continuation to11469965754; explicit original-node11469965754 junction to cn-osm-relation-8381929.",
+    "identityNote": "Published branch6 and branch3 both retain operator中国铁路 / line江门线 / class12 with different real trackIDs. Each missing way independently identifies operating agency中国铁路广州局集团有限公司. This evidence does not silently rewrite published identities.",
+    "directedMovement": "Both boundary joins and every internal turn are smooth; no reversal or station/group/name weld required."
+  },
+  "integrationConstraints": [
+    "Retain exact source relation5496304v15 and original consecutive way/node identity.",
+    "Use existing published endpoint nodes with explicit original-node junctions; do not connect nearby opposite-direction anchors.",
+    "Keep this as a stationless physical mainline section with source_review_id metadata, without inventing passenger stops.",
+    "This repairs the observed Jiangmen corridor omission only; no native solver pass or full G6045 completion is certified by this source analysis."
+  ]
+}

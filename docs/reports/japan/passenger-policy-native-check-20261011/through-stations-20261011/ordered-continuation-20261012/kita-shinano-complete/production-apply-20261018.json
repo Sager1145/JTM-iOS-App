@@ -1,0 +1,33 @@
+{
+  "mode": "applied",
+  "lineID": "jp-しなの鉄道-北しなの線",
+  "removedDisplayVertex": 69,
+  "productionEqualsNativeCandidateOwnLine": true,
+  "physicalStationsAndSegmentsUnchanged": true,
+  "nativeRows": [
+    [
+      "jp-しなの鉄道-北しなの線",
+      0,
+      0,
+      6,
+      665,
+      37401.5,
+      null,
+      null,
+      []
+    ]
+  ],
+  "laneRows": [
+    [
+      "jp-しなの鉄道-北しなの線",
+      0,
+      0,
+      37401.5,
+      -0.5
+    ]
+  ],
+  "nativeReviewedPairs": 26,
+  "nativeViewedOriginalPNGs": 52,
+  "main": "incremental build succeeded; actual bundled interval equals candidate,69absent/68retained; pixels pending locked desktop",
+  "physicalTopologyChanged": false
+}

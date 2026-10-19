@@ -1,0 +1,60 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import test from 'node:test';
+import {createRequire} from 'node:module';
+import {repairPackage,repairParts} from '../repair-miyafuku-own-display.mjs';
+const network=createRequire(import.meta.url)('../../../public/rail-network.js');
+const e=JSON.parse(fs.readFileSync(new URL('../miyafuku-own-display-evidence.json',import.meta.url)));
+const pkg={lines:[e.baselineLine,{id:'unrelated',segments:[],stations:[]}],geometrySource:{license:'OpenStreetMap ODbL',manualOverrides:{unrelated:{retained:true}}}};
+function lanes(){return Object.fromEntries(Object.entries(e.baselineRows).filter(([k])=>k!=='hubMembers').map(([k,v])=>[k,{jp:structuredClone(v)}]));}
+test('Gujo uses attributed own chain only inside4..32 while physical/stations/other intervals stay exact',()=>{
+  const result=repairPackage(pkg,e),line=result.lines[0],old=e.fragment.oldDecodedInterval;
+  assert.deepEqual(line.displayIntervalCoordinates[8],e.fragment.candidateDecodedInterval);
+  assert.deepEqual(line.displayIntervalCoordinates[8].slice(0,4),old.slice(0,4));
+  assert.deepEqual(line.displayIntervalCoordinates[8].slice(-23),old.slice(33));
+  assert(!line.displayIntervalCoordinates[8].some(p=>JSON.stringify(p)===JSON.stringify(old[11])),'northward raw bulge retained');
+  assert(line.displayIntervalCoordinates[8].some(p=>JSON.stringify(p)===JSON.stringify([135.1244096,35.3699586])),'own source bridge node missing');
+  assert.deepEqual(line.segments,e.baselineLine.segments);assert.deepEqual(line.stations,e.baselineLine.stations);
+  const before=network.decodeIntervals(e.baselineLine),after=network.decodeIntervals(line);
+  assert.deepEqual(after,before);assert.deepEqual(Object.keys(line.displayIntervalCoordinates),['0','8']);
+  assert.deepEqual(result.lines[1],pkg.lines[1]);assert.deepEqual(result.geometrySource.manualOverrides.unrelated,{retained:true});
+  assert.deepEqual(repairPackage(result,e),result);
+});
+test('native part and lane share production ruler while unrelated rows survive replay',()=>{
+  const input=lanes(),other=['unrelated',0,0,123,0];input.byRegion.jp.push(other);input.partsByRegion.jp.push(['unrelated',0,0,0,0,0]);
+  const repaired=repairPackage(pkg,e),result=repairParts(repaired,input,e);
+  assert.deepEqual(result.partsByRegion.jp[0],e.candidateNativeRows[0]);
+  assert.deepEqual(result.byRegion.jp,[[e.lineID,0,0,e.candidateNativeRows[0][5],-0.5],other]);
+  assert.deepEqual(result.partsByRegion.jp[0][7],network.displayPartsForLine(repaired.lines[0])[0]);
+  assert.deepEqual(result.partsByRegion.jp[1],input.partsByRegion.jp[1]);assert.deepEqual(repairParts(repaired,result,e),result);
+});
+test('new own measured references in both follow roles and actual object/string schemas reject',()=>{
+  for(const [key,row] of [
+    ['followsByRegion',[e.lineID,0,20,40,'other',0,20,40]],
+    ['followsByRegion',['other',0,20,40,e.lineID,0,20,40]],
+    ['familyWindowsByRegion',[e.lineID,0,1,2,0,'family']],
+    ['loopsByRegion',{lineIds:[e.lineID]}],['reversedLoopParts',e.lineID+'#0'],
+    ['strokeExcludedByRegion',[e.lineID,0,1,2]],['chainBoundariesByRegion',[e.lineID,0,2]],
+    ['releasedIntervalsByRegion',[e.lineID,8]],
+  ]){const input=lanes();input[key].jp.push(row);assert.throws(()=>repairParts(repairPackage(pkg,e),input,e),/reference changed/,key);}
+  const input=lanes();input.hubReportByRegion={jp:[{hubId:'new',members:[{lineId:e.lineID,startMetres:1,endMetres:2}]}]};
+  assert.throws(()=>repairParts(repairPackage(pkg,e),input,e),/hub reference changed/);
+});
+test('changed own baseline, source bytes and route membership reject',()=>{
+  const changed=structuredClone(pkg);changed.lines[0].segments[8][0]+=1;assert.throws(()=>repairPackage(changed,e),/baseline changed/);
+  const badSource=structuredClone(e);badSource.sourceFiles[0].sha256='changed';assert.throws(()=>repairPackage(pkg,badSource),/source bytes changed/);
+  const badRoute=structuredClone(e);badRoute.routes[1].ownMembers[0].ref=123;assert.throws(()=>repairPackage(pkg,badRoute),/route membership changed/);
+  const zeroRoute=structuredClone(e);zeroRoute.interval0.routes[0].ownMembers[0].ref=885071737;assert.throws(()=>repairPackage(pkg,zeroRoute),/route membership changed/);
+  const zeroBoundary=structuredClone(e);zeroBoundary.interval0.fragment.window.oldStartIndex=4;assert.throws(()=>repairPackage(pkg,zeroBoundary));
+});
+test('Miyazu own passenger curve replaces only5..29 without changing Gujo or either platform endpoint',()=>{
+  const research={old:e.interval0.fragment.oldDecodedInterval},expected={candidate:e.interval0.fragment.candidateDecodedInterval};
+  const result=repairPackage(pkg,e),line=result.lines[0];
+  assert.deepEqual(line.displayIntervalCoordinates?.[0],expected.candidate,'own curve absent: still using shared raw N02 bend');
+  assert.deepEqual(line.displayIntervalCoordinates[0].slice(0,5),research.old.slice(0,5));
+  assert.deepEqual(line.displayIntervalCoordinates[0].slice(-10),research.old.slice(30));
+  assert.deepEqual(line.displayIntervalCoordinates[8],e.fragment.candidateDecodedInterval);
+  assert.deepEqual(line.segments,e.baselineLine.segments);assert.deepEqual(line.stations,e.baselineLine.stations);
+  assert(!line.displayIntervalCoordinates[0].some(p=>JSON.stringify(p)===JSON.stringify(research.old[17])),'shared raw junction kink retained as own display');
+  assert.deepEqual(Object.keys(line.displayIntervalCoordinates),['0','8']);
+});

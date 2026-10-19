@@ -1,0 +1,862 @@
+{
+  "schema": "cn-focused-independent-output-review/1",
+  "reviewedAt": "2026-10-19T08:49:16.769843+00:00",
+  "reviewedRouteReport": "/private/tmp/cn-boundary-20261019/focused-gpm-session/route-report.json",
+  "scope": "Read-only actual focusedD271 output,production14pathmanifest,pinnedSQLite and bundled station/revisionJSON inspection. No new solve/build/test; no full176 output inspected or metrics claimed.",
+  "verdict": "Focused output retains all reviewed source paths and the real PNE boundary",
+  "actualResult": {
+    "trainID": "CN-REAL-D271-20261018-forced-known-stops",
+    "geometrySections": 14,
+    "expectedSectionCount": 14,
+    "resolvedSectionCount": 13,
+    "physicalBoundaryIndices": [
+      6
+    ],
+    "unresolvedBoundaryIndices": [
+      6
+    ],
+    "findingsCodes": {
+      "route_partial": 1,
+      "physical_intervals_unavailable": 9,
+      "physical_intervals_unproven": 5
+    },
+    "formalStatus": "部分解析 13/14"
+  },
+  "gridPolicy": "Positive CN coordinate grid uses Decimal(str(value))*100000 quantized ROUND_HALF_UP, matching5-decimal Math.round and avoiding Python bankers ties. No coordinate tolerance/proximity matching.",
+  "crossPartDuplicateHandling": {
+    "removedOnlyIdenticalAdjacentTrainPartEndpoint": [
+      {
+        "sectionIndex": 1,
+        "duplicateCoordinate": [
+          10385581,
+          3019264
+        ]
+      },
+      {
+        "sectionIndex": 2,
+        "duplicateCoordinate": [
+          10215893,
+          2787375
+        ]
+      },
+      {
+        "sectionIndex": 3,
+        "duplicateCoordinate": [
+          10216457,
+          2740525
+        ]
+      },
+      {
+        "sectionIndex": 4,
+        "duplicateCoordinate": [
+          10212402,
+          2690633
+        ]
+      },
+      {
+        "sectionIndex": 5,
+        "duplicateCoordinate": [
+          10185388,
+          2665826
+        ]
+      }
+    ],
+    "internalPartCoordinatesUnchanged": true
+  },
+  "sevenNewSourcePaths": [
+    {
+      "sectionId": "cn-reviewed-physical-10286390-chengdu-north",
+      "nodeCount": 627,
+      "edgeCount": 626,
+      "coordinateCount": 627,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        0
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-10259709-chengdu-north",
+      "nodeCount": 1050,
+      "edgeCount": 1049,
+      "coordinateCount": 1050,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        627
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-eguang-xichang-dechang-1",
+      "nodeCount": 155,
+      "edgeCount": 154,
+      "coordinateCount": 155,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        1677
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-eguang-dechang-miyi-1",
+      "nodeCount": 64,
+      "edgeCount": 63,
+      "coordinateCount": 64,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        1928
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-eguang-miyi-yanbian-1",
+      "nodeCount": 85,
+      "edgeCount": 84,
+      "coordinateCount": 85,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        2092
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-eguang-yanbian-panzhihua-1",
+      "nodeCount": 33,
+      "edgeCount": 32,
+      "coordinateCount": 33,
+      "actualRouteCoordinateDomain": "sections0to5 concatenated with identical part-boundary duplicate removed",
+      "contiguousGridMatches": [
+        2212
+      ],
+      "fullyRetained": true
+    },
+    {
+      "sectionId": "cn-reviewed-physical-eguang-yuanmou-guangtong-1",
+      "nodeCount": 32,
+      "edgeCount": 31,
+      "coordinateCount": 32,
+      "actualRouteCoordinateDomain": "section7 sourceCoordinates unmodified",
+      "contiguousGridMatches": [
+        63
+      ],
+      "fullyRetained": true
+    }
+  ],
+  "gpmOriginalPrefix": {
+    "nodeIds": [
+      4528283542,
+      9265647953,
+      7701253436,
+      9265647942
+    ],
+    "sourceRecords": [
+      {
+        "id": 4528283542,
+        "coordinate": [
+          101.7569348,
+          25.1710117
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 5
+      },
+      {
+        "id": 9265647953,
+        "coordinate": [
+          101.7570884,
+          25.1709272
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 2
+      },
+      {
+        "id": 7701253436,
+        "coordinate": [
+          101.7592281,
+          25.1698062
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 2
+      },
+      {
+        "id": 9265647942,
+        "coordinate": [
+          101.7593752,
+          25.1697278
+        ],
+        "tags": {
+          "railway": "switch"
+        },
+        "version": 2
+      }
+    ],
+    "sourceOriginalEdges": [
+      {
+        "from": 4528283542,
+        "to": 9265647953,
+        "wayId": 619166034,
+        "wayVersion": 14,
+        "consecutive": true
+      },
+      {
+        "from": 9265647953,
+        "to": 7701253436,
+        "wayId": 619166034,
+        "wayVersion": 14,
+        "consecutive": true
+      },
+      {
+        "from": 7701253436,
+        "to": 9265647942,
+        "wayId": 619166034,
+        "wayVersion": 14,
+        "consecutive": true
+      }
+    ],
+    "actualSectionIndex": 8,
+    "contiguousUnmodifiedPartMatchPositions": [
+      1
+    ],
+    "leadingRepeatedStationCoordinateRetained": true
+  },
+  "sevenLegOriginalEndpoints": [
+    {
+      "sectionIndex": 0,
+      "from": "成都南",
+      "to": "彭山",
+      "originalEndpointRecords": [
+        {
+          "id": 5617675902,
+          "coordinate": [
+            104.0660506,
+            30.6087887
+          ],
+          "tags": {
+            "name": "成都南站",
+            "name:en": "Chengdunan Railway Station",
+            "name:zh": "成都南站",
+            "name:zh-Hans": "成都南站",
+            "name:zh-Hant": "成都南站",
+            "public_transport": "stop_position",
+            "railway": "stop",
+            "train": "yes"
+          },
+          "version": 4
+        },
+        {
+          "id": 10779177796,
+          "coordinate": [
+            103.8558058,
+            30.1926378
+          ],
+          "tags": {},
+          "version": 1
+        }
+      ],
+      "actualCoordinates": [
+        [
+          104.06605,
+          30.60879
+        ],
+        [
+          103.85581,
+          30.19264
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 1,
+      "from": "彭山",
+      "to": "西昌西",
+      "originalEndpointRecords": [
+        {
+          "id": 10779177796,
+          "coordinate": [
+            103.8558058,
+            30.1926378
+          ],
+          "tags": {},
+          "version": 1
+        },
+        {
+          "id": 10244648816,
+          "coordinate": [
+            102.1589272,
+            27.8737548
+          ],
+          "tags": {},
+          "version": 2
+        }
+      ],
+      "actualCoordinates": [
+        [
+          103.85581,
+          30.19264
+        ],
+        [
+          102.15893,
+          27.87375
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 2,
+      "from": "西昌西",
+      "to": "德昌西",
+      "originalEndpointRecords": [
+        {
+          "id": 10244648816,
+          "coordinate": [
+            102.1589272,
+            27.8737548
+          ],
+          "tags": {},
+          "version": 2
+        },
+        {
+          "id": 12960690113,
+          "coordinate": [
+            102.1645691,
+            27.4052534
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 1
+        }
+      ],
+      "actualCoordinates": [
+        [
+          102.15893,
+          27.87375
+        ],
+        [
+          102.16457,
+          27.40525
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 3,
+      "from": "德昌西",
+      "to": "米易东",
+      "originalEndpointRecords": [
+        {
+          "id": 12960690113,
+          "coordinate": [
+            102.1645691,
+            27.4052534
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 1
+        },
+        {
+          "id": 11164531496,
+          "coordinate": [
+            102.124018,
+            26.9063321
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 1
+        }
+      ],
+      "actualCoordinates": [
+        [
+          102.16457,
+          27.40525
+        ],
+        [
+          102.12402,
+          26.90633
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 4,
+      "from": "米易东",
+      "to": "盐边",
+      "originalEndpointRecords": [
+        {
+          "id": 11164531496,
+          "coordinate": [
+            102.124018,
+            26.9063321
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 1
+        },
+        {
+          "id": 12960653373,
+          "coordinate": [
+            101.8538762,
+            26.6582582
+          ],
+          "tags": {},
+          "version": 1
+        }
+      ],
+      "actualCoordinates": [
+        [
+          102.12402,
+          26.90633
+        ],
+        [
+          101.85388,
+          26.65826
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 5,
+      "from": "盐边",
+      "to": "攀枝花南",
+      "originalEndpointRecords": [
+        {
+          "id": 12960653373,
+          "coordinate": [
+            101.8538762,
+            26.6582582
+          ],
+          "tags": {},
+          "version": 1
+        },
+        {
+          "id": 5230617665,
+          "coordinate": [
+            101.7358267,
+            26.4808022
+          ],
+          "tags": {},
+          "version": 3
+        }
+      ],
+      "actualCoordinates": [
+        [
+          101.85388,
+          26.65826
+        ],
+        [
+          101.73583,
+          26.4808
+        ]
+      ],
+      "gridMatches": true
+    },
+    {
+      "sectionIndex": 7,
+      "from": "元谋西",
+      "to": "广通北",
+      "originalEndpointRecords": [
+        {
+          "id": 6799880824,
+          "coordinate": [
+            101.8373128,
+            25.7138525
+          ],
+          "tags": {},
+          "version": 4
+        },
+        {
+          "id": 4528283542,
+          "coordinate": [
+            101.7569348,
+            25.1710117
+          ],
+          "tags": {
+            "railway": "switch"
+          },
+          "version": 5
+        }
+      ],
+      "actualCoordinates": [
+        [
+          101.83731,
+          25.71385
+        ],
+        [
+          101.75693,
+          25.17101
+        ]
+      ],
+      "gridMatches": true
+    }
+  ],
+  "allSuccessiveActualLegCoordinates": [
+    {
+      "beforeSectionIndex": 1,
+      "previousLast": [
+        103.85581,
+        30.19264
+      ],
+      "nextFirst": [
+        103.85581,
+        30.19264
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 2,
+      "previousLast": [
+        102.15893,
+        27.87375
+      ],
+      "nextFirst": [
+        102.15893,
+        27.87375
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 3,
+      "previousLast": [
+        102.16457,
+        27.40525
+      ],
+      "nextFirst": [
+        102.16457,
+        27.40525
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 4,
+      "previousLast": [
+        102.12402,
+        26.90633
+      ],
+      "nextFirst": [
+        102.12402,
+        26.90633
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 5,
+      "previousLast": [
+        101.85388,
+        26.65826
+      ],
+      "nextFirst": [
+        101.85388,
+        26.65826
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 6,
+      "previousLast": [
+        101.73583,
+        26.4808
+      ],
+      "nextFirst": [
+        101.7457,
+        26.4708
+      ],
+      "sameGridCoordinate": false
+    },
+    {
+      "beforeSectionIndex": 7,
+      "previousLast": [
+        101.83731,
+        25.71385
+      ],
+      "nextFirst": [
+        101.83731,
+        25.71385
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 8,
+      "previousLast": [
+        101.75693,
+        25.17101
+      ],
+      "nextFirst": [
+        101.75693,
+        25.17101
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 9,
+      "previousLast": [
+        102.05954,
+        25.12617
+      ],
+      "nextFirst": [
+        102.05954,
+        25.12617
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 10,
+      "previousLast": [
+        102.72033,
+        25.01815
+      ],
+      "nextFirst": [
+        102.72033,
+        25.01815
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 11,
+      "previousLast": [
+        102.86004,
+        24.87329
+      ],
+      "nextFirst": [
+        102.86004,
+        24.87329
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 12,
+      "previousLast": [
+        102.51025,
+        24.34214
+      ],
+      "nextFirst": [
+        102.51025,
+        24.34214
+      ],
+      "sameGridCoordinate": true
+    },
+    {
+      "beforeSectionIndex": 13,
+      "previousLast": [
+        100.9407,
+        22.78196
+      ],
+      "nextFirst": [
+        100.9407,
+        22.78196
+      ],
+      "sameGridCoordinate": true
+    }
+  ],
+  "pneRealBoundary": {
+    "incomingOriginalAnchor": {
+      "id": 5230617665,
+      "coordinate": [
+        101.7358267,
+        26.4808022
+      ],
+      "tags": {},
+      "version": 3
+    },
+    "outgoingOriginalAnchor": {
+      "id": 14072871990,
+      "coordinate": [
+        101.745703,
+        26.4707994
+      ],
+      "tags": {},
+      "version": 1
+    },
+    "actualSection5LastMatchesIncoming": true,
+    "actualSection6FirstMatchesOutgoing": true,
+    "distinctOriginalNodesRemainDistinct": true,
+    "onlyActualEndpointMismatchBeforeSection": [
+      6
+    ],
+    "reportedPhysicalAndUnresolvedBoundarySameIndex": true,
+    "logicalOnlyBoundaryHidden": false
+  },
+  "threeActualBundledStationBindings": [
+    {
+      "stationName": "成都南",
+      "officialTelecode": "CNW",
+      "trackID": "cn-osm-physical-relation-10286390-chengdu-north",
+      "marker": {
+        "id": 9334658569,
+        "coordinate": [
+          104.066049,
+          30.6090447
+        ],
+        "tags": {
+          "name": "成都南",
+          "name:en": "Chengdunan",
+          "name:zh": "成都南",
+          "name:zh-Hans": "成都南",
+          "name:zh-Hant": "成都南",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q11074637",
+          "wikipedia": "zh:成都南站"
+        },
+        "version": 3
+      },
+      "anchor": {
+        "id": 5617675902,
+        "coordinate": [
+          104.0660506,
+          30.6087887
+        ],
+        "tags": {
+          "name": "成都南站",
+          "name:en": "Chengdunan Railway Station",
+          "name:zh": "成都南站",
+          "name:zh-Hans": "成都南站",
+          "name:zh-Hant": "成都南站",
+          "public_transport": "stop_position",
+          "railway": "stop",
+          "train": "yes"
+        },
+        "version": 4
+      },
+      "originalDirectRelationMembers": [
+        [
+          "n",
+          9334658569,
+          ""
+        ]
+      ],
+      "bundledStationFeatureIdentityMatches": true,
+      "actualStopPositionFlag": true,
+      "projectionCreatesGraphEdge": false,
+      "findings": []
+    },
+    {
+      "stationName": "彭山",
+      "officialTelecode": "PSW",
+      "trackID": "cn-osm-physical-relation-10286390-chengdu-north",
+      "marker": {
+        "id": 1588514469,
+        "coordinate": [
+          103.8571009,
+          30.1949749
+        ],
+        "tags": {
+          "alt_name": "彭山站;彭山火车站;Pengshan Railway Station",
+          "name": "彭山",
+          "name:en": "Pengshan",
+          "public_transport": "station",
+          "railway": "station",
+          "train": "yes"
+        },
+        "version": 6
+      },
+      "anchor": {
+        "id": 10779177796,
+        "coordinate": [
+          103.8558058,
+          30.1926378
+        ],
+        "tags": {},
+        "version": 1
+      },
+      "originalDirectRelationMembers": [
+        [
+          "n",
+          1588514469,
+          ""
+        ]
+      ],
+      "bundledStationFeatureIdentityMatches": true,
+      "actualStopPositionFlag": false,
+      "projectionCreatesGraphEdge": false,
+      "findings": []
+    },
+    {
+      "stationName": "西昌西",
+      "officialTelecode": "XCE",
+      "trackID": "cn-osm-physical-relation-10259709-chengdu-north",
+      "marker": {
+        "id": 5230058264,
+        "coordinate": [
+          102.1590116,
+          27.8718658
+        ],
+        "tags": {
+          "name": "西昌西",
+          "name:en": "Xichang West",
+          "name:zh": "西昌西",
+          "public_transport": "station",
+          "railway": "station",
+          "wikidata": "Q110109733"
+        },
+        "version": 5
+      },
+      "anchor": {
+        "id": 10244648816,
+        "coordinate": [
+          102.1589272,
+          27.8737548
+        ],
+        "tags": {},
+        "version": 2
+      },
+      "originalDirectRelationMembers": [
+        [
+          "n",
+          5230058264,
+          ""
+        ]
+      ],
+      "bundledStationFeatureIdentityMatches": true,
+      "actualStopPositionFlag": false,
+      "projectionCreatesGraphEdge": false,
+      "findings": []
+    }
+  ],
+  "productionStationBindingTriples": [
+    [
+      "CNW",
+      9334658569,
+      5617675902
+    ],
+    [
+      "PSW",
+      1588514469,
+      10779177796
+    ],
+    [
+      "XCE",
+      5230058264,
+      10244648816
+    ]
+  ],
+  "executionContext": {
+    "resultDependencies": {
+      "diagnosticContract": "rail-diagnostics-v1",
+      "fallbackGraphCacheMaximumNodes": "not-applicable",
+      "fallbackGraphCacheMode": "standard",
+      "journeyInputSHA256": "743b8978a0814ee653763f4ea1386a441fefa4af8ac211fe26dfaa2e356e6eb3",
+      "rail/cn": "cn:0f6ce85ec6d41ecc9db431a31d8ae04ac907bf89cefb2c5ac86943f9455ce2d6"
+    },
+    "verifiedCNOnlyDependencyMatchesBundledRevision": true,
+    "dependenciesVerified": true,
+    "recordedCompiledUUID": "UUID: B8FD2EEC-47F0-3FB3-AE63-7370C4FC356A (arm64) /private/tmp/cn-boundary-20261019/ChinaRailComparison.app/Contents/MacOS/RailDiagnostics",
+    "compiledUUIDContextMatchesAndExecutablePathMatches": true,
+    "verificationLimit": "Read recorded execution context and result JSON; no new binary/MachO audit or execution.",
+    "standardMode": "standard",
+    "resultUpdatedAt": "2026-10-19T08:38:00Z"
+  },
+  "actionableFindings": [],
+  "limits": [
+    "D271 is partial13/14,with14/14geometry and a genuine retained PNE boundary; geometry presence is not a complete physical route.",
+    "Actual diagnostic still reports physical_intervals_unavailable forsections0–7/10 and physical_intervals_unproven for8/9/11–13. Source-coordinate retention does not turn those review findings into formal interval certification.",
+    "Actual paths were matched to source coordinates and endpoint proofs; no pixel,performance,platform-assignment or full176 regression claim is made."
+  ]
+}

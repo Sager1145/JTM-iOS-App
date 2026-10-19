@@ -1,0 +1,102 @@
+{
+  "status": "candidate-only-right-main-spine-unreviewed",
+  "actualRawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002797/000003/view.json",
+  "literalMainRightFlanks": [
+    [
+      519,
+      280
+    ],
+    [
+      517,
+      310
+    ],
+    [
+      515,
+      330
+    ],
+    [
+      515,
+      360
+    ],
+    [
+      519,
+      380
+    ],
+    [
+      527.5,
+      400
+    ],
+    [
+      544,
+      420
+    ],
+    [
+      561.5,
+      440
+    ],
+    [
+      570,
+      450
+    ],
+    [
+      585.5,
+      460
+    ],
+    [
+      607,
+      470
+    ]
+  ],
+  "inverseCoordinates": [
+    [
+      132.543017085119,
+      33.26544159854902
+    ],
+    [
+      132.54299562744689,
+      33.2651724743938
+    ],
+    [
+      132.54297416977477,
+      33.26499305782962
+    ],
+    [
+      132.54297416977477,
+      33.264723932292306
+    ],
+    [
+      132.543017085119,
+      33.26454451480672
+    ],
+    [
+      132.5431082802255,
+      33.26436509695258
+    ],
+    [
+      132.5432853060205,
+      33.26418567872989
+    ],
+    [
+      132.54347306065154,
+      33.26400626013863
+    ],
+    [
+      132.54356425575804,
+      33.2639165507048
+    ],
+    [
+      132.54373055271697,
+      33.263826841178826
+    ],
+    [
+      132.54396122269225,
+      33.26373713156071
+    ]
+  ],
+  "excluded": "West branch/passing-loop shape is a separate actual Apple blue sleeper-rail path. Persistence/hue alone had selected it; discarded all1000..1160m supports and retained right labelled source-oriented continuation.",
+  "warning": "Individual rail/main vs loop operational allocation remains cartographic WARNING. Root approved right as display candidate from label+source continuity. Labelgap330..380 uses visible neighbouring flanks, not dark text pixels. No physical topology/ID/km changes.",
+  "maxTurnDegrees": 25.515408725748024,
+  "turnsOver30": [],
+  "sourceGuardsPending": true,
+  "formalAcceptance": false
+}

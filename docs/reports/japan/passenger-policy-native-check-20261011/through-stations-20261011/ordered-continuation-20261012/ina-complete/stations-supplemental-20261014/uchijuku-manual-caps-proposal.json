@@ -1,0 +1,36 @@
+{
+  "status": "manual diagnostic, not accepted",
+  "appleCaps": [
+    [
+      389,
+      191
+    ],
+    [
+      608,
+      445
+    ]
+  ],
+  "midpointPixel": [
+    498.5,
+    318.0
+  ],
+  "ownRailGlyph": [
+    [
+      618,
+      470
+    ],
+    [
+      816,
+      650
+    ]
+  ],
+  "ownRailProjectionPixel": [
+    476.91628959276017,
+    341.74208144796376
+  ],
+  "proposedCoordinate": [
+    139.60004971318966,
+    36.01400400787114
+  ],
+  "regionalReference": "uchijuku-georeferenced-stable-actual-tiles.json"
+}

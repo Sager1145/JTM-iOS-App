@@ -1,0 +1,233 @@
+{
+  "format": "asa-five-unresolved-evidence-and-root-shots-v1",
+  "date": "2026-10-14",
+  "lineID": "jp-土佐くろしお鉄道-阿佐線",
+  "status": "five-remain-unresolved-no-alias-created",
+  "stations": [
+    {
+      "stationIndex": 0,
+      "name": "後免",
+      "status": "unresolved-alias-withheld",
+      "rawPixelWindowToInspect": [
+        240,
+        260,
+        600,
+        445
+      ],
+      "currentEvidence": "多个不等长窄面与土讃线轨道混在同一站框。东侧阿佐线分支可辨，但未能连续追溯到自家站台窄面。",
+      "missingProof": "完整各窄面端帽、股道与东侧分支同框；需区分阿佐线实际旅客面及土讃线，不以共享009057或Dosan标签分配。",
+      "proposedAlias": null,
+      "faceCaps": null,
+      "faceCaptureRequest": {
+        "kind": "station-face-detail",
+        "centerDerivedFromExistingRawPixel": [
+          460,
+          340
+        ],
+        "zoom256": 19,
+        "targetMapPointsPerPoint": 2,
+        "heading": 0,
+        "pitch": 0,
+        "appearance": "light-first",
+        "overlay": "product railway/dot/candidate overlays hidden; Apple basemap visible",
+        "viewport": "existing999x654 if available; save actual dimensions",
+        "cameraCenterOnlyNotAlias": [
+          133.64492310549014,
+          33.57912190016897
+        ]
+      },
+      "stationID": "009057",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/00-009057/view.json"
+    },
+    {
+      "stationIndex": 3,
+      "name": "のいち",
+      "status": "unresolved-alias-withheld",
+      "rawPixelWindowToInspect": [
+        470,
+        285,
+        595,
+        365
+      ],
+      "currentEvidence": "两条亮色长条及连续轨道可见。北条约475294起，539306附近接宽块；南条约489317起，540335附近接宽块。窄面东端不独立清楚。",
+      "missingProof": "拍全南北窄面两端和东侧加宽边界；明确真实代表面与对应轨道/组，不平均不同纵向中心、不采用宽块外沿。",
+      "proposedAlias": null,
+      "faceCaps": null,
+      "faceCaptureRequest": {
+        "kind": "station-face-detail",
+        "centerDerivedFromExistingRawPixel": [
+          530,
+          320
+        ],
+        "zoom256": 19,
+        "targetMapPointsPerPoint": 2,
+        "heading": 0,
+        "pitch": 0,
+        "appearance": "light-first",
+        "overlay": "product railway/dot/candidate overlays hidden; Apple basemap visible",
+        "viewport": "existing999x654 if available; save actual dimensions",
+        "cameraCenterOnlyNotAlias": [
+          133.69791261474734,
+          33.5619332907704
+        ]
+      },
+      "stationID": "009112",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/03-009112/view.json"
+    },
+    {
+      "stationIndex": 4,
+      "name": "よしかわ",
+      "status": "unresolved-alias-withheld",
+      "rawPixelWindowToInspect": [
+        420,
+        265,
+        505,
+        355
+      ],
+      "currentEvidence": "阿佐线走廊前后可追踪。NW约425270矩形鼓出、SE约478333宽L形与中部窄条相连；490344不是独立窄面端帽。",
+      "missingProof": "拍全NW鼓出、中部窄条、SE宽L形及轨道，确认窄面真实纵向端点；不使用整个连通块中点。",
+      "proposedAlias": null,
+      "faceCaps": null,
+      "faceCaptureRequest": {
+        "kind": "station-face-detail",
+        "centerDerivedFromExistingRawPixel": [
+          460,
+          310
+        ],
+        "zoom256": 19,
+        "targetMapPointsPerPoint": 2,
+        "heading": 0,
+        "pitch": 0,
+        "appearance": "light-first",
+        "overlay": "product railway/dot/candidate overlays hidden; Apple basemap visible",
+        "viewport": "existing999x654 if available; save actual dimensions",
+        "cameraCenterOnlyNotAlias": [
+          133.7101981054903,
+          33.546036005871635
+        ]
+      },
+      "stationID": "009193",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/04-009193/view.json"
+    },
+    {
+      "stationIndex": 13,
+      "name": "あき総合病院前",
+      "status": "unresolved-alias-withheld",
+      "rawPixelWindowToInspect": [
+        480,
+        285,
+        575,
+        340
+      ],
+      "currentEvidence": "配对轨道连续，但蓝框约488309→568337及北侧灰L/短块没有独立亮色窄面两端。",
+      "missingProof": "核实是否实际绘有独立窄面及端点。若z19仍无窄面，继续保留警告，不从POI、建筑框或卫星屋顶造别名。",
+      "proposedAlias": null,
+      "faceCaps": null,
+      "faceCaptureRequest": {
+        "kind": "station-face-detail",
+        "centerDerivedFromExistingRawPixel": [
+          530,
+          310
+        ],
+        "zoom256": 19,
+        "targetMapPointsPerPoint": 2,
+        "heading": 0,
+        "pitch": 0,
+        "appearance": "light-first",
+        "overlay": "product railway/dot/candidate overlays hidden; Apple basemap visible",
+        "viewport": "existing999x654 if available; save actual dimensions",
+        "cameraCenterOnlyNotAlias": [
+          133.89766361475273,
+          33.5043710424983
+        ]
+      },
+      "stationID": "009242",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/13-009242/view.json"
+    },
+    {
+      "stationIndex": 14,
+      "name": "安芸",
+      "status": "unresolved-alias-withheld",
+      "rawPixelWindowToInspect": [
+        425,
+        310,
+        700,
+        385
+      ],
+      "currentEvidence": "南側亮色窄条约433349→539377可见，但多条扇形轨道、其他条块和北侧车库未分配到旅客组。",
+      "missingProof": "拍全南侧亮条、其他面及中下部轨道，结合两端咽喉连续追踪旅客轨道组；最近轨道不作为分配依据。",
+      "proposedAlias": null,
+      "faceCaps": null,
+      "faceCaptureRequest": {
+        "kind": "station-face-detail",
+        "centerDerivedFromExistingRawPixel": [
+          485,
+          352
+        ],
+        "zoom256": 19,
+        "targetMapPointsPerPoint": 2,
+        "heading": 0,
+        "pitch": 0,
+        "appearance": "light-first",
+        "overlay": "product railway/dot/candidate overlays hidden; Apple basemap visible",
+        "viewport": "existing999x654 if available; save actual dimensions",
+        "cameraCenterOnlyNotAlias": [
+          133.90635721593378,
+          33.50468817332874
+        ]
+      },
+      "stationID": "009240",
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-z18/14-009240/view.json"
+    }
+  ],
+  "additionalThroatRequests": [
+    {
+      "stationIndex": 0,
+      "kind": "east-throat-and-Asa-Dosan-separation",
+      "center": [
+        133.6487274501524,
+        33.57979240681717
+      ],
+      "zoom256": 18,
+      "need": "从站台端到阿佐线东南分支、土讃线东北延续，连续拍见各轨道；与站台细图重叠。"
+    },
+    {
+      "stationIndex": 14,
+      "kind": "west-throat",
+      "centerFromStationRawPixel": [
+        240,
+        265
+      ],
+      "zoom256": 18,
+      "need": "医院前共同走廊怎样分开到南面及其他站场股道，须与站台细图重叠。",
+      "center": [
+        133.90504293351893,
+        33.50507732953069
+      ]
+    },
+    {
+      "stationIndex": 14,
+      "kind": "east-throat",
+      "center": [
+        133.9101227253894,
+        33.504127830342235
+      ],
+      "zoom256": 18,
+      "need": "南面/各股道到东侧共同走廊的合流，须与站台细图重叠；连接不自动证明旅客用途。"
+    }
+  ],
+  "minimumFirstPass": "5 face light z19 +3 throat light z18 =8 targeted basemap exports. Dark same-camera or shifted overlap only if specific cap/label ambiguity remains.",
+  "receiptRequirements": [
+    "selected own Asa ordinal20 / lineID and stationID",
+    "basemap.png plus actual view.json/mapRect/camera/dimensions/appearance",
+    "heading0 pitch0; both platform caps with adjacent rail support; no ungeoreferenced crop alone",
+    "Root sole UI/capture owner; no physical graph edits or guessed aliases"
+  ],
+  "officialReferenceGap": {
+    "source": "https://www.jr-shikoku.co.jp/global/sc/trainbus/kakueki.html",
+    "stationMapLink": "https://www.jr-shikoku.co.jp/global/sc/file/trainbus/kakueki/19Gomen.pdf",
+    "state": "Official Gomen map link found; fetch returned Cache miss twice. PDF contents NOT inspected.",
+    "request": "Root open/save official map if accessible to establish numbering/direction/Asa allocation. Diagram does not establish Apple face caps."
+  },
+  "nativeAcceptance": false
+}

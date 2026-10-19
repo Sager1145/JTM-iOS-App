@@ -1,0 +1,120 @@
+{
+  "caseIndex": 4,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 4,
+  "source": {
+    "caseIndex": 4,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 4,
+    "fromStationID": "004000",
+    "toStationID": "004061",
+    "camera": [
+      35.6405595,
+      139.7441245,
+      0.02393391000000733
+    ],
+    "effectiveCoordinates": [
+      [
+        139.747605,
+        35.64574
+      ],
+      [
+        139.74697,
+        35.64537
+      ],
+      [
+        139.74677000000008,
+        35.64528000000007
+      ],
+      [
+        139.74504000000013,
+        35.644310000000075
+      ],
+      [
+        139.74418000000003,
+        35.64373000000006
+      ],
+      [
+        139.74375999999995,
+        35.643320000000074
+      ],
+      [
+        139.7434896663957,
+        35.64290810024755
+      ],
+      [
+        139.74330882735933,
+        35.64250835079855
+      ],
+      [
+        139.74315654185477,
+        35.64210860134955
+      ],
+      [
+        139.74294714928624,
+        35.64138524520388
+      ],
+      [
+        139.74276631024986,
+        35.64067140690196
+      ],
+      [
+        139.7425283641494,
+        35.63983383662804
+      ],
+      [
+        139.7422428288287,
+        35.63905337341805
+      ],
+      [
+        139.74190970428776,
+        35.6381206247039
+      ],
+      [
+        139.74156706190286,
+        35.63739726855806
+      ],
+      [
+        139.7410519364745,
+        35.63632752571658
+      ],
+      [
+        139.740644,
+        35.635379
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t93 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:21;overlays:18;rides:0;budgetDrops:0;vertices:8985;camera:15.25;lod:14.10;backbones:1;networkStations:43;distance:5253.1;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.640560;centerLon:139.744125;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:3428.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:27;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:13;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.640560;centerLon:139.744125;distance:5253.1;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:2;gestureLabelPassMaxMs:0;regionTickMaxMs:2;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.640560",
+      "35.640560"
+    ],
+    "centerLon": [
+      "139.744125",
+      "139.744125"
+    ],
+    "distance": [
+      "5253.1",
+      "5253.1"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true
+}

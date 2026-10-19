@@ -1,0 +1,178 @@
+{
+  "caseIndex": 0,
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "intervalIndex": 0,
+  "source": {
+    "caseIndex": 0,
+    "lineID": "jp-東日本旅客鉄道-大糸線",
+    "intervalIndex": 0,
+    "fromStationID": "001821",
+    "toStationID": "001835",
+    "camera": [
+      36.7689365,
+      137.904621,
+      0.026317829999995865
+    ],
+    "effectiveCoordinates": [
+      [
+        137.908392,
+        36.774633
+      ],
+      [
+        137.9082,
+        36.77441
+      ],
+      [
+        137.908,
+        36.7742
+      ],
+      [
+        137.90782,
+        36.774
+      ],
+      [
+        137.90762,
+        36.77375
+      ],
+      [
+        137.90708,
+        36.77308
+      ],
+      [
+        137.90648,
+        36.77233
+      ],
+      [
+        137.90634,
+        36.77211
+      ],
+      [
+        137.90621,
+        36.77189
+      ],
+      [
+        137.90611,
+        36.77165
+      ],
+      [
+        137.90604,
+        36.77133
+      ],
+      [
+        137.90602,
+        36.77065
+      ],
+      [
+        137.90605,
+        36.77026
+      ],
+      [
+        137.90606,
+        36.77016
+      ],
+      [
+        137.90622,
+        36.76953
+      ],
+      [
+        137.90622,
+        36.7694
+      ],
+      [
+        137.9062,
+        36.76926
+      ],
+      [
+        137.90613,
+        36.769
+      ],
+      [
+        137.90608,
+        36.7689
+      ],
+      [
+        137.9059,
+        36.7686
+      ],
+      [
+        137.90578,
+        36.76846
+      ],
+      [
+        137.90559,
+        36.7683
+      ],
+      [
+        137.90533,
+        36.76813
+      ],
+      [
+        137.90504,
+        36.76794
+      ],
+      [
+        137.90452,
+        36.76759
+      ],
+      [
+        137.90382,
+        36.76712
+      ],
+      [
+        137.90327,
+        36.76676
+      ],
+      [
+        137.90311,
+        36.76666
+      ],
+      [
+        137.90224,
+        36.76607
+      ],
+      [
+        137.90216,
+        36.76602
+      ],
+      [
+        137.9018,
+        36.76572
+      ],
+      [
+        137.90168,
+        36.76558
+      ],
+      [
+        137.90154,
+        36.76539
+      ],
+      [
+        137.90147,
+        36.76522
+      ],
+      [
+        137.90103,
+        36.76382
+      ],
+      [
+        137.90095,
+        36.76357
+      ],
+      [
+        137.90085,
+        36.76324
+      ]
+    ]
+  },
+  "status": "root-reviewed-baseline-with-unresolved-candidates",
+  "actualOnStatus": "\t\t\t\t28 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:903;camera:15.09;lod:13.94;backbones:0;networkStations:3;distance:5777.4;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:36.768937;centerLon:137.904621;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1911.0;rebuilds:1;gestureBuilds:0;labelPasses:0;gestureLabelPasses:0;cacheHits:2;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:7;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCache",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:36.768937;centerLon:137.904621;distance:5777.4;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:0;labelPassMaxMs:0;gestureLabelPassMaxMs:0;regionTickMaxMs:0;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapPixelsPresent": true,
+  "fullIntervalInViewport": true,
+  "sameCameraOnOff": true,
+  "reviewEvidence": "root-review-sheets/case-00.jpg",
+  "geographicAcceptance": false,
+  "ownPlatformMidpointAccepted": false,
+  "observation": "Minami-Otari to Chikuni follows east Himekawa side; varying curve offsets and own station frames unresolved. Operator boundary is not physical terminus."
+}

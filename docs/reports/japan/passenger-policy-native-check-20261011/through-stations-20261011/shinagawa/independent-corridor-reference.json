@@ -1,0 +1,18 @@
+{
+  "reviewedAt": "2026-10-11",
+  "lineId": "jp-東日本旅客鉄道-総武線-3",
+  "stationCode": "004095",
+  "preservedSourceAnchor": [
+    139.739427,
+    35.629035
+  ],
+  "obsoleteDisplayAlias": [
+    139.738535,
+    35.628135
+  ],
+  "primaryMap": "sources/jr-east-platform-map.png",
+  "sourcePrintedDate": "2026-07",
+  "basis": "Official13–15 Yokosuka/Sobu platform group separate fromTokaido6–12. Native source/display samecamera independently places source east of obsolete surface alias.",
+  "repairScope": "Restore independent source-based passenger display approach; remove350m shift/surface departure/follow alias. Retain all physical geometry/mileage, south Osaki junction supports and tails.",
+  "limits": "Source station coordinate retained, not newly measured underground or platform-central coordinate; no precise Apple-pixel residual or whole-interval alignment pass."
+}

@@ -1,0 +1,204 @@
+{
+  "caseIndex": 12,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 12,
+  "source": {
+    "caseIndex": 12,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 12,
+    "fromStationID": "004562",
+    "toStationID": "004596",
+    "camera": [
+      35.4823805,
+      139.64352100000002,
+      0.028306652855627657
+    ],
+    "effectiveCoordinates": [
+      [
+        139.654055,
+        35.486777
+      ],
+      [
+        139.65388,
+        35.48669
+      ],
+      [
+        139.6533,
+        35.48643
+      ],
+      [
+        139.65298,
+        35.48629
+      ],
+      [
+        139.65288,
+        35.48624
+      ],
+      [
+        139.65226,
+        35.48603
+      ],
+      [
+        139.65188,
+        35.48589
+      ],
+      [
+        139.65129,
+        35.48574
+      ],
+      [
+        139.65049,
+        35.48558
+      ],
+      [
+        139.65009,
+        35.48554
+      ],
+      [
+        139.6497,
+        35.48552
+      ],
+      [
+        139.64927,
+        35.4855
+      ],
+      [
+        139.64913,
+        35.48549
+      ],
+      [
+        139.64874,
+        35.48548
+      ],
+      [
+        139.64819,
+        35.48546
+      ],
+      [
+        139.64798,
+        35.48544
+      ],
+      [
+        139.647,
+        35.48532
+      ],
+      [
+        139.6462,
+        35.48521
+      ],
+      [
+        139.64568,
+        35.48515
+      ],
+      [
+        139.64524,
+        35.48509
+      ],
+      [
+        139.64493,
+        35.48501
+      ],
+      [
+        139.64416,
+        35.48479
+      ],
+      [
+        139.64342,
+        35.48457
+      ],
+      [
+        139.64317,
+        35.48449
+      ],
+      [
+        139.64234,
+        35.48424
+      ],
+      [
+        139.64035,
+        35.48362
+      ],
+      [
+        139.63932,
+        35.4833
+      ],
+      [
+        139.6389,
+        35.48317
+      ],
+      [
+        139.63834,
+        35.48294
+      ],
+      [
+        139.63795,
+        35.48274
+      ],
+      [
+        139.63715,
+        35.48229
+      ],
+      [
+        139.63682,
+        35.48201
+      ],
+      [
+        139.63602,
+        35.48124
+      ],
+      [
+        139.63585,
+        35.48107
+      ],
+      [
+        139.63575,
+        35.48097
+      ],
+      [
+        139.63436,
+        35.47947
+      ],
+      [
+        139.633749,
+        35.478809
+      ],
+      [
+        139.632987,
+        35.477984
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t83 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:14;overlays:13;rides:0;budgetDrops:0;vertices:4574;camera:15.01;lod:13.86;backbones:1;networkStations:38;distance:6212.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.482381;centerLon:139.643521;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2460.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:16;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.482381;centerLon:139.643521;distance:6212.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.482381",
+      "35.482381"
+    ],
+    "centerLon": [
+      "139.643521",
+      "139.643521"
+    ],
+    "distance": [
+      "6212.6",
+      "6212.6"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true
+}

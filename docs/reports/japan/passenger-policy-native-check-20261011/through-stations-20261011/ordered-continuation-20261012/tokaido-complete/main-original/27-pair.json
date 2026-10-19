@@ -1,0 +1,180 @@
+{
+  "caseIndex": 27,
+  "lineID": "jp-東日本旅客鉄道-東海道線",
+  "intervalIndex": 27,
+  "source": {
+    "caseIndex": 27,
+    "lineID": "jp-東日本旅客鉄道-東海道線",
+    "intervalIndex": 27,
+    "fromStationID": "005215",
+    "toStationID": "005261",
+    "camera": [
+      35.247409000000005,
+      139.15038249999998,
+      0.04016628000000914
+    ],
+    "effectiveCoordinates": [
+      [
+        139.155757,
+        35.256103
+      ],
+      [
+        139.155,
+        35.25506
+      ],
+      [
+        139.15489,
+        35.25486
+      ],
+      [
+        139.15378,
+        35.25328
+      ],
+      [
+        139.15332,
+        35.25265
+      ],
+      [
+        139.15292,
+        35.25206
+      ],
+      [
+        139.15183,
+        35.25048
+      ],
+      [
+        139.15124,
+        35.2495
+      ],
+      [
+        139.15046,
+        35.24824
+      ],
+      [
+        139.14986,
+        35.24738
+      ],
+      [
+        139.14962,
+        35.24701
+      ],
+      [
+        139.1494,
+        35.24666
+      ],
+      [
+        139.14915,
+        35.24629
+      ],
+      [
+        139.14907,
+        35.24615
+      ],
+      [
+        139.14884,
+        35.2458
+      ],
+      [
+        139.14853,
+        35.24535
+      ],
+      [
+        139.14837,
+        35.24508
+      ],
+      [
+        139.14812,
+        35.24467
+      ],
+      [
+        139.1478,
+        35.24411
+      ],
+      [
+        139.14754,
+        35.24365
+      ],
+      [
+        139.14725,
+        35.24317
+      ],
+      [
+        139.14695,
+        35.24267
+      ],
+      [
+        139.14672,
+        35.24229
+      ],
+      [
+        139.14645,
+        35.24186
+      ],
+      [
+        139.14625,
+        35.2415
+      ],
+      [
+        139.1461,
+        35.24122
+      ],
+      [
+        139.14599,
+        35.24099
+      ],
+      [
+        139.1458,
+        35.2406
+      ],
+      [
+        139.14558,
+        35.24005
+      ],
+      [
+        139.14531,
+        35.23942
+      ],
+      [
+        139.14512,
+        35.23897
+      ],
+      [
+        139.145008,
+        35.238715
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline-only",
+  "actualOnStatus": "\t\t\t\t51 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:6;rides:0;budgetDrops:0;vertices:2440;camera:14.51;lod:13.36;backbones:1;networkStations:16;distance:8815.2;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.247409;centerLon:139.150382;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:2182.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:6;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "actualOffStatus": "\t\t\t\t23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.247409;centerLon:139.150382;distance:8815.2;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "rootPixelReviewed": true,
+  "basemapVisibleBoth": true,
+  "networkOnOffVisuallyDistinct": true,
+  "actualCameraComparison": {
+    "centerLat": [
+      "35.247409",
+      "35.247409"
+    ],
+    "centerLon": [
+      "139.150382",
+      "139.150382"
+    ],
+    "distance": [
+      "8815.2",
+      "8815.2"
+    ],
+    "viewportWidth": [
+      "1211.0",
+      "1211.0"
+    ],
+    "viewportHeight": [
+      "864.0",
+      "864.0"
+    ]
+  },
+  "sameCamera": true,
+  "headingEvidence": "OFF diagnostic omits heading; root visually compared paired basemap orientation.",
+  "fullIntervalInViewport": true,
+  "geographicAlignmentAccepted": false,
+  "ownPlatformMidpointAccepted": false
+}

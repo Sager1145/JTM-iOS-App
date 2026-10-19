@@ -1,0 +1,639 @@
+[
+  {
+    "directory": "hanazono-interval0-view0-z18-before",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3995.9999999701977,
+      "x": 233210505.77090853,
+      "y": 107377535.6467504
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "hanazono-interval0-view1-z18-before",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.999999910593,
+      "x": 233210091.71497726,
+      "y": 107375072.72982976
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "hanazono-interval0-view2-z18-before",
+    "lineID": "jp-伊予鉄道-花園線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233209696.73627025,
+      "y": 107374472.66010946
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval0-view0-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233207895.98175287,
+      "y": 107362181.77980879
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval0-view1-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233207828.87288886,
+      "y": 107364269.30336288
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval1-view0-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233207828.87288895,
+      "y": 107364269.30336288
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval1-view1-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616.000000014901,
+      "width": 3995.9999999701977,
+      "x": 233207813.9598081,
+      "y": 107366738.34390068
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval2-view0-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616.000000014901,
+      "width": 3995.9999999701977,
+      "x": 233207813.9598081,
+      "y": 107366738.34390068
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval2-view1-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616.000000014901,
+      "width": 3996,
+      "x": 233207787.86191648,
+      "y": 107369368.90691638
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval3-view0-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616.000000014901,
+      "width": 3996,
+      "x": 233207787.86191648,
+      "y": 107369368.90691638
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval3-view1-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233207759.87222758,
+      "y": 107372194.4269512
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi-interval3-view2-z18-before",
+    "lineID": "jp-伊予鉄道-本町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233207754.30748448,
+      "y": 107373292.13876551
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "honmachi1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233207754.30748448,
+      "y": 107373292.13876551
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval10-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 10,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233227365.0088535,
+      "y": 107366486.9543165
+    },
+    "reason": "persistent_unambiguous_rail_glyph_not_resolved",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval10-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 10,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233227435.84598765,
+      "y": 107364673.33361706
+    },
+    "reason": "persistent_unambiguous_rail_glyph_not_resolved",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval2-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233209696.73627025,
+      "y": 107374472.66010946
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval2-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233212202.90572682,
+      "y": 107374088.85942253
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval2-view2-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233212209.5904,
+      "y": 107374014.81748614
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval3-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233212209.5904,
+      "y": 107374014.81748614
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval3-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3996.0000000298023,
+      "x": 233213492.11535645,
+      "y": 107372919.57502659
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval4-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 4,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3996.0000000298023,
+      "x": 233213492.11535645,
+      "y": 107372919.57502659
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval4-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 4,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233215967.68678424,
+      "y": 107372847.75530264
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval5-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 5,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233215967.68678424,
+      "y": 107372847.75530264
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval5-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 5,
+    "mapRect": {
+      "height": 2616.000000014901,
+      "width": 3995.9999999701977,
+      "x": 233218776.63030237,
+      "y": 107372558.18498313
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval5-view2-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 5,
+    "mapRect": {
+      "height": 2615.9999999701977,
+      "width": 3996,
+      "x": 233219811.5333831,
+      "y": 107372398.88050473
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval6-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 6,
+    "mapRect": {
+      "height": 2615.9999999701977,
+      "width": 3996,
+      "x": 233219811.5333831,
+      "y": 107372398.88050473
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval6-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 6,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233220217.91483742,
+      "y": 107369822.28835627
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval7-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 7,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233220217.91483742,
+      "y": 107369822.28835627
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval7-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 7,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3996,
+      "x": 233220270.11062047,
+      "y": 107367856.119754
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval8-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 8,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3995.9999999403954,
+      "x": 233220270.11062065,
+      "y": 107367856.119754
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval8-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 8,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233222655.05982974,
+      "y": 107367339.81812158
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval8-view2-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 8,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3995.9999999701977,
+      "x": 233223316.10739216,
+      "y": 107367335.390861
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval9-view0-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 9,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3995.9999999701977,
+      "x": 233223316.10739216,
+      "y": 107367335.390861
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval9-view1-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 9,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233226140.04040995,
+      "y": 107367287.51328799
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "jounan-interval9-view2-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 9,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996.0000000298023,
+      "x": 233227365.0088535,
+      "y": 107366486.95431653
+    },
+    "reason": "persistent_unambiguous_rail_glyph_not_resolved",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "minamihoribata-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233209696.73627025,
+      "y": 107374472.66010946
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "nishihoribata-minami-middle-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999403954,
+      "x": 233209518.91746283,
+      "y": 107374466.45476365
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "nishihoribata-west-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233207333.0129495,
+      "y": 107373700.61018318
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "nishihoribata-z18-before",
+    "lineID": "jp-伊予鉄道-城南線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233207333.0129495,
+      "y": 107373700.61018318
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval0-view0-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233207333.0129495,
+      "y": 107373700.61018318
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval0-view1-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 0,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233205383.1276233,
+      "y": 107373687.14412722
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval1-view0-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233205383.1276233,
+      "y": 107373687.14412716
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval1-view1-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 1,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233203049.23046413,
+      "y": 107373319.07101387
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval2-view0-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233203049.23046413,
+      "y": 107373319.07101387
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval2-view1-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3995.9999999701977,
+      "x": 233203149.7475542,
+      "y": 107370545.13667947
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval2-view2-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 2,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233203250.5570561,
+      "y": 107370450.73344547
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval3-view0-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233203250.5570561,
+      "y": 107370450.73344547
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval3-view1-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2616,
+      "width": 3996,
+      "x": 233204819.4791688,
+      "y": 107368155.86011013
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  },
+  {
+    "directory": "otemachi-interval3-view2-z18-before",
+    "lineID": "jp-伊予鉄道-大手町線",
+    "intervalIndex": 3,
+    "mapRect": {
+      "height": 2615.999999985099,
+      "width": 3995.9999999701977,
+      "x": 233205036.39849246,
+      "y": 107367712.47075728
+    },
+    "reason": "partial_image_support",
+    "representation": "physical_rail_glyph_candidate"
+  }
+]

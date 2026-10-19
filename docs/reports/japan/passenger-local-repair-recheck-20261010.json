@@ -1,0 +1,125 @@
+{
+  "format": "jtm-passenger-local-repair-recheck-v1",
+  "date": "2026-10-10",
+  "status": "three_local_display_repairs_applied_with_remaining_offsets",
+  "scope": "Passenger-only, five intervals on three lines; not national acceptance",
+  "repairs": [
+    {
+      "stationID": "005260",
+      "name": "Ohiradai",
+      "kind": "bounded display station anchor and shared incoming/outgoing platform spur",
+      "evidence": "app/scripts/railway/passenger-station-approaches-evidence.json"
+    },
+    {
+      "stationID": "005725",
+      "name": "Miinohara",
+      "kind": "bounded display station anchor and both approaches",
+      "evidence": "app/scripts/railway/passenger-station-approaches-evidence.json"
+    },
+    {
+      "lineID": "jp-東日本旅客鉄道-京葉線-2",
+      "kind": "interval0 middle display curve only; previous tail retained",
+      "evidence": "app/scripts/railway/keiyo-midcurve-evidence.json"
+    }
+  ],
+  "nativeAlignment": {
+    "app": "RailAlignmentInspector",
+    "captured": 71,
+    "failed": 0,
+    "visuallyReviewed": 71,
+    "intervals": [
+      {
+        "itemID": "jp-小田急箱根-鉄道線#5",
+        "captures": 9,
+        "review": "All 0-8 reviewed. Corrected station spur approaches blue platform; larger incoming source bends and reversal remain displaced."
+      },
+      {
+        "itemID": "jp-小田急箱根-鉄道線#6",
+        "captures": 7,
+        "review": "All 0-6 reviewed. Corrected station pin inside blue footprint; shared fork, reversal and exit source bends remain displaced."
+      },
+      {
+        "itemID": "jp-西日本旅客鉄道-木次線#14",
+        "captures": 20,
+        "review": "All 0-19 reviewed. Station approach17-19 follows blue platform after repair. Upstream protected reversal and broader curve differences remain."
+      },
+      {
+        "itemID": "jp-西日本旅客鉄道-木次線#15",
+        "captures": 18,
+        "review": "All 0-17 reviewed. Station pin inside blue footprint; artificial seam zigzag removed. Bends1-15 still have alternating offsets; arrival16-17 reaches blue Yuki station area but nearby bends differ."
+      },
+      {
+        "itemID": "jp-東日本旅客鉄道-京葉線-2#0",
+        "captures": 17,
+        "review": "All 0-16 reviewed. Middle7-13 materially improved; residual southern-edge placement9-12 and small transition departure13 remain. Tail14-16 preserved, no sharp seam. Exact parallel track not certified."
+      }
+    ],
+    "snapshotRoot": "/private/tmp/jtm-passenger-local-refined-alignment",
+    "report": "ios/refactor-parallel/alignment-passenger-local-recheck-20261010.json",
+    "nativeSavedViewportNotes": 5,
+    "detailedIntervalCoverage": 0,
+    "records": "docs/reports/japan/passenger-local-native-viewpoint-records-20261010.json",
+    "selectedEvidence": "docs/reports/japan/passenger-local-repair-evidence-20261010",
+    "note": "Capture-time report retains pending verdicts. Later UI-saved notes are viewport-only, not whole-interval passes."
+  },
+  "stationFollowup": {
+    "freshlyReviewed": 2,
+    "visuallyInside": 2,
+    "method": "Actual native inspector station pins at z18 against visible Apple blue platform footprint, corroborated by captured display approaches. No polygon extraction or Apple pixel error measured. Production ridden-circle placement not runtime-certified.",
+    "stations": [
+      {
+        "stationID": "005260",
+        "displayAnchor": [
+          139.0739182642637,
+          35.238712408645384
+        ],
+        "verdict": "inside_blue_station_footprint_visual",
+        "evidence": "passenger-local-repair-evidence-20261010/jtm-ohiradai-refined-station-ui.png"
+      },
+      {
+        "stationID": "005725",
+        "displayAnchor": [
+          133.11634973681686,
+          35.091339728705066
+        ],
+        "verdict": "inside_blue_station_footprint_visual",
+        "evidence": "passenger-local-repair-evidence-20261010/jtm-miinohara-refined-station-ui.png"
+      }
+    ],
+    "prior17StationReview": "Initial14 inside/2outside/1boundary remains historical; only former two outside points freshly repaired and rechecked. Kamisakaemachi boundary not resolved."
+  },
+  "nativeRoute": {
+    "app": "RouteWorkbench",
+    "phase": "completed",
+    "completed": 3,
+    "resolvedSections": 5,
+    "consistencyFailures": 0,
+    "reviewFindings": 3,
+    "elapsedSeconds": 25.7052880525589,
+    "timingScope": "routeLoad",
+    "report": "ios/refactor-parallel/passenger-local-route-recheck-20261010.json",
+    "input": "ios/refactor-parallel/passenger-local-route-input-20261010.json",
+    "note": "Explicit inspection section indices, not authored scheduled trips. Three physical_intervals_unproven findings retained for Hakone two sections and Keiyo one; not topology certification or measured speedup."
+  },
+  "focusedRegression": {
+    "test": "PassengerStationApproachTests",
+    "cases": 2,
+    "passed": true,
+    "durationSeconds": 0.343,
+    "log": "ios/refactor-parallel/passenger-station-approach-regression-20261010.log",
+    "purpose": "Retain canonical physical station identities, weld both display approaches, preserve unrelated source intervals and reversal tips."
+  },
+  "reviewAndBuild": {
+    "independentReview": "Initial artificial seam corners identified and refined; final bounded repair reviewed. Keiyo17 and Kisuki-outgoing18 snapshots independently reviewed.",
+    "alignmentIncrementalBuild": "succeeded",
+    "routeIncrementalBuild": "succeeded"
+  },
+  "constraints": [
+    "No canonical station rows, physical segments/km, topology, membership or protected reversal tails changed.",
+    "OSM cached surveyed vertices reused only for selected passenger ways; common KSJ2 source is not independent survey proof.",
+    "Short seam aliases are display transitions, not physical switch proof.",
+    "No freight-only edge or geographic trust exception added.",
+    "Remaining Hakone/Kisuki/Keiyo offsets and earlier no-go topology findings stay open.",
+    "No retired full matrix, full-tree hash custody or umbrella verifier run."
+  ]
+}

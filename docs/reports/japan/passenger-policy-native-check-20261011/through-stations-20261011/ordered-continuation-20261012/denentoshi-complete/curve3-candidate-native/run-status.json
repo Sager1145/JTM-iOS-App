@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "B3676ECC-B04D-4B7C-A51D-AFBE4EF9F2FB",
+  "message" : "14\/14 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "denentoshi-own-curve-3-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-denentoshi-curve3-candidate-native\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T19:17:30Z"
+}

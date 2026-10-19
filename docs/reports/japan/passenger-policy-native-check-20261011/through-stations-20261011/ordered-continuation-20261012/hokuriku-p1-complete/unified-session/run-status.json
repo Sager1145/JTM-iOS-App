@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "38CA1296-8C65-463B-A492-CE55A06B316D",
+  "message" : "34\/34 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "ordered-33-hokuriku-p1-baseline-20261017",
+  "resultPath" : "\/Users\/sager\/Documents\/GitHub\/JTM-iOS-App\/docs\/reports\/japan\/passenger-policy-native-check-20261011\/through-stations-20261011\/ordered-continuation-20261012\/hokuriku-p1-complete\/unified-session\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T03:23:53Z"
+}

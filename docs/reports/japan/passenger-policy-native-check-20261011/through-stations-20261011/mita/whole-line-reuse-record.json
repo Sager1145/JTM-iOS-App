@@ -1,0 +1,660 @@
+{
+  "lineID": "jp-東京都-6号線三田線",
+  "completeIntervals": 26,
+  "plannedViewpoints": 115,
+  "freshFirstInterval": 4,
+  "reused": 107,
+  "pendingMissingInterval": null,
+  "records": [
+    {
+      "interval": "jp-東京都-6号線三田線#1",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004147/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#1",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004147/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#1",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004147/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#2",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004158/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#2",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004158/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#2",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004158/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#2",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004158/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#2",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004158/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#3",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004165/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#3",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004165/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#3",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004165/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#3",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004165/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#4",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004166/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#4",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004166/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#4",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004166/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#4",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004166/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#4",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004166/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#6",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004168/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#6",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004168/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#6",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004168/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#6",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004168/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#6",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004168/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#7",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004169/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#7",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004169/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#7",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004169/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#7",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004169/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#8",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004170/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#8",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004170/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#8",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004170/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#8",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004170/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#8",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004170/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#9",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004171/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#9",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004171/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#9",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004171/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#9",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004171/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#10",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004148/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#10",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004148/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#10",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004148/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#10",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004148/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#10",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004148/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#11",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004149/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#11",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004149/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#11",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004149/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#11",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004149/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#11",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004149/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#12",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004150/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#12",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004150/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#12",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004150/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#12",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004150/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#13",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004151/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#13",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004151/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#13",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004151/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#13",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004151/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#13",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004151/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#14",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004152/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#14",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004152/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#14",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004152/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#14",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004152/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#14",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004152/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#15",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004153/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#15",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004153/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#15",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004153/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#15",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004153/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#16",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004154/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#16",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004154/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#16",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004154/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#16",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004154/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#17",
+      "ordinal": 5,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004155/000005",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#18",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004156/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#18",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004156/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#18",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004156/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#18",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004156/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#19",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004157/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#19",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004157/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#19",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004157/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#19",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004157/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#20",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004159/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#20",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004159/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#20",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004159/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#20",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004159/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#21",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004160/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#21",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004160/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#21",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004160/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#21",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004160/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#22",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004161/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#22",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004161/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#22",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004161/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000000",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000001",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000002",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000003",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000004",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#23",
+      "ordinal": 5,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004162/000005",
+      "receiptPlanDigest": "57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#24",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004163/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#24",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004163/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#24",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004163/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#24",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004163/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#25",
+      "ordinal": 0,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004164/000000",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#25",
+      "ordinal": 1,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004164/000001",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#25",
+      "ordinal": 2,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004164/000002",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#25",
+      "ordinal": 3,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004164/000003",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    },
+    {
+      "interval": "jp-東京都-6号線三田線#25",
+      "ordinal": 4,
+      "originalDirectory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/004164/000004",
+      "receiptPlanDigest": "ca243929d9af5237145ae651192f3d6ecb23530b44a940bb978fe55c6d0db9b7"
+    }
+  ],
+  "freshMissingInterval": {
+    "interval": 5,
+    "viewpoints": 4,
+    "status": "captured"
+  },
+  "freshViewpoints": 8,
+  "validatedReusedViewpoints": 107,
+  "totalCapturedViewpoints": 115
+}

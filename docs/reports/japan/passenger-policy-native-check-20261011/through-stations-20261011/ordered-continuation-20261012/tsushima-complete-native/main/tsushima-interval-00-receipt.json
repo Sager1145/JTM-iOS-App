@@ -1,0 +1,27 @@
+{
+  "lineID": "jp-名古屋鉄道-津島線",
+  "intervalIndex": 0,
+  "lineObjectSha256": "d9901cb2d4c2cddbd573aca7b4926eba701097d180eea3bc18c63f3575e182b0",
+  "plannedCamera": [
+    35.1978175,
+    136.835805,
+    0.029850000000010368
+  ],
+  "actualCenter": [
+    35.197817,
+    136.835805
+  ],
+  "actualMapBounds": [
+    136.818632,
+    35.182891,
+    136.852978,
+    35.212741
+  ],
+  "completeIntervalInsideActualMap": true,
+  "renderStatus": "37 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:6;overlays:6;rides:0;budgetDrops:0;vertices:1935;camera:14.94;lod:13.79;backbones:1;networkStations:16;distance:6550.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.197817;centerLon:136.835805;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:2539.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:9;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:9;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+  "pixelReview": "Root reviewed actual ON/OFF pair; whole baseline REPAIR REQUIRED; see Main-review.md",
+  "pair": [
+    "tsushima-interval-00-overlay.png",
+    "tsushima-interval-00-basemap.png"
+  ]
+}

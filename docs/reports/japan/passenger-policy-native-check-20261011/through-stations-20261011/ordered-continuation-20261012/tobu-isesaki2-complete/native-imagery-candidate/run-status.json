@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "AFA5C88F-BDDE-497E-88A3-05A3C77E736B",
+  "message" : "2\/10 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "hikifune-delete-c-candidate-imagery",
+  "resultPath" : "\/private\/tmp\/jtm-hikifune-candidate-imagery-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-18T20:21:45Z"
+}

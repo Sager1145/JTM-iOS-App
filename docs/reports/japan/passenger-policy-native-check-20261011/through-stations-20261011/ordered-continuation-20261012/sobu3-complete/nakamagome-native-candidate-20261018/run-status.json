@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "6E2337CB-481B-4F63-903E-B0887E8E962E",
+  "message" : "20\/20 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "sobu3-nakamagome-own-passenger-candidate",
+  "resultPath" : "\/private\/tmp\/jtm-sobu-nakamagome-native-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "evidenceReady",
+  "updatedAt" : "2026-10-18T21:05:01Z"
+}

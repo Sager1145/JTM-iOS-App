@@ -1,0 +1,274 @@
+{
+  "format": "jtm-own-display-tail-evidence-v1",
+  "date": "2026-10-18",
+  "status": "reference-assisted Oito-only display repair candidate; parent owns application and final product review",
+  "lineID": "jp-西日本旅客鉄道-大糸線",
+  "intervalIndex": 7,
+  "fromStation": "姫川",
+  "toStation": "糸魚川",
+  "coordinateOrder": "longitude,latitude",
+  "purpose": "Remove Oito terminal hook toward Shinkansen roof; connect own Oito approach to platform4 bay representative independently of adjacent railway alignment",
+  "baselineSourceFile": "../source-line.json",
+  "reconstructed0baseDefinition": {
+    "construction": "expanded = [segments[6][2][-1]] + segments[7][2]",
+    "reason": "compact-v1 interval7 continuesFromPrevious=1; its stored row omits the shared first vertex",
+    "indexBase": 0,
+    "expandedCoordinateCount": 43,
+    "guardIndex": 32,
+    "guardCoordinate": [
+      137.85539,
+      37.04126
+    ],
+    "baselineTailIndicesInclusive": [
+      32,
+      42
+    ]
+  },
+  "baselineTail": [
+    [
+      137.85539,
+      37.04126
+    ],
+    [
+      137.8556,
+      37.04145
+    ],
+    [
+      137.85602,
+      37.04176
+    ],
+    [
+      137.85635,
+      37.04196
+    ],
+    [
+      137.85652,
+      37.04205
+    ],
+    [
+      137.85677,
+      37.04219
+    ],
+    [
+      137.85739,
+      37.04238
+    ],
+    [
+      137.85908,
+      37.04283
+    ],
+    [
+      137.85954,
+      37.04296
+    ],
+    [
+      137.86085,
+      37.04331
+    ],
+    [
+      137.861115,
+      37.043114
+    ]
+  ],
+  "ownDisplayTail": [
+    [
+      137.85539,
+      37.04126
+    ],
+    [
+      137.8555616,
+      37.0414025
+    ],
+    [
+      137.8555875,
+      37.0414267
+    ],
+    [
+      137.855758,
+      37.0415604
+    ],
+    [
+      137.8558825,
+      37.0416479
+    ],
+    [
+      137.8560229,
+      37.0417284
+    ],
+    [
+      137.8562777,
+      37.0418574
+    ],
+    [
+      137.856586,
+      37.0419884
+    ],
+    [
+      137.8570944,
+      37.0421668
+    ],
+    [
+      137.8573344,
+      37.0422358
+    ],
+    [
+      137.8579772,
+      37.0424066
+    ],
+    [
+      137.8585082,
+      37.0425822
+    ],
+    [
+      137.8594393,
+      37.042816
+    ],
+    [
+      137.8594954,
+      37.0428295
+    ],
+    [
+      137.8600415,
+      37.0430098
+    ],
+    [
+      137.8606034,
+      37.0431988
+    ],
+    [
+      137.86120633114302,
+      37.043370483849635
+    ]
+  ],
+  "spliceInstructions": {
+    "retainBaselineExpandedThroughIndex": 32,
+    "replaceBaselineExpandedFromIndex": 33,
+    "tailIncludesGuard": true,
+    "equivalentConstruction": "baselineExpanded[:33] + ownDisplayTail[1:]",
+    "avoidDuplicateGuardConstruction": "baselineExpanded[:32] + ownDisplayTail",
+    "resultExpandedCoordinateCount": 49
+  },
+  "pointProvenance": [
+    {
+      "tailIndex": 0,
+      "source": "unchanged baseline expanded interval7 index32"
+    },
+    {
+      "tailIndicesInclusive": [
+        1,
+        10
+      ],
+      "source": "OSM way24603555 own JR大糸線 curve, sourceGSImaps/ort; cross-checked directly against Apple imagery23/25"
+    },
+    {
+      "tailIndex": 11,
+      "source": "OSM way1262851194 continuation of own Oito approach; visually connected in Apple imagery25"
+    },
+    {
+      "tailIndicesInclusive": [
+        12,
+        13
+      ],
+      "source": "OSM way651661538 geometry, reverse order; geographic database name is Hisui, sourceKSJ2. Adopted only after visually following the incoming own Oito rail through this throat in Apple25/26; no nearest-Hisui snapping or physical topology inference."
+    },
+    {
+      "tailIndex": 14,
+      "source": "OSM way651661534 own Oito bay ingress, checked Apple26/28"
+    },
+    {
+      "tailIndex": 15,
+      "source": "OSM way633881900 own Oito bay line, checked Apple26/28"
+    },
+    {
+      "tailIndex": 16,
+      "source": "Mapped cut-edge4 longitudinal midpoint normal projection to own bay rail; JR West platform4 identity + GSI cut shape + actual Apple28 bay pixels"
+    }
+  ],
+  "platform4Reference": {
+    "mappedCutCaps": [
+      [
+        137.8606376,
+        37.0431901
+      ],
+      [
+        137.8617923,
+        37.0435123
+      ]
+    ],
+    "mappedCutEdgeLengthApproxMetres": 108.56575342197424,
+    "semanticLimit": "mapped cut-edge length, not a certified current effective stopping length; not whole-island midpoint",
+    "referenceAssistedRepresentative": [
+      137.86120633114302,
+      37.043370483849635
+    ],
+    "finalRailBearingDegreesTrueApprox": 70.36626810060739,
+    "AppleView28Pixels": {
+      "mappedWestCap": [
+        622.0123795866966,
+        564.454052656889
+      ],
+      "mappedEastCap": [
+        1052.5157421380281,
+        413.9555732756853
+      ],
+      "representative": [
+        834.0507180690765,
+        480.19747376441956
+      ],
+      "oldTerminal": [
+        800,
+        600
+      ]
+    }
+  },
+  "visualEvidenceConclusion": {
+    "reviewedNativeImageryViews": [
+      23,
+      25,
+      26,
+      27,
+      28
+    ],
+    "continuousOwnRailTraceConfirmed": true,
+    "statement": "Apple raw imagery shows the Oito curve emerging from beneath the separate elevated Shinkansen, curving northeast along the southern conventional approach, remaining continuous through the throat and diverging toward the narrow cut/bay4. The proposed yellow geographic chain was compared across overlapping raw Apple views23/25/26/28 and follows that incoming route to the bay; it was not selected by closest Hisui geometry. Old32 is the conservative own-curve splice guard, while later baseline controls drift north and old42 ends on the Shinkansen roof boundary.",
+    "pixelPlacementConclusion": "The reference-assisted representative is in the own bay trench at Apple28 pixel834.05,480.20; west cut cap agrees with the cut onset; east cut cap is partly covered by footbridge/roof. This supports platform-family and reference-assisted representative placement without certifying a usable stopping length or hidden buffer engineering.",
+    "limits": "Roof/shadow occludes short rail/platform fragments. Visible continuity and operator/platform references support the display path; imagery does not prove switch permissions, current operational co-track use, a physical graph edge, final lane behavior or popup acceptance.",
+    "rawInputs": [
+      "apple-view23-basemap.png",
+      "apple-view23-view.json",
+      "apple-view25-basemap.png",
+      "apple-view25-view.json",
+      "apple-view26-basemap.png",
+      "apple-view26-view.json",
+      "apple-view28-basemap.png",
+      "apple-view28-view.json"
+    ],
+    "comparisonImages": [
+      "apple-view23-old-tail-and-own-chain.png",
+      "apple-view25-old-tail-and-own-chain.png",
+      "apple-view26-old-tail-and-own-chain.png",
+      "apple-view28-own4-projections.png",
+      "apple-view28-own4-caps-and-rail-3x.png"
+    ]
+  },
+  "invariants": {
+    "displayOnly": true,
+    "noPhysicalTopologyChange": true,
+    "noMileageChange": true,
+    "noStationIDChange": true,
+    "noShinkansenGeometryUse": true,
+    "terminateAtOwnRepresentative": true,
+    "doNotContinueToMappedRailDeadEnd": true,
+    "noHisuiProductionLineGeometryUse": true,
+    "noHisuiDisplayFollow": true
+  },
+  "sources": {
+    "operator": "https://eki.jr-odekake.net/premises?id=0541482",
+    "gsi": "https://maps.gsi.go.jp/development/ichiran.html",
+    "gsiPhotoDate": "2022年10月",
+    "osmRaw": "osm-itoigawa-bbox.osm",
+    "osmRelevantSubset": "osm-own-bay-and-west-guard.osm",
+    "osmLicense": "© OpenStreetMap contributors, ODbL; https://www.openstreetmap.org/copyright"
+  },
+  "workPerformed": "Evidence export only. No source/production edit, build or native execution by this researcher."
+}

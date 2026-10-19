@@ -1,0 +1,20 @@
+[
+  {
+    "wayID": 1206564854,
+    "url": "https://api.openstreetmap.org/api/0.6/way/1206564854/full.json",
+    "bytes": 1200,
+    "fetchedAt": "2026-10-12T05:06:57.684791+00:00"
+  },
+  {
+    "wayID": 235606888,
+    "url": "https://api.openstreetmap.org/api/0.6/way/235606888/full.json",
+    "bytes": 12914,
+    "fetchedAt": "2026-10-12T05:06:58.045551+00:00"
+  },
+  {
+    "wayID": 235603026,
+    "url": "https://api.openstreetmap.org/api/0.6/way/235603026/full.json",
+    "bytes": 1466,
+    "fetchedAt": "2026-10-12T05:06:58.389067+00:00"
+  }
+]

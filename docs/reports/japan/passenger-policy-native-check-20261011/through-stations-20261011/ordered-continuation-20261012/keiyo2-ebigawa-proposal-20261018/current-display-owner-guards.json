@@ -1,0 +1,241 @@
+{
+  "format": "jtm-keiyo-current-display-guards-v1",
+  "scope": "exact existing display ownership before any proposal integration",
+  "parts": [
+    {
+      "index": 345,
+      "header": [
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        -1,
+        -1,
+        488,
+        42992.7,
+        "complex"
+      ],
+      "coordinateCount": 488,
+      "boundaries": []
+    },
+    {
+      "index": 346,
+      "header": [
+        "jp-東日本旅客鉄道-京葉線-2",
+        0,
+        -1,
+        -1,
+        87,
+        5413.2,
+        "complex"
+      ],
+      "coordinateCount": 87,
+      "boundaries": []
+    },
+    {
+      "index": 347,
+      "header": [
+        "jp-東日本旅客鉄道-京葉線-3",
+        0,
+        -1,
+        -1,
+        87,
+        5907.3,
+        "complex"
+      ],
+      "coordinateCount": 87,
+      "boundaries": []
+    }
+  ],
+  "byRegion": [],
+  "followsByRegion": [
+    {
+      "index": 120,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線-2",
+        0,
+        2068.8259884191734,
+        5413.198707560695,
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        20263.23636518532,
+        16918.863646043792
+      ]
+    },
+    {
+      "index": 121,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線-3",
+        0,
+        2129.885926151951,
+        5907.34228486841,
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        20997.49204914798,
+        24774.94840786443
+      ]
+    }
+  ],
+  "familyWindowsByRegion": [
+    {
+      "index": 34,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        16918.9,
+        19963.2,
+        0,
+        "東日本旅客鉄道:京葉線"
+      ]
+    },
+    {
+      "index": 35,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        21297.5,
+        24774.9,
+        0,
+        "東日本旅客鉄道:京葉線"
+      ]
+    },
+    {
+      "index": 36,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線-2",
+        0,
+        2368.8,
+        5413.2,
+        1,
+        "東日本旅客鉄道:京葉線"
+      ]
+    },
+    {
+      "index": 37,
+      "record": [
+        "jp-東日本旅客鉄道-京葉線-3",
+        0,
+        2429.9,
+        5907.3,
+        1,
+        "東日本旅客鉄道:京葉線"
+      ]
+    }
+  ],
+  "loopsByRegion": [],
+  "chainBoundariesByRegion": [],
+  "reversedLoopParts": [],
+  "hubReportByRegion": [
+    {
+      "index": 0,
+      "record": {
+        "hubId": "jp-tokyo",
+        "name": "Tokyo Station throat",
+        "trunkKey": "jp-東日本旅客鉄道-東海道線#0",
+        "members": [
+          {
+            "lineId": "jp-東海旅客鉄道-東海道新幹線",
+            "partIndex": 0,
+            "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+            "slot": -1,
+            "side": 0,
+            "reversed": true,
+            "from": 513300,
+            "to": 515688.6,
+            "previousLane": 0.5
+          },
+          {
+            "lineId": "jp-東日本旅客鉄道-東海道線",
+            "partIndex": 0,
+            "classKey": "group\u0000東日本旅客鉄道:東海道線",
+            "slot": 0,
+            "side": 0,
+            "reversed": false,
+            "from": 0,
+            "to": 2350,
+            "previousLane": 0.5
+          },
+          {
+            "lineId": "jp-東日本旅客鉄道-総武線-3",
+            "partIndex": 0,
+            "classKey": "group\u0000東日本旅客鉄道:東海道線",
+            "slot": 0,
+            "side": -1,
+            "reversed": false,
+            "from": 700,
+            "to": 2325,
+            "previousLane": -0.5
+          },
+          {
+            "lineId": "jp-東京地下鉄-4号線丸ノ内線",
+            "partIndex": 0,
+            "classKey": "group\u0000東京メトロ:4号線丸ノ内線",
+            "slot": 1,
+            "side": -1,
+            "reversed": false,
+            "from": 9111.6,
+            "to": 9436.6,
+            "previousLane": null
+          },
+          {
+            "lineId": "jp-東京地下鉄-2号線日比谷線",
+            "partIndex": 0,
+            "excluded": "crossing",
+            "previousLane": null
+          },
+          {
+            "lineId": "jp-東京地下鉄-3号線銀座線",
+            "partIndex": 0,
+            "excluded": "crossing",
+            "previousLane": null
+          },
+          {
+            "lineId": "jp-東京地下鉄-8号線有楽町線",
+            "partIndex": 0,
+            "excluded": "crossing",
+            "previousLane": null
+          },
+          {
+            "lineId": "jp-東日本旅客鉄道-京葉線",
+            "partIndex": 0,
+            "excluded": "crossing",
+            "previousLane": null
+          },
+          {
+            "lineId": "jp-東日本旅客鉄道-東北線-2",
+            "partIndex": 0,
+            "excluded": "separate-alignment",
+            "alongsideFrom": 13050,
+            "alongsideTo": 13155.4,
+            "previousLane": null
+          }
+        ],
+        "classes": [
+          {
+            "classKey": "group\u0000東海旅客鉄道:東海道新幹線",
+            "slot": -1,
+            "side": 0,
+            "lineIds": [
+              "jp-東海旅客鉄道-東海道新幹線"
+            ]
+          },
+          {
+            "classKey": "group\u0000東日本旅客鉄道:東海道線",
+            "slot": 0,
+            "side": 0,
+            "lineIds": [
+              "jp-東日本旅客鉄道-東海道線",
+              "jp-東日本旅客鉄道-総武線-3"
+            ]
+          },
+          {
+            "classKey": "group\u0000東京メトロ:4号線丸ノ内線",
+            "slot": 1,
+            "side": -1,
+            "lineIds": [
+              "jp-東京地下鉄-4号線丸ノ内線"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

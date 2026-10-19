@@ -1,0 +1,47 @@
+{
+  "status": "attributed own outer-direction reference only; not integrated candidate or surveyed truth",
+  "lineID": "jp-東日本旅客鉄道-山手線",
+  "ownInterval": 14,
+  "wayIDs": [
+    "1565541058",
+    "1565541057"
+  ],
+  "routeRelationID": "1972920",
+  "direction": "outer; west-to-east Sugamo toward Komagome/Tabata",
+  "source": "Bing (as OSM tags); © OpenStreetMap contributors, ODbL1.0",
+  "nodeIDs": [
+    "1577111093",
+    "1577111128",
+    "1577052618",
+    "1577052701",
+    "3708276248",
+    "1577052995"
+  ],
+  "coordinates": [
+    [
+      139.7452403,
+      35.7357731
+    ],
+    [
+      139.7456349,
+      35.7359405
+    ],
+    [
+      139.7460025,
+      35.7360887
+    ],
+    [
+      139.7465177,
+      35.7363181
+    ],
+    [
+      139.747219,
+      35.7366191
+    ],
+    [
+      139.7487011,
+      35.7372551
+    ]
+  ],
+  "limits": "Own passenger-track identification precedes geometry. Namboku and Yamanote freight ways excluded. Existing station endpoint is not moved; native complete-interval/own-frame review required before integration."
+}

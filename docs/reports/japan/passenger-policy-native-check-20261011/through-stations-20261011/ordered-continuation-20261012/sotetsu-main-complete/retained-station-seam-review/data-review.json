@@ -1,0 +1,599 @@
+{
+  "scope": "Sotetsu owner-only static data review; no physical-connectivity or final-render acceptance",
+  "owningRowChecks": [
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/RailAlignmentInspector.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Kisuki Keiyo Inspector.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/Users/sager/.codex/visualizations/2026/10/11/01a12c88-e8a9-7741-9046-e94472852230/rail-inspector-apps/Hakone Inspector.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    },
+    {
+      "path": "/Users/sager/Library/Developer/Xcode/DerivedData/RailMap-cysvihgspfvwbzatdiakpqjbxkno/Build/Products/Debug-maccatalyst/RailMap.app/Contents/Resources/jp-2025.json",
+      "ownerEqual": true
+    }
+  ],
+  "displayIntervalsPresent": false,
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStationID": "004633",
+      "toStationID": "004653",
+      "continuing": false,
+      "reconstructedPointCount": 8,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.620466,
+        35.464424
+      ],
+      "end": [
+        139.616465,
+        35.459845
+      ]
+    },
+    {
+      "intervalIndex": 1,
+      "fromStationID": "004653",
+      "toStationID": "004669",
+      "continuing": true,
+      "reconstructedPointCount": 12,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.616465,
+        35.459845
+      ],
+      "end": [
+        139.60897,
+        35.453595
+      ]
+    },
+    {
+      "intervalIndex": 2,
+      "fromStationID": "004669",
+      "toStationID": "004668",
+      "continuing": true,
+      "reconstructedPointCount": 13,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.60897,
+        35.453595
+      ],
+      "end": [
+        139.60253,
+        35.45401
+      ]
+    },
+    {
+      "intervalIndex": 3,
+      "fromStationID": "004668",
+      "toStationID": "004655",
+      "continuing": true,
+      "reconstructedPointCount": 11,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.60253,
+        35.45401
+      ],
+      "end": [
+        139.595195,
+        35.458235
+      ]
+    },
+    {
+      "intervalIndex": 4,
+      "fromStationID": "004655",
+      "toStationID": "004640",
+      "continuing": true,
+      "reconstructedPointCount": 12,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.595195,
+        35.458235
+      ],
+      "end": [
+        139.58638,
+        35.46371
+      ]
+    },
+    {
+      "intervalIndex": 5,
+      "fromStationID": "004640",
+      "toStationID": "004624",
+      "continuing": true,
+      "reconstructedPointCount": 9,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.58638,
+        35.46371
+      ],
+      "end": [
+        139.580454,
+        35.46737
+      ]
+    },
+    {
+      "intervalIndex": 6,
+      "fromStationID": "004624",
+      "toStationID": "004594",
+      "continuing": true,
+      "reconstructedPointCount": 29,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.580454,
+        35.46737
+      ],
+      "end": [
+        139.565521,
+        35.478065
+      ]
+    },
+    {
+      "intervalIndex": 7,
+      "fromStationID": "004594",
+      "toStationID": "004604",
+      "continuing": true,
+      "reconstructedPointCount": 21,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.565521,
+        35.478065
+      ],
+      "end": [
+        139.549985,
+        35.47509
+      ]
+    },
+    {
+      "intervalIndex": 8,
+      "fromStationID": "004604",
+      "toStationID": "004642",
+      "continuing": true,
+      "reconstructedPointCount": 25,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.549985,
+        35.47509
+      ],
+      "end": [
+        139.53237,
+        35.46339
+      ]
+    },
+    {
+      "intervalIndex": 9,
+      "fromStationID": "004642",
+      "toStationID": "004652",
+      "continuing": true,
+      "reconstructedPointCount": 26,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.53237,
+        35.46339
+      ],
+      "end": [
+        139.513475,
+        35.46054
+      ]
+    },
+    {
+      "intervalIndex": 10,
+      "fromStationID": "004652",
+      "toStationID": "004623",
+      "continuing": true,
+      "reconstructedPointCount": 17,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.513475,
+        35.46054
+      ],
+      "end": [
+        139.50257,
+        35.467785
+      ]
+    },
+    {
+      "intervalIndex": 11,
+      "fromStationID": "004623",
+      "toStationID": "004615",
+      "continuing": true,
+      "reconstructedPointCount": 32,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.50257,
+        35.467785
+      ],
+      "end": [
+        139.48259,
+        35.4704
+      ]
+    },
+    {
+      "intervalIndex": 12,
+      "fromStationID": "004615",
+      "toStationID": "004617",
+      "continuing": true,
+      "reconstructedPointCount": 23,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.48259,
+        35.4704
+      ],
+      "end": [
+        139.461,
+        35.46993
+      ]
+    },
+    {
+      "intervalIndex": 13,
+      "fromStationID": "004617",
+      "toStationID": "004614",
+      "continuing": true,
+      "reconstructedPointCount": 29,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.461,
+        35.46993
+      ],
+      "end": [
+        139.441155,
+        35.47054
+      ]
+    },
+    {
+      "intervalIndex": 14,
+      "fromStationID": "004614",
+      "toStationID": "004611",
+      "continuing": true,
+      "reconstructedPointCount": 15,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.441155,
+        35.47054
+      ],
+      "end": [
+        139.429032,
+        35.471501
+      ]
+    },
+    {
+      "intervalIndex": 15,
+      "fromStationID": "004611",
+      "toStationID": "004626",
+      "continuing": true,
+      "reconstructedPointCount": 35,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.429032,
+        35.471501
+      ],
+      "end": [
+        139.415885,
+        35.466845
+      ]
+    },
+    {
+      "intervalIndex": 16,
+      "fromStationID": "004626",
+      "toStationID": "004672",
+      "continuing": true,
+      "reconstructedPointCount": 76,
+      "startEqualsStation": true,
+      "endEqualsStation": true,
+      "start": [
+        139.415885,
+        35.466845
+      ],
+      "end": [
+        139.392235,
+        35.45344
+      ]
+    }
+  ],
+  "internalStationSeams": [
+    {
+      "stationID": "004653",
+      "stationName": "平沼橋",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004669",
+      "stationName": "西横浜",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004668",
+      "stationName": "天王町",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004655",
+      "stationName": "星川",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004640",
+      "stationName": "和田町",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004624",
+      "stationName": "上星川",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.00627773
+    },
+    {
+      "stationID": "004594",
+      "stationName": "西谷",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.02259872
+    },
+    {
+      "stationID": "004604",
+      "stationName": "鶴ヶ峰",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004642",
+      "stationName": "二俣川",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004652",
+      "stationName": "希望ヶ丘",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004623",
+      "stationName": "三ツ境",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004615",
+      "stationName": "瀬谷",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004617",
+      "stationName": "大和",
+      "endpointEqual": true,
+      "rawTurnDegrees": -0.0
+    },
+    {
+      "stationID": "004614",
+      "stationName": "相模大塚",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    },
+    {
+      "stationID": "004611",
+      "stationName": "さがみ野",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0650051
+    },
+    {
+      "stationID": "004626",
+      "stationName": "かしわ台",
+      "endpointEqual": true,
+      "rawTurnDegrees": 0.0
+    }
+  ],
+  "sharedStationIDs": {
+    "004633": {
+      "name": "横浜",
+      "owners": [
+        {
+          "lineID": "jp-京浜急行電鉄-本線",
+          "stationCoordinates": [
+            139.623125,
+            35.46625
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-東急電鉄-東横線",
+          "stationCoordinates": [
+            139.62235,
+            35.466435
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-東海道線",
+          "stationCoordinates": [
+            139.622278,
+            35.46588
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-根岸線",
+          "stationCoordinates": [
+            139.622491,
+            35.465754
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-横浜市-3号線",
+          "stationCoordinates": [
+            139.620159,
+            35.465399
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-横浜高速鉄道-みなとみらい21線",
+          "stationCoordinates": [
+            139.62235,
+            35.466435
+          ],
+          "sameCoordinates": false
+        }
+      ]
+    },
+    "004594": {
+      "name": "西谷",
+      "owners": [
+        {
+          "lineID": "jp-相模鉄道-相鉄新横浜線",
+          "stationCoordinates": [
+            139.565521,
+            35.478065
+          ],
+          "sameCoordinates": true
+        }
+      ]
+    },
+    "004642": {
+      "name": "二俣川",
+      "owners": [
+        {
+          "lineID": "jp-相模鉄道-相鉄いずみ野線",
+          "stationCoordinates": [
+            139.53237,
+            35.46339
+          ],
+          "sameCoordinates": true
+        }
+      ]
+    },
+    "004617": {
+      "name": "大和",
+      "owners": [
+        {
+          "lineID": "jp-小田急電鉄-江ノ島線",
+          "stationCoordinates": [
+            139.461494,
+            35.469791
+          ],
+          "sameCoordinates": false
+        }
+      ]
+    },
+    "004672": {
+      "name": "海老名",
+      "owners": [
+        {
+          "lineID": "jp-小田急電鉄-小田原線",
+          "stationCoordinates": [
+            139.39096,
+            35.452831
+          ],
+          "sameCoordinates": false
+        },
+        {
+          "lineID": "jp-東日本旅客鉄道-相模線",
+          "stationCoordinates": [
+            139.3893,
+            35.45423
+          ],
+          "sameCoordinates": false
+        }
+      ]
+    }
+  },
+  "orderedContinuation": [
+    {
+      "ordinal": 30,
+      "lineID": "jp-東日本旅客鉄道-東北線-2"
+    },
+    {
+      "ordinal": 31,
+      "lineID": "jp-東日本旅客鉄道-東海道線"
+    },
+    {
+      "ordinal": 32,
+      "lineID": "jp-相模鉄道-相鉄本線"
+    },
+    {
+      "ordinal": 33,
+      "lineID": "jp-西日本旅客鉄道-北陸線-p1"
+    },
+    {
+      "ordinal": 34,
+      "lineID": "jp-西日本旅客鉄道-大糸線"
+    },
+    {
+      "ordinal": 35,
+      "lineID": "jp-京阪電気鉄道-京津線"
+    }
+  ],
+  "productionMetadata": {
+    "byRegion": [
+      [
+        "jp-相模鉄道-相鉄本線",
+        0,
+        0,
+        25,
+        0.5
+      ],
+      [
+        "jp-相模鉄道-相鉄本線",
+        0,
+        25,
+        1100,
+        1.5
+      ],
+      [
+        "jp-相模鉄道-相鉄本線",
+        0,
+        1100,
+        24268.1,
+        0.5
+      ]
+    ],
+    "followsByRegion": [],
+    "familyWindowsByRegion": [],
+    "partsByRegion": [
+      [
+        "jp-相模鉄道-相鉄本線",
+        0,
+        0,
+        16,
+        377,
+        24268.1,
+        null,
+        null,
+        []
+      ]
+    ],
+    "strokeExcludedByRegion": [],
+    "chainBoundariesByRegion": [],
+    "scope": "Current source metadata only; no new final production pixel verdict"
+  }
+}

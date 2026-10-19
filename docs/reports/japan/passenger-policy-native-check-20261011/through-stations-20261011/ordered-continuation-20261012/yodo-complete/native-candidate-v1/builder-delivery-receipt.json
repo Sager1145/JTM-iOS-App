@@ -1,0 +1,12 @@
+{
+  "status": "candidate-native-resource-built-installed-six-apps",
+  "candidateSha256": "87fd1c46f5dafb9546fc6bd6f80d5453f425722042563b1f18f45d985ed488bc",
+  "packageSHA256": "481c1a86374c861dbd48ed5b263c43adb69a4853645fef7916259a79cc00fd66",
+  "historySHA256": "08606e1241fe18b3c1a0a2638e321e948410a54ce48494b86b7091423d4169a6",
+  "historyBytes": 1090900,
+  "productionPackageUnchanged": true,
+  "productionLanesUnchanged": true,
+  "signatureVerification": "all-six-strict-deep-pass",
+  "buildExitCode": 0,
+  "nativeAccepted": false
+}

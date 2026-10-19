@@ -1,0 +1,252 @@
+{
+  "method": "Bounded original-PNG pixel colour inspection at visually identified own rail columns; inverse project with existing GsiTileReference using explicit Apple camera rectX/rectY/mapPointsPerPoint and 2^28 world. Not GSI observations, not a new extractor.",
+  "actualPairs": 2,
+  "actualPNGs": 4,
+  "views": [
+    {
+      "pointOrdinal": 1,
+      "originalPNGs": [
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000001/basemap.png",
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.164713349314745,
+        "longitude": 136.48693875807874,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24326039280699144,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 235988165.89880264,
+        "rectY": 106175416.12418023,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "manualBlueWitnesses": [
+        {
+          "nearOldVertex": 1,
+          "manuallyObservedBlueRailPixel": [
+            1050,
+            821.5
+          ],
+          "referenceCoordinate": [
+            136.48760931033252,
+            35.164227663663105
+          ],
+          "oldVertexPixel": [
+            1050.2571266889572,
+            806.7528510242701
+          ],
+          "verticalDifferencePixels": 14.747148975729942,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 2,
+          "manuallyObservedBlueRailPixel": [
+            856,
+            667.5
+          ],
+          "referenceCoordinate": [
+            136.48708896178363,
+            35.16456534157919
+          ],
+          "oldVertexPixel": [
+            856.38707511127,
+            647.133216612041
+          ],
+          "verticalDifferencePixels": 20.366783387959003,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 3,
+          "manuallyObservedBlueRailPixel": [
+            633,
+            505
+          ],
+          "referenceCoordinate": [
+            136.4864908291733,
+            35.16492165604183
+          ],
+          "oldVertexPixel": [
+            632.6908617913723,
+            460.149342648685
+          ],
+          "verticalDifferencePixels": 44.85065735131502,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 4,
+          "manuallyObservedBlueRailPixel": [
+            416,
+            321
+          ],
+          "referenceCoordinate": [
+            136.48590878981707,
+            35.165325111764176
+          ],
+          "oldVertexPixel": [
+            416.4511888921261,
+            282.2857584580779
+          ],
+          "verticalDifferencePixels": 38.71424154192209,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 3,
+      "originalPNGs": [
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000003/basemap.png",
+        "/private/tmp/jtm-sangi-nishinojiri-own-detail-20261019/alignment/captures/000000/000003/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 35.166062557668916,
+        "longitude": 136.48495887870845,
+        "mapPointsPerPoint": 2,
+        "metresPerPoint": 0.24325641110590235,
+        "pitch": 0,
+        "rectHeight": 2400,
+        "rectWidth": 3200,
+        "rectX": 235986689.59374264,
+        "rectY": 106174185.48036464,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 19
+      },
+      "manualBlueWitnesses": [
+        {
+          "nearOldVertex": 3,
+          "manuallyObservedBlueRailPixel": [
+            1371,
+            1120
+          ],
+          "referenceCoordinate": [
+            136.48649042005593,
+            35.16492236188891
+          ],
+          "oldVertexPixel": [
+            1370.843391790986,
+            1075.4712504446507
+          ],
+          "verticalDifferencePixels": 44.52874955534935,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 4,
+          "manuallyObservedBlueRailPixel": [
+            1155,
+            937
+          ],
+          "referenceCoordinate": [
+            136.4859110629087,
+            35.16532362491905
+          ],
+          "oldVertexPixel": [
+            1154.6037188917398,
+            897.6076662540436
+          ],
+          "verticalDifferencePixels": 39.39233374595642,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 5,
+          "manuallyObservedBlueRailPixel": [
+            875,
+            697
+          ],
+          "referenceCoordinate": [
+            136.48516004438454,
+            35.1658498685151
+          ],
+          "oldVertexPixel": [
+            874.9834522455931,
+            660.4548938572407
+          ],
+          "verticalDifferencePixels": 36.54510614275932,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 6,
+          "manuallyObservedBlueRailPixel": [
+            711,
+            556
+          ],
+          "referenceCoordinate": [
+            136.4847201621061,
+            35.166159035039826
+          ],
+          "oldVertexPixel": [
+            710.9395624697208,
+            528.1959582939744
+          ],
+          "verticalDifferencePixels": 27.8040417060256,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 8,
+          "manuallyObservedBlueRailPixel": [
+            398,
+            287
+          ],
+          "referenceCoordinate": [
+            136.48388063068444,
+            35.166748860114105
+          ],
+          "oldVertexPixel": [
+            397.7648637890816,
+            268.2373655810952
+          ],
+          "verticalDifferencePixels": 18.76263441890478,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 9,
+          "manuallyObservedBlueRailPixel": [
+            223,
+            167
+          ],
+          "referenceCoordinate": [
+            136.48341124410683,
+            35.1670119777265
+          ],
+          "oldVertexPixel": [
+            222.5361633449793,
+            145.09844886511564
+          ],
+          "verticalDifferencePixels": 21.901551134884357,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        },
+        {
+          "nearOldVertex": 10,
+          "manuallyObservedBlueRailPixel": [
+            96,
+            97
+          ],
+          "referenceCoordinate": [
+            136.48307060356194,
+            35.16716546260726
+          ],
+          "oldVertexPixel": [
+            95.77497579157352,
+            72.12704602628946
+          ],
+          "verticalDifferencePixels": 24.872953973710537,
+          "uncertainty": "approximately one pixel; single cartographic witness, not a surveyed rail centre or complete traced path"
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    "v0 fine rail hidden by station fill",
+    "v7 selected column contains rail label competition; no forced pixel choice",
+    "v9/v10 retained guards still off blue",
+    "No complete candidate replacement"
+  ]
+}

@@ -1,0 +1,1035 @@
+{
+  "status": "diagnostic-needs-parent-reprojection",
+  "scope": "Ina own-guideway body controls intervals 2–6 only; no station endpoint aliases or hooks",
+  "coordinateConvention": "WGS84 longitude first",
+  "conversion": "MapKit Mercator world 268435456; mapX=rectX+x*rectWidth/viewportWidthPoints; mapY=rectY+y*rectHeight/viewportHeightPoints; lon=360*mapX/world-180; lat=degrees(atan(sinh(pi*(1-2*mapY/world))))",
+  "identity": "Western Ina sleeper glyph, identified by repeated Ina Line label and stations-z18 own western black sleeper continuity. Eastern thicker blue Joetsu Shinkansen rejected. Own glyph rail-edge centre; never whole multi-rail corridor centre.",
+  "warnings": [
+    "All controls are manual diagnostic pixels. Parent must reproject into raw and confirm same western own strand before integration.",
+    "Blue casing and labels in z17 light raws obscure some underlying black glyph details; point uncertainty is approximately 1–2 native pixels, up to 3 where flagged.",
+    "Station 5 provisional witness [487,279] in stations-z18/05-002824 is about 4 primary pixels east of own western strand continuation near corresponding y360; parent must resolve independently.",
+    "No secondary/third screenshots opened. This is primary body evidence only; not native acceptance."
+  ],
+  "imagesOpened": [
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000000/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000001/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000002/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000003/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000000/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000001/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000002/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000003/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000000/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000001/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000002/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000003/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000000/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000001/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000002/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000003/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000000/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000001/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000002/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000003/basemap.png"
+  ],
+  "identitySupplementImages": [
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/02-002857/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/03-002844/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/04-002835/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/05-002824/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/06-002812/basemap.png",
+    "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/stations-z18/07-002802/basemap.png"
+  ],
+  "intervals": [
+    {
+      "intervalIndex": 2,
+      "status": "diagnostic-needs-parent-reprojection",
+      "controls": [
+        {
+          "pixel": [
+            509,
+            300
+          ],
+          "coordinate": [
+            139.6169028134919,
+            35.93649969410784
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.93577,
+            "longitude": 139.616935,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9638513064709952,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319564.25568715,
+            "rectY": 105466874.94764715,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            530.5,
+            160
+          ],
+          "coordinate": [
+            139.61713348346717,
+            35.93771583598526
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.93577,
+            "longitude": 139.616935,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9638513064709952,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238319564.25568715,
+            "rectY": 105466874.94764715,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            490.5,
+            420
+          ],
+          "coordinate": [
+            139.6173025940634,
+            35.93856739730812
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.93888011311164,
+            "longitude": 139.6175332640387,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9638138797182196,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320010.3536872,
+            "rectY": 105464010.69609374,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            517,
+            250
+          ],
+          "coordinate": [
+            139.61758690821898,
+            35.94004409995094
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.93888011311164,
+            "longitude": 139.6175332640387,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9638138797182196,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320010.3536872,
+            "rectY": 105464010.69609374,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            497.5,
+            400
+          ],
+          "coordinate": [
+            139.6179385412056,
+            35.941855682813376
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.94199466198521,
+            "longitude": 139.61809410932847,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637763967184809,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320428.55024582,
+            "rectY": 105461142.246485,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            496.5,
+            410
+          ],
+          "coordinate": [
+            139.61805870304107,
+            35.942459160694455
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003008/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.942685,
+            "longitude": 139.618225,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637680882440689,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320526.14940444,
+            "rectY": 105460506.44092962,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 3,
+      "status": "diagnostic-needs-parent-reprojection",
+      "controls": [
+        {
+          "pixel": [
+            514,
+            300
+          ],
+          "coordinate": [
+            139.61824645767211,
+            35.94341463026867
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.942685,
+            "longitude": 139.618225,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637680882440689,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320526.14940444,
+            "rectY": 105460506.44092962,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            535.5,
+            160
+          ],
+          "coordinate": [
+            139.6184771276474,
+            35.9446306657463
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.942685,
+            "longitude": 139.618225,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637680882440689,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320526.14940444,
+            "rectY": 105460506.44092962,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            496.5,
+            420
+          ],
+          "coordinate": [
+            139.61866920371324,
+            35.945480854332686
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.9457935427809,
+            "longitude": 139.61883550067213,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637306740305506,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320981.37169978,
+            "rectY": 105457643.38510326,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            520.5,
+            250
+          ],
+          "coordinate": [
+            139.61892669577867,
+            35.946957427796775
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.9457935427809,
+            "longitude": 139.61883550067213,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9637306740305506,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238320981.37169978,
+            "rectY": 105457643.38510326,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            497,
+            400
+          ],
+          "coordinate": [
+            139.61925492812873,
+            35.9487668941741
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.94890586119102,
+            "longitude": 139.61941586066962,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636932115103567,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321414.11947912,
+            "rectY": 105454776.73897633,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            490,
+            450
+          ],
+          "coordinate": [
+            139.61937396560666,
+            35.949431767454556
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003009/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.950005,
+            "longitude": 139.61961,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636799806531212,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321558.88025597,
+            "rectY": 105453764.33421277,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 4,
+      "status": "diagnostic-needs-parent-reprojection",
+      "controls": [
+        {
+          "pixel": [
+            511,
+            300
+          ],
+          "coordinate": [
+            139.6195992711639,
+            35.95073456267896
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.950005,
+            "longitude": 139.61961,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636799806531212,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321558.88025597,
+            "rectY": 105453764.33421277,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            530,
+            160
+          ],
+          "coordinate": [
+            139.61980311904904,
+            35.95195048550584
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.950005,
+            "longitude": 139.61961,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636799806531212,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321558.88025597,
+            "rectY": 105453764.33421277,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            499.5,
+            350
+          ],
+          "coordinate": [
+            139.62005468618855,
+            35.95341265222525
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.953117363867655,
+            "longitude": 139.6201887966393,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636425137087179,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321990.462311,
+            "rectY": 105450897.49340388,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            517,
+            250
+          ],
+          "coordinate": [
+            139.6202424408196,
+            35.954281140997246
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.953117363867655,
+            "longitude": 139.6201887966393,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636425137087179,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238321990.462311,
+            "rectY": 105450897.49340388,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            495.5,
+            400
+          ],
+          "coordinate": [
+            139.62057506622023,
+            35.956092821088454
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.956231775218875,
+            "longitude": 139.6207520920152,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9636050192485864,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322410.4857863,
+            "rectY": 105448028.65356661,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            493.5,
+            410
+          ],
+          "coordinate": [
+            139.62070651653295,
+            35.95678420163865
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003010/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.95701,
+            "longitude": 139.620905,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635956497370078,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322524.50224358,
+            "rectY": 105447311.77419049,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 5,
+      "status": "diagnostic-needs-parent-reprojection",
+      "controls": [
+        {
+          "pixel": [
+            511,
+            300
+          ],
+          "coordinate": [
+            139.620894271164,
+            35.957739497986694
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.95701,
+            "longitude": 139.620905,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635956497370078,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322524.50224358,
+            "rectY": 105447311.77419049,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            534.5,
+            160
+          ],
+          "coordinate": [
+            139.6211463988114,
+            35.95895531299192
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.95701,
+            "longitude": 139.620905,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635956497370078,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322524.50224358,
+            "rectY": 105447311.77419049,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            492.5,
+            420
+          ],
+          "coordinate": [
+            139.6213266936141,
+            35.959803219708235
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96011585147091,
+            "longitude": 139.62153590591726,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963558254757657,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322994.93979242,
+            "rectY": 105444450.67844373,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            518.5,
+            250
+          ],
+          "coordinate": [
+            139.62160564335164,
+            35.96127952548889
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96011585147091,
+            "longitude": 139.62153590591726,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.963558254757657,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238322994.93979242,
+            "rectY": 105444450.67844373,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            508,
+            400
+          ],
+          "coordinate": [
+            139.62203604807877,
+            35.96309292256232
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96323186437724,
+            "longitude": 139.62207896342295,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635207345660199,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323399.87281793,
+            "rectY": 105441580.10895915,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            507,
+            410
+          ],
+          "coordinate": [
+            139.6221313558197,
+            35.963614221165344
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003011/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96384,
+            "longitude": 139.622185,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635134116154034,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323478.93942046,
+            "rectY": 105441019.86201002,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 3,
+          "warning": "Label/casing partially covers glyph; parent confirmation required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        }
+      ]
+    },
+    {
+      "intervalIndex": 6,
+      "status": "diagnostic-needs-parent-reprojection",
+      "controls": [
+        {
+          "pixel": [
+            524,
+            300
+          ],
+          "coordinate": [
+            139.62231374603272,
+            35.96456943490006
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96384,
+            "longitude": 139.622185,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635134116154034,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323478.93942046,
+            "rectY": 105441019.86201002,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            546,
+            160
+          ],
+          "coordinate": [
+            139.62254978042603,
+            35.96578514475975
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000000/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000000/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96384,
+            "longitude": 139.622185,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9635134116154034,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323478.93942046,
+            "rectY": 105441019.86201002,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            505,
+            420
+          ],
+          "coordinate": [
+            139.62271142580875,
+            35.966637075790125
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96694968049865,
+            "longitude": 139.62278652766116,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9634759642508761,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323927.47095385,
+            "rectY": 105438154.9911469,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            531,
+            250
+          ],
+          "coordinate": [
+            139.6229903755463,
+            35.96811325381426
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000001/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000001/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.96694968049865,
+            "longitude": 139.62278652766116,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9634759642508761,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238323927.47095385,
+            "rectY": 105438154.9911469,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            510.5,
+            400
+          ],
+          "coordinate": [
+            139.6233382411245,
+            35.96992409588918
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000002/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000002/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.970063025683835,
+            "longitude": 139.6233543343785,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9634384698907239,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238324350.85832912,
+            "rectY": 105435286.63106601,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        },
+        {
+          "pixel": [
+            511.5,
+            410
+          ],
+          "coordinate": [
+            139.62351463558196,
+            35.97079924171045
+          ],
+          "imageRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000003/basemap.png",
+          "cameraRef": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ina-complete/native/primary/captures/003012/000003/view.json",
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 35.971025,
+            "longitude": 139.62352,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9634268841480718,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 238324474.3875698,
+            "rectY": 105434400.33038937,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "identityEvidence": "Literal western Ina sleeper glyph rail-edge centre; eastern Joetsu excluded.",
+          "uncertaintyNativePixels": 2,
+          "warning": "Diagnostic manual pick; parent reprojection required.",
+          "status": "diagnostic-needs-parent-reprojection"
+        }
+      ]
+    }
+  ]
+}

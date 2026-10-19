@@ -1,0 +1,436 @@
+{
+  "schema": "cn-three-connectors-source-review/1",
+  "sourceSnapshot": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+  "formalResources": [
+    "app/data/rail-sections-cn.json",
+    "app/data/physical-rail-junctions.json",
+    "app/public/rail/cn-2025.sources.json"
+  ],
+  "manifest": "railway-sources/china-reviewed-physical-sections.json",
+  "pathCount": 6,
+  "originalAdjacentEdges": 372,
+  "sourceNodeEntries": 378,
+  "unchangedCompactPassengerRecords": 3991,
+  "unchangedPassengerIntervals": 17594,
+  "unchangedStationMemberships": 21573,
+  "newPassengerStations": 0,
+  "unchangedPeerJunctions": 203,
+  "newExactSameOriginalNodeJunctions": 9,
+  "sourceCoordinates": "Exact original WGS84; no coordinate conversion or inferred geometry",
+  "sharedRuntimeContract": "Existing Swift RouteGraph.SectionFeature and JS route graph accept track_id and source_node_ids independently of compact line_id; no runtime policy change",
+  "paths": [
+    {
+      "id": "cn-reviewed-physical-jingha-shenyang-own-tail",
+      "identity": {
+        "trackID": "cn-osm-relation-3066901-branch-2",
+        "lineName": "京哈高速线",
+        "operatorName": "中国铁路",
+        "railwayClassCode": "12"
+      },
+      "startNode": 12508585461,
+      "endNode": 6110778384,
+      "originalEdges": 16,
+      "relations": [
+        {
+          "id": 3066901,
+          "version": 81
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "published-identity-extension",
+        "urls": [
+          "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html"
+        ],
+        "support": "Same original3066901 member ways extend the already published Jingha HSR branch identity; no third corridor is relabeled."
+      },
+      "passengerEvidence": {
+        "kind": "source-way-passenger-tags",
+        "urls": [
+          "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html"
+        ],
+        "support": "Every source way is explicitly railway:traffic_mode=passenger; source topology alone supplies geometry."
+      }
+    },
+    {
+      "id": "cn-reviewed-physical-jingshen-connector",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-14265737",
+        "lineName": "京沈联络线",
+        "operatorName": "中国铁路沈阳局集团有限公司 沈阳车务段",
+        "railwayClassCode": "11"
+      },
+      "startNode": 6110778384,
+      "endNode": 6110779505,
+      "originalEdges": 23,
+      "relations": [
+        {
+          "id": 14265737,
+          "version": 3
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "original-member-node-operating-agency",
+        "urls": [
+          "https://rczp.china-railway.com.cn/page/platform/company_index.html?parentId=319",
+          "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html"
+        ],
+        "support": "Both exact original relation-member junction markers identify the same operating agency; first-party group jurisdiction corroborates. This is operating-agency attribution, not legal infrastructure ownership.",
+        "nodes": [
+          {
+            "id": 9160197895,
+            "version": 3
+          },
+          {
+            "id": 9160197900,
+            "version": 4
+          }
+        ]
+      },
+      "passengerEvidence": {
+        "kind": "reviewed-official-corridor",
+        "urls": [
+          "https://www.12306.cn/mormhweb/zxdtzz/201812/t20181227_421949.html",
+          "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G10121&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "support": "12306 directly names this JingShen connector in passenger admission2018-12-29; original member ways retain exact name/ref1247. OSM start_date2019 is retained as a conflicting source tag, not adopted as opening date.",
+        "sourceRelationIds": [
+          14265737
+        ],
+        "sourceNames": [
+          "京沈联络线"
+        ]
+      }
+    },
+    {
+      "id": "cn-reviewed-physical-kunming-south-connector",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-8466954",
+        "lineName": "昆明南联络线",
+        "operatorName": "中国铁路昆明局集团有限公司",
+        "railwayClassCode": "11"
+      },
+      "startNode": 6682022864,
+      "endNode": 6677079067,
+      "originalEdges": 242,
+      "relations": [
+        {
+          "id": 8466954,
+          "version": 22
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "reviewed-official-operating-agency",
+        "urls": [
+          "https://source.nra.gov.cn/images/P020260703623743684752.pdf",
+          "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/202001/W020200107406911187829.pdf"
+        ],
+        "support": "Reviewed operating-agency attribution: NRA printedp3 explicitly establishes KunmingSouth station under KunmingStation/KunmingGroup and passing passenger operations; original exact station/corridor membership and official EIA printedp87 existing southern interfield track plan locate this path in the same station-controlled network. For the separate crossover this is a reviewed inference, not a copied original way operator tag or legal ownership claim.",
+        "reviewedInference": false,
+        "sourceLocators": [
+          "NRA PDFp6 printedp3 andPDFp9 printedp6",
+          "EIA PDFp108 printedp87"
+        ],
+        "originalJunctionOperatorCorroboration": {
+          "nodeId": 6242605426,
+          "adjacentPublishedSegment": "cn-osm-relation-8415510",
+          "adjacentSourceWays": [
+            {
+              "id": 964644660,
+              "version": 4,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 512664887,
+              "version": 8,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666745976,
+              "version": 7,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666745980,
+              "version": 8,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666876137,
+              "version": 11,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 1172663181,
+              "version": 6,
+              "operator": "中国铁路昆明局集团有限公司"
+            }
+          ],
+          "interpretation": "Corroborates physical context only. Does not move operator tags from these ways onto the eight crossover ways."
+        }
+      },
+      "passengerEvidence": {
+        "kind": "original-passenger-relation",
+        "urls": [
+          "https://source.nra.gov.cn/images/P020260703623743684752.pdf",
+          "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/202001/W020200107406911187829.pdf",
+          "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=800000C29603&leftTicketDTO.train_date=2026-10-18&rand_code=",
+          "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D27104&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "support": "Exact original relation membership supplies passenger use:8466954 explicitly haspassenger_lines2 andpassenger traffic; all8 separate crossover ways are contiguous members of three original route=train services. Primary corridor and existing-interfield plan corroborate; no freight station marker becomes a passenger stop.",
+        "sourceRelationIds": [
+          8466954
+        ]
+      }
+    },
+    {
+      "id": "cn-reviewed-physical-kunming-nankun-kunyu-crossover",
+      "identity": {
+        "trackID": "cn-osm-physical-nankun-kunyu-crossover",
+        "lineName": "南昆-昆玉渡线",
+        "operatorName": "中国铁路昆明局集团有限公司",
+        "railwayClassCode": "12"
+      },
+      "startNode": 6677079067,
+      "endNode": 6242605426,
+      "originalEdges": 48,
+      "relations": [
+        {
+          "id": 12969503,
+          "version": 19
+        },
+        {
+          "id": 12969506,
+          "version": 18
+        },
+        {
+          "id": 12969507,
+          "version": 18
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "reviewed-official-operating-agency",
+        "urls": [
+          "https://source.nra.gov.cn/images/P020260703623743684752.pdf",
+          "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/202001/W020200107406911187829.pdf"
+        ],
+        "support": "Reviewed operating-agency attribution: NRA printedp3 explicitly establishes KunmingSouth station under KunmingStation/KunmingGroup and passing passenger operations; original exact station/corridor membership and official EIA printedp87 existing southern interfield track plan locate this path in the same station-controlled network. For the separate crossover this is a reviewed inference, not a copied original way operator tag or legal ownership claim.",
+        "reviewedInference": true,
+        "sourceLocators": [
+          "NRA PDFp6 printedp3 andPDFp9 printedp6",
+          "EIA PDFp108 printedp87"
+        ],
+        "originalJunctionOperatorCorroboration": {
+          "nodeId": 6242605426,
+          "adjacentPublishedSegment": "cn-osm-relation-8415510",
+          "adjacentSourceWays": [
+            {
+              "id": 964644660,
+              "version": 4,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 512664887,
+              "version": 8,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666745976,
+              "version": 7,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666745980,
+              "version": 8,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 666876137,
+              "version": 11,
+              "operator": "中国铁路昆明局集团有限公司"
+            },
+            {
+              "id": 1172663181,
+              "version": 6,
+              "operator": "中国铁路昆明局集团有限公司"
+            }
+          ],
+          "interpretation": "Corroborates physical context only. Does not move operator tags from these ways onto the eight crossover ways."
+        }
+      },
+      "passengerEvidence": {
+        "kind": "original-passenger-relation",
+        "urls": [
+          "https://source.nra.gov.cn/images/P020260703623743684752.pdf",
+          "https://www.mee.gov.cn/ywgz/hjyxpj/jsxmhjyxpj/xmslqk/202001/W020200107406911187829.pdf",
+          "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=800000C29603&leftTicketDTO.train_date=2026-10-18&rand_code=",
+          "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D27104&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "support": "Exact original relation membership supplies passenger use:8466954 explicitly haspassenger_lines2 andpassenger traffic; all8 separate crossover ways are contiguous members of three original route=train services. Primary corridor and existing-interfield plan corroborate; no freight station marker becomes a passenger stop.",
+        "sourceRelationIds": [
+          12969503,
+          12969506,
+          12969507
+        ]
+      }
+    },
+    {
+      "id": "cn-reviewed-physical-xinhui-jiangmen",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-5496304-xinhui",
+        "lineName": "江门线",
+        "operatorName": "中国铁路广州局集团有限公司",
+        "railwayClassCode": "12"
+      },
+      "startNode": 1831762682,
+      "endNode": 11469965754,
+      "originalEdges": 19,
+      "relations": [
+        {
+          "id": 5496304,
+          "version": 15
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "original-way-operator",
+        "urls": [
+          "https://www.ndrc.gov.cn/fggz/zcssfz/dffz/201808/t20180829_1147897.html",
+          "https://www.jiangmen.gov.cn/bmpd/jmsfzhggj/gggs/content/post_2116255.html"
+        ],
+        "support": "All3 exact original ways explicitly name this operating agency. No operating or ownership attributes are fabricated."
+      },
+      "passengerEvidence": {
+        "kind": "reviewed-official-corridor",
+        "urls": [
+          "https://www.ndrc.gov.cn/fggz/zcssfz/dffz/201808/t20180829_1147897.html",
+          "https://www.jiangmen.gov.cn/bmpd/jmsfzhggj/gggs/content/post_2116255.html",
+          "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "support": "NDRC passenger opening expressly starts at Guangzhu Intercity Xinhui towardZhanjiangxi; Jiangmen government explains westGuangdong passenger trains toGuangzhou useGuangzhuIntercity. These exact ownrelation ways are named江门线/广珠城际江门支线; two sourceways explicitly retain old_name深茂铁路江茂段 and start_date2018-07-01. This corroborates corridor-level passenger use for this exact retained mainline continuation, without inventing per-way traffic tags.",
+        "sourceRelationIds": [
+          5496304
+        ],
+        "sourceNames": [
+          "江门线"
+        ]
+      }
+    },
+    {
+      "id": "cn-reviewed-physical-jianghai-jiangmendong",
+      "identity": {
+        "trackID": "cn-osm-physical-relation-5496304-xinhui",
+        "lineName": "江门线",
+        "operatorName": "中国铁路广州局集团有限公司",
+        "railwayClassCode": "12"
+      },
+      "startNode": 1759441626,
+      "endNode": 5634096419,
+      "originalEdges": 24,
+      "relations": [
+        {
+          "id": 5496304,
+          "version": 15
+        }
+      ],
+      "operatorEvidence": {
+        "kind": "original-way-operator",
+        "urls": [
+          "https://www.openstreetmap.org/way/164295941",
+          "https://www.openstreetmap.org/way/164295943"
+        ],
+        "support": "Both exact original ways explicitly operator=中国铁路广州局集团有限公司; owner relation5496304v15 covers both."
+      },
+      "passengerEvidence": {
+        "kind": "source-way-passenger-tags",
+        "urls": [
+          "https://www.openstreetmap.org/way/164295941",
+          "https://www.openstreetmap.org/way/164295943"
+        ],
+        "support": "Both original active railway=rail ways explicitly passenger_lines=2 and highspeed=yes; no siding or freight exclusion tags. Exact own Jiangmen-line gap between published Jianghai and Jiangmendong source anchors."
+      }
+    }
+  ],
+  "withheld": "Guangzhou South cross-platform route with multiple unsupported switch reversals remains excluded; stop_area identity is not a physical connection.",
+  "focusedTests": {
+    "test_china_physical_junctions.py": 16,
+    "test_cn_package.py": 26
+  },
+  "independentReview": "No remaining substantive issue; exact source identity/junction checks and manifest validation before base artifact writes confirmed.",
+  "limits": "Kunming crossover operating agency remains explicitly reviewedInference; no legal ownership or unique actual train track assignment claim.",
+  "guangzhouSouthFollowup": {
+    "evidence": "guangzhou-south-platform-reversal-candidate.json",
+    "candidateMeters": 5612.101,
+    "oneExplicitPlatformReversalNode": 11832431941,
+    "notAdmitted": true,
+    "reason": "Twelve ways have no original owner relation; six are service=siding and lack own operator. Does not establish connectivity of the two fixed published GZS anchors or G6045 actual use of platform15."
+  },
+  "observedIntegrationFailure": {
+    "firstReplayCompletedAt": "2026-10-19T06:44:26Z",
+    "same176CoverageUnchanged": true,
+    "cause": "Review metadata source_id participates in Swift TrackIdentity but was absent from registry identity; five supplemental paths were therefore isolated.",
+    "fix": "Rename metadata to source_review_id. Do not change physical identity, junction, graph or source-anchor rules.",
+    "regression": "Existing stationless feature/junction identity test now rejects unintended source_id; observed red then16 tests green.",
+    "intermediateReview": "three-connectors-before-identity-result-review.json"
+  },
+  "jianghaiGapRepair": {
+    "evidence": "jianghai-jiangmendong-missing-mainline.json",
+    "nodes": 25,
+    "edges": 24,
+    "meters": 6568.694197,
+    "allOriginalWaysExplicitOperatorAndPassengerLines2": true,
+    "allExistingGeometryPreserved": true,
+    "newPassengerStations": 0,
+    "additionalSharedOriginalNodeJunctions": 2,
+    "incompleteIdentityReplayExcluded": true
+  },
+  "identityFixIndependentReview": "All seven identity fields traced, all registry endpoints match actual feature keys; source_review_id is ignored as identity metadata.",
+  "remainingSBTBoundary": {
+    "evidence": "jingshen-sbt-boundary-review.json",
+    "sourceSwitchNode": 12640376454,
+    "recordedPlatformAnchor": 12640351644,
+    "withheldWay": 1364948209,
+    "unprovenEdges": 3,
+    "reason": "No original owner relation membership, operating agency or passenger evidence; existing platform VII anchor retained."
+  },
+  "allSixPhysicalPathsUsedInFocusedNativeOutput": true,
+  "focusedNativeReview": "three-connectors-focused-review.json",
+  "independentJianghaiReview": "24 original edges,25 node versions/coordinates,owner membership and both endpoint identities verified; shared independent track identity with Xinhui path does not connect disjoint features across a gap.",
+  "observedDisplayIdentityFailure": {
+    "intermediateReplay": "three-connectors-before-metadata-fix-review.json",
+    "wrongMetadataRows": [
+      "D271 forced-known-stops section10",
+      "C293 forced-known-stops section0"
+    ],
+    "actualSourceGeometry": "Original national-rail path matches all reviewed source sequences.",
+    "cause": "Display canonicalization of fallback paths guessed nearby compact metro line without traversed identity evidence.",
+    "correctiveWork": "Guard source-qualified CN canonical display/metadata using actual path identity; focused regression and new full176 replay required."
+  },
+  "displayIdentityGuard": {
+    "swift": "RideRouteResolution.canonicalMatchesSourcePath; CN raw original-node paths require every selected compact identity to occur in actual path keys.",
+    "javascript": "CN graph result carries source_physical_identity_keys; canonicalizer requires every selected display identity to be present.",
+    "onMismatch": "Keep surveyed source geometry and do not invent line selection.",
+    "unchanged": "Physical graph edges, original topology, station anchors, path costs and frozen train inputs remain unchanged; display admission and CN cache semantics are revised.",
+    "focusedRegressionTests": {
+      "Swift RideRouteResolutionTests": 16,
+      "Node cn-source-route-display.test.mjs": 6
+    },
+    "observedRED": "Source-qualified national railway was redrawn and labelled as nearby metro; correct same-identity and compatibility cases pass.",
+    "finalNativeReplay": {
+      "completedAt": "2026-10-19T07:44:15Z",
+      "rows": 176,
+      "incorrectMetroSelections": 0,
+      "sourcePartsPreserved": 551,
+      "oldUnprovenDisplayAssignmentsWithdrawn": 12,
+      "geometrySectionsLost": 0
+    },
+    "cacheEpoch": "source-display-identity:1",
+    "realTrainFocusedResult": "C2935/5, no metro7909742 metadata; G1014/4 geometry with SBT boundary, G604511/11 geometry with GZS boundary, GZS→JM standalone1/1."
+  },
+  "formalFinalStatus": "Runtime integrated and replayed; GZS/SBT station boundary proof remains incomplete and is not fabricated."
+}

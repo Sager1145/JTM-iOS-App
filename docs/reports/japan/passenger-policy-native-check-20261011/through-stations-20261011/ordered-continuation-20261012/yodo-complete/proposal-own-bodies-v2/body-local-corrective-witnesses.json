@@ -1,0 +1,111 @@
+{
+  "status": "withdrawn-preliminary-point-experiment-do-not-integrate",
+  "reason": "Actual source-retention vertex zigzags away from thin ownblue; local literal pixel correction only, no blind smoothing. Proposals need ordered-triple/native validation.",
+  "corrections": [
+    {
+      "interval": 5,
+      "index": 10,
+      "angle": 30.397425503938344,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000001/view.json",
+      "viewOrdinal": 1,
+      "pixel": [
+        584.1468805484474,
+        365.72798991948366
+      ],
+      "image": "/private/tmp/yodo-triple-05-010.png",
+      "proposedPixel": [
+        583,
+        360
+      ],
+      "proposedCoordinate": [
+        132.85307915777048,
+        33.23426797007427
+      ],
+      "rgb": [
+        157,
+        188,
+        251
+      ],
+      "status": "candidate-only-local-ownblue-point-no-native-claim"
+    },
+    {
+      "interval": 5,
+      "index": 277,
+      "angle": 44.92408246991918,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002707/000020/view.json",
+      "viewOrdinal": 20,
+      "pixel": [
+        539.9567155316472,
+        370.57676639966667
+      ],
+      "image": "/private/tmp/yodo-triple-05-277.png",
+      "proposedPixel": [
+        540,
+        359
+      ],
+      "proposedCoordinate": [
+        132.7987862537226,
+        33.2072053803383
+      ],
+      "rgb": [
+        141,
+        185,
+        235
+      ],
+      "status": "candidate-only-local-ownblue-point-no-native-claim"
+    },
+    {
+      "interval": 7,
+      "index": 83,
+      "angle": 32.04247682865712,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000006/view.json",
+      "viewOrdinal": 6,
+      "pixel": [
+        516.1787927374244,
+        403.1396275088191
+      ],
+      "image": "/private/tmp/yodo-triple-07-083.png",
+      "proposedPixel": [
+        510,
+        403
+      ],
+      "proposedCoordinate": [
+        132.76543505250402,
+        33.181594436067485
+      ],
+      "rgb": [
+        185,
+        202,
+        240
+      ],
+      "status": "candidate-only-local-ownblue-point-no-native-claim"
+    },
+    {
+      "interval": 7,
+      "index": 101,
+      "angle": 35.179601560041114,
+      "rawView": "/private/tmp/jtm-yodo-shared-candidate-secondary-v1/captures/002709/000007/view.json",
+      "viewOrdinal": 7,
+      "pixel": [
+        539.349360100925,
+        306.99625155702233
+      ],
+      "image": "/private/tmp/yodo-triple-07-101.png",
+      "proposedPixel": [
+        532,
+        304
+      ],
+      "proposedCoordinate": [
+        132.7662932533334,
+        33.185542281078476
+      ],
+      "rgb": [
+        193,
+        208,
+        243
+      ],
+      "status": "candidate-only-local-ownblue-point-no-native-claim"
+    }
+  ],
+  "supersededBy": "local-body-v3/local-correction-receipt.json"
+}

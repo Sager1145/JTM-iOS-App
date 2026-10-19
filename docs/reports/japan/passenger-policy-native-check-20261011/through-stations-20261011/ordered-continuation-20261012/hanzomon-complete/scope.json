@@ -1,0 +1,35 @@
+{
+  "ordinal": 24,
+  "lineID": "jp-東京地下鉄-11号線半蔵門線",
+  "allIntervalIndexes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "plannedNativeViewsPerInspector": 67,
+  "guideline": "/Users/sager/.codex/skills/jtm-railway-audit-repair/references/rail-display-guideline.md",
+  "status": "complete-baseline-pixel-review; underground-identity-and-platform-acceptance-pending",
+  "carryPending": [
+    "Ujina evidenced repairs not applied",
+    "Toyama13 station-frame centres",
+    "Yodo prior candidate not accepted"
+  ],
+  "officialSource": "https://www.tokyometro.jp/station/line_hanzomon/index.html",
+  "preReviewNotes": [
+    "14station identities and order match official Z01-Z14 listing",
+    "Underground cartography cannot independently establish surveyed tunnel or platform centres",
+    "Oshiage separate Metro/Tobu versus Keisei/Asakusa platform identities remain required; preserve existing override pending dependency-bound review"
+  ],
+  "completedBaselineEvidence": "3 x 67 inspector views; candidate and original Main 13 complete intervals each, plus both through endpoints",
+  "geographicAcceptance": "pending"
+}

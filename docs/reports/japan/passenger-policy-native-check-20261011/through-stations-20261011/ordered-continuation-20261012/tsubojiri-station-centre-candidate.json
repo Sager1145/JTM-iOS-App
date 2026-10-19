@@ -1,0 +1,59 @@
+{
+  "format": "jtm-tsubojiri-main-georeference-v1",
+  "lineID": "jp-四国旅客鉄道-土讃線",
+  "stationID": "008522",
+  "reviewedAt": "2026-10-12",
+  "viewport": [
+    1211,
+    865
+  ],
+  "mapRegion": {
+    "east": 133.826717,
+    "latSpan": 0.0053,
+    "lonSpan": 0.008956,
+    "north": 34.056561,
+    "south": 34.051261,
+    "west": 133.817761
+  },
+  "stationFrame": {
+    "passengerPlatformLongAxisPixels": [
+      [
+        747,
+        344
+      ],
+      [
+        810,
+        419
+      ]
+    ],
+    "centreRailPixel": [
+      784,
+      380
+    ],
+    "selection": "Longitudinal middle projected onto the single identified existing passenger rail curve; no new branch inferred"
+  },
+  "inverseMercatorCoordinate": [
+    133.82355910404624,
+    34.05423271711011
+  ],
+  "displayAnchor": [
+    133.82353637323274,
+    34.05422071479742
+  ],
+  "projectionTransverseMetres": 2.4832242579344537,
+  "status": "candidate pending full native comparison, not production acceptance",
+  "sources": [
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-tsubojiri-complete-fold-before-basemap.png",
+      "sha256": "af4e7499e669b975469e1d1237285bbf38868951cccbfa1900181f8fb0fd186f"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-tsubojiri-complete-fold-before-basemap.ax.txt",
+      "sha256": "01855973d2723cf446847d5d75adc921edbde3539c310d4dc1086d94eda93650"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/dosan-tsubojiri-complete-fold-before-overlay.png",
+      "sha256": "9dc582e7d286e183e53712c67e54d190236810ac9731fed667947307345d344f"
+    }
+  ]
+}

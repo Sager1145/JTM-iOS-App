@@ -1,0 +1,164 @@
+{
+  "queueOrdinal": 58,
+  "lineID": "jp-こうべ未来都市機構-摩耶ケーブル線",
+  "packageVersion": "2025.5.2",
+  "stations": [
+    [
+      "006971",
+      "摩耶ケーブル",
+      135.216005,
+      34.72009,
+      "Maya Cable",
+      1
+    ],
+    [
+      "006940",
+      "虹",
+      135.21236,
+      34.72701,
+      "Nijinoeki",
+      1
+    ]
+  ],
+  "intervalCount": 1,
+  "legacyPlanPath": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/plan.json",
+  "legacyPlanOwnExactMatches": 1,
+  "plannedViewCount": 4,
+  "actualCompletedViewCount": 4,
+  "matchingCompleteViewCount": 4,
+  "missingViewCount": 0,
+  "ownCaptureStates": {
+    "captured": 4
+  },
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "006971",
+        "摩耶ケーブル"
+      ],
+      "toStation": [
+        "006940",
+        "虹"
+      ],
+      "legacySortedSlot": 167,
+      "plannedViewCount": 4,
+      "completedViewCount": 4,
+      "matchingCompleteViewCount": 4,
+      "missingViewCount": 0,
+      "planIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "sourceControlCount": 16,
+      "displayControlCount": 16
+    }
+  ],
+  "receipts": [
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000002",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 34.72586474456501,
+          "longitude": 135.21312024767946
+        },
+        "distanceMetres": 700,
+        "itemID": "jp-こうべ未来都市機構-摩耶ケーブル線#0",
+        "pointOrdinal": 2
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000003",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 34.72701,
+          "longitude": 135.21236
+        },
+        "distanceMetres": 845.420634440108,
+        "itemID": "jp-こうべ未来都市機構-摩耶ケーブル線#0",
+        "pointOrdinal": 3
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000001",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 34.72289352826621,
+          "longitude": 135.21438052152908
+        },
+        "distanceMetres": 350,
+        "itemID": "jp-こうべ未来都市機構-摩耶ケーブル線#0",
+        "pointOrdinal": 1
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b"
+    },
+    {
+      "intervalIndex": 0,
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000167/000000",
+      "viewpoint": {
+        "coordinate": {
+          "latitude": 34.72009,
+          "longitude": 135.216005
+        },
+        "distanceMetres": 0,
+        "itemID": "jp-こうべ未来都市機構-摩耶ケーブル線#0",
+        "pointOrdinal": 0
+      },
+      "namedIdentityPlan": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/identity-plan-57a1c7394e4341c4f370a98c84a73f64b909e156bdaf48f4513bcb73c0a08db6.json",
+      "identityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "badReceiptFiles": [],
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings",
+      "wholeLineRenderDependency": "880d45285c8b08d66d0243e904303b8efeb33c662aa13c618d27c511ae65503b"
+    }
+  ],
+  "requestPath": null,
+  "limits": [
+    "Availability + exact own source/display/station-ID comparison only; no PNGs visually reviewed in this preparation.",
+    "Recorded byte counts checked; no content hashes recomputed. No native/app/build/tests or production changes.",
+    "Whole-line dependency recorded verbatim, not recomputed; named-plan relevant own interval geometry/station IDs compared directly.",
+    "Request includes only intervals with missing/unusable old evidence; interval-level request may also capture already completed viewpoints within a partially completed interval.",
+    "All retained receipts use legacy fixed-z17-v2 isolated centreline,1024×768,light,ownLane=0/mainLane=0. Availability and exact identity do not establish current specified-capture-v3 pixels, Main joins, platform centre, or human/model acceptance.",
+    "No source image was visually opened in this preparation. No station name/current railway operation inference is made from immutable plan station IDs."
+  ],
+  "missingViewpoints": [],
+  "ownScopeNote": "Own scope is 摩耶ケーブル→虹, two cable stations/one inclined cable interval. Do not substitute the separate 摩耶ロープウェー trajectory or infer a conventional railway platform pair.",
+  "renderContracts": [
+    "inspector-centreline-v5-preserve-small-survey-curves;fixed-z17-v2;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;scale=8.0;viewport=1024x768;backing=1;flat;light;poi-excluded;buildings"
+  ],
+  "displayStationCoordinates": {},
+  "displayIntervalOverrideKeys": []
+}

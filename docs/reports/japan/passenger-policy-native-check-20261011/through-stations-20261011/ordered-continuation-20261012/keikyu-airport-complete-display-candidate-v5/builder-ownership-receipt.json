@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "productionLineCount": 658,
+  "changedLineIndexes": [
+    86
+  ],
+  "airport": {
+    "lineID": "jp-京浜急行電鉄-空港線",
+    "packageIndex": 86,
+    "physicalExact": true,
+    "stationsExact": true,
+    "segmentsExact": true,
+    "displayPointCounts": [
+      53,
+      53,
+      33,
+      40,
+      62,
+      94
+    ],
+    "aliases": {
+      "004349": [
+        139.7296463263893,
+        35.5545111000869
+      ],
+      "004356": [
+        139.7395571299553,
+        35.552546948974886
+      ],
+      "004364": [
+        139.74620288458635,
+        35.55049948698252
+      ],
+      "004373": [
+        139.75402342691427,
+        35.54833975657655
+      ],
+      "004382": [
+        139.76677632142656,
+        35.54511967376913
+      ],
+      "004368": [
+        139.78545198643883,
+        35.54937638200407
+      ]
+    },
+    "metadataOnlyAdded": "keikyu-airport-complete-display"
+  },
+  "reuse": {
+    "v5Intervals0Through4EqualV2": true,
+    "v5StationAliasesEqualV2": true
+  },
+  "lanes": {
+    "onlyOwningRowChanged": true,
+    "baselineRowSha256": "0aa80ada1e538b6e713e26376f0864827ea6a88fd68e616872f884933a34694e",
+    "candidateRowSha256": "58c479482961afd683df03a0742d36e6929f2b18febdf9881e7e28ccddd8809f",
+    "pointCount": 328,
+    "metres": 6422.3,
+    "classification": "station-approach/groomed",
+    "measuredReferencesUnchanged": true
+  },
+  "builder": {
+    "packageInputSha256": "5d279e0a3a979907f4cc1479a869035ed57c0b081e4a2370db96ef9b3f268018",
+    "lanesInputSha256": "63a39f601f6e63cf068123c0298d3912ecc58a0cbed3112478b1cc862235d7e4",
+    "manifestPackageSha256": "5d279e0a3a979907f4cc1479a869035ed57c0b081e4a2370db96ef9b3f268018",
+    "manifestLanesSha256": "63a39f601f6e63cf068123c0298d3912ecc58a0cbed3112478b1cc862235d7e4",
+    "vertexCount": 328,
+    "stationCount": 7,
+    "chainCount": 1,
+    "danglingRenderGroupIds": []
+  },
+  "preservation": {
+    "allOther657LinesByteStructuralExact": true,
+    "allOtherLaneAndReferenceStructuresExact": true,
+    "spotChecks": [
+      "jp-東日本旅客鉄道-大糸線",
+      "jp-東日本旅客鉄道-篠ノ井線",
+      "jp-アルピコ交通-上高地線",
+      "jp-万葉線-高岡軌道線",
+      "jp-万葉線-新湊港線",
+      "jp-西日本旅客鉄道-小野田線",
+      "jp-西日本旅客鉄道-小野田線-2"
+    ]
+  }
+}

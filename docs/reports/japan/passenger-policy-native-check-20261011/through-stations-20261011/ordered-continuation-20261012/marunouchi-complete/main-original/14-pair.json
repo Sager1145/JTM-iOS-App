@@ -1,0 +1,59 @@
+{
+  "caseIndex": 14,
+  "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+  "intervalIndex": 14,
+  "source": {
+    "caseIndex": 14,
+    "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+    "intervalIndex": 14,
+    "fromStationID": "003713",
+    "toStationID": "003707",
+    "camera": [
+      35.688047499999996,
+      139.71512,
+      0.012978227562428979
+    ],
+    "effectiveCoordinates": [
+      [
+        139.719325,
+        35.687835
+      ],
+      [
+        139.71828,
+        35.68774
+      ],
+      [
+        139.71755,
+        35.68768
+      ],
+      [
+        139.71665,
+        35.68761
+      ],
+      [
+        139.71592,
+        35.68757
+      ],
+      [
+        139.71524,
+        35.68763
+      ],
+      [
+        139.71407,
+        35.68786
+      ],
+      [
+        139.71185,
+        35.68834
+      ],
+      [
+        139.710915,
+        35.688525
+      ]
+    ]
+  },
+  "status": "root-pixel-reviewed-baseline; own-platform-and-geographic-acceptance-pending",
+  "actualOnStatus": "59 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:11;overlays:11;rides:0;budgetDrops:0;vertices:4131;camera:16.13;lod:14.98;backbones:0;networkStations:23;distance:2848.3;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.688047;centerLon:139.715120;viewportWidth:1211.0;viewportHeight:865.0;firstNetworkMs:3504.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:20;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:10;covered:1;basemapMuted:0;rideOverlaysMs:0;rid",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.688047;centerLon:139.715120;distance:2848.3;viewportWidth:1211.0;viewportHeight:865.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+  "fullIntervalAndBothEndpointsVisible": true
+}

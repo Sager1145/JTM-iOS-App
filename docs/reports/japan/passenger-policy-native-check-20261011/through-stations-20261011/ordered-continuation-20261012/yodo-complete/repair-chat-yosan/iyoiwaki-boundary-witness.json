@@ -1,0 +1,99 @@
+{
+  "status": "candidate-only-precise-own-face-move-confirmed-80-required",
+  "stationID": "009319",
+  "rawView": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/stations-all-z18/guard-iyoiwaki-009319/view.json",
+  "camera": {
+    "displayScale": 1,
+    "heading": 0,
+    "latitude": 33.39159000000001,
+    "longitude": 132.47305499999996,
+    "mapPointsPerPoint": 3.9999999962747097,
+    "metresPerPoint": 0.496750097493589,
+    "pitch": 0,
+    "rectHeight": 2615.999999985099,
+    "rectWidth": 3996.0000000298023,
+    "rectX": 232994799.24066132,
+    "rectY": 107775474.40199825,
+    "viewportHeightPoints": 654,
+    "viewportWidthPoints": 999,
+    "zoom256": 18.000000001343615
+  },
+  "ownNarrowFaces": [
+    [
+      [
+        414,
+        300
+      ],
+      [
+        615,
+        364
+      ]
+    ],
+    [
+      [
+        409,
+        313
+      ],
+      [
+        612,
+        377
+      ]
+    ]
+  ],
+  "groupLongitudinalMidpoint": [
+    512.5,
+    338.5
+  ],
+  "literalOwnRailCentres": [
+    [
+      450,
+      319
+    ],
+    [
+      500,
+      335
+    ],
+    [
+      550,
+      351
+    ]
+  ],
+  "normalPixel": [
+    512.3548621190131,
+    338.95355587808433
+  ],
+  "candidateDisplayAlias": [
+    132.47312395885416,
+    33.3915364611264
+  ],
+  "oldAlias": [
+    132.473055,
+    33.39159
+  ],
+  "oldAliasPixel": [
+    499.5,
+    327
+  ],
+  "excluded": [
+    "South attached bulb around515354",
+    "Broadbluecasing, road25 andline label"
+  ],
+  "uncertainty": {
+    "capPixels": 2,
+    "normalPixels": 2,
+    "surveyedPrecision": false
+  },
+  "requiredCompleteIntervals": [
+    80,
+    81
+  ],
+  "requiredInterval80": {
+    "fromStationID": "009291",
+    "fromName": "双岩",
+    "toStationID": "009319",
+    "toName": "伊予石城"
+  },
+  "independentSavedImageReview": "GPT-6.1 Sol medium confirmed exactapproxfacecaps andownrailcentre335y500; old499327 ~16px earlyalongaxis beyondcapuncertainty.",
+  "physicalIDsCoordinatesKmRoutingUnchanged": true,
+  "formalAcceptance": false
+}

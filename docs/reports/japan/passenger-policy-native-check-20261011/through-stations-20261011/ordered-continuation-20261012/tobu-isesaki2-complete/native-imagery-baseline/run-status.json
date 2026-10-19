@@ -1,0 +1,11 @@
+{
+  "active" : false,
+  "dependenciesVerified" : true,
+  "invocationID" : "0C5F9F46-E304-4599-B5CA-18ED483B280D",
+  "message" : "2\/10 scoped captures; 0 failed. All alignment and connectivity verdicts require review.",
+  "requestID" : "hikifune-own-branch-sharp-turn-imagery",
+  "resultPath" : "\/private\/tmp\/jtm-hikifune-imagery-20261018\/result.json",
+  "schemaVersion" : 1,
+  "state" : "partial",
+  "updatedAt" : "2026-10-18T20:19:48Z"
+}

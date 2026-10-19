@@ -1,0 +1,73 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-東日本旅客鉄道-総武線-3#3\/lineOffset",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-東日本旅客鉄道-総武線-3#3\/stationApproach",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-東日本旅客鉄道-総武線-3#3\/disconnectedParts",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東日本旅客鉄道-総武線-3\/station\/004235",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004235"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-東日本旅客鉄道-総武線-3\/station\/004301",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "004301"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東日本旅客鉄道-総武線-3#2\/seam",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#2",
+      "jp-東日本旅客鉄道-総武線-3#3"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004235"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-東日本旅客鉄道-総武線-3#3\/seam",
+    "itemIDs" : [
+      "jp-東日本旅客鉄道-総武線-3#3",
+      "jp-東日本旅客鉄道-総武線-3#4"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "004301"
+  }
+]

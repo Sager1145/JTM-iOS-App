@@ -1,0 +1,516 @@
+{
+  "reviewDate": "2026-10-19",
+  "lineID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線",
+  "sourcePackage": "app/public/rail/jp-2025.json",
+  "stationOrder": [
+    {
+      "index": 0,
+      "id": "000651",
+      "name": "目時",
+      "longitude": 141.289575,
+      "latitude": 40.35205
+    },
+    {
+      "index": 1,
+      "id": "000657",
+      "name": "金田一温泉",
+      "longitude": 141.303838,
+      "latitude": 40.323073
+    },
+    {
+      "index": 2,
+      "id": "000662",
+      "name": "斗米",
+      "longitude": 141.290936,
+      "latitude": 40.2855
+    },
+    {
+      "index": 3,
+      "id": "000668",
+      "name": "二戸",
+      "longitude": 141.285985,
+      "latitude": 40.25983
+    },
+    {
+      "index": 4,
+      "id": "000686",
+      "name": "一戸",
+      "longitude": 141.297414,
+      "latitude": 40.210111
+    },
+    {
+      "index": 5,
+      "id": "000698",
+      "name": "小鳥谷",
+      "longitude": 141.307739,
+      "latitude": 40.171089
+    },
+    {
+      "index": 6,
+      "id": "000707",
+      "name": "小繋",
+      "longitude": 141.26042,
+      "latitude": 40.123105
+    },
+    {
+      "index": 7,
+      "id": "000718",
+      "name": "奥中山高原",
+      "longitude": 141.2285,
+      "latitude": 40.066155
+    },
+    {
+      "index": 8,
+      "id": "000727",
+      "name": "御堂",
+      "longitude": 141.23705,
+      "latitude": 40.00436
+    },
+    {
+      "index": 9,
+      "id": "000733",
+      "name": "いわて沼宮内",
+      "longitude": 141.217075,
+      "latitude": 39.96059
+    },
+    {
+      "index": 10,
+      "id": "000743",
+      "name": "岩手川口",
+      "longitude": 141.199372,
+      "latitude": 39.91924
+    },
+    {
+      "index": 11,
+      "id": "000757",
+      "name": "好摩",
+      "longitude": 141.173675,
+      "latitude": 39.87416
+    },
+    {
+      "index": 12,
+      "id": "000764",
+      "name": "渋民",
+      "longitude": 141.15423,
+      "latitude": 39.834745
+    },
+    {
+      "index": 13,
+      "id": "000770",
+      "name": "滝沢",
+      "longitude": 141.149555,
+      "latitude": 39.799
+    },
+    {
+      "index": 14,
+      "id": "000771",
+      "name": "巣子",
+      "longitude": 141.148722,
+      "latitude": 39.78351
+    },
+    {
+      "index": 15,
+      "id": "000776",
+      "name": "厨川",
+      "longitude": 141.12886,
+      "latitude": 39.74408
+    },
+    {
+      "index": 16,
+      "id": "000782",
+      "name": "青山",
+      "longitude": 141.118322,
+      "latitude": 39.724691
+    },
+    {
+      "index": 17,
+      "id": "000792",
+      "name": "盛岡",
+      "longitude": 141.136375,
+      "latitude": 39.701195
+    }
+  ],
+  "intervals": [
+    0,
+    16
+  ],
+  "viewedPairCount": 23,
+  "viewedOriginalPNGCount": 46,
+  "unviewedOtherLegacyPairs": 237,
+  "method": "Each listed basemap.png and smooth.png was opened at original 1024x768 via view_image; no contact-sheet substitution.",
+  "rows": [
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 0,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.35205,
+        "longitude": 141.289575
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000000",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000000/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "目时端点：北向标注 Aomori Railway Line，南向为 Iwate Galaxy Railway Line；红线从站区向南延伸，平台填充不证明站台面。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 1,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.34893080704189,
+        "longitude": 141.28902387105387
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000001",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000001/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "跨马淵川南行直段；红线连续，未见错误分支或孤立急角。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 2,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.34580022763366,
+        "longitude": 141.28859794680508
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000002",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000002/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "山地近南北直段；红线在自有标注蓝线东侧有小幅持续偏差，无孤立横折。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 3,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.342667664411614,
+        "longitude": 141.28819640688533
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000003",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000003/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "南北线向东南弯的上半段；红线东偏，弯势连续，不能由角度判假弯。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 4,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.339576289120764,
+        "longitude": 141.28877595933974
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000004",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000004/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "向东南的真实大弯；红蓝均转弯，红线与蓝线局部偏离，未见折返钩。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 5,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.33730457479823,
+        "longitude": 141.2915507165402
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000005",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000005/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000005/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "马淵川跨越与东南直段；红线留在自有常规线方向。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 6,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.33537316585782,
+        "longitude": 141.2948106492051
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000006",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000006/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000006/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "Kono 沿山边东南直段；红线位于双线填充西南侧，未出现错支。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 7,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.33346693108054,
+        "longitude": 141.29809632528762
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000007",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000007/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000007/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "东南转南的大曲线；红蓝弯势一致，保留真实曲线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 8,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.33115596486869,
+        "longitude": 141.30080335245216
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000008",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000008/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000008/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "常规线在河西侧南行；东侧斜向 Tohoku-Shinkansen 独立，不借该线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 9,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.328283601152755,
+        "longitude": 141.30248783723084
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000009",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000009/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000009/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "新干线斜交常规线；红线继续南行，没有转入新干线。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 10,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.32519674333986,
+        "longitude": 141.30329220367372
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000010",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000010/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000010/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "金田一温泉北接近；红线沿近南北常规线穿过新干线交越后入站。"
+    },
+    {
+      "intervalIndex": 0,
+      "pointOrdinal": 11,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#0",
+      "coordinate": {
+        "latitude": 40.323073,
+        "longitude": 141.303838
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000011",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000011/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000316/000011/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "金田一温泉站区；红线终点方向在常规线填充内，西侧斜向新干线分离；具体站台面未证实。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 0,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.724691,
+        "longitude": 141.118322
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000000",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000000/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000000/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "青山站区；标注 Iwate Galaxy Railway Line 在新干线东侧，红线向南离站；平台面不能由填充证明。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 1,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.721725738942006,
+        "longitude": 141.11709530678732
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000001",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000001/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000001/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "青山南侧复合弯；红线由站区东侧向西侧通道延伸，蓝图此处只突出标注新干线，不能凭最近蓝线判错轨。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 2,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.71863473485597,
+        "longitude": 141.11774950921546
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000002",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000002/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000002/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "连续向东南弯；红线沿宽铁路走廊西侧，未见孤立肩或反向钩。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 3,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.715994040738074,
+        "longitude": 141.1199234985131
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000003",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000003/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000003/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "东南接近直段；红线与新干线保持横向分离，未转入其明示中心线。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 4,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.713576592392805,
+        "longitude": 141.12254357958852
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000004",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000004/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000004/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "Tenshojicho 铁路设施东侧主走廊；红线东南连续，无孤立急角。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 5,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.711169644854756,
+        "longitude": 141.12518018216983
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000005",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000005/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000005/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "Akita-Shinkansen 西向支路出现；红线继续东南，不转西支。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 6,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.708785787502265,
+        "longitude": 141.12785192347062
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000006",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000006/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000006/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "西向秋田线与东北方向汇合区；红线保持本区间东南方向，未借东侧山田支路。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 7,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.70640181590196,
+        "longitude": 141.130522367183
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000007",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000007/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000007/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "盛冈北咽喉；红线沿西侧常规线方向入站，东北新干线与山田分支分离，但轨道逐线身份不足。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 8,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.70403630210301,
+        "longitude": 141.13322044757857
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000008",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000008/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000008/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "站前北接近；红线在宽站区西侧接近，不能从 Yamada Line 标签直接认定 IGR 站台。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 9,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.70164599760922,
+        "longitude": 141.13588205931606
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000009",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000009/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000009/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "盛冈端点近景；红线止于站区，站台和线路填充重叠，IGR 自有客运站台面未证实。"
+    },
+    {
+      "intervalIndex": 16,
+      "pointOrdinal": 10,
+      "itemID": "jp-アイジーアールいわて銀河鉄道-いわて銀河鉄道線#16",
+      "coordinate": {
+        "latitude": 39.701195,
+        "longitude": 141.136375
+      },
+      "directory": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000010",
+      "viewedOriginals": [
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000010/basemap.png",
+        "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/000324/000010/smooth.png"
+      ],
+      "viewed": true,
+      "observation": "盛冈端点重叠近景；同样未见红线急折，终点所属具体平台面仍需独立证据。"
+    }
+  ],
+  "limits": [
+    "Legacy z17 isolated centreline evidence; no fresh capture or Main composition verification.",
+    "Source/display/station identity matching reused from existing-evidence-20261019.json, not a new national dependency scan.",
+    "Station fill is not proof of own passenger platform face. No geometry repair proposed."
+  ]
+}

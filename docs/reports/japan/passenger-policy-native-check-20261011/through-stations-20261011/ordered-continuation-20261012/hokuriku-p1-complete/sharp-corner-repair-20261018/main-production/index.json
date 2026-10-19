@@ -1,0 +1,39 @@
+{
+  "contexts": [
+    {
+      "context": "loop",
+      "on": {
+        "status": "network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1934;camera:15.51;lod:14.36;backbones:0;networkStations:1;distance:4389.6;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.619500;centerLon:136.078800;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1926.0;rebuilds:3;gestureBuilds:0;labelPasses:2;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:11;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCac",
+        "pixelDimensions": [
+          2422,
+          1728
+        ]
+      },
+      "off": {
+        "status": "network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.619500;centerLon:136.078800;distance:4389.6;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+        "pixelDimensions": [
+          2422,
+          1728
+        ]
+      }
+    },
+    {
+      "context": "crossing",
+      "on": {
+        "status": "network:rendered;lines:3;overlays:2;rides:0;budgetDrops:0;vertices:1177;camera:17.24;lod:16.10;backbones:0;networkStations:0;distance:1316.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:35.616440;centerLon:136.081960;viewportWidth:1211.0;viewportHeight:864.0;firstNetworkMs:1974.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:4;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+        "pixelDimensions": [
+          2422,
+          1728
+        ]
+      },
+      "off": {
+        "status": "network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:35.616440;centerLon:136.081960;distance:1316.9;viewportWidth:1211.0;viewportHeight:864.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0",
+        "pixelDimensions": [
+          2422,
+          1728
+        ]
+      }
+    }
+  ],
+  "scope": "two actual production contexts; not whole-line pixel or station platform acceptance"
+}

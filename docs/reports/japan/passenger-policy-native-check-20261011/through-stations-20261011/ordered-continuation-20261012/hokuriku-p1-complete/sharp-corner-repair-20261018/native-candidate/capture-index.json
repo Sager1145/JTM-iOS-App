@@ -1,0 +1,700 @@
+{
+  "captureSettings" : {
+    "appearance" : "light",
+    "height" : 768,
+    "outputModes" : [
+      "basemap",
+      "display",
+      "smooth"
+    ],
+    "width" : 1024,
+    "zoom" : 17
+  },
+  "format" : "jtm-scoped-evidence-index-v1",
+  "spacingMetres" : 298.15620483871265,
+  "unavailableItemIDs" : [
+
+  ],
+  "views" : [
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000000",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.644992999999999,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.076639,
+      "pointOrdinal" : 0,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-0"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000001",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.642744615671369,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07485520720749,
+      "pointOrdinal" : 1,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-1"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000002",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.640199883875269,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.0738167900403,
+      "pointOrdinal" : 2,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-2"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000003",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.637543305719305,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07405535141405,
+      "pointOrdinal" : 3,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-3"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000004",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.634891854332608,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07454690272934,
+      "pointOrdinal" : 4,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-4"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000005",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.632239883953758,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07503400010927,
+      "pointOrdinal" : 5,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-5"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000006",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.629615514167803,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07570808440801,
+      "pointOrdinal" : 6,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-6"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000007",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.626999552858727,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07643212833008,
+      "pointOrdinal" : 7,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-7"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000008",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.62466683042895,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07791985882628,
+      "pointOrdinal" : 8,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-8"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000009",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.62274961326051,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08022051919204,
+      "pointOrdinal" : 9,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-9"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000010",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.620843812515751,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08252826229847,
+      "pointOrdinal" : 10,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-10"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000011",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.618272126707936,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.0831601059881,
+      "pointOrdinal" : 11,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-11"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000012",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.616062126016651,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08142557804015,
+      "pointOrdinal" : 12,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-12"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000013",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.614699288703257,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07859374978094,
+      "pointOrdinal" : 13,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-13"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000014",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.613950474529958,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07545004619232,
+      "pointOrdinal" : 14,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-14"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000015",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.614496410890759,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07227386424728,
+      "pointOrdinal" : 15,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-15"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000016",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.616531979447494,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07027319070087,
+      "pointOrdinal" : 16,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-16"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000017",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.61917615474141,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07040890847668,
+      "pointOrdinal" : 17,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-17"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000018",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.621104634134163,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07257747908704,
+      "pointOrdinal" : 18,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-18"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000019",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.621476529433785,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07578504064287,
+      "pointOrdinal" : 19,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-19"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000020",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.619863157172844,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07828247744646,
+      "pointOrdinal" : 20,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-20"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000021",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.617284778342274,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.07913240675182,
+      "pointOrdinal" : 21,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-21"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000022",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.61493627091798,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08060702313412,
+      "pointOrdinal" : 22,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-22"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000023",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.612607514834558,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08215249573936,
+      "pointOrdinal" : 23,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-23"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000024",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.609949144631848,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08256514709817,
+      "pointOrdinal" : 24,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-24"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000025",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.607582132811295,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08402396476541,
+      "pointOrdinal" : 25,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-25"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000026",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.605720611741461,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08639766414464,
+      "pointOrdinal" : 26,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-26"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000027",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.604008811506688,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.08891450131404,
+      "pointOrdinal" : 27,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-27"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000028",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.603493272773008,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.0921276850622,
+      "pointOrdinal" : 28,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-28"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000029",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.602995284219531,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.09531246719683,
+      "pointOrdinal" : 29,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-29"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000030",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.601425805650869,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.09793770573123,
+      "pointOrdinal" : 30,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-30"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000031",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.599069166366696,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.09935288152766,
+      "pointOrdinal" : 31,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-31"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000032",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.596432296214822,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.09995122869032,
+      "pointOrdinal" : 32,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-32"
+    },
+    {
+      "directory" : "\/private\/tmp\/jtm-corner-repair-20261018\/hokuriku-native-candidate\/alignment\/captures\/000000\/000033",
+      "itemID" : "jp-西日本旅客鉄道-北陸線-p1#0",
+      "latitude" : 35.594209999999997,
+      "lineDependency" : "2b81c1c330c69a3dac2d14923a425f1a7418fe047797ae78567924526d0f7d0d",
+      "longitude" : 136.10068999999999,
+      "pointOrdinal" : 33,
+      "receiptFiles" : [
+        "README.txt",
+        "basemap.png",
+        "display-stage-distance-samples.json",
+        "display.png",
+        "distance-samples.json",
+        "smooth.png",
+        "view.json"
+      ],
+      "referenceDependency" : "Apple-only",
+      "status" : "captured",
+      "viewpointID" : "jp-西日本旅客鉄道-北陸線-p1#0#point-33"
+    }
+  ]
+}

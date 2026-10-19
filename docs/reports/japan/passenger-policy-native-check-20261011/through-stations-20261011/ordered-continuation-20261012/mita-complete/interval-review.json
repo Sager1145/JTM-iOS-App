@@ -1,0 +1,730 @@
+{
+  "lineID": "jp-東京都-6号線三田線",
+  "intervals": [
+    {
+      "intervalIndex": 0,
+      "fromStation": [
+        "003104",
+        "西高島平"
+      ],
+      "toStation": [
+        "003112",
+        "新高島平"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "00"
+        ]
+      },
+      "observation": "North terminal retains passenger corridor; own frame midpoint remains unaccepted.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/00-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 1,
+      "fromStation": [
+        "003112",
+        "新高島平"
+      ],
+      "toStation": [
+        "003117",
+        "高島平"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 3,
+        "sheets": [
+          "01"
+        ]
+      },
+      "observation": "Straight passenger corridor retained.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/01-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 2,
+      "fromStation": [
+        "003117",
+        "高島平"
+      ],
+      "toStation": [
+        "003128",
+        "西台"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "01",
+          "02"
+        ]
+      },
+      "observation": "Runs south of depot fan; yard branches excluded.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/02-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 3,
+      "fromStation": [
+        "003128",
+        "西台"
+      ],
+      "toStation": [
+        "003140",
+        "蓮根"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "03"
+        ]
+      },
+      "observation": "West-to-south curve continuous.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/03-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 4,
+      "fromStation": [
+        "003140",
+        "蓮根"
+      ],
+      "toStation": [
+        "003158",
+        "志村三丁目"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "04",
+          "05"
+        ]
+      },
+      "observation": "South-to-east curve continuous through Shimura Aioicho.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/04-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 5,
+      "fromStation": [
+        "003158",
+        "志村三丁目"
+      ],
+      "toStation": [
+        "003165",
+        "志村坂上"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "05",
+          "06"
+        ]
+      },
+      "observation": "East-to-southeast bend retained; local contour differences remain.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/05-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 6,
+      "fromStation": [
+        "003165",
+        "志村坂上"
+      ],
+      "toStation": [
+        "003193",
+        "本蓮沼"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "06",
+          "07"
+        ]
+      },
+      "observation": "Continuous southeast approach; own frame midpoint unaccepted.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/06-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 7,
+      "fromStation": [
+        "003193",
+        "本蓮沼"
+      ],
+      "toStation": [
+        "003216",
+        "板橋本町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "07",
+          "08"
+        ]
+      },
+      "observation": "Independent underground passenger identity across expressway.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/07-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 8,
+      "fromStation": [
+        "003216",
+        "板橋本町"
+      ],
+      "toStation": [
+        "003245",
+        "板橋区役所前"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "08",
+          "09"
+        ]
+      },
+      "observation": "Northern bend retained; continuous interval.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/08-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 9,
+      "fromStation": [
+        "003245",
+        "板橋区役所前"
+      ],
+      "toStation": [
+        "003268",
+        "新板橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "09",
+          "10"
+        ]
+      },
+      "observation": "East bend and Shin-itabashi approach remain independent of Tobu.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/09-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 10,
+      "fromStation": [
+        "003268",
+        "新板橋"
+      ],
+      "toStation": [
+        "003293",
+        "西巣鴨"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "10",
+          "11"
+        ]
+      },
+      "observation": "Independent JR crossing; Taisho University bend remains a contour candidate.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/10-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 11,
+      "fromStation": [
+        "003293",
+        "西巣鴨"
+      ],
+      "toStation": [
+        "003354",
+        "巣鴨"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "12",
+          "13"
+        ]
+      },
+      "observation": "Independent Toden crossing and JR platform family.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/11-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 12,
+      "fromStation": [
+        "003354",
+        "巣鴨"
+      ],
+      "toStation": [
+        "003415",
+        "千石"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "13",
+          "14"
+        ]
+      },
+      "observation": "Local angular excursion at Sengoku north/platform approach.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/12-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 13,
+      "fromStation": [
+        "003415",
+        "千石"
+      ],
+      "toStation": [
+        "003461",
+        "白山"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "14",
+          "15"
+        ]
+      },
+      "observation": "Hakusan old triangular detour absent; true north bend retained.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/13-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 14,
+      "fromStation": [
+        "003461",
+        "白山"
+      ],
+      "toStation": [
+        "003529",
+        "春日"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "15",
+          "16"
+        ]
+      },
+      "observation": "Hakusan south continuous; Kasuga crossings independent.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/14-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 15,
+      "fromStation": [
+        "003529",
+        "春日"
+      ],
+      "toStation": [
+        "003580",
+        "水道橋"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "16",
+          "17"
+        ]
+      },
+      "observation": "East Tokyo Dome corridor continuous; separate JR Suidobashi position.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/15-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 16,
+      "fromStation": [
+        "003580",
+        "水道橋"
+      ],
+      "toStation": [
+        "003651",
+        "神保町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "17",
+          "18"
+        ]
+      },
+      "observation": "Small S at Kanda river differs locally from Apple transit curve.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/16-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 17,
+      "fromStation": [
+        "003651",
+        "神保町"
+      ],
+      "toStation": [
+        "003719",
+        "大手町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "18",
+          "19",
+          "20"
+        ]
+      },
+      "observation": "Continuous diagonal then south turn; north Otemachi river-side contour candidate.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/17-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 18,
+      "fromStation": [
+        "003719",
+        "大手町"
+      ],
+      "toStation": [
+        "003802",
+        "日比谷"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "20",
+          "21"
+        ]
+      },
+      "observation": "Local zigzag south of Otemachi and north of Hibiya differs from Apple transit line.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/18-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 19,
+      "fromStation": [
+        "003802",
+        "日比谷"
+      ],
+      "toStation": [
+        "003842",
+        "内幸町"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "21",
+          "22"
+        ]
+      },
+      "observation": "Continuous along east of Hibiya park; small real bends retained.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/19-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 20,
+      "fromStation": [
+        "003842",
+        "内幸町"
+      ],
+      "toStation": [
+        "003911",
+        "御成門"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "22",
+          "23"
+        ]
+      },
+      "observation": "Continuous straight corridor, independent Ginza/Asakusa/JR crossings.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/20-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 21,
+      "fromStation": [
+        "003911",
+        "御成門"
+      ],
+      "toStation": [
+        "003962",
+        "芝公園"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "23",
+          "24"
+        ]
+      },
+      "observation": "Continuous south of Onarimon and Zojoji; Oedo crossing independent.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/21-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 22,
+      "fromStation": [
+        "003962",
+        "芝公園"
+      ],
+      "toStation": [
+        "003986",
+        "三田"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 3,
+        "sheets": [
+          "24"
+        ]
+      },
+      "observation": "Mita northeast approach has local turn contour differences.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/22-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 23,
+      "fromStation": [
+        "003986",
+        "三田"
+      ],
+      "toStation": [
+        "004025",
+        "白金高輪"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 6,
+        "sheets": [
+          "25",
+          "26"
+        ]
+      },
+      "observation": "Retained north arch; no regression to old campus-side detour. Transit support incomplete in central span.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/23-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 24,
+      "fromStation": [
+        "004025",
+        "白金高輪"
+      ],
+      "toStation": [
+        "004044",
+        "白金台"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 4,
+        "sheets": [
+          "26",
+          "27"
+        ]
+      },
+      "observation": "South-to-west turn differs locally from Apple; shared final lanes require Main review.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/24-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    },
+    {
+      "intervalIndex": 25,
+      "fromStation": [
+        "004044",
+        "白金台"
+      ],
+      "toStation": [
+        "004072",
+        "目黒"
+      ],
+      "dedicatedApps": {
+        "rootReviewed": true,
+        "viewsPerApp": 5,
+        "sheets": [
+          "27",
+          "28"
+        ]
+      },
+      "observation": "Meguro northeast approach cuts diagonal corner; through-running boundary is not physical terminus.",
+      "geographicAcceptance": "WARNING: own platform midpoint and local contour candidates unresolved",
+      "productionChange": false,
+      "mainOriginal": {
+        "pair": "main-original/25-pair.json",
+        "rootPixelReviewed": true,
+        "fullIntervalInViewport": true,
+        "status": "reviewed-with-platform-and-local-contour-limits"
+      }
+    }
+  ]
+}

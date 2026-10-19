@@ -1,0 +1,7 @@
+# Queue77 Sapporo Toshin: original review, 2026-10-19
+
+Parent actually viewed all4pairs/8originalPNGs: historical#0 two pairs1024x768 plus newly captured#1 two pairs1600x1200. Exact paths and mixed rendering contracts are retained in original-review-viewed-manifest-20261019.json. New#1 completed2/2,0fail/pending, diagnostic14553; actual nativeUI2/2 observed andappquit. The unavailable older#1 immutableplan was not recovered by a bounded filename search in Japanreports/refactor receipts/LibraryBatchEvidence, so those unverified originals were not substituted. New#1 source/display IEEEbits andstationIDs exactly match the actual namedimmutableplan referenced by both newviews.
+
+The own street tram turns from the west-side north approach into the north/south corridor, then south to the Susukino westward interface. The turning areas have corresponding own tram geometry; no isolated falseV, wrong subway branch or break was identified. Blue Namboku/Toho underground corridors and broad undergroundstation fill are separate from the own surface tram. Rounded street turns must remain. A few pixels of lateral disagreement and mergedstationfill do not prove exactplatform faces/longitudinalcaps. No station or geometry correction proposed.
+
+No claim of finalMain composition, otherSapporo tramrecord joins or geographic platform-centre acceptance. Existing source and prior station/branch fixes preserved. This review adds evidence only.

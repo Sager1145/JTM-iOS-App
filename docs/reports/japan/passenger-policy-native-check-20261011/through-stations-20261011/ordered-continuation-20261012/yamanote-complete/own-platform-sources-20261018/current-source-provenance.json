@@ -1,0 +1,169 @@
+{
+  "scope": "17-station named Shinagawa→Tabata package arc, not full operatingloop",
+  "lineID": "jp-東日本旅客鉄道-山手線",
+  "stationCount": 17,
+  "firstStation": [
+    "004095",
+    "品川",
+    139.738535,
+    35.628135,
+    "Shinagawa",
+    1
+  ],
+  "lastStation": [
+    "003335",
+    "田端",
+    139.761575,
+    35.737475,
+    "Tabata",
+    1
+  ],
+  "displayOverrideIntervals": [
+    "0",
+    "15"
+  ],
+  "shinagawa": {
+    "currentFirstThree": [
+      [
+        139.738535,
+        35.628135
+      ],
+      [
+        139.7384606298466,
+        35.62804604059754
+      ],
+      [
+        139.73846516918167,
+        35.62795708119507
+      ]
+    ],
+    "currentLocalDeflectionDegrees": 36.57170211819106,
+    "introducedBy": "app/scripts/railway/repair-shinagawa-apple-forks-display.mjs;accepted2026-10-12",
+    "sourceStationEndWindow": {
+      "stationAnchor": [
+        139.738535,
+        35.628135
+      ],
+      "identifiedPairCentre": [
+        139.73845609051148,
+        35.628135
+      ],
+      "gapMeters": 7.139931341542967,
+      "policy": "display endpoint connector only; physical station unchanged"
+    },
+    "hypotheticalTransverseOnlyFirstThree": [
+      [
+        139.73845609051148,
+        35.628135
+      ],
+      [
+        139.7384606298466,
+        35.62804604059754
+      ],
+      [
+        139.73846516918167,
+        35.62795708119507
+      ]
+    ],
+    "hypotheticalDeflectionDegrees": 0.0,
+    "policy": "same latitude/retained chainage; not a full-platform midpoint claim; no apply"
+  },
+  "komagome": {
+    "ownInterval": 14,
+    "from": [
+      "003354",
+      "巣鴨",
+      139.74035,
+      35.73372,
+      "Sugamo",
+      1
+    ],
+    "to": [
+      "003343",
+      "駒込",
+      139.748054,
+      35.736861,
+      "Komagome",
+      1
+    ],
+    "physicalSegment": [
+      0.779,
+      1,
+      [
+        [
+          139.74144,
+          35.73419
+        ],
+        [
+          139.74435,
+          35.73534
+        ],
+        [
+          139.74531,
+          35.73572
+        ],
+        [
+          139.74648,
+          35.73618
+        ],
+        [
+          139.74677,
+          35.73622
+        ],
+        [
+          139.74697,
+          35.73634
+        ],
+        [
+          139.748054,
+          35.736861
+        ]
+      ]
+    ],
+    "equalsFrozen20261012Baseline": true,
+    "displayOverridePresent": false,
+    "rawOwnFeatureMatches": [
+      {
+        "index": 14397,
+        "type": "Feature",
+        "properties": {
+          "N02_001": "11",
+          "N02_002": "2",
+          "N02_003": "山手線",
+          "N02_004": "東日本旅客鉄道"
+        },
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [
+              139.74144,
+              35.73419
+            ],
+            [
+              139.74435,
+              35.73534
+            ],
+            [
+              139.74531,
+              35.73572
+            ],
+            [
+              139.74648,
+              35.73618
+            ],
+            [
+              139.74677,
+              35.73622
+            ],
+            [
+              139.74697,
+              35.73634
+            ]
+          ]
+        }
+      }
+    ],
+    "localDeflectionDegrees": 26.82702933475889,
+    "legacyView": "/Users/sager/Library/Application Support/RailAlignmentInspector/BatchEvidence/captures/005033/000002/view.json"
+  }
+}

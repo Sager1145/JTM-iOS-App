@@ -1,0 +1,323 @@
+{
+  "format": "jtm-yodo-shared-stations-native-pixel-review-v1",
+  "id": "primary",
+  "status": "rejected",
+  "candidateSha256": "87fd1c46f5dafb9546fc6bd6f80d5453f425722042563b1f18f45d985ed488bc",
+  "packageSha256": "481c1a86374c861dbd48ed5b263c43adb69a4853645fef7916259a79cc00fd66",
+  "planDigest": "f28a45fe4a4471bf9ac116badca064b2620b12054e398d2c59c73329155ed06b",
+  "intervalIDs": [
+    "jp-四国旅客鉄道-予土線#0",
+    "jp-四国旅客鉄道-予土線#18",
+    "jp-土佐くろしお鉄道-中村線#0",
+    "jp-土佐くろしお鉄道-中村線#1",
+    "jp-土佐くろしお鉄道-中村線#2",
+    "jp-四国旅客鉄道-予讃線#87",
+    "jp-四国旅客鉄道-予讃線#88"
+  ],
+  "candidateRowsSha256": {
+    "jp-四国旅客鉄道-予土線": "199b08ee85a87e834c39b213d653b3c45fd25200fe8497359b71ebac9d5823de",
+    "jp-土佐くろしお鉄道-中村線": "83cd4dc1db6e25cc9e3708e9275b0a1ccfdb31d3c78a316b2c44be05806d180d",
+    "jp-四国旅客鉄道-予讃線": "2f2653b0cb11c9fd8af5c879c4867a2e8437db2e4184ddfd92e10757b60f4aa6"
+  },
+  "captureRoot": "/private/tmp/jtm-yodo-shared-candidate-primary-v1",
+  "reviewedIntervalIDs": [
+    "jp-四国旅客鉄道-予讃線#88",
+    "jp-四国旅客鉄道-予土線#16",
+    "jp-四国旅客鉄道-予土線#4",
+    "jp-四国旅客鉄道-予土線#6",
+    "jp-四国旅客鉄道-予讃線#87",
+    "jp-土佐くろしお鉄道-中村線#0",
+    "jp-四国旅客鉄道-予土線#7",
+    "jp-土佐くろしお鉄道-中村線#1",
+    "jp-四国旅客鉄道-予土線#5",
+    "jp-四国旅客鉄道-予土線#15",
+    "jp-四国旅客鉄道-予土線#1",
+    "jp-四国旅客鉄道-予土線#0",
+    "jp-四国旅客鉄道-予土線#10",
+    "jp-四国旅客鉄道-予土線#3",
+    "jp-四国旅客鉄道-予土線#17",
+    "jp-土佐くろしお鉄道-中村線#2",
+    "jp-四国旅客鉄道-予土線#18",
+    "jp-四国旅客鉄道-予土線#2",
+    "jp-四国旅客鉄道-予土線#8",
+    "jp-四国旅客鉄道-予土線#9",
+    "jp-四国旅客鉄道-予土線#14",
+    "jp-四国旅客鉄道-予土線#12",
+    "jp-四国旅客鉄道-予土線#11",
+    "jp-四国旅客鉄道-予土線#13"
+  ],
+  "reviewedViews": 316,
+  "reviewedPanels": 948,
+  "failedViews": 0,
+  "contactSheetsActuallyOpened": [
+    "yodo-sheet-00..61.jpg",
+    "adj-sheet-00..17.jpg"
+  ],
+  "originalPanelsActuallyOpened": [
+    {
+      "queueID": "002693",
+      "views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002703",
+      "views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002705",
+      "views": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "panels": [
+        "basemap"
+      ]
+    },
+    {
+      "queueID": "002963",
+      "views": [
+        13
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002964",
+      "views": [
+        0,
+        10,
+        28
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002969",
+      "views": [
+        0,
+        6,
+        9,
+        12,
+        13
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002798",
+      "views": [
+        7
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    },
+    {
+      "queueID": "002799",
+      "views": [
+        0
+      ],
+      "panels": [
+        "basemap",
+        "display",
+        "smooth"
+      ]
+    }
+  ],
+  "originalPanelCount": 171,
+  "defects": [
+    {
+      "intervalID": "jp-四国旅客鉄道-予土線#18",
+      "description": "Retained Yodo18 body misses visible own railway shallow bends. Full interval acceptance withheld.",
+      "witnesses": [
+        {
+          "itemID": "jp-四国旅客鉄道-予土線#18",
+          "viewpointID": "jp-四国旅客鉄道-予土線#18#point-7",
+          "ownRailPixel": [
+            451.5,
+            450
+          ],
+          "candidateNearestPixel": [
+            464.1405025445328,
+            454.6627572174719
+          ],
+          "candidateDisplayResidualPixels": 13.473069785591797,
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 33.26853569833679,
+            "longitude": 132.5847469255934,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9948847614097797,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 233075984.77671188,
+            "rectY": 107883529.50992453,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "pixelPickUncertainty": 1.5,
+          "identity": "Continuous labelled Yodo thin blue railway with adjacent sleeper marks; river is broad cyan to the west, road is gray and separate.",
+          "qualification": "Cartographic residual; not a surveyed physical distance. Retained body defect, shared station seam is not its cause."
+        },
+        {
+          "itemID": "jp-四国旅客鉄道-予土線#18",
+          "viewpointID": "jp-四国旅客鉄道-予土線#18#point-7",
+          "ownRailPixel": [
+            437.5,
+            500
+          ],
+          "candidateNearestPixel": [
+            447.1848618351648,
+            503.2034929049134
+          ],
+          "candidateDisplayResidualPixels": 10.200927191096982,
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 33.26853569833679,
+            "longitude": 132.5847469255934,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9948847614097797,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 233075984.77671188,
+            "rectY": 107883529.50992453,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "pixelPickUncertainty": 1.5,
+          "identity": "Continuous labelled Yodo thin blue railway with adjacent sleeper marks; river is broad cyan to the west, road is gray and separate.",
+          "qualification": "Cartographic residual; not a surveyed physical distance. Retained body defect, shared station seam is not its cause."
+        },
+        {
+          "itemID": "jp-四国旅客鉄道-予土線#18",
+          "viewpointID": "jp-四国旅客鉄道-予土線#18#point-15",
+          "ownRailPixel": [
+            427,
+            550
+          ],
+          "candidateNearestPixel": [
+            436.1047941263631,
+            558.7025156121406
+          ],
+          "candidateDisplayResidualPixels": 12.594882058320632,
+          "camera": {
+            "displayScale": 1,
+            "heading": 0,
+            "latitude": 33.245947112926544,
+            "longitude": 132.57484087214536,
+            "mapPointsPerPoint": 8,
+            "metresPerPoint": 0.9951384201848261,
+            "pitch": 0,
+            "rectHeight": 6144,
+            "rectWidth": 8192,
+            "rectX": 233068598.28789386,
+            "rectY": 107903671.73765464,
+            "viewportHeightPoints": 768,
+            "viewportWidthPoints": 1024,
+            "zoom256": 17
+          },
+          "pixelPickUncertainty": 1.5,
+          "identity": "Continuous labelled Yodo thin blue railway with adjacent sleeper marks; river is broad cyan to the west, road is gray and separate.",
+          "qualification": "Cartographic residual; not a surveyed physical distance. Retained body defect, shared station seam is not its cause."
+        }
+      ]
+    }
+  ],
+  "warnings": [
+    "Yodo3 mountain/tunnel wash does not establish physical pixel precision. All27 original basemaps opened.",
+    "Iejigawa outer source guard retained; west approach carries cartographic precision warning.",
+    "Inspector is isolated centreline ownLane=0 and does not prove Main lane offset or station dot presentation.",
+    "Wakai/Kaina narrow face witnesses and Kita shared group midpoint retain cap/normal uncertainty; no individual platform-number assignment."
+  ],
+  "formalAcceptance": false
+}

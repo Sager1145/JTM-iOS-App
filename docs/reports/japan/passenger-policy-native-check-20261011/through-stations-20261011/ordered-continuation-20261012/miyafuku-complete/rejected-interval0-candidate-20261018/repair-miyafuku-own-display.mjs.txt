@@ -1,0 +1,121 @@
+#!/usr/bin/env node
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
+import {projectPointOntoPolyline} from './jp-manual-corrections/geo.mjs';
+import {partRowsForLine} from './build-display-lanes.mjs';
+import {refreshDependencyReferences,applyPreparedWrites,DEPENDENCY_PATHS} from './repair-three-reversal-extents.mjs';
+const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),REPO=path.dirname(ROOT);
+const EVIDENCE='scripts/railway/miyafuku-own-display-evidence.json',KEY='miyafuku-own-display';
+const LINE='jp-WILLER　TRAINS-宮福線';
+const network=createRequire(import.meta.url)('../../public/rail-network.js');
+const read=p=>JSON.parse(fs.readFileSync(p));
+const equal=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+
+function ownChain(e) {
+  const root=path.resolve(REPO,e.sourceRoot);
+  for(const s of e.sourceFiles)assert.equal(createHash('sha256').update(fs.readFileSync(path.join(root,s.file))).digest('hex'),s.sha256,'Miyafuku source bytes changed: '+s.file);
+  const chain=[];let previous;
+  for(const frozen of e.sourceWays){
+    const full=read(path.join(root,`way-${frozen.id}-full.json`)),way=full.elements.find(r=>r.type==='way'&&r.id===frozen.id);
+    const nodes=new Map(full.elements.filter(r=>r.type==='node').map(r=>[r.id,r]));
+    const coordinates=way.nodes.map(id=>{const n=nodes.get(id);assert(Number.isInteger(n.version));return[n.lon,n.lat];});
+    assert.deepEqual({...way,coordinates},frozen,'Miyafuku own source changed');
+    assert.equal(way.tags.railway,'rail');assert.equal(way.tags.gauge,'1067');assert.equal(way.tags.service,undefined);
+    assert.equal(way.tags.name,'京都丹後鉄道宮福線');assert.equal(way.tags.operator,'京都丹後鉄道');
+    if(previous!==undefined)assert.equal(way.nodes[0],previous,'Miyafuku own chain disconnected');
+    chain.push(...coordinates.slice(previous===undefined?0:1));previous=way.nodes.at(-1);
+  }
+  const relations=read(path.join(root,e.relationFile??'way-44001348-relations.json')).elements;
+  const ownIDs=e.sourceWays.map(w=>w.id);
+  for(const frozen of e.routes){
+    const r=relations.find(r=>r.type==='relation'&&r.id===frozen.id);
+    const ownMembers=r.members.flatMap((m,index)=>m.type==='way'&&ownIDs.includes(m.ref)?[{index,ref:m.ref,role:m.role}]:[]);
+    assert.deepEqual({id:r.id,version:r.version,timestamp:r.timestamp,tags:r.tags,ownMembers},frozen,'Miyafuku route membership changed');
+    assert.equal(ownMembers.length,ownIDs.length);assert(ownMembers.every((m,i)=>i===0||m.index===ownMembers[i-1].index+1));
+  }
+  if(e.ownStopNode){assert(e.sourceWays.find(w=>w.id===e.ownStopNode.way)?.nodes.includes(e.ownStopNode.id),'Miyafuku own stop disconnected');assert(e.excludedWays.every(id=>!ownIDs.includes(id)),'Miyafuku excluded neighbor included');}
+  return chain;
+}
+function displayFragment(line,f,chain,range){
+  const w=f.window,i=f.interval,[start,end]=range;
+  assert.deepEqual(line.segments[i],f.physicalCompactRowGuard,'Miyafuku physical baseline changed');
+  assert.deepEqual(line.stations.slice(i,i+2),f.stationRowsGuard);
+  assert.deepEqual(network.decodeIntervals(line)[i],f.oldDecodedInterval);
+  assert.deepEqual([w.oldStartIndex,w.oldEndIndexInclusive],range);
+  assert.deepEqual(w.oldWindow,f.oldDecodedInterval.slice(start,end+1));
+  assert.deepEqual(w.retainedBefore,{oldIndex:start-1,coordinate:f.oldDecodedInterval[start-1]});
+  assert.deepEqual(w.retainedAfter,{oldIndex:end+1,coordinate:f.oldDecodedInterval[end+1]});
+  assert.deepEqual(w.projectedBoundaries.map(b=>b.oldIndex),range);
+  const projections=w.projectedBoundaries.map(b=>{
+    const p=projectPointOntoPolyline(f.oldDecodedInterval[b.oldIndex],chain);
+    assert.deepEqual(p.point,b.point);assert.equal(p.insertIndex,b.insertIndex);assert(Math.abs(p.distanceM-b.distanceM)<1e-9);return p;
+  });
+  const replacement=[projections[0].point,...chain.slice(projections[0].insertIndex+1,projections[1].insertIndex+1),projections[1].point];
+  assert.deepEqual(replacement,w.replacementCoordinates);
+  const interval=[...f.oldDecodedInterval.slice(0,start),...replacement,...f.oldDecodedInterval.slice(end+1)];
+  assert.deepEqual(interval,f.candidateDecodedInterval);return interval;
+}
+function proposedLine(e){
+  assert.equal(e.format,'jtm-miyafuku-own-display-v1');assert.equal(e.lineID,LINE);
+  const line=structuredClone(e.baselineLine);
+  assert.equal(e.fragment.interval,8);assert.equal(e.interval0.fragment.interval,0);
+  line.displayIntervalCoordinates={...line.displayIntervalCoordinates,
+    0:displayFragment(line,e.interval0.fragment,ownChain(e.interval0),[5,29]),
+    8:displayFragment(line,e.fragment,ownChain(e),[4,32])};return line;
+}
+export function repairPackage(input,e=read(path.join(ROOT,EVIDENCE))){
+  const proposed=proposedLine(e),indices=input.lines.flatMap((r,i)=>r.id===LINE?[i]:[]);assert.equal(indices.length,1);
+  assert(equal(input.lines[indices[0]],e.baselineLine)||equal(input.lines[indices[0]],proposed),'Miyafuku baseline changed');
+  assert.match(input.geometrySource.license,/OpenStreetMap.*ODbL/i);
+  const provenance={reviewedAt:e.reviewedAt,status:e.status,lineID:LINE,windows:[e.interval0,e].map(source=>({intervalIndex:source.fragment.interval,oldWindow:[source.fragment.window.oldStartIndex,source.fragment.window.oldEndIndexInclusive],ways:source.sourceWays.map(w=>[w.id,w.version]),routes:source.routes.map(r=>[r.id,r.version]),sourceRoot:source.sourceRoot,status:source.fragment.status})),policy:e.policy,script:'app/scripts/railway/repair-miyafuku-own-display.mjs',physicalTopologyChanged:false};
+  const previous=input.geometrySource.manualOverrides?.[KEY];assert(previous===undefined||equal(previous,provenance),'Miyafuku provenance changed');
+  const result=structuredClone(input);result.lines[indices[0]]=proposed;result.geometrySource.manualOverrides??={};result.geometrySource.manualOverrides[KEY]=provenance;return result;
+}
+export function repairParts(pkg,input,e=read(path.join(ROOT,EVIDENCE))){
+  const line=pkg.lines.find(r=>r.id===LINE);assert.deepEqual(line,proposedLine(e));
+  const rows=partRowsForLine(line,network.displayPartsForLine(line));assert.deepEqual(rows,e.candidateNativeRows);
+  assert.equal(rows.length,1);const lane=[[LINE,0,0,rows[0][5],e.baselineRows.byRegion[0][4]]];
+  for(const key of ['partsByRegion','byRegion','followsByRegion','familyWindowsByRegion','strokeExcludedByRegion','chainBoundariesByRegion','releasedIntervalsByRegion']){
+    const current=(input[key]?.jp||[]).filter(r=>r[0]===LINE||key==='followsByRegion'&&r[4]===LINE);
+    const proposed=key==='partsByRegion'?rows:key==='byRegion'?lane:e.baselineRows[key];
+    assert(equal(current,e.baselineRows[key])||equal(current,proposed),'Miyafuku measured reference changed: '+key);
+  }
+  assert.deepEqual((input.loopsByRegion?.jp||[]).filter(r=>(r.lineIds||[]).includes(LINE)),e.baselineRows.loopsByRegion,'Miyafuku measured reference changed: loopsByRegion');
+  assert.deepEqual((input.reversedLoopParts?.jp||[]).filter(r=>r.startsWith(LINE+'#')),e.baselineRows.reversedLoopParts,'Miyafuku measured reference changed: reversedLoopParts');
+  const hubs=(input.hubReportByRegion?.jp||[]).flatMap(h=>(h.members||[]).filter(m=>m.lineId===LINE).map(member=>({hubID:h.hubId,member})));
+  assert.deepEqual(hubs,e.baselineRows.hubMembers,'Miyafuku measured hub reference changed');
+  for(const [key,frozen]of Object.entries(e.ownMaps))assert.deepEqual(input[key]?.jp?.[LINE]??null,frozen,'Miyafuku map reference changed: '+key);
+  assert(!(input.excludedOperators||[]).includes(e.baselineLine.operator),'Miyafuku excluded operator changed');
+  assert(!(input.excludedLineIds||[]).includes(LINE),'Miyafuku excluded line changed');
+  const result=structuredClone(input);result.partsByRegion.jp=result.partsByRegion.jp.map(r=>r[0]===LINE?rows[0]:r);result.byRegion.jp=result.byRegion.jp.map(r=>r[0]===LINE?lane[0]:r);return result;
+}
+function main(args){
+  const candidate=args.length===2&&args[0]==='--candidate-root'?path.resolve(args[1]):null;
+  assert(candidate||equal(args,['--apply']),'Use --candidate-root /private/tmp/<dir> or --apply');if(candidate)assert(candidate.startsWith('/private/tmp/'));
+  const paths={package:'public/rail/jp-2025.json',lanes:'public/rail/display-lanes.json',...DEPENDENCY_PATHS};
+  const snapshots=Object.fromEntries(Object.entries(paths).map(([k,p])=>[k,{path:path.join(ROOT,p),before:fs.readFileSync(path.join(ROOT,p),'utf8')}]));
+  const e=read(path.join(ROOT,EVIDENCE));
+  const inputPaths=[path.join(ROOT,EVIDENCE),...[e,e.interval0].flatMap(source=>source.sourceFiles.map(s=>path.resolve(REPO,source.sourceRoot,s.file))),path.join(ROOT,'data/rail-sections.json'),...e.referenceAudit.externalUnchangedPaths.map(p=>path.join(ROOT,p))];
+  const sourceSnapshots=inputPaths.map(p=>({path:p,before:fs.readFileSync(p,'utf8')}));
+  const raw=read(path.join(ROOT,'data/rail-sections.json'));for(const r of [...e.rawFeatures,...e.interval0.rawFeatures])assert.deepEqual(raw.features[r.featureIndex],r.feature,'Miyafuku raw N02 changed');
+  assert.deepEqual(e.rawFeatures.find(r=>r.featureIndex===19849).feature.geometry.coordinates.toReversed(),e.fragment.oldDecodedInterval.slice(1,-1),'Miyafuku Gujo raw source changed');
+  const zeroRaw=e.interval0.rawFeatures.map(r=>r.feature.geometry.coordinates);assert.deepEqual([...zeroRaw[0],...zeroRaw[1].slice(1)],e.interval0.fragment.oldDecodedInterval.slice(1,-1),'Miyafuku Miyazu raw source changed');
+  const junctions=read(path.join(ROOT,'data/physical-rail-junctions.json'));assert.deepEqual(junctions.junctions.filter(r=>r.lineIDs?.includes(LINE)),e.baselineExternalJunctions,'Miyafuku external junction changed');
+  const shared=read(path.join(ROOT,'public/rail/shared-corridors.json'));
+  assert.deepEqual(shared.corridors.filter(r=>(r.lineIds||[]).includes(LINE)||(r.members||[]).some(m=>m.lineId===LINE)),e.baselineExternalDisplayReferences.corridors,'Miyafuku shared corridor changed');
+  assert.deepEqual(shared.displayLandlords.filter(r=>r.tenantLineId===LINE||r.landlordLineId===LINE||(r.tenantLineIds||[]).includes(LINE)||(r.landlordLineIds||[]).includes(LINE)),e.baselineExternalDisplayReferences.displayLandlords,'Miyafuku display landlord changed');
+  assert.deepEqual((shared.displayLanePolicy.excludedLineIds||[]).filter(id=>id===LINE),e.baselineExternalDisplayReferences.excludedLineIds,'Miyafuku shared exclusion changed');
+  const releases=read(path.join(ROOT,'public/rail/display-releases.json'));
+  assert.deepEqual(releases.releases.filter(r=>r.lineId===LINE),e.baselineExternalDisplayReferences.releases,'Miyafuku display release changed');
+  const load=k=>JSON.parse(snapshots[k].before),pkg=repairPackage(load('package'),e),lanes=repairParts(pkg,load('lanes'),e);
+  const deps=refreshDependencyReferences(pkg,Object.fromEntries(Object.keys(DEPENDENCY_PATHS).map(k=>[k,load(k)])));
+  const outputs={package:JSON.stringify(pkg),lanes:JSON.stringify(lanes)+'\n',...Object.fromEntries(Object.entries(deps).map(([k,v])=>[k,JSON.stringify(v,null,2)+'\n']))};
+  if(candidate){fs.mkdirSync(candidate,{recursive:true});for(const[k,after]of Object.entries(outputs))fs.writeFileSync(path.join(candidate,path.basename(snapshots[k].path)),after);}
+  else applyPreparedWrites(Object.entries(outputs).filter(([k,v])=>v!==snapshots[k].before).map(([k,after])=>({...snapshots[k],after})),[...Object.values(snapshots),...sourceSnapshots]);
+  console.log(JSON.stringify({mode:candidate?'candidate':'applied',lineID:LINE,parts:lanes.partsByRegion.jp.filter(r=>r[0]===LINE).map(r=>({points:r[4],metres:r[5]})),physicalTopologyChanged:false}));
+}
+if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))main(process.argv.slice(2));

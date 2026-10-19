@@ -1,0 +1,7384 @@
+{
+  "status": "unfinished-draft-stopped-by-Root-for-independent-repair-chats",
+  "lineID": "jp-四国旅客鉄道-予讃線",
+  "intervalIndex": 83,
+  "coordinates": [
+    [
+      132.509775,
+      33.363175
+    ],
+    [
+      132.50992356731683,
+      33.36298681483671
+    ],
+    [
+      132.51,
+      33.36288999999999
+    ],
+    [
+      132.51007280112657,
+      33.36279899875335
+    ],
+    [
+      132.51022274114143,
+      33.36261157376775
+    ],
+    [
+      132.51031999999998,
+      33.362490000000015
+    ],
+    [
+      132.51037408783117,
+      33.362424948727586
+    ],
+    [
+      132.51052803149508,
+      33.362239800878356
+    ],
+    [
+      132.510681975159,
+      33.362054652635166
+    ],
+    [
+      132.51083134848813,
+      33.36186841218411
+    ],
+    [
+      132.51100300986508,
+      33.36168919451038
+    ],
+    [
+      132.51106,
+      33.3616
+    ],
+    [
+      132.51116394240597,
+      33.36150997646755
+    ],
+    [
+      132.51134633261898,
+      33.361339718984986
+    ],
+    [
+      132.51150726515988,
+      33.361160500222425
+    ],
+    [
+      132.51167892653683,
+      33.36098128109075
+    ],
+    [
+      132.51180767256955,
+      33.36078413961962
+    ],
+    [
+      132.51195787627438,
+      33.36060491971286
+    ],
+    [
+      132.51207589347104,
+      33.36048842657554
+    ],
+    [
+      132.51212953765133,
+      33.360425699437
+    ],
+    [
+      132.5123011990283,
+      33.360255439833075
+    ],
+    [
+      132.51249431807736,
+      33.36008517989604
+    ],
+    [
+      132.51255869109372,
+      33.36001349140184
+    ],
+    [
+      132.51267670829037,
+      33.35991491962589
+    ],
+    [
+      132.5128054543231,
+      33.35978050338786
+    ],
+    [
+      132.51283764083126,
+      33.3597625812071
+    ],
+    [
+      132.5129342003558,
+      33.35967297024794
+    ],
+    [
+      132.51300930220822,
+      33.35961024252163
+    ],
+    [
+      132.51320689176003,
+      33.359447697682604
+    ],
+    [
+      132.51336782430093,
+      33.359313280722915
+    ],
+    [
+      132.51336782430093,
+      33.359313280722915
+    ],
+    [
+      132.51357167218606,
+      33.35916094125097
+    ],
+    [
+      132.51373260472695,
+      33.359053407345506
+    ],
+    [
+      132.51378624890725,
+      33.359026523848385
+    ],
+    [
+      132.51399009679238,
+      33.3588831450568
+    ],
+    [
+      132.51407592748086,
+      33.358820416761205
+    ],
+    [
+      132.51420467351358,
+      33.35876664961471
+    ],
+    [
+      132.51441925023477,
+      33.35861430918591
+    ],
+    [
+      132.51466601346414,
+      33.3585336582627
+    ],
+    [
+      132.5148591325132,
+      33.35844404603816
+    ],
+    [
+      132.51490204785745,
+      33.35842612358217
+    ],
+    [
+      132.51515953992288,
+      33.35834547248458
+    ],
+    [
+      132.5153955743162,
+      33.35824689881935
+    ],
+    [
+      132.51564233754556,
+      33.358157286299544
+    ],
+    [
+      132.51587837193887,
+      33.358076634952816
+    ],
+    [
+      132.515899829611,
+      33.358076634952816
+    ],
+    [
+      132.51614659284036,
+      33.357987022257696
+    ],
+    [
+      132.51640277711886,
+      33.35789951064716
+    ],
+    [
+      132.51647787897127,
+      33.35787262679359
+    ],
+    [
+      132.51663881151217,
+      33.357809897769656
+    ],
+    [
+      132.5168963035776,
+      33.35772028479988
+    ],
+    [
+      132.51714306680697,
+      33.357639633048194
+    ],
+    [
+      132.51714306680697,
+      33.357639633048194
+    ],
+    [
+      132.51738983003634,
+      33.357541058583536
+    ],
+    [
+      132.51764732210177,
+      33.35746936799365
+    ],
+    [
+      132.51789408533114,
+      33.357388716009446
+    ],
+    [
+      132.51815157739657,
+      33.35729910260602
+    ],
+    [
+      132.51839834062594,
+      33.35720948911032
+    ],
+    [
+      132.5186451038553,
+      33.35711987552235
+    ],
+    [
+      132.51873093454378,
+      33.35710195279368
+    ],
+    [
+      132.51889186708468,
+      33.357030261842105
+    ],
+    [
+      132.51913863031405,
+      33.356949609451
+    ],
+    [
+      132.51917081682222,
+      33.356940648069596
+    ],
+    [
+      132.51938539354342,
+      33.35686895698516
+    ],
+    [
+      132.51964288560885,
+      33.35677934304657
+    ],
+    [
+      132.51989090685413,
+      33.356696548040134
+    ],
+    [
+      132.5201376700835,
+      33.35661589533979
+    ],
+    [
+      132.52038443331287,
+      33.35652628114064
+    ],
+    [
+      132.52063119654224,
+      33.35641874397987
+    ],
+    [
+      132.52088868860767,
+      33.35635601390807
+    ],
+    [
+      132.52113545183704,
+      33.35626639944134
+    ],
+    [
+      132.52122128252552,
+      33.35623951508333
+    ],
+    [
+      132.5213822150664,
+      33.35617678488235
+    ],
+    [
+      132.52163970713184,
+      33.35609613170037
+    ],
+    [
+      132.52187574152515,
+      33.35600651696608
+    ],
+    [
+      132.52213323359058,
+      33.35593482511221
+    ],
+    [
+      132.52224052195118,
+      33.35590794065179
+    ],
+    [
+      132.522390725656,
+      33.355872094691634
+    ],
+    [
+      132.52259457354114,
+      33.355845210211825
+    ],
+    [
+      132.5226589465575,
+      33.35583624871672
+    ],
+    [
+      132.522927167459,
+      33.35580040272704
+    ],
+    [
+      132.52301299814746,
+      33.35579144122732
+    ],
+    [
+      132.52319538836048,
+      33.355755595219186
+    ],
+    [
+      132.52328121904895,
+      33.35573767220959
+    ],
+    [
+      132.5234481730933,
+      33.3557336847994
+    ],
+    [
+      132.52370566515873,
+      33.35567991574599
+    ],
+    [
+      132.5237914958472,
+      33.35567095423386
+    ],
+    [
+      132.52398461489628,
+      33.35562614665936
+    ],
+    [
+      132.5242421069617,
+      33.35555445449219
+    ],
+    [
+      132.52425283579777,
+      33.35553653144118
+    ],
+    [
+      132.52449959902714,
+      33.35544691613072
+    ],
+    [
+      132.52473563342045,
+      33.35533041608919
+    ],
+    [
+      132.5248000064368,
+      33.355312492992034
+    ],
+    [
+      132.5249609389777,
+      33.35519599277059
+    ],
+    [
+      132.5251755156989,
+      33.355070530819276
+    ],
+    [
+      132.52520770220707,
+      33.355088453966246
+    ],
+    [
+      132.52542227892826,
+      33.35495403027397
+    ],
+    [
+      132.52554029612492,
+      33.35483752957275
+    ],
+    [
+      132.52560466914127,
+      33.354783759965734
+    ],
+    [
+      132.52579778819035,
+      33.35463141256551
+    ],
+    [
+      132.52589434771488,
+      33.35456868120557
+    ],
+    [
+      132.52599090723942,
+      33.354461141626196
+    ],
+    [
+      132.52616256861637,
+      33.35429087035379
+    ],
+    [
+      132.52622694163273,
+      33.35427294704259
+    ],
+    [
+      132.52634495882938,
+      33.35411163707565
+    ],
+    [
+      132.5265139723782,
+      33.35393977916145
+    ],
+    [
+      132.52668563375516,
+      33.35376950686919
+    ],
+    [
+      132.52681437978788,
+      33.35362611941737
+    ],
+    [
+      132.52686802396818,
+      33.353608195969294
+    ],
+    [
+      132.52703968534513,
+      33.35343792302842
+    ],
+    [
+      132.5270718718533,
+      33.35337519080836
+    ],
+    [
+      132.52721134672208,
+      33.353276611514055
+    ],
+    [
+      132.52741519460722,
+      33.353124261476
+    ],
+    [
+      132.5275224829678,
+      33.353043605465544
+    ],
+    [
+      132.5276297713284,
+      33.3530077583258
+    ],
+    [
+      132.52785507688566,
+      33.352882293220446
+    ],
+    [
+      132.5279730940823,
+      33.352819560599954
+    ],
+    [
+      132.5280803824429,
+      33.35279267517734
+    ],
+    [
+      132.52831641683622,
+      33.35268513340382
+    ],
+    [
+      132.52854172239347,
+      33.35259551515774
+    ],
+    [
+      132.5285631800656,
+      33.35259551515774
+    ],
+    [
+      132.52862755308195,
+      33.35256862966592
+    ],
+    [
+      132.52880994329496,
+      33.35248797314065
+    ],
+    [
+      132.52904597768827,
+      33.3523893928416
+    ],
+    [
+      132.52917472372098,
+      33.35232665986591
+    ],
+    [
+      132.52928201208158,
+      33.352263926845
+    ],
+    [
+      132.52950957182395,
+      33.35214219514186
+    ],
+    [
+      132.5295739448403,
+      33.35210634763092
+    ],
+    [
+      132.52971341970908,
+      33.351998805009515
+    ],
+    [
+      132.52988508108604,
+      33.35185541464098
+    ],
+    [
+      132.52991726759421,
+      33.35181956701194
+    ],
+    [
+      132.53009965780723,
+      33.35164929057242
+    ],
+    [
+      132.53014257315147,
+      33.35160448092771
+    ],
+    [
+      132.53026059034812,
+      33.3514700518552
+    ],
+    [
+      132.5304000652169,
+      33.35127288884003
+    ],
+    [
+      132.53044298056113,
+      33.35119223111421
+    ],
+    [
+      132.5305073535775,
+      33.35106676339217
+    ],
+    [
+      132.53060113153953,
+      33.35085223826486
+    ],
+    [
+      132.53062999999997,
+      33.350800000000014
+    ],
+    [
+      132.53070082409073,
+      33.35064285954761
+    ],
+    [
+      132.53079591686657,
+      33.350431872675074
+    ],
+    [
+      132.5308910096424,
+      33.35022088529121
+    ],
+    [
+      132.53094999999996,
+      33.35009000000001
+    ],
+    [
+      132.53098502808376,
+      33.350009565246985
+    ],
+    [
+      132.53107729109217,
+      33.349797701966125
+    ],
+    [
+      132.531085,
+      33.34978
+    ]
+  ],
+  "controls": [
+    {
+      "coordinate": [
+        132.51083134848813,
+        33.36186841218411
+      ],
+      "pixel": [
+        412,
+        240
+      ],
+      "normalOffsetPixels": 0,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        163,
+        192,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          409,
+          235
+        ],
+        [
+          411,
+          237
+        ],
+        [
+          412,
+          240
+        ],
+        [
+          414,
+          242
+        ],
+        [
+          416,
+          245
+        ]
+      ],
+      "controlID": "yosan83-C0000",
+      "sourceChainageMapPoints": 1408.7053471954346,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourcePixelInterpolated": [
+        132.51083591882298,
+        33.361869503998065
+      ]
+    },
+    {
+      "coordinate": [
+        132.51100300986508,
+        33.36168919451038
+      ],
+      "pixel": [
+        428,
+        260
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        181,
+        203,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          424,
+          255
+        ],
+        [
+          426,
+          258
+        ],
+        [
+          428,
+          260
+        ],
+        [
+          429,
+          262
+        ],
+        [
+          430,
+          264
+        ]
+      ],
+      "controlID": "yosan83-C0001",
+      "sourceChainageMapPoints": 1609.9489682233539,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourcePixelInterpolated": [
+        132.5109898624869,
+        33.36168435496702
+      ]
+    },
+    {
+      "coordinate": [
+        132.51116394240597,
+        33.36150997646755
+      ],
+      "pixel": [
+        443,
+        280
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        122,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          439,
+          275
+        ],
+        [
+          441,
+          278
+        ],
+        [
+          443,
+          280
+        ],
+        [
+          444,
+          283
+        ],
+        [
+          446,
+          285
+        ]
+      ],
+      "controlID": "yosan83-C0002",
+      "sourceChainageMapPoints": 1811.1925892512731,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.51114344024467,
+        33.36149899399675
+      ]
+    },
+    {
+      "coordinate": [
+        132.51134633261898,
+        33.361339718984986
+      ],
+      "pixel": [
+        460,
+        299
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        171,
+        197,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          457,
+          293
+        ],
+        [
+          459,
+          296
+        ],
+        [
+          460,
+          299
+        ],
+        [
+          462,
+          301
+        ],
+        [
+          464,
+          304
+        ]
+      ],
+      "controlID": "yosan83-C0003",
+      "sourceChainageMapPoints": 2012.4362102791924,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.511296711775,
+        33.36131345558868
+      ]
+    },
+    {
+      "coordinate": [
+        132.51150726515988,
+        33.361160500222425
+      ],
+      "pixel": [
+        475,
+        319
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        211,
+        223,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          471,
+          315
+        ],
+        [
+          474,
+          317
+        ],
+        [
+          475,
+          319
+        ],
+        [
+          476,
+          321
+        ],
+        [
+          478,
+          324
+        ]
+      ],
+      "controlID": "yosan83-C0004",
+      "sourceChainageMapPoints": 2213.6798313071117,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.51144998330528,
+        33.361127916785016
+      ]
+    },
+    {
+      "coordinate": [
+        132.51167892653683,
+        33.36098128109075
+      ],
+      "pixel": [
+        491,
+        339
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        157,
+        189,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          487,
+          334
+        ],
+        [
+          489,
+          336
+        ],
+        [
+          491,
+          339
+        ],
+        [
+          492,
+          341
+        ],
+        [
+          494,
+          344
+        ]
+      ],
+      "controlID": "yosan83-C0005",
+      "sourceChainageMapPoints": 2414.923452335031,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.51160325483562,
+        33.36094237758577
+      ]
+    },
+    {
+      "coordinate": [
+        132.51180767256955,
+        33.36078413961962
+      ],
+      "pixel": [
+        503,
+        361
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        167,
+        194,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          500,
+          356
+        ],
+        [
+          501,
+          358
+        ],
+        [
+          503,
+          361
+        ],
+        [
+          505,
+          363
+        ],
+        [
+          507,
+          366
+        ]
+      ],
+      "controlID": "yosan83-C0006",
+      "sourceChainageMapPoints": 2616.1670733629503,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.5117565263659,
+        33.36075683799094
+      ]
+    },
+    {
+      "coordinate": [
+        132.51195787627438,
+        33.36060491971286
+      ],
+      "pixel": [
+        517,
+        381
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        180,
+        202,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          514,
+          376
+        ],
+        [
+          516,
+          379
+        ],
+        [
+          517,
+          381
+        ],
+        [
+          519,
+          384
+        ],
+        [
+          521,
+          386
+        ]
+      ],
+      "controlID": "yosan83-C0007",
+      "sourceChainageMapPoints": 2817.4106943908696,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.51190979789618,
+        33.36057129800052
+      ]
+    },
+    {
+      "coordinate": [
+        132.51207589347104,
+        33.36048842657554
+      ],
+      "pixel": [
+        528,
+        394
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        135,
+        177,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          524,
+          389
+        ],
+        [
+          526,
+          392
+        ],
+        [
+          528,
+          394
+        ],
+        [
+          529,
+          397
+        ],
+        [
+          531,
+          399
+        ]
+      ],
+      "controlID": "yosan83-C0008",
+      "sourceChainageMapPoints": 2948.9748157497124,
+      "sourceBracket": [
+        3,
+        4
+      ],
+      "sourcePixelInterpolated": [
+        132.51201000000003,
+        33.36045
+      ]
+    },
+    {
+      "coordinate": [
+        132.51212953765133,
+        33.360425699437
+      ],
+      "pixel": [
+        533,
+        401
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        154,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          530,
+          396
+        ],
+        [
+          532,
+          398
+        ],
+        [
+          533,
+          401
+        ],
+        [
+          535,
+          403
+        ],
+        [
+          537,
+          406
+        ]
+      ],
+      "controlID": "yosan83-C0009",
+      "sourceChainageMapPoints": 3018.654315418789,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.51206295829104,
+        33.360385693668405
+      ]
+    },
+    {
+      "coordinate": [
+        132.5123011990283,
+        33.360255439833075
+      ],
+      "pixel": [
+        549,
+        420
+      ],
+      "normalOffsetPixels": -10,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        153,
+        186,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          546,
+          416
+        ],
+        [
+          548,
+          418
+        ],
+        [
+          549,
+          420
+        ],
+        [
+          551,
+          423
+        ],
+        [
+          553,
+          425
+        ]
+      ],
+      "controlID": "yosan83-C0010",
+      "sourceChainageMapPoints": 3219.897936446708,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.51221590884762,
+        33.36019996820138
+      ]
+    },
+    {
+      "coordinate": [
+        132.51249431807736,
+        33.36008517989604
+      ],
+      "pixel": [
+        567,
+        439
+      ],
+      "normalOffsetPixels": -14,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        140,
+        179,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          563,
+          434
+        ],
+        [
+          565,
+          437
+        ],
+        [
+          567,
+          439
+        ],
+        [
+          569,
+          441
+        ],
+        [
+          570,
+          444
+        ]
+      ],
+      "controlID": "yosan83-C0011",
+      "sourceChainageMapPoints": 3421.1415574746275,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.51236885940415,
+        33.360014242337996
+      ]
+    },
+    {
+      "coordinate": [
+        132.51255869109372,
+        33.36001349140184
+      ],
+      "pixel": [
+        573,
+        447
+      ],
+      "normalOffsetPixels": -15,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        158,
+        189,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          570,
+          442
+        ],
+        [
+          572,
+          444
+        ],
+        [
+          573,
+          447
+        ],
+        [
+          575,
+          449
+        ],
+        [
+          577,
+          452
+        ]
+      ],
+      "controlID": "yosan83-C0012",
+      "sourceChainageMapPoints": 3501.586867262273,
+      "sourceBracket": [
+        4,
+        5
+      ],
+      "sourcePixelInterpolated": [
+        132.51243,
+        33.359939999999995
+      ]
+    },
+    {
+      "coordinate": [
+        132.51267670829037,
+        33.35991491962589
+      ],
+      "pixel": [
+        584,
+        458
+      ],
+      "normalOffsetPixels": -17,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        159,
+        189,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          580,
+          453
+        ],
+        [
+          582,
+          456
+        ],
+        [
+          584,
+          458
+        ],
+        [
+          585,
+          461
+        ],
+        [
+          587,
+          463
+        ]
+      ],
+      "controlID": "yosan83-C0013",
+      "sourceChainageMapPoints": 3622.3851785025468,
+      "sourceBracket": [
+        5,
+        6
+      ],
+      "sourcePixelInterpolated": [
+        132.5125206005606,
+        33.35982782797265
+      ]
+    },
+    {
+      "coordinate": [
+        132.5128054543231,
+        33.35978050338786
+      ],
+      "pixel": [
+        596,
+        473
+      ],
+      "normalOffsetPixels": -19,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        198,
+        217,
+        241
+      ],
+      "persistentWitnessPixels": [
+        [
+          593,
+          469
+        ],
+        [
+          595,
+          471
+        ],
+        [
+          596,
+          473
+        ],
+        [
+          598,
+          476
+        ],
+        [
+          600,
+          478
+        ]
+      ],
+      "controlID": "yosan83-C0014",
+      "sourceChainageMapPoints": 3781.581220497919,
+      "sourceBracket": [
+        5,
+        6
+      ],
+      "sourcePixelInterpolated": [
+        132.51264000000003,
+        33.35968000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.51283764083126,
+        33.3597625812071
+      ],
+      "pixel": [
+        599,
+        475
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        121,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          595,
+          470
+        ],
+        [
+          597,
+          473
+        ],
+        [
+          599,
+          475
+        ],
+        [
+          601,
+          477
+        ],
+        [
+          603,
+          479
+        ]
+      ],
+      "controlID": "yosan83-C0015",
+      "sourceChainageMapPoints": 3823.628799530466,
+      "sourceBracket": [
+        6,
+        7
+      ],
+      "sourcePixelInterpolated": [
+        132.51267771111281,
+        33.35964498255724
+      ]
+    },
+    {
+      "coordinate": [
+        132.5129342003558,
+        33.35967297024794
+      ],
+      "pixel": [
+        608,
+        485
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        200,
+        213,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          604,
+          481
+        ],
+        [
+          606,
+          483
+        ],
+        [
+          608,
+          485
+        ],
+        [
+          611,
+          488
+        ],
+        [
+          613,
+          490
+        ]
+      ],
+      "controlID": "yosan83-C0016",
+      "sourceChainageMapPoints": 3937.6800632428744,
+      "sourceBracket": [
+        6,
+        7
+      ],
+      "sourcePixelInterpolated": [
+        132.51278000000002,
+        33.35955
+      ]
+    },
+    {
+      "coordinate": [
+        132.51300930220822,
+        33.35961024252163
+      ],
+      "pixel": [
+        615,
+        492
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 1,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000001/view.json",
+      "rgb": [
+        196,
+        212,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          611,
+          488
+        ],
+        [
+          613,
+          490
+        ],
+        [
+          615,
+          492
+        ],
+        [
+          618,
+          494
+        ],
+        [
+          620,
+          497
+        ]
+      ],
+      "controlID": "yosan83-C0017",
+      "sourceChainageMapPoints": 4024.8724205583853,
+      "sourceBracket": [
+        7,
+        8
+      ],
+      "sourcePixelInterpolated": [
+        132.51286258735246,
+        33.35948085721583
+      ]
+    },
+    {
+      "coordinate": [
+        132.51320689176003,
+        33.359447697682604
+      ],
+      "pixel": [
+        380,
+        277
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        113,
+        167,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          376,
+          273
+        ],
+        [
+          378,
+          275
+        ],
+        [
+          380,
+          277
+        ],
+        [
+          382,
+          279
+        ],
+        [
+          384,
+          281
+        ]
+      ],
+      "controlID": "yosan83-C0018",
+      "sourceChainageMapPoints": 4226.116041586304,
+      "sourceBracket": [
+        7,
+        8
+      ],
+      "sourcePixelInterpolated": [
+        132.51305320242886,
+        33.35932127255762
+      ]
+    },
+    {
+      "coordinate": [
+        132.51336782430093,
+        33.359313280722915
+      ],
+      "pixel": [
+        395,
+        292
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        194,
+        211,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          390,
+          287
+        ],
+        [
+          392,
+          289
+        ],
+        [
+          395,
+          292
+        ],
+        [
+          397,
+          294
+        ],
+        [
+          399,
+          295
+        ]
+      ],
+      "controlID": "yosan83-C0019",
+      "sourceChainageMapPoints": 4391.656520167697,
+      "sourceBracket": [
+        7,
+        8
+      ],
+      "sourcePixelInterpolated": [
+        132.51320999999996,
+        33.359190000000005
+      ]
+    },
+    {
+      "coordinate": [
+        132.51336782430093,
+        33.359313280722915
+      ],
+      "pixel": [
+        395,
+        292
+      ],
+      "normalOffsetPixels": -20,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        194,
+        211,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          391,
+          288
+        ],
+        [
+          393,
+          290
+        ],
+        [
+          395,
+          292
+        ],
+        [
+          398,
+          294
+        ],
+        [
+          400,
+          295
+        ]
+      ],
+      "controlID": "yosan83-C0020",
+      "sourceChainageMapPoints": 4427.359662614223,
+      "sourceBracket": [
+        8,
+        9
+      ],
+      "sourcePixelInterpolated": [
+        132.51324929838984,
+        33.35916715212871
+      ]
+    },
+    {
+      "coordinate": [
+        132.51357167218606,
+        33.35916094125097
+      ],
+      "pixel": [
+        414,
+        309
+      ],
+      "normalOffsetPixels": -17,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        186,
+        206,
+        246
+      ],
+      "persistentWitnessPixels": [
+        [
+          409,
+          305
+        ],
+        [
+          412,
+          307
+        ],
+        [
+          414,
+          309
+        ],
+        [
+          417,
+          310
+        ],
+        [
+          419,
+          312
+        ]
+      ],
+      "controlID": "yosan83-C0021",
+      "sourceChainageMapPoints": 4628.603283642143,
+      "sourceBracket": [
+        8,
+        9
+      ],
+      "sourcePixelInterpolated": [
+        132.51347080691113,
+        33.35903836816059
+      ]
+    },
+    {
+      "coordinate": [
+        132.51373260472695,
+        33.359053407345506
+      ],
+      "pixel": [
+        429,
+        321
+      ],
+      "normalOffsetPixels": -15,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        134,
+        176,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          424,
+          318
+        ],
+        [
+          426,
+          320
+        ],
+        [
+          429,
+          321
+        ],
+        [
+          431,
+          323
+        ],
+        [
+          434,
+          325
+        ]
+      ],
+      "controlID": "yosan83-C0022",
+      "sourceChainageMapPoints": 4782.317595204478,
+      "sourceBracket": [
+        8,
+        9
+      ],
+      "sourcePixelInterpolated": [
+        132.51364,
+        33.358940000000004
+      ]
+    },
+    {
+      "coordinate": [
+        132.51378624890725,
+        33.359026523848385
+      ],
+      "pixel": [
+        434,
+        324
+      ],
+      "normalOffsetPixels": -15,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        180,
+        202,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          428,
+          321
+        ],
+        [
+          431,
+          323
+        ],
+        [
+          434,
+          324
+        ],
+        [
+          436,
+          326
+        ],
+        [
+          439,
+          328
+        ]
+      ],
+      "controlID": "yosan83-C0023",
+      "sourceChainageMapPoints": 4829.846904670062,
+      "sourceBracket": [
+        9,
+        10
+      ],
+      "sourcePixelInterpolated": [
+        132.51369351308438,
+        33.35891107403688
+      ]
+    },
+    {
+      "coordinate": [
+        132.51399009679238,
+        33.3588831450568
+      ],
+      "pixel": [
+        453,
+        340
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        152,
+        186,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          448,
+          337
+        ],
+        [
+          450,
+          339
+        ],
+        [
+          453,
+          340
+        ],
+        [
+          456,
+          342
+        ],
+        [
+          458,
+          344
+        ]
+      ],
+      "controlID": "yosan83-C0024",
+      "sourceChainageMapPoints": 5031.090525697981,
+      "sourceBracket": [
+        9,
+        10
+      ],
+      "sourcePixelInterpolated": [
+        132.51392009257802,
+        33.358788598648744
+      ]
+    },
+    {
+      "coordinate": [
+        132.51407592748086,
+        33.358820416761205
+      ],
+      "pixel": [
+        461,
+        347
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        181,
+        203,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          456,
+          343
+        ],
+        [
+          459,
+          345
+        ],
+        [
+          461,
+          347
+        ],
+        [
+          463,
+          348
+        ],
+        [
+          466,
+          350
+        ]
+      ],
+      "controlID": "yosan83-C0025",
+      "sourceChainageMapPoints": 5110.944597477823,
+      "sourceBracket": [
+        9,
+        10
+      ],
+      "sourcePixelInterpolated": [
+        132.51400999999998,
+        33.35874000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.51420467351358,
+        33.35876664961471
+      ],
+      "pixel": [
+        473,
+        353
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        139,
+        179,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          468,
+          350
+        ],
+        [
+          471,
+          351
+        ],
+        [
+          473,
+          353
+        ],
+        [
+          476,
+          354
+        ],
+        [
+          479,
+          356
+        ]
+      ],
+      "controlID": "yosan83-C0026",
+      "sourceChainageMapPoints": 5232.334146725901,
+      "sourceBracket": [
+        10,
+        11
+      ],
+      "sourcePixelInterpolated": [
+        132.51415616382724,
+        33.35868012575751
+      ]
+    },
+    {
+      "coordinate": [
+        132.51441925023477,
+        33.35861430918591
+      ],
+      "pixel": [
+        493,
+        370
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        181,
+        204,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          487,
+          367
+        ],
+        [
+          490,
+          369
+        ],
+        [
+          493,
+          370
+        ],
+        [
+          495,
+          371
+        ],
+        [
+          498,
+          373
+        ]
+      ],
+      "controlID": "yosan83-C0027",
+      "sourceChainageMapPoints": 5433.57776775382,
+      "sourceBracket": [
+        10,
+        11
+      ],
+      "sourcePixelInterpolated": [
+        132.51439847906795,
+        33.3585808641616
+      ]
+    },
+    {
+      "coordinate": [
+        132.51466601346414,
+        33.3585336582627
+      ],
+      "pixel": [
+        516,
+        379
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        135,
+        178,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          511,
+          376
+        ],
+        [
+          514,
+          377
+        ],
+        [
+          516,
+          379
+        ],
+        [
+          519,
+          380
+        ],
+        [
+          522,
+          381
+        ]
+      ],
+      "controlID": "yosan83-C0028",
+      "sourceChainageMapPoints": 5634.821388781739,
+      "sourceBracket": [
+        10,
+        11
+      ],
+      "sourcePixelInterpolated": [
+        132.51464079430878,
+        33.35848160245251
+      ]
+    },
+    {
+      "coordinate": [
+        132.5148591325132,
+        33.35844404603816
+      ],
+      "pixel": [
+        534,
+        389
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        133,
+        176,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          530,
+          387
+        ],
+        [
+          532,
+          388
+        ],
+        [
+          534,
+          389
+        ],
+        [
+          537,
+          391
+        ],
+        [
+          540,
+          392
+        ]
+      ],
+      "controlID": "yosan83-C0029",
+      "sourceChainageMapPoints": 5800.262384182415,
+      "sourceBracket": [
+        10,
+        11
+      ],
+      "sourcePixelInterpolated": [
+        132.51484,
+        33.35840000000002
+      ]
+    },
+    {
+      "coordinate": [
+        132.51490204785745,
+        33.35842612358217
+      ],
+      "pixel": [
+        538,
+        391
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        204,
+        218,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          533,
+          389
+        ],
+        [
+          535,
+          390
+        ],
+        [
+          538,
+          391
+        ],
+        [
+          541,
+          392
+        ],
+        [
+          544,
+          393
+        ]
+      ],
+      "controlID": "yosan83-C0030",
+      "sourceChainageMapPoints": 5836.0650098096585,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.5148844753228,
+        33.35838488705531
+      ]
+    },
+    {
+      "coordinate": [
+        132.51515953992288,
+        33.35834547248458
+      ],
+      "pixel": [
+        562,
+        400
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        199,
+        214,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          556,
+          398
+        ],
+        [
+          559,
+          399
+        ],
+        [
+          562,
+          400
+        ],
+        [
+          564,
+          402
+        ],
+        [
+          567,
+          403
+        ]
+      ],
+      "controlID": "yosan83-C0031",
+      "sourceChainageMapPoints": 6037.308630837578,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.5151344674632,
+        33.35829993838434
+      ]
+    },
+    {
+      "coordinate": [
+        132.5153955743162,
+        33.35824689881935
+      ],
+      "pixel": [
+        584,
+        411
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        139,
+        180,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          579,
+          409
+        ],
+        [
+          582,
+          410
+        ],
+        [
+          584,
+          411
+        ],
+        [
+          587,
+          412
+        ],
+        [
+          590,
+          413
+        ]
+      ],
+      "controlID": "yosan83-C0032",
+      "sourceChainageMapPoints": 6238.552251865497,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.51538445960358,
+        33.35821498963045
+      ]
+    },
+    {
+      "coordinate": [
+        132.51564233754556,
+        33.358157286299544
+      ],
+      "pixel": [
+        607,
+        421
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        171,
+        197,
+        248
+      ],
+      "persistentWitnessPixels": [
+        [
+          602,
+          419
+        ],
+        [
+          605,
+          420
+        ],
+        [
+          607,
+          421
+        ],
+        [
+          610,
+          422
+        ],
+        [
+          613,
+          424
+        ]
+      ],
+      "controlID": "yosan83-C0033",
+      "sourceChainageMapPoints": 6439.795872893416,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.51563445174395,
+        33.35813004079365
+      ]
+    },
+    {
+      "coordinate": [
+        132.51587837193887,
+        33.358076634952816
+      ],
+      "pixel": [
+        629,
+        430
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        162,
+        192,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          624,
+          428
+        ],
+        [
+          627,
+          429
+        ],
+        [
+          629,
+          430
+        ],
+        [
+          632,
+          431
+        ],
+        [
+          635,
+          432
+        ]
+      ],
+      "controlID": "yosan83-C0034",
+      "sourceChainageMapPoints": 6629.412169989394,
+      "sourceBracket": [
+        11,
+        12
+      ],
+      "sourcePixelInterpolated": [
+        132.51587,
+        33.35804999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.515899829611,
+        33.358076634952816
+      ],
+      "pixel": [
+        631,
+        430
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        159,
+        190,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          625,
+          428
+        ],
+        [
+          628,
+          429
+        ],
+        [
+          631,
+          430
+        ],
+        [
+          634,
+          431
+        ],
+        [
+          637,
+          432
+        ]
+      ],
+      "controlID": "yosan83-C0035",
+      "sourceChainageMapPoints": 6641.039493921336,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.5158844827443,
+        33.35804517242397
+      ]
+    },
+    {
+      "coordinate": [
+        132.51614659284036,
+        33.357987022257696
+      ],
+      "pixel": [
+        654,
+        440
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 2,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000002/view.json",
+      "rgb": [
+        115,
+        168,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          648,
+          438
+        ],
+        [
+          651,
+          439
+        ],
+        [
+          654,
+          440
+        ],
+        [
+          657,
+          441
+        ],
+        [
+          660,
+          442
+        ]
+      ],
+      "controlID": "yosan83-C0036",
+      "sourceChainageMapPoints": 6842.283114949255,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.51613514746464,
+        33.35796161756847
+      ]
+    },
+    {
+      "coordinate": [
+        132.51640277711886,
+        33.35789951064716
+      ],
+      "pixel": [
+        354,
+        314
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        124,
+        172,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          348,
+          311
+        ],
+        [
+          351,
+          312
+        ],
+        [
+          354,
+          314
+        ],
+        [
+          356,
+          315
+        ],
+        [
+          359,
+          316
+        ]
+      ],
+      "controlID": "yosan83-C0037",
+      "sourceChainageMapPoints": 7043.526735977174,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.51638581218492,
+        33.35787806263276
+      ]
+    },
+    {
+      "coordinate": [
+        132.51647787897127,
+        33.35787262679359
+      ],
+      "pixel": [
+        361,
+        317
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        135,
+        177,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          356,
+          315
+        ],
+        [
+          359,
+          316
+        ],
+        [
+          361,
+          317
+        ],
+        [
+          364,
+          318
+        ],
+        [
+          367,
+          319
+        ]
+      ],
+      "controlID": "yosan83-C0038",
+      "sourceChainageMapPoints": 7111.116067010181,
+      "sourceBracket": [
+        12,
+        13
+      ],
+      "sourcePixelInterpolated": [
+        132.51647000000003,
+        33.35784999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.51663881151217,
+        33.357809897769656
+      ],
+      "pixel": [
+        376,
+        324
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        197,
+        213,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          371,
+          322
+        ],
+        [
+          374,
+          323
+        ],
+        [
+          376,
+          324
+        ],
+        [
+          379,
+          325
+        ],
+        [
+          382,
+          326
+        ]
+      ],
+      "controlID": "yosan83-C0039",
+      "sourceChainageMapPoints": 7244.7703570050935,
+      "sourceBracket": [
+        13,
+        14
+      ],
+      "sourcePixelInterpolated": [
+        132.51663578834086,
+        33.35779308764108
+      ]
+    },
+    {
+      "coordinate": [
+        132.5168963035776,
+        33.35772028479988
+      ],
+      "pixel": [
+        400,
+        334
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        202,
+        215,
+        243
+      ],
+      "persistentWitnessPixels": [
+        [
+          394,
+          331
+        ],
+        [
+          397,
+          332
+        ],
+        [
+          400,
+          334
+        ],
+        [
+          403,
+          335
+        ],
+        [
+          405,
+          336
+        ]
+      ],
+      "controlID": "yosan83-C0040",
+      "sourceChainageMapPoints": 7446.013978033013,
+      "sourceBracket": [
+        13,
+        14
+      ],
+      "sourcePixelInterpolated": [
+        132.516885416288,
+        33.357707394480194
+      ]
+    },
+    {
+      "coordinate": [
+        132.51714306680697,
+        33.357639633048194
+      ],
+      "pixel": [
+        423,
+        343
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        121,
+        170,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          417,
+          341
+        ],
+        [
+          420,
+          342
+        ],
+        [
+          423,
+          343
+        ],
+        [
+          426,
+          344
+        ],
+        [
+          429,
+          345
+        ]
+      ],
+      "controlID": "yosan83-C0041",
+      "sourceChainageMapPoints": 7647.257599060932,
+      "sourceBracket": [
+        13,
+        14
+      ],
+      "sourcePixelInterpolated": [
+        132.5171350442351,
+        33.357621701234955
+      ]
+    },
+    {
+      "coordinate": [
+        132.51714306680697,
+        33.357639633048194
+      ],
+      "pixel": [
+        423,
+        343
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        121,
+        170,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          418,
+          341
+        ],
+        [
+          421,
+          342
+        ],
+        [
+          423,
+          343
+        ],
+        [
+          426,
+          344
+        ],
+        [
+          429,
+          346
+        ]
+      ],
+      "controlID": "yosan83-C0042",
+      "sourceChainageMapPoints": 7651.252809089596,
+      "sourceBracket": [
+        13,
+        14
+      ],
+      "sourcePixelInterpolated": [
+        132.51714000000004,
+        33.35761999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.51738983003634,
+        33.357541058583536
+      ],
+      "pixel": [
+        446,
+        354
+      ],
+      "normalOffsetPixels": -1,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        132,
+        176,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          440,
+          352
+        ],
+        [
+          443,
+          353
+        ],
+        [
+          446,
+          354
+        ],
+        [
+          448,
+          355
+        ],
+        [
+          451,
+          356
+        ]
+      ],
+      "controlID": "yosan83-C0043",
+      "sourceChainageMapPoints": 7848.501220088851,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51738260363516,
+        33.35753192121708
+      ]
+    },
+    {
+      "coordinate": [
+        132.51764732210177,
+        33.35746936799365
+      ],
+      "pixel": [
+        470,
+        362
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        164,
+        194,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          464,
+          360
+        ],
+        [
+          467,
+          361
+        ],
+        [
+          470,
+          362
+        ],
+        [
+          473,
+          363
+        ],
+        [
+          475,
+          365
+        ]
+      ],
+      "controlID": "yosan83-C0044",
+      "sourceChainageMapPoints": 8049.744841116771,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51763012113736,
+        33.35744205833182
+      ]
+    },
+    {
+      "coordinate": [
+        132.51789408533114,
+        33.357388716009446
+      ],
+      "pixel": [
+        493,
+        371
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        149,
+        184,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          488,
+          369
+        ],
+        [
+          490,
+          370
+        ],
+        [
+          493,
+          371
+        ],
+        [
+          496,
+          373
+        ],
+        [
+          499,
+          374
+        ]
+      ],
+      "controlID": "yosan83-C0045",
+      "sourceChainageMapPoints": 8250.988462144689,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51787763863956,
+        33.357352195353755
+      ]
+    },
+    {
+      "coordinate": [
+        132.51815157739657,
+        33.35729910260602
+      ],
+      "pixel": [
+        517,
+        381
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        153,
+        186,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          511,
+          378
+        ],
+        [
+          514,
+          379
+        ],
+        [
+          517,
+          381
+        ],
+        [
+          519,
+          382
+        ],
+        [
+          522,
+          383
+        ]
+      ],
+      "controlID": "yosan83-C0046",
+      "sourceChainageMapPoints": 8452.232083172608,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51812515614176,
+        33.35726233228291
+      ]
+    },
+    {
+      "coordinate": [
+        132.51839834062594,
+        33.35720948911032
+      ],
+      "pixel": [
+        540,
+        391
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        125,
+        172,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          534,
+          388
+        ],
+        [
+          537,
+          389
+        ],
+        [
+          540,
+          391
+        ],
+        [
+          542,
+          392
+        ],
+        [
+          545,
+          393
+        ]
+      ],
+      "controlID": "yosan83-C0047",
+      "sourceChainageMapPoints": 8653.475704200528,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51837267364397,
+        33.357172469119284
+      ]
+    },
+    {
+      "coordinate": [
+        132.5186451038553,
+        33.35711987552235
+      ],
+      "pixel": [
+        563,
+        401
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        148,
+        184,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          557,
+          398
+        ],
+        [
+          560,
+          399
+        ],
+        [
+          563,
+          401
+        ],
+        [
+          565,
+          402
+        ],
+        [
+          568,
+          403
+        ]
+      ],
+      "controlID": "yosan83-C0048",
+      "sourceChainageMapPoints": 8854.719325228447,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51862019114617,
+        33.357082605862885
+      ]
+    },
+    {
+      "coordinate": [
+        132.51873093454378,
+        33.35710195279368
+      ],
+      "pixel": [
+        571,
+        403
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        152,
+        186,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          566,
+          401
+        ],
+        [
+          569,
+          402
+        ],
+        [
+          571,
+          403
+        ],
+        [
+          574,
+          404
+        ],
+        [
+          577,
+          406
+        ]
+      ],
+      "controlID": "yosan83-C0049",
+      "sourceChainageMapPoints": 8927.738238165384,
+      "sourceBracket": [
+        14,
+        15
+      ],
+      "sourcePixelInterpolated": [
+        132.51871,
+        33.35705
+      ]
+    },
+    {
+      "coordinate": [
+        132.51889186708468,
+        33.357030261842105
+      ],
+      "pixel": [
+        586,
+        411
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        179,
+        202,
+        242
+      ],
+      "persistentWitnessPixels": [
+        [
+          580,
+          408
+        ],
+        [
+          583,
+          409
+        ],
+        [
+          586,
+          411
+        ],
+        [
+          588,
+          412
+        ],
+        [
+          591,
+          413
+        ]
+      ],
+      "controlID": "yosan83-C0050",
+      "sourceChainageMapPoints": 9055.962946256366,
+      "sourceBracket": [
+        15,
+        16
+      ],
+      "sourcePixelInterpolated": [
+        132.51886766876657,
+        33.35699266593688
+      ]
+    },
+    {
+      "coordinate": [
+        132.51913863031405,
+        33.356949609451
+      ],
+      "pixel": [
+        609,
+        420
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        139,
+        179,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          604,
+          417
+        ],
+        [
+          606,
+          419
+        ],
+        [
+          609,
+          420
+        ],
+        [
+          612,
+          421
+        ],
+        [
+          615,
+          422
+        ]
+      ],
+      "controlID": "yosan83-C0051",
+      "sourceChainageMapPoints": 9257.206567284285,
+      "sourceBracket": [
+        15,
+        16
+      ],
+      "sourcePixelInterpolated": [
+        132.51911512367576,
+        33.35690268231043
+      ]
+    },
+    {
+      "coordinate": [
+        132.51917081682222,
+        33.356940648069596
+      ],
+      "pixel": [
+        612,
+        421
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        146,
+        183,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          607,
+          419
+        ],
+        [
+          610,
+          420
+        ],
+        [
+          612,
+          421
+        ],
+        [
+          615,
+          422
+        ],
+        [
+          618,
+          424
+        ]
+      ],
+      "controlID": "yosan83-C0052",
+      "sourceChainageMapPoints": 9285.56986703216,
+      "sourceBracket": [
+        15,
+        16
+      ],
+      "sourcePixelInterpolated": [
+        132.51914999999997,
+        33.35689000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.51938539354342,
+        33.35686895698516
+      ],
+      "pixel": [
+        632,
+        429
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        118,
+        169,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          627,
+          427
+        ],
+        [
+          630,
+          428
+        ],
+        [
+          632,
+          429
+        ],
+        [
+          635,
+          431
+        ],
+        [
+          638,
+          432
+        ]
+      ],
+      "controlID": "yosan83-C0053",
+      "sourceChainageMapPoints": 9458.450188312205,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.519364014823,
+        33.35681551472079
+      ]
+    },
+    {
+      "coordinate": [
+        132.51964288560885,
+        33.35677934304657
+      ],
+      "pixel": [
+        656,
+        439
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 3,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000003/view.json",
+      "rgb": [
+        144,
+        182,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          650,
+          437
+        ],
+        [
+          653,
+          438
+        ],
+        [
+          656,
+          439
+        ],
+        [
+          658,
+          440
+        ],
+        [
+          661,
+          441
+        ]
+      ],
+      "controlID": "yosan83-C0054",
+      "sourceChainageMapPoints": 9659.693809340124,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.51961314160394,
+        33.35672880906759
+      ]
+    },
+    {
+      "coordinate": [
+        132.51989090685413,
+        33.356696548040134
+      ],
+      "pixel": [
+        355,
+        313
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        135,
+        177,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          349,
+          311
+        ],
+        [
+          352,
+          312
+        ],
+        [
+          355,
+          313
+        ],
+        [
+          358,
+          315
+        ],
+        [
+          360,
+          316
+        ]
+      ],
+      "controlID": "yosan83-C0055",
+      "sourceChainageMapPoints": 9860.937430368043,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.51986226838488,
+        33.35664210332803
+      ]
+    },
+    {
+      "coordinate": [
+        132.5201376700835,
+        33.35661589533979
+      ],
+      "pixel": [
+        378,
+        322
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        120,
+        170,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          373,
+          320
+        ],
+        [
+          375,
+          321
+        ],
+        [
+          378,
+          322
+        ],
+        [
+          381,
+          323
+        ],
+        [
+          384,
+          325
+        ]
+      ],
+      "controlID": "yosan83-C0056",
+      "sourceChainageMapPoints": 10062.181051395963,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52011139516588,
+        33.35655539750207
+      ]
+    },
+    {
+      "coordinate": [
+        132.52038443331287,
+        33.35652628114064
+      ],
+      "pixel": [
+        401,
+        332
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        158,
+        190,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          396,
+          330
+        ],
+        [
+          399,
+          331
+        ],
+        [
+          401,
+          332
+        ],
+        [
+          404,
+          333
+        ],
+        [
+          407,
+          334
+        ]
+      ],
+      "controlID": "yosan83-C0057",
+      "sourceChainageMapPoints": 10263.424672423882,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52036052194688,
+        33.356468691589754
+      ]
+    },
+    {
+      "coordinate": [
+        132.52063119654224,
+        33.35641874397987
+      ],
+      "pixel": [
+        424,
+        344
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        165,
+        194,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          418,
+          342
+        ],
+        [
+          421,
+          343
+        ],
+        [
+          424,
+          344
+        ],
+        [
+          427,
+          346
+        ],
+        [
+          429,
+          347
+        ]
+      ],
+      "controlID": "yosan83-C0058",
+      "sourceChainageMapPoints": 10464.668293451801,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52060964872788,
+        33.35638198559104
+      ]
+    },
+    {
+      "coordinate": [
+        132.52088868860767,
+        33.35635601390807
+      ],
+      "pixel": [
+        448,
+        351
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        206,
+        220,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          442,
+          348
+        ],
+        [
+          445,
+          350
+        ],
+        [
+          448,
+          351
+        ],
+        [
+          451,
+          352
+        ],
+        [
+          453,
+          354
+        ]
+      ],
+      "controlID": "yosan83-C0059",
+      "sourceChainageMapPoints": 10665.91191447972,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52085877550883,
+        33.35629527950596
+      ]
+    },
+    {
+      "coordinate": [
+        132.52113545183704,
+        33.35626639944134
+      ],
+      "pixel": [
+        471,
+        361
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        113,
+        167,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          466,
+          359
+        ],
+        [
+          468,
+          360
+        ],
+        [
+          471,
+          361
+        ],
+        [
+          474,
+          362
+        ],
+        [
+          477,
+          363
+        ]
+      ],
+      "controlID": "yosan83-C0060",
+      "sourceChainageMapPoints": 10867.15553550764,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52110790228983,
+        33.35620857333451
+      ]
+    },
+    {
+      "coordinate": [
+        132.52122128252552,
+        33.35623951508333
+      ],
+      "pixel": [
+        479,
+        364
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        130,
+        175,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          473,
+          362
+        ],
+        [
+          476,
+          363
+        ],
+        [
+          479,
+          364
+        ],
+        [
+          482,
+          365
+        ],
+        [
+          484,
+          366
+        ]
+      ],
+      "controlID": "yosan83-C0061",
+      "sourceChainageMapPoints": 10933.473738660614,
+      "sourceBracket": [
+        16,
+        17
+      ],
+      "sourcePixelInterpolated": [
+        132.52119,
+        33.35618
+      ]
+    },
+    {
+      "coordinate": [
+        132.5213822150664,
+        33.35617678488235
+      ],
+      "pixel": [
+        494,
+        371
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        161,
+        191,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          488,
+          369
+        ],
+        [
+          491,
+          370
+        ],
+        [
+          494,
+          371
+        ],
+        [
+          497,
+          372
+        ],
+        [
+          500,
+          373
+        ]
+      ],
+      "controlID": "yosan83-C0062",
+      "sourceChainageMapPoints": 11068.399156535559,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.52135959730606,
+        33.35612730965575
+      ]
+    },
+    {
+      "coordinate": [
+        132.52163970713184,
+        33.35609613170037
+      ],
+      "pixel": [
+        518,
+        380
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        150,
+        185,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          512,
+          378
+        ],
+        [
+          515,
+          379
+        ],
+        [
+          518,
+          380
+        ],
+        [
+          520,
+          381
+        ],
+        [
+          523,
+          382
+        ]
+      ],
+      "controlID": "yosan83-C0063",
+      "sourceChainageMapPoints": 11269.642777563478,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.52161255465478,
+        33.35604872102627
+      ]
+    },
+    {
+      "coordinate": [
+        132.52187574152515,
+        33.35600651696608
+      ],
+      "pixel": [
+        540,
+        390
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        176,
+        200,
+        248
+      ],
+      "persistentWitnessPixels": [
+        [
+          535,
+          388
+        ],
+        [
+          538,
+          389
+        ],
+        [
+          540,
+          390
+        ],
+        [
+          543,
+          391
+        ],
+        [
+          546,
+          392
+        ]
+      ],
+      "controlID": "yosan83-C0064",
+      "sourceChainageMapPoints": 11470.886398591398,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.52186551200356,
+        33.355970132325844
+      ]
+    },
+    {
+      "coordinate": [
+        132.52213323359058,
+        33.35593482511221
+      ],
+      "pixel": [
+        564,
+        398
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        153,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          559,
+          396
+        ],
+        [
+          562,
+          397
+        ],
+        [
+          564,
+          398
+        ],
+        [
+          567,
+          399
+        ],
+        [
+          570,
+          400
+        ]
+      ],
+      "controlID": "yosan83-C0065",
+      "sourceChainageMapPoints": 11672.130019619317,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.52211846935228,
+        33.35589154355447
+      ]
+    },
+    {
+      "coordinate": [
+        132.52224052195118,
+        33.35590794065179
+      ],
+      "pixel": [
+        574,
+        401
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        144,
+        182,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          569,
+          399
+        ],
+        [
+          571,
+          400
+        ],
+        [
+          574,
+          401
+        ],
+        [
+          577,
+          402
+        ],
+        [
+          580,
+          403
+        ]
+      ],
+      "controlID": "yosan83-C0066",
+      "sourceChainageMapPoints": 11752.904091983315,
+      "sourceBracket": [
+        17,
+        18
+      ],
+      "sourcePixelInterpolated": [
+        132.52222,
+        33.35585999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.522390725656,
+        33.355872094691634
+      ],
+      "pixel": [
+        588,
+        405
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        113,
+        167,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          582,
+          404
+        ],
+        [
+          585,
+          404
+        ],
+        [
+          588,
+          405
+        ],
+        [
+          591,
+          406
+        ],
+        [
+          594,
+          406
+        ]
+      ],
+      "controlID": "yosan83-C0067",
+      "sourceChainageMapPoints": 11873.373640647236,
+      "sourceBracket": [
+        18,
+        19
+      ],
+      "sourcePixelInterpolated": [
+        132.52237735481873,
+        33.355829403236605
+      ]
+    },
+    {
+      "coordinate": [
+        132.52259457354114,
+        33.355845210211825
+      ],
+      "pixel": [
+        607,
+        408
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        128,
+        174,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          601,
+          407
+        ],
+        [
+          604,
+          408
+        ],
+        [
+          607,
+          408
+        ],
+        [
+          610,
+          409
+        ],
+        [
+          613,
+          410
+        ]
+      ],
+      "controlID": "yosan83-C0068",
+      "sourceChainageMapPoints": 12028.517116572877,
+      "sourceBracket": [
+        18,
+        19
+      ],
+      "sourcePixelInterpolated": [
+        132.52258,
+        33.355789999999985
+      ]
+    },
+    {
+      "coordinate": [
+        132.5226589465575,
+        33.35583624871672
+      ],
+      "pixel": [
+        613,
+        409
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        132,
+        175,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          607,
+          407
+        ],
+        [
+          610,
+          408
+        ],
+        [
+          613,
+          409
+        ],
+        [
+          616,
+          409
+        ],
+        [
+          619,
+          410
+        ]
+      ],
+      "controlID": "yosan83-C0069",
+      "sourceChainageMapPoints": 12074.617261675156,
+      "sourceBracket": [
+        19,
+        20
+      ],
+      "sourcePixelInterpolated": [
+        132.522640204252,
+        33.355778252833474
+      ]
+    },
+    {
+      "coordinate": [
+        132.522927167459,
+        33.35580040272704
+      ],
+      "pixel": [
+        638,
+        413
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        168,
+        195,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          632,
+          412
+        ],
+        [
+          635,
+          413
+        ],
+        [
+          638,
+          413
+        ],
+        [
+          640,
+          414
+        ],
+        [
+          643,
+          415
+        ]
+      ],
+      "controlID": "yosan83-C0070",
+      "sourceChainageMapPoints": 12275.860882703075,
+      "sourceBracket": [
+        19,
+        20
+      ],
+      "sourcePixelInterpolated": [
+        132.522903017344,
+        33.3557269722317
+      ]
+    },
+    {
+      "coordinate": [
+        132.52301299814746,
+        33.35579144122732
+      ],
+      "pixel": [
+        646,
+        414
+      ],
+      "normalOffsetPixels": -9,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        197,
+        213,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          640,
+          413
+        ],
+        [
+          643,
+          414
+        ],
+        [
+          646,
+          414
+        ],
+        [
+          649,
+          415
+        ],
+        [
+          652,
+          416
+        ]
+      ],
+      "controlID": "yosan83-C0071",
+      "sourceChainageMapPoints": 12342.466029876452,
+      "sourceBracket": [
+        19,
+        20
+      ],
+      "sourcePixelInterpolated": [
+        132.52299,
+        33.355709999999995
+      ]
+    },
+    {
+      "coordinate": [
+        132.52319538836048,
+        33.355755595219186
+      ],
+      "pixel": [
+        663,
+        418
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        137,
+        178,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          657,
+          416
+        ],
+        [
+          660,
+          417
+        ],
+        [
+          663,
+          418
+        ],
+        [
+          666,
+          419
+        ],
+        [
+          669,
+          420
+        ]
+      ],
+      "controlID": "yosan83-C0072",
+      "sourceChainageMapPoints": 12477.104503730994,
+      "sourceBracket": [
+        20,
+        21
+      ],
+      "sourcePixelInterpolated": [
+        132.52316120117825,
+        33.355662063676164
+      ]
+    },
+    {
+      "coordinate": [
+        132.52328121904895,
+        33.35573767220959
+      ],
+      "pixel": [
+        671,
+        420
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 4,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000004/view.json",
+      "rgb": [
+        181,
+        203,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          665,
+          418
+        ],
+        [
+          668,
+          419
+        ],
+        [
+          671,
+          420
+        ],
+        [
+          674,
+          420
+        ],
+        [
+          677,
+          421
+        ]
+      ],
+      "controlID": "yosan83-C0073",
+      "sourceChainageMapPoints": 12539.074597696035,
+      "sourceBracket": [
+        20,
+        21
+      ],
+      "sourcePixelInterpolated": [
+        132.52324,
+        33.35564
+      ]
+    },
+    {
+      "coordinate": [
+        132.5234481730933,
+        33.3557336847994
+      ],
+      "pixel": [
+        356,
+        310
+      ],
+      "normalOffsetPixels": -13,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        197,
+        213,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          350,
+          310
+        ],
+        [
+          353,
+          310
+        ],
+        [
+          356,
+          310
+        ],
+        [
+          359,
+          311
+        ],
+        [
+          362,
+          311
+        ]
+      ],
+      "controlID": "yosan83-C0074",
+      "sourceChainageMapPoints": 12678.348124758913,
+      "sourceBracket": [
+        21,
+        22
+      ],
+      "sourcePixelInterpolated": [
+        132.52342448824498,
+        33.355615633634415
+      ]
+    },
+    {
+      "coordinate": [
+        132.52370566515873,
+        33.35567991574599
+      ],
+      "pixel": [
+        380,
+        316
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        177,
+        196,
+        233
+      ],
+      "persistentWitnessPixels": [
+        [
+          374,
+          315
+        ],
+        [
+          377,
+          316
+        ],
+        [
+          380,
+          316
+        ],
+        [
+          384,
+          317
+        ],
+        [
+          386,
+          317
+        ]
+      ],
+      "controlID": "yosan83-C0075",
+      "sourceChainageMapPoints": 12879.591745786833,
+      "sourceBracket": [
+        21,
+        22
+      ],
+      "sourcePixelInterpolated": [
+        132.52369106498242,
+        33.355580425383245
+      ]
+    },
+    {
+      "coordinate": [
+        132.5237914958472,
+        33.35567095423386
+      ],
+      "pixel": [
+        388,
+        317
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        132,
+        175,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          382,
+          316
+        ],
+        [
+          385,
+          317
+        ],
+        [
+          388,
+          317
+        ],
+        [
+          391,
+          318
+        ],
+        [
+          394,
+          318
+        ]
+      ],
+      "controlID": "yosan83-C0076",
+      "sourceChainageMapPoints": 12939.181224262751,
+      "sourceBracket": [
+        21,
+        22
+      ],
+      "sourcePixelInterpolated": [
+        132.52377,
+        33.35557
+      ]
+    },
+    {
+      "coordinate": [
+        132.52398461489628,
+        33.35562614665936
+      ],
+      "pixel": [
+        406,
+        322
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        123,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          400,
+          321
+        ],
+        [
+          403,
+          321
+        ],
+        [
+          406,
+          322
+        ],
+        [
+          409,
+          323
+        ],
+        [
+          412,
+          324
+        ]
+      ],
+      "controlID": "yosan83-C0077",
+      "sourceChainageMapPoints": 13080.835366814752,
+      "sourceBracket": [
+        22,
+        23
+      ],
+      "sourcePixelInterpolated": [
+        132.5239538483654,
+        33.35553003297782
+      ]
+    },
+    {
+      "coordinate": [
+        132.5242421069617,
+        33.35555445449219
+      ],
+      "pixel": [
+        430,
+        330
+      ],
+      "normalOffsetPixels": -9,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        122,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          424,
+          329
+        ],
+        [
+          427,
+          330
+        ],
+        [
+          430,
+          330
+        ],
+        [
+          433,
+          331
+        ],
+        [
+          435,
+          332
+        ]
+      ],
+      "controlID": "yosan83-C0078",
+      "sourceChainageMapPoints": 13282.078987842671,
+      "sourceBracket": [
+        22,
+        23
+      ],
+      "sourcePixelInterpolated": [
+        132.5242150360025,
+        33.355473253044735
+      ]
+    },
+    {
+      "coordinate": [
+        132.52425283579777,
+        33.35553653144118
+      ],
+      "pixel": [
+        431,
+        332
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        118,
+        169,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          425,
+          330
+        ],
+        [
+          428,
+          331
+        ],
+        [
+          431,
+          332
+        ],
+        [
+          434,
+          332
+        ],
+        [
+          437,
+          333
+        ]
+      ],
+      "controlID": "yosan83-C0079",
+      "sourceChainageMapPoints": 13293.608664625866,
+      "sourceBracket": [
+        22,
+        23
+      ],
+      "sourcePixelInterpolated": [
+        132.52423,
+        33.355470000000004
+      ]
+    },
+    {
+      "coordinate": [
+        132.52449959902714,
+        33.35544691613072
+      ],
+      "pixel": [
+        454,
+        342
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        160,
+        190,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          448,
+          340
+        ],
+        [
+          451,
+          341
+        ],
+        [
+          454,
+          342
+        ],
+        [
+          456,
+          343
+        ],
+        [
+          459,
+          345
+        ]
+      ],
+      "controlID": "yosan83-C0080",
+      "sourceChainageMapPoints": 13483.32260887059,
+      "sourceBracket": [
+        23,
+        24
+      ],
+      "sourcePixelInterpolated": [
+        132.52446065262052,
+        33.355380301820674
+      ]
+    },
+    {
+      "coordinate": [
+        132.52473563342045,
+        33.35533041608919
+      ],
+      "pixel": [
+        476,
+        355
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        119,
+        170,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          470,
+          352
+        ],
+        [
+          473,
+          353
+        ],
+        [
+          476,
+          355
+        ],
+        [
+          478,
+          356
+        ],
+        [
+          481,
+          357
+        ]
+      ],
+      "controlID": "yosan83-C0081",
+      "sourceChainageMapPoints": 13684.56622989851,
+      "sourceBracket": [
+        23,
+        24
+      ],
+      "sourcePixelInterpolated": [
+        132.52470532292529,
+        33.35528515222244
+      ]
+    },
+    {
+      "coordinate": [
+        132.5248000064368,
+        33.355312492992034
+      ],
+      "pixel": [
+        482,
+        357
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        177,
+        200,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          476,
+          355
+        ],
+        [
+          479,
+          356
+        ],
+        [
+          482,
+          357
+        ],
+        [
+          484,
+          359
+        ],
+        [
+          487,
+          360
+        ]
+      ],
+      "controlID": "yosan83-C0082",
+      "sourceChainageMapPoints": 13737.763730633087,
+      "sourceBracket": [
+        23,
+        24
+      ],
+      "sourcePixelInterpolated": [
+        132.52477,
+        33.35526
+      ]
+    },
+    {
+      "coordinate": [
+        132.5249609389777,
+        33.35519599277059
+      ],
+      "pixel": [
+        497,
+        370
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        194,
+        211,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          492,
+          366
+        ],
+        [
+          494,
+          368
+        ],
+        [
+          497,
+          370
+        ],
+        [
+          499,
+          371
+        ],
+        [
+          502,
+          373
+        ]
+      ],
+      "controlID": "yosan83-C0083",
+      "sourceChainageMapPoints": 13885.80985092643,
+      "sourceBracket": [
+        24,
+        25
+      ],
+      "sourcePixelInterpolated": [
+        132.52493687588947,
+        33.35517014381384
+      ]
+    },
+    {
+      "coordinate": [
+        132.5251755156989,
+        33.355070530819276
+      ],
+      "pixel": [
+        517,
+        384
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        200,
+        214,
+        243
+      ],
+      "persistentWitnessPixels": [
+        [
+          512,
+          380
+        ],
+        [
+          515,
+          382
+        ],
+        [
+          517,
+          384
+        ],
+        [
+          520,
+          385
+        ],
+        [
+          522,
+          387
+        ]
+      ],
+      "controlID": "yosan83-C0084",
+      "sourceChainageMapPoints": 14083.757313646965,
+      "sourceBracket": [
+        24,
+        25
+      ],
+      "sourcePixelInterpolated": [
+        132.52516000000003,
+        33.35504999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.52520770220707,
+        33.355088453966246
+      ],
+      "pixel": [
+        520,
+        382
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        161,
+        191,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          515,
+          378
+        ],
+        [
+          517,
+          380
+        ],
+        [
+          520,
+          382
+        ],
+        [
+          522,
+          384
+        ],
+        [
+          525,
+          386
+        ]
+      ],
+      "controlID": "yosan83-C0085",
+      "sourceChainageMapPoints": 14087.053471954348,
+      "sourceBracket": [
+        25,
+        26
+      ],
+      "sourcePixelInterpolated": [
+        132.52516341665142,
+        33.35504765715651
+      ]
+    },
+    {
+      "coordinate": [
+        132.52542227892826,
+        33.35495403027397
+      ],
+      "pixel": [
+        540,
+        397
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        176,
+        199,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          535,
+          393
+        ],
+        [
+          537,
+          395
+        ],
+        [
+          540,
+          397
+        ],
+        [
+          542,
+          399
+        ],
+        [
+          545,
+          401
+        ]
+      ],
+      "controlID": "yosan83-C0086",
+      "sourceChainageMapPoints": 14288.297092982268,
+      "sourceBracket": [
+        25,
+        26
+      ],
+      "sourcePixelInterpolated": [
+        132.52537201685692,
+        33.35490461709144
+      ]
+    },
+    {
+      "coordinate": [
+        132.52554029612492,
+        33.35483752957275
+      ],
+      "pixel": [
+        551,
+        410
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        161,
+        191,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          546,
+          406
+        ],
+        [
+          548,
+          408
+        ],
+        [
+          551,
+          410
+        ],
+        [
+          553,
+          412
+        ],
+        [
+          555,
+          414
+        ]
+      ],
+      "controlID": "yosan83-C0087",
+      "sourceChainageMapPoints": 14421.41406332883,
+      "sourceBracket": [
+        25,
+        26
+      ],
+      "sourcePixelInterpolated": [
+        132.52551,
+        33.35480999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.52560466914127,
+        33.354783759965734
+      ],
+      "pixel": [
+        557,
+        416
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        155,
+        188,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          553,
+          412
+        ],
+        [
+          555,
+          414
+        ],
+        [
+          557,
+          416
+        ],
+        [
+          559,
+          418
+        ],
+        [
+          561,
+          420
+        ]
+      ],
+      "controlID": "yosan83-C0088",
+      "sourceChainageMapPoints": 14489.540714010187,
+      "sourceBracket": [
+        26,
+        27
+      ],
+      "sourcePixelInterpolated": [
+        132.525575060913,
+        33.35475642049426
+      ]
+    },
+    {
+      "coordinate": [
+        132.52579778819035,
+        33.35463141256551
+      ],
+      "pixel": [
+        575,
+        433
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        177,
+        202,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          571,
+          429
+        ],
+        [
+          574,
+          431
+        ],
+        [
+          575,
+          433
+        ],
+        [
+          578,
+          435
+        ],
+        [
+          581,
+          438
+        ]
+      ],
+      "controlID": "yosan83-C0089",
+      "sourceChainageMapPoints": 14690.784335038106,
+      "sourceBracket": [
+        26,
+        27
+      ],
+      "sourcePixelInterpolated": [
+        132.52576724845767,
+        33.35459814841192
+      ]
+    },
+    {
+      "coordinate": [
+        132.52589434771488,
+        33.35456868120557
+      ],
+      "pixel": [
+        584,
+        440
+      ],
+      "normalOffsetPixels": -6,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        158,
+        190,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          580,
+          436
+        ],
+        [
+          582,
+          438
+        ],
+        [
+          584,
+          440
+        ],
+        [
+          586,
+          442
+        ],
+        [
+          588,
+          444
+        ]
+      ],
+      "controlID": "yosan83-C0090",
+      "sourceChainageMapPoints": 14777.435215852665,
+      "sourceBracket": [
+        26,
+        27
+      ],
+      "sourcePixelInterpolated": [
+        132.52585,
+        33.354530000000004
+      ]
+    },
+    {
+      "coordinate": [
+        132.52599090723942,
+        33.354461141626196
+      ],
+      "pixel": [
+        593,
+        452
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        192,
+        211,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          589,
+          448
+        ],
+        [
+          590,
+          449
+        ],
+        [
+          593,
+          452
+        ],
+        [
+          595,
+          454
+        ],
+        [
+          597,
+          456
+        ]
+      ],
+      "controlID": "yosan83-C0091",
+      "sourceChainageMapPoints": 14892.027956066026,
+      "sourceBracket": [
+        27,
+        28
+      ],
+      "sourcePixelInterpolated": [
+        132.5259522334241,
+        33.35443415627732
+      ]
+    },
+    {
+      "coordinate": [
+        132.52616256861637,
+        33.35429087035379
+      ],
+      "pixel": [
+        609,
+        471
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        125,
+        172,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          605,
+          467
+        ],
+        [
+          607,
+          469
+        ],
+        [
+          609,
+          471
+        ],
+        [
+          611,
+          473
+        ],
+        [
+          613,
+          476
+        ]
+      ],
+      "controlID": "yosan83-C0092",
+      "sourceChainageMapPoints": 15093.271577093945,
+      "sourceBracket": [
+        27,
+        28
+      ],
+      "sourcePixelInterpolated": [
+        132.5261317720616,
+        33.35426583874659
+      ]
+    },
+    {
+      "coordinate": [
+        132.52622694163273,
+        33.35427294704259
+      ],
+      "pixel": [
+        615,
+        473
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        177,
+        200,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          611,
+          469
+        ],
+        [
+          613,
+          471
+        ],
+        [
+          615,
+          473
+        ],
+        [
+          617,
+          475
+        ],
+        [
+          619,
+          478
+        ]
+      ],
+      "controlID": "yosan83-C0093",
+      "sourceChainageMapPoints": 15136.121009653938,
+      "sourceBracket": [
+        27,
+        28
+      ],
+      "sourcePixelInterpolated": [
+        132.52616999999998,
+        33.354229999999994
+      ]
+    },
+    {
+      "coordinate": [
+        132.52634495882938,
+        33.35411163707565
+      ],
+      "pixel": [
+        626,
+        491
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 5,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000005/view.json",
+      "rgb": [
+        129,
+        174,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          622,
+          486
+        ],
+        [
+          624,
+          488
+        ],
+        [
+          626,
+          491
+        ],
+        [
+          627,
+          493
+        ],
+        [
+          629,
+          496
+        ]
+      ],
+      "controlID": "yosan83-C0094",
+      "sourceChainageMapPoints": 15294.515198121864,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.52629552483523,
+        33.35408685806078
+      ]
+    },
+    {
+      "coordinate": [
+        132.5265139723782,
+        33.35393977916145
+      ],
+      "pixel": [
+        398,
+        260
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        178,
+        201,
+        247
+      ],
+      "persistentWitnessPixels": [
+        [
+          395,
+          255
+        ],
+        [
+          396,
+          257
+        ],
+        [
+          398,
+          260
+        ],
+        [
+          400,
+          262
+        ],
+        [
+          402,
+          265
+        ]
+      ],
+      "controlID": "yosan83-C0095",
+      "sourceChainageMapPoints": 15495.758819149783,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.52645500715346,
+        33.353904992449266
+      ]
+    },
+    {
+      "coordinate": [
+        132.52668563375516,
+        33.35376950686919
+      ],
+      "pixel": [
+        414,
+        279
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        142,
+        181,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          410,
+          275
+        ],
+        [
+          412,
+          277
+        ],
+        [
+          414,
+          279
+        ],
+        [
+          416,
+          282
+        ],
+        [
+          417,
+          284
+        ]
+      ],
+      "controlID": "yosan83-C0096",
+      "sourceChainageMapPoints": 15697.002440177703,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.52661448947168,
+        33.35372312645778
+      ]
+    },
+    {
+      "coordinate": [
+        132.52681437978788,
+        33.35362611941737
+      ],
+      "pixel": [
+        426,
+        295
+      ],
+      "normalOffsetPixels": -9,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        138,
+        179,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          423,
+          290
+        ],
+        [
+          425,
+          292
+        ],
+        [
+          426,
+          295
+        ],
+        [
+          428,
+          297
+        ],
+        [
+          430,
+          300
+        ]
+      ],
+      "controlID": "yosan83-C0097",
+      "sourceChainageMapPoints": 15855.378575388833,
+      "sourceBracket": [
+        28,
+        29
+      ],
+      "sourcePixelInterpolated": [
+        132.52674000000002,
+        33.35357999999999
+      ]
+    },
+    {
+      "coordinate": [
+        132.52686802396818,
+        33.353608195969294
+      ],
+      "pixel": [
+        431,
+        297
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        166,
+        194,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          427,
+          292
+        ],
+        [
+          429,
+          295
+        ],
+        [
+          431,
+          297
+        ],
+        [
+          433,
+          299
+        ],
+        [
+          435,
+          301
+        ]
+      ],
+      "controlID": "yosan83-C0098",
+      "sourceChainageMapPoints": 15898.246061205622,
+      "sourceBracket": [
+        29,
+        30
+      ],
+      "sourcePixelInterpolated": [
+        132.52677850856713,
+        33.35354434396326
+      ]
+    },
+    {
+      "coordinate": [
+        132.52703968534513,
+        33.35343792302842
+      ],
+      "pixel": [
+        447,
+        316
+      ],
+      "normalOffsetPixels": -10,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        156,
+        188,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          443,
+          312
+        ],
+        [
+          445,
+          314
+        ],
+        [
+          447,
+          316
+        ],
+        [
+          449,
+          318
+        ],
+        [
+          451,
+          321
+        ]
+      ],
+      "controlID": "yosan83-C0099",
+      "sourceChainageMapPoints": 16099.489682233541,
+      "sourceBracket": [
+        29,
+        30
+      ],
+      "sourcePixelInterpolated": [
+        132.52695928901954,
+        33.353376954666295
+      ]
+    },
+    {
+      "coordinate": [
+        132.5270718718533,
+        33.35337519080836
+      ],
+      "pixel": [
+        450,
+        323
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        143,
+        181,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          446,
+          318
+        ],
+        [
+          448,
+          320
+        ],
+        [
+          450,
+          323
+        ],
+        [
+          452,
+          325
+        ],
+        [
+          454,
+          327
+        ]
+      ],
+      "controlID": "yosan83-C0100",
+      "sourceChainageMapPoints": 16155.940815050268,
+      "sourceBracket": [
+        29,
+        30
+      ],
+      "sourcePixelInterpolated": [
+        132.52701000000002,
+        33.35333
+      ]
+    },
+    {
+      "coordinate": [
+        132.52721134672208,
+        33.353276611514055
+      ],
+      "pixel": [
+        463,
+        334
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        136,
+        178,
+        253
+      ],
+      "persistentWitnessPixels": [
+        [
+          459,
+          330
+        ],
+        [
+          461,
+          332
+        ],
+        [
+          463,
+          334
+        ],
+        [
+          465,
+          336
+        ],
+        [
+          468,
+          338
+        ]
+      ],
+      "controlID": "yosan83-C0101",
+      "sourceChainageMapPoints": 16300.73330326146,
+      "sourceBracket": [
+        30,
+        31
+      ],
+      "sourcePixelInterpolated": [
+        132.52715542311262,
+        33.35322251349509
+      ]
+    },
+    {
+      "coordinate": [
+        132.52741519460722,
+        33.353124261476
+      ],
+      "pixel": [
+        482,
+        351
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        149,
+        184,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          477,
+          347
+        ],
+        [
+          480,
+          349
+        ],
+        [
+          482,
+          351
+        ],
+        [
+          484,
+          353
+        ],
+        [
+          486,
+          355
+        ]
+      ],
+      "controlID": "yosan83-C0102",
+      "sourceChainageMapPoints": 16501.976924289378,
+      "sourceBracket": [
+        30,
+        31
+      ],
+      "sourcePixelInterpolated": [
+        132.52735754322345,
+        33.35307312034879
+      ]
+    },
+    {
+      "coordinate": [
+        132.5275224829678,
+        33.353043605465544
+      ],
+      "pixel": [
+        492,
+        360
+      ],
+      "normalOffsetPixels": -8,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        187,
+        206,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          488,
+          356
+        ],
+        [
+          490,
+          358
+        ],
+        [
+          492,
+          360
+        ],
+        [
+          495,
+          362
+        ],
+        [
+          497,
+          363
+        ]
+      ],
+      "controlID": "yosan83-C0103",
+      "sourceChainageMapPoints": 16613.94603424843,
+      "sourceBracket": [
+        30,
+        31
+      ],
+      "sourcePixelInterpolated": [
+        132.52747,
+        33.35299000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.5276297713284,
+        33.3530077583258
+      ],
+      "pixel": [
+        502,
+        364
+      ],
+      "normalOffsetPixels": -10,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        197,
+        212,
+        244
+      ],
+      "persistentWitnessPixels": [
+        [
+          497,
+          361
+        ],
+        [
+          500,
+          363
+        ],
+        [
+          502,
+          364
+        ],
+        [
+          504,
+          366
+        ],
+        [
+          507,
+          368
+        ]
+      ],
+      "controlID": "yosan83-C0104",
+      "sourceChainageMapPoints": 16703.220545317297,
+      "sourceBracket": [
+        31,
+        32
+      ],
+      "sourcePixelInterpolated": [
+        132.52756698371536,
+        33.352931358751555
+      ]
+    },
+    {
+      "coordinate": [
+        132.52785507688566,
+        33.352882293220446
+      ],
+      "pixel": [
+        523,
+        378
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        156,
+        188,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          518,
+          375
+        ],
+        [
+          521,
+          377
+        ],
+        [
+          523,
+          378
+        ],
+        [
+          525,
+          380
+        ],
+        [
+          528,
+          382
+        ]
+      ],
+      "controlID": "yosan83-C0105",
+      "sourceChainageMapPoints": 16904.464166345217,
+      "sourceBracket": [
+        31,
+        32
+      ],
+      "sourcePixelInterpolated": [
+        132.5277856055127,
+        33.352799168835574
+      ]
+    },
+    {
+      "coordinate": [
+        132.5279730940823,
+        33.352819560599954
+      ],
+      "pixel": [
+        534,
+        385
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        171,
+        196,
+        249
+      ],
+      "persistentWitnessPixels": [
+        [
+          529,
+          382
+        ],
+        [
+          532,
+          384
+        ],
+        [
+          534,
+          385
+        ],
+        [
+          537,
+          387
+        ],
+        [
+          539,
+          388
+        ]
+      ],
+      "controlID": "yosan83-C0106",
+      "sourceChainageMapPoints": 17009.765472673567,
+      "sourceBracket": [
+        31,
+        32
+      ],
+      "sourcePixelInterpolated": [
+        132.5279,
+        33.352729999999994
+      ]
+    },
+    {
+      "coordinate": [
+        132.5280803824429,
+        33.35279267517734
+      ],
+      "pixel": [
+        544,
+        388
+      ],
+      "normalOffsetPixels": -13,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        187,
+        206,
+        246
+      ],
+      "persistentWitnessPixels": [
+        [
+          538,
+          386
+        ],
+        [
+          541,
+          387
+        ],
+        [
+          544,
+          388
+        ],
+        [
+          546,
+          390
+        ],
+        [
+          549,
+          391
+        ]
+      ],
+      "controlID": "yosan83-C0107",
+      "sourceChainageMapPoints": 17105.707787373136,
+      "sourceBracket": [
+        32,
+        33
+      ],
+      "sourcePixelInterpolated": [
+        132.52801659617552,
+        33.35268454730177
+      ]
+    },
+    {
+      "coordinate": [
+        132.52831641683622,
+        33.35268513340382
+      ],
+      "pixel": [
+        566,
+        400
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        119,
+        169,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          560,
+          397
+        ],
+        [
+          563,
+          399
+        ],
+        [
+          566,
+          400
+        ],
+        [
+          569,
+          401
+        ],
+        [
+          571,
+          402
+        ]
+      ],
+      "controlID": "yosan83-C0108",
+      "sourceChainageMapPoints": 17306.951408401055,
+      "sourceBracket": [
+        32,
+        33
+      ],
+      "sourcePixelInterpolated": [
+        132.5282611622634,
+        33.352589208003366
+      ]
+    },
+    {
+      "coordinate": [
+        132.52854172239347,
+        33.35259551515774
+      ],
+      "pixel": [
+        587,
+        410
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        160,
+        191,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          582,
+          407
+        ],
+        [
+          585,
+          409
+        ],
+        [
+          587,
+          410
+        ],
+        [
+          590,
+          411
+        ],
+        [
+          593,
+          412
+        ]
+      ],
+      "controlID": "yosan83-C0109",
+      "sourceChainageMapPoints": 17495.252800297316,
+      "sourceBracket": [
+        32,
+        33
+      ],
+      "sourcePixelInterpolated": [
+        132.52849000000003,
+        33.3525
+      ]
+    },
+    {
+      "coordinate": [
+        132.5285631800656,
+        33.35259551515774
+      ],
+      "pixel": [
+        589,
+        410
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        154,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          583,
+          408
+        ],
+        [
+          586,
+          409
+        ],
+        [
+          589,
+          410
+        ],
+        [
+          591,
+          412
+        ],
+        [
+          594,
+          413
+        ]
+      ],
+      "controlID": "yosan83-C0110",
+      "sourceChainageMapPoints": 17508.195029428975,
+      "sourceBracket": [
+        33,
+        34
+      ],
+      "sourcePixelInterpolated": [
+        132.5285058343988,
+        33.35249406210128
+      ]
+    },
+    {
+      "coordinate": [
+        132.52862755308195,
+        33.35256862966592
+      ],
+      "pixel": [
+        595,
+        413
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        113,
+        167,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          589,
+          411
+        ],
+        [
+          592,
+          412
+        ],
+        [
+          595,
+          413
+        ],
+        [
+          597,
+          414
+        ],
+        [
+          600,
+          416
+        ]
+      ],
+      "controlID": "yosan83-C0111",
+      "sourceChainageMapPoints": 17560.64071590935,
+      "sourceBracket": [
+        33,
+        34
+      ],
+      "sourcePixelInterpolated": [
+        132.52857,
+        33.352470000000004
+      ]
+    },
+    {
+      "coordinate": [
+        132.52880994329496,
+        33.35248797314065
+      ],
+      "pixel": [
+        612,
+        422
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        189,
+        207,
+        245
+      ],
+      "persistentWitnessPixels": [
+        [
+          606,
+          419
+        ],
+        [
+          609,
+          420
+        ],
+        [
+          612,
+          422
+        ],
+        [
+          614,
+          423
+        ],
+        [
+          617,
+          424
+        ]
+      ],
+      "controlID": "yosan83-C0112",
+      "sourceChainageMapPoints": 17709.438650456894,
+      "sourceBracket": [
+        34,
+        35
+      ],
+      "sourcePixelInterpolated": [
+        132.52874844091002,
+        33.352395379322395
+      ]
+    },
+    {
+      "coordinate": [
+        132.52904597768827,
+        33.3523893928416
+      ],
+      "pixel": [
+        634,
+        433
+      ],
+      "normalOffsetPixels": -12,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        157,
+        188,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          629,
+          430
+        ],
+        [
+          631,
+          431
+        ],
+        [
+          634,
+          433
+        ],
+        [
+          637,
+          434
+        ],
+        [
+          639,
+          436
+        ]
+      ],
+      "controlID": "yosan83-C0113",
+      "sourceChainageMapPoints": 17910.682271484813,
+      "sourceBracket": [
+        34,
+        35
+      ],
+      "sourcePixelInterpolated": [
+        132.52898977554275,
+        33.35229445755522
+      ]
+    },
+    {
+      "coordinate": [
+        132.52917472372098,
+        33.35232665986591
+      ],
+      "pixel": [
+        646,
+        440
+      ],
+      "normalOffsetPixels": -11,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        162,
+        191,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          640,
+          437
+        ],
+        [
+          643,
+          438
+        ],
+        [
+          646,
+          440
+        ],
+        [
+          649,
+          441
+        ],
+        [
+          651,
+          443
+        ]
+      ],
+      "controlID": "yosan83-C0114",
+      "sourceChainageMapPoints": 18019.27357076087,
+      "sourceBracket": [
+        34,
+        35
+      ],
+      "sourcePixelInterpolated": [
+        132.52912000000003,
+        33.35224000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.52928201208158,
+        33.352263926845
+      ],
+      "pixel": [
+        656,
+        447
+      ],
+      "normalOffsetPixels": -10,
+      "viewOrdinal": 6,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000006/view.json",
+      "rgb": [
+        187,
+        206,
+        246
+      ],
+      "persistentWitnessPixels": [
+        [
+          651,
+          444
+        ],
+        [
+          653,
+          445
+        ],
+        [
+          656,
+          447
+        ],
+        [
+          659,
+          449
+        ],
+        [
+          661,
+          450
+        ]
+      ],
+      "controlID": "yosan83-C0115",
+      "sourceChainageMapPoints": 18111.925892512732,
+      "sourceBracket": [
+        35,
+        36
+      ],
+      "sourcePixelInterpolated": [
+        132.52922661566168,
+        33.3521866922141
+      ]
+    },
+    {
+      "coordinate": [
+        132.52950957182395,
+        33.35214219514186
+      ],
+      "pixel": [
+        413,
+        246
+      ],
+      "normalOffsetPixels": -9,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        186,
+        206,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          408,
+          243
+        ],
+        [
+          410,
+          245
+        ],
+        [
+          413,
+          246
+        ],
+        [
+          416,
+          248
+        ],
+        [
+          418,
+          249
+        ]
+      ],
+      "controlID": "yosan83-C0116",
+      "sourceChainageMapPoints": 18313.16951354065,
+      "sourceBracket": [
+        35,
+        36
+      ],
+      "sourcePixelInterpolated": [
+        132.52945818807558,
+        33.35207090599221
+      ]
+    },
+    {
+      "coordinate": [
+        132.5295739448403,
+        33.35210634763092
+      ],
+      "pixel": [
+        419,
+        250
+      ],
+      "normalOffsetPixels": -9,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        202,
+        217,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          413,
+          247
+        ],
+        [
+          416,
+          248
+        ],
+        [
+          419,
+          250
+        ],
+        [
+          421,
+          252
+        ],
+        [
+          423,
+          253
+        ]
+      ],
+      "controlID": "yosan83-C0117",
+      "sourceChainageMapPoints": 18366.885995869867,
+      "sourceBracket": [
+        35,
+        36
+      ],
+      "sourcePixelInterpolated": [
+        132.52952,
+        33.35204
+      ]
+    },
+    {
+      "coordinate": [
+        132.52971341970908,
+        33.351998805009515
+      ],
+      "pixel": [
+        432,
+        262
+      ],
+      "normalOffsetPixels": -7,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        165,
+        195,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          429,
+          259
+        ],
+        [
+          431,
+          261
+        ],
+        [
+          432,
+          262
+        ],
+        [
+          435,
+          264
+        ],
+        [
+          438,
+          266
+        ]
+      ],
+      "controlID": "yosan83-C0118",
+      "sourceChainageMapPoints": 18514.41313456857,
+      "sourceBracket": [
+        36,
+        37
+      ],
+      "sourcePixelInterpolated": [
+        132.52968069119163,
+        33.351943585347904
+      ]
+    },
+    {
+      "coordinate": [
+        132.52988508108604,
+        33.35185541464098
+      ],
+      "pixel": [
+        448,
+        278
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        153,
+        187,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          444,
+          275
+        ],
+        [
+          446,
+          277
+        ],
+        [
+          448,
+          278
+        ],
+        [
+          451,
+          280
+        ],
+        [
+          453,
+          282
+        ]
+      ],
+      "controlID": "yosan83-C0119",
+      "sourceChainageMapPoints": 18688.21349371998,
+      "sourceBracket": [
+        36,
+        37
+      ],
+      "sourcePixelInterpolated": [
+        132.52986999999996,
+        33.35183
+      ]
+    },
+    {
+      "coordinate": [
+        132.52991726759421,
+        33.35181956701194
+      ],
+      "pixel": [
+        451,
+        282
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        158,
+        189,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          447,
+          277
+        ],
+        [
+          449,
+          279
+        ],
+        [
+          451,
+          282
+        ],
+        [
+          453,
+          284
+        ],
+        [
+          455,
+          286
+        ]
+      ],
+      "controlID": "yosan83-C0120",
+      "sourceChainageMapPoints": 18715.65675559649,
+      "sourceBracket": [
+        37,
+        38
+      ],
+      "sourcePixelInterpolated": [
+        132.5298930246865,
+        33.35180601598268
+      ]
+    },
+    {
+      "coordinate": [
+        132.53009965780723,
+        33.35164929057242
+      ],
+      "pixel": [
+        468,
+        301
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        150,
+        185,
+        251
+      ],
+      "persistentWitnessPixels": [
+        [
+          464,
+          296
+        ],
+        [
+          466,
+          298
+        ],
+        [
+          468,
+          301
+        ],
+        [
+          469,
+          303
+        ],
+        [
+          471,
+          305
+        ]
+      ],
+      "controlID": "yosan83-C0121",
+      "sourceChainageMapPoints": 18916.90037662441,
+      "sourceBracket": [
+        37,
+        38
+      ],
+      "sourcePixelInterpolated": [
+        132.53006186654324,
+        33.35163013907506
+      ]
+    },
+    {
+      "coordinate": [
+        132.53014257315147,
+        33.35160448092771
+      ],
+      "pixel": [
+        472,
+        306
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        123,
+        171,
+        254
+      ],
+      "persistentWitnessPixels": [
+        [
+          468,
+          302
+        ],
+        [
+          470,
+          304
+        ],
+        [
+          472,
+          306
+        ],
+        [
+          474,
+          309
+        ],
+        [
+          476,
+          311
+        ]
+      ],
+      "controlID": "yosan83-C0122",
+      "sourceChainageMapPoints": 18974.270932324875,
+      "sourceBracket": [
+        37,
+        38
+      ],
+      "sourcePixelInterpolated": [
+        132.53011000000004,
+        33.351579999999984
+      ]
+    },
+    {
+      "coordinate": [
+        132.53026059034812,
+        33.3514700518552
+      ],
+      "pixel": [
+        483,
+        321
+      ],
+      "normalOffsetPixels": -5,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        145,
+        182,
+        252
+      ],
+      "persistentWitnessPixels": [
+        [
+          480,
+          316
+        ],
+        [
+          481,
+          319
+        ],
+        [
+          483,
+          321
+        ],
+        [
+          485,
+          324
+        ],
+        [
+          486,
+          326
+        ]
+      ],
+      "controlID": "yosan83-C0123",
+      "sourceChainageMapPoints": 19118.14399765233,
+      "sourceBracket": [
+        38,
+        39
+      ],
+      "sourcePixelInterpolated": [
+        132.53021485508827,
+        33.35144470331766
+      ]
+    },
+    {
+      "coordinate": [
+        132.5304000652169,
+        33.35127288884003
+      ],
+      "pixel": [
+        496,
+        343
+      ],
+      "normalOffsetPixels": -4,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        116,
+        168,
+        255
+      ],
+      "persistentWitnessPixels": [
+        [
+          493,
+          338
+        ],
+        [
+          494,
+          340
+        ],
+        [
+          496,
+          343
+        ],
+        [
+          497,
+          345
+        ],
+        [
+          499,
+          348
+        ]
+      ],
+      "controlID": "yosan83-C0124",
+      "sourceChainageMapPoints": 19319.387618680248,
+      "sourceBracket": [
+        38,
+        39
+      ],
+      "sourcePixelInterpolated": [
+        132.5303615219962,
+        33.351255455629406
+      ]
+    },
+    {
+      "coordinate": [
+        132.53044298056113,
+        33.35119223111421
+      ],
+      "pixel": [
+        500,
+        352
+      ],
+      "normalOffsetPixels": -3,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        160,
+        190,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          497,
+          347
+        ],
+        [
+          499,
+          349
+        ],
+        [
+          500,
+          352
+        ],
+        [
+          502,
+          354
+        ],
+        [
+          504,
+          357
+        ]
+      ],
+      "controlID": "yosan83-C0125",
+      "sourceChainageMapPoints": 19399.626067768044,
+      "sourceBracket": [
+        38,
+        39
+      ],
+      "sourcePixelInterpolated": [
+        132.53042,
+        33.35118000000001
+      ]
+    },
+    {
+      "coordinate": [
+        132.5305073535775,
+        33.35106676339217
+      ],
+      "pixel": [
+        506,
+        366
+      ],
+      "normalOffsetPixels": -2,
+      "viewOrdinal": 7,
+      "rawView": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/yodo-complete/native-outer-adjacent-baseline/primary/captures/002794/000007/view.json",
+      "rgb": [
+        160,
+        190,
+        250
+      ],
+      "persistentWitnessPixels": [
+        [
+          504,
+          361
+        ],
+        [
+          505,
+          364
+        ],
+        [
+          506,
+          366
+        ],
+        [
+          507,
+          369
+        ],
+        [
+          509,
+          372
+        ]
+      ],
+      "controlID": "yosan83-C0126",
+      "sourceChainageMapPoints": 19520.631239708167,
+      "sourceBracket": [
+        39,
+        40
+      ],
+      "sourcePixelInterpolated": [
+        132.53048801531475,
+        33.35105692485013
+      ]
+    }
+  ],
+  "unsupportedSamples": [
+    {
+      "chainageMapPoints": 201.2436210279192,
+      "sourceBracket": [
+        0,
+        1
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.50992356731683,
+        33.36298681483671
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 304.7764185266553,
+      "sourceBracket": [
+        0,
+        1
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51,
+        33.36288999999999
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 402.4872420558384,
+      "sourceBracket": [
+        1,
+        2
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51007280112657,
+        33.36279899875335
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 603.7308630837576,
+      "sourceBracket": [
+        1,
+        2
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51022274114143,
+        33.36261157376775
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 734.2678975281929,
+      "sourceBracket": [
+        1,
+        2
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51031999999998,
+        33.362490000000015
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 804.9744841116768,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51037408783117,
+        33.362424948727586
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 1006.218105139596,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51052803149508,
+        33.362239800878356
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 1207.4617261675153,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.510681975159,
+        33.362054652635166
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 1701.6365813262234,
+      "sourceBracket": [
+        2,
+        3
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.51106,
+        33.3616
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 19721.874860736087,
+      "sourceBracket": [
+        39,
+        40
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53060113153953,
+        33.35085223826486
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 19773.234367491823,
+      "sourceBracket": [
+        39,
+        40
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53062999999997,
+        33.350800000000014
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 19923.118481764006,
+      "sourceBracket": [
+        40,
+        41
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53070082409073,
+        33.35064285954761
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 20124.362102791925,
+      "sourceBracket": [
+        40,
+        41
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53079591686657,
+        33.350431872675074
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 20325.605723819845,
+      "sourceBracket": [
+        40,
+        41
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.5308910096424,
+        33.35022088529121
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 20450.446260445726,
+      "sourceBracket": [
+        40,
+        41
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53094999999996,
+        33.35009000000001
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 20526.849344847764,
+      "sourceBracket": [
+        41,
+        42
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53098502808376,
+        33.350009565246985
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    },
+    {
+      "chainageMapPoints": 20728.092965875683,
+      "sourceBracket": [
+        41,
+        42
+      ],
+      "sourceInterpolatedCoordinate": [
+        132.53107729109217,
+        33.349797701966125
+      ],
+      "handling": "Retained original source interpolation; no ownpixel fit claimed."
+    }
+  ],
+  "turnsAbove45": [
+    [
+      88,
+      45.00000000000001
+    ],
+    [
+      94,
+      68.68208772095718
+    ],
+    [
+      95,
+      70.5599651718238
+    ]
+  ],
+  "sourceCoordinates": [
+    [
+      132.509775,
+      33.363175
+    ],
+    [
+      132.51,
+      33.36289
+    ],
+    [
+      132.51032,
+      33.36249
+    ],
+    [
+      132.51106,
+      33.3616
+    ],
+    [
+      132.51201,
+      33.36045
+    ],
+    [
+      132.51243,
+      33.35994
+    ],
+    [
+      132.51264,
+      33.35968
+    ],
+    [
+      132.51278,
+      33.35955
+    ],
+    [
+      132.51321,
+      33.35919
+    ],
+    [
+      132.51364,
+      33.35894
+    ],
+    [
+      132.51401,
+      33.35874
+    ],
+    [
+      132.51484,
+      33.3584
+    ],
+    [
+      132.51587,
+      33.35805
+    ],
+    [
+      132.51647,
+      33.35785
+    ],
+    [
+      132.51714,
+      33.35762
+    ],
+    [
+      132.51871,
+      33.35705
+    ],
+    [
+      132.51915,
+      33.35689
+    ],
+    [
+      132.52119,
+      33.35618
+    ],
+    [
+      132.52222,
+      33.35586
+    ],
+    [
+      132.52258,
+      33.35579
+    ],
+    [
+      132.52299,
+      33.35571
+    ],
+    [
+      132.52324,
+      33.35564
+    ],
+    [
+      132.52377,
+      33.35557
+    ],
+    [
+      132.52423,
+      33.35547
+    ],
+    [
+      132.52477,
+      33.35526
+    ],
+    [
+      132.52516,
+      33.35505
+    ],
+    [
+      132.52551,
+      33.35481
+    ],
+    [
+      132.52585,
+      33.35453
+    ],
+    [
+      132.52617,
+      33.35423
+    ],
+    [
+      132.52674,
+      33.35358
+    ],
+    [
+      132.52701,
+      33.35333
+    ],
+    [
+      132.52747,
+      33.35299
+    ],
+    [
+      132.5279,
+      33.35273
+    ],
+    [
+      132.52849,
+      33.3525
+    ],
+    [
+      132.52857,
+      33.35247
+    ],
+    [
+      132.52912,
+      33.35224
+    ],
+    [
+      132.52952,
+      33.35204
+    ],
+    [
+      132.52987,
+      33.35183
+    ],
+    [
+      132.53011,
+      33.35158
+    ],
+    [
+      132.53042,
+      33.35118
+    ],
+    [
+      132.53063,
+      33.3508
+    ],
+    [
+      132.53095,
+      33.35009
+    ],
+    [
+      132.531085,
+      33.34978
+    ]
+  ],
+  "endpointGuards": {
+    "start": [
+      132.509775,
+      33.363175
+    ],
+    "end": [
+      132.531085,
+      33.34978
+    ],
+    "warning": "Preserved current guards pending Root highzoom station adjudication. Nakamura Wakai precise last7 retained."
+  },
+  "limits": [
+    "Unfinishedcandidate-only draft. Rootrequestedstopbeforefurtherfit/reviewforindependentrepairchats.",
+    "First/last150m retainsourcependingapprovedaliases/localflanks; do notreturnoldstationguards.",
+    "Sourcephysical/IDs/km/topologyuntouched.",
+    "No native/UI/build/freeze/production."
+  ],
+  "pixelReview": {
+    "actualBaselineViewsOpened": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "actualBaselinePanelsOpened": 18,
+    "metadataCameraRecordsRead": 9,
+    "actualCandidateReprojectionViewsOpened": 0,
+    "remainingBaselineViews": [
+      6,
+      7,
+      8
+    ],
+    "remainingCandidateViews": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "warning": "Nofitacceptance; draft146points includes3turnsabove45, unknownpalettefalsepicks/localguardjoins."
+  }
+}

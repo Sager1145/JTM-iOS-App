@@ -1,0 +1,14 @@
+Command: swift test --package-path /Users/sager/Documents/GitHub/JTM-iOS-App/ios/RailKit --scratch-path /private/tmp/railkit-build-bis --jobs 2 --filter DirectionalAlignmentSelectionTests.hokurikuLoopUsesUpDirection
+Building for debugging...
+[Using on-disk description]
+[1 / 5]
+[5 / 7] RailCoreTests-product
+Build complete! (0.63 sec)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite DirectionalAlignmentSelectionTests started.
+◇ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" started.
+✔ Test "Hatsuhara's loop serves the up direction; the crossing straight serves down" passed after 0.481 seconds.
+✔ Suite DirectionalAlignmentSelectionTests passed after 0.481 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.481 seconds.

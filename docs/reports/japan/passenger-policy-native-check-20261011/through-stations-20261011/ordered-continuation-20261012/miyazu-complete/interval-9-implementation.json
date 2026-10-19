@@ -1,0 +1,63 @@
+{
+  "status": "candidate-exported; unrendered, not applied",
+  "changedLines": [
+    "jp-WILLER　TRAINS-宮津線"
+  ],
+  "physicalSegmentsAndStationsUnchanged": true,
+  "changedLaneDocumentKeys": [
+    "partsByRegion"
+  ],
+  "changedNativeRows": [
+    [
+      [
+        "jp-WILLER　TRAINS-宮津線",
+        0,
+        0,
+        17,
+        1565,
+        83949.8
+      ],
+      [
+        "jp-WILLER　TRAINS-宮津線",
+        0,
+        0,
+        17,
+        1569,
+        83947
+      ]
+    ]
+  ],
+  "focusedTests": {
+    "command": "node --test app/scripts/railway/tests/miyazu-yosano-display.test.mjs",
+    "passed": 3,
+    "failed": 0,
+    "durationMs": 136.167542
+  },
+  "candidateCommand": "node app/scripts/railway/repair-miyazu-yosano-display.mjs --candidate-root /private/tmp/jtm-miyazu9-candidate-20261018",
+  "candidateDirectory": "/private/tmp/jtm-miyazu9-candidate-20261018",
+  "pythonNativeCounterpart": "interval-9-native-decoder-query.json",
+  "nativeBuildOrCaptureRun": false,
+  "applyRun": false,
+  "followupReplayGuards": {
+    "categories": [
+      "loopsByRegion",
+      "reversedLoopParts",
+      "strokeExcludedByRegion",
+      "chainBoundariesByRegion"
+    ],
+    "actualSchemas": [
+      "loop objects lineIds",
+      "reversed strings lineID#part",
+      "stroke row owner0",
+      "boundary row owner0"
+    ],
+    "focusedAffectedTest": {
+      "command": "node --test --test-name-pattern='changed physical baseline' app/scripts/railway/tests/miyazu-yosano-display.test.mjs",
+      "passed": 1,
+      "failed": 0,
+      "durationMs": 146.689333
+    },
+    "candidateGeometryUnchanged": true,
+    "nativeOrApplyRun": false
+  }
+}

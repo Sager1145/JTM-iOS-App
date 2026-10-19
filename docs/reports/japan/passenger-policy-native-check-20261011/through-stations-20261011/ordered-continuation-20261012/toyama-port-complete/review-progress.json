@@ -1,0 +1,99 @@
+{
+  "primaryContinuousViewsReviewed": 42,
+  "secondaryContinuousViewsReviewed": 42,
+  "thirdContinuousViewsReviewed": 42,
+  "allThreeCaptured": 42,
+  "allIntervals": 14,
+  "status": "corridor-northern-frames-formally-applied-delivered-main-other13-frame-centres-pending",
+  "observedDetailNeeded": "Iwasehama source endpoint appears at passenger-frame south end, not midpoint; inspect complete frame before repair.",
+  "directionSource": "https://www.city.toyama.lg.jp/_res/projects/default_project/_page_/001/006/518/r8_odekakepamphlet260219.pdf",
+  "directionNote": "Hotel-front stop boards Iwasehama direction only. This does not by itself make the track one-way.",
+  "rootManuallyReviewedContinuousViews": {
+    "primary": 42,
+    "secondary": 42,
+    "third": 42
+  },
+  "reviewStatus": "baseline-review-found-northern-offsets-and-short-iwasehama-endpoint",
+  "excludedExtraction": "pixel-analysis-baseline is unaccepted: generic blue/cyan mode selected cyan roadside lines near Shimookui; own-blue analysis remains proposal evidence, not native acceptance.",
+  "stationDetailsCaptured": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "stationDetailsCameraChecked": true,
+  "excludedDetailAttempts": [
+    "01-station-detail-z19: actual camera differs from requested station camera; do not use as centred station extent evidence"
+  ],
+  "currentCandidate": "root-candidate-v2/candidate.json",
+  "rejectedCandidates": [
+    "root-candidate-v1/candidate.json"
+  ],
+  "candidateV2RootReviewedViews": {
+    "primary": 42,
+    "secondary": 42,
+    "third": 42
+  },
+  "candidateV2Captured": {
+    "primary": 42,
+    "secondary": 42,
+    "third": 42
+  },
+  "mainCandidateV2": {
+    "intervals": 14,
+    "onOffPairs": 14,
+    "rootReviewed": true,
+    "dateBoundary": "2021-03-20/21 actual UI pass"
+  },
+  "candidateV3": {
+    "changedStationID": "001843",
+    "changedIntervals": [
+      12,
+      13
+    ],
+    "inspectors": {
+      "primary": 6,
+      "secondary": 6,
+      "third": 6
+    },
+    "all18ViewsRootReviewed": true,
+    "mainPairs": [
+      "12",
+      "13",
+      "keirin"
+    ],
+    "allMainPairsRootReviewed": true,
+    "unchangedIntervalsReusingV2": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "historyUnchangedFromDatedV2": true
+  },
+  "delivery": {
+    "formalReplay": "app/scripts/railway/repair-toyama-port-corridor-display.mjs",
+    "originalMain": "main-delivered/north-on.png",
+    "rootReviewedOriginalMainNorthPair": true,
+    "otherStationFrameCentresPending": 13
+  }
+}

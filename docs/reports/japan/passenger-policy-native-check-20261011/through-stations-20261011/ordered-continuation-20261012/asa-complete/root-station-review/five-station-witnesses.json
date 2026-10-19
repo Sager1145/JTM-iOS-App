@@ -1,0 +1,307 @@
+[
+  {
+    "i": 0,
+    "id": "009057",
+    "folder": "00-009057-face-z19",
+    "caps": [
+      [
+        198,
+        467
+      ],
+      [
+        548,
+        324
+      ]
+    ],
+    "rail": [
+      [
+        260,
+        462
+      ],
+      [
+        450,
+        381
+      ],
+      [
+        650,
+        296
+      ],
+      [
+        850,
+        211
+      ],
+      [
+        950,
+        168
+      ]
+    ],
+    "basis": "own southern 0/1 platform; representative platform0 rail, official numbering plus regional east-branch continuity; no Dosan alias copied",
+    "view": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/00-009057-face-z19/view.json",
+    "frameMidpointPixel": [
+      373.0,
+      395.5
+    ],
+    "normalAliasPixel": [
+      379.61123742835827,
+      411.0078408923146
+    ],
+    "alias": [
+      133.64481343327833,
+      33.57899227519761
+    ],
+    "pickUncertaintyPixels": 3,
+    "status": "root-candidate-not-native-accepted"
+  },
+  {
+    "i": 3,
+    "id": "009112",
+    "folder": "03-009112-caps-z20",
+    "frame": [
+      [
+        274,
+        148
+      ],
+      [
+        790,
+        300
+      ],
+      [
+        722,
+        514
+      ],
+      [
+        206,
+        361
+      ]
+    ],
+    "rail": [
+      [
+        200,
+        257
+      ],
+      [
+        350,
+        294
+      ],
+      [
+        499,
+        331
+      ],
+      [
+        650,
+        369
+      ],
+      [
+        850,
+        419
+      ]
+    ],
+    "basis": "own rectangular station frame longitudinal midpoint, normal to identified paired passenger rail group; user station-frame preference",
+    "view": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/03-009112-caps-z20/view.json",
+    "frameMidpointPixel": [
+      498.0,
+      330.75
+    ],
+    "normalAliasPixel": [
+      497.99960755556384,
+      330.75158040320406
+    ],
+    "alias": [
+      133.69791060255687,
+      33.56192909828104
+    ],
+    "pickUncertaintyPixels": 3,
+    "status": "root-candidate-not-native-accepted"
+  },
+  {
+    "i": 4,
+    "id": "009193",
+    "folder": "04-009193-caps-z20",
+    "frame": [
+      [
+        330,
+        176
+      ],
+      [
+        418,
+        103
+      ],
+      [
+        689,
+        445
+      ],
+      [
+        600,
+        519
+      ]
+    ],
+    "rail": [
+      [
+        330,
+        104
+      ],
+      [
+        375,
+        166
+      ],
+      [
+        410,
+        228
+      ],
+      [
+        449,
+        281
+      ],
+      [
+        510,
+        319
+      ],
+      [
+        570,
+        351
+      ],
+      [
+        611,
+        396
+      ],
+      [
+        640,
+        449
+      ],
+      [
+        677,
+        515
+      ],
+      [
+        733,
+        625
+      ]
+    ],
+    "basis": "own main station rectangle excluding east facility polygon; actual labelled curving rail instead of straight cut through platform fill",
+    "view": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/04-009193-caps-z20/view.json",
+    "frameMidpointPixel": [
+      509.25,
+      310.75
+    ],
+    "normalAliasPixel": [
+      505.75716361403465,
+      316.3569215834141
+    ],
+    "alias": [
+      133.71020649700074,
+      33.54604790199008
+    ],
+    "pickUncertaintyPixels": 3,
+    "status": "root-candidate-not-native-accepted"
+  },
+  {
+    "i": 13,
+    "id": "009242",
+    "folder": "13-009242-face-z19",
+    "frame": [
+      [
+        451,
+        285
+      ],
+      [
+        618,
+        244
+      ],
+      [
+        640,
+        327
+      ],
+      [
+        473,
+        372
+      ]
+    ],
+    "rail": [
+      [
+        350,
+        351
+      ],
+      [
+        500,
+        315.5
+      ],
+      [
+        650,
+        280
+      ],
+      [
+        750,
+        256
+      ]
+    ],
+    "basis": "own current Apple station rectangle on unique railway; older aerial confirms corridor only, does not prove post-construction platform caps",
+    "view": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/13-009242-face-z19/view.json",
+    "frameMidpointPixel": [
+      545.5,
+      307.0
+    ],
+    "normalAliasPixel": [
+      544.9916351884604,
+      304.8519796729088
+    ],
+    "alias": [
+      133.89762201807417,
+      33.5043445350319
+    ],
+    "pickUncertaintyPixels": 3,
+    "status": "root-candidate-not-native-accepted"
+  },
+  {
+    "i": 14,
+    "id": "009240",
+    "folder": "14-009240-face-z19",
+    "caps": [
+      [
+        366,
+        381
+      ],
+      [
+        579,
+        421
+      ]
+    ],
+    "rail": [
+      [
+        100,
+        305
+      ],
+      [
+        300,
+        344
+      ],
+      [
+        500,
+        383
+      ],
+      [
+        700,
+        422
+      ],
+      [
+        900,
+        460
+      ]
+    ],
+    "basis": "own southern narrow passenger face, north-adjacent through passenger rail traced from west/east throat; yard and access building excluded",
+    "view": "/Users/sager/Documents/GitHub/JTM-iOS-App/docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/asa-complete/stations-supplemental-20261014/14-009240-face-z19/view.json",
+    "frameMidpointPixel": [
+      472.5,
+      401.0
+    ],
+    "normalAliasPixel": [
+      476.8888032618493,
+      378.49331662987663
+    ],
+    "alias": [
+      133.90637435203962,
+      33.504684833474094
+    ],
+    "pickUncertaintyPixels": 3,
+    "status": "root-candidate-not-native-accepted"
+  }
+]

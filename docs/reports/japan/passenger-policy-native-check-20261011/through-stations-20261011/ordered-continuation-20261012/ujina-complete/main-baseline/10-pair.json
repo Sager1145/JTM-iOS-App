@@ -1,0 +1,66 @@
+{
+  "intervalIndex": 10,
+  "source": {
+    "intervalIndex": 10,
+    "fromStationID": "008116",
+    "toStationID": "008125",
+    "camera": [
+      34.3728525,
+      132.464295,
+      0.004911499999992941
+    ],
+    "sourceCoordinates": [
+      [
+        132.46397,
+        34.374145
+      ],
+      [
+        132.46423,
+        34.37408
+      ],
+      [
+        132.46434,
+        34.37406
+      ],
+      [
+        132.46448,
+        34.374
+      ],
+      [
+        132.46454,
+        34.37393
+      ],
+      [
+        132.46459,
+        34.37387
+      ],
+      [
+        132.46462,
+        34.37373
+      ],
+      [
+        132.46456,
+        34.37315
+      ],
+      [
+        132.46454,
+        34.3725
+      ],
+      [
+        132.46457,
+        34.37182
+      ],
+      [
+        132.46458,
+        34.37173
+      ],
+      [
+        132.4646,
+        34.37156
+      ]
+    ]
+  },
+  "status": "captured-awaiting-root-pixel-review",
+  "actualOnStatus": "34 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:rendered;lines:2;overlays:2;rides:0;budgetDrops:0;vertices:645;camera:17.37;lod:16.40;backbones:0;networkStations:6;distance:1085.9;focusRevision:0;focusBottom:0.0;heading:-0.0;centerLat:34.372852;centerLon:132.464295;viewportWidth:1024.0;viewportHeight:768.0;firstNetworkMs:12534.0;rebuilds:3;gestureBuilds:0;labelPasses:1;gestureLabelPasses:0;cacheHits:5;annotationReuses:0;panCallbacks:0;panMaxGapMs:0;gestureFrames:0;gestureMaxFrameGapMs:0;buildMs:6;covered:1;basemapMuted:0;rideOverlaysMs:0;rideCach",
+  "actualOffStatus": "23 text ID: railMapRenderStatus, Secondary Actions: Cancel, Description: network:off;lines:0;overlays:0;backbones:0;networkStations:0;rides:0;centerLat:34.372852;centerLon:132.464295;distance:1085.9;viewportWidth:1024.0;viewportHeight:768.0;basemapMuted:0;rideOverlaysMs:0;rideCacheMisses:0;markersMs:0;networkOverlaysMs:0;teardownMs:0;rideScanMs:0;materializeMs:0;labelPassMs:1;labelPassMaxMs:1;gestureLabelPassMaxMs:0;regionTickMaxMs:1;stackingMaxMs:0;annotationViews:0"
+}

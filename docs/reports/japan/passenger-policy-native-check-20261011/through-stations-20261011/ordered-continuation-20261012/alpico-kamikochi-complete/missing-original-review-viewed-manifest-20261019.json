@@ -1,0 +1,209 @@
+{
+  "reviewedAt": "2026-10-19",
+  "lineID": "jp-アルピコ交通-上高地線",
+  "scope": "Only new interval 1 西松本→渚, all four original basemap/smooth pairs",
+  "captureIndexPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/capture-index.json",
+  "resultPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/result.json",
+  "captureStatus": {
+    "captured": 4,
+    "failed": 0,
+    "pending": 0,
+    "processID": 92679,
+    "updatedAt": "2026-10-19T06:07:12Z",
+    "state": "evidenceReady"
+  },
+  "counts": {
+    "newPairsActuallyViewed": 4,
+    "newOriginalPNGsActuallyViewed": 8,
+    "retainedLegacyPairsReopened": 0,
+    "retainedLegacyPairsNotReverified": 56
+  },
+  "relevantCurrentIdentity": {
+    "sourceDecodedControlCount": 18,
+    "displayControlCount": 18,
+    "allFourNamedPlanIdentityMatches": true,
+    "stationIDs": [
+      "002512",
+      "002511"
+    ],
+    "scope": "Exact IEEE coordinate bits and station IDs for #1 only. No whole-line dependency hash recomputed."
+  },
+  "confirmedFalseVOrShoulderOrWrongJRTransfer": false,
+  "geometryCandidate": null,
+  "stationCoordinateCandidate": null,
+  "disposition": "Preserve reviewed own curve; no source-ready repair established. Full own platform caps unresolved; no whole-line or Main acceptance.",
+  "views": [
+    {
+      "viewpointID": "jp-アルピコ交通-上高地線#1#point-0",
+      "itemID": "jp-アルピコ交通-上高地線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 0,
+      "directory": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000000",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000000/basemap.png",
+        "smooth": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000000/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000000/view.json",
+      "timestamp": "2026-10-19T06:07:10Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.227,
+        "longitude": 137.963175,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.960334279538994,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237084127.42314667,
+        "rectY": 105196448.18133536,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "intervalIdentityPlan": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/identity-plan-27c5bdafebff5eba9cb27e0a14e168626060d36e7311e60d5edd53ca0eeaeb73.json",
+      "currentRelevantIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "finding": "西松本 endpoint and west/southwest departure are continuous on the own Kamikochi corridor; the broad westward curve is retained. The displayed own approach stays separate from the east-side JR/Shinonoi multi-track fan. No isolated false V, shoulder or station hook. Own complete usable platform caps are not fixed by this station fill."
+    },
+    {
+      "viewpointID": "jp-アルピコ交通-上高地線#1#point-1",
+      "itemID": "jp-アルピコ交通-上高地線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 1,
+      "directory": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000001",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000001/basemap.png",
+        "smooth": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000001/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000001/view.json",
+      "timestamp": "2026-10-19T06:07:11Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.22565103926601,
+        "longitude": 137.95982718262565,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9603506279216469,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237081631.1095814,
+        "rectY": 105197695.07846396,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "intervalIdentityPlan": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/identity-plan-27c5bdafebff5eba9cb27e0a14e168626060d36e7311e60d5edd53ca0eeaeb73.json",
+      "currentRelevantIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "finding": "Whole own westward bowl-shaped curve remains continuous across the viewport, including the crossing near Route 19. No abrupt transverse return, chord across built blocks or transfer into JR. Small red/blue differences do not support a geometry edit."
+    },
+    {
+      "viewpointID": "jp-アルピコ交通-上高地線#1#point-2",
+      "itemID": "jp-アルピコ交通-上高地線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 2,
+      "directory": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000002",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000002/basemap.png",
+        "smooth": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000002/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000002/view.json",
+      "timestamp": "2026-10-19T06:07:11Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.226984712590486,
+        "longitude": 137.956350893416,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.96033446481384,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237079039.0004726,
+        "rectY": 105196462.31220596,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "intervalIdentityPlan": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/identity-plan-27c5bdafebff5eba9cb27e0a14e168626060d36e7311e60d5edd53ca0eeaeb73.json",
+      "currentRelevantIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "finding": "Own curve approaches the northwest-running Nagisa station segment smoothly, with a small southeast-side difference relative to the station-band linework. No isolated false corner or detached cap. Full own platform caps/pair are unresolved."
+    },
+    {
+      "viewpointID": "jp-アルピコ交通-上高地線#1#point-3",
+      "itemID": "jp-アルピコ交通-上高地線#1",
+      "intervalIndex": 1,
+      "pointOrdinal": 3,
+      "directory": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000003",
+      "originalPNGs": {
+        "basemap": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000003/basemap.png",
+        "smooth": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000003/smooth.png"
+      },
+      "actuallyViewedModes": [
+        "basemap",
+        "smooth"
+      ],
+      "detail": "original",
+      "viewPath": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/captures/000000/000003/view.json",
+      "timestamp": "2026-10-19T06:07:11Z",
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.227135,
+        "longitude": 137.956085,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.9603326434116745,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 237078840.7359716,
+        "rectY": 105196323.39437522,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "intervalIdentityPlan": "/private/tmp/jtm-alpico-kamikochi-missing-20261019/alignment/identity-plan-27c5bdafebff5eba9cb27e0a14e168626060d36e7311e60d5edd53ca0eeaeb73.json",
+      "currentRelevantIdentityMatch": {
+        "source": true,
+        "display": true,
+        "stationIDs": true
+      },
+      "renderContract": "inspector-centreline-v5-preserve-small-survey-curves;specified-capture-v3;projection-witness-v1;exact-interior-or-same-line-three-way-endpoints;ownLane=0;mainLane=0;angle=30.0;blend=300.0;fraction=0.4;deviationPx=1.0;deviationMetres=10.0;w=1.5;lane=2.7;r=3.5999999999999996;rmin=3.0;ramp=24.0;weight=1.0;zoom=17.0;scale=8.0;viewport=1600x1200;backing=1;flat;light;outputs=basemap,smooth;coverage=mercator-min-axis-0.4-max350-v1;poi-excluded;buildings",
+      "wholeLineRenderDependency": "3cd0137db52c89fbe0014932bf473145eeecde074aa2f6bb43578063dcfac268",
+      "finding": "渚 endpoint is within the own diagonal Kamikochi station context and continues northwest without a hook or gap. Red lies on/near the southeast side of the depicted own band; no independently established full platform-centre or coordinate replacement. Visible extra river/next-interval context is not separately reviewed interval coverage."
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "viewedPairCount": 2,
+  "viewedPNGCount": 4,
+  "views": [
+    {
+      "pointOrdinal": 0,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/basemap.png",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000000/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.52083,
+        "longitude": 139.3077,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956760509431986,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238086677.92725334,
+        "rectY": 104924334.59784691,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "controlPixels": [
+        {
+          "decodedVertexIndex": 0,
+          "x": 800.0,
+          "y": 600.0000000018626
+        },
+        {
+          "decodedVertexIndex": 1,
+          "x": 833.5544320009649,
+          "y": 574.4842203892767
+        },
+        {
+          "decodedVertexIndex": 2,
+          "x": 930.4894577786326,
+          "y": 510.6944539472461
+        },
+        {
+          "decodedVertexIndex": 3,
+          "x": 935.1497955545783,
+          "y": 509.53463581204414
+        },
+        {
+          "decodedVertexIndex": 4,
+          "x": 956.5873493365943,
+          "y": 494.4569864459336
+        },
+        {
+          "decodedVertexIndex": 5,
+          "x": 959.3835519999266,
+          "y": 494.4569864459336
+        },
+        {
+          "decodedVertexIndex": 6,
+          "x": 961.24768711254,
+          "y": 493.29716621525586
+        },
+        {
+          "decodedVertexIndex": 7,
+          "x": 1047.9299697764218,
+          "y": 442.2649276256561
+        },
+        {
+          "decodedVertexIndex": 8,
+          "x": 1074.9599288888276,
+          "y": 428.34699400514364
+        }
+      ]
+    },
+    {
+      "pointOrdinal": 1,
+      "originalPaths": [
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/basemap.png",
+        "/private/tmp/jtm-watarase-keikoku-missing-20261019/alignment/captures/000006/000001/smooth.png"
+      ],
+      "actuallyViewed": true,
+      "camera": {
+        "displayScale": 1,
+        "heading": 0,
+        "latitude": 36.5224294687004,
+        "longitude": 139.31105080755052,
+        "mapPointsPerPoint": 8,
+        "metresPerPoint": 0.956740986041505,
+        "pitch": 0,
+        "rectHeight": 9600,
+        "rectWidth": 12800,
+        "rectX": 238089176.4704555,
+        "rectY": 104922850.52313125,
+        "viewportHeightPoints": 1200,
+        "viewportWidthPoints": 1600,
+        "zoom256": 17
+      },
+      "controlPixels": [
+        {
+          "decodedVertexIndex": 0,
+          "x": 487.6820997297764,
+          "y": 785.5093394592404
+        },
+        {
+          "decodedVertexIndex": 1,
+          "x": 521.2365317307413,
+          "y": 759.9935598466545
+        },
+        {
+          "decodedVertexIndex": 2,
+          "x": 618.171557508409,
+          "y": 696.2037934046239
+        },
+        {
+          "decodedVertexIndex": 3,
+          "x": 622.8318952843547,
+          "y": 695.0439752694219
+        },
+        {
+          "decodedVertexIndex": 4,
+          "x": 644.2694490663707,
+          "y": 679.9663259033114
+        },
+        {
+          "decodedVertexIndex": 5,
+          "x": 647.065651729703,
+          "y": 679.9663259033114
+        },
+        {
+          "decodedVertexIndex": 6,
+          "x": 648.9297868423164,
+          "y": 678.8065056726336
+        },
+        {
+          "decodedVertexIndex": 7,
+          "x": 735.6120695061982,
+          "y": 627.7742670830339
+        },
+        {
+          "decodedVertexIndex": 8,
+          "x": 762.642028618604,
+          "y": 613.8563334625214
+        }
+      ]
+    }
+  ]
+}

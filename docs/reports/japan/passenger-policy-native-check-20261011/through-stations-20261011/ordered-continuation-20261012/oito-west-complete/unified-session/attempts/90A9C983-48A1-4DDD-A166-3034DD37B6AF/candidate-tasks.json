@@ -1,0 +1,392 @@
+[
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#0\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#0\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#0\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001821",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001821"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001790",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001790"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#0\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#0",
+      "jp-西日本旅客鉄道-大糸線#1"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001790"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#1\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#1"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#1\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#1"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#1\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#1"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001772",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#1"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001772"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#1\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#1",
+      "jp-西日本旅客鉄道-大糸線#2"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001772"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#2\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#2"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#2\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#2"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#2\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#2"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001734",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#2"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001734"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#2\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#2",
+      "jp-西日本旅客鉄道-大糸線#3"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001734"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#3\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#3"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#3\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#3"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#3\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#3"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001715",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#3"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001715"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#3\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#3",
+      "jp-西日本旅客鉄道-大糸線#4"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001715"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#4\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#4"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#4\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#4"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#4\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#4"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001706",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#4"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001706"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#4\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#4",
+      "jp-西日本旅客鉄道-大糸線#5"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001706"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#5\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#5"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#5\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#5"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#5\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#5"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001686",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#5"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001686"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#5\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#5",
+      "jp-西日本旅客鉄道-大糸線#6"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001686"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#6\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#6"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#6\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#6"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#6\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#6"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001681",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#6"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001681"
+  },
+  {
+    "category" : "intervalSeam",
+    "id" : "jp-西日本旅客鉄道-大糸線#6\/seam",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#6",
+      "jp-西日本旅客鉄道-大糸線#7"
+    ],
+    "measuredMetres" : 0,
+    "note" : "Adjacent display endpoints only. Zero distance does not prove rendered continuity, track identity or physical connection; missing geometry stays unknown.",
+    "state" : "pendingReview",
+    "stationID" : "001681"
+  },
+  {
+    "category" : "lineOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線#7\/lineOffset",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#7"
+    ],
+    "note" : "Compare own track with retained native basemap evidence.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationApproach",
+    "id" : "jp-西日本旅客鉄道-大糸線#7\/stationApproach",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#7"
+    ],
+    "note" : "Review station approach, intended connections and false joins; proximity is not physical proof.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "disconnectedParts",
+    "id" : "jp-西日本旅客鉄道-大糸線#7\/disconnectedParts",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#7"
+    ],
+    "note" : "Review visible breaks and clipping separately from physical connectivity.",
+    "state" : "pendingReview"
+  },
+  {
+    "category" : "stationOffset",
+    "id" : "jp-西日本旅客鉄道-大糸線\/station\/001666",
+    "itemIDs" : [
+      "jp-西日本旅客鉄道-大糸線#7"
+    ],
+    "note" : "Blue passenger platforms define this line's station extent; purple transfer passages and yards are excluded.",
+    "state" : "pendingReview",
+    "stationID" : "001666"
+  }
+]
