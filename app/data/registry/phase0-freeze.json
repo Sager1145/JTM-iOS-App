@@ -3,12 +3,17 @@
   "protectedFiles": [
     {
       "path": "app/data/rail-history.json",
-      "sha256": "84bb46af91be7b88a3499599a20671990d19c59d44b4f7952f3a0b2b63265b24",
+      "sha256": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc",
       "why": "历史叠加"
     },
     {
+      "path": "app/public/rail/cn-2025.json",
+      "sha256": "7101bb0e5e3f5076e0ab31d49e9e9abd63235cce2471df5c212723e54c8a24ba",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
       "path": "app/public/rail/display-lanes.json",
-      "sha256": "168eb974dfbc977d701d7bd700ec4b77c45d492853f18b27e14d9d84eb8f576b",
+      "sha256": "6f1f306043a905dc804c9c1557bd4676b19c32991156b26093bb6e995b0b3c4c",
       "why": "显示 lane/follow 合同，非注册表输入"
     },
     {
@@ -18,7 +23,7 @@
     },
     {
       "path": "app/public/rail/jp-2025.json",
-      "sha256": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda",
+      "sha256": "3c6c2b723f5c2c05d63db3c55320753863e6a1027c6443624d891f8cb3cd2baa",
       "why": "compact-v1 包，P0 期间字节不变"
     },
     {
@@ -37,12 +42,203 @@
       "why": "compact-v1 包，P0 期间字节不变"
     },
     {
+      "path": "app/scripts/railway/ichibata-kitamatsue-display-evidence.json",
+      "sha256": "837c80751f8c6dd8c088b03ceb6959fea110c0eed19208976c795a2308d4932a",
+      "why": "北松江 #6 证据：只删 15/17/19"
+    },
+    {
+      "path": "app/scripts/railway/isumi-kurohara-display-evidence.json",
+      "sha256": "0053662bcc7f5a90ab2ba1fb786e32c58f8cfb2201ae164f3a4f8829a861ee06",
+      "why": "夷隅显示修复证据"
+    },
+    {
       "path": "app/scripts/railway/jp-manual-corrections/corrections.json",
       "sha256": "f339d2644893e150b04b21eb43cc05b38c6250d55b001472c8e8125606c00c8c",
       "why": "手工修复 authority；含いすみ substitute_bus（id A3）"
+    },
+    {
+      "path": "app/scripts/railway/keiyo-shared-corridor-evidence.json",
+      "sha256": "f6b85b2431d985b42d73a59135229651ca1268fd4d1bc03769db8b8f519f914e",
+      "why": "京叶 shared fork 证据"
+    },
+    {
+      "path": "app/scripts/railway/manyo-east-display-evidence.json",
+      "sha256": "8d64257ebfd2830f642240835a91ec0b1037bfdb73e7a2a4c1a4b192975af6ff",
+      "why": "万叶东线已接受显示证据"
+    },
+    {
+      "path": "app/scripts/railway/miyafuku-own-display-evidence.json",
+      "sha256": "fa9066041b39a5a2cdb5ab464dc9013a1f6d28323f6e9e1d72c01245ed30acd4",
+      "why": "宫福当前 authority；interval0 候选已否决"
+    },
+    {
+      "path": "app/scripts/railway/miyazu-yosano-display-evidence.json",
+      "sha256": "7750736e9ba67d4504d35023d4d08f4ded22855b18f6761d0a16abf13f39dbca",
+      "why": "宫津 #9 已接受；#15 另案未覆盖"
+    },
+    {
+      "path": "app/scripts/railway/repair-ichibata-kitamatsue-display.mjs",
+      "sha256": "304b9c8a8132e5a403521085b4064fe48e506cb19464873702fb7b42fe43adb5",
+      "why": "北松江 #6 写者；target part1 保持 150→0"
+    },
+    {
+      "path": "app/scripts/railway/repair-isumi-kurohara-display.mjs",
+      "sha256": "35aab8523fb42076d322bbb687f7a4cbbd1192f34c392a2ee0a0d34868ffc167",
+      "why": "夷隅显示修复写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-manyo-east-display.mjs",
+      "sha256": "0e833ea59c88e74cb673a8aa2f8f0839e82cb0603f723a69bf42081ed3d4d143",
+      "why": "万叶东线修复写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-miyafuku-own-display.mjs",
+      "sha256": "3f40f4ffb301b6a383bc053af057142c22651f9bf9dda5ebfe44bc36e2acb15d",
+      "why": "宫福当前写者，不得回落已否决 interval0"
+    },
+    {
+      "path": "app/scripts/railway/repair-miyazu-yosano-display.mjs",
+      "sha256": "c5513080ac7919adbd48abf7254dda69db9dc8c5aaae1942e8af048de909ed5d",
+      "why": "宫津 #9 写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-shinagawa-apple-forks-display.mjs",
+      "sha256": "c20ff5e079d9460faf2fb89777a9607b5df44e995e2f92373948040251fe4654",
+      "why": "品川 fork 显示写者；配套证据 JSON 不在盘上"
+    },
+    {
+      "path": "app/scripts/railway/repair-shinagawa-display-lanes.mjs",
+      "sha256": "760e7866093d957174e53f9cb1d5bf3aca14aba0286fa2a6111fb3e644225f1f",
+      "why": "品川/大崎派生尺写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-three-reversal-extents.mjs",
+      "sha256": "4264748df944a94a75eac46d5632d4f580696c9030565da128c74338418b30c9",
+      "why": "applyPreparedWrites 写前快照守卫"
+    },
+    {
+      "path": "app/scripts/railway/repair-tokyo-southern-branches.py",
+      "sha256": "da3f7ee76c01d068a9390703d240e00403b921faf6ffdb08a026aab9e6b76eda",
+      "why": "大崎/品川南支修复写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-watarase-hanawa-step-display.mjs",
+      "sha256": "290a55ca43a640e9a6d789efd2d810fe4add71141d91e95b400832dd6fca97ac",
+      "why": "渡良濑花轮 #8 写者"
+    },
+    {
+      "path": "app/scripts/railway/repair-yokohama-itoigawa-own-platform-display.mjs",
+      "sha256": "5ec33da817ba3ffdbdd8a0389355750f9770d418687340573470d741203f6507",
+      "why": "横滨相铁与糸鱼川本线端点写者"
+    },
+    {
+      "path": "app/scripts/railway/tokyo-southern-branches-overrides.json",
+      "sha256": "9aa04bb9da09c04296ba1dd22f94ecea824aa9919516433969d5b59b6d6da45b",
+      "why": "品川/大崎共享支线覆写"
+    },
+    {
+      "path": "app/scripts/railway/watarase-hanawa-step-display-evidence.json",
+      "sha256": "05745d79cf46fefc2cd59b6e8296aece7f0b8a361bd266faefd5d61dc761beb5",
+      "why": "花轮 #8：删后一组 v5，保留前一组 v2/v3"
+    },
+    {
+      "path": "app/scripts/railway/yokohama-itoigawa-own-platform-display-evidence.json",
+      "sha256": "d7b458e96963bda44183bbecaa44804f861e34ab541404455f0e4271cb9a9045",
+      "why": "横滨相铁与糸鱼川本线端点证据"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/chat-handoff-20261017/work-inventory-20261019.md",
+      "sha256": "bca854e0b6f79242cb2fe616e2731e29f28ad427f286ac0b18caa578dc2b17c4",
+      "why": "布崎 24.37° 否决、西野尻不建候选、Manyo 23 对"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ichibata-kitamatsue-complete/interval-11-own-source-review-20261019.md",
+      "sha256": "e1be96cb6455dbbd41f014ad4f0ef163836e97fea02466b9ddf6f1b05c5566d6",
+      "why": "布崎前窄窗否决的来源审查"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/ichibata-kitamatsue-complete/interval-6-own-source-review-20261019.md",
+      "sha256": "ee78f862055cf287fb7fe0a54d3b8a76fbd61324021e7f17fe6c997fc807a2fe",
+      "why": "北松江 #6 来源审查"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-shinminato-complete/preparation-20261019.md",
+      "sha256": "94b95fb538a158833d9ee9f9361b626eb582b84aead43889f3cd80d5b5f36565",
+      "why": "万叶新湊港 23 对保留；named plan 缺失"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/rejected-interval0-candidate-20261018/README.md",
+      "sha256": "f0f1bdafe957c8d92c76cb7a2670bd5058c86a7a83f9877d4bedde9f63d7d719",
+      "why": "宫福 interval0 否决说明"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyafuku-complete/rejected-interval0-candidate-20261018/miyafuku-own-display-evidence.json",
+      "sha256": "06f1ede1c509843d0fa65be2971a5eed31ad270e176914cf51bb06be7717cd18",
+      "why": "宫福已否决 interval0 候选快照"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyazu-complete/interval-15-own-source-review-20261018.md",
+      "sha256": "0fcc7d986a72ef8eae41178c5f3f133d779781dbd2b4180de6cc73c13c61cd55",
+      "why": "宫津 #15 独立未决审查"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/miyazu-complete/interval-9-source-review.md",
+      "sha256": "2da1cae500e6f0695799fc8518e8079642ec360d716a9e3abb3c55bd68c2a88d",
+      "why": "宫津 #9 已接受修复审查"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/sangi-sangi-complete/interval-13-own-source-20261019/interval-13-own-source-review-20261019.md",
+      "sha256": "8f59f26706723499d628635e59ab8a7e17a9dd6208484ef51511667a380a461b",
+      "why": "西野尻否决：不导出候选"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/watarase-keikoku-complete/hanawa-step-own-source-review-20261019.md",
+      "sha256": "cd43b8752110111f0cbbe3a7e38a7be0344deaf28718fd920e6ad6fd71c3f439",
+      "why": "花轮 #8 来源审查"
+    },
+    {
+      "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/osaki/latest-fragments-source-review.md",
+      "sha256": "dfdadf7fabe311d76ecd77c2fa76e807ec50e7f03a94f2e187a94e5a1c49d563",
+      "why": "大崎共享进路与 follow 合同"
+    },
+    {
+      "path": "docs/reports/japan/tokyo-osaki-legacy-repair-2026-10-01.md",
+      "sha256": "1bd4bf960155276677004d267e4ed1422cf0143252aede68ef6fec4b710b7a3e",
+      "why": "大崎—品川旧修复记录"
+    },
+    {
+      "path": "docs/reports/japan/tokyo-southern-branch-audit-2026-10-01.md",
+      "sha256": "bbbb258943b70d98cf6588c1f826cf38234662f79a84ab1f4f7deb08c27ded95",
+      "why": "品川南支审计"
+    },
+    {
+      "path": "docs/reports/sources/china-real-train-paths-20261018/README.md",
+      "sha256": "3595abe87e1190ba18a4c16ce1dfd6b566ffce187a2000776f0f2e487b6ae563",
+      "why": "广州南/沈阳北/攀枝花南缺证与地铁误标"
+    },
+    {
+      "path": "docs/reports/sources/china-real-train-paths-20261018/chuxiong-lijiang-continuation4.json",
+      "sha256": "a2cc936a8182eefaa7e1bfa24466151b3874a3542665dac8e046fc52d70c1412",
+      "why": "楚雄→丽江缺证，不补边"
+    },
+    {
+      "path": "docs/reports/sources/china-real-train-paths-20261018/overhaul-handoff-20261019.md",
+      "sha256": "0ea45974a0b713ee6d37c5e384795727be696f2f8164b8cf20b6fb86319f45ee",
+      "why": "source_review_id 只是审阅来源"
+    },
+    {
+      "path": "docs/reports/sources/china-real-train-paths-20261018/three-connectors-source-review.json",
+      "sha256": "b3440fd69d44c26a7448684b2a53f7e5f79c0a15c9d1d95bd4060a7368a531f2",
+      "why": "source_review_id 不得充当轨道身份"
+    },
+    {
+      "path": "docs/reports/sources/crtrainroute-study-20261018.md",
+      "sha256": "03cc82fb1965baaf2962993e26fce20acaada77018d7b27abcd3fa9d79a283d7",
+      "why": "CN 缺证边界与昆明地铁误标"
     }
   ],
   "regions": [
+    "cn",
     "hk",
     "jp",
     "kr",
@@ -52,7 +248,7 @@
   "registryInputs": [
     {
       "path": "app/data/rail-history.json",
-      "sha256": "84bb46af91be7b88a3499599a20671990d19c59d44b4f7952f3a0b2b63265b24"
+      "sha256": "3dd1f94e9b9f5f37ba720db830e4aaa54b72303758999e1a028d46af379bf6bc"
     },
     {
       "path": "app/data/station-english-jp.json",
@@ -60,7 +256,11 @@
     },
     {
       "path": "app/data/station-english.json",
-      "sha256": "e62d05fea9f978b298fa60f917b683a744c276fe0e5c870b4945a72b59e7ede4"
+      "sha256": "aafe50f4ec5a65daf8a2378e438b78f6030913c2a6824bb883c090b606e0187b"
+    },
+    {
+      "path": "app/data/station-names-cn.json",
+      "sha256": "dedfb53e8496b74d206ef9d6f701355fd7331e8cf13a03b89a46bec4bf9496e2"
     },
     {
       "path": "app/data/station-names-hk.json",
@@ -80,7 +280,15 @@
     },
     {
       "path": "app/data/station-names.json",
-      "sha256": "a9a7f9f844f3064b8c81470057ef13673eebee6a3e76d2a01a891adda0fa33a3"
+      "sha256": "ca55cc68f84db61c27d5d3435fe089a3c5718846e06b37c790587863a8345964"
+    },
+    {
+      "path": "app/data/station-readings-cn.json",
+      "sha256": "03083c114739497ffa7f00feba6cb01b3156af13104c9f1ebe7b8884a17f1607"
+    },
+    {
+      "path": "app/data/stations-cn.json",
+      "sha256": "9a2f7c12a1aad928efff26f0447f7bc5e1b4057647b8065779906cbbf765ed4c"
     },
     {
       "path": "app/data/stations-hk.json",
@@ -103,12 +311,16 @@
       "sha256": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
     },
     {
+      "path": "app/public/rail/cn-2025.json",
+      "sha256": "7101bb0e5e3f5076e0ab31d49e9e9abd63235cce2471df5c212723e54c8a24ba"
+    },
+    {
       "path": "app/public/rail/hk-2025.json",
       "sha256": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184"
     },
     {
       "path": "app/public/rail/jp-2025.json",
-      "sha256": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda"
+      "sha256": "3c6c2b723f5c2c05d63db3c55320753863e6a1027c6443624d891f8cb3cd2baa"
     },
     {
       "path": "app/public/rail/kr-2025.json",

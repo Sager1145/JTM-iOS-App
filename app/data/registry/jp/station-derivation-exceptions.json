@@ -7,7 +7,6 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:365",
         "lp:jp:366",
         "lp:jp:367",
         "lp:jp:368",
@@ -15,7 +14,8 @@
         "lp:jp:370",
         "lp:jp:371",
         "lp:jp:372",
-        "lp:jp:373"
+        "lp:jp:373",
+        "lp:jp:374"
       ]
     },
     {
@@ -209,7 +209,8 @@
       ],
       "lp": [
         "lp:jp:330",
-        "lp:jp:331"
+        "lp:jp:331",
+        "lp:jp:332"
       ]
     },
     {
@@ -219,9 +220,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:335",
         "lp:jp:336",
-        "lp:jp:337"
+        "lp:jp:337",
+        "lp:jp:338"
       ]
     },
     {
@@ -231,8 +232,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:343",
-        "lp:jp:344"
+        "lp:jp:344",
+        "lp:jp:345"
       ]
     },
     {
@@ -242,8 +243,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:656",
-        "lp:jp:657"
+        "lp:jp:657",
+        "lp:jp:658"
       ]
     },
     {
@@ -253,8 +254,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:351",
-        "lp:jp:352"
+        "lp:jp:352",
+        "lp:jp:353"
       ]
     },
     {
@@ -264,9 +265,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:360",
         "lp:jp:361",
-        "lp:jp:362"
+        "lp:jp:362",
+        "lp:jp:363"
       ]
     },
     {
@@ -276,8 +277,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:381",
-        "lp:jp:382"
+        "lp:jp:382",
+        "lp:jp:383"
       ]
     },
     {
@@ -287,9 +288,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:394",
         "lp:jp:395",
-        "lp:jp:396"
+        "lp:jp:396",
+        "lp:jp:397"
       ]
     },
     {
@@ -299,9 +300,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:397",
         "lp:jp:398",
-        "lp:jp:399"
+        "lp:jp:399",
+        "lp:jp:400"
       ]
     },
     {
@@ -311,9 +312,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:409",
         "lp:jp:410",
-        "lp:jp:411"
+        "lp:jp:411",
+        "lp:jp:412"
       ]
     },
     {
@@ -323,8 +324,8 @@
         "東武鉄道"
       ],
       "lp": [
-        "lp:jp:414",
-        "lp:jp:415"
+        "lp:jp:415",
+        "lp:jp:416"
       ]
     },
     {
@@ -334,8 +335,8 @@
         "東武鉄道"
       ],
       "lp": [
-        "lp:jp:419",
-        "lp:jp:420"
+        "lp:jp:420",
+        "lp:jp:421"
       ]
     },
     {
@@ -345,9 +346,9 @@
         "東海旅客鉄道"
       ],
       "lp": [
-        "lp:jp:433",
         "lp:jp:434",
-        "lp:jp:435"
+        "lp:jp:435",
+        "lp:jp:436"
       ]
     },
     {
@@ -357,8 +358,8 @@
         "神戸新交通"
       ],
       "lp": [
-        "lp:jp:478",
-        "lp:jp:479"
+        "lp:jp:479",
+        "lp:jp:480"
       ]
     },
     {
@@ -368,8 +369,8 @@
         "福井鉄道"
       ],
       "lp": [
-        "lp:jp:486",
-        "lp:jp:487"
+        "lp:jp:487",
+        "lp:jp:488"
       ]
     },
     {
@@ -379,8 +380,8 @@
         "立山黒部貫光"
       ],
       "lp": [
-        "lp:jp:494",
-        "lp:jp:495"
+        "lp:jp:495",
+        "lp:jp:496"
       ]
     },
     {
@@ -390,8 +391,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:511",
-        "lp:jp:512"
+        "lp:jp:512",
+        "lp:jp:513"
       ]
     },
     {
@@ -401,8 +402,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:528",
-        "lp:jp:529"
+        "lp:jp:529",
+        "lp:jp:530"
       ]
     },
     {
@@ -412,8 +413,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:531",
-        "lp:jp:532"
+        "lp:jp:532",
+        "lp:jp:533"
       ]
     },
     {
@@ -423,9 +424,9 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:534",
         "lp:jp:535",
-        "lp:jp:536"
+        "lp:jp:536",
+        "lp:jp:537"
       ]
     },
     {
@@ -435,8 +436,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:541",
-        "lp:jp:542"
+        "lp:jp:542",
+        "lp:jp:543"
       ]
     },
     {
@@ -446,8 +447,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:560",
-        "lp:jp:561"
+        "lp:jp:561",
+        "lp:jp:562"
       ]
     },
     {
@@ -457,8 +458,8 @@
         "豊橋鉄道"
       ],
       "lp": [
-        "lp:jp:579",
-        "lp:jp:580"
+        "lp:jp:580",
+        "lp:jp:581"
       ]
     },
     {
@@ -468,8 +469,8 @@
         "阪急電鉄"
       ],
       "lp": [
-        "lp:jp:625",
-        "lp:jp:626"
+        "lp:jp:626",
+        "lp:jp:627"
       ]
     },
     {
@@ -663,7 +664,8 @@
       ],
       "lp": [
         "lp:jp:330",
-        "lp:jp:331"
+        "lp:jp:331",
+        "lp:jp:332"
       ]
     },
     {
@@ -673,9 +675,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:335",
         "lp:jp:336",
-        "lp:jp:337"
+        "lp:jp:337",
+        "lp:jp:338"
       ]
     },
     {
@@ -685,8 +687,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:343",
-        "lp:jp:344"
+        "lp:jp:344",
+        "lp:jp:345"
       ]
     },
     {
@@ -696,8 +698,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:656",
-        "lp:jp:657"
+        "lp:jp:657",
+        "lp:jp:658"
       ]
     },
     {
@@ -707,8 +709,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:351",
-        "lp:jp:352"
+        "lp:jp:352",
+        "lp:jp:353"
       ]
     },
     {
@@ -718,9 +720,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:360",
         "lp:jp:361",
-        "lp:jp:362"
+        "lp:jp:362",
+        "lp:jp:363"
       ]
     },
     {
@@ -730,13 +732,13 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:365",
         "lp:jp:366",
         "lp:jp:367",
         "lp:jp:368",
         "lp:jp:369",
         "lp:jp:370",
-        "lp:jp:371"
+        "lp:jp:371",
+        "lp:jp:372"
       ]
     },
     {
@@ -746,8 +748,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:372",
-        "lp:jp:373"
+        "lp:jp:373",
+        "lp:jp:374"
       ]
     },
     {
@@ -757,8 +759,8 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:381",
-        "lp:jp:382"
+        "lp:jp:382",
+        "lp:jp:383"
       ]
     },
     {
@@ -768,9 +770,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:394",
         "lp:jp:395",
-        "lp:jp:396"
+        "lp:jp:396",
+        "lp:jp:397"
       ]
     },
     {
@@ -780,9 +782,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:397",
         "lp:jp:398",
-        "lp:jp:399"
+        "lp:jp:399",
+        "lp:jp:400"
       ]
     },
     {
@@ -792,9 +794,9 @@
         "東日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:409",
         "lp:jp:410",
-        "lp:jp:411"
+        "lp:jp:411",
+        "lp:jp:412"
       ]
     },
     {
@@ -804,8 +806,8 @@
         "東武鉄道"
       ],
       "lp": [
-        "lp:jp:414",
-        "lp:jp:415"
+        "lp:jp:415",
+        "lp:jp:416"
       ]
     },
     {
@@ -815,8 +817,8 @@
         "東武鉄道"
       ],
       "lp": [
-        "lp:jp:419",
-        "lp:jp:420"
+        "lp:jp:420",
+        "lp:jp:421"
       ]
     },
     {
@@ -826,9 +828,9 @@
         "東海旅客鉄道"
       ],
       "lp": [
-        "lp:jp:433",
         "lp:jp:434",
-        "lp:jp:435"
+        "lp:jp:435",
+        "lp:jp:436"
       ]
     },
     {
@@ -838,8 +840,8 @@
         "神戸新交通"
       ],
       "lp": [
-        "lp:jp:478",
-        "lp:jp:479"
+        "lp:jp:479",
+        "lp:jp:480"
       ]
     },
     {
@@ -849,8 +851,8 @@
         "福井鉄道"
       ],
       "lp": [
-        "lp:jp:486",
-        "lp:jp:487"
+        "lp:jp:487",
+        "lp:jp:488"
       ]
     },
     {
@@ -860,8 +862,8 @@
         "立山黒部貫光"
       ],
       "lp": [
-        "lp:jp:494",
-        "lp:jp:495"
+        "lp:jp:495",
+        "lp:jp:496"
       ]
     },
     {
@@ -871,8 +873,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:511",
-        "lp:jp:512"
+        "lp:jp:512",
+        "lp:jp:513"
       ]
     },
     {
@@ -882,8 +884,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:528",
-        "lp:jp:529"
+        "lp:jp:529",
+        "lp:jp:530"
       ]
     },
     {
@@ -893,8 +895,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:531",
-        "lp:jp:532"
+        "lp:jp:532",
+        "lp:jp:533"
       ]
     },
     {
@@ -904,9 +906,9 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:534",
         "lp:jp:535",
-        "lp:jp:536"
+        "lp:jp:536",
+        "lp:jp:537"
       ]
     },
     {
@@ -916,8 +918,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:541",
-        "lp:jp:542"
+        "lp:jp:542",
+        "lp:jp:543"
       ]
     },
     {
@@ -927,8 +929,8 @@
         "西日本旅客鉄道"
       ],
       "lp": [
-        "lp:jp:560",
-        "lp:jp:561"
+        "lp:jp:561",
+        "lp:jp:562"
       ]
     },
     {
@@ -938,8 +940,8 @@
         "豊橋鉄道"
       ],
       "lp": [
-        "lp:jp:579",
-        "lp:jp:580"
+        "lp:jp:580",
+        "lp:jp:581"
       ]
     },
     {
@@ -949,8 +951,8 @@
         "阪急電鉄"
       ],
       "lp": [
-        "lp:jp:625",
-        "lp:jp:626"
+        "lp:jp:626",
+        "lp:jp:627"
       ]
     }
   ],
@@ -5689,7 +5691,6 @@
         "jp-東日本旅客鉄道-東海道線"
       ],
       "lp": [
-        "lp:jp:365",
         "lp:jp:366",
         "lp:jp:367",
         "lp:jp:368",
@@ -5697,14 +5698,15 @@
         "lp:jp:370",
         "lp:jp:371",
         "lp:jp:372",
-        "lp:jp:373"
+        "lp:jp:373",
+        "lp:jp:374"
       ]
     }
   ],
   "history-unmatched": [
     {
-      "collection": "retirements",
-      "history_id": "jp-id-echigo-hisui-transfer-2015.current.sections",
+      "collection": "identity_periods",
+      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.sections",
       "line_name": "日本海ひすいライン",
       "operator": "えちごトキめき鉄道",
       "matchCount": 2,
@@ -5714,8 +5716,8 @@
       ]
     },
     {
-      "collection": "retirements",
-      "history_id": "jp-id-echigo-hisui-transfer-2015.current.stations",
+      "collection": "identity_periods",
+      "history_id": "jp-id-echigo-hisui-transfer-2015.identity.period0.stations",
       "line_name": "日本海ひすいライン",
       "operator": "えちごトキめき鉄道",
       "matchCount": 2,
@@ -5723,6 +5725,390 @@
         "lp:jp:8",
         "lp:jp:9"
       ]
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-chuo-transfer.identity.period0.stations",
+      "line_name": "4号線(中央線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.sections",
+      "line_name": "8号線(今里筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-imazatosuji-transfer.identity.period0.stations",
+      "line_name": "8号線(今里筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.sections",
+      "line_name": "1号線(御堂筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-midosuji-transfer.identity.period0.stations",
+      "line_name": "1号線(御堂筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.sections",
+      "line_name": "7号線(長堀鶴見緑地線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-nagahori-transfer.identity.period0.stations",
+      "line_name": "7号線(長堀鶴見緑地線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.sections",
+      "line_name": "南港ポートタウン線",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-newtram-transfer.identity.period0.stations",
+      "line_name": "南港ポートタウン線",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.sections",
+      "line_name": "6号線(堺筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-sakaisuji-transfer.identity.period0.stations",
+      "line_name": "6号線(堺筋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.sections",
+      "line_name": "5号線(千日前線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-sennichimae-transfer.identity.period0.stations",
+      "line_name": "5号線(千日前線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.sections",
+      "line_name": "2号線(谷町線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-tanimachi-transfer.identity.period0.stations",
+      "line_name": "2号線(谷町線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.sections",
+      "line_name": "3号線(四つ橋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h2.osaka-metro-yotsubashi-transfer.identity.period0.stations",
+      "line_name": "3号線(四つ橋線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h4.rename-108.identity.period0.stations",
+      "line_name": "福武線",
+      "operator": "福井鉄道",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:487",
+        "lp:jp:488"
+      ]
+    },
+    {
+      "collection": "identity_periods",
+      "history_id": "jp.h2005.h4.rename-111.identity.period0.stations",
+      "line_name": "ポートアイランド線",
+      "operator": "神戸新交通",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:479",
+        "lp:jp:480"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part0",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part1",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part10",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part11",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part12",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part2",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part3",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part4",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part5",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part6",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part7",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part8",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.sections.part9",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.fukutoshin-ikebukuro-shibuya.current.stations",
+      "line_name": "13号線副都心線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.jre-hazawa-link.current.sections",
+      "line_name": "東海道線",
+      "operator": "東日本旅客鉄道",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:373",
+        "lp:jp:374"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.jre-hazawa-link.current.stations",
+      "line_name": "東海道線",
+      "operator": "東日本旅客鉄道",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:373",
+        "lp:jp:374"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.osaka-chuo-yumeshima.current.sections",
+      "line_name": "4号線(中央線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.osaka-chuo-yumeshima.current.stations",
+      "line_name": "4号線(中央線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.portliner-kobe-airport.current.sections",
+      "line_name": "ポートアイランド線",
+      "operator": "神戸新交通",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:479",
+        "lp:jp:480"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h1.portliner-kobe-airport.current.stations",
+      "line_name": "ポートアイランド線",
+      "operator": "神戸新交通",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:479",
+        "lp:jp:480"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h2.osaka-metro-chuo-transfer.current.sections",
+      "line_name": "4号線(中央線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h3e.station-opening-2010-21.current.stations",
+      "line_name": "東海道線",
+      "operator": "東日本旅客鉄道",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:373",
+        "lp:jp:374"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h3e.station-opening-2020-50.current.stations",
+      "line_name": "2号線日比谷線",
+      "operator": "東京地下鉄",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h3w.hiroki.current.stations",
+      "line_name": "鹿児島線",
+      "operator": "九州旅客鉄道",
+      "matchCount": 2,
+      "lp": [
+        "lp:jp:72",
+        "lp:jp:73"
+      ]
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.h2005.h4.rename-170.current.stations",
+      "line_name": "7号線(長堀鶴見緑地線)",
+      "operator": "大阪市高速電気軌道",
+      "matchCount": 0,
+      "lp": []
+    },
+    {
+      "collection": "retirements",
+      "history_id": "jp.opening.toyama-station-connection.current.sections",
+      "line_name": "富山駅南北接続線",
+      "operator": "富山地方鉄道",
+      "matchCount": 0,
+      "lp": []
     },
     {
       "collection": "retirements",
