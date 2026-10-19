@@ -1,0 +1,141 @@
+{
+  "schema": "station-english-evidence/1",
+  "countries": [
+    "cn"
+  ],
+  "note": "Reviewed official MTR English corridor spelling, scoped to exact GSH line/station/operator memberships; no other memberships promoted.",
+  "sources": [
+    {
+      "url": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf"
+    }
+  ],
+  "byLineStation": {
+    "cn-guangshengan-hsr:cn-official-12306-imq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-imq",
+      "operator": "中国铁路／港铁",
+      "name": "光明城",
+      "en": "Guangmingcheng",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "IMQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 7103617869,
+          "anchorNodeId": 5961930726
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-ioq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-ioq",
+      "operator": "中国铁路／港铁",
+      "name": "深圳北",
+      "en": "Shenzhenbei",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "IOQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 5369745039,
+          "anchorNodeId": 7750445758
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-iuq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-iuq",
+      "operator": "中国铁路／港铁",
+      "name": "虎门",
+      "en": "Humen",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "IUQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 7063297019,
+          "anchorNodeId": 5961931131
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-izq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-izq",
+      "operator": "中国铁路／港铁",
+      "name": "广州南",
+      "en": "Guangzhounan",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "IZQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 3677030154,
+          "anchorNodeId": 3676493382
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-nzq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-nzq",
+      "operator": "中国铁路／港铁",
+      "name": "福田",
+      "en": "Futian",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "NZQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 2310688619,
+          "anchorNodeId": 5924574225
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-qsq": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-qsq",
+      "operator": "中国铁路／港铁",
+      "name": "南沙北",
+      "en": "Nanshabei",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "QSQ",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 8385846445,
+          "anchorNodeId": 5892868978
+        }
+      ]
+    },
+    "cn-guangshengan-hsr:cn-official-12306-xja": {
+      "country": "cn",
+      "lineId": "cn-guangshengan-hsr",
+      "stationCode": "cn-official-12306-xja",
+      "operator": "中国铁路／港铁",
+      "name": "香港西九龙",
+      "en": "Hong Kong West Kowloon",
+      "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+      "identityEvidence": [
+        {
+          "officialTelecode": "XJA",
+          "source": "https://www.highspeed.mtr.com.hk/res/pdf/Service_Guide_EN.pdf",
+          "membershipEvidence": "official-corridor-membership-and-order",
+          "markerNodeId": 7919700008,
+          "anchorNodeId": 3384138011
+        }
+      ]
+    }
+  },
+  "unresolved": []
+}
