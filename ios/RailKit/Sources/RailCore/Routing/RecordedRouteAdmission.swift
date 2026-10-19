@@ -123,7 +123,8 @@ public enum RecordedRouteAdmission {
             let result = LocalJourneySearch.search(
                 package: constrained, originCode: first, destinationCode: last,
                 trainType: train.trainType, requiredStationCodes: codes, stationAliases: stationAliases,
-                maximumChoices: maximumChoices, maximumExpansions: maximumExpansions)
+                maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
+                operatorID: train.operatorID)
             let choices = result.choices.filter {
                 respectsSections($0, train: train, package: package, stationAliases: stationAliases,
                                  relaxLineConstraints: relaxLineConstraints)

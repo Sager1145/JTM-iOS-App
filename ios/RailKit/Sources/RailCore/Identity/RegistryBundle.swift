@@ -251,26 +251,36 @@ public enum RegistryIdentityUpgrade {
         return apply(train, bundle: bundle)
     }
 
-    /// Recompute `operator_id` from `company`, then each stop's `station_id`
-    /// from its code and that operator. `company`, `n02_station_code`, and
-    /// route sections are not rewritten. A missing bundle never reaches here:
+    /// Recompute `operator_id` from `company`, then each stop and route-section
+    /// endpoint `station_id` from its code and that operator. `company` and
+    /// source codes are not rewritten. A missing bundle never reaches here:
     /// ``applyLoaded(_:regionFallback:)`` returns the train unchanged.
     public static func apply(_ train: Train, bundle: RegistryBundle) -> Train {
         var train = train
         recomputeOperator(&train, bundle: bundle)
         let operatorID = train.operatorID
         train.stops = train.stops.map { upgradedStop($0, operatorID: operatorID, bundle: bundle) }
+        train.routeSections = train.routeSections?.map {
+            upgradedSection($0, operatorID: operatorID, bundle: bundle)
+        }
         return train
     }
 
     /// Company text is the source. The same text keeps the cached ids.
-    /// A different value drops `operatorID` and every stop `stationID`.
+    /// A different value drops `operatorID` and every stop and section station id.
     public static func reassignCompany(_ company: String?, on train: inout Train) {
         guard train.company != company else { return }
         train.company = company
         train.operatorID = nil
         for index in train.stops.indices {
             train.stops[index].stationID = nil
+        }
+        if var sections = train.routeSections {
+            for index in sections.indices {
+                sections[index].fromStationID = nil
+                sections[index].toStationID = nil
+            }
+            train.routeSections = sections
         }
     }
 
@@ -323,16 +333,39 @@ public enum RegistryIdentityUpgrade {
     private static func upgradedStop(
         _ stop: Stop, operatorID: String?, bundle: RegistryBundle
     ) -> Stop {
-        guard let raw = stop.n02StationCode, !raw.isEmpty else {
-            return keepOrClearStation(stop, code: nil, bundle: bundle)
+        var copy = stop
+        copy.stationID = upgradedStationID(
+            existing: stop.stationID, code: stop.n02StationCode,
+            operatorID: operatorID, bundle: bundle)
+        return copy
+    }
+
+    private static func upgradedSection(
+        _ section: RouteSection, operatorID: String?, bundle: RegistryBundle
+    ) -> RouteSection {
+        var copy = section
+        copy.fromStationID = upgradedStationID(
+            existing: section.fromStationID, code: section.fromN02StationCode,
+            operatorID: operatorID, bundle: bundle)
+        copy.toStationID = upgradedStationID(
+            existing: section.toStationID, code: section.toN02StationCode,
+            operatorID: operatorID, bundle: bundle)
+        return copy
+    }
+
+    /// Same fail-closed rule as a stop: a unique code wins, otherwise keep an
+    /// id only while the bundle still lists it for that code.
+    private static func upgradedStationID(
+        existing: String?, code raw: String?, operatorID: String?, bundle: RegistryBundle
+    ) -> String? {
+        guard let raw, !raw.isEmpty else {
+            return keepOrClearStationID(existing, code: nil, bundle: bundle)
         }
         let code = StationCodeAliases.canonical(raw)
         if let chosen = uniqueStation(code: code, operatorID: operatorID, bundle: bundle) {
-            var copy = stop
-            copy.stationID = chosen
-            return copy
+            return chosen
         }
-        return keepOrClearStation(stop, code: code, bundle: bundle)
+        return keepOrClearStationID(existing, code: code, bundle: bundle)
     }
 
     private static func uniqueStation(
@@ -342,18 +375,13 @@ public enum RegistryIdentityUpgrade {
     }
 
     /// Not unique. Keep an id only when the bundle still lists it for this code.
-    private static func keepOrClearStation(
-        _ stop: Stop, code: String?, bundle: RegistryBundle
-    ) -> Stop {
-        guard let existing = stop.stationID else { return stop }
+    private static func keepOrClearStationID(
+        _ existing: String?, code: String?, bundle: RegistryBundle
+    ) -> String? {
+        guard let existing else { return nil }
         let listed = bundleContainsStation(existing, bundle: bundle)
         let onCode = code.map { codeContainsStation(existing, code: $0, bundle: bundle) } ?? false
-        guard listed && onCode else {
-            var copy = stop
-            copy.stationID = nil
-            return copy
-        }
-        return stop
+        return listed && onCode ? existing : nil
     }
 
     private static func bundleContainsStation(_ identifier: String, bundle: RegistryBundle) -> Bool {

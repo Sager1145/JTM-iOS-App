@@ -709,6 +709,12 @@ extension StoreOperations {
             "to_n02_station_code",
             section.toN02StationCode.map(TrainValidation.JSON.string) ?? .null
         ))
+        if let fromStationID = section.fromStationID {
+            pairs.append(("from_station_id", .string(fromStationID)))
+        }
+        if let toStationID = section.toStationID {
+            pairs.append(("to_station_id", .string(toStationID)))
+        }
         if let lines = section.lineNames {
             pairs.append(("line_names", .array(lines.map(TrainValidation.JSON.string))))
         }

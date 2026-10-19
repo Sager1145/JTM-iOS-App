@@ -983,8 +983,14 @@ final class RiddenRouteStore {
                             preferredOperatorNames: properties?.preferredOperatorNames ?? [],
                             requiredLineIDs: properties?.requiredLineIDs ?? section?.lineIDs ?? [],
                             sectionCodes: properties?.sectionCodes ?? section?.sectionCodes ?? [],
-                            fromStationCode: properties?.fromStationCode ?? section?.fromN02StationCode,
-                            toStationCode: properties?.toStationCode ?? section?.toN02StationCode),
+                            fromStationCode: SolverRegistryInput.persistedHopCode(
+                                persisted: properties?.fromStationCode,
+                                sectionCode: section?.fromN02StationCode,
+                                stationID: section?.fromStationID, region: country),
+                            toStationCode: SolverRegistryInput.persistedHopCode(
+                                persisted: properties?.toStationCode,
+                                sectionCode: section?.toN02StationCode,
+                                stationID: section?.toStationID, region: country)),
                         temporal: properties?.temporalKind ?? .current, properties: properties)
                 }
             }
@@ -1910,7 +1916,8 @@ final class RiddenRouteStore {
             preferredLineNames: policy?.preferredLineNames ?? [],
             preferredOperatorNames: policy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: policy?.allowedInstitutionTypeCodes,
-            institutionFilterMode: policy?.institutionFilterMode)
+            institutionFilterMode: policy?.institutionFilterMode,
+            operatorID: raw.operatorID ?? canonical.operatorID)
         guard let context = RouteGraph.solveContext(
             train: cacheTrain, routeSections: sections, country: country,
             rideDate: Dates.normalizeDateString(canonical.date),

@@ -79,6 +79,11 @@ public enum RouteSolver {
         /// ADR 0011: the ride's ISO day, used to keep retired railway out of
         /// the graph for rides after its abolition. `nil` = undated ride.
         var rideDate: String?
+        /// Registry operator. Nil keeps the legacy company-alias hints.
+        var operatorID: String?
+        /// Ride region used to find the installed registry. Empty defers to
+        /// the solve's country argument.
+        var region: String
 
         init(
             id: String = "", number: String = "", trainType: String = "",
@@ -86,7 +91,9 @@ public enum RouteSolver {
             preferredLineNames: [String] = [], preferredOperatorNames: [String] = [],
             allowedInstitutionTypeCodes: [String]? = nil,
             institutionFilterMode: String = "soft",
-            rideDate: String? = nil
+            rideDate: String? = nil,
+            operatorID: String? = nil,
+            region: String = ""
         ) {
             self.id = id
             self.number = number
@@ -99,6 +106,8 @@ public enum RouteSolver {
             self.allowedInstitutionTypeCodes = allowedInstitutionTypeCodes
             self.institutionFilterMode = institutionFilterMode
             self.rideDate = rideDate
+            self.operatorID = operatorID
+            self.region = region
         }
 
         var policy: TrainPolicy {
@@ -984,7 +993,7 @@ public enum RouteSolver {
     }
 
     static func inferSectionRouteConstraints(
-        section: RouteSection, train: TrainContext
+        section: RouteSection, train: TrainContext, country: String = ""
     ) -> (lineNames: Set<String>, operatorNames: Set<String>) {
         let text = [
             train.id, train.number, train.trainType, train.company,
@@ -1005,7 +1014,7 @@ public enum RouteSolver {
             })
         {
             lines.insert("日豊線")
-            operators.insert("九州旅客鉄道")
+            operators.formUnion(registryServiceOperators(train: train, country: country) ?? ["九州旅客鉄道"])
         }
         // Haruka keeps its JR West operator preference, but no longer pins a
         // line per section: required lines skip every fallback attempt, so a
@@ -1013,9 +1022,18 @@ public enum RouteSolver {
         // the うめきた platform at 大阪) could not reach the pinned row.
         // Physical junctions now decide which rows a train can cross.
         if text.contains("はるか") || asciiCaseInsensitiveContains(text, "haruka") {
-            operators.insert("西日本旅客鉄道")
+            operators.formUnion(registryServiceOperators(train: train, country: country) ?? ["西日本旅客鉄道"])
         }
         return (lines, operators)
+    }
+
+    /// Package names of `train.operatorID` when a registry is installed.
+    /// Nil means the lookup is absent, so the caller keeps its legacy spelling.
+    private static func registryServiceOperators(train: TrainContext, country: String) -> [String]? {
+        let region = train.region.isEmpty ? country : train.region
+        guard let identity = SolverRegistryInput.installedIdentity(region: region) else { return nil }
+        guard let operatorID = train.operatorID else { return [] }
+        return identity.operator(for: operatorID)?.names ?? []
     }
 
     static func buildSegmentRouteHints(
@@ -1035,14 +1053,25 @@ public enum RouteSolver {
             institutionFilterMode: train.institutionFilterMode)
         let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: country)
         var preferredLines = Set(train.preferredLineNames.filter { !$0.isEmpty })
-        var preferredOperators = Set(train.preferredOperatorNames.filter { !$0.isEmpty })
-        preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(
-            company: train.company, country: country))
+        let region = train.region.isEmpty ? country : train.region
+        var preferredOperators: Set<String>
+        var explicitOperators: Set<String>
+        if let identity = SolverRegistryInput.installedIdentity(region: region) {
+            preferredOperators = Set(SolverRegistryInput.packageOperatorNames(
+                operatorIDs: train.operatorID.map { [$0] } ?? [],
+                storedNames: train.preferredOperatorNames, identity: identity))
+            explicitOperators = Set(SolverRegistryInput.packageOperatorNames(
+                operatorIDs: [], storedNames: section.operatorNames ?? [], identity: identity))
+        } else {
+            preferredOperators = Set(train.preferredOperatorNames.filter { !$0.isEmpty })
+            preferredOperators.formUnion(RouteGraph.derivedPreferredOperatorNames(
+                company: train.company, country: country))
+            explicitOperators = Set((section.operatorNames ?? []).filter { !$0.isEmpty })
+        }
 
-        let inferred = inferSectionRouteConstraints(section: section, train: train)
+        let inferred = inferSectionRouteConstraints(section: section, train: train, country: country)
         var explicitLines = Set((section.lineNames ?? []).filter { !$0.isEmpty })
         explicitLines.formUnion(inferred.lineNames)
-        var explicitOperators = Set((section.operatorNames ?? []).filter { !$0.isEmpty })
         explicitOperators.formUnion(inferred.operatorNames)
         preferredLines.formUnion(explicitLines)
         preferredOperators.formUnion(explicitOperators)
@@ -1779,19 +1808,31 @@ public enum RouteSolver {
         previousSection: RouteSection, nextSection: RouteSection,
         graph: RouteGraph.Graph, stations: Stations.Index, rideDate: String?
     ) -> (previous: String, first: String)? {
-        let previousCode = trimmedStationCode(previousSection.toN02StationCode)
-        let nextCode = trimmedStationCode(nextSection.fromN02StationCode)
-        guard !previousCode.isEmpty, previousCode == nextCode else { return nil }
+        let previousID = trimmedStationCode(previousSection.toStationID)
+        let nextID = trimmedStationCode(nextSection.fromStationID)
+        let stopCodes: Set<String>
+        if !previousID.isEmpty || !nextID.isEmpty {
+            guard !previousID.isEmpty, !nextID.isEmpty,
+                  SolverRegistryInput.sameStation(previousID, nextID),
+                  let region = SolverRegistryInput.regionCode(previousID),
+                  let identity = SolverRegistryInput.installedIdentity(region: region) else { return nil }
+            var codes = Set(identity.codes(of: previousID))
+            if previousID != nextID { codes.formIntersection(identity.codes(of: nextID)) }
+            guard !codes.isEmpty else { return nil }
+            stopCodes = codes
+        } else {
+            let previousCode = trimmedStationCode(previousSection.toN02StationCode)
+            let nextCode = trimmedStationCode(nextSection.fromN02StationCode)
+            guard !previousCode.isEmpty, previousCode == nextCode else { return nil }
+            stopCodes = stationGroupCodes(stopCode: previousCode, stations: stations, rideDate: rideDate)
+        }
         guard graph.nodes[previous] != nil, graph.nodes[first] != nil else { return nil }
-        let stopName = Stations.normalizeStationName(
-            previousSection.to ?? nextSection.from ?? "")
-        let stopCodes = stationGroupCodes(stopCode: previousCode, stations: stations, rideDate: rideDate)
         let previousKeys = boundaryCandidateKeys(
             identityOf: previous, section: previousSection, stopCodes: stopCodes,
-            stopName: stopName, graph: graph, stations: stations, rideDate: rideDate)
+            graph: graph, stations: stations, rideDate: rideDate)
         let firstKeys = boundaryCandidateKeys(
             identityOf: first, section: nextSection, stopCodes: stopCodes,
-            stopName: stopName, graph: graph, stations: stations, rideDate: rideDate)
+            graph: graph, stations: stations, rideDate: rideDate)
         for previousKey in previousKeys {
             for firstKey in firstKeys {
                 if previousKey == firstKey
@@ -1933,7 +1974,7 @@ public enum RouteSolver {
     /// Snaps first, then junction endpoints, each in stable order.
     private static func boundaryCandidateKeys(
         identityOf certified: String, section: RouteSection, stopCodes: Set<String>,
-        stopName: String, graph: RouteGraph.Graph, stations: Stations.Index,
+        graph: RouteGraph.Graph, stations: Stations.Index,
         rideDate: String?
     ) -> [String] {
         let requiredIdentity = String(physicalIdentity(certified))
@@ -1973,7 +2014,7 @@ public enum RouteSolver {
         for entry in graph.physicalJunctionEdges() {
             let junction = entry.junction
             guard !junction.evidence.isEmpty,
-                  junctionServesStop(junction, stopCodes: stopCodes, stopName: stopName),
+                  junctionServesStop(junction, stopCodes: stopCodes),
                   RouteGraph.RailValidity.isValid(
                     validFrom: junction.validFrom, validTo: junction.validTo, on: rideDate)
             else { continue }
@@ -2006,12 +2047,10 @@ public enum RouteSolver {
     }
 
     private static func junctionServesStop(
-        _ junction: RouteGraph.PhysicalJunction, stopCodes: Set<String>, stopName: String
+        _ junction: RouteGraph.PhysicalJunction, stopCodes: Set<String>
     ) -> Bool {
         let code = trimmedStationCode(junction.stationCode)
-        if !code.isEmpty { return stopCodes.contains(code) }
-        let name = Stations.normalizeStationName(junction.station ?? "")
-        return !stopName.isEmpty && name == stopName
+        return !code.isEmpty && stopCodes.contains(code)
     }
 
     struct StationSectionInference: Sendable {
@@ -2028,7 +2067,8 @@ public enum RouteSolver {
     /// other tie stays ambiguous.
     static func inferStationSections(
         _ sections: [RouteSection], resolver: StationIntervalResolver?, network: RouteNetwork?,
-        eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool
+        eligibility: StationRouteEligibility?, allowedCodes: [String], hard: Bool,
+        country: String = ""
     ) -> StationSectionInference {
         var result = StationSectionInference()
         guard let resolver, let network, let eligibility else { return result }
@@ -2057,11 +2097,15 @@ public enum RouteSolver {
                   network.lines.filter({ candidates.contains($0.lineId) }).allSatisfy({
                       eligibility.permits($0, allowedInstitutionCodes: allowedCodes, hard: hard)
                   }),
-                  let from = eligibility.stationCode(first.fromN02StationCode) else { continue }
-            let destinations = sections[index..<end].compactMap { eligibility.stationCode($0.toN02StationCode) }
+                  let from = graphStationCode(first, from: true, country: country, eligibility: eligibility)
+            else { continue }
+            let destinations = sections[index..<end].compactMap {
+                graphStationCode($0, from: false, country: country, eligibility: eligibility)
+            }
             guard destinations.count == end - index,
                   sections[(index + 1)..<end].enumerated().allSatisfy({ offset, section in
-                      eligibility.stationCode(section.fromN02StationCode) == destinations[offset]
+                      graphStationCode(section, from: true, country: country, eligibility: eligibility)
+                          == destinations[offset]
                   }) else { continue }
             switch resolver.resolve(
                 stationCodes: [from] + destinations, requiredLineIDs: ids,
@@ -2098,12 +2142,24 @@ public enum RouteSolver {
     public static func routeSectionBoundarySharesExplicitStop(
         _ previous: RouteSection, _ next: RouteSection
     ) -> Bool {
+        let previousID = previous.toStationID?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let nextID = next.fromStationID?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !previousID.isEmpty || !nextID.isEmpty {
+            guard !previousID.isEmpty, !nextID.isEmpty else { return false }
+            return SolverRegistryInput.sameStation(previousID, nextID)
+        }
         let previousCode = previous.toN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let nextCode = next.fromN02StationCode?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        if !previousCode.isEmpty, !nextCode.isEmpty { return previousCode == nextCode }
-        let previousName = Stations.normalizeStationName(previous.to ?? "")
-        let nextName = Stations.normalizeStationName(next.from ?? "")
-        return !previousName.isEmpty && previousName == nextName
+        return !previousCode.isEmpty && !nextCode.isEmpty && previousCode == nextCode
+    }
+
+    private static func graphStationCode(
+        _ section: RouteSection, from: Bool, country: String, eligibility: StationRouteEligibility
+    ) -> String? {
+        SolverRegistryInput.graphStationCode(
+            stationID: from ? section.fromStationID : section.toStationID,
+            rawCode: from ? section.fromN02StationCode : section.toN02StationCode,
+            region: country, eligibility: eligibility)
     }
 
     /// Package row `name` to the graph's `lineName`. `-2` and `-p1` are row
@@ -2840,11 +2896,21 @@ public enum RouteSolver {
         let length = pathLength(for: coordinates)
         var preferredLines = Set(normalizedHintValues(train.preferredLineNames + requiredLines))
         preferredLines.formUnion(requiredLines)
-        var preferredOperators = Set(normalizedHintValues(
-            train.preferredOperatorNames
-                + RouteGraph.derivedPreferredOperatorNames(
-                    company: train.company, country: country)
-                + [match.operatorName]))
+        let region = train.region.isEmpty ? country : train.region
+        var preferredOperators: Set<String>
+        if let identity = SolverRegistryInput.installedIdentity(region: region) {
+            preferredOperators = Set(normalizedHintValues(
+                SolverRegistryInput.packageOperatorNames(
+                    operatorIDs: train.operatorID.map { [$0] } ?? [],
+                    storedNames: train.preferredOperatorNames, identity: identity)
+                    + [match.operatorName]))
+        } else {
+            preferredOperators = Set(normalizedHintValues(
+                train.preferredOperatorNames
+                    + RouteGraph.derivedPreferredOperatorNames(
+                        company: train.company, country: country)
+                    + [match.operatorName]))
+        }
         preferredOperators.formUnion(requiredOperators)
         let hints = SegmentHints(
             preferredLines: preferredLines, preferredOperators: preferredOperators,
@@ -3092,6 +3158,28 @@ public enum RouteSolver {
         let toStations: [Int]
     }
 
+    /// Company-station codes only. Nil when either endpoint cannot be solved.
+    /// A nil lookup is the caller's signal to keep the source-code expansion.
+    static func registryEndpointIndices(
+        section: RouteSection, country: String, stations: Stations.Index, rideDate: String? = nil
+    ) -> (from: [Int], to: [Int])? {
+        guard SolverRegistryInput.installedIdentity(region: country) != nil else { return nil }
+        let from = registryEndpointStations(
+            section.fromStationID, stations: stations, rideDate: rideDate, country: country)
+        let to = registryEndpointStations(
+            section.toStationID, stations: stations, rideDate: rideDate, country: country)
+        guard !from.isEmpty, !to.isEmpty else { return nil }
+        return (from, to)
+    }
+
+    private static func registryEndpointStations(
+        _ stationID: String?, stations: Stations.Index, rideDate: String?, country: String
+    ) -> [Int] {
+        guard let indices = SolverRegistryInput.endpointIndices(
+            stationID: stationID, region: country, stations: stations) else { return [] }
+        return filterStationCandidatesByRideDate(indices, in: stations, rideDate: rideDate)
+    }
+
     /// Reject unavailable endpoints before allocating any route graph, using
     /// the same normalization, expansion and date filtering as the solver.
     private static func prepareSectionEndpoints(
@@ -3114,23 +3202,33 @@ public enum RouteSolver {
             allowedInstitutionTypeCodes: train.allowedInstitutionTypeCodes,
             institutionFilterMode: train.institutionFilterMode)
         let allowedCodes = RouteGraph.allowedInstitutionTypeCodes(cacheTrain, country: country)
-        let lineNames = (section.lineNames ?? []).filter { !$0.isEmpty }
-        let fromStop = Stations.Stop(
-            name: section.from, n02StationCode: section.fromN02StationCode)
-        let toStop = Stations.Stop(
-            name: section.to, n02StationCode: section.toN02StationCode)
-        let fromStations = filterStationCandidatesByRideDate(
-            resolveRouteEndpointStationCandidates(
-                .stop(fromStop), in: stations, allowedCodes: allowedCodes,
-                sectionLineNames: lineNames,
-                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
-            in: stations, rideDate: train.rideDate)
-        let toStations = filterStationCandidatesByRideDate(
-            resolveRouteEndpointStationCandidates(
-                .stop(toStop), in: stations, allowedCodes: allowedCodes,
-                sectionLineNames: lineNames,
-                sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
-            in: stations, rideDate: train.rideDate)
+        let fromStations: [Int]
+        let toStations: [Int]
+        if SolverRegistryInput.installedIdentity(region: country) != nil {
+            guard let ends = registryEndpointIndices(
+                section: section, country: country, stations: stations, rideDate: train.rideDate)
+            else { return nil }
+            fromStations = ends.from
+            toStations = ends.to
+        } else {
+            let lineNames = (section.lineNames ?? []).filter { !$0.isEmpty }
+            let fromStop = Stations.Stop(
+                name: section.from, n02StationCode: section.fromN02StationCode)
+            let toStop = Stations.Stop(
+                name: section.to, n02StationCode: section.toN02StationCode)
+            fromStations = filterStationCandidatesByRideDate(
+                resolveRouteEndpointStationCandidates(
+                    .stop(fromStop), in: stations, allowedCodes: allowedCodes,
+                    sectionLineNames: lineNames,
+                    sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
+                in: stations, rideDate: train.rideDate)
+            toStations = filterStationCandidatesByRideDate(
+                resolveRouteEndpointStationCandidates(
+                    .stop(toStop), in: stations, allowedCodes: allowedCodes,
+                    sectionLineNames: lineNames,
+                    sectionOperatorNames: section.operatorNames ?? [], rideDate: train.rideDate),
+                in: stations, rideDate: train.rideDate)
+        }
         guard !fromStations.isEmpty, !toStations.isEmpty else { return nil }
         return PreparedSectionEndpoints(
             section: section, allowedCodes: allowedCodes,

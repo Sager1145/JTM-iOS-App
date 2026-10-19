@@ -40,8 +40,10 @@ enum TokyoConventionalRouteInference {
         let corridor = corridorCodes(package: package)
         guard eligible(train), value.sectionCodes?.isEmpty != false,
               permitsTunnel(value),
-              let from = stationCode(value.fromN02StationCode, name: value.from, corridor: corridor),
-              let to = stationCode(value.toN02StationCode, name: value.to, corridor: corridor),
+              let from = stationCode(
+                value.fromN02StationCode, name: value.from, stationID: value.fromStationID, corridor: corridor),
+              let to = stationCode(
+                value.toN02StationCode, name: value.to, stationID: value.toStationID, corridor: corridor),
               let start = corridor.firstIndex(of: from),
               let end = corridor.firstIndex(of: to), start != end else { return value }
         var indices = Array(min(start, end)..<max(start, end))
@@ -67,14 +69,16 @@ enum TokyoConventionalRouteInference {
               train.routeSections?.contains(where: { $0.sectionCodes?.isEmpty == false }) != true,
               (train.routeSections ?? []).allSatisfy(permitsTunnel),
               let first = train.stops.first, let last = train.stops.last,
-              let from = stationCode(first.n02StationCode, name: first.name, corridor: corridor),
-              let to = stationCode(last.n02StationCode, name: last.name, corridor: corridor),
+              let from = stationCode(
+                first.n02StationCode, name: first.name, stationID: first.stationID, corridor: corridor),
+              let to = stationCode(
+                last.n02StationCode, name: last.name, stationID: last.stationID, corridor: corridor),
               corridor.contains(from), corridor.contains(to), from != to else { return nil }
         let choices = RailwayRouteChoices.choices(
             package: package, originCode: from, destinationCode: to,
             trainType: train.trainType)
         let authored = train.stops.filter { !RailwayRouteEditing.isUntouchedGenerated($0) }
-            .compactMap { stationCode($0.n02StationCode, name: $0.name, corridor: corridor) }
+            .compactMap { stationCode($0.n02StationCode, name: $0.name, stationID: $0.stationID, corridor: corridor) }
         return choices.first { candidate in
             guard candidate.lineIDs == [tunnelLineID] else { return false }
             var cursor = 0
@@ -100,7 +104,8 @@ enum TokyoConventionalRouteInference {
         // case. Automatic stops remain consequences of the current suggestion.
         guard !train.stops.contains(where: {
             !RailwayRouteEditing.isUntouchedGenerated($0)
-                && surfaceCodes.contains(stationCode($0.n02StationCode, name: $0.name) ?? "")
+                && surfaceCodes.contains(stationCode(
+                    $0.n02StationCode, name: $0.name, stationID: $0.stationID) ?? "")
         }) else { return false }
         // An explicit surface assignment elsewhere in this corridor also
         // constrains the adjacent legs, including partially coded old records.
@@ -120,9 +125,28 @@ enum TokyoConventionalRouteInference {
     }
 
     private static func stationCode(
-        _ code: String?, name: String?, corridor: [String]? = nil
+        _ code: String?, name: String?, stationID: String? = nil, corridor: [String]? = nil
     ) -> String? {
-        if let code, !code.isEmpty { return code }
+        let explicit = code.flatMap { $0.isEmpty ? nil : $0 }
+        if SolverRegistryInput.installedIdentity(region: "jp") != nil {
+            guard let stationID, !stationID.isEmpty,
+                  let identity = SolverRegistryInput.installedIdentity(region: "jp") else {
+                return explicit
+            }
+            let owned = Set(identity.codes(of: stationID).map { StationCodeAliases.canonical($0) })
+            guard !owned.isEmpty else { return nil }
+            if let explicit {
+                return owned.contains(StationCodeAliases.canonical(explicit)) ? explicit : nil
+            }
+            guard let narrowed = narrowedStationCode(name, corridor: corridor),
+                  owned.contains(StationCodeAliases.canonical(narrowed)) else { return nil }
+            return narrowed
+        }
+        if let explicit { return explicit }
+        return narrowedStationCode(name, corridor: corridor)
+    }
+
+    private static func narrowedStationCode(_ name: String?, corridor: [String]?) -> String? {
         let codes = corridor ?? fallbackTunnelCodes
         switch (name ?? "").lowercased() {
         case "東京", "东京", "tokyo": return codes.first

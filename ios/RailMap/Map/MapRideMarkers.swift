@@ -221,24 +221,21 @@ enum MapRideMarkers {
                   let last = segment.coordinates.last else { continue }
             let endpoints = ride.recordedStopIndices(for: segment)
             if let index = endpoints.from, stops.indices.contains(index),
-               agrees(segment.from, stops[index].name), result[index] == nil {
+               agrees(segment.from, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = first
             }
             if let index = endpoints.to, stops.indices.contains(index),
-               agrees(segment.to, stops[index].name), result[index] == nil {
+               agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = last
             }
         }
         return result
     }
 
-    /// A declared endpoint name against the stop the index says it is. An
-    /// absent name is not a disagreement: `leanExportSection` drops `from`/`to`
-    /// wherever the station table can reconstruct them (jsonspec §13.4).
-    private static func agrees(_ declared: String?, _ stopName: String) -> Bool {
-        guard let declared, !declared.isEmpty else { return true }
-        return Stations.normalizeStationName(declared)
-            == Stations.normalizeStationName(stopName)
+    /// A declared endpoint against the stop the index says it is. An absent
+    /// declaration is not a disagreement. Equal names are not the same stop.
+    private static func agrees(_ declared: String?, stop: Stop, region: String) -> Bool {
+        SolverRegistryInput.markerAgrees(declared: declared, stop: stop, region: region)
     }
 
     /// Which continuous-stroke chain a stop's bead belongs on, and where —
@@ -291,13 +288,13 @@ enum MapRideMarkers {
             guard let ref = strokeRef(segment) else { continue }
             let endpoints = ride.recordedStopIndices(for: segment)
             if let index = endpoints.from, stops.indices.contains(index),
-               agrees(segment.from, stops[index].name), result[index] == nil {
+               agrees(segment.from, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.fromAnchor,
                     segmentIndex: segment.segmentIndex, partIndex: segment.partIndex, isSegmentStart: true)
             }
             if let index = endpoints.to, stops.indices.contains(index),
-               agrees(segment.to, stops[index].name), result[index] == nil {
+               agrees(segment.to, stop: stops[index], region: ride.country), result[index] == nil {
                 result[index] = StrokeAnchorRef(
                     chainID: ref.chainID, vertexIndex: ref.toAnchor,
                     segmentIndex: segment.segmentIndex, partIndex: segment.partIndex, isSegmentStart: false)

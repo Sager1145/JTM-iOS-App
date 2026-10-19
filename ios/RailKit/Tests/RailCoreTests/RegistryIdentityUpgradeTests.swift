@@ -121,7 +121,10 @@ struct RegistryIdentityUpgradeTests {
         #expect(upgraded.stops[0].n02StationCode == "003700")
         #expect(upgraded.stops[0].name == "東京")
         #expect(upgraded.stops[1].stationID == nil)
-        #expect(upgraded.routeSections == source.routeSections)
+        #expect(upgraded.routeSections?.first?.fromN02StationCode == "003700")
+        #expect(upgraded.routeSections?.first?.toN02StationCode == "116021")
+        #expect(upgraded.routeSections?.first?.fromStationID == "st:jp:1")
+        #expect(upgraded.routeSections?.first?.toStationID == nil)
     }
 
     @Test func aliasCanonicalizesAHongKongCode() {
@@ -435,5 +438,45 @@ struct RegistryIdentityUpgradeTests {
         #expect(imported.stops[0].n02StationCode == "003700")
         #expect(imported.stops[1].stationID == "st:jp:2")
         #expect(imported.stops[1].n02StationCode == "116021")
+    }
+
+    @Test func sectionEndpointsFollowTheStopFailClosedRule() {
+        let source = ride(
+            company: "JR東日本",
+            stops: pair("003700"),
+            sections: [RouteSection(
+                from: "A", to: "B",
+                fromN02StationCode: "111111", toN02StationCode: "222222",
+                fromStationID: "st:jp:9", toStationID: "st:jp:8")])
+        let upgraded = RegistryIdentityUpgrade.apply(
+            source,
+            bundle: bundle(
+                stationCodes: ["111111": "st:jp:1"],
+                groupCodes: ["222222": ["st:jp:2", "st:jp:3"]],
+                operators: ["op:jp:1": ["JR東日本"]],
+                stationOperator: ["st:jp:2": "op:jp:1", "st:jp:3": "op:jp:1"]))
+        let section = upgraded.routeSections?.first
+        #expect(section?.fromStationID == "st:jp:1")
+        #expect(section?.toStationID == nil)
+        #expect(section?.fromN02StationCode == "111111")
+        #expect(section?.toN02StationCode == "222222")
+    }
+
+    @Test func reassignCompanyClearsSectionStationIds() {
+        var train = ride(
+            company: "JR東日本", operatorID: "op:jp:1",
+            stops: pair("003700", stationID: "st:jp:1"),
+            sections: [RouteSection(
+                from: "A", to: "B", fromStationID: "st:jp:1", toStationID: "st:jp:2")])
+        RegistryIdentityUpgrade.reassignCompany("JR東日本", on: &train)
+        #expect(train.operatorID == "op:jp:1")
+        #expect(train.routeSections?.first?.fromStationID == "st:jp:1")
+        #expect(train.routeSections?.first?.toStationID == "st:jp:2")
+        RegistryIdentityUpgrade.reassignCompany("JR東海", on: &train)
+        #expect(train.company == "JR東海")
+        #expect(train.operatorID == nil)
+        #expect(train.stops[0].stationID == nil)
+        #expect(train.routeSections?.first?.fromStationID == nil)
+        #expect(train.routeSections?.first?.toStationID == nil)
     }
 }

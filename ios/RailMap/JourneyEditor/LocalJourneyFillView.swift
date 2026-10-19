@@ -244,6 +244,7 @@ struct LocalJourneyFillView: View {
         let type = train.trainType
         let serviceDate = Dates.normalizeDateString(train.date)
         let required = [originCode] + requiredStationCodes + [destinationCode]
+        let operatorID = train.operatorID
         // Service labels are display metadata, never additional graph edges.
         let worker = Task.detached(priority: .userInitiated) {
             let aliases = try loadJourneyStationAliases(for: required, package: package)
@@ -258,7 +259,7 @@ struct LocalJourneyFillView: View {
             }
             return LocalJourneySearch.search(package: package, originCode: originCode,
                 destinationCode: destinationCode, trainType: type, requiredStationCodes: required,
-                stationAliases: aliases, continuation: allows)
+                stationAliases: aliases, continuation: allows, operatorID: operatorID)
         }
         let result: LocalJourneySearch.Result
         do {

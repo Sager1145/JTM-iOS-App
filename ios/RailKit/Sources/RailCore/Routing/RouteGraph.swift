@@ -459,6 +459,8 @@ public enum RouteGraph {
         public var lineIDs: [String]
         public var sectionCodes: [String]
         public var sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin?
+        public var fromStationID: String?
+        public var toStationID: String?
 
         public init(
             from: String? = nil,
@@ -468,7 +470,9 @@ public enum RouteGraph {
             lineNames: [String] = [],
             operatorNames: [String] = [],
             lineIDs: [String] = [], sectionCodes: [String] = [],
-            sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin? = nil
+            sectionCodesOrigin: RecordedRouteAdmission.SectionCodesOrigin? = nil,
+            fromStationID: String? = nil,
+            toStationID: String? = nil
         ) {
             self.from = from
             self.to = to
@@ -479,6 +483,8 @@ public enum RouteGraph {
             self.lineIDs = lineIDs
             self.sectionCodes = sectionCodes
             self.sectionCodesOrigin = sectionCodesOrigin
+            self.fromStationID = fromStationID
+            self.toStationID = toStationID
         }
 
         /// Recorded section fields shared by template, solver and playback cache keys.
@@ -489,7 +495,9 @@ public enum RouteGraph {
                 toStationCode: section.toN02StationCode,
                 lineNames: section.lineNames ?? [], operatorNames: section.operatorNames ?? [],
                 lineIDs: section.lineIDs ?? [], sectionCodes: section.sectionCodes ?? [],
-                sectionCodesOrigin: section.sectionCodesOrigin)
+                sectionCodesOrigin: section.sectionCodesOrigin,
+                fromStationID: section.fromStationID,
+                toStationID: section.toStationID)
         }
     }
 
@@ -516,6 +524,8 @@ public enum RouteGraph {
             if !section.lineIDs.isEmpty { key += "|line_ids:" + jsSorted(section.lineIDs).joined(separator: ",") }
             if !section.sectionCodes.isEmpty { key += "|section_codes:" + section.sectionCodes.joined(separator: ",") }
             if let origin = section.sectionCodesOrigin { key += "|section_codes_origin:" + origin.rawValue }
+            if let identifier = section.fromStationID, !identifier.isEmpty { key += "|from_st:" + identifier }
+            if let identifier = section.toStationID, !identifier.isEmpty { key += "|to_st:" + identifier }
             return key
         }
         .joined(separator: "|")
@@ -543,6 +553,7 @@ public enum RouteGraph {
         public var preferredOperatorNames: [String]
         public var allowedInstitutionTypeCodes: [String]?
         public var institutionFilterMode: String?
+        public var operatorID: String?
 
         public init(
             id: String = "",
@@ -554,7 +565,8 @@ public enum RouteGraph {
             preferredLineNames: [String] = [],
             preferredOperatorNames: [String] = [],
             allowedInstitutionTypeCodes: [String]? = nil,
-            institutionFilterMode: String? = nil
+            institutionFilterMode: String? = nil,
+            operatorID: String? = nil
         ) {
             self.id = id
             self.number = number
@@ -566,6 +578,7 @@ public enum RouteGraph {
             self.preferredOperatorNames = preferredOperatorNames
             self.allowedInstitutionTypeCodes = allowedInstitutionTypeCodes
             self.institutionFilterMode = institutionFilterMode
+            self.operatorID = operatorID
         }
     }
 
@@ -796,10 +809,17 @@ public enum RouteGraph {
         let templateKey = templateKey(sections: routeSections)
         let allowedCodes = allowedInstitutionTypeCodes(train, country: country)
         var policyParts = train.preferredLineNames.map { "line:\($0)" }
-        policyParts += train.preferredOperatorNames.map { "operator:\($0)" }
-        policyParts += derivedPreferredOperatorNames(
-            company: train.company, country: country
-        ).map { "operator:\($0)" }
+        if let identity = SolverRegistryInput.installedIdentity(region: country) {
+            policyParts += SolverRegistryInput.packageOperatorNames(
+                operatorIDs: train.operatorID.map { [$0] } ?? [],
+                storedNames: train.preferredOperatorNames, identity: identity
+            ).map { "operator:\($0)" }
+        } else {
+            policyParts += train.preferredOperatorNames.map { "operator:\($0)" }
+            policyParts += derivedPreferredOperatorNames(
+                company: train.company, country: country
+            ).map { "operator:\($0)" }
+        }
         // Duplicates are NOT removed — a preferred operator that is also
         // derived from the company field appears twice, and does so in the
         // shipped Taiwanese store.
@@ -814,7 +834,8 @@ public enum RouteGraph {
             + "|date:\(normalizedRideDate ?? "none")|history:\(historyRevision ?? "none")"
         let inferContext = RouteSolver.TrainContext(
             id: train.id, number: train.number, trainType: train.trainType,
-            company: train.company, origin: train.origin, destination: train.destination)
+            company: train.company, origin: train.origin, destination: train.destination,
+            operatorID: train.operatorID, region: country)
         for (index, section) in routeSections.enumerated() {
             // `inferSectionRouteConstraints` only reads `from`/`to`, but takes
             // the top-level `RouteSection` (from `Train.swift`), not this
@@ -823,7 +844,7 @@ public enum RouteGraph {
             // of a section with different optionality.
             let hintSection = RailCore.RouteSection(from: section.from, to: section.to)
             let inferred = RouteSolver.inferSectionRouteConstraints(
-                section: hintSection, train: inferContext)
+                section: hintSection, train: inferContext, country: country)
             guard !inferred.lineNames.isEmpty || !inferred.operatorNames.isEmpty else { continue }
             let lines = jsSorted(inferred.lineNames).joined(separator: ",")
             let operators = jsSorted(inferred.operatorNames).joined(separator: ",")

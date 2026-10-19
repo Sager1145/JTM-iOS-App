@@ -193,6 +193,8 @@ function normalizeExportRouteSection(section) {
     to_n02_station_code: canonicalStationCode(
       section.to_n02_station_code || null,
     ),
+    ...carriedRegistryID("from_station_id", section.from_station_id),
+    ...carriedRegistryID("to_station_id", section.to_station_id),
   };
   if (Array.isArray(section.line_names) && section.line_names.length)
     normalized.line_names = [...section.line_names];
@@ -280,6 +282,8 @@ function getRideRouteSectionsForTrain(train) {
       to_n02_station_code: to
         ? stationCode(to)
         : toStop.n02_station_code || null,
+      ...carriedRegistryID("from_station_id", fromStop.station_id),
+      ...carriedRegistryID("to_station_id", toStop.station_id),
     });
   }
 
@@ -373,6 +377,8 @@ function leanExportSection(section) {
     out.to = section.to;
   out.from_n02_station_code = fromCode;
   out.to_n02_station_code = toCode;
+  Object.assign(out, carriedRegistryID("from_station_id", section.from_station_id));
+  Object.assign(out, carriedRegistryID("to_station_id", section.to_station_id));
   if (Array.isArray(section.line_names) && section.line_names.length)
     out.line_names = [...section.line_names];
   if (Array.isArray(section.operator_names) && section.operator_names.length)
@@ -489,6 +495,8 @@ function normalizeImportedRouteSection(section) {
       "to",
       "from_n02_station_code",
       "to_n02_station_code",
+      "from_station_id",
+      "to_station_id",
       "line_names",
       "operator_names",
       "line_ids",
@@ -510,6 +518,8 @@ function normalizeImportedRouteSection(section) {
     to: section.to || stationNameForCode(toCode),
     from_n02_station_code: fromCode,
     to_n02_station_code: toCode,
+    ...carriedRegistryID("from_station_id", section.from_station_id),
+    ...carriedRegistryID("to_station_id", section.to_station_id),
     line_names: Array.isArray(section.line_names)
       ? section.line_names.map(String).filter(Boolean)
       : [],

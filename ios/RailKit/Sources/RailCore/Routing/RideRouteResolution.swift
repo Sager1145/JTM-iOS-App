@@ -166,7 +166,7 @@ public struct RideRouteResolution {
             request.canonicalTrain.requiresRouteConfirmation ? [] : request.canonicalTrain.routeSections ?? [],
             resolver: network?.resolver, network: network?.network, eligibility: network?.eligibility,
             allowedCodes: RouteGraph.allowedInstitutionTypeCodes(key, country: country),
-            hard: context.institutionFilterMode == "hard").ambiguous.isEmpty
+            hard: context.institutionFilterMode == "hard", country: country).ambiguous.isEmpty
     }
 
     public mutating func resolve(_ request: Request, allowLegacy: Bool = true) throws -> Result {
@@ -199,7 +199,8 @@ public struct RideRouteResolution {
             cacheTrain, country: country)
         let inferred = RouteSolver.inferStationSections(
             sections, resolver: intervalResolver, network: displayNetwork, eligibility: eligibility,
-            allowedCodes: allowedCodes, hard: context.institutionFilterMode == "hard")
+            allowedCodes: allowedCodes, hard: context.institutionFilterMode == "hard",
+            country: country)
         let rejectPrecomputed = !allowLegacy && !inferred.ambiguous.isEmpty
         var segments: [Segment] = []
         var unsupported = false
@@ -239,8 +240,12 @@ public struct RideRouteResolution {
                     sectionCodes: section.sectionCodes ?? [],
                     fromStationCode: section.fromN02StationCode,
                     toStationCode: section.toN02StationCode)
-                hints.fromStationCode = eligibility?.stationCode(hints.fromStationCode) ?? hints.fromStationCode
-                hints.toStationCode = eligibility?.stationCode(hints.toStationCode) ?? hints.toStationCode
+                hints.fromStationCode = SolverRegistryInput.hintedGraphStationCode(
+                    stationID: section.fromStationID, rawCode: hints.fromStationCode,
+                    region: country, eligibility: eligibility)
+                hints.toStationCode = SolverRegistryInput.hintedGraphStationCode(
+                    stationID: section.toStationID, rawCode: hints.toStationCode,
+                    region: country, eligibility: eligibility)
                 if let certified = displayNetwork?.sourceCertification(for: hints),
                    let exact = displayNetwork?.canonicalizeRouteFeature(
                     RouteFeature(geometry: nil, hints: hints),
@@ -600,7 +605,8 @@ public struct RideRouteResolution {
             preferredOperatorNames: train.routePolicy?.preferredOperatorNames ?? [],
             allowedInstitutionTypeCodes: train.routePolicy?.allowedInstitutionTypeCodes,
             institutionFilterMode: train.routePolicy?.institutionFilterMode ?? "soft",
-            rideDate: Dates.normalizeDateString(train.date))
+            rideDate: Dates.normalizeDateString(train.date),
+            operatorID: train.operatorID, region: train.region ?? "")
     }
 
 }

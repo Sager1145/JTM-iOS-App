@@ -33,18 +33,18 @@ struct RouteSectionEditorView: View {
             Section(localization.text("ios.editor.endpoints")) {
                 EditorTextField(
                     title: localization.text("ios.editor.fromStation"),
-                    text: endpointText(\.from, code: \.fromN02StationCode))
+                    text: endpointText(from: true))
                 NavigationLink {
                     StationPickerView(
                         regionCode: region.code,
                         onSelect: { station in
-                            section.from = station.name
-                            section.fromN02StationCode = station.key.sourceCode
+                            SolverRegistryInput.assignEndpoint(
+                                &section, from: true, name: station.name, code: station.key.sourceCode)
                         },
                         rideDate: rideDate,
                         onSelectRetired: { station in
-                            section.from = station.name
-                            section.fromN02StationCode = station.certifiedCode
+                            SolverRegistryInput.assignEndpoint(
+                                &section, from: true, name: station.name, code: station.certifiedCode)
                         })
                     .environment(localization)
                 } label: {
@@ -54,18 +54,18 @@ struct RouteSectionEditorView: View {
                 }
                 EditorTextField(
                     title: localization.text("ios.editor.toStation"),
-                    text: endpointText(\.to, code: \.toN02StationCode))
+                    text: endpointText(from: false))
                 NavigationLink {
                     StationPickerView(
                         regionCode: region.code,
                         onSelect: { station in
-                            section.to = station.name
-                            section.toN02StationCode = station.key.sourceCode
+                            SolverRegistryInput.assignEndpoint(
+                                &section, from: false, name: station.name, code: station.key.sourceCode)
                         },
                         rideDate: rideDate,
                         onSelectRetired: { station in
-                            section.to = station.name
-                            section.toN02StationCode = station.certifiedCode
+                            SolverRegistryInput.assignEndpoint(
+                                &section, from: false, name: station.name, code: station.certifiedCode)
                         })
                     .environment(localization)
                 } label: {
@@ -103,15 +103,12 @@ struct RouteSectionEditorView: View {
         EditorBindings.optionalText($section, keyPath)
     }
 
-    private func endpointText(
-        _ keyPath: WritableKeyPath<RouteSection, String?>,
-        code: WritableKeyPath<RouteSection, String?>
-    ) -> Binding<String> {
+    private func endpointText(from: Bool) -> Binding<String> {
         Binding(
-            get: { section[keyPath: keyPath] ?? "" },
+            get: { (from ? section.from : section.to) ?? "" },
             set: { value in
-                if value != section[keyPath: keyPath] { section[keyPath: code] = nil }
-                section[keyPath: keyPath] = value.isEmpty ? nil : value
+                SolverRegistryInput.renameEndpoint(
+                    &section, from: from, name: value.isEmpty ? nil : value)
             }
         )
     }

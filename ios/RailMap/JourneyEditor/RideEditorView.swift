@@ -1277,7 +1277,8 @@ struct RideEditorView: View {
                 lineNames: draft.routePolicy?.preferredLineNames ?? [],
                 operatorNames: draft.routePolicy?.preferredOperatorNames ?? [],
                 selectedLineIDs: selectedCatalogLineIDs,
-                stationCodes: draft.stops.compactMap(\.n02StationCode),
+                stationCodes: SolverRegistryInput.solveInputCodes(
+                    stops: draft.stops, region: Region.resolved(draft).code),
                 onCommit: { lineIDs, lineNames, operatorNames in
                     selectedCatalogLineIDs = Set(lineIDs)
                     var policy = routePolicy.wrappedValue
@@ -1323,7 +1324,8 @@ struct RideEditorView: View {
                 }
             }
         }
-        .disabled(routePackage == nil || draft.stops.compactMap(\.n02StationCode).count < 2)
+        .disabled(routePackage == nil || SolverRegistryInput.solvableEndpointCount(
+            stops: draft.stops, region: Region.resolved(draft).code) < 2)
         .accessibilityIdentifier("rideEditorLines")
     }
 

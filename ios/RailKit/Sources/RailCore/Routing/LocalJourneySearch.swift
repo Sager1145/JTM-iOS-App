@@ -43,14 +43,15 @@ public enum LocalJourneySearch {
         requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
         maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
         continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
-        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil,
+        operatorID: String? = nil
     ) -> [RailwayRouteChoices.Choice] {
         search(package: package, originCode: originCode, destinationCode: destinationCode,
                trainType: trainType, excludingStationCodes: excludingStationCodes,
                requiredStationCodes: requiredStationCodes, stationAliases: stationAliases,
                maximumChoices: maximumChoices, maximumExpansions: maximumExpansions,
                continuation: continuation, originLineIDs: originLineIDs,
-               destinationLineIDs: destinationLineIDs).choices
+               destinationLineIDs: destinationLineIDs, operatorID: operatorID).choices
     }
 
     /// Keeps at most `maximumChoices` settled labels per station occurrence and anchor progress, and
@@ -64,7 +65,8 @@ public enum LocalJourneySearch {
         requiredStationCodes: [String] = [], stationAliases: [String: String] = [:],
         maximumChoices: Int = 3, maximumExpansions: Int = 50_000,
         continuation: ((_ from: CompactPackage.Line, _ to: CompactPackage.Line, _ stationCode: String) -> Bool)? = nil,
-        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil
+        originLineIDs: Set<String>? = nil, destinationLineIDs: Set<String>? = nil,
+        operatorID: String? = nil
     ) -> Result {
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
         func canonical(_ code: String) -> String {
@@ -76,7 +78,10 @@ public enum LocalJourneySearch {
         let protectedCodes = Set(requiredStationCodes + [originCode, destinationCode])
         let excludingStationCodes = Set(excludingStationCodes.map(canonical)).subtracting(protectedCodes)
         func result(_ choices: [RailwayRouteChoices.Choice] = [], truncated: Bool = false) -> Result {
-            Result(choices: choices.map { restoreAnchors($0, originalAnchors: originalAnchors, canonical: canonical) }, isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
+            Result(choices: choices.map {
+                restoreAnchors($0, originalAnchors: originalAnchors, canonical: canonical,
+                               region: package.country, operatorID: operatorID)
+            }, isTruncated: truncated, topologyIsComplete: false, directionIsKnown: false)
         }
         guard maximumChoices > 0, maximumExpansions > 0 else { return result(truncated: true) }
         guard originCode != destinationCode,
@@ -108,7 +113,7 @@ public enum LocalJourneySearch {
 
     private static func restoreAnchors(
         _ input: RailwayRouteChoices.Choice, originalAnchors: [String],
-        canonical: (String) -> String
+        canonical: (String) -> String, region: String, operatorID: String?
     ) -> RailwayRouteChoices.Choice {
         var choice = input
         var anchor = 0
@@ -119,8 +124,14 @@ public enum LocalJourneySearch {
             anchor += 1
         }
         for index in choice.routeSections.indices {
-            choice.routeSections[index].fromN02StationCode = choice.stations[index].code
-            choice.routeSections[index].toN02StationCode = choice.stations[index + 1].code
+            let fromCode = choice.stations[index].code
+            let toCode = choice.stations[index + 1].code
+            choice.routeSections[index].fromN02StationCode = fromCode
+            choice.routeSections[index].toN02StationCode = toCode
+            choice.routeSections[index].fromStationID = SolverRegistryInput.anchorStationID(
+                code: fromCode, region: region, operatorID: operatorID)
+            choice.routeSections[index].toStationID = SolverRegistryInput.anchorStationID(
+                code: toCode, region: region, operatorID: operatorID)
         }
         // Choice identity remains the ordered physical section-code chain.
         return choice

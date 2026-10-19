@@ -275,6 +275,15 @@ function validateTrain(train, index, ids) {
           );
         }
       });
+      ["from_station_id", "to_station_id"].forEach((field) => {
+        const stationIDError = registryIDError(
+          section[field], REGISTRY_STATION_ID, field, train.region);
+        if (stationIDError) {
+          throw new Error(
+            `${prefix} route section ${sectionIndex + 1}: ${stationIDError}`,
+          );
+        }
+      });
       ["line_names", "operator_names", "line_ids", "section_codes"].forEach((field) => {
         const values = section[field] || [];
         if (

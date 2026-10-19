@@ -408,6 +408,10 @@ public struct RouteSection: Codable, Hashable, Sendable {
     public var to: String?
     public var fromN02StationCode: String?
     public var toN02StationCode: String?
+    /// Company station that owns `fromN02StationCode`. Absent until upgrade.
+    public var fromStationID: String?
+    /// Company station that owns `toN02StationCode`. Absent until upgrade.
+    public var toStationID: String?
     /// A **hard** constraint on which line the solver may traverse (§6.4).
     /// Empty or absent means unconstrained, which is a branch-leak risk at a
     /// junction rather than a neutral default.
@@ -426,6 +430,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         to: String? = nil,
         fromN02StationCode: String? = nil,
         toN02StationCode: String? = nil,
+        fromStationID: String? = nil,
+        toStationID: String? = nil,
         lineNames: [String]? = nil,
         operatorNames: [String]? = nil,
         lineIDs: [String]? = nil,
@@ -438,6 +444,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         self.to = to
         self.fromN02StationCode = fromN02StationCode
         self.toN02StationCode = toN02StationCode
+        self.fromStationID = fromStationID
+        self.toStationID = toStationID
         self.lineNames = lineNames
         self.operatorNames = operatorNames
         self.lineIDs = lineIDs
@@ -451,6 +459,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         case from, to, number, name
         case fromN02StationCode = "from_n02_station_code"
         case toN02StationCode = "to_n02_station_code"
+        case fromStationID = "from_station_id"
+        case toStationID = "to_station_id"
         case lineNames = "line_names"
         case operatorNames = "operator_names"
         case lineIDs = "line_ids"
@@ -470,6 +480,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         toN02StationCode = try container.decodeIfPresent(
             String.self, forKey: .toN02StationCode
         ).map(StationCodeAliases.canonical)
+        fromStationID = try container.decodeIfPresent(String.self, forKey: .fromStationID)
+        toStationID = try container.decodeIfPresent(String.self, forKey: .toStationID)
         lineNames = try container.decodeIfPresent([String].self, forKey: .lineNames)
         operatorNames = try container.decodeIfPresent([String].self, forKey: .operatorNames)
         lineIDs = try container.decodeIfPresent([String].self, forKey: .lineIDs)
@@ -485,6 +497,8 @@ public struct RouteSection: Codable, Hashable, Sendable {
         try container.encodeIfPresent(to, forKey: .to)
         try container.encode(fromN02StationCode, forKey: .fromN02StationCode)  // null, not absent
         try container.encode(toN02StationCode, forKey: .toN02StationCode)
+        try container.encodeIfPresent(fromStationID, forKey: .fromStationID)
+        try container.encodeIfPresent(toStationID, forKey: .toStationID)
         try container.encodeIfPresent(lineNames, forKey: .lineNames)
         try container.encodeIfPresent(operatorNames, forKey: .operatorNames)
         try container.encodeIfPresent(lineIDs, forKey: .lineIDs)
@@ -1084,7 +1098,8 @@ public enum TrainValidation {
         }
         if let sections = train.routeSections {
             for (offset, section) in sections.enumerated() {
-                issues.append(contentsOf: sectionDiagnostics(section, index: offset))
+                issues.append(contentsOf: sectionDiagnostics(
+                    section, index: offset, trainRegion: train.region))
             }
         }
         if let policy = train.routePolicy {
@@ -1201,7 +1216,9 @@ public enum TrainValidation {
         return !value.isEmpty
     }
 
-    private static func sectionDiagnostics(_ section: RouteSection, index: Int) -> [Diagnostic] {
+    private static func sectionDiagnostics(
+        _ section: RouteSection, index: Int, trainRegion: String?
+    ) -> [Diagnostic] {
         var issues: [Diagnostic] = []
         let at = sectionAt(index)
         let hasFrom = presentEndpoint(section.from) || presentEndpoint(section.fromN02StationCode)
@@ -1223,6 +1240,18 @@ public enum TrainValidation {
                 reason: "\(field) must be a six-digit N02_005c, a TDX StationUID, or null.",
                 location: at))
             break
+        }
+        let identities = [
+            (section.fromStationID, "from_station_id"),
+            (section.toStationID, "to_station_id"),
+        ]
+        for (value, field) in identities {
+            if let issue = registryIdentityDiagnostic(
+                value, field: field, kind: "st",
+                path: "route_sections[\(index)].\(field)", location: at, trainRegion: trainRegion
+            ) {
+                issues.append(issue)
+            }
         }
         return issues
     }
@@ -1355,6 +1384,14 @@ public enum TrainValidation {
             for (offset, section) in rows.enumerated() {
                 _ = try member(section, "from")
                 guard case .object = section else { continue }
+                for field in ["from_station_id", "to_station_id"] {
+                    if let value = section[field], value != .null, !value.isString {
+                        return Diagnostic(
+                            path: "route_sections[\(offset)].\(field)",
+                            reason: "\(field) must match \(stationIDPatternSource).",
+                            location: sectionAt(offset))
+                    }
+                }
                 for field in ["line_names", "operator_names"] {
                     let values = (section[field] ?? .null).orEmptyArray
                     guard case .array(let items) = values, items.allSatisfy(\.isString) else {
@@ -1516,7 +1553,9 @@ public enum TrainValidation {
             from: truthyText(section["from"]),
             to: truthyText(section["to"]),
             fromN02StationCode: codeText(section["from_n02_station_code"]),
-            toN02StationCode: codeText(section["to_n02_station_code"]))
+            toN02StationCode: codeText(section["to_n02_station_code"]),
+            fromStationID: (section["from_station_id"] ?? .null).stringOrNilIfNotString,
+            toStationID: (section["to_station_id"] ?? .null).stringOrNilIfNotString)
     }
 
     private static func truthyText(_ value: JSON?) -> String? {
@@ -1667,6 +1706,7 @@ public enum TrainValidation {
             section,
             [
                 "from", "to", "from_n02_station_code", "to_n02_station_code",
+                "from_station_id", "to_station_id",
                 "line_names", "operator_names", "line_ids", "section_codes", "section_codes_origin", "number", "name",
             ],
             "Route section")
@@ -1680,6 +1720,8 @@ public enum TrainValidation {
             to: (section["to"] ?? .null).stringOrNilIfFalsy ?? stations.nameForCode(toCode),
             fromN02StationCode: fromCode,
             toN02StationCode: toCode,
+            fromStationID: (section["from_station_id"] ?? .null).stringOrNilIfNotString,
+            toStationID: (section["to_station_id"] ?? .null).stringOrNilIfNotString,
             // `Array.isArray(x) ? x.map(String).filter(Boolean) : []` — the
             // import path always produces an array, never an absent field, so
             // these are `?? []` and not left nil. A section that comes back
@@ -2103,7 +2145,9 @@ public enum TrainValidation {
                     from: fromStop.name,
                     to: toStop.name,
                     fromN02StationCode: endpointCode(fromStop),
-                    toN02StationCode: endpointCode(toStop)))
+                    toN02StationCode: endpointCode(toStop),
+                    fromStationID: fromStop.stationID,
+                    toStationID: toStop.stationID))
         }
         return calculated
     }
@@ -2212,7 +2256,9 @@ public enum TrainValidation {
             },
             toN02StationCode: section.toN02StationCode.flatMap {
                 $0.isEmpty ? nil : StationCodeAliases.canonical($0)
-            })
+            },
+            fromStationID: section.fromStationID.flatMap { $0.isEmpty ? nil : $0 },
+            toStationID: section.toStationID.flatMap { $0.isEmpty ? nil : $0 })
         if let lines = section.lineNames, !lines.isEmpty { normalized.lineNames = lines }
         if let operators = section.operatorNames, !operators.isEmpty {
             normalized.operatorNames = operators
@@ -2243,7 +2289,10 @@ public enum TrainValidation {
         let toCode = section.toN02StationCode.flatMap {
             $0.isEmpty ? nil : StationCodeAliases.canonical($0)
         }
-        var out = RouteSection(fromN02StationCode: fromCode, toN02StationCode: toCode)
+        var out = RouteSection(
+            fromN02StationCode: fromCode, toN02StationCode: toCode,
+            fromStationID: section.fromStationID.flatMap { $0.isEmpty ? nil : $0 },
+            toStationID: section.toStationID.flatMap { $0.isEmpty ? nil : $0 })
         if let from = section.from, !from.isEmpty,
             fromCode == nil || !jsStringEquals(stations.nameForCode(fromCode), from)
         {
