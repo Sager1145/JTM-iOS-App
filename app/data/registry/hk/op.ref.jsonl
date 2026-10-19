@@ -1,0 +1,3 @@
+{"schema":"jtm-registry/1","region":"hk","kind":"op.ref"}
+{"id":"op:hk:1","scheme":"package-operator","value":"MTR","run":1}
+{"id":"op:hk:2","scheme":"package-operator","value":"香港電車","run":1}

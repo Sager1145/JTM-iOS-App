@@ -1,0 +1,6232 @@
+{
+  "lines": [
+    {
+      "packageLine": "kr-3hoseon",
+      "lp": "lp:kr:28",
+      "intervals": 32,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:694"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:695"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:696"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:697"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:698"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:699"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:700"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:701"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:702"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:703"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:704"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:705"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:706"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:707"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:708"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:709"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:710"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:711"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:712"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:713"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:714"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:715"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:716"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:717"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:718"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:719"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:720"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:721"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:722"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:723"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:724"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:725"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:726"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-4hoseon",
+      "lp": "lp:kr:32",
+      "intervals": 27,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:794"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:795"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:796"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:797"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:798"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:799"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:800"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:801"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:802"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:803"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:804"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:805"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:806"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:807"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:808"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:809"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:810"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:811"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:812"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:813"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:814"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:815"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:816"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:817"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:818"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:819"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:820"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:821"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-ansanseon",
+      "lp": "lp:kr:41",
+      "intervals": 13,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:994"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:995"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:996"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:997"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:998"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:999"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1000"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1001"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1002"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1003"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1004"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1005"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1006"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1007"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-ansanyeongyeolseon",
+      "lp": "lp:kr:76",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1395"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1396"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-ansim-hayang-bokseonjeoncheol",
+      "lp": "lp:kr:62",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1298"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1299"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1300"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1301"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1302"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-bundangseon",
+      "lp": "lp:kr:23",
+      "intervals": 33,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:526"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:527"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:528"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:529"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:530"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:531"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:532"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:533"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:534"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:535"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:536"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:537"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:538"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:539"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:540"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:541"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:542"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:543"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:544"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:545"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:546"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:547"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:548"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:549"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:550"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:551"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:552"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:553"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:554"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:555"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:556"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:557"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:558"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:559"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-busan-dosicheoldo-1hoseon",
+      "lp": "lp:kr:27",
+      "intervals": 39,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:654"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:655"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:656"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:657"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:658"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:659"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:660"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:661"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:662"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:663"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:664"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:665"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:666"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:667"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:668"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:669"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:670"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:671"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:672"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:673"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:674"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:675"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:676"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:677"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:678"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:679"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:680"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:681"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:682"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:683"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:684"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:685"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:686"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:687"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:688"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:689"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:690"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:691"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:692"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:693"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-busan-dosicheoldo-2hoseon",
+      "lp": "lp:kr:30",
+      "intervals": 29,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:737"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:738"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:739"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:740"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:741"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:742"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:743"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:744"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:745"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:746"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:747"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:748"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:749"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:750"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:751"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:752"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:753"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:754"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:755"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:756"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:757"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:758"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:759"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:760"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:761"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:762"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:763"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:764"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:765"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:766"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-busan-dosicheoldo-3hoseon",
+      "lp": "lp:kr:53",
+      "intervals": 16,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1214"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1215"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1216"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1217"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1218"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1219"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1220"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1221"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1222"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1223"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1224"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1225"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1226"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1227"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1228"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1229"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1230"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-busan-dosicheoldo-4hoseon",
+      "lp": "lp:kr:58",
+      "intervals": 14,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1261"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1262"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1263"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1264"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1265"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1266"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1267"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1268"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1269"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1270"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1271"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1272"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1273"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1274"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1275"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-busangimhaegyeongjeoncheol",
+      "lp": "lp:kr:45",
+      "intervals": 20,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1081"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1082"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1083"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1084"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1085"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1086"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1087"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1088"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1089"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1090"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1091"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1092"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1093"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1094"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1095"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1096"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1097"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1098"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1099"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1100"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:1101"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-byeolnaeseon",
+      "lp": "lp:kr:60",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1279"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1280"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1281"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1282"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1283"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1284"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-byeongjeomgijiseon",
+      "lp": "lp:kr:79",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1405"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1406"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-chungbukseon",
+      "lp": "lp:kr:12",
+      "intervals": 16,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:302"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:303"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:304"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:305"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:306"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:307"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:308"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:309"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:310"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:311"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:312"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:313"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:314"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:315"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:316"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:317"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:318"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daegu-dosicheoldo-1hoseon",
+      "lp": "lp:kr:38",
+      "intervals": 31,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:911"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:912"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:913"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:914"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:915"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:916"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:917"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:918"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:919"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:920"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:921"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:922"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:923"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:924"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:925"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:926"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:927"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:928"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:929"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:930"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:931"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:932"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:933"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:934"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:935"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:936"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:937"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:938"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:939"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:940"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:941"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:942"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daegu-dosicheoldo-2hoseon",
+      "lp": "lp:kr:37",
+      "intervals": 27,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:883"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:884"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:885"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:886"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:887"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:888"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:889"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:890"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:891"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:892"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:893"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:894"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:895"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:896"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:897"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:898"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:899"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:900"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:901"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:902"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:903"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:904"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:905"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:906"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:907"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:908"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:909"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:910"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daegu-dosicheoldo-3hoseon",
+      "lp": "lp:kr:44",
+      "intervals": 29,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1051"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1052"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1053"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1054"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1055"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1056"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1057"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1058"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1059"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1060"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1061"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1062"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1063"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1064"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1065"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1066"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1067"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1068"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1069"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1070"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:1071"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:1072"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:1073"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:1074"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:1075"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:1076"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:1077"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:1078"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:1079"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:1080"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daeguseon",
+      "lp": "lp:kr:48",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1144"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1145"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1146"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1147"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1148"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daejeon-dosicheoldo-1hoseon",
+      "lp": "lp:kr:47",
+      "intervals": 21,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1122"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1123"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1124"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1125"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1126"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1127"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1128"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1129"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1130"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1131"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1132"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1133"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1134"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1135"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1136"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1137"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1138"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1139"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1140"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1141"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:1142"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:1143"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-daejeonseon",
+      "lp": "lp:kr:72",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1376"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1377"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-donghaebonseon",
+      "lp": "lp:kr:34",
+      "intervals": 9,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:838"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:839"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:840"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:841"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:842"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:843"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:844"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:845"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:846"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:847"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-donghaeseon",
+      "lp": "lp:kr:46",
+      "intervals": 19,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1102"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1103"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1104"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1105"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1106"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1107"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1108"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1109"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1110"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1111"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1112"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1113"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1114"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1115"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1116"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1117"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1118"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1119"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1120"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1121"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-ganggyeongseon",
+      "lp": "lp:kr:81",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1409"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1410"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gayaseon",
+      "lp": "lp:kr:66",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1332"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1333"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1334"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1335"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1336"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1337"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1338"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gimpo-goldeurain",
+      "lp": "lp:kr:43",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1040"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1041"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1042"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1043"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1044"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1045"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1046"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1047"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1048"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1049"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1050"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gwacheonseon",
+      "lp": "lp:kr:55",
+      "intervals": 9,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1235"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1236"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1237"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1238"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1239"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1240"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1241"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1242"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1243"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1244"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gwangju-dosicheoldo-1hoseon",
+      "lp": "lp:kr:49",
+      "intervals": 19,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1149"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1150"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1151"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1152"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1153"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1154"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1155"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1156"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1157"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1158"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1159"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1160"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1161"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1162"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1163"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1164"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1165"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1166"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1167"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1168"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gwangjuseon",
+      "lp": "lp:kr:59",
+      "intervals": 2,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1276"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1277"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1278"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongbugosokseon",
+      "lp": "lp:kr:2",
+      "intervals": 22,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:98"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:99"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:100"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:101"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:102"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:103"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:104"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:105"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:106"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:107"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:108"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:109"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:110"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:111"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:112"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:113"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:114"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:115"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:116"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:117"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:118"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:119"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:120"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongbukseon",
+      "lp": "lp:kr:11",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:291"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:292"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:293"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:294"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:295"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:296"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:297"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:298"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:299"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:300"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:301"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongbuseon",
+      "lp": "lp:kr:1",
+      "intervals": 96,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:2"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:3"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:4"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:5"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:6"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:7"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:8"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:9"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:10"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:11"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:12"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:13"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:14"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:15"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:16"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:17"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:18"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:19"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:20"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:21"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:22"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:23"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:24"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:25"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:26"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:27"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:28"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:29"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:30"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:31"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:32"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:33"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:34"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:35"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:36"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:37"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:38"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:39"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:40"
+        },
+        {
+          "seq": 40,
+          "ls": "ls:kr:41"
+        },
+        {
+          "seq": 41,
+          "ls": "ls:kr:42"
+        },
+        {
+          "seq": 42,
+          "ls": "ls:kr:43"
+        },
+        {
+          "seq": 43,
+          "ls": "ls:kr:44"
+        },
+        {
+          "seq": 44,
+          "ls": "ls:kr:45"
+        },
+        {
+          "seq": 45,
+          "ls": "ls:kr:46"
+        },
+        {
+          "seq": 46,
+          "ls": "ls:kr:47"
+        },
+        {
+          "seq": 47,
+          "ls": "ls:kr:48"
+        },
+        {
+          "seq": 48,
+          "ls": "ls:kr:49"
+        },
+        {
+          "seq": 49,
+          "ls": "ls:kr:50"
+        },
+        {
+          "seq": 50,
+          "ls": "ls:kr:51"
+        },
+        {
+          "seq": 51,
+          "ls": "ls:kr:52"
+        },
+        {
+          "seq": 52,
+          "ls": "ls:kr:53"
+        },
+        {
+          "seq": 53,
+          "ls": "ls:kr:54"
+        },
+        {
+          "seq": 54,
+          "ls": "ls:kr:55"
+        },
+        {
+          "seq": 55,
+          "ls": "ls:kr:56"
+        },
+        {
+          "seq": 56,
+          "ls": "ls:kr:57"
+        },
+        {
+          "seq": 57,
+          "ls": "ls:kr:58"
+        },
+        {
+          "seq": 58,
+          "ls": "ls:kr:59"
+        },
+        {
+          "seq": 59,
+          "ls": "ls:kr:60"
+        },
+        {
+          "seq": 60,
+          "ls": "ls:kr:61"
+        },
+        {
+          "seq": 61,
+          "ls": "ls:kr:62"
+        },
+        {
+          "seq": 62,
+          "ls": "ls:kr:63"
+        },
+        {
+          "seq": 63,
+          "ls": "ls:kr:64"
+        },
+        {
+          "seq": 64,
+          "ls": "ls:kr:65"
+        },
+        {
+          "seq": 65,
+          "ls": "ls:kr:66"
+        },
+        {
+          "seq": 66,
+          "ls": "ls:kr:67"
+        },
+        {
+          "seq": 67,
+          "ls": "ls:kr:68"
+        },
+        {
+          "seq": 68,
+          "ls": "ls:kr:69"
+        },
+        {
+          "seq": 69,
+          "ls": "ls:kr:70"
+        },
+        {
+          "seq": 70,
+          "ls": "ls:kr:71"
+        },
+        {
+          "seq": 71,
+          "ls": "ls:kr:72"
+        },
+        {
+          "seq": 72,
+          "ls": "ls:kr:73"
+        },
+        {
+          "seq": 73,
+          "ls": "ls:kr:74"
+        },
+        {
+          "seq": 74,
+          "ls": "ls:kr:75"
+        },
+        {
+          "seq": 75,
+          "ls": "ls:kr:76"
+        },
+        {
+          "seq": 76,
+          "ls": "ls:kr:77"
+        },
+        {
+          "seq": 77,
+          "ls": "ls:kr:78"
+        },
+        {
+          "seq": 78,
+          "ls": "ls:kr:79"
+        },
+        {
+          "seq": 79,
+          "ls": "ls:kr:80"
+        },
+        {
+          "seq": 80,
+          "ls": "ls:kr:81"
+        },
+        {
+          "seq": 81,
+          "ls": "ls:kr:82"
+        },
+        {
+          "seq": 82,
+          "ls": "ls:kr:83"
+        },
+        {
+          "seq": 83,
+          "ls": "ls:kr:84"
+        },
+        {
+          "seq": 84,
+          "ls": "ls:kr:85"
+        },
+        {
+          "seq": 85,
+          "ls": "ls:kr:86"
+        },
+        {
+          "seq": 86,
+          "ls": "ls:kr:87"
+        },
+        {
+          "seq": 87,
+          "ls": "ls:kr:88"
+        },
+        {
+          "seq": 88,
+          "ls": "ls:kr:89"
+        },
+        {
+          "seq": 89,
+          "ls": "ls:kr:90"
+        },
+        {
+          "seq": 90,
+          "ls": "ls:kr:91"
+        },
+        {
+          "seq": 91,
+          "ls": "ls:kr:92"
+        },
+        {
+          "seq": 92,
+          "ls": "ls:kr:93"
+        },
+        {
+          "seq": 93,
+          "ls": "ls:kr:94"
+        },
+        {
+          "seq": 94,
+          "ls": "ls:kr:95"
+        },
+        {
+          "seq": 95,
+          "ls": "ls:kr:96"
+        },
+        {
+          "seq": 96,
+          "ls": "ls:kr:97"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongchunseon",
+      "lp": "lp:kr:17",
+      "intervals": 19,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:394"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:395"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:396"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:397"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:398"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:399"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:400"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:401"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:402"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:403"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:404"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:405"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:406"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:407"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:408"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:409"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:410"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:411"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:412"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:413"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeonggangseon",
+      "lp": "lp:kr:10",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:284"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:285"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:286"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:287"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:288"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:289"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:290"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeonginseon",
+      "lp": "lp:kr:39",
+      "intervals": 20,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:943"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:944"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:945"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:946"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:947"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:948"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:949"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:950"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:951"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:952"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:953"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:954"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:955"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:956"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:957"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:958"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:959"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:960"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:961"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:962"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:963"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongjeonseon",
+      "lp": "lp:kr:4",
+      "intervals": 33,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:161"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:162"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:163"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:164"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:165"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:166"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:167"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:168"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:169"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:170"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:171"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:172"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:173"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:174"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:175"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:176"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:177"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:178"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:179"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:180"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:181"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:182"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:183"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:184"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:185"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:186"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:187"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:188"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:189"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:190"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:191"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:192"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:193"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:194"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeonguiseon",
+      "lp": "lp:kr:21",
+      "intervals": 24,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:496"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:497"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:498"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:499"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:500"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:501"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:502"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:503"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:504"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:505"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:506"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:507"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:508"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:509"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:510"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:511"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:512"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:513"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:514"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:515"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:516"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:517"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:518"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:519"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:520"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyeongwonseon",
+      "lp": "lp:kr:16",
+      "intervals": 37,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:356"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:357"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:358"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:359"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:360"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:361"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:362"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:363"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:364"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:365"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:366"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:367"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:368"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:369"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:370"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:371"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:372"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:373"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:374"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:375"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:376"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:377"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:378"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:379"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:380"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:381"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:382"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:383"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:384"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:385"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:386"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:387"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:388"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:389"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:390"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:391"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:392"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:393"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-gyooeseon",
+      "lp": "lp:kr:35",
+      "intervals": 7,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:848"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:849"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:850"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:851"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:852"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:853"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:854"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:855"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-haeundae-haebyeonyeolcha",
+      "lp": "lp:kr:75",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1389"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1390"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1391"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1392"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1393"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1394"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-hambaekseon",
+      "lp": "lp:kr:63",
+      "intervals": 2,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1303"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1304"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1305"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-hanamseon",
+      "lp": "lp:kr:67",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1339"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1340"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1341"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1342"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1343"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1344"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-honamgosokseon",
+      "lp": "lp:kr:6",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:216"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:217"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:218"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:219"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:220"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-honamseon",
+      "lp": "lp:kr:5",
+      "intervals": 20,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:195"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:196"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:197"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:198"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:199"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:200"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:201"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:202"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:203"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:204"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:205"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:206"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:207"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:208"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:209"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:210"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:211"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:212"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:213"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:214"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:215"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-ilsanseon",
+      "lp": "lp:kr:51",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1184"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1185"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1186"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1187"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1188"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1189"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1190"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1191"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1192"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1193"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1194"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-incheon-dosicheoldo-1hoseon",
+      "lp": "lp:kr:31",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:767"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:768"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:769"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:770"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:771"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:772"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:773"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:774"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:775"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:776"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:777"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:778"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:779"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:780"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:781"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:782"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:783"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:784"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:785"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:786"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:787"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:788"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:789"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:790"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:791"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:792"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:793"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-incheon-dosicheoldo-2hoseon",
+      "lp": "lp:kr:36",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:856"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:857"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:858"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:859"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:860"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:861"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:862"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:863"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:864"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:865"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:866"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:867"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:868"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:869"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:870"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:871"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:872"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:873"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:874"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:875"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:876"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:877"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:878"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:879"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:880"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:881"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:882"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-incheongukjegonghang-syeoteulteurein-beulru-rain",
+      "lp": "lp:kr:82",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1411"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1412"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-incheongukjegonghang-syeoteulteurein-orenji-rain",
+      "lp": "lp:kr:80",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1407"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1408"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-incheongukjegonghangseon",
+      "lp": "lp:kr:19",
+      "intervals": 22,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:420"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:421"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:422"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:423"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:424"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:425"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:426"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:427"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:428"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:429"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:430"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:431"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:432"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:433"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:434"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:435"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:436"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:437"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:438"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:439"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:440"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:441"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:442"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-janghangseon",
+      "lp": "lp:kr:9",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:257"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:258"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:259"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:260"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:261"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:262"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:263"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:264"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:265"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:266"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:267"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:268"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:269"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:270"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:271"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:272"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:273"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:274"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:275"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:276"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:277"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:278"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:279"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:280"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:281"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:282"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:283"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jeongseonseon",
+      "lp": "lp:kr:24",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:560"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:561"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:562"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:563"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:564"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:565"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:566"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jeonraseon",
+      "lp": "lp:kr:7",
+      "intervals": 16,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:221"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:222"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:223"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:224"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:225"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:226"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:227"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:228"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:229"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:230"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:231"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:232"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:233"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:234"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:235"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:236"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:237"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jinjeopseon",
+      "lp": "lp:kr:54",
+      "intervals": 3,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1231"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1232"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1233"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1234"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jukbyeonhaeanseukaireil",
+      "lp": "lp:kr:78",
+      "intervals": 3,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1401"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1402"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1403"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1404"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jungangseon",
+      "lp": "lp:kr:3",
+      "intervals": 39,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:121"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:122"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:123"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:124"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:125"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:126"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:127"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:128"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:129"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:130"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:131"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:132"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:133"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:134"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:135"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:136"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:137"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:138"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:139"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:140"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:141"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:142"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:143"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:144"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:145"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:146"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:147"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:148"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:149"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:150"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:151"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:152"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:153"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:154"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:155"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:156"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:157"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:158"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:159"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:160"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-jungbunaeryukseon",
+      "lp": "lp:kr:14",
+      "intervals": 8,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:339"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:340"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:341"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:342"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:343"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:344"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:345"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:346"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:347"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-macheonjiseon",
+      "lp": "lp:kr:69",
+      "intervals": 7,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1356"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1357"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1358"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1359"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1360"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1361"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1362"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1363"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-manguseon",
+      "lp": "lp:kr:74",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1384"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1385"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1386"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1387"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1388"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-mokpoboseongseon",
+      "lp": "lp:kr:18",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:414"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:415"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:416"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:417"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:418"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:419"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-samcheokseon",
+      "lp": "lp:kr:56",
+      "intervals": 3,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1245"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1246"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1247"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1248"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seohaeseon",
+      "lp": "lp:kr:15",
+      "intervals": 7,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:348"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:349"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:350"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:351"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:352"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:353"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:354"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:355"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-gyeongjeoncheol-sinrimseon",
+      "lp": "lp:kr:68",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1345"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1346"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1347"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1348"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1349"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1350"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1351"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1352"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1353"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1354"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1355"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-1hoseon",
+      "lp": "lp:kr:65",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1321"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1322"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1323"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1324"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1325"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1326"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1327"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1328"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1329"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1330"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1331"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-2hoseon",
+      "lp": "lp:kr:42",
+      "intervals": 31,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1008"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1009"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1010"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1011"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1012"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1013"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1014"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1015"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1016"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1017"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1018"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1019"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1020"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1021"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1022"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1023"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1024"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1025"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1026"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:1027"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:1028"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:1029"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:1030"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:1031"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:1032"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:1033"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:1034"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:1035"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:1036"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:1037"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:1038"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:1039"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-2hoseon-seongsujiseon",
+      "lp": "lp:kr:73",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1378"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1379"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1380"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1381"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1382"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1383"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-2hoseon-sinjeongjiseon",
+      "lp": "lp:kr:71",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1371"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1372"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1373"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1374"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1375"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-5hoseon",
+      "lp": "lp:kr:25",
+      "intervals": 46,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:567"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:568"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:569"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:570"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:571"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:572"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:573"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:574"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:575"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:576"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:577"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:578"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:579"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:580"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:581"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:582"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:583"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:584"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:585"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:586"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:587"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:588"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:589"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:590"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:591"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:592"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:593"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:594"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:595"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:596"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:597"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:598"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:599"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:600"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:601"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:602"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:603"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:604"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:605"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:606"
+        },
+        {
+          "seq": 40,
+          "ls": "ls:kr:607"
+        },
+        {
+          "seq": 41,
+          "ls": "ls:kr:608"
+        },
+        {
+          "seq": 42,
+          "ls": "ls:kr:609"
+        },
+        {
+          "seq": 43,
+          "ls": "ls:kr:610"
+        },
+        {
+          "seq": 44,
+          "ls": "ls:kr:611"
+        },
+        {
+          "seq": 45,
+          "ls": "ls:kr:612"
+        },
+        {
+          "seq": 46,
+          "ls": "ls:kr:613"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-6hoseon",
+      "lp": "lp:kr:40",
+      "intervals": 29,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:964"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:965"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:966"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:967"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:968"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:969"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:970"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:971"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:972"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:973"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:974"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:975"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:976"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:977"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:978"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:979"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:980"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:981"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:982"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:983"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:984"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:985"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:986"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:987"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:988"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:989"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:990"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:991"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:992"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:993"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-7hoseon",
+      "lp": "lp:kr:20",
+      "intervals": 52,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:443"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:444"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:445"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:446"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:447"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:448"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:449"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:450"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:451"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:452"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:453"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:454"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:455"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:456"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:457"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:458"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:459"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:460"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:461"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:462"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:463"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:464"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:465"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:466"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:467"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:468"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:469"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:470"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:471"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:472"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:473"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:474"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:475"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:476"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:477"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:478"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:479"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:480"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:481"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:482"
+        },
+        {
+          "seq": 40,
+          "ls": "ls:kr:483"
+        },
+        {
+          "seq": 41,
+          "ls": "ls:kr:484"
+        },
+        {
+          "seq": 42,
+          "ls": "ls:kr:485"
+        },
+        {
+          "seq": 43,
+          "ls": "ls:kr:486"
+        },
+        {
+          "seq": 44,
+          "ls": "ls:kr:487"
+        },
+        {
+          "seq": 45,
+          "ls": "ls:kr:488"
+        },
+        {
+          "seq": 46,
+          "ls": "ls:kr:489"
+        },
+        {
+          "seq": 47,
+          "ls": "ls:kr:490"
+        },
+        {
+          "seq": 48,
+          "ls": "ls:kr:491"
+        },
+        {
+          "seq": 49,
+          "ls": "ls:kr:492"
+        },
+        {
+          "seq": 50,
+          "ls": "ls:kr:493"
+        },
+        {
+          "seq": 51,
+          "ls": "ls:kr:494"
+        },
+        {
+          "seq": 52,
+          "ls": "ls:kr:495"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-8hoseon",
+      "lp": "lp:kr:52",
+      "intervals": 18,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1195"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1196"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1197"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1198"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1199"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1200"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1201"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1202"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1203"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1204"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1205"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1206"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1207"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1208"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1209"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:1210"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:1211"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:1212"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:1213"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-seoul-jihacheol-9hoseon",
+      "lp": "lp:kr:26",
+      "intervals": 39,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:614"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:615"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:616"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:617"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:618"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:619"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:620"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:621"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:622"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:623"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:624"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:625"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:626"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:627"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:628"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:629"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:630"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:631"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:632"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:633"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:kr:634"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:kr:635"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:kr:636"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:kr:637"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:kr:638"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:kr:639"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:kr:640"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:kr:641"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:kr:642"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:kr:643"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:kr:644"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:kr:645"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:kr:646"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:kr:647"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:kr:648"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:kr:649"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:kr:650"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:kr:651"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:kr:652"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:kr:653"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-sinbundangseon",
+      "lp": "lp:kr:33",
+      "intervals": 15,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:822"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:823"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:824"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:825"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:826"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:827"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:828"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:829"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:830"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:831"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:832"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:833"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:834"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:835"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:836"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:837"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-sudogwongwangyeokgeuphaengcheoldoeiseon",
+      "lp": "lp:kr:29",
+      "intervals": 9,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:727"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:728"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:729"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:730"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:731"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:732"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:733"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:734"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:735"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:736"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-suinseon",
+      "lp": "lp:kr:50",
+      "intervals": 14,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1169"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1170"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1171"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1172"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1173"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1174"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1175"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1176"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1177"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1178"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1179"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1180"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1181"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1182"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1183"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-suseopyeongtaekgosokseon",
+      "lp": "lp:kr:22",
+      "intervals": 4,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:521"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:522"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:523"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:524"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:525"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-taebaekseon",
+      "lp": "lp:kr:13",
+      "intervals": 19,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:319"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:320"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:321"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:322"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:323"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:324"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:325"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:326"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:327"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:328"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:329"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:330"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:331"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:332"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:333"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:334"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:335"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:336"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:337"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:kr:338"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-uijeongbugyeongjeoncheol",
+      "lp": "lp:kr:64",
+      "intervals": 14,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1306"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1307"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1308"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1309"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1310"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1311"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1312"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1313"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1314"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1315"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1316"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1317"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1318"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:1319"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:1320"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-uisinseolseon",
+      "lp": "lp:kr:61",
+      "intervals": 12,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1285"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1286"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1287"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1288"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1289"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1290"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1291"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1292"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1293"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1294"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1295"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1296"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:1297"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-wolmibadayeolcha",
+      "lp": "lp:kr:77",
+      "intervals": 3,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1397"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1398"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1399"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1400"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-yeongdongseon",
+      "lp": "lp:kr:8",
+      "intervals": 18,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:238"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:239"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:240"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:241"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:242"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:243"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:244"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:245"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:246"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:247"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:248"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:249"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:kr:250"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:kr:251"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:kr:252"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:kr:253"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:kr:254"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:kr:255"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:kr:256"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-yongingyeongjeoncheol",
+      "lp": "lp:kr:57",
+      "intervals": 11,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1249"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1250"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1251"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1252"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1253"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1254"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1255"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:kr:1256"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:kr:1257"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:kr:1258"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:kr:1259"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:kr:1260"
+        }
+      ]
+    },
+    {
+      "packageLine": "kr-yongsanseon",
+      "lp": "lp:kr:70",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:kr:1364"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:kr:1365"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:kr:1366"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:kr:1367"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:kr:1368"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:kr:1369"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:kr:1370"
+        }
+      ]
+    }
+  ],
+  "notMapped": [
+    "raw/display vertex ordinal",
+    "display part index + metre ruler",
+    "native chain",
+    "capture pointOrdinal"
+  ]
+}

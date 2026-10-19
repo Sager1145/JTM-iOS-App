@@ -1,0 +1,16 @@
+{"schema":"jtm-registry/1","region":"mo","kind":"cx.ref"}
+{"id":"cx:mo:1","scheme":"group-code","value":"mo-official-mlm-barra","run":1}
+{"id":"cx:mo:2","scheme":"group-code","value":"mo-official-mlm-ocean","run":1}
+{"id":"cx:mo:3","scheme":"group-code","value":"mo-official-mlm-jockey","run":1}
+{"id":"cx:mo:4","scheme":"group-code","value":"mo-official-mlm-stadium","run":1}
+{"id":"cx:mo:5","scheme":"group-code","value":"mo-official-mlm-paikok","run":1}
+{"id":"cx:mo:6","scheme":"group-code","value":"mo-official-mlm-cotaiw","run":1}
+{"id":"cx:mo:7","scheme":"group-code","value":"mo-official-mlm-lotus","run":1}
+{"id":"cx:mo:8","scheme":"group-code","value":"mo-official-mlm-hospital","run":1}
+{"id":"cx:mo:9","scheme":"group-code","value":"mo-official-mlm-eag","run":1}
+{"id":"cx:mo:10","scheme":"group-code","value":"mo-official-mlm-cotaie","run":1}
+{"id":"cx:mo:11","scheme":"group-code","value":"mo-official-mlm-must","run":1}
+{"id":"cx:mo:12","scheme":"group-code","value":"mo-official-mlm-airport","run":1}
+{"id":"cx:mo:13","scheme":"group-code","value":"mo-official-mlm-ferry","run":1}
+{"id":"cx:mo:14","scheme":"group-code","value":"mo-official-mlm-seacpaivan","run":1}
+{"id":"cx:mo:15","scheme":"group-code","value":"mo-official-mlm-hengqin","run":1}

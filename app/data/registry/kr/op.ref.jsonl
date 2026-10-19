@@ -1,0 +1,22 @@
+{"schema":"jtm-registry/1","region":"kr","kind":"op.ref"}
+{"id":"op:kr:1","scheme":"package-operator","value":"한국철도공사","run":1}
+{"id":"op:kr:2","scheme":"package-operator","value":"공항철도주식회사","run":1}
+{"id":"op:kr:3","scheme":"package-operator","value":"서울교통공사","run":1}
+{"id":"op:kr:4","scheme":"package-operator","value":"에스알","run":1}
+{"id":"op:kr:5","scheme":"package-operator","value":"서울시메트로9호선","run":1}
+{"id":"op:kr:6","scheme":"package-operator","value":"부산교통공사","run":1}
+{"id":"op:kr:7","scheme":"package-operator","value":"지티엑스에이운영주식회사","run":1}
+{"id":"op:kr:8","scheme":"package-operator","value":"인천교통공사","run":1}
+{"id":"op:kr:9","scheme":"package-operator","value":"네오트랜스주식회사","run":1}
+{"id":"op:kr:10","scheme":"package-operator","value":"대구교통공사","run":1}
+{"id":"op:kr:11","scheme":"package-operator","value":"김포골드라인SRS","run":1}
+{"id":"op:kr:12","scheme":"package-operator","value":"부산·김해경전철주식회사","run":1}
+{"id":"op:kr:13","scheme":"package-operator","value":"대전교통공사","run":1}
+{"id":"op:kr:14","scheme":"package-operator","value":"광주교통공사","run":1}
+{"id":"op:kr:15","scheme":"package-operator","value":"용인에버라인운영(주)","run":1}
+{"id":"op:kr:16","scheme":"package-operator","value":"우이신설 도시철도","run":1}
+{"id":"op:kr:17","scheme":"package-operator","value":"(주)우진메트로","run":1}
+{"id":"op:kr:18","scheme":"package-operator","value":"로템SRS","run":1}
+{"id":"op:kr:19","scheme":"package-operator","value":"해운대블루라인(주)","run":1}
+{"id":"op:kr:20","scheme":"package-operator","value":"(주)스카이레일","run":1}
+{"id":"op:kr:21","scheme":"package-operator","value":"인천공항시설관리","run":1}

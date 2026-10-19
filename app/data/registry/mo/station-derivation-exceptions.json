@@ -1,0 +1,16 @@
+{
+  "line-family-candidate": [],
+  "same-operator-split-names": [],
+  "same-operator-multi-codes": [],
+  "cross-complex-same-station": [],
+  "unmapped-source": [],
+  "ambiguous-company-text": [],
+  "identity-not-a-railway": [],
+  "history-unmatched": [],
+  "shared-facility-candidate": [],
+  "name-line-not-unique": [],
+  "line-label-collision": [],
+  "line-alias-is-country-code": [],
+  "station-code-conflict": [],
+  "crosswalk-conflict": []
+}

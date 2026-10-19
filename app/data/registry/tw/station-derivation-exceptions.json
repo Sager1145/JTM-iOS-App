@@ -1,0 +1,349 @@
+{
+  "line-family-candidate": [],
+  "same-operator-split-names": [
+    {
+      "cx": "cx:tw:23",
+      "op": "op:tw:2",
+      "st": "st:tw:24",
+      "names": [
+        "凱旋",
+        "前鎮之星"
+      ]
+    },
+    {
+      "cx": "cx:tw:45",
+      "op": "op:tw:2",
+      "st": "st:tw:48",
+      "names": [
+        "凹子底",
+        "愛河之心"
+      ]
+    }
+  ],
+  "same-operator-multi-codes": [
+    {
+      "cx": "cx:tw:23",
+      "op": "op:tw:2",
+      "st": "st:tw:24",
+      "codes": [
+        "KLRT-C3",
+        "KRTC-R6"
+      ]
+    },
+    {
+      "cx": "cx:tw:34",
+      "op": "op:tw:2",
+      "st": "st:tw:35",
+      "codes": [
+        "KLRT-C14",
+        "KRTC-O1"
+      ]
+    },
+    {
+      "cx": "cx:tw:45",
+      "op": "op:tw:2",
+      "st": "st:tw:48",
+      "codes": [
+        "KLRT-C24",
+        "KRTC-R13"
+      ]
+    },
+    {
+      "cx": "cx:tw:61",
+      "op": "op:tw:2",
+      "st": "st:tw:65",
+      "codes": [
+        "KRTC-O5",
+        "KRTC-R10"
+      ]
+    },
+    {
+      "cx": "cx:tw:102",
+      "op": "op:tw:3",
+      "st": "st:tw:111",
+      "codes": [
+        "NTALRT-K09",
+        "NTMCC-Y08"
+      ]
+    },
+    {
+      "cx": "cx:tw:148",
+      "op": "op:tw:7",
+      "st": "st:tw:169",
+      "codes": [
+        "TRTC-BL12",
+        "TRTC-R10"
+      ]
+    },
+    {
+      "cx": "cx:tw:386",
+      "op": "op:tw:7",
+      "st": "st:tw:418",
+      "codes": [
+        "TRTC-BL11",
+        "TRTC-G12"
+      ]
+    },
+    {
+      "cx": "cx:tw:388",
+      "op": "op:tw:7",
+      "st": "st:tw:420",
+      "codes": [
+        "TRTC-BL14",
+        "TRTC-O07"
+      ]
+    },
+    {
+      "cx": "cx:tw:389",
+      "op": "op:tw:7",
+      "st": "st:tw:421",
+      "codes": [
+        "TRTC-BL15",
+        "TRTC-BR10"
+      ]
+    },
+    {
+      "cx": "cx:tw:396",
+      "op": "op:tw:7",
+      "st": "st:tw:428",
+      "codes": [
+        "TRTC-BL23",
+        "TRTC-BR24"
+      ]
+    },
+    {
+      "cx": "cx:tw:405",
+      "op": "op:tw:7",
+      "st": "st:tw:437",
+      "codes": [
+        "TRTC-BR09",
+        "TRTC-R05"
+      ]
+    },
+    {
+      "cx": "cx:tw:406",
+      "op": "op:tw:7",
+      "st": "st:tw:438",
+      "codes": [
+        "TRTC-BR11",
+        "TRTC-G16"
+      ]
+    },
+    {
+      "cx": "cx:tw:427",
+      "op": "op:tw:7",
+      "st": "st:tw:460",
+      "codes": [
+        "TRTC-G09",
+        "TRTC-O05"
+      ]
+    },
+    {
+      "cx": "cx:tw:428",
+      "op": "op:tw:7",
+      "st": "st:tw:461",
+      "codes": [
+        "TRTC-G10",
+        "TRTC-R08"
+      ]
+    },
+    {
+      "cx": "cx:tw:431",
+      "op": "op:tw:7",
+      "st": "st:tw:464",
+      "codes": [
+        "TRTC-G14",
+        "TRTC-R11"
+      ]
+    },
+    {
+      "cx": "cx:tw:432",
+      "op": "op:tw:7",
+      "st": "st:tw:465",
+      "codes": [
+        "TRTC-G15",
+        "TRTC-O08"
+      ]
+    },
+    {
+      "cx": "cx:tw:440",
+      "op": "op:tw:7",
+      "st": "st:tw:474",
+      "codes": [
+        "TRTC-O06",
+        "TRTC-R07"
+      ]
+    },
+    {
+      "cx": "cx:tw:443",
+      "op": "op:tw:7",
+      "st": "st:tw:477",
+      "codes": [
+        "TRTC-O11",
+        "TRTC-R13"
+      ]
+    }
+  ],
+  "cross-complex-same-station": [],
+  "unmapped-source": [
+    {
+      "ord": 29,
+      "station_code": "TRA-1070",
+      "group_code": "tw-official-tra-1070",
+      "name": "鶯歌",
+      "line_name": "縱貫線北段",
+      "operator": "國營臺灣鐵路股份有限公司"
+    },
+    {
+      "ord": 271,
+      "station_code": "TRTC-BL01",
+      "group_code": "tw-official-trtc-bl01",
+      "name": "頂埔",
+      "line_name": "板南線",
+      "operator": "臺北大眾捷運股份有限公司"
+    }
+  ],
+  "ambiguous-company-text": [],
+  "identity-not-a-railway": [],
+  "history-unmatched": [],
+  "shared-facility-candidate": [
+    {
+      "cx": "cx:tw:1",
+      "operators": [
+        "op:tw:1",
+        "op:tw:6"
+      ],
+      "metres": 128,
+      "sharedCodes": [
+        "TRA-4080"
+      ]
+    },
+    {
+      "cx": "cx:tw:38",
+      "operators": [
+        "op:tw:2",
+        "op:tw:6"
+      ],
+      "metres": 25,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:40",
+      "operators": [
+        "op:tw:2",
+        "op:tw:6"
+      ],
+      "metres": 40,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:79",
+      "operators": [
+        "op:tw:2",
+        "op:tw:6"
+      ],
+      "metres": 23,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:103",
+      "operators": [
+        "op:tw:3",
+        "op:tw:7"
+      ],
+      "metres": 48,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:142",
+      "operators": [
+        "op:tw:4",
+        "op:tw:6"
+      ],
+      "metres": 44,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:147",
+      "operators": [
+        "op:tw:5",
+        "op:tw:6",
+        "op:tw:7"
+      ],
+      "metres": 21,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:148",
+      "operators": [
+        "op:tw:5",
+        "op:tw:6",
+        "op:tw:7",
+        "op:tw:8"
+      ],
+      "metres": 16,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:149",
+      "operators": [
+        "op:tw:3",
+        "op:tw:5",
+        "op:tw:6",
+        "op:tw:7"
+      ],
+      "metres": 28,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:422",
+      "operators": [
+        "op:tw:3",
+        "op:tw:7"
+      ],
+      "metres": 30,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:tw:437",
+      "operators": [
+        "op:tw:3",
+        "op:tw:7"
+      ],
+      "metres": 47,
+      "sharedCodes": []
+    }
+  ],
+  "name-line-not-unique": [
+    {
+      "name": "左營",
+      "label": "縱貫線南段",
+      "qualified": false,
+      "cx": [
+        "cx:tw:83",
+        "cx:tw:353"
+      ]
+    },
+    {
+      "name": "苗栗",
+      "label": "臺中線",
+      "qualified": false,
+      "cx": [
+        "cx:tw:152",
+        "cx:tw:251"
+      ]
+    }
+  ],
+  "line-label-collision": [],
+  "line-alias-is-country-code": [],
+  "station-code-conflict": [
+    {
+      "value": "TRA-4080",
+      "candidates": [
+        "st:tw:1",
+        "st:tw:2"
+      ]
+    }
+  ],
+  "crosswalk-conflict": []
+}

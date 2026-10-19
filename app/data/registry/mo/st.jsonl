@@ -1,0 +1,16 @@
+{"schema":"jtm-registry/1","region":"mo","kind":"st"}
+{"id":"st:mo:1","parent":"cx:mo:1","run":1}
+{"id":"st:mo:2","parent":"cx:mo:2","run":1}
+{"id":"st:mo:3","parent":"cx:mo:3","run":1}
+{"id":"st:mo:4","parent":"cx:mo:4","run":1}
+{"id":"st:mo:5","parent":"cx:mo:5","run":1}
+{"id":"st:mo:6","parent":"cx:mo:6","run":1}
+{"id":"st:mo:7","parent":"cx:mo:7","run":1}
+{"id":"st:mo:8","parent":"cx:mo:8","run":1}
+{"id":"st:mo:9","parent":"cx:mo:9","run":1}
+{"id":"st:mo:10","parent":"cx:mo:10","run":1}
+{"id":"st:mo:11","parent":"cx:mo:11","run":1}
+{"id":"st:mo:12","parent":"cx:mo:12","run":1}
+{"id":"st:mo:13","parent":"cx:mo:13","run":1}
+{"id":"st:mo:14","parent":"cx:mo:14","run":1}
+{"id":"st:mo:15","parent":"cx:mo:15","run":1}

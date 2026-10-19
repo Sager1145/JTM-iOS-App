@@ -266,7 +266,7 @@ CN（P3，单独项目）的边界（准备文档 L24、L26、L75、L92–93）�
 4. 同一 `(scheme, value)` 在同一时刻只指向一个实体。
 5. 任何旧 id / 旧站码都能经 alias 解析；无法唯一解析时拒绝，而不是取第一个。
 6. 有效期区间不重叠（同一实体同一属性）；日期都有来源。
-7. 同一国家内，`(站名, 线路标签)` 至多指向一个站群（§11.4）；线路标签在国家内唯一；任何线路别名都不得等于一个受支持的国家代码。
+7. 同一国家内，`(站名, 线路标签)` 至多指向一个站群（§11.4）；线路标签在国家内唯一；等于受支持国家代码的线路别名/记号（P0 实测：東京モノレール `line_code = MO`）不作为单独括号元素解析，只能用 `(CC, 线名)` 两元素形式。
 8. 一个整数只属于一个索引空间（§3.8）；注册表序号不兼任区间、顶点、part、测量尺、chain 或 `pointOrdinal`。
 9. `station_complex`、`station_facility`、`station_link`、`route_pattern`、follow / family 都不产生物理拓扑边。
 10. 已否决候选（宫福、布崎、西野尻 等）永不成为 accepted repair、默认数据或自动兜底；同一 authority 下已接受的修复不被后续 export 覆盖。
@@ -308,11 +308,11 @@ CN（P3，单独项目）的边界（准备文档 L24、L26、L75、L92–93）�
 |---|---|
 | `app/data/registry/{region}/*.jsonl`、`runs.jsonl` | 只追加账本，格式见 §9.2 |
 | `.gitattributes` 一行 | `app/data/registry/**/*.jsonl text eol=lf merge=union` |
-| `app/data/registry/{region}/line-crosswalk.json` | 人工审定的 `lp` → `ln` 归属（首次为空；P0 只生成 `line-family-candidate` 报告供审定） |
-| `app/data/registry/index-space-map.{region}.json` | 旧 package line id → `lp`、(line id, 区间序号) → `line_stop` 范围；其余索引空间按 §3.8 标为“不映射，留在原 owner”。**任何消费者切换前发布** |
-| `app/data/registry/station-derivation-exceptions.{region}.json` | P0 生成的例外报告（只读产物，P1 审定后另存覆写表） |
+| `app/data/registry/{region}/line-crosswalk.json`（`{"schema":"jtm-line-crosswalk/1","groups":[…]}`） | 人工审定的 `lp` → `ln` 归属（首次为空；P0 只生成 `line-family-candidate` 报告供审定） |
+| `app/data/registry/{region}/index-space-map.json` | 旧 package line id → `lp`、(line id, 区间序号) → `line_stop` 范围；其余索引空间按 §3.8 标为“不映射，留在原 owner”。**任何消费者切换前发布** |
+| `app/data/registry/{region}/station-derivation-exceptions.json` | P0 生成的例外报告（只读产物，P1 审定后另存覆写表） |
 | `app/data/registry/{region}/excluded-source.json` | 不变量 3 的显式排除清单（人工维护，每条带原因与来源） |
-| `app/data/registry/homonyms.{region}.json` | 同名车站组、同名线路组及其自动生成的消歧显示名 |
+| `app/data/registry/{region}/homonyms.json` | 同名车站组、同名线路组及其自动生成的消歧显示名 |
 | `app/scripts/build/rail-database/registry.mjs` | 账本读写（规范化序列化）+ 铸造 + 校验，被 `load.mjs` 调用 |
 | `app/scripts/build/mint-registry.mjs` | 唯一允许写账本的入口（`--dry-run` 只出变更摘要）；`build-rail-database.mjs` 只读账本 |
 | `app/scripts/build/rail-database/schema.sql` | 新增注册表相关表（§9.4），`meta.schema_version` 3 → 4 |
@@ -389,7 +389,14 @@ app/data/registry/
 3. **station_complex**：每个 `(region, group_code)` 一个 `cx`；`refs` 记 group code。
 4. **station**：每个 `(group_code, operator)` 一个 `st`，`parent = cx`；`refs` 记该组合下全部 N02/TDX/MTR 站码；同时写 `station_operator(role='owner')`。
    这是身份分组，不声明共用站台或物理连接。`station_facility` 不在 P0 铸造，只出候选报告。
-5. **line_stop**：每个 `(package line id, seq)` 一个 `ls`，`parent = st`，并引用其 `lp`；`refs` 记该行的源站码。
+5. **line_stop**：每个 `(package line id, station)` 一个 `ls`，`parent = st`，并引用其 `lp`；派生键为 `lp|st`，所以线路改由他社运营时旧 `ls` 退役、在新 `st` 下铸造新 `ls`。
+
+护栏（P0 评审后加入）：
+- 解析到已退役实体的输入不铸造、也不在其下铸造子实体，进 `reappeared` 报告，铸造脚本以失败退出。
+- 任何退役都需要显式 `--allow-retire`，防止某地区包读取失败时整片退役。
+- 多家公司共用的源站码不分配给任何一家，进 `station-code-conflict` 报告（P0 实测：TW `TRA-4080` 嘉義，台铁与阿里山林业铁路共用）。
+- 多文件追加先写全部临时文件，再按 ref → 实体 → 事件 → runs 的顺序 rename；每个实体必须恰有一条键 ref，校验器据此发现中断的写入。
+- 已知设计限制：operator 以包内公司名为键，公司改名会铸造新 `op` 及其下的 `st`。P1 须加入公司改名映射（为既有 `op` 追加带 `from` 日期的新 `package-operator` ref），使改名只追加名称、不换 id（不变量 1）。
 
 “冻结”含义：账本一经入库，此后重建只能追加；源数据中某实体消失时在 `events.jsonl` 追加 `retire` 事件（附日期与来源），不删除、不复用序号。
 
@@ -521,8 +528,8 @@ P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序
 
 - 括号可用半角 `()` 或全角 `（）`；分隔符可用 `,` `，` `、` `·`；空格可有可无。
 - **CC** 是 ISO 3166-1 alpha-2 大写：`JP TW HK MO KR CN`（NA 已退役，`US`/`CA` 不受支持；CN 可用，但 P3 前 `(站名, 线名)` 不保证唯一，歧义按 §11.3 第 6 步拒绝）；输入不区分大小写，`jp` 等地区 slug 也接受。
-  括号里一个元素只有在属于受支持的国家代码集合时才被当作 CC，否则当作线名
-  （因此不变量 7 要求不得有线路别名等于国家代码）。
+  括号里只有一个元素时：属于受支持国家代码集合就当作 CC，否则当作线名；有两个元素时，第一个一定是 CC，第二个一定是线名。
+  因此与国家代码相同的线路记号（如東京モノレール的 `MO`，与澳门 `MO` 相同）只能写成 `浜松町 (JP, MO)`；`浜松町 (MO)` 表示澳门。
 - **线名**可以是该国内任一线路别名：官方名、去掉编号的通称（`丸ノ内線` 对 N02 的 `4号線丸ノ内線`）、
   公司限定名（`京成本線`、`阪神本線`）、英文名、线路记号（`JY`、`M`）、运行系统名（`上野東京ライン` → `route_pattern`）。
   别名来自 §3.5 `name` 表 `form='alias'`，P1 补齐。

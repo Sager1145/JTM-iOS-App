@@ -1,0 +1,377 @@
+{
+  "line-family-candidate": [
+    {
+      "by": "stripped-id",
+      "key": "hk-mtr-lr",
+      "operators": [
+        "MTR"
+      ],
+      "lp": [
+        "lp:hk:8",
+        "lp:hk:9",
+        "lp:hk:10",
+        "lp:hk:11",
+        "lp:hk:13",
+        "lp:hk:15",
+        "lp:hk:16",
+        "lp:hk:17"
+      ]
+    }
+  ],
+  "same-operator-split-names": [],
+  "same-operator-multi-codes": [],
+  "cross-complex-same-station": [
+    {
+      "name": "信德街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:197",
+        "cx:hk:253"
+      ],
+      "metres": 18
+    },
+    {
+      "name": "健康東街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:207",
+        "cx:hk:244"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "健康西街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:206",
+        "cx:hk:245"
+      ],
+      "metres": 6
+    },
+    {
+      "name": "元朗",
+      "op": "op:hk:1",
+      "cx": [
+        "cx:hk:100",
+        "cx:hk:140"
+      ],
+      "metres": 120
+    },
+    {
+      "name": "兆康",
+      "op": "op:hk:1",
+      "cx": [
+        "cx:hk:56",
+        "cx:hk:137"
+      ],
+      "metres": 60
+    },
+    {
+      "name": "北角道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:203",
+        "cx:hk:232"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "堅拿道西",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:194",
+        "cx:hk:257"
+      ],
+      "metres": 57
+    },
+    {
+      "name": "天水圍",
+      "op": "op:hk:1",
+      "cx": [
+        "cx:hk:106",
+        "cx:hk:138"
+      ],
+      "metres": 212
+    },
+    {
+      "name": "太古城道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:213",
+        "cx:hk:238"
+      ],
+      "metres": 4
+    },
+    {
+      "name": "太康街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:214",
+        "cx:hk:237"
+      ],
+      "metres": 5
+    },
+    {
+      "name": "屈地街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:173",
+        "cx:hk:276"
+      ],
+      "metres": 39
+    },
+    {
+      "name": "屯門",
+      "op": "op:hk:1",
+      "cx": [
+        "cx:hk:68",
+        "cx:hk:136"
+      ],
+      "metres": 162
+    },
+    {
+      "name": "山道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:171",
+        "cx:hk:277"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "康山",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:212",
+        "cx:hk:239"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "書局街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:204",
+        "cx:hk:247"
+      ],
+      "metres": 35
+    },
+    {
+      "name": "木星街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:201",
+        "cx:hk:249"
+      ],
+      "metres": 21
+    },
+    {
+      "name": "杜老誌道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:193",
+        "cx:hk:229"
+      ],
+      "metres": 49
+    },
+    {
+      "name": "東邊街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:176",
+        "cx:hk:273"
+      ],
+      "metres": 55
+    },
+    {
+      "name": "柏架山道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:210",
+        "cx:hk:241"
+      ],
+      "metres": 135
+    },
+    {
+      "name": "柯布連道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:191",
+        "cx:hk:259"
+      ],
+      "metres": 38
+    },
+    {
+      "name": "柴灣道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:218",
+        "cx:hk:233"
+      ],
+      "metres": 17
+    },
+    {
+      "name": "機利文街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:181",
+        "cx:hk:268"
+      ],
+      "metres": 29
+    },
+    {
+      "name": "水街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:174",
+        "cx:hk:275"
+      ],
+      "metres": 43
+    },
+    {
+      "name": "海富街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:216",
+        "cx:hk:235"
+      ],
+      "metres": 2
+    },
+    {
+      "name": "渣華道",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:208",
+        "cx:hk:243"
+      ],
+      "metres": 6
+    },
+    {
+      "name": "港澳碼頭",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:178",
+        "cx:hk:270"
+      ],
+      "metres": 19
+    },
+    {
+      "name": "炮台山",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:202",
+        "cx:hk:248"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "畢打街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:183",
+        "cx:hk:266"
+      ],
+      "metres": 74
+    },
+    {
+      "name": "百德新街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:196",
+        "cx:hk:256"
+      ],
+      "metres": 55
+    },
+    {
+      "name": "皇后大道西",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:170",
+        "cx:hk:278"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "維多利亞公園",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:198",
+        "cx:hk:252"
+      ],
+      "metres": 44
+    },
+    {
+      "name": "船塢里",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:211",
+        "cx:hk:240"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "芬尼街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:209",
+        "cx:hk:242"
+      ],
+      "metres": 3
+    },
+    {
+      "name": "西邊街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:175",
+        "cx:hk:274"
+      ],
+      "metres": 66
+    },
+    {
+      "name": "軍器廠街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:188",
+        "cx:hk:262"
+      ],
+      "metres": 26
+    },
+    {
+      "name": "金鐘港鐵站",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:187",
+        "cx:hk:263"
+      ],
+      "metres": 33
+    },
+    {
+      "name": "銀行街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:185",
+        "cx:hk:265"
+      ],
+      "metres": 36
+    },
+    {
+      "name": "電照街",
+      "op": "op:hk:2",
+      "cx": [
+        "cx:hk:205",
+        "cx:hk:246"
+      ],
+      "metres": 3
+    }
+  ],
+  "unmapped-source": [],
+  "ambiguous-company-text": [],
+  "identity-not-a-railway": [],
+  "history-unmatched": [],
+  "shared-facility-candidate": [],
+  "name-line-not-unique": [],
+  "line-label-collision": [],
+  "line-alias-is-country-code": [],
+  "station-code-conflict": [],
+  "crosswalk-conflict": []
+}

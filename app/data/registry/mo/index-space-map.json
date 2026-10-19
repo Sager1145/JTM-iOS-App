@@ -1,0 +1,99 @@
+{
+  "lines": [
+    {
+      "packageLine": "mo-mlm-hengqin",
+      "lp": "lp:mo:3",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:mo:16"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:mo:17"
+        }
+      ]
+    },
+    {
+      "packageLine": "mo-mlm-spv",
+      "lp": "lp:mo:2",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:mo:14"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:mo:15"
+        }
+      ]
+    },
+    {
+      "packageLine": "mo-mlm-taipa",
+      "lp": "lp:mo:1",
+      "intervals": 12,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:mo:1"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:mo:2"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:mo:3"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:mo:4"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:mo:5"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:mo:6"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:mo:7"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:mo:8"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:mo:9"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:mo:10"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:mo:11"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:mo:12"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:mo:13"
+        }
+      ]
+    }
+  ],
+  "notMapped": [
+    "raw/display vertex ordinal",
+    "display part index + metre ruler",
+    "native chain",
+    "capture pointOrdinal"
+  ]
+}

@@ -1,0 +1,2627 @@
+{
+  "lines": [
+    {
+      "packageLine": "tw-alsr-alishan",
+      "lp": "lp:tw:1",
+      "intervals": 16,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:1"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:2"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:3"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:4"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:5"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:6"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:7"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:8"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:9"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:10"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:11"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:12"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:13"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:14"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:15"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:16"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:17"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-alsr-shenmu",
+      "lp": "lp:tw:2",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:18"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:19"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-alsr-zhaoping",
+      "lp": "lp:tw:3",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:20"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:21"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-alsr-zhushan",
+      "lp": "lp:tw:4",
+      "intervals": 2,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:22"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:23"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:24"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-klrt-c",
+      "lp": "lp:tw:5",
+      "intervals": 38,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:25"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:26"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:27"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:28"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:29"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:30"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:31"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:32"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:33"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:34"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:35"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:36"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:37"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:38"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:39"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:40"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:41"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:42"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:43"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:44"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:45"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:46"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:47"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:48"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:49"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:50"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:51"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:tw:52"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:tw:53"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:tw:54"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:tw:55"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:tw:56"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:tw:57"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:tw:58"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:tw:59"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:tw:60"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:tw:61"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:tw:62"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-krtc-o",
+      "lp": "lp:tw:6",
+      "intervals": 13,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:63"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:64"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:65"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:66"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:67"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:68"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:69"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:70"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:71"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:72"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:73"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:74"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:75"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:76"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-krtc-r",
+      "lp": "lp:tw:7",
+      "intervals": 24,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:77"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:78"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:79"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:80"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:81"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:82"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:83"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:84"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:85"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:86"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:87"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:88"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:89"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:90"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:91"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:92"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:93"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:94"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:95"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:96"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:97"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:98"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:99"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:100"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:101"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-ntmetro-k",
+      "lp": "lp:tw:8",
+      "intervals": 8,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:102"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:103"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:104"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:105"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:106"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:107"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:108"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:109"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:110"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-ntmetro-lb",
+      "lp": "lp:tw:9",
+      "intervals": 11,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:111"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:112"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:113"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:114"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:115"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:116"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:117"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:118"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:119"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:120"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:121"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:122"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-ntmetro-v-blue",
+      "lp": "lp:tw:10",
+      "intervals": 3,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:123"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:124"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:125"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:126"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-ntmetro-v-green",
+      "lp": "lp:tw:11",
+      "intervals": 10,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:127"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:128"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:129"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:130"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:131"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:132"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:133"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:134"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:135"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:136"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:137"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tcmrt-g",
+      "lp": "lp:tw:12",
+      "intervals": 17,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:138"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:139"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:140"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:141"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:142"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:143"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:144"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:145"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:146"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:147"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:148"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:149"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:150"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:151"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:152"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:153"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:154"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:155"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-thsr-main",
+      "lp": "lp:tw:13",
+      "intervals": 11,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:156"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:157"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:158"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:159"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:160"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:161"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:162"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:163"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:164"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:165"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:166"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:167"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-chengzhui",
+      "lp": "lp:tw:14",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:168"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:169"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-coast",
+      "lp": "lp:tw:15",
+      "intervals": 17,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:170"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:171"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:172"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:173"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:174"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:175"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:176"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:177"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:178"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:179"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:180"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:181"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:182"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:183"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:184"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:185"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:186"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:187"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-jiji",
+      "lp": "lp:tw:16",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:188"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:189"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:190"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:191"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:192"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:193"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:194"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-liujia",
+      "lp": "lp:tw:17",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:195"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:196"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-neiwan",
+      "lp": "lp:tw:18",
+      "intervals": 11,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:197"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:198"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:199"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:200"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:201"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:202"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:203"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:204"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:205"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:206"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:207"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:208"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-north-link",
+      "lp": "lp:tw:19",
+      "intervals": 12,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:209"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:210"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:211"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:212"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:213"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:214"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:215"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:216"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:217"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:218"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:219"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:220"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:221"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-pingtung",
+      "lp": "lp:tw:20",
+      "intervals": 20,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:222"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:223"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:224"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:225"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:226"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:227"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:228"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:229"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:230"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:231"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:232"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:233"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:234"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:235"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:236"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:237"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:238"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:239"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:240"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:241"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:242"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-pingxi",
+      "lp": "lp:tw:21",
+      "intervals": 6,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:243"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:244"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:245"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:246"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:247"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:248"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:249"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-shalun",
+      "lp": "lp:tw:22",
+      "intervals": 2,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:250"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:251"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:252"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-shenao",
+      "lp": "lp:tw:23",
+      "intervals": 2,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:253"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:254"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:255"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-south-link",
+      "lp": "lp:tw:24",
+      "intervals": 11,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:256"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:257"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:258"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:259"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:260"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:261"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:262"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:263"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:264"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:265"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:266"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:267"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-taichung",
+      "lp": "lp:tw:25",
+      "intervals": 22,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:268"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:269"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:270"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:271"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:272"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:273"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:274"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:275"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:276"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:277"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:278"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:279"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:280"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:281"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:282"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:283"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:284"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:285"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:286"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:287"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:288"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:289"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:290"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-taitung",
+      "lp": "lp:tw:26",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:291"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:292"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:293"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:294"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:295"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:296"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:297"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:298"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:299"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:300"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:301"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:302"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:303"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:304"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:305"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:306"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:307"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:308"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:309"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:310"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:311"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:312"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:313"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:314"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:315"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:316"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:317"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-western-north",
+      "lp": "lp:tw:27",
+      "intervals": 35,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:318"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:319"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:320"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:321"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:322"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:323"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:324"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:325"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:326"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:327"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:328"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:329"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:330"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:331"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:332"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:333"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:334"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:335"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:336"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:337"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:338"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:339"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:340"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:341"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:342"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:343"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:344"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:tw:345"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:tw:346"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:tw:347"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:tw:348"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:tw:349"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:tw:350"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:tw:351"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:tw:352"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:tw:353"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-western-south",
+      "lp": "lp:tw:28",
+      "intervals": 45,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:354"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:355"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:356"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:357"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:358"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:359"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:360"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:361"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:362"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:363"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:364"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:365"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:366"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:367"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:368"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:369"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:370"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:371"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:372"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:373"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:374"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:375"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:376"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:377"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:378"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:379"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:380"
+        },
+        {
+          "seq": 27,
+          "ls": "ls:tw:381"
+        },
+        {
+          "seq": 28,
+          "ls": "ls:tw:382"
+        },
+        {
+          "seq": 29,
+          "ls": "ls:tw:383"
+        },
+        {
+          "seq": 30,
+          "ls": "ls:tw:384"
+        },
+        {
+          "seq": 31,
+          "ls": "ls:tw:385"
+        },
+        {
+          "seq": 32,
+          "ls": "ls:tw:386"
+        },
+        {
+          "seq": 33,
+          "ls": "ls:tw:387"
+        },
+        {
+          "seq": 34,
+          "ls": "ls:tw:388"
+        },
+        {
+          "seq": 35,
+          "ls": "ls:tw:389"
+        },
+        {
+          "seq": 36,
+          "ls": "ls:tw:390"
+        },
+        {
+          "seq": 37,
+          "ls": "ls:tw:391"
+        },
+        {
+          "seq": 38,
+          "ls": "ls:tw:392"
+        },
+        {
+          "seq": 39,
+          "ls": "ls:tw:393"
+        },
+        {
+          "seq": 40,
+          "ls": "ls:tw:394"
+        },
+        {
+          "seq": 41,
+          "ls": "ls:tw:395"
+        },
+        {
+          "seq": 42,
+          "ls": "ls:tw:396"
+        },
+        {
+          "seq": 43,
+          "ls": "ls:tw:397"
+        },
+        {
+          "seq": 44,
+          "ls": "ls:tw:398"
+        },
+        {
+          "seq": 45,
+          "ls": "ls:tw:399"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tra-yilan",
+      "lp": "lp:tw:29",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:400"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:401"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:402"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:403"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:404"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:405"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:406"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:407"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:408"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:409"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:410"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:411"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:412"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:413"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:414"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:415"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:416"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:417"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:418"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:419"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:420"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:421"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:422"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:423"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:424"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:425"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:426"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-bl",
+      "lp": "lp:tw:30",
+      "intervals": 22,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:427"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:428"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:429"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:430"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:431"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:432"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:433"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:434"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:435"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:436"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:437"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:438"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:439"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:440"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:441"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:442"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:443"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:444"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:445"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:446"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:447"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:448"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:449"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-br",
+      "lp": "lp:tw:31",
+      "intervals": 23,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:450"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:451"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:452"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:453"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:454"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:455"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:456"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:457"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:458"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:459"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:460"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:461"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:462"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:463"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:464"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:465"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:466"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:467"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:468"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:469"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:470"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:471"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:472"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:473"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-g",
+      "lp": "lp:tw:32",
+      "intervals": 18,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:474"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:475"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:476"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:477"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:478"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:479"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:480"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:481"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:482"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:483"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:484"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:485"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:486"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:487"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:488"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:489"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:490"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:491"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:492"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-g-xiaobitan",
+      "lp": "lp:tw:33",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:493"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:494"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-o-huilong",
+      "lp": "lp:tw:34",
+      "intervals": 20,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:495"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:496"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:497"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:498"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:499"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:500"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:501"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:502"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:503"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:504"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:505"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:506"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:507"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:508"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:509"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:510"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:511"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:512"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:513"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:514"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:515"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-o-luzhou",
+      "lp": "lp:tw:35",
+      "intervals": 5,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:516"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:517"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:518"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:519"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:520"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:521"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-r",
+      "lp": "lp:tw:36",
+      "intervals": 26,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:522"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:523"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:524"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:525"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:526"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:527"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:528"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:529"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:530"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:531"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:532"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:533"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:534"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:535"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:536"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:537"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:538"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:539"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:540"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:541"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:542"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:543"
+        },
+        {
+          "seq": 22,
+          "ls": "ls:tw:544"
+        },
+        {
+          "seq": 23,
+          "ls": "ls:tw:545"
+        },
+        {
+          "seq": 24,
+          "ls": "ls:tw:546"
+        },
+        {
+          "seq": 25,
+          "ls": "ls:tw:547"
+        },
+        {
+          "seq": 26,
+          "ls": "ls:tw:548"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-r-xinbeitou",
+      "lp": "lp:tw:37",
+      "intervals": 1,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:549"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:550"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-trtc-y",
+      "lp": "lp:tw:38",
+      "intervals": 13,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:551"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:552"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:553"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:554"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:555"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:556"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:557"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:558"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:559"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:560"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:561"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:562"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:563"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:564"
+        }
+      ]
+    },
+    {
+      "packageLine": "tw-tym-a",
+      "lp": "lp:tw:39",
+      "intervals": 21,
+      "stops": [
+        {
+          "seq": 0,
+          "ls": "ls:tw:565"
+        },
+        {
+          "seq": 1,
+          "ls": "ls:tw:566"
+        },
+        {
+          "seq": 2,
+          "ls": "ls:tw:567"
+        },
+        {
+          "seq": 3,
+          "ls": "ls:tw:568"
+        },
+        {
+          "seq": 4,
+          "ls": "ls:tw:569"
+        },
+        {
+          "seq": 5,
+          "ls": "ls:tw:570"
+        },
+        {
+          "seq": 6,
+          "ls": "ls:tw:571"
+        },
+        {
+          "seq": 7,
+          "ls": "ls:tw:572"
+        },
+        {
+          "seq": 8,
+          "ls": "ls:tw:573"
+        },
+        {
+          "seq": 9,
+          "ls": "ls:tw:574"
+        },
+        {
+          "seq": 10,
+          "ls": "ls:tw:575"
+        },
+        {
+          "seq": 11,
+          "ls": "ls:tw:576"
+        },
+        {
+          "seq": 12,
+          "ls": "ls:tw:577"
+        },
+        {
+          "seq": 13,
+          "ls": "ls:tw:578"
+        },
+        {
+          "seq": 14,
+          "ls": "ls:tw:579"
+        },
+        {
+          "seq": 15,
+          "ls": "ls:tw:580"
+        },
+        {
+          "seq": 16,
+          "ls": "ls:tw:581"
+        },
+        {
+          "seq": 17,
+          "ls": "ls:tw:582"
+        },
+        {
+          "seq": 18,
+          "ls": "ls:tw:583"
+        },
+        {
+          "seq": 19,
+          "ls": "ls:tw:584"
+        },
+        {
+          "seq": 20,
+          "ls": "ls:tw:585"
+        },
+        {
+          "seq": 21,
+          "ls": "ls:tw:586"
+        }
+      ]
+    }
+  ],
+  "notMapped": [
+    "raw/display vertex ordinal",
+    "display part index + metre ruler",
+    "native chain",
+    "capture pointOrdinal"
+  ]
+}

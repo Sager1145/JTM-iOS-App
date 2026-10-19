@@ -1,0 +1,1434 @@
+{
+  "line-family-candidate": [],
+  "same-operator-split-names": [
+    {
+      "cx": "cx:kr:34",
+      "op": "op:kr:1",
+      "st": "st:kr:61",
+      "names": [
+        "대구",
+        "대구역"
+      ]
+    },
+    {
+      "cx": "cx:kr:53",
+      "op": "op:kr:1",
+      "st": "st:kr:83",
+      "names": [
+        "대전",
+        "대전역"
+      ]
+    },
+    {
+      "cx": "cx:kr:97",
+      "op": "op:kr:1",
+      "st": "st:kr:141",
+      "names": [
+        "서울",
+        "서울역"
+      ]
+    }
+  ],
+  "same-operator-multi-codes": [
+    {
+      "cx": "cx:kr:1",
+      "op": "op:kr:1",
+      "st": "st:kr:1",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-BUSAN",
+        "KR-GYEONGBUSEON-BUSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:2",
+      "op": "op:kr:1",
+      "st": "st:kr:3",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-CHORYANG",
+        "KR-GYEONGBUSEON-CHORYANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:3",
+      "op": "op:kr:1",
+      "st": "st:kr:5",
+      "codes": [
+        "KR-DONGHAESEON-BUSANJIN",
+        "KR-GYEONGBUGOSOKSEON-BUSANJIN",
+        "KR-GYEONGBUSEON-BUSANJIN"
+      ]
+    },
+    {
+      "cx": "cx:kr:4",
+      "op": "op:kr:1",
+      "st": "st:kr:7",
+      "codes": [
+        "KR-DONGHAEBONSEON-JWACHEON",
+        "KR-DONGHAESEON-JWACHEON",
+        "KR-GYEONGBUGOSOKSEON-JWACHEON",
+        "KR-GYEONGBUSEON-JWACHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:5",
+      "op": "op:kr:1",
+      "st": "st:kr:9",
+      "codes": [
+        "KR-DONGHAESEON-BEOMIL",
+        "KR-GYEONGBUGOSOKSEON-BEOMIL",
+        "KR-GYEONGBUSEON-BEOMIL"
+      ]
+    },
+    {
+      "cx": "cx:kr:6",
+      "op": "op:kr:1",
+      "st": "st:kr:11",
+      "codes": [
+        "KR-DONGHAESEON-BEOMNAEGOL",
+        "KR-GAYASEON-BEOMNAEGOL",
+        "KR-GYEONGBUGOSOKSEON-BEOMNAEGOL",
+        "KR-GYEONGBUSEON-BEOMNAEGOL"
+      ]
+    },
+    {
+      "cx": "cx:kr:9",
+      "op": "op:kr:1",
+      "st": "st:kr:17",
+      "codes": [
+        "KR-GAYASEON-GAEGEUM",
+        "KR-GYEONGBUSEON-GAEGEUM"
+      ]
+    },
+    {
+      "cx": "cx:kr:10",
+      "op": "op:kr:1",
+      "st": "st:kr:19",
+      "codes": [
+        "KR-GAYASEON-NAENGJEONG",
+        "KR-GYEONGBUSEON-NAENGJEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:11",
+      "op": "op:kr:1",
+      "st": "st:kr:21",
+      "codes": [
+        "KR-GAYASEON-JURYE",
+        "KR-GYEONGBUSEON-JURYE"
+      ]
+    },
+    {
+      "cx": "cx:kr:12",
+      "op": "op:kr:1",
+      "st": "st:kr:23",
+      "codes": [
+        "KR-GAYASEON-GAMJEON",
+        "KR-GYEONGBUSEON-GAMJEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:13",
+      "op": "op:kr:1",
+      "st": "st:kr:25",
+      "codes": [
+        "KR-GAYASEON-SASANG",
+        "KR-GYEONGBUSEON-SASANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:21",
+      "op": "op:kr:1",
+      "st": "st:kr:42",
+      "codes": [
+        "KR-GYEONGBUSEON-GEUMGOK",
+        "KR-GYEONGCHUNSEON-GEUMGOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:25",
+      "op": "op:kr:1",
+      "st": "st:kr:48",
+      "codes": [
+        "KR-GYEONGBUSEON-SAMRANGJIN",
+        "KR-GYEONGJEONSEON-SAMRANGJIN"
+      ]
+    },
+    {
+      "cx": "cx:kr:31",
+      "op": "op:kr:1",
+      "st": "st:kr:55",
+      "codes": [
+        "KR-DAEGUSEON-DONGDAEGU",
+        "KR-GYEONGBUGOSOKSEON-DONGDAEGU",
+        "KR-GYEONGBUSEON-DONGDAEGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:32",
+      "op": "op:kr:1",
+      "st": "st:kr:57",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-SINCHEON",
+        "KR-GYEONGBUSEON-SINCHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:33",
+      "op": "op:kr:1",
+      "st": "st:kr:59",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-CHILSEONGSIJANG",
+        "KR-GYEONGBUSEON-CHILSEONGSIJANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:34",
+      "op": "op:kr:1",
+      "st": "st:kr:61",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-DAEGU",
+        "KR-GYEONGBUSEON-DAEGUYEOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:35",
+      "op": "op:kr:1",
+      "st": "st:kr:63",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-SEODAEGU",
+        "KR-GYEONGBUSEON-SEODAEGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:40",
+      "op": "op:kr:1",
+      "st": "st:kr:68",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-BUKSAM",
+        "KR-GYEONGBUSEON-BUKSAM"
+      ]
+    },
+    {
+      "cx": "cx:kr:43",
+      "op": "op:kr:1",
+      "st": "st:kr:71",
+      "codes": [
+        "KR-GYEONGBUKSEON-GIMCHEON",
+        "KR-GYEONGBUSEON-GIMCHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:49",
+      "op": "op:kr:1",
+      "st": "st:kr:77",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-JITAN",
+        "KR-GYEONGBUSEON-JITAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:52",
+      "op": "op:kr:1",
+      "st": "st:kr:80",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-SINHEUNG",
+        "KR-GYEONGBUSEON-SINHEUNG"
+      ]
+    },
+    {
+      "cx": "cx:kr:53",
+      "op": "op:kr:1",
+      "st": "st:kr:83",
+      "codes": [
+        "KR-DAEJEONSEON-DAEJEON",
+        "KR-GYEONGBUGOSOKSEON-DAEJEON",
+        "KR-GYEONGBUSEON-DAEJEONYEOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:56",
+      "op": "op:kr:1",
+      "st": "st:kr:87",
+      "codes": [
+        "KR-CHUNGBUKSEON-JOCHIWON",
+        "KR-GYEONGBUSEON-JOCHIWON"
+      ]
+    },
+    {
+      "cx": "cx:kr:58",
+      "op": "op:kr:1",
+      "st": "st:kr:89",
+      "codes": [
+        "KR-GYEONGBUSEON-CHEONAN",
+        "KR-JANGHANGSEON-CHEONAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:70",
+      "op": "op:kr:1",
+      "st": "st:kr:102",
+      "codes": [
+        "KR-BYEONGJEOMGIJISEON-BYEONGJEOM",
+        "KR-GYEONGBUSEON-BYEONGJEOM"
+      ]
+    },
+    {
+      "cx": "cx:kr:78",
+      "op": "op:kr:1",
+      "st": "st:kr:110",
+      "codes": [
+        "KR-ANSANSEON-GEUMJEONG",
+        "KR-GWACHEONSEON-GEUMJEONG",
+        "KR-GYEONGBUSEON-GEUMJEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:86",
+      "op": "op:kr:1",
+      "st": "st:kr:119",
+      "codes": [
+        "KR-GYEONGBUSEON-GURO",
+        "KR-GYEONGINSEON-GURO"
+      ]
+    },
+    {
+      "cx": "cx:kr:92",
+      "op": "op:kr:1",
+      "st": "st:kr:129",
+      "codes": [
+        "KR-GYEONGBUSEON-YONGSAN",
+        "KR-YONGSANSEON-YONGSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:94",
+      "op": "op:kr:3",
+      "st": "st:kr:135",
+      "codes": [
+        "KR-4HOSEON-SAMGAKJI",
+        "KR-SEOUL-JIHACHEOL-6H-SAMGAKJI"
+      ]
+    },
+    {
+      "cx": "cx:kr:97",
+      "op": "op:kr:1",
+      "st": "st:kr:141",
+      "codes": [
+        "KR-GYEONGBUSEON-SEOULYEOK",
+        "KR-GYEONGUISEON-SEOULYEOK",
+        "KR-SEOUL-JIHACHEOL-1H-SEOUL"
+      ]
+    },
+    {
+      "cx": "cx:kr:99",
+      "op": "op:kr:1",
+      "st": "st:kr:146",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-CHEONANASAN",
+        "KR-JANGHANGSEON-CHEONANASAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:100",
+      "op": "op:kr:1",
+      "st": "st:kr:147",
+      "codes": [
+        "KR-GYEONGBUGOSOKSEON-ASAN",
+        "KR-JANGHANGSEON-ASAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:101",
+      "op": "op:kr:1",
+      "st": "st:kr:148",
+      "codes": [
+        "KR-CHUNGBUKSEON-OSONG",
+        "KR-GYEONGBUGOSOKSEON-OSONG",
+        "KR-HONAMGOSOKSEON-OSONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:102",
+      "op": "op:kr:1",
+      "st": "st:kr:149",
+      "codes": [
+        "KR-DONGHAESEON-GYEONGJU",
+        "KR-GYEONGBUGOSOKSEON-GYEONGJU"
+      ]
+    },
+    {
+      "cx": "cx:kr:104",
+      "op": "op:kr:1",
+      "st": "st:kr:151",
+      "codes": [
+        "KR-DONGHAESEON-BUJEON",
+        "KR-GYEONGBUGOSOKSEON-BUJEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:105",
+      "op": "op:kr:1",
+      "st": "st:kr:153",
+      "codes": [
+        "KR-DONGHAESEON-BUAM",
+        "KR-GAYASEON-BUAM",
+        "KR-GYEONGBUGOSOKSEON-BUAM"
+      ]
+    },
+    {
+      "cx": "cx:kr:106",
+      "op": "op:kr:1",
+      "st": "st:kr:155",
+      "codes": [
+        "KR-GYEONGWONSEON-CHEONGRYANGRI",
+        "KR-JUNGANGSEON-CHEONGRYANGRI",
+        "KR-SEOUL-JIHACHEOL-1H-CHEONGRYANGRI"
+      ]
+    },
+    {
+      "cx": "cx:kr:107",
+      "op": "op:kr:1",
+      "st": "st:kr:156",
+      "codes": [
+        "KR-GYEONGWONSEON-HOEGI",
+        "KR-JUNGANGSEON-HOEGI"
+      ]
+    },
+    {
+      "cx": "cx:kr:108",
+      "op": "op:kr:1",
+      "st": "st:kr:157",
+      "codes": [
+        "KR-JUNGANGSEON-JUNGRANG",
+        "KR-MANGUSEON-JUNGRANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:109",
+      "op": "op:kr:1",
+      "st": "st:kr:158",
+      "codes": [
+        "KR-JUNGANGSEON-SANGBONG",
+        "KR-MANGUSEON-SANGBONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:110",
+      "op": "op:kr:1",
+      "st": "st:kr:160",
+      "codes": [
+        "KR-GYEONGCHUNSEON-MANGU",
+        "KR-JUNGANGSEON-MANGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:111",
+      "op": "op:kr:1",
+      "st": "st:kr:161",
+      "codes": [
+        "KR-JUNGANGSEON-YANGWON",
+        "KR-YEONGDONGSEON-YANGWON"
+      ]
+    },
+    {
+      "cx": "cx:kr:136",
+      "op": "op:kr:1",
+      "st": "st:kr:190",
+      "codes": [
+        "KR-CHUNGBUKSEON-BONGYANG",
+        "KR-JUNGANGSEON-BONGYANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:137",
+      "op": "op:kr:1",
+      "st": "st:kr:191",
+      "codes": [
+        "KR-JUNGANGSEON-JECHEON",
+        "KR-TAEBAEKSEON-JECHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:140",
+      "op": "op:kr:1",
+      "st": "st:kr:194",
+      "codes": [
+        "KR-GYEONGBUKSEON-YEONGJU",
+        "KR-JUNGANGSEON-YEONGJU",
+        "KR-YEONGDONGSEON-YEONGJU"
+      ]
+    },
+    {
+      "cx": "cx:kr:161",
+      "op": "op:kr:1",
+      "st": "st:kr:216",
+      "codes": [
+        "KR-GYEONGJEONSEON-SUNCHEON",
+        "KR-JEONRASEON-SUNCHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:176",
+      "op": "op:kr:1",
+      "st": "st:kr:231",
+      "codes": [
+        "KR-GWANGJUSEON-GONGHANG",
+        "KR-GYEONGJEONSEON-GONGHANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:178",
+      "op": "op:kr:1",
+      "st": "st:kr:236",
+      "codes": [
+        "KR-GYEONGJEONSEON-GWANGJUSONGJEONG",
+        "KR-HONAMGOSOKSEON-GWANGJUSONGJEONG",
+        "KR-HONAMSEON-GWANGJUSONGJEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:179",
+      "op": "op:kr:1",
+      "st": "st:kr:238",
+      "codes": [
+        "KR-DAEJEONSEON-SEODAEJEON",
+        "KR-HONAMSEON-SEODAEJEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:185",
+      "op": "op:kr:1",
+      "st": "st:kr:245",
+      "codes": [
+        "KR-HONAMGOSOKSEON-IKSAN",
+        "KR-HONAMSEON-IKSAN",
+        "KR-JANGHANGSEON-IKSAN",
+        "KR-JEONRASEON-IKSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:187",
+      "op": "op:kr:1",
+      "st": "st:kr:247",
+      "codes": [
+        "KR-HONAMGOSOKSEON-JEONGEUP",
+        "KR-HONAMSEON-JEONGEUP"
+      ]
+    },
+    {
+      "cx": "cx:kr:218",
+      "op": "op:kr:1",
+      "st": "st:kr:279",
+      "codes": [
+        "KR-SAMCHEOKSEON-DONGHAE",
+        "KR-YEONGDONGSEON-DONGHAE"
+      ]
+    },
+    {
+      "cx": "cx:kr:242",
+      "op": "op:kr:1",
+      "st": "st:kr:304",
+      "codes": [
+        "KR-JANGHANGSEON-HONGSEONG",
+        "KR-SEOHAESEON-HONGSEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:281",
+      "op": "op:kr:1",
+      "st": "st:kr:345",
+      "codes": [
+        "KR-CHUNGBUKSEON-CHUNGJU",
+        "KR-JUNGBUNAERYUKSEON-CHUNGJU"
+      ]
+    },
+    {
+      "cx": "cx:kr:293",
+      "op": "op:kr:1",
+      "st": "st:kr:357",
+      "codes": [
+        "KR-HAMBAEKSEON-YEMI",
+        "KR-TAEBAEKSEON-YEMI"
+      ]
+    },
+    {
+      "cx": "cx:kr:294",
+      "op": "op:kr:1",
+      "st": "st:kr:358",
+      "codes": [
+        "KR-HAMBAEKSEON-HAMBAEK",
+        "KR-TAEBAEKSEON-HAMBAEK"
+      ]
+    },
+    {
+      "cx": "cx:kr:295",
+      "op": "op:kr:1",
+      "st": "st:kr:359",
+      "codes": [
+        "KR-HAMBAEKSEON-JODONG",
+        "KR-TAEBAEKSEON-JODONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:297",
+      "op": "op:kr:1",
+      "st": "st:kr:361",
+      "codes": [
+        "KR-JEONGSEONSEON-MINDUNGSAN",
+        "KR-TAEBAEKSEON-MINDUNGSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:318",
+      "op": "op:kr:1",
+      "st": "st:kr:382",
+      "codes": [
+        "KR-GYEONGINSEON-SOSA",
+        "KR-SEOHAESEON-SOSA"
+      ]
+    },
+    {
+      "cx": "cx:kr:323",
+      "op": "op:kr:1",
+      "st": "st:kr:388",
+      "codes": [
+        "KR-BUNDANGSEON-WANGSIPRI",
+        "KR-GYEONGWONSEON-WANGSIPRI"
+      ]
+    },
+    {
+      "cx": "cx:kr:323",
+      "op": "op:kr:3",
+      "st": "st:kr:389",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-WANGSIPRI",
+        "KR-SEOUL-JIHACHEOL-5H-WANGSIPRI"
+      ]
+    },
+    {
+      "cx": "cx:kr:325",
+      "op": "op:kr:1",
+      "st": "st:kr:391",
+      "codes": [
+        "KR-GYEONGWONSEON-SINIMUN",
+        "KR-MANGUSEON-SINIMUN"
+      ]
+    },
+    {
+      "cx": "cx:kr:326",
+      "op": "op:kr:1",
+      "st": "st:kr:392",
+      "codes": [
+        "KR-GYEONGWONSEON-SEOKGYE",
+        "KR-MANGUSEON-SEOKGYE"
+      ]
+    },
+    {
+      "cx": "cx:kr:327",
+      "op": "op:kr:1",
+      "st": "st:kr:394",
+      "codes": [
+        "KR-GYEONGWONSEON-GWANGUNDAE",
+        "KR-MANGUSEON-GWANGUNDAE"
+      ]
+    },
+    {
+      "cx": "cx:kr:337",
+      "op": "op:kr:1",
+      "st": "st:kr:408",
+      "codes": [
+        "KR-GYEONGWONSEON-UIJEONGBU",
+        "KR-GYOOESEON-UIJEONGBU"
+      ]
+    },
+    {
+      "cx": "cx:kr:338",
+      "op": "op:kr:1",
+      "st": "st:kr:410",
+      "codes": [
+        "KR-GYEONGWONSEON-GANEUNG",
+        "KR-GYOOESEON-GANEUNG"
+      ]
+    },
+    {
+      "cx": "cx:kr:393",
+      "op": "op:kr:1",
+      "st": "st:kr:480",
+      "codes": [
+        "KR-GYEONGUISEON-GAJWA",
+        "KR-YONGSANSEON-GAJWA"
+      ]
+    },
+    {
+      "cx": "cx:kr:397",
+      "op": "op:kr:3",
+      "st": "st:kr:492",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-5H-GONGDEOK",
+        "KR-SEOUL-JIHACHEOL-6H-GONGDEOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:402",
+      "op": "op:kr:3",
+      "st": "st:kr:499",
+      "codes": [
+        "KR-4HOSEON-NOWON",
+        "KR-SEOUL-JIHACHEOL-7H-NOWON"
+      ]
+    },
+    {
+      "cx": "cx:kr:406",
+      "op": "op:kr:3",
+      "st": "st:kr:503",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-6H-TAEREUNGIPGU",
+        "KR-SEOUL-JIHACHEOL-7H-TAEREUNGIPGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:413",
+      "op": "op:kr:3",
+      "st": "st:kr:510",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-5H-GUNJA",
+        "KR-SEOUL-JIHACHEOL-7H-GUNJA"
+      ]
+    },
+    {
+      "cx": "cx:kr:415",
+      "op": "op:kr:3",
+      "st": "st:kr:512",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-GEONDAEIPGU",
+        "KR-SEOUL-JIHACHEOL-7H-GEONDAEIPGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:422",
+      "op": "op:kr:3",
+      "st": "st:kr:522",
+      "codes": [
+        "KR-3HOSEON-GOSOKTEOMINEOL",
+        "KR-SEOUL-JIHACHEOL-7H-GOSOKTEOMINEOL"
+      ]
+    },
+    {
+      "cx": "cx:kr:424",
+      "op": "op:kr:3",
+      "st": "st:kr:525",
+      "codes": [
+        "KR-4HOSEON-CHONGSINDAEIPGU-ISU",
+        "KR-SEOUL-JIHACHEOL-7H-CHONGSINDAEIPGU-ISU"
+      ]
+    },
+    {
+      "cx": "cx:kr:425",
+      "op": "op:kr:3",
+      "st": "st:kr:526",
+      "codes": [
+        "KR-4HOSEON-ISU",
+        "KR-SEOUL-JIHACHEOL-7H-ISU"
+      ]
+    },
+    {
+      "cx": "cx:kr:452",
+      "op": "op:kr:1",
+      "st": "st:kr:558",
+      "codes": [
+        "KR-GYEONGUISEON-NEUNGGOK",
+        "KR-GYOOESEON-NEUNGGOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:453",
+      "op": "op:kr:1",
+      "st": "st:kr:559",
+      "codes": [
+        "KR-GYEONGUISEON-DAEGOK",
+        "KR-GYOOESEON-DAEGOK",
+        "KR-ILSANSEON-DAEGOK"
+      ]
+    },
+    {
+      "cx": "cx:kr:514",
+      "op": "op:kr:3",
+      "st": "st:kr:638",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-KKACHISAN",
+        "KR-SEOUL-JIHACHEOL-5H-KKACHISAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:518",
+      "op": "op:kr:3",
+      "st": "st:kr:642",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-YEONGDEUNGPOGUCHEONG",
+        "KR-SEOUL-JIHACHEOL-5H-YEONGDEUNGPOGUCHEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:524",
+      "op": "op:kr:3",
+      "st": "st:kr:649",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-AHYEON",
+        "KR-SEOUL-JIHACHEOL-5H-AHYEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:525",
+      "op": "op:kr:3",
+      "st": "st:kr:650",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-CHUNGJEONGRO",
+        "KR-SEOUL-JIHACHEOL-5H-CHUNGJEONGRO"
+      ]
+    },
+    {
+      "cx": "cx:kr:529",
+      "op": "op:kr:3",
+      "st": "st:kr:658",
+      "codes": [
+        "KR-3HOSEON-JONGRO3GA",
+        "KR-SEOUL-JIHACHEOL-5H-JONGRO3GA"
+      ]
+    },
+    {
+      "cx": "cx:kr:530",
+      "op": "op:kr:3",
+      "st": "st:kr:659",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-EULJIRO4GA",
+        "KR-SEOUL-JIHACHEOL-5H-EULJIRO4GA"
+      ]
+    },
+    {
+      "cx": "cx:kr:531",
+      "op": "op:kr:3",
+      "st": "st:kr:660",
+      "codes": [
+        "KR-4HOSEON-DONGDAEMUNYEOKSAMUNHWAGO",
+        "KR-SEOUL-JIHACHEOL-2H-DONGDAEMUNYEOKSAMUNHWAGO",
+        "KR-SEOUL-JIHACHEOL-5H-DONGDAEMUNYEOKSAMUNHWAGO"
+      ]
+    },
+    {
+      "cx": "cx:kr:532",
+      "op": "op:kr:3",
+      "st": "st:kr:661",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-5H-CHEONGGU",
+        "KR-SEOUL-JIHACHEOL-6H-CHEONGGU"
+      ]
+    },
+    {
+      "cx": "cx:kr:536",
+      "op": "op:kr:3",
+      "st": "st:kr:665",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-SINDAP",
+        "KR-SEOUL-JIHACHEOL-5H-SINDAP"
+      ]
+    },
+    {
+      "cx": "cx:kr:541",
+      "op": "op:kr:3",
+      "st": "st:kr:670",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-5H-CHEONHO",
+        "KR-SEOUL-JIHACHEOL-8H-CHEONHO"
+      ]
+    },
+    {
+      "cx": "cx:kr:542",
+      "op": "op:kr:3",
+      "st": "st:kr:671",
+      "codes": [
+        "KR-MACHEONJISEON-GANGDONG",
+        "KR-SEOUL-JIHACHEOL-5H-GANGDONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:547",
+      "op": "op:kr:3",
+      "st": "st:kr:676",
+      "codes": [
+        "KR-HANAMSEON-SANGILDONG",
+        "KR-SEOUL-JIHACHEOL-5H-SANGILDONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:589",
+      "op": "op:kr:3",
+      "st": "st:kr:731",
+      "codes": [
+        "KR-3HOSEON-GYODAE",
+        "KR-SEOUL-JIHACHEOL-2H-GYODAE"
+      ]
+    },
+    {
+      "cx": "cx:kr:619",
+      "op": "op:kr:3",
+      "st": "st:kr:771",
+      "codes": [
+        "KR-3HOSEON-EULJIRO3GA",
+        "KR-SEOUL-JIHACHEOL-2H-EULJIRO3GA"
+      ]
+    },
+    {
+      "cx": "cx:kr:620",
+      "op": "op:kr:3",
+      "st": "st:kr:772",
+      "codes": [
+        "KR-3HOSEON-CHUNGMURO",
+        "KR-4HOSEON-CHUNGMURO"
+      ]
+    },
+    {
+      "cx": "cx:kr:622",
+      "op": "op:kr:3",
+      "st": "st:kr:774",
+      "codes": [
+        "KR-3HOSEON-YAKSU",
+        "KR-SEOUL-JIHACHEOL-6H-YAKSU"
+      ]
+    },
+    {
+      "cx": "cx:kr:633",
+      "op": "op:kr:3",
+      "st": "st:kr:787",
+      "codes": [
+        "KR-3HOSEON-GARAKSIJANG",
+        "KR-SEOUL-JIHACHEOL-8H-GARAKSIJANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:676",
+      "op": "op:kr:3",
+      "st": "st:kr:832",
+      "codes": [
+        "KR-4HOSEON-BULAMSAN",
+        "KR-JINJEOPSEON-BULAMSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:690",
+      "op": "op:kr:3",
+      "st": "st:kr:848",
+      "codes": [
+        "KR-4HOSEON-SADANG",
+        "KR-SEOUL-JIHACHEOL-2H-SADANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:708",
+      "op": "op:kr:1",
+      "st": "st:kr:869",
+      "codes": [
+        "KR-DONGHAEBONSEON-BEKSEUKO",
+        "KR-DONGHAESEON-BEKSEUKO"
+      ]
+    },
+    {
+      "cx": "cx:kr:786",
+      "op": "op:kr:10",
+      "st": "st:kr:949",
+      "codes": [
+        "KR-ANSIM-HAYANG-BOKSE-ANSIM",
+        "KR-DAEGU-DOSICHEOLDO--ANSIM"
+      ]
+    },
+    {
+      "cx": "cx:kr:787",
+      "op": "op:kr:1",
+      "st": "st:kr:950",
+      "codes": [
+        "KR-GYEONGINSEON-INCHEON",
+        "KR-SUINSEON-INCHEON"
+      ]
+    },
+    {
+      "cx": "cx:kr:813",
+      "op": "op:kr:3",
+      "st": "st:kr:979",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-SINDANG",
+        "KR-SEOUL-JIHACHEOL-6H-SINDANG"
+      ]
+    },
+    {
+      "cx": "cx:kr:820",
+      "op": "op:kr:3",
+      "st": "st:kr:986",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-HAPJEONG",
+        "KR-SEOUL-JIHACHEOL-6H-HAPJEONG"
+      ]
+    },
+    {
+      "cx": "cx:kr:831",
+      "op": "op:kr:1",
+      "st": "st:kr:998",
+      "codes": [
+        "KR-ANSANSEON-CHOJI",
+        "KR-ANSANYEONGYEOLSEON-CHOJI"
+      ]
+    },
+    {
+      "cx": "cx:kr:832",
+      "op": "op:kr:1",
+      "st": "st:kr:999",
+      "codes": [
+        "KR-ANSANSEON-ANSAN",
+        "KR-ANSANYEONGYEOLSEON-ANSAN"
+      ]
+    },
+    {
+      "cx": "cx:kr:835",
+      "op": "op:kr:1",
+      "st": "st:kr:1002",
+      "codes": [
+        "KR-ANSANSEON-OIDO",
+        "KR-SUINSEON-OIDO"
+      ]
+    },
+    {
+      "cx": "cx:kr:836",
+      "op": "op:kr:3",
+      "st": "st:kr:1003",
+      "codes": [
+        "KR-SEOUL-JIHACHEOL-2H-JAMSIL",
+        "KR-SEOUL-JIHACHEOL-8H-JAMSIL"
+      ]
+    }
+  ],
+  "cross-complex-same-station": [],
+  "unmapped-source": [],
+  "ambiguous-company-text": [],
+  "identity-not-a-railway": [],
+  "history-unmatched": [],
+  "shared-facility-candidate": [
+    {
+      "cx": "cx:kr:13",
+      "operators": [
+        "op:kr:1",
+        "op:kr:6",
+        "op:kr:12"
+      ],
+      "metres": 12,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:20",
+      "operators": [
+        "op:kr:1",
+        "op:kr:6"
+      ],
+      "metres": 11,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:21",
+      "operators": [
+        "op:kr:1",
+        "op:kr:6"
+      ],
+      "metres": 18,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:52",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3",
+        "op:kr:13"
+      ],
+      "metres": 47,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:87",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 43,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:96",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3"
+      ],
+      "metres": 39,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:97",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3",
+        "op:kr:7"
+      ],
+      "metres": 33,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:112",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 10,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:326",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 40,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:330",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 2,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:333",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 32,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:386",
+      "operators": [
+        "op:kr:2",
+        "op:kr:8"
+      ],
+      "metres": 28,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:387",
+      "operators": [
+        "op:kr:2",
+        "op:kr:3",
+        "op:kr:5",
+        "op:kr:11"
+      ],
+      "metres": 14,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:388",
+      "operators": [
+        "op:kr:2",
+        "op:kr:3",
+        "op:kr:5"
+      ],
+      "metres": 17,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:389",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3",
+        "op:kr:5"
+      ],
+      "metres": 18,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:393",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2"
+      ],
+      "metres": 39,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:394",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3"
+      ],
+      "metres": 13,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:395",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2"
+      ],
+      "metres": 11,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:396",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3"
+      ],
+      "metres": 10,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:397",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3"
+      ],
+      "metres": 12,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:398",
+      "operators": [
+        "op:kr:1",
+        "op:kr:2",
+        "op:kr:3"
+      ],
+      "metres": 18,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:418",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 10,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:420",
+      "operators": [
+        "op:kr:3",
+        "op:kr:9"
+      ],
+      "metres": 5,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:431",
+      "operators": [
+        "op:kr:3",
+        "op:kr:18"
+      ],
+      "metres": 17,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:438",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 22,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:472",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3",
+        "op:kr:4",
+        "op:kr:7"
+      ],
+      "metres": 29,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:482",
+      "operators": [
+        "op:kr:1",
+        "op:kr:9"
+      ],
+      "metres": 10,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:483",
+      "operators": [
+        "op:kr:1",
+        "op:kr:9"
+      ],
+      "metres": 29,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:491",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 2,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:492",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 5,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:496",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 39,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:499",
+      "operators": [
+        "op:kr:1",
+        "op:kr:5"
+      ],
+      "metres": 7,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:520",
+      "operators": [
+        "op:kr:3",
+        "op:kr:5"
+      ],
+      "metres": 7,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:529",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 15,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:573",
+      "operators": [
+        "op:kr:3",
+        "op:kr:5"
+      ],
+      "metres": 23,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:590",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3",
+        "op:kr:6",
+        "op:kr:7",
+        "op:kr:13"
+      ],
+      "metres": 8,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:611",
+      "operators": [
+        "op:kr:3",
+        "op:kr:7"
+      ],
+      "metres": 48,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:691",
+      "operators": [
+        "op:kr:1",
+        "op:kr:3"
+      ],
+      "metres": 20,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:810",
+      "operators": [
+        "op:kr:3",
+        "op:kr:16"
+      ],
+      "metres": 31,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:886",
+      "operators": [
+        "op:kr:6",
+        "op:kr:12"
+      ],
+      "metres": 34,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:909",
+      "operators": [
+        "op:kr:1",
+        "op:kr:6"
+      ],
+      "metres": 44,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:926",
+      "operators": [
+        "op:kr:1",
+        "op:kr:10"
+      ],
+      "metres": 44,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:927",
+      "operators": [
+        "op:kr:1",
+        "op:kr:10"
+      ],
+      "metres": 29,
+      "sharedCodes": []
+    },
+    {
+      "cx": "cx:kr:928",
+      "operators": [
+        "op:kr:1",
+        "op:kr:10"
+      ],
+      "metres": 37,
+      "sharedCodes": []
+    }
+  ],
+  "name-line-not-unique": [],
+  "line-label-collision": [],
+  "line-alias-is-country-code": [],
+  "station-code-conflict": [],
+  "crosswalk-conflict": []
+}

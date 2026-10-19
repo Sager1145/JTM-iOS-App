@@ -7,6 +7,7 @@ import vm from "node:vm";
 import { createRequire } from "node:module";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
+import { loadRegistryTables } from "./registry.mjs";
 
 const require = createRequire(import.meta.url);
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -998,7 +999,7 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
   }
 
   const insertMeta = insert("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)");
-  insertMeta.run("schema_version", "3");
+  insertMeta.run("schema_version", "4");
   insertMeta.run("generator", "scripts/build/build-rail-database.mjs");
   insertMeta.run("generated_at", new Date().toISOString());
   insertMeta.run("geometry_included", geometry ? "1" : "0");
@@ -1016,6 +1017,12 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
       })),
     ),
   );
+
+  const registryDir = path.join(APP_DIR, "data", "registry");
+  if (fs.existsSync(registryDir)) {
+    const registryCounts = loadRegistryTables(db, registryDir);
+    for (const [table, n] of Object.entries(registryCounts)) tally(table, n);
+  }
 
   db.exec("COMMIT");
   db.exec("ANALYZE");

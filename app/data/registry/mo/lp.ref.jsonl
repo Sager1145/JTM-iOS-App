@@ -1,0 +1,4 @@
+{"schema":"jtm-registry/1","region":"mo","kind":"lp.ref"}
+{"id":"lp:mo:1","scheme":"package-line","value":"mo-mlm-taipa","run":1}
+{"id":"lp:mo:2","scheme":"package-line","value":"mo-mlm-spv","run":1}
+{"id":"lp:mo:3","scheme":"package-line","value":"mo-mlm-hengqin","run":1}

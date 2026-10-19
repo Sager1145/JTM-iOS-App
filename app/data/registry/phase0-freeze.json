@@ -1,0 +1,127 @@
+{
+  "generated": "2026-10-19",
+  "protectedFiles": [
+    {
+      "path": "app/data/rail-history.json",
+      "sha256": "84bb46af91be7b88a3499599a20671990d19c59d44b4f7952f3a0b2b63265b24",
+      "why": "历史叠加"
+    },
+    {
+      "path": "app/public/rail/display-lanes.json",
+      "sha256": "168eb974dfbc977d701d7bd700ec4b77c45d492853f18b27e14d9d84eb8f576b",
+      "why": "显示 lane/follow 合同，非注册表输入"
+    },
+    {
+      "path": "app/public/rail/hk-2025.json",
+      "sha256": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "sha256": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
+      "path": "app/public/rail/kr-2025.json",
+      "sha256": "207c07029b46962847b7b464f3346be0949ad3f5a2d4a210b8d50734dcbd5687",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
+      "path": "app/public/rail/mo-2025.json",
+      "sha256": "138abaeb5ace82a0499e64394f7bf8ca4208c6fe7263f2a4b0caf96030df58f6",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
+      "path": "app/public/rail/tw-2025.json",
+      "sha256": "2d22f8dd3ce0d7fe1018951af252731bd1308234bc3249159552e3dd0b51b638",
+      "why": "compact-v1 包，P0 期间字节不变"
+    },
+    {
+      "path": "app/scripts/railway/jp-manual-corrections/corrections.json",
+      "sha256": "f339d2644893e150b04b21eb43cc05b38c6250d55b001472c8e8125606c00c8c",
+      "why": "手工修复 authority；含いすみ substitute_bus（id A3）"
+    }
+  ],
+  "regions": [
+    "hk",
+    "jp",
+    "kr",
+    "mo",
+    "tw"
+  ],
+  "registryInputs": [
+    {
+      "path": "app/data/rail-history.json",
+      "sha256": "84bb46af91be7b88a3499599a20671990d19c59d44b4f7952f3a0b2b63265b24"
+    },
+    {
+      "path": "app/data/station-english-jp.json",
+      "sha256": "1b770a3e4b623854352bde273fa8638a3b110399c05dd38e555430ae96df2893"
+    },
+    {
+      "path": "app/data/station-english.json",
+      "sha256": "e62d05fea9f978b298fa60f917b683a744c276fe0e5c870b4945a72b59e7ede4"
+    },
+    {
+      "path": "app/data/station-names-hk.json",
+      "sha256": "69b38952dd4155446310562642b09b3facde24f1bc618bf54283fd888a2290fb"
+    },
+    {
+      "path": "app/data/station-names-kr.json",
+      "sha256": "61da4f574766bc655a9490a56c0add2c4a6afe643dc03c68e7cefc189b39aa58"
+    },
+    {
+      "path": "app/data/station-names-mo.json",
+      "sha256": "ece8fb476a1d9977e30f32889d6c55e787a5323fa4140ddbf2cc12cff88c6cf8"
+    },
+    {
+      "path": "app/data/station-names-tw.json",
+      "sha256": "2d32795defd504d0a31fd0b93c9ff3cdc5e3c99739ccf2d8aaa60709b5044eba"
+    },
+    {
+      "path": "app/data/station-names.json",
+      "sha256": "a9a7f9f844f3064b8c81470057ef13673eebee6a3e76d2a01a891adda0fa33a3"
+    },
+    {
+      "path": "app/data/stations-hk.json",
+      "sha256": "8c2041a38ebeb1e7fcaf14d596e12c5b353162ec71b3d065562926a07f99d1a4"
+    },
+    {
+      "path": "app/data/stations-kr.json",
+      "sha256": "98589dce8d90335603a0e480fc5cf6d8d50addf16919a1b592bc067e085345cf"
+    },
+    {
+      "path": "app/data/stations-mo.json",
+      "sha256": "276bbff22132d249bba953fc64bd76632417cb5956461f2a789c5c4f31a69430"
+    },
+    {
+      "path": "app/data/stations-tw.json",
+      "sha256": "21e6b9be6fce9b5c1060cbecb41cdffb960961aaa0f138ae150d0fcd44f6a60a"
+    },
+    {
+      "path": "app/data/stations.json",
+      "sha256": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
+    },
+    {
+      "path": "app/public/rail/hk-2025.json",
+      "sha256": "cbf78eca08becf515bd5f9bf71bd92203f9253e23a906921d9b8fea52e605184"
+    },
+    {
+      "path": "app/public/rail/jp-2025.json",
+      "sha256": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda"
+    },
+    {
+      "path": "app/public/rail/kr-2025.json",
+      "sha256": "207c07029b46962847b7b464f3346be0949ad3f5a2d4a210b8d50734dcbd5687"
+    },
+    {
+      "path": "app/public/rail/mo-2025.json",
+      "sha256": "138abaeb5ace82a0499e64394f7bf8ca4208c6fe7263f2a4b0caf96030df58f6"
+    },
+    {
+      "path": "app/public/rail/tw-2025.json",
+      "sha256": "2d22f8dd3ce0d7fe1018951af252731bd1308234bc3249159552e3dd0b51b638"
+    }
+  ],
+  "schema": "jtm-registry-freeze/1"
+}

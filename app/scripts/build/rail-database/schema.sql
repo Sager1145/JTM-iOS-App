@@ -642,3 +642,104 @@ CREATE VIEW badge_provenance AS
     LEFT JOIN operator_logo_manifest m
            ON m.manifest = 'jp' AND m.operator = o.name
    WHERE l.badge_path IS NOT NULL AND l.badge_path <> '';
+
+-- Identity registry (ADR 0013 §9.4). Rebuilt from the JSONL ledger when
+-- app/data/registry exists. The ledger stays append-only; these rows do not.
+CREATE TABLE registry_entity (
+  id        TEXT PRIMARY KEY,
+  kind      TEXT NOT NULL,
+  region    TEXT NOT NULL,
+  slug      TEXT,
+  parent_id TEXT REFERENCES registry_entity(id),
+  created   TEXT,
+  retired   TEXT
+) STRICT;
+CREATE INDEX registry_entity_region_kind ON registry_entity(region, kind);
+CREATE INDEX registry_entity_parent ON registry_entity(parent_id);
+
+CREATE TABLE external_ref (
+  entity_id  TEXT NOT NULL REFERENCES registry_entity(id),
+  scheme     TEXT NOT NULL,
+  value      TEXT NOT NULL,
+  valid_from TEXT,
+  valid_to   TEXT,
+  source     TEXT,
+  region     TEXT NOT NULL
+) STRICT;
+CREATE INDEX external_ref_entity ON external_ref(entity_id);
+CREATE INDEX external_ref_scheme_value ON external_ref(scheme, value);
+CREATE UNIQUE INDEX external_ref_region_scheme_value
+  ON external_ref(region, scheme, value, ifnull(valid_from, ''));
+
+CREATE TABLE identity_alias (
+  old_key   TEXT NOT NULL,
+  scheme    TEXT NOT NULL,
+  entity_id TEXT NOT NULL REFERENCES registry_entity(id),
+  reason    TEXT
+) STRICT;
+CREATE INDEX identity_alias_entity ON identity_alias(entity_id);
+CREATE INDEX identity_alias_old ON identity_alias(old_key);
+
+CREATE TABLE line_operation (
+  line_id     TEXT NOT NULL REFERENCES registry_entity(id),
+  operator_id TEXT NOT NULL REFERENCES registry_entity(id),
+  role        TEXT NOT NULL,
+  valid_from  TEXT,
+  valid_to    TEXT
+) STRICT;
+CREATE INDEX line_operation_line ON line_operation(line_id);
+CREATE INDEX line_operation_operator ON line_operation(operator_id);
+
+CREATE TABLE station_operator (
+  station_id  TEXT NOT NULL REFERENCES registry_entity(id),
+  operator_id TEXT NOT NULL REFERENCES registry_entity(id),
+  role        TEXT NOT NULL,
+  valid_from  TEXT,
+  valid_to    TEXT
+) STRICT;
+CREATE INDEX station_operator_station ON station_operator(station_id);
+CREATE INDEX station_operator_operator ON station_operator(operator_id);
+
+CREATE TABLE homonym_group (
+  region        TEXT NOT NULL,
+  kind          TEXT NOT NULL,
+  norm_name     TEXT NOT NULL,
+  entity_id     TEXT NOT NULL REFERENCES registry_entity(id),
+  display_label TEXT
+) STRICT;
+CREATE INDEX homonym_group_lookup ON homonym_group(region, kind, norm_name);
+
+CREATE TABLE registry_exception (
+  region     TEXT NOT NULL,
+  rule       TEXT NOT NULL,
+  entity_ids TEXT,
+  detail     TEXT
+) STRICT;
+CREATE INDEX registry_exception_rule ON registry_exception(region, rule);
+
+CREATE TABLE excluded_source (
+  region TEXT NOT NULL,
+  scheme TEXT NOT NULL,
+  value  TEXT NOT NULL,
+  reason TEXT,
+  source TEXT
+) STRICT;
+CREATE INDEX excluded_source_lookup ON excluded_source(region, scheme, value);
+
+-- Package line id → live lp. Old line queries stay on `line`.
+CREATE VIEW line_registry AS
+  SELECT l.id AS line_id, e.id AS registry_id
+    FROM line l
+    JOIN external_ref r ON r.scheme = 'package-line' AND r.value = l.id
+    JOIN registry_entity e
+      ON e.id = r.entity_id AND e.kind = 'lp' AND e.retired IS NULL
+     AND e.region = lower(l.country_code);
+
+-- Package station id → live cx, matched on the group code inside the country.
+CREATE VIEW station_registry AS
+  SELECT s.id AS station_id, e.id AS registry_id
+    FROM station s
+    JOIN external_ref r ON r.scheme = 'group-code' AND r.value = s.code
+    JOIN registry_entity e
+      ON e.id = r.entity_id AND e.kind = 'cx' AND e.retired IS NULL
+     AND e.region = lower(s.country_code);

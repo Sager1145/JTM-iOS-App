@@ -1,3 +1,5 @@
 * text=auto
 *.svg -text
 app/data/rail.db filter=lfs diff=lfs merge=lfs -text
+app/data/registry/**/*.jsonl text eol=lf merge=union
+app/data/registry/*.jsonl text eol=lf merge=union
