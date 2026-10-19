@@ -9,7 +9,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 export const APP_DIR = path.resolve(HERE, "..", "..", "..");
 
 export const SCHEMA_ID = "jtm-registry/1";
-export const KINDS = ["op", "lp", "cx", "st", "ls"];
+export const KINDS = ["op", "lp", "cx", "st", "ls", "rp"];
 export const REGIONS = ["jp", "tw", "hk", "mo", "kr", "cn"];
 const FILE_KINDS = ["op", "ln", "lp", "cx", "st", "ls", "rp", "fc"];
 const COUNTRY_CODES = ["jp", "tw", "hk", "mo", "kr", "cn"];
@@ -33,6 +33,7 @@ const DERIV_SCHEME = {
   cx: "group-code",
   st: "derivation",
   ls: "derivation",
+  rp: "route-pattern",
 };
 
 const KEY_SCHEME = {
@@ -55,6 +56,7 @@ export const REPORT_RULES = [
   "line-alias-is-country-code",
   "station-code-conflict",
   "crosswalk-conflict",
+  "operator-rename-invalid",
 ];
 
 const NOT_MAPPED = [
@@ -247,6 +249,8 @@ function blankAdditions() {
     reappeared: [],
     conflicts: [],
     crosswalkConflicts: [],
+    operatorRenameInvalid: [],
+    operatorNameAmbiguous: [],
   };
 }
 
@@ -430,15 +434,27 @@ function crosswalkKey(lpIds) {
   return [...(lpIds ?? [])].map(String).sort(compareId).join(",");
 }
 
-function readLineCrosswalk(root, region) {
+function readReviewed(root, region, name, schema, listKey) {
   if (!root) return null;
-  const file = path.join(root, region, "line-crosswalk.json");
+  const file = path.join(root, region, name);
   if (!fs.existsSync(file)) return null;
   const doc = JSON.parse(fs.readFileSync(file, "utf8"));
-  if (!doc || doc.schema !== "jtm-line-crosswalk/1" || !Array.isArray(doc.groups)) {
-    throw new Error(`bad line-crosswalk ${file}`);
+  if (!doc || doc.schema !== schema || !Array.isArray(doc[listKey])) {
+    throw new Error(`bad ${name} ${file}`);
   }
   return doc;
+}
+
+function readLineCrosswalk(root, region) {
+  return readReviewed(root, region, "line-crosswalk.json", "jtm-line-crosswalk/1", "groups");
+}
+
+function readOperatorRenames(root, region) {
+  return readReviewed(root, region, "operator-renames.json", "jtm-operator-renames/1", "renames");
+}
+
+function readRoutePatterns(root, region) {
+  return readReviewed(root, region, "route-patterns.json", "jtm-route-patterns/1", "patterns");
 }
 
 function sortedCrosswalkGroups(doc) {
@@ -471,21 +487,34 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     if (event.event === "retire") retired.add(event.id);
   }
   const refIndex = new Map();
+  const refUniq = new Map();
   const derivByEntity = new Map();
   const keyRefCount = new Map();
+  const liveOpsByName = new Map();
   for (const ref of ledger.refs) {
     const parts = String(ref.id).split(":");
     if (parts[1] !== region) continue;
     refIndex.set(`${ref.scheme}\0${ref.value}`, ref.id);
-    if (DERIV_SCHEME[parts[0]] === ref.scheme) derivByEntity.set(ref.id, ref.value);
-    if (KEY_SCHEME[parts[0]] === ref.scheme) keyRefCount.set(ref.id, (keyRefCount.get(ref.id) ?? 0) + 1);
+    refUniq.set(`${ref.scheme}\0${ref.value}\0${ref.from ?? ""}`, ref.id);
+    if (DERIV_SCHEME[parts[0]] === ref.scheme && !ref.from) derivByEntity.set(ref.id, ref.value);
+    if (KEY_SCHEME[parts[0]] === ref.scheme && !(parts[0] === "op" && ref.from)) {
+      keyRefCount.set(ref.id, (keyRefCount.get(ref.id) ?? 0) + 1);
+    }
+    if (ref.scheme === "package-operator" && parts[0] === "op" && entities.has(ref.id) && !retired.has(ref.id)) {
+      let holders = liveOpsByName.get(ref.value);
+      if (!holders) {
+        holders = new Set();
+        liveOpsByName.set(ref.value, holders);
+      }
+      holders.add(ref.id);
+    }
   }
   for (const id of entities.keys()) {
     const parts = String(id).split(":");
     if (parts[1] !== region || !KEY_SCHEME[parts[0]]) continue;
     if (keyRefCount.get(id) !== 1) throw new Error(`ledger incomplete: ${id} key ref`);
   }
-  const inputs = { op: new Set(), lp: new Set(), cx: new Set(), st: new Set(), ls: new Set() };
+  const inputs = { op: new Set(), lp: new Set(), cx: new Set(), st: new Set(), ls: new Set(), rp: new Set() };
   const seq = Object.fromEntries(KINDS.map((kind) => [kind, nextSeq(entities, region, kind)]));
   const seenReappeared = new Set();
 
@@ -496,12 +525,15 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     additions.reappeared.push(entry);
   };
 
-  const addRef = (kind, id, scheme, value) => {
-    const key = `${scheme}\0${value}`;
-    if (refIndex.has(key)) return false;
-    refIndex.set(key, id);
-    additions.refs.push({ region, kind, rec: { id, scheme, value, run: runId } });
-    if (DERIV_SCHEME[kind] === scheme) derivByEntity.set(id, value);
+  const addRef = (kind, id, scheme, value, from = null) => {
+    const uniq = `${scheme}\0${value}\0${from ?? ""}`;
+    if (refUniq.has(uniq)) return false;
+    refUniq.set(uniq, id);
+    refIndex.set(`${scheme}\0${value}`, id);
+    const rec = { id, scheme, value, run: runId };
+    if (from) rec.from = from;
+    additions.refs.push({ region, kind, rec });
+    if (DERIV_SCHEME[kind] === scheme && !from) derivByEntity.set(id, value);
     return true;
   };
 
@@ -543,14 +575,57 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     return id;
   };
 
+  const renameDoc = readOperatorRenames(root, region);
+  if (renameDoc) {
+    const renames = [...renameDoc.renames].sort((a, b) => compareId(String(a.op ?? ""), String(b.op ?? ""))
+      || compareText(String(a.from ?? ""), String(b.from ?? ""))
+      || compareText(String(a.name ?? ""), String(b.name ?? "")));
+    for (const rename of renames) {
+      const op = String(rename.op ?? "");
+      const name = String(rename.name ?? "");
+      const from = String(rename.from ?? "");
+      const source = String(rename.source ?? "");
+      const live = ID_RE.test(op) && op.startsWith(`op:${region}:`) && entities.has(op) && !retired.has(op);
+      const holder = refUniq.get(`package-operator\0${name}\0${from}`);
+      const heldByOther = [...(liveOpsByName.get(name) ?? [])].some((id) => id !== op);
+      if (!live || !name || !/^\d{4}-\d{2}-\d{2}$/.test(from) || (holder && holder !== op) || heldByOther) {
+        additions.operatorRenameInvalid.push({ op, name, from, source });
+        continue;
+      }
+      if (addRef("op", op, "package-operator", name, from)) {
+        let holders = liveOpsByName.get(name);
+        if (!holders) {
+          holders = new Set();
+          liveOpsByName.set(name, holders);
+        }
+        holders.add(op);
+      }
+    }
+    additions.operatorRenameInvalid.sort((a, b) => compareText(a.op, b.op) || compareText(a.from, b.from) || compareText(a.name, b.name));
+  }
+
   const operators = db.prepare(
     "SELECT id, name FROM operator WHERE country_code = ? ORDER BY id",
   ).all(country);
   const opByOperatorId = new Map();
+  const seenOp = new Set();
   for (const row of operators) {
+    const holders = liveOpsByName.get(row.name);
+    if (holders && holders.size > 1) {
+      additions.operatorNameAmbiguous.push({
+        name: row.name,
+        ops: [...holders].sort(compareId),
+      });
+      for (const id of holders) seenOp.add(id);
+      continue;
+    }
     const id = ensureEntity("op", "package-operator", row.name);
-    if (id) opByOperatorId.set(row.id, id);
+    if (id) {
+      opByOperatorId.set(row.id, id);
+      seenOp.add(id);
+    }
   }
+  additions.operatorNameAmbiguous.sort((a, b) => compareText(a.name, b.name) || compareId(a.ops[0] ?? "", b.ops[0] ?? ""));
 
   const lines = db.prepare(`
     SELECT rowid AS line_rowid, id
@@ -644,11 +719,48 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     ensureEntity("ls", "derivation", `${lp}|${stId}`, { parent: stId, part: lp });
   }
 
+  const patternDoc = readRoutePatterns(root, region);
+  if (patternDoc) {
+    const memberSeen = new Set();
+    for (const event of ledger.events) {
+      if (event.event === "member") memberSeen.add(`${event.id}\0${event.value}`);
+    }
+    const patterns = [...patternDoc.patterns].sort((a, b) => compareText(String(a.slug ?? ""), String(b.slug ?? ""))
+      || compareText(crosswalkKey(a.lp), crosswalkKey(b.lp)));
+    for (const pattern of patterns) {
+      const lpIds = Array.isArray(pattern.lp) ? pattern.lp.map(String).sort(compareId) : [];
+      if (!lpIds.length) continue;
+      const ready = lpIds.every((lpId) => lpId.startsWith(`lp:${region}:`) && entities.has(lpId) && !retired.has(lpId));
+      if (!ready) continue;
+      const value = lpIds.join(",");
+      const existing = refIndex.get(`route-pattern\0${value}`) ?? null;
+      const id = ensureEntity("rp", "route-pattern", value);
+      if (!id) continue;
+      if (!existing) {
+        const created = additions.entities.find((item) => item.rec.id === id);
+        if (created && pattern.slug) {
+          created.rec.slug = String(pattern.slug);
+          entities.set(id, created.rec);
+        }
+      }
+      for (const lpId of lpIds) {
+        const key = `${id}\0${lpId}`;
+        if (memberSeen.has(key)) continue;
+        memberSeen.add(key);
+        additions.events.push({ region, rec: { id, event: "member", value: lpId, run: runId } });
+      }
+    }
+  }
+
   const retireIds = [];
   for (const id of entities.keys()) {
     const match = ID_RE.exec(id);
     if (!match || match[2] !== region || !KINDS.includes(match[1])) continue;
     if (retired.has(id)) continue;
+    if (match[1] === "op") {
+      if (!seenOp.has(id)) retireIds.push(id);
+      continue;
+    }
     const value = derivByEntity.get(id);
     if (value === undefined) continue;
     if (!inputs[match[1]].has(value)) retireIds.push(id);
@@ -1024,10 +1136,39 @@ export function reports(db, ledger, region, root) {
     }
   }
   out["crosswalk-conflict"] = crosswalkRows;
+  out["operator-rename-invalid"] = operatorRenameRows(root, region, ledger, index);
 
   const ordered = {};
   for (const rule of REPORT_RULES) ordered[rule] = out[rule];
   return ordered;
+}
+
+function operatorRenameRows(root, region, ledger, index) {
+  const doc = readOperatorRenames(root, region);
+  if (!doc) return [];
+  const rows = [];
+  for (const rename of doc.renames) {
+    const op = String(rename.op ?? "");
+    const name = String(rename.name ?? "");
+    const from = String(rename.from ?? "");
+    const source = String(rename.source ?? "");
+    const live = ID_RE.test(op) && op.startsWith(`op:${region}:`) && ledger.entities.has(op) && !index.retired.has(op);
+    const holder = ledger.refs.find((ref) => ref.scheme === "package-operator"
+      && ref.value === name
+      && (ref.from ?? "") === from
+      && String(ref.id).startsWith(`op:${region}:`));
+    const heldByOther = ledger.refs.some((ref) => ref.scheme === "package-operator"
+      && ref.value === name
+      && ref.id !== op
+      && String(ref.id).startsWith(`op:${region}:`)
+      && ledger.entities.has(ref.id)
+      && !index.retired.has(ref.id));
+    if (!live || !name || !/^\d{4}-\d{2}-\d{2}$/.test(from) || (holder && holder.id !== op) || heldByOther) {
+      rows.push({ op, name, from, source });
+    }
+  }
+  rows.sort((a, b) => compareText(a.op, b.op) || compareText(a.from, b.from) || compareText(a.name, b.name) || compareText(a.source, b.source));
+  return rows;
 }
 
 function ambiguousCompanies(facts, region) {
@@ -1440,5 +1581,159 @@ export function loadRegistryTables(db, root) {
       }
     }
   }
+  fillNames(db, ledger, tally);
   return counts;
+}
+
+function officialLang(region) {
+  if (region === "jp") return "ja";
+  if (region === "kr") return "ko";
+  return "zh-Hant";
+}
+
+function fieldName(field, bcp47) {
+  if (field === "kana" || field === "katakana") return { lang: bcp47 || "ja", form: "kana" };
+  if (field === "romaji") return { lang: bcp47 || "en", form: "romaji" };
+  if (field === "en") return { lang: "en", form: "official" };
+  if (field === "zh_Hant") return { lang: bcp47 || "zh-Hant", form: "official" };
+  if (field === "zh_Hans") return { lang: bcp47 || "zh-Hans", form: "official" };
+  if (bcp47) return { lang: bcp47, form: "official" };
+  return null;
+}
+
+function rememberLookup(map, key, id) {
+  if (!map.has(key)) map.set(key, id);
+  else if (map.get(key) !== id) map.set(key, null);
+}
+
+function fillNames(db, ledger, tally) {
+  if (!hasTable(db, "name")) return;
+  const retired = new Set();
+  for (const event of ledger.events) {
+    if (event.event === "retire") retired.add(event.id);
+  }
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const opByName = new Map();
+  const lpByLine = new Map();
+  const cxByGroup = new Map();
+  const stByCode = new Map();
+  const stByDeriv = new Map();
+  for (const ref of ledger.refs) {
+    if (!live(ref.id)) continue;
+    const region = String(ref.id).split(":")[1];
+    if (ref.scheme === "package-operator") rememberLookup(opByName, `${region}\0${ref.value}`, ref.id);
+    else if (ref.scheme === "package-line") rememberLookup(lpByLine, `${region}\0${ref.value}`, ref.id);
+    else if (ref.scheme === "group-code") rememberLookup(cxByGroup, `${region}\0${ref.value}`, ref.id);
+    else if (ref.scheme === "station-code") rememberLookup(stByCode, `${region}\0${ref.value}`, ref.id);
+    else if (ref.scheme === "derivation" && String(ref.id).startsWith("st:")) rememberLookup(stByDeriv, ref.value, ref.id);
+  }
+  const rows = [];
+  const seen = new Set();
+  const push = (entityId, region, lang, form, value, source, status = null) => {
+    if (!entityId || !live(entityId) || value === null || value === undefined || value === "") return;
+    const text = String(value);
+    const key = [entityId, region, lang, form, text, source, status ?? ""].join("\0");
+    if (seen.has(key)) return;
+    seen.add(key);
+    rows.push({ entityId, region, lang, form, value: text, source, status });
+  };
+  if (hasTable(db, "operator")) {
+    for (const row of db.prepare("SELECT country_code, name, short_name FROM operator").all()) {
+      const region = String(row.country_code).toLowerCase();
+      if (!REGIONS.includes(region)) continue;
+      const op = opByName.get(`${region}\0${row.name}`);
+      if (!op) continue;
+      const lang = officialLang(region);
+      push(op, region, lang, "official", row.name, "operator.name");
+      push(op, region, lang, "short", row.short_name, "operator.short_name");
+    }
+  }
+  if (hasTable(db, "line")) {
+    for (const row of db.prepare("SELECT id, country_code, name, name_roma, line_code FROM line").all()) {
+      const region = String(row.country_code).toLowerCase();
+      if (!REGIONS.includes(region)) continue;
+      const lp = lpByLine.get(`${region}\0${row.id}`);
+      if (!lp) continue;
+      push(lp, region, officialLang(region), "official", row.name, "line.name");
+      push(lp, region, "en", "romaji", row.name_roma, "line.name_roma");
+      push(lp, region, "und", "alias", row.line_code, "line.line_code");
+    }
+  }
+  if (hasTable(db, "station")) {
+    for (const row of db.prepare("SELECT country_code, code, name, name_roma FROM station").all()) {
+      const region = String(row.country_code).toLowerCase();
+      if (!REGIONS.includes(region)) continue;
+      const cx = cxByGroup.get(`${region}\0${row.code}`);
+      if (!cx) continue;
+      push(cx, region, officialLang(region), "official", row.name, "station.name");
+      push(cx, region, "en", "romaji", row.name_roma, "station.name_roma");
+    }
+  }
+  if (hasTable(db, "station_english") && hasTable(db, "station")) {
+    const english = db.prepare(`
+      SELECT s.country_code AS country_code, s.code AS code, e.en AS en, e.status AS status
+        FROM station_english e
+        JOIN station s ON s.id = e.station_id
+    `).all();
+    for (const row of english) {
+      const region = String(row.country_code).toLowerCase();
+      const cx = cxByGroup.get(`${region}\0${row.code}`);
+      if (!cx) continue;
+      push(cx, region, "en", "official", row.en, "station_english.en", row.status ?? null);
+    }
+  }
+  if (hasTable(db, "station_name")) {
+    const bcp47 = new Map();
+    if (hasTable(db, "name_field")) {
+      for (const row of db.prepare("SELECT field, bcp47 FROM name_field").all()) bcp47.set(row.field, row.bcp47 ?? null);
+    }
+    for (const row of db.prepare("SELECT country_code, key, field, value FROM station_name WHERE key_type = 'code'").all()) {
+      const region = String(row.country_code).toLowerCase();
+      if (!REGIONS.includes(region)) continue;
+      const mapped = fieldName(row.field, bcp47.get(row.field) ?? null);
+      if (!mapped) continue;
+      let cx = cxByGroup.get(`${region}\0${row.key}`);
+      if (!cx) {
+        const st = stByCode.get(`${region}\0${row.key}`);
+        const parent = st ? ledger.entities.get(st)?.parent : null;
+        if (parent && live(parent)) cx = parent;
+      }
+      if (!cx) continue;
+      push(cx, region, mapped.lang, mapped.form, row.value, "station_name.value");
+    }
+  }
+  if (hasTable(db, "line_station") && hasTable(db, "station") && hasTable(db, "line") && hasTable(db, "operator")) {
+    const stops = db.prepare(`
+      SELECT lower(l.country_code) AS region, s.code AS code, s.name AS cx_name,
+             o.name AS operator_name, ls.name AS stop_name
+        FROM line_station ls
+        JOIN station s ON s.id = ls.station_id
+        JOIN line l ON l.id = ls.line_id
+        JOIN operator o ON o.id = l.operator_id
+       WHERE ls.name <> s.name
+    `).all();
+    for (const row of stops) {
+      if (!REGIONS.includes(row.region)) continue;
+      const op = opByName.get(`${row.region}\0${row.operator_name}`);
+      const cx = cxByGroup.get(`${row.region}\0${row.code}`);
+      if (!op || !cx) continue;
+      const st = stByDeriv.get(`${cx}|${op}`);
+      if (!st || row.stop_name === row.cx_name) continue;
+      push(st, row.region, officialLang(row.region), "official", row.stop_name, "line_station.name");
+    }
+  }
+  rows.sort((a, b) => compareId(a.entityId, b.entityId)
+    || compareText(a.source, b.source)
+    || compareText(a.lang, b.lang)
+    || compareText(a.form, b.form)
+    || compareText(a.value, b.value)
+    || compareText(a.status ?? "", b.status ?? ""));
+  const insert = db.prepare(`
+    INSERT INTO name (entity_id, region, lang, form, value, valid_from, valid_to, source, status)
+    VALUES (?, ?, ?, ?, ?, NULL, NULL, ?, ?)
+  `);
+  for (const row of rows) {
+    insert.run(row.entityId, row.region, row.lang, row.form, row.value, row.source, row.status);
+    tally("name");
+  }
 }

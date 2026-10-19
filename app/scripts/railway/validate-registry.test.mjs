@@ -12,6 +12,7 @@ import { KEY_ORDERS, appendLedger, canonical, mint, nextSeq, readLedger, reports
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MINT = path.resolve(HERE, "../build/mint-registry.mjs");
 const VALIDATE = path.resolve(HERE, "validate-registry.mjs");
+const EXPORT = path.resolve(HERE, "../build/export-registry-bundle.mjs");
 const AT = "2026-10-19";
 
 function applySchema(db) {
@@ -624,6 +625,244 @@ test("line crosswalk mints ln once and does not reassign an lp", () => {
     assert.deepEqual(report["crosswalk-conflict"][0].assigned, [{ lp: "lp:jp:1", ln: "ln:jp:1" }]);
     const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
     assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("operator rename keeps op, line, and station ids", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const before = readLedger(fixture.root);
+    const op = refId(before, "package-operator", "JR東日本");
+    const lp = refId(before, "package-line", "jp-jr-yamanote");
+    const tokyo = refId(before, "derivation", "cx:jp:1|op:jp:1");
+    const shinjuku = refId(before, "derivation", "cx:jp:2|op:jp:1");
+    fs.writeFileSync(path.join(fixture.root, "jp", "operator-renames.json"), `${JSON.stringify({
+      schema: "jtm-operator-renames/1",
+      renames: [
+        { op, name: "JR東日本新", from: AT, source: "test" },
+        { op: "op:jp:99", name: "ない会社", from: AT, source: "test" },
+      ],
+    })}\n`);
+    fixture.db.prepare("UPDATE operator SET name = ?, display_label = ? WHERE id = ?").run("JR東日本新", "JR東日本新", 1);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.match(again.stdout, /operator-rename-invalid 1/);
+    const ledger = readLedger(fixture.root);
+    assert.equal(refId(ledger, "package-operator", "JR東日本"), op);
+    assert.equal(refId(ledger, "package-operator", "JR東日本新"), op);
+    assert.equal(ledger.refs.find((ref) => ref.scheme === "package-operator" && ref.value === "JR東日本新").from, AT);
+    assert.equal(refId(ledger, "package-operator", "ない会社"), null);
+    assert.equal(refId(ledger, "package-line", "jp-jr-yamanote"), lp);
+    assert.equal(refId(ledger, "package-line", "jp-jr-chuo"), "lp:jp:2");
+    assert.equal(refId(ledger, "derivation", `cx:jp:1|${op}`), tokyo);
+    assert.equal(refId(ledger, "derivation", `cx:jp:2|${op}`), shinjuku);
+    assert.equal(ledger.events.some((event) => event.event === "retire"), false);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.equal(report["operator-rename-invalid"].length, 1);
+    assert.equal(report["operator-rename-invalid"][0].op, "op:jp:99");
+    const repeat = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(repeat.status, 0, repeat.stdout + repeat.stderr);
+    assert.match(repeat.stdout, /no changes/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("operator rename is rejected when another live operator holds the name", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const before = readLedger(fixture.root);
+    const op1 = refId(before, "package-operator", "JR東日本");
+    const op2 = refId(before, "package-operator", "京王電鉄");
+    const dated = canonical({
+      id: op2, scheme: "package-operator", value: "共有名", from: "2020-01-01", run: 1,
+    }, KEY_ORDERS.ref);
+    fs.appendFileSync(path.join(fixture.root, "jp", "op.ref.jsonl"), `${dated}\n`);
+    fs.writeFileSync(path.join(fixture.root, "jp", "operator-renames.json"), `${JSON.stringify({
+      schema: "jtm-operator-renames/1",
+      renames: [{ op: op1, name: "共有名", from: AT, source: "test" }],
+    })}\n`);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.match(again.stdout, /operator-rename-invalid/);
+    const ledger = readLedger(fixture.root);
+    assert.equal(ledger.refs.some((ref) => ref.scheme === "package-operator" && ref.value === "共有名" && ref.id === op1), false);
+    assert.equal(ledger.refs.find((ref) => ref.id === op2 && ref.value === "共有名").from, "2020-01-01");
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.equal(report["operator-rename-invalid"].length, 1);
+    assert.equal(report["operator-rename-invalid"][0].op, op1);
+    assert.equal(report["operator-rename-invalid"][0].name, "共有名");
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("an operator name held by two live ops mints nothing and exits 1", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const op2 = refId(readLedger(fixture.root), "package-operator", "京王電鉄");
+    const dated = canonical({
+      id: op2, scheme: "package-operator", value: "JR東日本", from: "2020-01-01", run: 1,
+    }, KEY_ORDERS.ref);
+    fs.appendFileSync(path.join(fixture.root, "jp", "op.ref.jsonl"), `${dated}\n`);
+    const before = snapshot(fixture.root);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT, "--allow-retire"]);
+    assert.equal(again.status, 1, again.stdout + again.stderr);
+    assert.match(again.stdout, /operator-name-ambiguous/);
+    sameSnapshot(before, snapshot(fixture.root));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("renaming an operator without a mapping is refused", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const before = snapshot(fixture.root);
+    fixture.db.prepare("UPDATE operator SET name = ? WHERE name = ?").run("JR東日本新", "JR東日本");
+    const refused = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(refused.status, 1, refused.stdout + refused.stderr);
+    assert.match(refused.stdout, /retire refused/);
+    sameSnapshot(before, snapshot(fixture.root));
+    const allowed = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT, "--allow-retire"]);
+    assert.equal(allowed.status, 0, allowed.stdout + allowed.stderr);
+    const ledger = readLedger(fixture.root);
+    assert.notEqual(refId(ledger, "package-operator", "JR東日本新"), "op:jp:1");
+    assert.ok(ledger.events.some((event) => event.event === "retire" && event.id === "op:jp:1"));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("route pattern mints an rp, a key ref, and member events", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    fs.writeFileSync(path.join(fixture.root, "jp", "route-patterns.json"), `${JSON.stringify({
+      schema: "jtm-route-patterns/1",
+      patterns: [{
+        slug: "jr-pair",
+        lp: ["lp:jp:2", "lp:jp:1"],
+        kind: "through-run",
+        why: "test",
+        source: "test",
+      }],
+    })}\n`);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    const ledger = readLedger(fixture.root);
+    assert.equal(ledger.entities.get("rp:jp:1").slug, "jr-pair");
+    assert.equal(refId(ledger, "route-pattern", "lp:jp:1,lp:jp:2"), "rp:jp:1");
+    const members = ledger.events.filter((event) => event.event === "member").map((event) => event.value).sort();
+    assert.deepEqual(members, ["lp:jp:1", "lp:jp:2"]);
+    const before = snapshot(fixture.root);
+    const repeat = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(repeat.status, 0, repeat.stdout + repeat.stderr);
+    assert.match(repeat.stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+
+    const retiredMember = path.join(fixture.dir, "retired-member");
+    fs.cpSync(fixture.root, retiredMember, { recursive: true });
+    const retire = canonical({ id: "lp:jp:2", event: "retire", on: AT, why: "test", run: 1 }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(retiredMember, "jp", "events.jsonl"), `${retire}\n`);
+    const memberBad = runNode(VALIDATE, ["--root", retiredMember, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(memberBad.status, 1);
+    assert.match(memberBad.stdout, /member not live lp:jp:2/);
+
+    const missingKey = path.join(fixture.dir, "missing-key");
+    fs.cpSync(fixture.root, missingKey, { recursive: true });
+    const refFile = path.join(missingKey, "jp", "rp.ref.jsonl");
+    const [header] = fs.readFileSync(refFile, "utf8").split("\n");
+    fs.writeFileSync(refFile, `${header}\n`);
+    const keyBad = runNode(VALIDATE, ["--root", missingKey, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(keyBad.status, 1);
+    assert.match(keyBad.stdout, /key ref rp:jp:1 has 0 route-pattern/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("registry bundle is deterministic and drops conflicted or retired ids", () => {
+  const fixture = openFixture();
+  try {
+    fixture.db.prepare("INSERT INTO line (id, country_code, operator_id, name, line_code, railway_identity, interval_count) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .run("jp-keio-line", "JP", 2, "京王線", "KO", null, 1);
+    fixture.db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, ?, ?, ?, ?, ?)")
+      .run("jp-keio-line", 0, 2, "新宿", 139.7, 35.689);
+    fixture.db.prepare(`INSERT INTO source_station
+      (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 4, "SHARED", "200", 2, "新宿", "京王線", "京王電鉄", 139.7, 35.689);
+    fixture.db.prepare(`INSERT INTO source_station
+      (country_code, ord, station_code, group_code, station_id, name, line_name, operator, display_lon, display_lat)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`).run("JP", 5, "SHARED", "200", 2, "新宿", "山手線", "JR東日本", 139.7, 35.689);
+    fixture.db.exec("CREATE TABLE operator_alias (id INTEGER PRIMARY KEY, scope TEXT, alias TEXT, label TEXT)");
+    fixture.db.prepare("INSERT INTO operator_alias (scope, alias, label) VALUES (?, ?, ?)").run("JP", "JR East", "JR東日本");
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const out = path.join(fixture.dir, "bundle");
+    const exported = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(exported.status, 0, exported.stdout + exported.stderr);
+    const file = path.join(out, "jp.json");
+    const text = fs.readFileSync(file);
+    const again = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.ok(fs.readFileSync(file).equals(text));
+    const check = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--check"]);
+    assert.equal(check.status, 0, check.stdout + check.stderr);
+    const bundle = JSON.parse(text.toString("utf8"));
+    assert.equal(bundle.schema, "jtm-registry-bundle/1");
+    assert.equal(bundle.stationCodes.SHARED, undefined);
+    assert.equal(bundle.stationCodes["200A"], "st:jp:2");
+    assert.equal(bundle.lines["jp-jr-yamanote"], "lp:jp:1");
+    assert.deepEqual(bundle.groupCodes["200"], ["st:jp:2", "st:jp:3"]);
+    assert.equal(bundle.stationOperator["st:jp:1"], "op:jp:1");
+    assert.ok(bundle.operators["op:jp:1"].includes("JR東日本"));
+    assert.ok(bundle.operators["op:jp:1"].includes("JR東"));
+    assert.ok(bundle.operators["op:jp:1"].includes("JR East"));
+    assert.equal(/[:,]\s/.test(text.toString("utf8")), false);
+    fs.writeFileSync(file, text.toString("utf8").replace("JR東", "JR西"));
+    const drifted = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--check"]);
+    assert.equal(drifted.status, 1);
+    assert.match(drifted.stdout, /bundle differs jp/);
+
+    fixture.db.prepare("DELETE FROM line_station WHERE line_id = ? AND station_id = ?").run("jp-jr-yamanote", 1);
+    const retired = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT, "--allow-retire"]);
+    assert.equal(retired.status, 0, retired.stdout + retired.stderr);
+    const after = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(after.status, 0, after.stdout + after.stderr);
+    const next = JSON.parse(fs.readFileSync(file, "utf8"));
+    assert.equal(next.stationOperator["st:jp:1"], undefined);
+    assert.equal(next.stationCodes["100A"], undefined);
+    assert.equal(next.lines["jp-jr-yamanote"], "lp:jp:1");
+    assert.equal(Object.values(next.stationOperator).includes("st:jp:1"), false);
+    assert.equal(Object.values(next.groupCodes).some((ids) => ids.includes("st:jp:1")), false);
   } finally {
     fixture.db.close();
     fs.rmSync(fixture.dir, { recursive: true, force: true });

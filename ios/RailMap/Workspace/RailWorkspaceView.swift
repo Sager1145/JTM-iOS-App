@@ -968,6 +968,7 @@ struct RailWorkspaceView: View {
 
     private func commitJourneyEditor(_ train: Train, launch: JourneyEditorLaunch) {
         guard journeySaveAttemptID == nil else { return }
+        let train = BundledRegistry.upgrade(train)
 
         let persistence: Task<RideLibrary.SaveResult, Never>
         let rollback: @MainActor () -> Bool

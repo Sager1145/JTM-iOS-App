@@ -32,6 +32,7 @@ actor RideStorage {
     ) {
         rootDirectory = directory
         self.writeData = writeData
+        BundledRegistry.install()
     }
 
     /// What the data screen says about the copy on this device, read in one
@@ -88,6 +89,14 @@ actor RideStorage {
         }
         let store = try JSONDecoder().decode(TrainStore.self, from: Data(contentsOf: url))
         for train in store.trains { try TrainValidation.validateSupportedRegions(train) }
+        return upgraded(store)
+    }
+
+    /// Fills `station_id` / `operator_id` when the bundled registry can do so
+    /// uniquely. A missing `registry-<cc>.json` leaves the train unchanged.
+    private func upgraded(_ store: TrainStore) -> TrainStore {
+        var store = store
+        store.trains = store.trains.map(BundledRegistry.upgrade)
         return store
     }
 
@@ -144,7 +153,7 @@ actor RideStorage {
         let files = try currentBackupFiles()
         let bytes = try Data(contentsOf: files.store)
         let store = try JSONDecoder().decode(TrainStore.self, from: bytes)
-        _ = try writeStore(store)
+        _ = try writeStore(upgraded(store))
         discardBackup()
     }
 

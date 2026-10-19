@@ -105,6 +105,10 @@ public struct Train: Codable, Equatable, Sendable {
     /// Optional so existing stores keep their original shape.
     public var vehicleType: String?
     public var company: String?
+    /// Registry operator, `op:<region>:<seq>` (ADR 0013). Optional, and written
+    /// only when set, so a store that never had one stays byte-identical.
+    /// `company` is still written unchanged.
+    public var operatorID: String?
     public var origin: String
     public var destination: String
     /// Recommended `up` / `down` / `unknown`, but free text in practice — see
@@ -161,7 +165,8 @@ public struct Train: Codable, Equatable, Sendable {
         region: String? = nil,
         notes: String? = nil,
         journeyGroup: JourneyGroup? = nil,
-        routeConfirmation: RouteConfirmation? = nil
+        routeConfirmation: RouteConfirmation? = nil,
+        operatorID: String? = nil
     ) {
         self.id = id
         self.date = date
@@ -182,6 +187,7 @@ public struct Train: Codable, Equatable, Sendable {
         self.notes = notes
         self.journeyGroup = journeyGroup
         self.routeConfirmation = routeConfirmation
+        self.operatorID = operatorID
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -190,6 +196,7 @@ public struct Train: Codable, Equatable, Sendable {
         case trainType = "train_type"
         case vehicleType = "vehicle_type"
         case company
+        case operatorID = "operator_id"
         case routePolicy = "route_policy"
         case routeSections = "route_sections"
         case region, notes
@@ -215,6 +222,7 @@ public struct Train: Codable, Equatable, Sendable {
         try container.encodeIfPresent(trainType, forKey: .trainType)
         try container.encodeIfPresent(vehicleType, forKey: .vehicleType)
         try container.encodeIfPresent(company, forKey: .company)
+        try container.encodeIfPresent(operatorID, forKey: .operatorID)
         try container.encode(origin, forKey: .origin)
         try container.encode(destination, forKey: .destination)
         try container.encodeIfPresent(direction, forKey: .direction)
@@ -271,6 +279,9 @@ public struct Stop: Codable, Equatable, Sendable {
     /// The key name is historical (jsonspec §2.3): the value has not been
     /// N02-only since Taiwan was added.
     public var n02StationCode: String?
+    /// Company station, `st:<region>:<seq>` (ADR 0013). Optional, and written
+    /// only when set. `n02_station_code` stays the external code.
+    public var stationID: String?
     /// Passenger-facing platform/track number. `0` is valid; negative and
     /// fractional values are rejected. `nil` serializes as JSON `null` and is
     /// never rendered as the word "null".
@@ -305,7 +316,8 @@ public struct Stop: Codable, Equatable, Sendable {
         actualDeparture: String? = nil,
         stopType: String = "passenger_stop",
         rideSegment: Bool = false,
-        routeEditing: RouteEditingMetadata? = nil
+        routeEditing: RouteEditingMetadata? = nil,
+        stationID: String? = nil
     ) {
         self.name = name
         self.n02StationCode = n02StationCode
@@ -318,6 +330,7 @@ public struct Stop: Codable, Equatable, Sendable {
         self.stopType = stopType
         self.rideSegment = rideSegment
         self.routeEditing = routeEditing
+        self.stationID = stationID
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -325,6 +338,7 @@ public struct Stop: Codable, Equatable, Sendable {
         case actualArrival = "actual_arrival"
         case actualDeparture = "actual_departure"
         case n02StationCode = "n02_station_code"
+        case stationID = "station_id"
         case stopType = "stop_type"
         case rideSegment = "ride_segment"
         case routeEditing = "route_editing"
@@ -336,6 +350,7 @@ public struct Stop: Codable, Equatable, Sendable {
         // ADR 0010: persisted rides may carry a legacy HK/MO code.
         n02StationCode = try container.decodeIfPresent(String.self, forKey: .n02StationCode)
             .map(StationCodeAliases.canonical)
+        stationID = try container.decodeIfPresent(String.self, forKey: .stationID)
         hasPlatformNumberField = container.contains(.platformNumber)
         platformNumber = try container.decodeIfPresent(Int.self, forKey: .platformNumber)
         arrival = try container.decodeIfPresent(String.self, forKey: .arrival)
@@ -351,6 +366,7 @@ public struct Stop: Codable, Equatable, Sendable {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(name, forKey: .name)
         try container.encode(n02StationCode, forKey: .n02StationCode)  // null, not absent
+        try container.encodeIfPresent(stationID, forKey: .stationID)
         if hasPlatformNumberField {
             try container.encode(platformNumber, forKey: .platformNumber)  // null, not absent
         }
@@ -366,6 +382,7 @@ public struct Stop: Codable, Equatable, Sendable {
     public static func == (lhs: Stop, rhs: Stop) -> Bool {
         lhs.name == rhs.name
             && lhs.n02StationCode == rhs.n02StationCode
+            && lhs.stationID == rhs.stationID
             && lhs.platformNumber == rhs.platformNumber
             && lhs.arrival == rhs.arrival
             && lhs.actualArrival == rhs.actualArrival
@@ -622,6 +639,13 @@ public enum TrainValidation {
 
     /// `TRAIN_ID_PATTERN.source`, quoted verbatim into the error message.
     public static let trainIDPatternSource = "^[a-zA-Z0-9_-]+$"
+
+    /// ADR 0013 company-station id. Quoted into the rejection, same way as
+    /// ``trainIDPatternSource``.
+    public static let stationIDPatternSource = "^st:(jp|tw|hk|mo|kr|cn):[1-9][0-9]*$"
+
+    /// ADR 0013 operator id. Quoted into the rejection.
+    public static let operatorIDPatternSource = "^op:(jp|tw|hk|mo|kr|cn):[1-9][0-9]*$"
 
     public static let defaultTrainColor = "#d9364f"
 
@@ -1027,6 +1051,12 @@ public enum TrainValidation {
         if !missingID && !missingNumber && !missingOrigin && !missingDestination {
             if let issue = identityDiagnostic(train.id, ids: &ids) { issues.append(issue) }
         }
+        if let issue = registryIdentityDiagnostic(
+            train.operatorID, field: "operator_id", kind: "op",
+            path: "operator_id", location: "", trainRegion: train.region
+        ) {
+            issues.append(issue)
+        }
         if let date = train.date, date != undated, !Dates.isValidDateString(date) {
             issues.append(Diagnostic(
                 path: "date",
@@ -1050,7 +1080,7 @@ public enum TrainValidation {
             }
         }
         for (offset, stop) in train.stops.enumerated() {
-            issues.append(contentsOf: stopDiagnostics(stop, index: offset))
+            issues.append(contentsOf: stopDiagnostics(stop, index: offset, trainRegion: train.region))
         }
         if let sections = train.routeSections {
             for (offset, section) in sections.enumerated() {
@@ -1095,10 +1125,47 @@ public enum TrainValidation {
         "platform_number must be a non-negative integer or null."
     private static let stationCodeReason =
         "n02_station_code must be a six-digit N02_005c, a TDX StationUID, or null."
+
+    /// `st:jp:1` / `op:tw:12`. ASCII only, so this does not use a regular expression.
+    private static func matchesRegistryID(_ value: String, kind: String) -> Bool {
+        let parts = value.split(separator: ":", omittingEmptySubsequences: false)
+        guard parts.count == 3, parts[0] == Substring(kind) else { return false }
+        switch parts[1] {
+        case "jp", "tw", "hk", "mo", "kr", "cn": break
+        default: return false
+        }
+        let sequence = parts[2]
+        guard let first = sequence.first, first >= "1", first <= "9" else { return false }
+        return sequence.dropFirst().allSatisfy { $0 >= "0" && $0 <= "9" }
+    }
+
+    private static func registryIdentityDiagnostic(
+        _ value: String?, field: String, kind: String, path: String, location: String,
+        trainRegion: String?
+    ) -> Diagnostic? {
+        guard let value else { return nil }
+        let pattern = kind == "st" ? stationIDPatternSource : operatorIDPatternSource
+        guard matchesRegistryID(value, kind: kind) else {
+            return Diagnostic(
+                path: path, reason: "\(field) must match \(pattern).", location: location)
+        }
+        if let trainRegion, !trainRegion.isEmpty {
+            let segment = value.split(separator: ":")[1]
+            if String(segment) != trainRegion.lowercased() {
+                return Diagnostic(
+                    path: path,
+                    reason: "\(field) region must equal the train region.",
+                    location: location)
+            }
+        }
+        return nil
+    }
     private static let institutionReason =
         "route_policy.allowed_institution_type_codes must contain only N02_002 codes 1/2/3/4/5."
 
-    private static func stopDiagnostics(_ stop: Stop, index: Int) -> [Diagnostic] {
+    private static func stopDiagnostics(
+        _ stop: Stop, index: Int, trainRegion: String?
+    ) -> [Diagnostic] {
         var issues: [Diagnostic] = []
         let at = stopAt(index)
         if stop.name.isEmpty {
@@ -1115,6 +1182,12 @@ public enum TrainValidation {
         if let code = stop.n02StationCode, stationCodeSystem(code) == nil {
             issues.append(Diagnostic(
                 path: "stops[\(index)].n02_station_code", reason: stationCodeReason, location: at))
+        }
+        if let issue = registryIdentityDiagnostic(
+            stop.stationID, field: "station_id", kind: "st",
+            path: "stops[\(index)].station_id", location: at, trainRegion: trainRegion
+        ) {
+            issues.append(issue)
         }
         if let platform = stop.platformNumber, platform < 0 {
             issues.append(Diagnostic(
@@ -1209,6 +1282,20 @@ public enum TrainValidation {
             }
         }
         _ = try normalizeImportedRouteConfirmation(json["route_confirmation"])
+        if let value = json["operator_id"], value != .null {
+            guard value.isString else {
+                return Diagnostic(
+                    path: "operator_id",
+                    reason: "operator_id must match \(operatorIDPatternSource).")
+            }
+            if let issue = registryIdentityDiagnostic(
+                value.stringOrNilIfNotString, field: "operator_id", kind: "op",
+                path: "operator_id", location: "",
+                trainRegion: (json["region"] ?? .null).stringOrNilIfNotString
+            ) {
+                return issue
+            }
+        }
         return nil
     }
 
@@ -1253,6 +1340,12 @@ public enum TrainValidation {
             }
             if let platform = platformShape(stop, index: offset) { return platform }
             if let time = timeShape(stop, index: offset) { return time }
+            if let value = stop["station_id"], value != .null, !value.isString {
+                return Diagnostic(
+                    path: "stops[\(offset)].station_id",
+                    reason: "station_id must match \(stationIDPatternSource).",
+                    location: stopAt(offset))
+            }
         }
         if let sections = json["route_sections"], sections.isTruthy {
             guard case .array(let rows) = sections else {
@@ -1350,7 +1443,8 @@ public enum TrainValidation {
             stops: stopsForValidation(json),
             region: optionalText(json, "region"),
             notes: optionalText(json, "notes"),
-            routeConfirmation: try normalizeImportedRouteConfirmation(json["route_confirmation"]))
+            routeConfirmation: try normalizeImportedRouteConfirmation(json["route_confirmation"]),
+            operatorID: optionalText(json, "operator_id"))
     }
 
     private static func requiredText(_ json: JSON, _ key: String) -> String {
@@ -1457,7 +1551,8 @@ public enum TrainValidation {
                 departure: timeText(row["departure"]),
                 actualDeparture: timeText(row["actual_departure"]),
                 stopType: stopType,
-                rideSegment: ride)
+                rideSegment: ride,
+                stationID: (row["station_id"] ?? .null).stringOrNilIfNotString)
         }
     }
 
@@ -1532,7 +1627,7 @@ public enum TrainValidation {
         try assertOnlyKeys(
             stop,
             [
-                "name", "n02_station_code", "platform_number", "arrival", "actual_arrival",
+                "name", "n02_station_code", "station_id", "platform_number", "arrival", "actual_arrival",
                 "departure", "actual_departure",
                 "stop_type", "ride_segment", "route_editing",
             ],
@@ -1642,7 +1737,7 @@ public enum TrainValidation {
         try assertOnlyKeys(
             train,
             [
-                "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "origin",
+                "id", "date", "number", "number_en", "train_type", "vehicle_type", "company", "operator_id", "origin",
                 "destination", "direction", "visible", "style", "route_policy",
                 "route_sections", "stops", "region", "notes", "journey_group", "route_confirmation",
             ],
@@ -1704,7 +1799,8 @@ public enum TrainValidation {
             region: (train["region"] ?? .null).stringOrNilIfFalsy,
             notes: (train["notes"] ?? .null).stringOrNilIfNotString.map(jsTrim),
             journeyGroup: try normalizeImportedJourneyGroup(train["journey_group"]),
-            routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]))
+            routeConfirmation: try normalizeImportedRouteConfirmation(train["route_confirmation"]),
+            operatorID: (train["operator_id"] ?? .null).stringOrNilIfNotString)
     }
 
     private static func normalizeImportedRouteConfirmation(_ value: JSON?) throws -> RouteConfirmation? {
@@ -1757,7 +1853,8 @@ public enum TrainValidation {
                       let id = UUID(uuidString: text) else { return nil }
                 return Stop.RouteEditingMetadata(
                     visitID: id, generatedBy: metadata["generated_by"]?.stringOrNilIfNotString)
-            })
+            },
+            stationID: (stop["station_id"] ?? .null).stringOrNilIfNotString)
     }
 
     /// `canonicalStopShape` for a stop that is already typed — the export
@@ -1779,7 +1876,8 @@ public enum TrainValidation {
             actualDeparture: normalizeNullableTime(stop.actualDeparture.map(JSON.string)),
             stopType: stop.stopType.isEmpty ? "passenger_stop" : stop.stopType,
             rideSegment: stop.rideSegment,
-            routeEditing: stop.routeEditing)
+            routeEditing: stop.routeEditing,
+            stationID: stop.stationID)
     }
 
     private static func platformNumber(_ value: JSON?) -> Int? {
@@ -1931,7 +2029,8 @@ public enum TrainValidation {
             region: train.region,
             notes: train.notes,
             journeyGroup: train.journeyGroup,
-            routeConfirmation: train.routeConfirmation)
+            routeConfirmation: train.routeConfirmation,
+            operatorID: train.operatorID)
     }
 
     /// Route inputs for solving and geometry display. Pending hints are

@@ -12,5 +12,6 @@
   "line-label-collision": [],
   "line-alias-is-country-code": [],
   "station-code-conflict": [],
-  "crosswalk-conflict": []
+  "crosswalk-conflict": [],
+  "operator-rename-invalid": []
 }

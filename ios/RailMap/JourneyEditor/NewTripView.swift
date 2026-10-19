@@ -1099,7 +1099,9 @@ struct NewTripView: View {
             if draft.stops[span.upperBound].arrival != pickerArrival {
                 draft.stops[span.upperBound].arrival = pickerArrival
             }
-            if !companyName.isEmpty { draft.company = companyName }
+            if !companyName.isEmpty {
+                RegistryIdentityUpgrade.reassignCompany(companyName, on: &draft)
+            }
             let number = trainNumber.trimmingCharacters(in: .whitespacesAndNewlines)
             draft.number = [number, draft.number, limitedExpressName,
                             draft.routeSections?.first?.lineNames?.first ?? originLine?.name ?? ""]
@@ -1164,9 +1166,9 @@ struct NewTripView: View {
             : typedNumber
         if companyName.isEmpty {
             let joined = corridor.operatorNames.filter { !$0.isEmpty }.joined(separator: "・")
-            draft.company = joined.isEmpty ? nil : joined
+            RegistryIdentityUpgrade.reassignCompany(joined.isEmpty ? nil : joined, on: &draft)
         } else {
-            draft.company = companyName
+            RegistryIdentityUpgrade.reassignCompany(companyName, on: &draft)
         }
         draft.origin = origin.name
         draft.destination = destination.name

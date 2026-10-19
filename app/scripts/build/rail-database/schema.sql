@@ -726,6 +726,21 @@ CREATE TABLE excluded_source (
 ) STRICT;
 CREATE INDEX excluded_source_lookup ON excluded_source(region, scheme, value);
 
+-- Unified names (ADR 0013 §3.5). Filled beside the old name tables; those stay.
+CREATE TABLE name (
+  entity_id  TEXT NOT NULL,
+  region     TEXT NOT NULL,
+  lang       TEXT NOT NULL,
+  form       TEXT NOT NULL,
+  value      TEXT NOT NULL,
+  valid_from TEXT,
+  valid_to   TEXT,
+  source     TEXT NOT NULL,
+  status     TEXT
+) STRICT;
+CREATE INDEX name_region_value ON name(region, value);
+CREATE INDEX name_entity ON name(entity_id);
+
 -- Package line id → live lp. Old line queries stay on `line`.
 CREATE VIEW line_registry AS
   SELECT l.id AS line_id, e.id AS registry_id

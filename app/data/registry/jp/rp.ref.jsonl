@@ -1,0 +1,2 @@
+{"schema":"jtm-registry/1","region":"jp","kind":"rp.ref"}
+{"id":"rp:jp:1","scheme":"route-pattern","value":"lp:jp:366,lp:jp:367,lp:jp:368,lp:jp:369,lp:jp:370,lp:jp:371,lp:jp:372,lp:jp:373,lp:jp:374","run":2}

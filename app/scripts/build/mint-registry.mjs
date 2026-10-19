@@ -122,6 +122,8 @@ function main() {
       reappeared: [],
       conflicts: [],
       crosswalkConflicts: [],
+      operatorRenameInvalid: [],
+      operatorNameAmbiguous: [],
     };
     for (const region of regions) {
       const additions = mint(db, ledger, { region, runId, at, root: options.root });
@@ -132,12 +134,16 @@ function main() {
       merged.reappeared.push(...additions.reappeared);
       merged.conflicts.push(...additions.conflicts);
       merged.crosswalkConflicts.push(...additions.crosswalkConflicts);
+      merged.operatorRenameInvalid.push(...(additions.operatorRenameInvalid ?? []));
+      merged.operatorNameAmbiguous.push(...(additions.operatorNameAmbiguous ?? []));
     }
     if (merged.reappeared.length) console.log(`reappeared ${merged.reappeared.length}`);
     if (merged.conflicts.length) console.log(`station-code-conflict ${merged.conflicts.length}`);
     if (merged.crosswalkConflicts.length) console.log(`crosswalk-conflict ${merged.crosswalkConflicts.length}`);
+    if (merged.operatorRenameInvalid.length) console.log(`operator-rename-invalid ${merged.operatorRenameInvalid.length}`);
+    if (merged.operatorNameAmbiguous.length) console.log(`operator-name-ambiguous ${merged.operatorNameAmbiguous.length}`);
     const refused = retireLines(merged.events);
-    if (merged.reappeared.length) {
+    if (merged.reappeared.length || merged.operatorNameAmbiguous.length) {
       code = 1;
     } else if (refused.length && !options.allowRetire) {
       console.log("retire refused");

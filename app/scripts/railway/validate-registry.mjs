@@ -46,6 +46,7 @@ const KEY_SCHEME = {
   st: "derivation",
   ls: "derivation",
   ln: "crosswalk",
+  rp: "route-pattern",
 };
 
 function pushMap(map, key, value) {
@@ -84,6 +85,16 @@ function referenceViolations(ledger) {
   for (const [id, count] of retired) {
     if (count > 1) violations.push(`multiple retire ${id}`);
   }
+  for (const event of ledger.events) {
+    if (event.event !== "member") continue;
+    if (kindOf(event.id) !== "rp" || !ID_RE.test(event.id)) {
+      violations.push(`member event ${event.id}`);
+      continue;
+    }
+    if (retired.has(event.id)) continue;
+    const liveLp = kindOf(event.value) === "lp" && ledger.entities.has(event.value) && !retired.has(event.value);
+    if (!liveLp) violations.push(`member not live ${event.value}`);
+  }
   for (const alias of ledger.aliases) {
     if (!ledger.entities.has(alias.id)) violations.push(`alias target missing ${alias.id}`);
   }
@@ -91,6 +102,8 @@ function referenceViolations(ledger) {
   for (const ref of ledger.refs) {
     const kind = kindOf(ref.id);
     if (KEY_SCHEME[kind] !== ref.scheme) continue;
+    // A dated package-operator ref is a rename of the same op, not a second key.
+    if (kind === "op" && ref.from) continue;
     keyRefs.set(ref.id, (keyRefs.get(ref.id) ?? 0) + 1);
   }
   for (const entity of ledger.entities.values()) {

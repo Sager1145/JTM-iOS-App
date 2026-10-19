@@ -292,7 +292,9 @@ final class TransferGuideImport {
             if isEmpty(train.numberEn) { train.numberEn = completed.numberEn }
             if isEmpty(train.trainType) { train.trainType = completed.trainType }
             if isEmpty(train.vehicleType) { train.vehicleType = completed.vehicleType }
-            if isEmpty(train.company) { train.company = completed.company }
+            if isEmpty(train.company) {
+                RegistryIdentityUpgrade.reassignCompany(completed.company, on: &train)
+            }
             if isEmpty(train.direction) { train.direction = completed.direction }
 
             let completedLines = (completed.routePolicy?.preferredLineNames ?? [])

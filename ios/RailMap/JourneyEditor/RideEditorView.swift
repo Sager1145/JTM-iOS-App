@@ -819,7 +819,8 @@ struct RideEditorView: View {
             completed.number = completed.origin + " → " + completed.destination
         }
         if !proposal.choice.operatorNames.isEmpty {
-            completed.company = proposal.choice.operatorNames.joined(separator: " / ")
+            RegistryIdentityUpgrade.reassignCompany(
+                proposal.choice.operatorNames.joined(separator: " / "), on: &completed)
         }
         applyCompletedDraft(completed)
         selectedRouteChoice = proposal.choice
@@ -880,7 +881,11 @@ struct RideEditorView: View {
         }, set: { value in
             guard let index = stopIDs.firstIndex(of: id), draft.stops.indices.contains(index) else { return }
             var updated = value
-            if updated != draft.stops[index] {
+            let previous = draft.stops[index]
+            if updated.name != previous.name || updated.n02StationCode != previous.n02StationCode {
+                updated.stationID = nil
+            }
+            if updated != previous {
                 if updated.routeEditing == nil { updated.routeEditing = Stop.RouteEditingMetadata(visitID: id) }
                 updated.routeEditing?.generatedBy = nil
                 generatedStopIDs.remove(id)
@@ -1127,7 +1132,7 @@ struct RideEditorView: View {
             preferredLineSelectionRow
             EditorSearchField(
                 title: localization.countryText("field.company", fallback: "Operator"),
-                text: optionalText(\.company),
+                text: companyText,
                 suggestions: regionalHistory.compactMap(\.company) + regionalLines.compactMap(\.operatorName))
         } header: {
             Text(localization.text("ios.editor.serviceDetails"))
@@ -2039,6 +2044,16 @@ struct RideEditorView: View {
 
     private func optionalText(_ keyPath: WritableKeyPath<Train, String?>) -> Binding<String> {
         EditorBindings.optionalText($draft, keyPath)
+    }
+
+    /// Company text is typed. The registry ids are not.
+    private var companyText: Binding<String> {
+        Binding(
+            get: { draft.company ?? "" },
+            set: { value in
+                RegistryIdentityUpgrade.reassignCompany(value.isEmpty ? nil : value, on: &draft)
+            }
+        )
     }
 
     /// Any write counts, including the same word again or a clear.

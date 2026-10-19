@@ -356,6 +356,9 @@ public enum ImportEngine {
         ) throws -> String {
             var train = try TrainValidation.normalizeImportedTrain(
                 raw, fallbackDate: fallbackDate, country: country, stations: stations)
+            // ADR 0013: fill station_id / operator_id between the two doors.
+            // A missing registry bundle leaves the train unchanged.
+            train = RegistryIdentityUpgrade.applyLoaded(train, regionFallback: country)
             if existingIDsCacheCount != trains.count {
                 existingIDsCache = Set(trains.map(\.id))
                 existingIDsCacheCount = trains.count

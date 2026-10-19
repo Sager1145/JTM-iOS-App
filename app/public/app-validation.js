@@ -146,6 +146,21 @@ function validateSupportedJourneyRegions(train) {
   inspect(train);
 }
 
+const REGISTRY_STATION_ID = /^st:(jp|tw|hk|mo|kr|cn):[1-9][0-9]*$/;
+const REGISTRY_OPERATOR_ID = /^op:(jp|tw|hk|mo|kr|cn):[1-9][0-9]*$/;
+
+function registryIDError(value, pattern, field, region) {
+  if (value == null) return null;
+  if (typeof value !== "string" || !pattern.test(value))
+    return `${field} must match ${pattern.source}.`;
+  if (region) {
+    const segment = value.split(":")[1];
+    if (segment !== String(region).toLowerCase())
+      return `${field} region must equal the train region.`;
+  }
+  return null;
+}
+
 function validateTrain(train, index, ids) {
   validateSupportedJourneyRegions(train);
   const prefix = `Train ${index + 1}`;
@@ -159,6 +174,9 @@ function validateTrain(train, index, ids) {
     if (train[key] !== undefined && typeof train[key] !== "string")
       throw new Error(`${prefix}: ${key} must be a string when present.`);
   });
+  const operatorIDError = registryIDError(
+    train.operator_id, REGISTRY_OPERATOR_ID, "operator_id", train.region);
+  if (operatorIDError) throw new Error(`${prefix}: ${operatorIDError}`);
   // §3.2: ids feed route_id / cache keys / DOM ids, so keep them to the
   // documented charset instead of accepting arbitrary text.
   if (!TRAIN_ID_PATTERN.test(train.id))
@@ -211,6 +229,10 @@ function validateTrain(train, index, ids) {
         `${prefix} stop ${stopIndex + 1}: n02_station_code must be a six-digit N02_005c, a TDX StationUID, or null.`,
       );
     }
+    const stationIDError = registryIDError(
+      stop.station_id, REGISTRY_STATION_ID, "station_id", train.region);
+    if (stationIDError)
+      throw new Error(`${prefix} stop ${stopIndex + 1}: ${stationIDError}`);
     if (
       stop.platform_number !== null &&
       stop.platform_number !== undefined &&

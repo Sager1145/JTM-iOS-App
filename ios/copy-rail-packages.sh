@@ -60,6 +60,11 @@ for country in jp tw hk mo kr cn; do
         exit 1
     fi
     cp -p "$package" "$target_dir/$country-2025.json"
+    # Optional identity bundle (ADR 0013 §10). Absent in a partial tree.
+    registry="$here/../app/data/registry-bundle/$country.json"
+    if [ -f "$registry" ]; then
+        cp -p "$registry" "$target_dir/registry-$country.json"
+    fi
 done
 
 # The map never decodes one of the national packages merely to draw it. Build

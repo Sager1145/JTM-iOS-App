@@ -107,7 +107,10 @@ struct StopEditorView: View {
 
     private var stationName: Binding<String> {
         Binding(get: { stop.name }, set: { name in
-            if name != stop.name { stop.n02StationCode = nil }
+            if name != stop.name {
+                stop.n02StationCode = nil
+                stop.stationID = nil
+            }
             stop.name = name
         })
     }
@@ -133,12 +136,14 @@ struct StopEditorView: View {
                 StationPickerView(
                     regionCode: region.code, selectedLineIDs: selectedLineIDs,
                     onSelect: { station in
+                        stop.stationID = nil
                         stop.name = station.name
                         stop.n02StationCode = station.key.sourceCode
                         stationNameFocused = false
                     },
                     rideDate: journeyDate,
                     onSelectRetired: { station in
+                        stop.stationID = nil
                         stop.name = station.name
                         stop.n02StationCode = station.certifiedCode
                         stationNameFocused = false
@@ -187,11 +192,13 @@ struct StopEditorView: View {
                     StationPickerView(
                         regionCode: region.code, selectedLineIDs: selectedLineIDs,
                         onSelect: { station in
+                            stop.stationID = nil
                             stop.name = station.name
                             stop.n02StationCode = station.key.sourceCode
                         },
                         rideDate: journeyDate,
                         onSelectRetired: { station in
+                            stop.stationID = nil
                             stop.name = station.name
                             stop.n02StationCode = station.certifiedCode
                         })

@@ -12,6 +12,10 @@ struct RailMapApp: App {
     @AppStorage("appearance") private var appearance = "system"
     @State private var localization = AppLocalization()
 
+    init() {
+        BundledRegistry.install()
+    }
+
     var body: some Scene {
         WindowGroup {
 #if ROUTE_WORKBENCH

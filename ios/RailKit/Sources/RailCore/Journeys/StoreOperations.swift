@@ -625,6 +625,7 @@ extension StoreOperations {
         if let trainType = train.trainType { pairs.append(("train_type", .string(trainType))) }
         if let vehicleType = train.vehicleType { pairs.append(("vehicle_type", .string(vehicleType))) }
         if let company = train.company { pairs.append(("company", .string(company))) }
+        if let operatorID = train.operatorID { pairs.append(("operator_id", .string(operatorID))) }
         pairs.append(("origin", .string(train.origin)))
         pairs.append(("destination", .string(train.destination)))
         if let direction = train.direction { pairs.append(("direction", .string(direction))) }
@@ -661,6 +662,9 @@ extension StoreOperations {
             ("name", .string(stop.name)),
             ("n02_station_code", stop.n02StationCode.map(TrainValidation.JSON.string) ?? .null),
         ]
+        if let stationID = stop.stationID {
+            pairs.append(("station_id", .string(stationID)))
+        }
         if stop.hasPlatformNumberField {
             pairs.append((
                 "platform_number",

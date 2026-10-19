@@ -1,0 +1,22 @@
+{
+  "schema": "jtm-route-patterns/1",
+  "patterns": [
+    {
+      "slug": "jp-jr-east-ueno-tokyo-through",
+      "lp": [
+        "lp:jp:366",
+        "lp:jp:367",
+        "lp:jp:368",
+        "lp:jp:369",
+        "lp:jp:370",
+        "lp:jp:371",
+        "lp:jp:372",
+        "lp:jp:373",
+        "lp:jp:374"
+      ],
+      "kind": "through-run",
+      "why": "railway_identity groups a through-running system, not one railway (ADR 0013 §9.5)",
+      "source": "app/public/rail/jp-2025.json railwayIdentity"
+    }
+  ]
+}

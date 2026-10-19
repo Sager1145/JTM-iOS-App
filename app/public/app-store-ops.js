@@ -123,6 +123,14 @@ function canonicalRouteEditingMetadata(metadata) {
   };
 }
 
+// Derived registry ids are carried as stored. Null is absence. A non-string
+// stays so validateTrain can reject it the way Swift's shape check does.
+// This file does not resolve ids; the bundles live in the app.
+function carriedRegistryID(key, value) {
+  if (value == null) return {};
+  return { [key]: value };
+}
+
 function canonicalStopShape(stop) {
   const actualArrival = normalizeNullableTime(stop.actual_arrival);
   const actualDeparture = normalizeNullableTime(stop.actual_departure);
@@ -130,6 +138,7 @@ function canonicalStopShape(stop) {
   return {
     name: stop.name || "",
     n02_station_code: canonicalStationCode(stop.n02_station_code || null),
+    ...carriedRegistryID("station_id", stop.station_id),
     // `??` is intentional: platform 0 exists and must not collapse to null.
     platform_number: stop.platform_number ?? null,
     arrival: normalizeNullableTime(stop.arrival),
@@ -318,6 +327,7 @@ function normalizeExportTrain(train) {
       ? { vehicle_type: train.vehicle_type }
       : {}),
     company: normalizeTrainCompany(train.company),
+    ...carriedRegistryID("operator_id", train.operator_id),
     origin: train.origin || "",
     destination: train.destination || "",
     direction: train.direction || "down",
@@ -437,6 +447,7 @@ function normalizeImportedStop(stop) {
     [
       "name",
       "n02_station_code",
+      "station_id",
       "platform_number",
       "arrival",
       "actual_arrival",
@@ -608,6 +619,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       "region",
       "notes",
       "company",
+      "operator_id",
       "origin",
       "destination",
       "direction",
@@ -646,6 +658,7 @@ function normalizeImportedTrain(train, { fallbackDate = null } = {}) {
       ? { vehicle_type: train.vehicle_type.trim() }
       : {}),
     company: normalizeTrainCompany(train.company),
+    ...carriedRegistryID("operator_id", train.operator_id),
     origin: train.origin,
     destination: train.destination,
     direction: train.direction || "down",

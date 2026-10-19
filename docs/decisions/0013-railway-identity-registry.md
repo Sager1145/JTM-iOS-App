@@ -494,6 +494,9 @@ P0 之后各期（准备文档 L96）：
 6. 由 JSONL 账本导出、打包给 app 的精简身份表 `registry.{region}.json`（派生物，格式在 P1 再定；`st` ↔ 站码、`op` ↔ 别名、`lp` ↔ package line id）。
    乘车记录引用**只经现有 alias/import 路径**（`StationCodeAliases.canonical`、`JourneyCompletion`）升级：新增可选字段 `station_id` / `operator_id`，
    读取时由原码补全、保存时双写，旧字段继续保留；无法唯一升级的旧记录保持原样并报告。
+   实施说明（P1 评审后）：`station_id` / `operator_id` 是由站码与 `company` 派生的缓存，用户不直接输入。
+   每次加载、导入、保存都重新推导：唯一答案即写入（可覆盖旧值）；无唯一答案时，与当前站码/公司不一致或不在当前 bundle 中的旧值被清除；
+   编辑器改站点或公司时先清除再推导。缺少该地区 bundle 时不做任何改动。
 7. 修正 TW 两处站群归属（§11.4）。
 
 P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序与界面小字标签。
