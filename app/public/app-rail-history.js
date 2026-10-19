@@ -140,6 +140,8 @@ function validateRailHistoryOverlay(json) {
     if (!Array.isArray(json[key]))
       throw new Error(`rail history overlay: ${key} must be an array`);
   }
+  if (json.identity_periods != null && !Array.isArray(json.identity_periods))
+    throw new Error("rail history overlay: identity_periods must be an array");
 
   const sectionIds = new Set();
   (json.sections || []).forEach((entry, index) => {
@@ -188,12 +190,57 @@ function validateRailHistoryOverlay(json) {
     }
   });
 
+  const identityPeriodIds = new Set();
+  const periodsBySelector = new Map();
+  (json.identity_periods || []).forEach((entry, index) => {
+    const label = `identity_periods[${index}]`;
+    const id = railHistoryEntryId(entry, label);
+    if (identityPeriodIds.has(id))
+      throw new Error(`rail history overlay: duplicate identity period history_id ${id}`);
+    identityPeriodIds.add(id);
+    validateRailHistoryInterval(entry, label);
+    if (typeof entry.valid_to !== "string" || entry.service_validity != null ||
+        entry.infrastructure_validity != null)
+      throw new Error(`rail history overlay: ${label}.valid_to is required`);
+    const match = entry.match;
+    const bbox = match?.bbox;
+    const targets = match?.targets;
+    if (typeof match?.line_name !== "string" || !match.line_name ||
+        typeof match?.operator !== "string" || !match.operator ||
+        !Array.isArray(bbox) || bbox.length !== 4 || !bbox.every(Number.isFinite) ||
+        bbox[0] > bbox[2] || bbox[1] > bbox[3] ||
+        (targets != null && (!Array.isArray(targets) || !targets.length ||
+          targets.some((target) => target !== "sections" && target !== "stations"))) ||
+        (match.station_name != null && typeof match.station_name !== "string"))
+      throw new Error(`rail history overlay: ${label}.match is invalid`);
+    if (typeof entry.as?.N02_003 !== "string" || !entry.as.N02_003 ||
+        typeof entry.as?.N02_004 !== "string" || !entry.as.N02_004 ||
+        (entry.as.N02_001 != null && typeof entry.as.N02_001 !== "string") ||
+        (entry.as.N02_002 != null && typeof entry.as.N02_002 !== "string") ||
+        (entry.as.N02_005 != null && typeof entry.as.N02_005 !== "string") ||
+        typeof entry.source !== "string" || !entry.source)
+      throw new Error(`rail history overlay: ${label}.as is invalid`);
+    const selector = JSON.stringify([match.line_name, match.operator, bbox,
+      [...(targets || ["sections", "stations"])].sort(), match.station_name || null]);
+    const prior = periodsBySelector.get(selector) || [];
+    if (prior.some((other) =>
+      (other.valid_from == null || entry.valid_to > other.valid_from) &&
+      (entry.valid_from == null || other.valid_to > entry.valid_from)))
+      throw new Error(`rail history overlay: overlapping identity periods for ${selector}`);
+    prior.push(entry);
+    periodsBySelector.set(selector, prior);
+  });
+
   for (const id of stationIds) {
     if (sectionIds.has(id) || retirementIds.has(id))
       throw new Error(`rail history overlay: history_id ${id} crosses categories`);
   }
   for (const id of retirementIds) {
-    if (sectionIds.has(id))
+    if (sectionIds.has(id) || identityPeriodIds.has(id))
+      throw new Error(`rail history overlay: history_id ${id} crosses categories`);
+  }
+  for (const id of identityPeriodIds) {
+    if (sectionIds.has(id) || stationIds.has(id))
       throw new Error(`rail history overlay: history_id ${id} crosses categories`);
   }
   return json;
@@ -304,7 +351,73 @@ function railHistoryMatches(feature, match) {
   const properties = feature?.properties;
   if (railHistoryLineName(properties) !== match.line_name) return false;
   if (railHistoryOperator(properties) !== match.operator) return false;
+  if (match.station_name != null &&
+      (properties?.station_name || properties?.name || properties?.N02_005) !== match.station_name)
+    return false;
   return railHistoryInsideBbox(railHistoryCoordinates(feature.geometry), match.bbox);
+}
+
+function railHistoryCloneFeature(feature) {
+  return { ...feature, properties: { ...(feature?.properties || {}) } };
+}
+
+function railHistoryIdentityVariants(feature, periods, target) {
+  if (!periods.length) return [feature];
+  const base = railServiceBounds(feature.properties || {});
+  const later = (a, b) => a == null ? (b ?? null) : b == null ? a : (a > b ? a : b);
+  const earlier = (a, b) => a == null ? (b ?? null) : b == null ? a : (a < b ? a : b);
+  const nonempty = (a, b) => a == null || b == null || a < b;
+  const pieces = [];
+  let cursor = base.valid_from;
+  [...periods].sort((a, b) => (a.valid_from || "").localeCompare(b.valid_from || ""))
+    .forEach((period) => {
+      const from = later(base.valid_from, period.valid_from);
+      const to = earlier(base.valid_to, period.valid_to);
+      if (!nonempty(from, to)) return;
+      const gapTo = earlier(base.valid_to, from);
+      if (cursor !== gapTo && nonempty(cursor, gapTo))
+        pieces.push([cursor, gapTo, null]);
+      pieces.push([from, to, period]);
+      cursor = later(cursor, period.valid_to);
+    });
+  if (cursor !== base.valid_to && nonempty(cursor, base.valid_to))
+    pieces.push([cursor, base.valid_to, null]);
+  return pieces.map(([from, to, period]) => {
+    const copy = railHistoryCloneFeature(feature);
+    copy.properties.service_validity = [from, to];
+    delete copy.properties.infrastructure_validity;
+    if (period) {
+      if (period.as.N02_001 != null) {
+        copy.properties.N02_001 = period.as.N02_001;
+        copy.properties.railway_class_code = period.as.N02_001;
+      }
+      if (period.as.N02_002 != null) {
+        copy.properties.N02_002 = period.as.N02_002;
+        copy.properties.institution_type_code = period.as.N02_002;
+      }
+      copy.properties.N02_003 = period.as.N02_003;
+      copy.properties.N02_004 = period.as.N02_004;
+      copy.properties.line_name = period.as.N02_003;
+      copy.properties.operator = period.as.N02_004;
+      if (target === "stations" && period.as.N02_005 != null) {
+        copy.properties.N02_005 = period.as.N02_005;
+        copy.properties.station_name = period.as.N02_005;
+      }
+      copy.properties.history_id = period.history_id;
+      if (target === "sections") copy.properties.temporal_kind = "historical";
+    }
+    return copy;
+  });
+}
+
+function applyRailHistoryIdentityPeriods(overlay, list, target) {
+  const periods = (overlay?.identity_periods || []).filter((period) =>
+    railHistoryTargetAllows(period.match, target));
+  if (!periods.length) return;
+  const original = list.slice();
+  list.splice(0, list.length, ...original.flatMap((feature) =>
+    railHistoryIdentityVariants(feature,
+      periods.filter((period) => railHistoryMatches(feature, period.match)), target)));
 }
 
 // Apply an overlay to the current package. `sections` / `stations` are
@@ -395,6 +508,8 @@ function applyRailHistory(overlay, sections, stations) {
     sectionList,
     stationList,
   );
+  applyRailHistoryIdentityPeriods(overlay, sectionList, "sections");
+  applyRailHistoryIdentityPeriods(overlay, stationList, "stations");
 
   const addedSections = overlay?.sections || [];
   const addedStations = overlay?.stations || [];
@@ -430,6 +545,7 @@ function applyLoadedRailHistoryToStations(stations, country = activeCountry) {
     applyRailHistoryRetirements(overlay, [], stationList, {
       requireAllRetirementsMatched: false,
     });
+    applyRailHistoryIdentityPeriods(overlay, stationList, "stations");
     (overlay.stations || []).forEach((feature) => stationList.push(feature));
   }
   return stations;
@@ -457,6 +573,7 @@ function applyLoadedRailHistoryToSections(
     const overlay = railHistoryOverlays.get(code);
     if (!overlay) continue;
     applyRailHistoryRetirements(overlay, sectionList, currentStations);
+    applyRailHistoryIdentityPeriods(overlay, sectionList, "sections");
     const retirementIDs = new Set(
       (overlay.retirements || []).map((entry) => entry?.history_id).filter(Boolean),
     );

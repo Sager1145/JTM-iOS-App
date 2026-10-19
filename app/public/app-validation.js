@@ -130,7 +130,7 @@ function warnBranchLeak(train) {
 // Retired railway packages never enter the live store, including untagged imports.
 function validateSupportedJourneyRegions(train) {
   if (typeof train?.region === "string" && train.region &&
-      !["jp", "tw", "hk", "mo", "kr"].includes(train.region.toLowerCase())) {
+      !["jp", "tw", "hk", "mo", "kr", "cn"].includes(train.region.toLowerCase())) {
     throw new Error(`Unsupported journey region: ${train.region}.`);
   }
   const freeText = new Set(["name", "number", "number_en", "notes", "company", "origin", "destination", "id"]);

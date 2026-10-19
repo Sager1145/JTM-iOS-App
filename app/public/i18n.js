@@ -274,7 +274,7 @@
   // sources.md states: the Chinese and Japanese columns are deliberately empty
   // where the operator publishes no such name, and the interface then falls
   // back to the official one (stationName's `|| name`).
-  const LOCALIZED_NAME_COUNTRIES = new Set(["TW", "HK", "MO", "KR", "US", "CA"]);
+  const LOCALIZED_NAME_COUNTRIES = new Set(["TW", "HK", "MO", "KR", "CN", "US", "CA"]);
   // One station-name key rule for the whole system, owned by AppCore (the
   // station-resolution index and the build scripts use the same function).
   // app-core.js loads before this file — same load-order contract as
@@ -417,7 +417,7 @@
   // the country in via I18N.setCountry (i18n.js loads before app-config.js).
   let uiCountry = "jp";
   function setCountry(country) {
-    uiCountry = ["jp", "tw", "hk", "mo", "kr"].includes(country)
+    uiCountry = ["jp", "tw", "hk", "mo", "kr", "cn"].includes(country)
       ? country
       : "jp";
   }

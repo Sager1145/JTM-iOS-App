@@ -33,11 +33,20 @@ let stationCandidatesIndex;
 // stripped from the persisted/exported JSON so the archive doesn't repeat every
 // station name in both the stops and the sections.
 let stationNameByCode = new Map();
+let physicalRailJunctions = [];
+let physicalRailJunctionsReady = null;
 function stationNameForCode(code) {
   return (code && stationNameByCode.get(String(code))) || "";
 }
 
 const AppDatasets = {
+  installPhysicalRailJunctions(document) {
+    if (document?.format !== "jtm-physical-rail-junctions-v1" ||
+        !Array.isArray(document.junctions))
+      throw new Error("Unsupported physical railway junction registry.");
+    physicalRailJunctions = document.junctions;
+    physicalRailJunctionsReady = Promise.resolve();
+  },
   // The three seed collections boot fetches together.
   installSeedData({ defaultStore, matchedRoutes, matchedStops }) {
     defaultTrainStore = defaultStore;
@@ -153,6 +162,18 @@ async function ensureRailSectionsLoaded() {
     });
   }
   return railSectionsReady;
+}
+
+function ensurePhysicalRailJunctionsLoaded() {
+  if (!physicalRailJunctionsReady) {
+    const ready = fetchJson("physical-rail-junctions")
+      .then((document) => AppDatasets.installPhysicalRailJunctions(document));
+    physicalRailJunctionsReady = ready;
+    ready.catch(() => {
+      if (physicalRailJunctionsReady === ready) physicalRailJunctionsReady = null;
+    });
+  }
+  return physicalRailJunctionsReady;
 }
 
 function mergeFeatureCollections(collections) {

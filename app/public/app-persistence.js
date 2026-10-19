@@ -78,6 +78,7 @@ function setPersistenceStateChangedListener(listener) {
 // the export textarea for rescue; only an explicit, successful data action
 // (import / open local JSON / restore / reset / clear) leaves the mode.
 let storeRecoveryMode = false;
+let storeRecoveryRawText = "";
 
 function enterStoreRecoveryMode({ message = "", rawText = null } = {}) {
   storeRecoveryMode = true;
@@ -86,10 +87,10 @@ function enterStoreRecoveryMode({ message = "", rawText = null } = {}) {
   clearTimeout(storeSaveRetryTimer);
   clearTimeout(pendingServerStoreJournalTimer);
   pendingServerStoreJournalTimer = null;
-  clearTimeout(exportTextareaTimer);
   pendingServerStoreText = null;
   storeSaveDirty = false;
-  if (rawText && els.json) els.json.value = rawText;
+  storeRecoveryRawText = typeof rawText === "string" ? rawText : "";
+  if (els.json) els.json.value = storeRecoveryRawText;
   if (els.importStatus)
     setStatus(
       els.importStatus,
@@ -100,6 +101,7 @@ function enterStoreRecoveryMode({ message = "", rawText = null } = {}) {
 
 function exitStoreRecoveryMode() {
   storeRecoveryMode = false;
+  storeRecoveryRawText = "";
 }
 
 function saveTrainStore() {
@@ -424,7 +426,6 @@ async function flushPersistence() {
  * @property {Function} resetForCountry
  * @property {Function} readUserStore
  * @property {Function} writeUserStore
- * @property {Function} seedStoredRoutes
  * @property {Function} pickLocalJson
  * @property {Function} defaultStore
  * @property {Function} fallbackStore
@@ -444,7 +445,6 @@ const PersistenceService = Object.freeze({
   resetForCountry: resetPersistenceStateForCountrySwitch,
   readUserStore: readUserStoreAll,
   writeUserStore: writeUserStoreChunks,
-  seedStoredRoutes: seedRouteCacheEntries,
   pickLocalJson: pickLocalJsonFile,
   defaultStore: getDefaultTrainStore,
   fallbackStore: countryFallbackStore,
@@ -457,20 +457,18 @@ const PersistenceService = Object.freeze({
   },
 });
 
-// The read-only export textarea is a display convenience, not part of the
-// edit path. Refreshing it ran a full exportTrainStore() (whole-store
-// JSON.stringify) on EVERY mutation. Debounce it so rapid edits coalesce into
-// a single serialization once the user pauses, off the interaction's hot path.
-let exportTextareaTimer = null;
-function scheduleExportTextareaRefresh() {
-  // Recovery mode pins the broken store's raw JSON in the export box for
-  // rescue; routine renders must not overwrite it with the fallback view.
-  if (storeRecoveryMode) return;
-  clearTimeout(exportTextareaTimer);
-  exportTextareaTimer = setTimeout(() => {
-    if (els.json)
-      els.json.value = perfMeasure("export textarea", () => exportTrainStore());
-  }, 300);
+// The read-only preview is materialized only when the user opens, focuses,
+// copies or explicitly exports it. Recovery owns the textarea's original raw
+// bytes; export actions must never replace those bytes with the fallback view.
+function exportJsonText() {
+  if (storeRecoveryMode) return storeRecoveryRawText;
+  return perfMeasure("export JSON", () => exportTrainStore());
+}
+
+function refreshExportTextarea() {
+  const text = exportJsonText();
+  if (els.json) els.json.value = text;
+  return text;
 }
 
 // Load the saved store from the server. Returns:
@@ -780,16 +778,12 @@ async function idbDeleteValue(key) {
 // The static (GitHub Pages) deploy has no backend, so the user's own data is
 // persisted right here in the browser. Layout:
 //   object store "dates": key = date string ("" for undated trains), value =
-//     { date, trains: [<canonical train>...],
-//       routes: [{ cache_key, features } | { cache_key, unsolvable: true }] }
-//   object store "meta":  key "meta", value =
+//     { date, trains: [<canonical train>...] }
+//   object store "meta": key "meta", value =
 //     { schema_version, updated_at, dates: [<date keys in store order>] }
-// Each record also carries that day's precomputed route geometry (taken from
-// the runtime route cache), so restoring the user store on a later boot seeds
-// the cache exactly like the published sample parts do — no on-device
-// re-solve, which is what crashes memory-tight iPhones.
-// Writes are diffed per day: only days whose serialized content changed are
-// rewritten, and days that disappeared are deleted.
+// Derived geometry belongs only to the rail-hash/solver-version route cache.
+// Legacy chunks may still contain routes; train recovery and the write-diff
+// baseline remain readable, and the next changed/forced write drops that copy.
 
 function openUserStoreDb() {
   return openIdb(
@@ -803,34 +797,14 @@ function openUserStoreDb() {
 // write only touches days whose content actually changed.
 let userStoreWrittenChunks = new Map();
 
-// Group the canonical trains per day (preserving store order) and attach each
-// day's route geometry from the runtime cache. Returns Map<dateKey, record>.
+// Group canonical records by day, preserving store order. Route geometry never
+// changes a user-record chunk or participates in its cross-tab conflict check.
 function buildUserStoreChunks(canonicalStore) {
   const chunks = new Map();
-  const liveById = new Map(trainStore.trains.map((t) => [t.id, t]));
   for (const train of canonicalStore.trains) {
     const dateKey = typeof train.date === "string" ? train.date : "";
-    if (!chunks.has(dateKey))
-      chunks.set(dateKey, { date: dateKey, trains: [], routes: [] });
-    const chunk = chunks.get(dateKey);
-    chunk.trains.push(train);
-    // Attach the solved geometry (or the negative-cache marker) so a later
-    // boot never has to re-run the solver for this train.
-    try {
-      const context = buildTrainRouteSolveContext(liveById.get(train.id) || train);
-      if (context && context.cacheKey) {
-        if (RouteService.has(context.cacheKey)) {
-          chunk.routes.push({
-            cache_key: context.cacheKey,
-            features: RouteService.get(context.cacheKey),
-          });
-        } else if (RouteService.isNegative(context.cacheKey)) {
-          chunk.routes.push({ cache_key: context.cacheKey, unsolvable: true });
-        }
-      }
-    } catch {
-      // Geometry is an optimization — the store itself must still be saved.
-    }
+    if (!chunks.has(dateKey)) chunks.set(dateKey, { date: dateKey, trains: [] });
+    chunks.get(dateKey).trains.push(train);
   }
   return chunks;
 }
@@ -842,6 +816,11 @@ async function writeUserStoreChunks(canonicalStore, { force = false } = {}) {
   // and the per-day diff would DELETE days missing from it. Only an explicit,
   // confirmed force-save (保存為我的資料) may write.
   if (storeRecoveryMode && !force) return;
+  // Sample parts seed runtime geometry without writing it. Preserve that warm
+  // restore when the user explicitly saves the sample as their own records.
+  const routesSaved = force ? persistUserStoreRoutes(canonicalStore).catch((error) => {
+    console.warn("Saved records will restore without cached geometry.", error);
+  }) : null;
   const chunks = buildUserStoreChunks(canonicalStore);
   const serialized = new Map();
   for (const [dateKey, record] of chunks)
@@ -963,11 +942,12 @@ async function writeUserStoreChunks(canonicalStore, { force = false } = {}) {
     db.close();
   }
   userStoreWrittenChunks = serialized;
+  if (routesSaved) await routesSaved;
 }
 
 // Read the whole user store back. Returns null when nothing is saved (or the
 // saved data is unreadable), so callers can fall back to the sample.
-// `routes` collects every day's cached geometry for seeding the runtime cache.
+// Older records with a `routes` field still restore their canonical trains.
 async function readUserStoreAll() {
   let db;
   try {
@@ -1014,13 +994,11 @@ async function readUserStoreAll() {
       if (!seen.has(key)) orderedKeys.push(key);
     }
     const trains = [];
-    const routes = [];
     const chunkTexts = new Map();
     for (const key of orderedKeys) {
       const record = records.get(key);
       if (!record || !Array.isArray(record.trains)) continue;
       trains.push(...record.trains);
-      if (Array.isArray(record.routes)) routes.push(...record.routes);
       chunkTexts.set(key, JSON.stringify(record));
     }
     if (!trains.length) return null;
@@ -1033,7 +1011,6 @@ async function readUserStoreAll() {
           (meta && meta.schema_version) || SCHEMA_VERSION,
         trains,
       },
-      routes,
     };
   } catch (err) {
     console.warn("Could not read the user store from IndexedDB.", err);
@@ -1062,25 +1039,6 @@ async function clearUserStore() {
   }
   userStoreWrittenChunks = new Map();
   userStoreAvailable = false;
-}
-
-// Seed the runtime route cache from stored user-route entries (same contract
-// as seedRouteCacheFromPart, minus the part wrapper).
-function seedRouteCacheEntries(routes) {
-  if (!Array.isArray(routes)) return;
-  for (const route of routes) {
-    if (!route || typeof route.cache_key !== "string" || !route.cache_key)
-      continue;
-    if (route.unsolvable === true) {
-      RouteService.seedNegative(route.cache_key);
-    } else if (
-      Array.isArray(route.features) &&
-      route.features.length &&
-      !RouteService.has(route.cache_key)
-    ) {
-      RouteService.seed(route.cache_key, route.features);
-    }
-  }
 }
 
 // =========================================================================
@@ -1112,19 +1070,29 @@ function getRailContentHash() {
       "rail-sections not loaded yet; await ensureSolverReady() before touching the route cache.",
     );
   const feats = (railSectionsGeoJson && railSectionsGeoJson.features) || [];
-  // Cheap deterministic content signature (hashing the full 12MB text every
-  // boot would be wasteful): feature count + a sampled coordinate sweep.
+  // Hash the graph's effective inputs rather than the full JSON text.
   let h = 0x811c9dc5;
   const mix = (n) => {
     h ^= n | 0;
     h = Math.imul(h, 0x01000193) >>> 0;
   };
   mix(feats.length);
+  // Reviewed junction identities, geometry and validity affect solvability
+  // even when the original surveyed section vertices have not changed.
+  const junctionIdentity = JSON.stringify(physicalRailJunctions);
+  for (let i = 0; i < junctionIdentity.length; i++) mix(junctionIdentity.charCodeAt(i));
   // Full content hash (~tens of ms over ~405k points, one-time at boot): every
   // coordinate is mixed in — not a sample — so ANY change to the rail geometry
   // changes the namespace and invalidates stale cached routes. Avoids the blind
   // spots a sparse sample would leave between sampled features.
   for (let i = 0; i < feats.length; i += 1) {
+    const properties = feats[i]?.properties || {};
+    const graphInputs = JSON.stringify([
+      physicalRailIdentityKey(properties),
+      String(properties.N02_002 || properties.institution_type_code || ""),
+      railServiceBounds(properties),
+    ]);
+    for (let j = 0; j < graphInputs.length; j++) mix(graphInputs.charCodeAt(j));
     const geom = feats[i] && feats[i].geometry;
     const coords = geom && geom.coordinates;
     if (!Array.isArray(coords)) {
@@ -1152,12 +1120,21 @@ function getRailContentHash() {
   const stationFeats = (stationsGeoJson && stationsGeoJson.features) || [];
   mix(stationFeats.length);
   for (let i = 0; i < stationFeats.length; i += 1) {
-    // Dual-schema station code (Japan N02_005c, Taiwan n02_station_code) —
-    // reading only the Japan spelling hashed every TW station as "", so a
-    // TW station-code-only fix would never rotate the cache namespace.
-    const code = String(stationCode(stationFeats[i]) || "");
-    for (let j = 0; j < code.length; j += 1) mix(code.charCodeAt(j));
-    const coord = getFeatureDisplayCoordinate(stationFeats[i]);
+    const station = stationFeats[i];
+    // Use the resolver's dual-schema accessors: changing membership, candidate
+    // names, institution or service windows can change a solve without moving
+    // the station or changing its code. Display-only metadata is irrelevant.
+    const stationInputs = JSON.stringify([
+      stationCode(station) || "",
+      stationName(station) || "",
+      stationGroupCode(station) || "",
+      stationLineName(station),
+      stationOperator(station),
+      stationInstitutionTypeCode(station),
+      railServiceBounds(station.properties),
+    ]);
+    for (let j = 0; j < stationInputs.length; j++) mix(stationInputs.charCodeAt(j));
+    const coord = getFeatureDisplayCoordinate(station);
     if (Array.isArray(coord)) {
       mix(coord[0] * 1e5);
       mix(coord[1] * 1e5);
@@ -1262,35 +1239,64 @@ async function warmRouteCacheFromIndexedDb({ isCurrent = () => true } = {}) {
   }
 }
 
-// Fire-and-forget persist of one solved route's geometry for future sessions.
-function persistRouteCacheEntry(cacheKey, features) {
-  if (!window.indexedDB || !Array.isArray(features) || !features.length) return;
-  const storeKey = `${getRailContentHash()}::${cacheKey}`;
-  openRouteCacheDb()
-    .then((db) => {
-      const tx = db.transaction(ROUTE_CACHE_STORE_NAME, "readwrite");
-      tx.objectStore(ROUTE_CACHE_STORE_NAME).put(features, storeKey);
-      tx.oncomplete = () => db.close();
-      tx.onerror = () => db.close();
-    })
-    .catch((err) => console.warn("Route cache persist skipped.", err));
+// One writer for derived geometry, including sample geometry kept as user
+// data. All entries use the current rail-content namespace; the warm owner
+// above still evicts obsolete rail hashes and solver versions.
+async function persistRouteCacheEntries(entries) {
+  if (!window.indexedDB || !entries.length) return;
+  try {
+    const prefix = `${getRailContentHash()}::`;
+    const db = await openRouteCacheDb();
+    try {
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(ROUTE_CACHE_STORE_NAME, "readwrite");
+        const store = tx.objectStore(ROUTE_CACHE_STORE_NAME);
+        for (const entry of entries) {
+          if (entry.unsolvable === true) {
+            store.delete(`${prefix}${entry.cache_key}`);
+            store.put(1, `${prefix}${ROUTE_NEG_CACHE_MARKER}${entry.cache_key}`);
+          } else {
+            store.delete(`${prefix}${ROUTE_NEG_CACHE_MARKER}${entry.cache_key}`);
+            store.put(entry.features, `${prefix}${entry.cache_key}`);
+          }
+        }
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error || new Error("Could not persist route cache."));
+        tx.onabort = () => reject(tx.error || new Error("Route cache write was aborted."));
+      });
+    } finally {
+      db.close();
+    }
+  } catch (error) {
+    // Cache storage is optional; canonical journey persistence proceeds.
+    console.warn("Route cache persist skipped.", error);
+  }
 }
 
-// Fire-and-forget persist of a "this route can't be solved with the current rail
-// data + policy" marker, so future sessions skip the doomed solve too. Namespaced
-// by rail-content hash like the positive cache, and stored under a distinct
-// marker prefix so warmRouteCacheFromIndexedDb() can tell the two apart.
+function persistRouteCacheEntry(cacheKey, features) {
+  if (!Array.isArray(features) || !features.length) return;
+  return persistRouteCacheEntries([{ cache_key: cacheKey, features }]);
+}
+
 function persistRouteNegativeEntry(cacheKey) {
-  if (!window.indexedDB) return;
-  const storeKey = `${getRailContentHash()}::${ROUTE_NEG_CACHE_MARKER}${cacheKey}`;
-  openRouteCacheDb()
-    .then((db) => {
-      const tx = db.transaction(ROUTE_CACHE_STORE_NAME, "readwrite");
-      tx.objectStore(ROUTE_CACHE_STORE_NAME).put(1, storeKey);
-      tx.oncomplete = () => db.close();
-      tx.onerror = () => db.close();
-    })
-    .catch((err) => console.warn("Route negative-cache persist skipped.", err));
+  return persistRouteCacheEntries([{ cache_key: cacheKey, unsolvable: true }]);
+}
+
+async function persistUserStoreRoutes(canonicalStore) {
+  const liveById = new Map(trainStore.trains.map((train) => [train.id, train]));
+  const entries = new Map();
+  for (const train of canonicalStore.trains) {
+    const context = buildTrainRouteSolveContext(liveById.get(train.id) || train);
+    if (!context?.cacheKey) continue;
+    if (RouteService.has(context.cacheKey)) {
+      const features = RouteService.get(context.cacheKey);
+      if (Array.isArray(features) && features.length)
+        entries.set(context.cacheKey, { cache_key: context.cacheKey, features });
+    } else if (RouteService.isNegative(context.cacheKey)) {
+      entries.set(context.cacheKey, { cache_key: context.cacheKey, unsolvable: true });
+    }
+  }
+  await persistRouteCacheEntries([...entries.values()]);
 }
 
 // =========================================================================
@@ -1321,7 +1327,7 @@ async function verifyFileHandlePermission(handle, writable) {
 }
 
 async function writeLocalJsonFile(
-  jsonText = exportTrainStore(),
+  jsonText = exportJsonText(),
   promptIfMissing = true,
 ) {
   if (!supportsFileSystemAccess()) {

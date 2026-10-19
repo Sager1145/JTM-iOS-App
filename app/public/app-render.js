@@ -20,7 +20,7 @@ function updateFocusZoomButton() {
 }
 
 
-function renderAll({ updateJsonTextarea = true } = {}) {
+function renderAll() {
   perfMeasure("renderDateButtons", renderDateButtons);
   perfMeasure("renderTrainList", renderTrainList);
   updateImportTarget();
@@ -30,10 +30,6 @@ function renderAll({ updateJsonTextarea = true } = {}) {
   renderNetworkWorkspace();
   renderPassportJourneyLog();
   scheduleMileageStats();
-  // Serializing the whole store to fill the export textarea is O(store size).
-  // Callers in hot loops (progressive import) skip it; everyone else gets a
-  // debounced refresh so the serialization never blocks the interaction.
-  if (updateJsonTextarea) scheduleExportTextareaRefresh();
 }
 
 // Named mutation results keep persistence and rendering explicit. Controllers
@@ -49,13 +45,11 @@ const MutationResults = Object.freeze({
     editor: true,
     routes: true,
     stats: true,
-    exportJson: true,
   }),
   trainOrderChanged: Object.freeze({
     persist: true,
     list: true,
     routes: true,
-    exportJson: true,
   }),
   trainDetailsChanged: Object.freeze({
     persist: true,
@@ -63,20 +57,17 @@ const MutationResults = Object.freeze({
     editor: true,
     routes: true,
     stats: true,
-    exportJson: true,
   }),
   routeChanged: Object.freeze({
     persist: true,
     editor: true,
     routes: true,
     stats: true,
-    exportJson: true,
   }),
   visibilityChanged: Object.freeze({
     persist: true,
     list: true,
     routes: true,
-    exportJson: true,
   }),
 });
 
@@ -90,7 +81,6 @@ function applyMutationResult(result) {
   if (result.editor) perfMeasure("renderEditor", renderEditor);
   if (result.routes) perfMeasure("renderTrainLayers", renderTrainLayers);
   if (result.stats) scheduleMileageStats();
-  if (result.exportJson) scheduleExportTextareaRefresh();
 }
 
 // The date-selector bar: a "全部" button plus one button per available date
@@ -605,7 +595,6 @@ function selectTrain(id, { fit = false } = {}) {
   scrollSelectedCardIntoView();
   perfMeasure("renderEditor", renderEditor);
   perfMeasure("renderTrainLayers", renderTrainLayers);
-  scheduleExportTextareaRefresh();
   if (fit && train) fitTrainsBounds([train]);
 }
 

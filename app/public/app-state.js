@@ -2,33 +2,9 @@
 //  app-state.js — core application state owner and named state transitions
 //
 //  Classic-script compatibility is intentional: the lexical bindings below
-//  remain visible to the ordered app family and the Node VM replay. New code
-//  should read through AppState and change state through AppActions. Existing
-//  direct writers are migrated one state group at a time.
+//  remain visible to the ordered app family and the Node VM replay. AppActions
+//  owns the shared multi-field transitions used by imports and country changes.
 // =========================================================================
-
-/**
- * @typedef {Object} AppStateView
- * @property {{schema_version: string, trains: Array<Object>}} trainStore
- * @property {?string} selectedTrainId
- * @property {?string} focusedTrainId
- * @property {Map} endpointLabelMarkers
- * @property {string} selectedDate
- * @property {Array<string>} manualDates
- * @property {boolean} mapFollowsSelectedDate
- * @property {boolean} focusZoomEnabled
- * @property {?Object} map
- * @property {?Array<Object>} cachedRouteItems
- * @property {string} cachedRouteSignature
- * @property {string} cachedRouteOverlapSignature
- * @property {boolean} cachedRouteDateActive
- * @property {Array<Object>} cachedOrderedTrains
- * @property {boolean} importInProgress
- * @property {string} dataSourceMode
- * @property {?string} sampleModeDate
- * @property {boolean} userStoreAvailable
- * @property {boolean} sampleEditHintShown
- */
 
 let trainStore = { schema_version: SCHEMA_VERSION, trains: [] };
 let selectedTrainId = null;
@@ -70,67 +46,6 @@ let sampleModeDate = null;
 let userStoreAvailable = false;
 let sampleEditHintShown = false;
 
-/** @type {Readonly<AppStateView>} */
-const AppState = Object.freeze({
-  get trainStore() {
-    return trainStore;
-  },
-  get selectedTrainId() {
-    return selectedTrainId;
-  },
-  get focusedTrainId() {
-    return focusedTrainId;
-  },
-  get endpointLabelMarkers() {
-    return endpointLabelMarkers;
-  },
-  get selectedDate() {
-    return selectedDate;
-  },
-  get manualDates() {
-    return manualDates;
-  },
-  get mapFollowsSelectedDate() {
-    return mapFollowsSelectedDate;
-  },
-  get focusZoomEnabled() {
-    return focusZoomEnabled;
-  },
-  get map() {
-    return map || null;
-  },
-  get cachedRouteItems() {
-    return cachedRouteItems;
-  },
-  get cachedRouteSignature() {
-    return cachedRouteSignature;
-  },
-  get cachedRouteOverlapSignature() {
-    return cachedRouteOverlapSignature;
-  },
-  get cachedRouteDateActive() {
-    return cachedRouteDateActive;
-  },
-  get cachedOrderedTrains() {
-    return cachedOrderedTrains;
-  },
-  get importInProgress() {
-    return importInProgress;
-  },
-  get dataSourceMode() {
-    return dataSourceMode;
-  },
-  get sampleModeDate() {
-    return sampleModeDate;
-  },
-  get userStoreAvailable() {
-    return userStoreAvailable;
-  },
-  get sampleEditHintShown() {
-    return sampleEditHintShown;
-  },
-});
-
 /**
  * Named transitions for state groups that have been migrated. Keeping these
  * operations beside the bindings makes their write ownership explicit while
@@ -146,6 +61,9 @@ const AppActions = Object.freeze({
     return trainStore;
   },
   resetWorkspaceForCountry() {
+    // The outgoing store must disappear before persistence targets move.
+    // Incoming dataset preparation can fail before its store is loaded.
+    trainStore = { schema_version: SCHEMA_VERSION, trains: [] };
     selectedTrainId = null;
     focusedTrainId = null;
     dataSourceMode = "user";

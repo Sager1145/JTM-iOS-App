@@ -64,6 +64,8 @@ function stationCode(feature) {
 function stationCodeSystem(code) {
   const value = String(code || "").trim();
   if (/^\d{6}$/.test(value)) return "N02";
+  if (/^CN-12306-[A-Z]{3}$/.test(value)) return "CN-12306";
+  if (/^CN-OSM-N[0-9]+$/.test(value)) return "CN-OSM";
   if (/^[A-Z][A-Z0-9]*-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(value))
     return "TDX";
   return null;
@@ -74,6 +76,8 @@ function isValidSourceStationCode(code) {
 }
 
 function stationCodeFieldLabel(code) {
+  if (stationCodeSystem(code) === "CN-12306") return "12306";
+  if (stationCodeSystem(code) === "CN-OSM") return "OSM";
   return stationCodeSystem(code) === "TDX" ? "TDX StationUID" : "N02_005c";
 }
 
@@ -144,7 +148,8 @@ function stationLookupKeys(name, code) {
 // builds into local Maps that are atomically swapped into the module globals
 // only at the end, so no consumer can observe a half-built index mid-slice.
 // Builds the name/code candidate index plus the code -> name map in one pass.
-async function buildStationIndexesSliced(collection) {
+async function buildStationIndexesSliced(collection, { isCurrent = () => true } = {}) {
+  if (!isCurrent()) return;
   const candidates = new Map();
   const nameByCode = new Map();
   const features = (collection && collection.features) || [];
@@ -168,10 +173,11 @@ async function buildStationIndexesSliced(collection) {
       // yieldToEventLoop, not setTimeout(0): exempt from the >=1 s background-tab
       // timer clamp, so a boot in a hidden tab isn't stretched by seconds.
       await yieldToEventLoop();
+      if (!isCurrent()) return;
       t0 = now();
     }
   }
-  AppDatasets.installStationIndexes(candidates, nameByCode);
+  if (isCurrent()) AppDatasets.installStationIndexes(candidates, nameByCode);
 }
 
 // Display coordinates of a train's UNAMBIGUOUS stops (single name candidate or

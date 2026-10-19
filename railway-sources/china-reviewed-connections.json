@@ -1,0 +1,349 @@
+{
+  "schema": "cn-reviewed-connections/1",
+  "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+  "sourceRetrievedAt": "2026-10-18",
+  "sourceSnapshotAt": "2026-10-17T20:20:51Z",
+  "connections": [
+    {
+      "id": "cn-reviewed-harbin-jingha-hamu-lead-in",
+      "reviewedAt": "2026-10-18",
+      "station": "哈尔滨",
+      "stationCode": "CN-12306-HBB",
+      "from": {
+        "lineId": "cn-osm-relation-3066901",
+        "identity": {
+          "operatorName": "中国铁路",
+          "lineName": "京哈高速线",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-3066901"
+        },
+        "nodeId": 9907645305,
+        "segmentIndex": 0,
+        "vertexIndex": 0,
+        "sourceStation": {
+          "groupId": "cn-official-12306-hbb",
+          "markerNodeId": 334358067,
+          "markerVersion": 29,
+          "anchorNodeId": 9907645305,
+          "anchorVersion": 4
+        }
+      },
+      "to": {
+        "lineId": "cn-osm-relation-7047176",
+        "identity": {
+          "operatorName": "中国铁路哈尔滨局集团有限公司",
+          "lineName": "哈牡客专线",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-7047176"
+        },
+        "nodeId": 11805437289,
+        "segmentIndex": 0,
+        "vertexIndex": 0,
+        "sourceStation": {
+          "groupId": "cn-official-12306-hbb",
+          "markerNodeId": 334358067,
+          "markerVersion": 29,
+          "anchorNodeId": 11805437289,
+          "anchorVersion": 2
+        }
+      },
+      "ownerRelationId": 3066901,
+      "relationVersions": {
+        "3066901": 81,
+        "7047176": 65
+      },
+      "nodeIds": [
+        9907645305,
+        6726762735,
+        6726762736,
+        6726762737,
+        6726762738,
+        6726762739,
+        6726762740,
+        6726762741,
+        6726762742,
+        6728392268,
+        11106087231,
+        6728392269,
+        6728392270,
+        6728392271,
+        6728392272,
+        6728392273,
+        6728392274,
+        6728392275,
+        6728392276,
+        6728392277,
+        6728392279,
+        6728406103,
+        11805437289
+      ],
+      "coordinates": [
+        [
+          126.626001,
+          45.7598234
+        ],
+        [
+          126.6264497,
+          45.7603402
+        ],
+        [
+          126.6268085,
+          45.7607544
+        ],
+        [
+          126.6271035,
+          45.7610838
+        ],
+        [
+          126.6276051,
+          45.7616433
+        ],
+        [
+          126.6278438,
+          45.7618828
+        ],
+        [
+          126.6285948,
+          45.7625862
+        ],
+        [
+          126.6290746,
+          45.7630336
+        ],
+        [
+          126.629315,
+          45.7632441
+        ],
+        [
+          126.629577,
+          45.7634347
+        ],
+        [
+          126.6298508,
+          45.7636112
+        ],
+        [
+          126.6301135,
+          45.7637543
+        ],
+        [
+          126.6303981,
+          45.7638897
+        ],
+        [
+          126.6306764,
+          45.7640053
+        ],
+        [
+          126.6309761,
+          45.7641119
+        ],
+        [
+          126.6313017,
+          45.7642085
+        ],
+        [
+          126.6315985,
+          45.764285
+        ],
+        [
+          126.6319368,
+          45.7643515
+        ],
+        [
+          126.6322423,
+          45.7643964
+        ],
+        [
+          126.6327269,
+          45.7644507
+        ],
+        [
+          126.6340562,
+          45.7645717
+        ],
+        [
+          126.6348269,
+          45.7646411
+        ],
+        [
+          126.6355934,
+          45.7647127
+        ]
+      ],
+      "nodeVersions": {
+        "9907645305": 4,
+        "6726762735": 2,
+        "6726762736": 1,
+        "6726762737": 1,
+        "6726762738": 1,
+        "6726762739": 1,
+        "6726762740": 3,
+        "6726762741": 3,
+        "6726762742": 2,
+        "6728392268": 3,
+        "11106087231": 2,
+        "6728392269": 3,
+        "6728392270": 3,
+        "6728392271": 4,
+        "6728392272": 4,
+        "6728392273": 4,
+        "6728392274": 4,
+        "6728392275": 3,
+        "6728392276": 3,
+        "6728392277": 3,
+        "6728392279": 5,
+        "6728406103": 5,
+        "11805437289": 2
+      },
+      "edgeWayIds": [
+        715782823,
+        715782823,
+        715782823,
+        715782823,
+        715782823,
+        715782823,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142,
+        1271240142
+      ],
+      "wayVersions": {
+        "715782823": 13,
+        "1271240142": 3
+      },
+      "attachMeters": {
+        "from": 0,
+        "to": 0
+      },
+      "reviewReason": "The published Jingha interval is clipped at the truthful Harbin station anchor. These two original member ways continue beyond that anchor to an existing Hamu source vertex. Preserve original station anchors and order; retain the source lead-in through an explicit end junction.",
+      "passengerEvidence": {
+        "trainNumber": "G101",
+        "trainNo": "240000G10121",
+        "serviceDate": "2026-10-18",
+        "retrievedAt": "2026-10-18T20:24:01.468283+00:00",
+        "stationCodes": [
+          "IFP",
+          "SBT",
+          "CRT",
+          "VAB",
+          "MDB"
+        ],
+        "retainedRecord": "docs/reports/sources/china-real-train-paths-20261018/highspeed-sources.json",
+        "rawStops": "railway-sources/local/china/evidence/real-train-paths-20261018/highspeed-raw/stops-G101.json",
+        "urls": [
+          "https://search.12306.cn/search/v1/train/search?keyword=G1&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G10121&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "scope": "Official API response for the requested service date supports same-train passenger continuity from Harbin West to Mudanjiang. It does not specify a unique intermediate track, prove actual train operation, or establish an opening date. Original OSM member-way adjacency and passenger rail tags supply the physical geometry."
+      }
+    },
+    {
+      "id": "cn-reviewed-xiaolan-jiangmen-guangzhu-lead-in",
+      "reviewedAt": "2026-10-19",
+      "station": "小榄",
+      "stationCode": "CN-12306-EAQ",
+      "from": {
+        "lineId": "cn-osm-relation-5496304-branch-5",
+        "identity": {
+          "operatorName": "中国铁路",
+          "lineName": "江门线",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-5496304-branch-5"
+        },
+        "nodeId": 7710011723,
+        "segmentIndex": 0,
+        "vertexIndex": 0,
+        "sourceStation": {
+          "groupId": "cn-official-12306-eaq",
+          "markerNodeId": 7710011721,
+          "markerVersion": 4,
+          "anchorNodeId": 7710011723,
+          "anchorVersion": 3
+        }
+      },
+      "to": {
+        "lineId": "cn-osm-relation-5456788",
+        "identity": {
+          "operatorName": "中国铁路广州局集团有限公司",
+          "lineName": "广珠城际铁路",
+          "railwayClassCode": "12",
+          "trackID": "cn-osm-relation-5456788"
+        },
+        "nodeId": 7710011722,
+        "segmentIndex": 6,
+        "vertexIndex": 30
+      },
+      "ownerRelationId": 5496304,
+      "relationVersions": {
+        "5496304": 15,
+        "5456788": 31
+      },
+      "nodeIds": [
+        7710011723,
+        7710011722
+      ],
+      "coordinates": [
+        [
+          113.265173,
+          22.6511385
+        ],
+        [
+          113.266232,
+          22.6524813
+        ]
+      ],
+      "nodeVersions": {
+        "7710011723": 3,
+        "7710011722": 2
+      },
+      "edgeWayIds": [
+        154395107
+      ],
+      "wayVersions": {
+        "154395107": 15
+      },
+      "attachMeters": {
+        "from": 0,
+        "to": 0
+      },
+      "reviewReason": "Exact original member-way continuation from the clipped Jiangmen Branch Xiaolan anchor to an existing Guangzhou-Zhuhai source vertex. No station-anchor modification or geometric gap filling. Original passenger_lines=2 evidences passenger eligibility; positive passenger_lines is explicit source evidence, with freight, inactive and construction exclusions retained.",
+      "passengerEvidence": {
+        "trainNumber": "G6045",
+        "trainNo": "6x000G604806",
+        "serviceDate": "2026-10-18",
+        "rawStops": "railway-sources/local/china/evidence/real-train-paths-20261018/highspeed-raw/stops-G6045.json",
+        "retainedRecord": "docs/reports/sources/china-real-train-paths-20261018/highspeed-sources.json",
+        "stationCodes": [
+          "IZQ",
+          "JOQ",
+          "PUQ",
+          "PVQ",
+          "PXQ",
+          "WRQ",
+          "MDQ",
+          "ZWQ"
+        ],
+        "limits": "Official record supports same-train ordered passenger stops; it does not choose a unique platform or create geometry.",
+        "urls": [
+          "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+          "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code="
+        ],
+        "scope": "Official G6045 2026-10-18 same-train Guangzhou South to Jiangmen passenger continuity supports this corridor, without assigning a unique intermediate track. Original way154395107 passenger_lines=2 and exact consecutive nodes supply geometry and local passenger eligibility."
+      }
+    }
+  ]
+}

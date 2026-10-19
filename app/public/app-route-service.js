@@ -12,14 +12,19 @@ let solverReadyPromise = null;
 let routeServiceGeneration = 0;
 let solverRenderKickPending = false;
 
+function captureRouteSolveOwnership() {
+  const generation = routeServiceGeneration;
+  return () => generation === routeServiceGeneration;
+}
+
 configureStationRouteResolver({
   allowedInstitutionCodes: getAllowedInstitutionTypeCodes,
   filterPreferredStations: filterStationsByPreferredInstitution,
   distanceMeters,
 });
 configureRouteSolverApi({
-  addStationTransferConnectorEdges: (...args) =>
-    addStationTransferConnectorEdges(...args),
+  captureSolveOwnership: captureRouteSolveOwnership,
+  currentSourceHash: getRailContentHash,
   coordKey: (...args) => coordKey(...args),
   coordinatesClose: (...args) => coordinatesClose(...args),
   distanceMeters: (...args) => distanceMeters(...args),
@@ -56,6 +61,7 @@ function ensureSolverReady() {
     const generation = routeServiceGeneration;
     const ready = (async () => {
       await ensureRailSectionsLoaded();
+      await ensurePhysicalRailJunctionsLoaded();
       if (typeof RailMap !== "undefined" && typeof RailMap.ensureNetwork === "function") {
         const network = await RailMap.ensureNetwork(activeRailPackageUrl());
         if (!network && generation === routeServiceGeneration)
@@ -84,12 +90,15 @@ function ensureSolverReady() {
 function requestSolverThenRerender() {
   if (solverRenderKickPending) return;
   solverRenderKickPending = true;
+  const isCurrent = captureRouteSolveOwnership();
   ensureSolverReady()
     .then(() => {
+      if (!isCurrent()) return;
       solverRenderKickPending = false;
       renderTrainLayers();
     })
     .catch(() => {
+      if (!isCurrent()) return;
       solverRenderKickPending = false;
     });
 }
@@ -106,25 +115,37 @@ function generateMatchedRouteFeaturesForTrain(train) {
   return [];
 }
 
+function currentFallbackRouteFeaturesForTrain(train, features) {
+  const context = buildTrainRouteSolveContext(train);
+  if (!context || runtimeRouteNegativeCache.has(context.cacheKey) || !railSectionsGeoJson || !physicalRailJunctionsReady) return [];
+  const sourceHash = getRailContentHash();
+  return (features || []).filter(feature =>
+    routeFeatureHasCurrentSolveProvenance(feature, context.cacheKey, sourceHash));
+}
+
 async function warmRouteCacheForTrainStreaming(
   train,
   { yieldIfNeeded } = {},
 ) {
+  const isCurrent = captureRouteSolveOwnership();
   let prep = prepareTrainRouteSolve(train);
   if (prep.done) return prep.result;
   await ensureSolverReady();
+  if (!isCurrent()) return [];
   if (train.route_sections?.some((section) => inferredTokyoConventionalSection(section, train).section_codes?.length)
       && typeof RailMap.ensureNetwork === "function") {
     await RailMap.ensureNetwork(activeRailPackageUrl());
+    if (!isCurrent()) return [];
   }
   prep = prepareTrainRouteSolve(train);
   if (prep.done) return prep.result;
-  return solveTrainRouteStreaming(train, { yieldIfNeeded });
+  return solveTrainRouteStreaming(train, { yieldIfNeeded, isCurrent });
 }
 
 async function drainPendingRouteSolves() {
   if (_routeSolveDraining) return;
   _routeSolveDraining = true;
+  const isCurrent = captureRouteSolveOwnership();
   setRouteSolveInProgress(true);
   try {
     let frameStart = performance.now();
@@ -133,23 +154,26 @@ async function drainPendingRouteSolves() {
       await waitForImportPaint();
       frameStart = performance.now();
     };
-    while (_pendingRouteSolves.size) {
+    while (isCurrent() && _pendingRouteSolves.size) {
       const id = _pendingRouteSolves.values().next().value;
       _pendingRouteSolves.delete(id);
       const train = getTrain(id);
       if (!train) continue;
       try {
         await warmRouteCacheForTrainStreaming(train, { yieldIfNeeded });
+        if (!isCurrent()) return;
         appendTrainToLayers(train);
       } catch (err) {
         console.warn(`Background route solve failed for ${id}.`, err);
       }
     }
   } finally {
-    setRouteSolveInProgress(false);
-    trimRegionalGraphCache(REGIONAL_GRAPH_NODE_BUDGET);
-    _routeSolveDraining = false;
-    renderTrainLayers();
+    if (isCurrent()) {
+      setRouteSolveInProgress(false);
+      trimRegionalGraphCache(REGIONAL_GRAPH_NODE_BUDGET);
+      _routeSolveDraining = false;
+      renderTrainLayers();
+    }
   }
 }
 
@@ -165,6 +189,8 @@ function resetRouteServiceForCountry() {
   runtimeRouteCache.clear();
   runtimeRouteNegativeCache.clear();
   _pendingRouteSolves.clear();
+  _routeSolveDraining = false;
+  setRouteSolveInProgress(false);
   solverReadyPromise = null;
   solverRenderKickPending = false;
 }
@@ -199,6 +225,7 @@ function seedRuntimeRouteNegativeCache(cacheKey) {
 const RouteService = Object.freeze({
   ensureReady: ensureSolverReady,
   featuresForTrain: generateMatchedRouteFeaturesForTrain,
+  fallbackFeaturesForTrain: currentFallbackRouteFeaturesForTrain,
   warmTrain: warmRouteCacheForTrainStreaming,
   requestSolve: requestTrainRouteSolve,
   has: (cacheKey) => runtimeRouteCache.has(cacheKey),

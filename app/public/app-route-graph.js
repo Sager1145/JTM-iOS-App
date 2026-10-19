@@ -116,7 +116,7 @@ function inferredTokyoConventionalSection(section, train) {
     codes.push(`${tunnel}@${ordered[i]}:${ordered[i + 1]}`);
   if (start > end) codes.reverse();
   return { ...section, from_n02_station_code: from, to_n02_station_code: to,
-    line_ids: [tunnel], section_codes: codes,
+    line_ids: [tunnel], section_codes: codes, section_codes_origin: "corridorPreference",
     line_names: section.line_names?.length ? section.line_names : ["総武線"],
     operator_names: section.operator_names?.length ? section.operator_names : ["東日本旅客鉄道"] };
 }
@@ -144,6 +144,7 @@ function getTrainRouteTemplateKey(train) {
       let key = `${from}->${to}|lines:${lines}|operators:${operators}`;
       if (section.line_ids?.length) key += `|line_ids:${[...section.line_ids].sort().join(",")}`;
       if (section.section_codes?.length) key += `|section_codes:${section.section_codes.join(",")}`;
+      if (section.section_codes_origin) key += `|section_codes_origin:${section.section_codes_origin}`;
       return key;
     })
     .join("|");
@@ -186,11 +187,6 @@ const NON_PREFERRED_OPERATOR_LENGTH_FACTOR = 6;
 const NON_PREFERRED_LINE_LENGTH_FACTOR = 8;
 const NON_PREFERRED_OPERATOR_STATION_SNAP_PENALTY = 12000;
 const NON_PREFERRED_LINE_STATION_SNAP_PENALTY = 15000;
-const STATION_TRANSFER_NODE_RADIUS_DEG = 0.0035;
-const STATION_TRANSFER_MAX_SNAP_METERS = 520;
-const STATION_TRANSFER_MAX_NODE_GAP_METERS = 900;
-const STATION_TRANSFER_EDGE_PENALTY = 180;
-const STATION_TRANSFER_MAX_NODES_PER_GROUP = 24;
 // When adjacent route_sections share the same explicit station code, keep the
 // next solve on the same physical station record chosen by the previous solve.
 // N02 can assign an old and a relocated platform to one station name/group
@@ -198,17 +194,6 @@ const STATION_TRANSFER_MAX_NODES_PER_GROUP = 24;
 // otherwise end one feature at the new platform and start the next at the old
 // one, leaving a visible gap even though connecting rail geometry exists.
 const ROUTE_SECTION_CONTINUITY_STATION_METERS = 60;
-// The candidate filter above is intentionally tight, but the final rendered
-// itinerary has a stronger invariant: two consecutive sections that name the
-// same explicit station must meet.  N02 occasionally puts the only routable
-// node hundreds of metres from that station's display point (large station
-// throats, relocated platforms, or a change between conventional/Shinkansen
-// geometry).  The graph already treats same-station nodes up to this distance
-// as an internal station connector, so use the identical bound when closing a
-// remaining feature seam after the solve.
-const ROUTE_SECTION_STITCH_MAX_METERS =
-  STATION_TRANSFER_MAX_NODE_GAP_METERS;
-
 // Half-open validity interval [valid_from, valid_to) on ISO YYYY-MM-DD
 // strings, per docs/rail-history.md and ADR 0011. An undated ride (rideDate
 // null/empty/not an ISO date) may only use edges with no valid_to — exactly
@@ -271,6 +256,10 @@ function buildTrainRouteSolveContext(train) {
     if (!lines.length && !operators.length) return;
     cacheKey += `|infer:${index}:line:${lines.join(",")}:operator:${operators.join(",")}`;
   });
+  // Persisted CN solves predating the display identity guard lack the
+  // traversed track evidence, so they must be solved again under this policy.
+  if (String(train.region || activeCountry || "").toLowerCase() === "cn")
+    cacheKey += "|source-display-identity:1|source-anchor:1";
   return {
     routeSections,
     templateKey,
@@ -350,16 +339,30 @@ function dedupedRouteTemplate(cached) {
   return deduped;
 }
 
+function routeFeatureHasCurrentSolveProvenance(feature, cacheKey, sourceHash) {
+  const properties = feature?.properties || {};
+  return properties.route_solver_version === String(ROUTE_SOLVER_CACHE_VERSION) &&
+    properties.route_solve_digest === routeKeyDigest(cacheKey) &&
+    properties.rail_content_hash === sourceHash;
+}
+
 function prepareTrainRouteSolve(train) {
   const context = buildTrainRouteSolveContext(train);
   if (!context) return { done: true, result: [] };
   const { cacheKey } = context;
-  if (runtimeRouteCache.has(cacheKey)) {
+  if (runtimeRouteCache.has(cacheKey) && railSectionsGeoJson && physicalRailJunctionsReady) {
     const cached = runtimeRouteCache.get(cacheKey);
-    return {
-      done: true,
-      result: cloneRouteFeaturesForTrain(dedupedRouteTemplate(cached), train),
-    };
+    const sourceHash = routeSolverApi.currentSourceHash?.();
+    if (sourceHash && cached.length && cached.every(feature =>
+      routeFeatureHasCurrentSolveProvenance(feature, cacheKey, sourceHash))) {
+      return {
+        done: true,
+        result: cloneRouteFeaturesForTrain(dedupedRouteTemplate(cached), train),
+      };
+    }
+    // Raw part/user seeds have no persistent namespace. Consume them only
+    // against the loaded physical inputs; leave pending seeds alone at boot.
+    runtimeRouteCache.delete(cacheKey);
   }
 
   // Known-unsolvable with this exact data + policy: skip the regional-graph
@@ -386,19 +389,19 @@ function prepareTrainRouteSolve(train) {
   return { done: false, ...context };
 }
 
-// Taiwan, Hong Kong and Macao emit their display package and rail-sections
+// Taiwan, Hong Kong, Macao and China emit their display package and rail-sections
 // dataset from the same groomed, station-cut interval geometry.  Re-running an
 // adjacent interval through Dijkstra can nevertheless change that geometry: a
 // switchback/reversal contains graph nodes that are intentionally visited more
 // than once, and the shortest-path graph is free to jump between those visits
 // (the dense Alishan throat is the clearest example) — and the graph's
 // coordinate normalization can shift vertices off the drawn line.  Index the
-// exact official intervals by their line/operator-specific station endpoints
+// exact source intervals by their line/operator-specific station endpoints
 // so canonical route_sections draw the VERY SAME ordered coordinates as the
 // "all railways" layer — ridden lines coincide with the network tracks.
 // Imported/non-adjacent/ambiguous sections still fall through to the normal
 // graph solver below.  Japan stays excluded: N02 sections are not station-cut.
-const OFFICIAL_INTERVAL_COUNTRIES = new Set(["tw", "hk", "mo"]);
+const OFFICIAL_INTERVAL_COUNTRIES = new Set(["tw", "hk", "mo", "cn"]);
 const _taiwanOfficialIntervalIndexes = new WeakMap();
 
 function taiwanOfficialIntervalCoordinateKey(coord) {
@@ -539,6 +542,11 @@ function solveTaiwanRouteSectionOnOfficialInterval(
   if (matches.size !== 1) return null;
   const match = [...matches][0];
   const properties = match.feature.properties || {};
+  // CN station-cut intervals retain the package line ID. Explicit physical
+  // identities must agree even when the endpoint names/coordinates coincide.
+  if (activeCountry === "cn" && section.line_ids?.length &&
+      !section.line_ids.includes(properties.line_id)) return null;
+  const intervalMode = activeCountry === "cn" ? "source_interval_exact" : "official_interval_exact";
   const institutionTypeCode = String(
     properties.institution_type_code || "",
   );
@@ -581,6 +589,12 @@ function solveTaiwanRouteSectionOnOfficialInterval(
     match.operator,
   ]);
 
+  const endpointCodeSystems = [
+    section.from_n02_station_code || stationCode(fromStations[0]),
+    section.to_n02_station_code || stationCode(toStations[0]),
+  ].map(stationCodeSystem);
+  const cnCodeSystem = endpointCodeSystems[0]?.startsWith("CN-") &&
+    endpointCodeSystems[0] === endpointCodeSystems[1] ? endpointCodeSystems[0] : "CN";
   return {
     type: "Feature",
     properties: {
@@ -588,7 +602,7 @@ function solveTaiwanRouteSectionOnOfficialInterval(
       route_id: `${train.id}-runtime-primary`,
       variant_rank: 0,
       is_primary: true,
-      route_choice: "official_interval_exact",
+      route_choice: intervalMode,
       geometry_role: "single_primary_segment",
       source: `rail-sections-${activeCountry} interval shared with ${activeCountry}-2025 display package`,
       segment_index: segmentIndex,
@@ -598,13 +612,13 @@ function solveTaiwanRouteSectionOnOfficialInterval(
         section.from_n02_station_code || stationCode(fromStations[0]),
       to_n02_station_code:
         section.to_n02_station_code || stationCode(toStations[0]),
-      station_code_system: "TDX",
+      station_code_system: activeCountry === "cn" ? cnCodeSystem : "TDX",
       allowed_institution_type_codes: allowedCodes,
       preferred_line_names: preferredLines,
       required_line_names: requiredLines,
       required_operator_names: requiredOperators,
       preferred_operator_names: preferredOperators,
-      solve_mode: "official_interval_exact",
+      solve_mode: intervalMode,
       require_preferred_institution: false,
       used_institution_type_codes: institutionTypeCode
         ? [institutionTypeCode]
@@ -641,24 +655,25 @@ function solveTrainRouteSection(
   warnings,
   continuityAnchor = null,
 ) {
+  const recordedSection = section;
   section = inferredTokyoConventionalSection(section, train);
-  const result = section.section_codes?.length
-    ? solvePhysicalRouteSection(section, segmentIndex, train, allowedCodes)
-    :
-    solveTaiwanRouteSectionOnOfficialInterval(
-      section,
-      segmentIndex,
-      train,
-      allowedCodes,
-      continuityAnchor,
-    ) ||
-    solveRouteSectionOnDemand(
-      section,
-      segmentIndex,
-      train,
-      allowedCodes,
-      continuityAnchor,
+  let result = section.section_codes?.length
+    ? solvePhysicalRouteSection(section, segmentIndex, train, allowedCodes) : null;
+  const inferred = ["corridorPreference", "packageInference"].includes(section.section_codes_origin);
+  if (!result && (!section.section_codes?.length || inferred)) {
+    // Failed machine materialization keeps physical solver permission. Saved
+    // authored intervals remain fixed, even if another railway is available.
+    const fallback = !recordedSection.section_codes?.length ? recordedSection : { ...section };
+    if (fallback !== recordedSection) {
+      delete fallback.section_codes;
+      delete fallback.section_codes_origin;
+    }
+    result = solveTaiwanRouteSectionOnOfficialInterval(
+      fallback, segmentIndex, train, allowedCodes, continuityAnchor,
+    ) || solveRouteSectionOnDemand(
+      fallback, segmentIndex, train, allowedCodes, continuityAnchor,
     );
+  }
   if (!result) {
     warnings.push(
       `${section.from || section.from_n02_station_code}→${section.to || section.to_n02_station_code}`,
@@ -681,7 +696,9 @@ function solvePhysicalRouteSection(section, segmentIndex, train, allowedCodes) {
     section_codes: [...section.section_codes],
     allowed_institution_type_codes: allowedCodes,
     source: "compact_package_physical_intervals",
-    route_choice: "selected_physical_intervals", geometry_role: "single_primary_segment",
+    route_choice: section.section_codes_origin ? "inferred_physical_intervals" : "selected_physical_intervals",
+    ...(section.section_codes_origin ? { section_codes_origin: section.section_codes_origin } : {}),
+    geometry_role: "single_primary_segment",
     route_template_key: routeKeyDigest(getTrainRouteTemplateKey(train)),
     preserve_ordered_geometry: true,
   };
@@ -743,24 +760,25 @@ function commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings
     return [];
   }
 
-  const templateFeatures = stitchAdjacentRouteFeatureEndpoints(
-    generated.map((feature) => {
+  const sourceHash = routeSolverApi.currentSourceHash?.() || null;
+  const templateFeatures = generated.map((feature) => {
       // `solve_attempt_index` is solver-internal bookkeeping (which relaxed
       // hint attempt produced this geometry) and isn't part of the persisted
-      // shape: dropped here so cached/exported features are unchanged except
-      // for the version bump, matching the shipped fixtures.
+      // shape. Stamp provenance only on these freshly solved results.
       const { solve_attempt_index, ...restProperties } = feature.properties || {};
       return {
         ...feature,
         properties: {
           ...restProperties,
+          route_solver_version: String(ROUTE_SOLVER_CACHE_VERSION),
+          route_solve_digest: routeKeyDigest(cacheKey),
+          rail_content_hash: sourceHash,
           train_id: "__template__",
           route_id: `solved-${routeKeyDigest(cacheKey)}-primary`,
           route_template_key: routeKeyDigest(templateKey),
         },
       };
-    }),
-  );
+    });
   runtimeRouteCache.set(cacheKey, templateFeatures);
   // Persist the freshly solved geometry so later sessions skip both the solve
   // and (if every train hits the cache) the route-graph build entirely.
@@ -814,7 +832,9 @@ function commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings
 // input stay live, and GC can reclaim transient graph memory between slices).
 // Writes the exact same runtime/negative caches + matched-routes features as the
 // synchronous solver, so the later render-time lookup is an untouched cache hit.
-async function solveTrainRouteStreaming(train, { yieldIfNeeded } = {}) {
+async function solveTrainRouteStreaming(train, { yieldIfNeeded, isCurrent } = {}) {
+  isCurrent ||= routeSolverApi?.captureSolveOwnership?.() || (() => true);
+  if (!isCurrent()) return [];
   const prep = prepareTrainRouteSolve(train);
   if (prep.done) return prep.result;
 
@@ -846,6 +866,7 @@ async function solveTrainRouteStreaming(train, { yieldIfNeeded } = {}) {
       continuityAnchor,
     );
     if (yieldIfNeeded) await yieldIfNeeded();
+    if (!isCurrent()) return [];
   }
   return commitTrainRouteSolve(train, cacheKey, templateKey, generated, warnings);
 }
@@ -916,50 +937,7 @@ function dedupeSameTrainRouteFeatures(features) {
       geometry,
     });
   });
-  return stitchAdjacentRouteFeatureEndpoints(cleaned);
-}
-
-function stitchAdjacentRouteFeatureEndpoints(features) {
-  for (let index = 1; index < features.length; index += 1) {
-    const previous = features[index - 1];
-    const current = features[index];
-    if (
-      Number(current.properties?.segment_index) !==
-      Number(previous.properties?.segment_index) + 1
-    ) {
-      continue;
-    }
-    if (
-      !routeSectionBoundarySharesExplicitStop(
-        previous.properties,
-        current.properties,
-      )
-    ) {
-      continue;
-    }
-    const previousEnd = routeFeatureEndCoordinate(previous);
-    const currentLines =
-      current.geometry?.type === "LineString"
-        ? [current.geometry.coordinates]
-        : current.geometry?.type === "MultiLineString"
-          ? current.geometry.coordinates
-          : [];
-    const currentStart = currentLines[0]?.[0];
-    if (
-      !previousEnd ||
-      !currentStart ||
-      routeSolverApi.distanceMeters(previousEnd, currentStart) >
-        ROUTE_SECTION_STITCH_MAX_METERS
-    ) {
-      continue;
-    }
-    if (routeSolverApi.coordinatesClose(previousEnd, currentStart, 0.25)) {
-      currentLines[0][0] = previousEnd;
-    } else {
-      currentLines[0].unshift(previousEnd);
-    }
-  }
-  return features;
+  return cleaned;
 }
 
 function cloneRouteFeaturesForTrain(features, train) {
@@ -1114,17 +1092,43 @@ function getAllowedInstitutionTypeCodes(train) {
 
 // Core graph builder shared by the full-network graph and the on-demand
 // regional subgraphs. Builds nodes / edges / nodeMeta / spatial-grid from
-// ONLY the given rail-section features (station transfer edges added later).
-function buildRouteGraphFromFeatures(features) {
+// Surveyed within-identity edges plus the retained reviewed physical registry.
+function physicalRailIdentityKey(properties) {
+  return JSON.stringify([
+    properties?.operatorName || properties?.N02_004 || properties?.operator || "",
+    properties?.lineName || properties?.N02_003 || properties?.line_name || "",
+    String(properties?.railwayClassCode || properties?.N02_001 || properties?.railway_class_code || ""),
+    String(properties?.level ?? ""),
+    String(properties?.trackID ?? properties?.track_id ?? ""),
+  ]);
+}
+
+function buildRouteGraphFromFeatures(features, junctions =
+  typeof physicalRailJunctions === "undefined" ? [] : physicalRailJunctions) {
   const nodes = new Map();
   const adjacency = new Map();
   const grid = new Map();
   const nodeMeta = new Map();
   const cellSize = 0.01;
-
-  function ensureNode(coord) {
+  const sourceNodesByCoordinate = new Map();
+  function coordinateIdentityKey(coord, properties) {
+    return physicalRailIdentityKey(properties) + "@" + routeSolverApi.coordKey(coord);
+  }
+  function resolvePhysicalNode(coord, properties) {
+    const coordinateKey = coordinateIdentityKey(routeSolverApi.normalizeGraphCoord(coord), properties);
+    const candidates = [...(sourceNodesByCoordinate.get(coordinateKey) || [])];
+    if (nodes.has(coordinateKey)) candidates.push(coordinateKey);
+    return candidates.length === 1 ? candidates[0] : null;
+  }
+  function ensureNode(coord, properties, sourceNodeID = undefined) {
     const normalized = routeSolverApi.normalizeGraphCoord(coord);
-    const key = routeSolverApi.coordKey(normalized);
+    const coordinateKey = coordinateIdentityKey(normalized, properties);
+    const key = sourceNodeID === undefined ? coordinateKey
+      : physicalRailIdentityKey(properties) + "@source-node:" + sourceNodeID;
+    if (sourceNodeID !== undefined) {
+      if (!sourceNodesByCoordinate.has(coordinateKey)) sourceNodesByCoordinate.set(coordinateKey, new Set());
+      sourceNodesByCoordinate.get(coordinateKey).add(key);
+    }
     if (!nodes.has(key)) {
       nodes.set(key, normalized);
       adjacency.set(key, []);
@@ -1158,9 +1162,9 @@ function buildRouteGraphFromFeatures(features) {
     if (railwayClass) meta.railway_class_codes.add(railwayClass);
   }
 
-  function addRailEdge(aCoord, bCoord, properties) {
-    const a = ensureNode(aCoord);
-    const b = ensureNode(bCoord);
+  function addRailEdge(aCoord, bCoord, properties, aSourceID = undefined, bSourceID = undefined) {
+    const a = ensureNode(aCoord, properties, aSourceID);
+    const b = ensureNode(bCoord, properties, bSourceID);
     if (a === b) return;
     recordNodeMeta(a, properties);
     recordNodeMeta(b, properties);
@@ -1188,20 +1192,42 @@ function buildRouteGraphFromFeatures(features) {
   // N02 Station LineString is used only for station snap candidates, never as a train-runnable edge.
   (features || []).forEach((feature) => {
     const props = feature.properties || {};
-    iterateGeometryLines(feature.geometry).forEach((line) => {
+    const lines = iterateGeometryLines(feature.geometry);
+    const hasSourceIDs = Object.prototype.hasOwnProperty.call(props, "source_node_ids");
+    const sourceIDs = props.source_node_ids;
+    if (hasSourceIDs && (!Array.isArray(sourceIDs) || sourceIDs.length !== lines.length ||
+        sourceIDs.some((ids, lineIndex) => !Array.isArray(ids) || ids.length !== lines[lineIndex].length ||
+          ids.some(id => typeof id !== "string" || !id.trim())))) {
+      throw new Error("source_node_ids must contain one nonempty string ID per section vertex");
+    }
+    lines.forEach((line, lineIndex) => {
       for (let i = 0; i < line.length - 1; i += 1)
-        addRailEdge(line[i], line[i + 1], props);
+        addRailEdge(line[i], line[i + 1], props,
+          hasSourceIDs ? sourceIDs[lineIndex][i] : undefined,
+          hasSourceIDs ? sourceIDs[lineIndex][i + 1] : undefined);
     });
   });
 
-  return {
+  const graph = {
     nodes,
     adjacency,
     grid,
     nodeMeta,
     cellSize,
     stationSnapCache: new Map(),
+    ensurePhysicalNode: (coord, properties) => {
+      const key = coordinateIdentityKey(routeSolverApi.normalizeGraphCoord(coord), properties);
+      return sourceNodesByCoordinate.has(key) ? resolvePhysicalNode(coord, properties) : ensureNode(coord, properties);
+    },
+    resolvePhysicalNode,
+    canEnsurePhysicalNode: (coord, properties) => {
+      const key = coordinateIdentityKey(routeSolverApi.normalizeGraphCoord(coord), properties);
+      return !sourceNodesByCoordinate.has(key) || resolvePhysicalNode(coord, properties) !== null;
+    },
+    recordPhysicalNodeMeta: recordNodeMeta,
   };
+  addReviewedPhysicalJunctionEdges(graph, junctions);
+  return graph;
 }
 
 // Full-network graph (~377k nodes). Retained as the guaranteed-correct
@@ -1219,7 +1245,6 @@ function getRuntimeRouteGraph() {
   const graph = buildRouteGraphFromFeatures(
     (railSectionsGeoJson && railSectionsGeoJson.features) || [],
   );
-  routeSolverApi.addStationTransferConnectorEdges(graph);
   runtimeRouteGraph = graph;
   return runtimeRouteGraph;
 }
@@ -1416,10 +1441,6 @@ function getRegionalRouteGraph(bbox) {
     return cached;
   }
   const graph = buildRouteGraphFromFeatures(railFeaturesInBbox(qbbox));
-  routeSolverApi.addStationTransferConnectorEdges(
-    graph,
-    stationFeaturesInBbox(qbbox),
-  );
   graph.regionBbox = qbbox;
   regionalGraphCache.set(key, graph);
   regionalGraphNodeCount += graph.nodes.size;

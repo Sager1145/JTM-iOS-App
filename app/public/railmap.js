@@ -175,42 +175,10 @@
   //   station row: [stationGroupId, name, lon, lat, (nameRoma, romaSourceCode)]
   //   segment row: [km, sharedFirstPoint, coordinates, (arcDirection)]
   //   segment i joins station i to station (i+1) % n (loop lines close the ring)
-  async function loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl) {
-    const responses = await Promise.all(
-      packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
-    );
-    if (responses.some((response) => !response.ok)) return null;
-    const packages = await Promise.all(responses.map((response) => response.json()));
-    const merged = global.RailNetwork.mergeCompactPackages(packages);
-    let reviewedSharedCorridors = null;
-    try {
-      const reviewedResponse = await fetch(reviewedUrl, { cache: "no-cache" });
-      if (reviewedResponse.ok) reviewedSharedCorridors = await reviewedResponse.json();
-    } catch (e) {
-      console.warn("[railmap] shared-corridor review unavailable:", e);
-    }
-    let displayLanes = null;
-    try {
-      const laneResponse = await fetch(lanesUrl, { cache: "no-cache" });
-      if (laneResponse.ok) displayLanes = await laneResponse.json();
-      else
-        console.warn(
-          `[railmap] display lanes unavailable: ${laneResponse.status} ${laneResponse.statusText} (${lanesUrl})`,
-        );
-    } catch (e) {
-      console.warn("[railmap] display lanes unavailable:", lanesUrl, e);
-    }
-    return global.RailNetwork.buildNetworkFromCompactPackage(
-      merged,
-      reviewedSharedCorridors,
-      displayLanes,
-    );
-  }
-
   function loadNetworkInWorker(packageUrls, reviewedUrl, lanesUrl) {
     return new Promise((resolve, reject) => {
       const workerUrl = new URL(
-        "./rail-network-worker.js?v=20260901-stroke1",
+        "./rail-network-worker.js?v=20261017-owner1",
         global.location.href,
       );
       const worker = new Worker(workerUrl);
@@ -254,7 +222,7 @@
           console.warn("[railmap] background network load unavailable:", workerError);
         }
       }
-      return await loadNetworkOnMain(packageUrls, reviewedUrl, lanesUrl);
+      return await global.RailNetwork.loadNetwork({ packageUrls, reviewedUrl, lanesUrl });
     } catch (e) {
       console.warn("[railmap] rail package unavailable:", e);
       return null;
@@ -1399,6 +1367,27 @@
       // Canonical parts a follow names, resolved once per rebuild and
       // projected on demand at this pass's nominal zoom.
       const partsByLine = new Map(model.lines.map((line) => [line.lineId, line.parts]));
+      // Exact surveyed junction candidates, shared with the native policy.
+      // This index belongs to the network and survives camera/zoom builds.
+      const junctionKey = (lineId, point) => {
+        const identity = network.lineById.get(lineId);
+        return JSON.stringify([identity?.country || '', identity?.operator || null, point[0], point[1]]);
+      };
+      if (!model.junctionVertices) {
+        model.junctionVertices = new Map();
+        for (const candidate of [...model.lines].sort((a,b) => a.lineId < b.lineId ? -1 : a.lineId > b.lineId ? 1 : 0))
+          candidate.parts.forEach((part, partIndex) => {
+            const seen = new Set();
+            for (const point of part.coordinates) {
+              const key = junctionKey(candidate.lineId, point);
+              if (seen.has(key)) continue;
+              seen.add(key);
+              let rows = model.junctionVertices.get(key);
+              if (!rows) model.junctionVertices.set(key, rows = []);
+              rows.push({lineId: candidate.lineId, partIndex});
+            }
+          });
+      }
       const projectedCanon = new Map();
       const canonPixels = (lineId, partIndex) => {
         const key = `${lineId}#${partIndex}`;
@@ -1409,6 +1398,8 @@
         held = {
           points: part.coordinates.map((point) => RailStroke.project(point, nominalZoom)),
           measures: part.measures,
+          shapeBoundaryMeasures: [...(part.tenantWindows || []), ...(part.familyWindows || [])]
+            .flatMap((window) => [window.from, window.to]),
         };
         projectedCanon.set(key, held);
         return held;
@@ -1579,6 +1570,60 @@
             afterLane: RailStroke.terminalLanes(after.rows, partSpan(after)).start,
           };
         };
+        const forkJointAt = (index, atEnd) => {
+          const own = parts[index], points = projectPart(index);
+          if (points.length < 2) return null;
+          const coordinate = atEnd ? own.coordinates.at(-1) : own.coordinates[0];
+          const endpointParts = parts.map((part, i) => ({part, i})).filter(({part}) =>
+            [part.coordinates[0], part.coordinates.at(-1)].some(point =>
+              point[0] === coordinate[0] && point[1] === coordinate[1]));
+          if (endpointParts.length < 3) return null;
+          const lane = RailStroke.terminalLanes(own.rows, own.totalMetres)[atEnd ? 'end' : 'start'];
+          for (const candidate of endpointParts) {
+            if (candidate.i === index) continue;
+            const join = RailStroke.tangentJoin(points, projectPart(candidate.i), atEnd, lane, 0, true);
+            if (join) return join;
+          }
+          const a = atEnd ? points.at(-2) : points[0], b = atEnd ? points.at(-1) : points[1];
+          const tangent = unit(a,b);
+          return tangent ? {lane, targetLane:0, incoming:tangent, outgoing:tangent} : null;
+        };
+        const branchJointAt = (index, atEnd) => {
+          const part = parts[index], points = projectPart(index);
+          if (points.length < 2) return null;
+          const coordinate = atEnd ? part.coordinates.at(-1) : part.coordinates[0];
+          const ownLane = RailStroke.terminalLanes(part.rows, part.totalMetres)[atEnd ? 'end' : 'start'];
+          for (const candidate of model.junctionVertices.get(junctionKey(line.lineId, coordinate)) || []) {
+            if (candidate.lineId === line.lineId && candidate.partIndex === index) continue;
+            const main = partsByLine.get(candidate.lineId)[candidate.partIndex];
+            const canon = canonPixels(candidate.lineId, candidate.partIndex);
+            const endpoint = atEnd ? points.at(-1) : points[0];
+            const vertex = canon.points.findIndex(point => point[0] === endpoint[0] && point[1] === endpoint[1]);
+            if (vertex <= 0 || vertex + 1 >= canon.points.length) continue;
+            let length = 0;
+            for (let i = 1; i < canon.points.length; i++)
+              length += Math.hypot(canon.points[i][0]-canon.points[i-1][0], canon.points[i][1]-canon.points[i-1][1]);
+            const width = Math.max(RailStroke.LANE_RAMP_HALF_WIDTH_METRES,
+              length > 0 ? STROKE_MIN_RAMP_PX * main.totalMetres / length : 0);
+            // Match the reviewed adjacent joins used when this main part is
+            // built; its lane ramp may already be changing near the switch.
+            const mainParts = partsByLine.get(candidate.lineId);
+            const adjacentLane = (atEnd) => {
+              const otherIndex = candidate.partIndex + (atEnd ? 1 : -1);
+              const other = mainParts[otherIndex];
+              const before = atEnd ? main : other, after = atEnd ? other : main;
+              if (!other || after.joinPrevious === false || !touches(before, after)) return null;
+              const otherCanon = canonPixels(candidate.lineId, otherIndex);
+              if (otherCanon.points.length < 2 || canon.points.length < 2) return null;
+              return RailStroke.terminalLanes(other.rows, partSpan(other))[atEnd ? 'start' : 'end'];
+            };
+            const mainLane = RailStroke.laneAt(RailStroke.laneProfile(main.rows, main.totalMetres,
+              adjacentLane(false), adjacentLane(true)), canon.measures[vertex], width);
+            const join = RailStroke.tangentJoin(points, canon.points, atEnd, ownLane, mainLane);
+            if (join) return join;
+          }
+          return null;
+        };
         for (let i = 0; i < n; i++) {
           if (!trigger[i]) continue;
           const part = parts[i];
@@ -1591,6 +1636,8 @@
             const px = projectPart(i);
             const startJoint = jointAt(i);
             const endJoint = jointAt(i + 1);
+            const forkStart = forkJointAt(i, false);
+            const forkEnd = forkJointAt(i, true);
             const follows = (part.follows || [])
               .map((follow) => {
                 const canon = canonPixels(follow.canonLineId, follow.canonPartIndex);
@@ -1602,6 +1649,7 @@
                       canonTo: follow.canonTo,
                       points: canon.points,
                       measures: canon.measures,
+                      shapeBoundaryMeasures: canon.shapeBoundaryMeasures,
                     }
                   : null;
               })
@@ -1617,20 +1665,22 @@
               enforceMinimumCornerRadius: true,
               anchors: part.anchors,
               follows,
-              joinStart: startJoint
+              shapeBoundaryMeasures: [...(part.tenantWindows || []), ...(part.familyWindows || [])]
+                .flatMap((window) => [window.from, window.to]),
+              joinStart: forkStart || (startJoint
                 ? {
                     lane: startJoint.beforeLane,
                     incoming: startJoint.incoming,
                     outgoing: startJoint.outgoing,
                   }
-                : null,
-              joinEnd: endJoint
+                : branchJointAt(i, false)),
+              joinEnd: forkEnd || (endJoint
                 ? {
                     lane: endJoint.afterLane,
                     incoming: endJoint.incoming,
                     outgoing: endJoint.outgoing,
                   }
-                : null,
+                : branchJointAt(i, true)),
             });
             entry = { zoomBucket, laneLodBucket: laneLod.bucket, stroke };
             strokeCachePut(part, entry);

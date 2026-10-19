@@ -1,0 +1,1124 @@
+{
+  "schemaVersion": 1,
+  "asOfDate": "2026-10-10",
+  "scope": "Canonical builder inputs and comparison references in JTM-iOS-App; retired archives and historical build snapshots inventoried separately without loading",
+  "groups": [
+    {
+      "legacyPath": "app/data/raw",
+      "localPath": "railway-sources/local/raw/downloads",
+      "kind": "raw-gis",
+      "label": "Raw official/OSM downloads; currently empty",
+      "files": 0,
+      "bytes": 0,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-history-sources",
+      "localPath": "railway-sources/local/history/jp/review-inputs",
+      "kind": "official-history-input",
+      "label": "MLIT N02 provenance and reviewed historical input",
+      "files": 21,
+      "bytes": 649569,
+      "trackedFiles": 19,
+      "provenance": {
+        "publisher": "Japan MLIT / reviewed local historical inputs",
+        "sourceURLs": [
+          "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html"
+        ],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present",
+          "local/history/jp/review-inputs/n02-provenance.json"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/generated",
+      "localPath": "railway-sources/local/history/jp/generated-evidence",
+      "kind": "generated-builder-input",
+      "label": "Historical identity/coordinate comparisons, not runtime DB",
+      "files": 8,
+      "bytes": 21581428,
+      "trackedFiles": 8,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-name-sources",
+      "localPath": "railway-sources/local/station-names",
+      "kind": "station-name-input",
+      "label": "Kana evidence and OpenCC conversion dictionary",
+      "files": 4,
+      "bytes": 6325948,
+      "trackedFiles": 4,
+      "provenance": {
+        "publisher": "Official station publications / OpenCC contributors",
+        "sourceURLs": [
+          "https://github.com/BYVoid/OpenCC"
+        ],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present",
+          "attribution/OpenCC/LICENSE.txt",
+          "attribution/OpenCC/NOTICE.txt"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-sources",
+      "localPath": "railway-sources/local/station-english/raw",
+      "kind": "operator-pages",
+      "label": "Downloaded station-name source pages with sidecar metadata",
+      "files": 3470,
+      "bytes": 310846463,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verification-candidates",
+      "localPath": "railway-sources/local/station-english/candidates",
+      "kind": "station-name-candidate",
+      "label": "Local candidate extraction and review inputs",
+      "files": 858,
+      "bytes": 426008244,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verification-review",
+      "localPath": "railway-sources/local/station-english/review",
+      "kind": "station-name-review",
+      "label": "Local station-name review evidence",
+      "files": 22,
+      "bytes": 49908589,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/sources",
+      "localPath": "railway-sources/local/timetable/sources",
+      "kind": "official-timetable-sources",
+      "label": "Source registry and archived timetable evidence",
+      "files": 399,
+      "bytes": 1981163,
+      "trackedFiles": 399,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/normalized",
+      "localPath": "railway-sources/local/timetable/normalized",
+      "kind": "normalized-timetable-input",
+      "label": "Normalized input entities; derived SQLite stays published",
+      "files": 3701,
+      "bytes": 11399741,
+      "trackedFiles": 3700,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/candidates",
+      "localPath": "railway-sources/local/timetable/candidates",
+      "kind": "timetable-candidate",
+      "label": "Candidate facts awaiting build/review",
+      "files": 482,
+      "bytes": 2173100,
+      "trackedFiles": 482,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/audits",
+      "localPath": "railway-sources/local/timetable/review",
+      "kind": "timetable-review",
+      "label": "Local coverage/review outputs, no runtime role",
+      "files": 31,
+      "bytes": 3137696,
+      "trackedFiles": 31,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/migration",
+      "localPath": "railway-sources/local/timetable/migration",
+      "kind": "timetable-migration",
+      "label": "Local pipeline migration evidence",
+      "files": 1,
+      "bytes": 77457,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/train-service-history/manifest.json",
+      "localPath": "railway-sources/local/timetable/manifest.json",
+      "kind": "timetable-build-manifest",
+      "label": "Builder input manifest; relative paths accessed via legacy alias",
+      "files": 1,
+      "bytes": 3988,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/conventional-timetable",
+      "localPath": "railway-sources/local/timetable/conventional",
+      "kind": "reviewed-timetable-input",
+      "label": "Reviewed overlays compiled into line service catalog",
+      "files": 7,
+      "bytes": 54228,
+      "trackedFiles": 7,
+      "provenance": {
+        "publisher": "Operator/official publications and reviewed local facts; exact publishers in source registries",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/network-cache",
+      "localPath": "railway-sources/local/apple-maps/network-cache",
+      "kind": "map-reference-network",
+      "label": "Local comparison network extraction, not official topology",
+      "files": 61,
+      "bytes": 77694598,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/metadata",
+      "localPath": "railway-sources/local/apple-maps/metadata",
+      "kind": "map-reference-metadata",
+      "label": "Local capture sidecar evidence",
+      "files": 2266,
+      "bytes": 11307330,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/rail",
+      "localPath": "railway-sources/local/apple-maps/captures/rail",
+      "kind": "map-reference-capture",
+      "label": "Local map comparison images, not published railway database",
+      "files": 975,
+      "bytes": 2187582755,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/no_rail",
+      "localPath": "railway-sources/local/apple-maps/captures/no_rail",
+      "kind": "map-reference-capture",
+      "label": "Local map comparison images, not published railway database",
+      "files": 1291,
+      "bytes": 2128582042,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/pending",
+      "localPath": "railway-sources/local/apple-maps/captures/pending",
+      "kind": "map-reference-capture",
+      "label": "Local map comparison images, not published railway database",
+      "files": 57,
+      "bytes": 26159368,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "outputs/apple-maps-rail/merged",
+      "localPath": "railway-sources/local/apple-maps/captures/merged",
+      "kind": "map-reference-capture",
+      "label": "Local map comparison images, not published railway database",
+      "files": 118,
+      "bytes": 1337405152,
+      "trackedFiles": 0,
+      "provenance": {
+        "publisher": "Apple Maps / local capture process",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-east.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-east.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 3355638,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-fukuoka.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-fukuoka.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 61551,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-nankai.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-nankai.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 202955,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-private-extra.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-private-extra.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 5309,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-private.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-private.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 1559148,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-shikoku.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-shikoku.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 370190,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp-west.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp-west.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 2269416,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-jp.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-jp.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 1010168,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-kr-second-pass.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-kr-second-pass.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 54614,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-kr.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-kr.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 1938450,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-next-official.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-next-official.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 3545240,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-tw-afr.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-tw-afr.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 1901,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-verified-tw.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-verified-tw.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 682164,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-jre-source.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-jre-source.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 47341,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-kyushu-source.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-kyushu-source.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 83659,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-metro-source.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-metro-source.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 65704,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-toei-source.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-toei-source.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 7979,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-official.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-official.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 2785,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/jp-station-english-manual.json",
+      "localPath": "railway-sources/local/station-english/reviewed/jp-station-english-manual.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 7503,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/hk-mo-station-english-official.json",
+      "localPath": "railway-sources/local/station-english/reviewed/hk-mo-station-english-official.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 262433,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/tw-station-english-afr-source.json",
+      "localPath": "railway-sources/local/station-english/reviewed/tw-station-english-afr-source.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 64548,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-kr-second-pass-first-baseline.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-kr-second-pass-first-baseline.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 445906,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/data/station-english-kr-second-pass-review.json",
+      "localPath": "railway-sources/local/station-english/reviewed/station-english-kr-second-pass-review.json",
+      "kind": "reviewed-station-name-input",
+      "label": "Reviewed source/enrichment input; compiled station-English tables remain published",
+      "files": 1,
+      "bytes": 250704,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "See preserved source registry/sidecars",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "app/scripts/railway/jp-manual-corrections/n02-fragments.json",
+      "localPath": "railway-sources/local/raw/n02/fragments.json",
+      "kind": "n02-extraction",
+      "label": "Extracted N02 fragments used by manual correction builder; correction rules remain code",
+      "files": 1,
+      "bytes": 19084,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "Japan MLIT / reviewed local historical inputs",
+        "sourceURLs": [
+          "https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N02-2025.html"
+        ],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present",
+          "local/history/jp/review-inputs/n02-provenance.json"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "wl.html",
+      "localPath": "railway-sources/local/station-english/unclassified/wl.html",
+      "kind": "unclassified-page",
+      "label": "Downloaded Japanese HTML; publisher/version unverified",
+      "files": 1,
+      "bytes": 17186,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "Unknown; must identify before using as evidence",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    },
+    {
+      "legacyPath": "yk.html",
+      "localPath": "railway-sources/local/station-english/unclassified/yk.html",
+      "kind": "failed-download",
+      "label": "HTTP 404 response; not authoritative evidence",
+      "files": 1,
+      "bytes": 196,
+      "trackedFiles": 1,
+      "provenance": {
+        "publisher": "Unidentified server (404 response); not usable evidence",
+        "sourceURLs": [],
+        "metadata": [
+          "local/inventory.jsonl",
+          "Original adjacent source registry or *.metadata.json where present"
+        ],
+        "version": "Preserved per source record; unspecified versions remain unknown",
+        "retrievedAt": "Preserved per download sidecar where available; otherwise unknown",
+        "crs": "Original source-defined CRS retained; no geometry conversion during relocation",
+        "licence": "Original terms and attribution retained; not globally reverified by this inventory",
+        "reviewStatus": "Input role/path classified; individual fact verification remains with owning builder/evidence review"
+      }
+    }
+  ],
+  "externalImports": [
+    {
+      "originalPath": "/Users/sager/Documents/GitHub/Japan-Train-Map/outputs/osm-basemap-cache",
+      "localPath": "railway-sources/local/osm/degree-cells",
+      "kind": "osm-overpass-degree-cell-cache",
+      "files": 168,
+      "bytes": 224142454,
+      "publisher": "OpenStreetMap contributors / Overpass endpoints in individual cache metadata",
+      "licence": "ODbL; retain published output attribution",
+      "retrievalDates": "2026-08-18 through 2026-08-20",
+      "crs": "WGS84 longitude/latitude",
+      "coverage": "partial cached cells; includes non-JP cells; not a current national coverage claim",
+      "unknownFields": [
+        "OSM database timestamp",
+        "database version",
+        "original query"
+      ],
+      "externalOriginalPreserved": true
+    },
+    {
+      "originalPath": "/Users/sager/Documents/GitHub/Japan-Train-Map/app/data/raw/railway/jp/history",
+      "localPath": "railway-sources/local/raw/n02/history",
+      "kind": "official-n02-historical-download",
+      "label": "MLIT N02 historical releases; versions and individual terms retained in provenance registry",
+      "files": 18,
+      "bytes": 188718326,
+      "publisher": "MLIT",
+      "provenance": "local/history/jp/review-inputs/n02-provenance.json",
+      "crs": "Original CRS retained; inspect .prj/source metadata before conversion",
+      "externalOriginalPreserved": true
+    },
+    {
+      "originalPath": "/Users/sager/Documents/GitHub/Japan-Train-Map/app/data/raw/railway/jp/backup-n02-2025-baseline-20260813",
+      "localPath": "railway-sources/local/raw/n02/baseline-2025-20260813",
+      "kind": "official-n02-baseline-download",
+      "label": "Preserved N02 baseline download and shapefile members, not a built package",
+      "files": 27,
+      "bytes": 189273355,
+      "publisher": "MLIT",
+      "provenance": "local/history/jp/review-inputs/n02-provenance.json",
+      "crs": "Original CRS retained; inspect .prj/source metadata before conversion",
+      "externalOriginalPreserved": true
+    },
+    {
+      "originalPath": "/Users/sager/Documents/GitHub/Japan-Train-Map/app/data/raw/railway/jp/osm",
+      "localPath": "railway-sources/local/raw/osm/jp",
+      "kind": "osm-builder-extract",
+      "label": "Existing JP OSM builder extract; inspect original sidecars for retrieval/version",
+      "files": 4,
+      "bytes": 6279883,
+      "publisher": "OpenStreetMap contributors",
+      "provenance": "Original extract metadata",
+      "crs": "Original CRS retained; inspect .prj/source metadata before conversion",
+      "externalOriginalPreserved": true
+    }
+  ],
+  "externalReferences": [
+    {
+      "path": "backups/north-america/2026-10-03",
+      "kind": "retired-archive",
+      "handling": "Preserved in place; filename inventory only, not loaded or packaged"
+    },
+    {
+      "path": "outputs/*/snapshot and app-input-durable",
+      "kind": "historical-build-snapshot",
+      "handling": "Already ignored historical copies; not canonical source inputs"
+    }
+  ],
+  "retainedRuntimeAndCode": {
+    "solverDatabases": [
+      "app/data/rail-sections*.json",
+      "app/data/stations*.json",
+      "app/data/rail.db",
+      "app/data/train_timetable.sqlite3",
+      "app/data/train-service-history/derived/",
+      "ios/RailKit/Sources/RailCore/Resources/"
+    ],
+    "displayProducts": [
+      "app/public/rail/"
+    ],
+    "reviewedRuntimeMetadata": [
+      "app/data/physical-rail-junctions.json",
+      "app/data/physical-rail-topology.json",
+      "app/data/rail-history.json"
+    ],
+    "reproducibleCodeAndAttribution": [
+      "app/scripts/railway/*overrides*.json",
+      "app/scripts/railway/*repairs*.json",
+      "app/scripts/railway/*evidence*.json",
+      "app/scripts/railway/tests/fixtures/ (small semantic regression inputs, not raw downloads)",
+      "app/public/rail/*.sources.md",
+      "railway-sources/attribution/"
+    ],
+    "scope": "Keep processed runtime databases and necessary code/attribution; raw downloads, normalized builder entities and candidate inputs stay local"
+  }
+}

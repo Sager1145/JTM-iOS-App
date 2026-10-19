@@ -1,10 +1,24 @@
 # Japan operational corridors: evidence and coverage
 
-Checked 2026-10-02. Resource: `ios/RailKit/Sources/RailCore/Resources/japan-through-services.json`.
+Catalog check date 2026-10-02; targeted historical repairs 2026-10-10. Resource: `ios/RailKit/Sources/RailCore/Resources/japan-through-services.json`.
 
-This catalog contains 41 representative operational corridors across Hokkaido, Tohoku, Kanto, Chubu, Kansai, Chugoku, Shikoku and Kyushu. It is deliberately partial. “Checked” means the listed corridors in that region were researched; it does not mean all operators, branches or services in the region were audited. Unlisted through services remain unknown. It has no timetable validity or dated guarantee that a passenger can ride a particular departure without changing trains.
+This catalog contains 176 operational corridor records. It is partial. “Checked” describes the listed records in a region; it does not certify all operators, branches, endpoints or historical periods. Unlisted services and dates without sufficient evidence remain unknown. It has no timetable guarantee that a passenger can ride a particular departure without changing trains.
 
-Each record names exact physical line IDs from `app/public/rail/jp-2025.json` and anchors every leg to exact station IDs. All IDs, anchors and consecutive joins were checked against that inventory. A surveyed physical row can carry multiple operating systems. Shared row membership or an ordinary interchange never establishes through-running. Operational aliases such as JK/JS/JO are distinguished from cross-operator through corridors; JS branches retain different internal service identities.
+Each record names physical line IDs from `app/public/rail/jp-2025.json` and station anchors. Operational records are display corridors, not physical search edges. Shared row membership, identical station codes or an ordinary interchange do not establish track connectivity. Current physical identities and geometry do not prove their historical operator identity.
+
+The oldest locally documented N02 observation is [1996-12-31](https://nlftp.mlit.go.jp/ksj/old/meta/N02/N02-07L/KS-META-N02-07L-2K.htm), despite the archive's H7 label. `historicalTargetFrom` records that review target; `coverageFrom: 2005-01-01` remains the separate inventory coverage floor. Neither field is a service opening date.
+
+## Targeted historical repairs — 2026-10-10
+
+- [Tobu history](https://www.tobu.co.jp/corporation/history/fhistory07.html): Kuki extension is 2006-03-18, correcting the prior 2003 claim. The [Tokyu announcement](https://www.tokyu.co.jp/image/news/pdf/020829.pdf) and [Metro history](https://www.tokyometro.jp/corporate/profile/history/index.html) support the Minami-Kurihashi corridor from 2003-03-19.
+- [Tokyu's 2001 announcement](https://www.tokyu.co.jp/company/news/pdf/010221.pdf): Mita–Musashi-Kosugi from 2000-09-26 and Urawa-Misono–Musashi-Kosugi from 2001-03-28. Hiyoshi stays a separately dated 2008 extension. Metro history supports Yurakucho–Seibu Hanno from 1998-03-26.
+- [Noseden history](https://noseden.hankyu.co.jp/100th/history.html): Nissei-Chuo–Hankyu Umeda from 1997-11-17. [Sanyo history](https://www.sanyo-railway.co.jp/company/history.html): Himeji–Hanshin Umeda from 1998-02-15. [Nagoya history](https://www.kotsu.city.nagoya.jp/rp/about/trp0004819.htm): Kamiiida/Komaki through operation from 2003-03-27, with the initial Inuyama endpoint still requiring evidence.
+- [Kyoto chronology](https://www.city.kyoto.lg.jp/kotsu/page/0000219240.html): the complete Kokusaikaikan–Kintetsu Nara corridor begins 2000-03-15; the older Kitaoji–Shin-Tanabe corridor is not represented by that whole path. [Kyoto's extension announcement](https://www.city.kyoto.lg.jp/kotsu/page/0000024682.html) and [chronology PDF](https://www.city.kyoto.lg.jp/kotsu/cmsfiles/contents/0000073/73257/05_sonota03.pdf) establish Keishin's city-hall terminus before the 2008-01-16 Uzumasa extension. The record now splits at Kyoto Shiyakusho-mae; 2004-11-26 was an unrelated eastern extension.
+- [Odakyu's 2018 diagram announcement](https://www.odakyu.jp/news/o5oaa10000005s29-att/o5oaa10000005s2g.pdf) and [Metro's confirmed revision date](https://www.tokyometro.jp/news/2017/190856.html): split the Isehara extension at Hon-Atsugi from 2018-03-17, preserving the earlier shorter corridor.
+- [Keikyu chronology](https://www.keikyu.co.jp/history/chronology07.html): Narita–Haneda airport through operation from 1998-11-18; this does not date other Keikyu endpoints.
+- Six previously reviewed workbench onset constraints are now in the production catalog: the two Shonan-Shinjuku branches (2001-12-01), the two Gakkentoshi–Tozai branches (1997-03-08), Komachi (1997-03-22), and Hakutaka (1997-03-22). Their `historicalReview` evidence is explicitly limited to service opening; unproven initial outer endpoints remain flagged.
+
+`legVariants` stores ordered indices into one shared `legs` array, with source URLs, notes and half-open periods. It is required when alternate legs would otherwise produce a new interior adjacency by filtering. Haruka's existing pre/post-2021 choices are now explicit. Its pre-2005 footprint, pandemic suspensions and missing Umeda freight geometry are unresolved, so those variants do not certify complete operation on every day. An unmatched, overlapping or malformed variant returns no path.
 
 ## Official evidence
 
@@ -27,6 +41,26 @@ Each record names exact physical line IDs from `app/public/rail/jp-2025.json` an
 
 ## Remaining evidence gaps
 
-Hokuriku and Okinawa are marked unknown. Other regions have representative checked corridors with partial coverage. Uncovered examples include additional JR regional through corridors, JR Ueno-Tokyo chains, additional Sotetsu and private-railway branches, Hokuso, longer Kintetsu corridors and Fukuoka Hakozaki patterns. The Senseki-Tohoku connecting track lacks an exact shared station anchor in the shipped inventory, so no speculative corridor is added. No negative assertion is made about these networks.
+100 of 176 patterns still lack an explicit opening boundary. An absent date means the recorded scope may predate the 2005 inventory; it does not establish existence in 1996. Additional historical endpoint patterns, withdrawals, temporary suspensions and operator transfers remain to be researched. Particular unresolved cases include Tama/Chiyoda interruptions, older Karasuma–Kintetsu endpoints, Haruka suspensions, Hakutaka's initial outer endpoints and the retired conventional Kaikyo corridor absent from the current package.
 
-This is a physical routing aid. Corridor slicing preserves ordered station occurrences and checks surveyed geometry and permitted traversal directions. It supplies physical intermediate visits, not a timetable-derived stopping list. Exact passenger stops and actual single-seat departures require dated service evidence.
+Corridor slicing preserves ordered station occurrences and checks available geometry and allowed traversal directions. It supplies physical intermediate visits, not a timetable-derived stopping list. Actual single-seat departures and complete historical coverage require dated evidence; operational continuity must never fill a physical geometry gap.
+
+## Inspection-driven repair, 2026-10-10
+
+The Catalyst inspection report covered 176 records and 103 temporal boundary samples. It flagged an unspecified start for `odakyu-jr-asagiri-numazu`. [Odakyu’s official chronology](https://www.odakyu.jp/company/history/) explicitly dates Shinjuku–Numazu mutual through operation to 1991-03-16; this onset and these outer endpoints are now encoded. The existing exclusive 2012-03-17 end is retained. This does not prove every stop, daily timetable or physical connection. At that first inspection stage, explicit starts covered 56 of 176 records; 120 remained unspecified.
+
+The report also found missing source attribution on all three display connectors. Their already recorded service/physical-registry sources are now linked through `sourceURLs` and `physicalJunctionID`, with a limited `sourceScope`. The detector still treats physical passage and historical applicability as unresolved; linking an existing source does not certify its content or create geometry. The JR East PDF and Seibu page were unavailable through the web reader in this session; their retained catalog/registry references were reused, without a new content-verification claim.
+
+
+### Automatic continuation: dated paths, one-day suspensions and surveyed connections
+
+The 2026-10-10 continuation adds exact Rinkai Shin-Kiba–Kawagoe onset (JR East's 2002-12-01 revision timetable), the 2008 Fukutoshin northern corridors ending at Shibuya and their 2013 southern extensions, and Tozai–Sobu's documented Mitaka–Tsudanuma onset. Hibiya's 1988 Kikuna endpoint constraint is separated from its 2013 Naka-Meguro–Minami-Kurihashi replacement. Corridor joins do not promise one single-seat train across every outer endpoint.
+
+Airport and endpoint opening constraints remain explicitly incomplete: Fukuoka Airport 1993-03-03, Miyazaki Airport 1996-07-18, Nankai Airport line 1994-06-15, Izumi-Chuo 1995-04-01, Kami-Otai 1993-08-12 and Hokushin mutual operation 1988-04-02. Current operator IDs do not establish predecessor identities. Nankai Rapi:t's actual 1994-09-04 debut replaces the incorrect conflation with the airport line's June opening.
+
+JR West's [construction notice](https://www.westjr.co.jp/press/article/items/221209_00_press_senrokirikae.pdf) specifies Haruka's complete 2023-02-12 suspension and Kuroshio's Tennoji short-turn operation. Sparse ordered variants reuse the normal legs, encode the bounded full suspension explicitly, and resume normal selection on 2023-02-13. Haruka's unverified claim that all Maibara services stopped on 2020-04-24 is withdrawn.
+
+Four Osaka Loop display legs now carry a source-attributed forward traversal of the current package's station order, selecting Nishikujo rather than the eastern arc and correctly wrapping from Kyobashi. Rapid direction comes from [JR West's 2015 revision](https://www.westjr.co.jp/press/article/items/141219_00_honsya.pdf); express western passage comes from the construction notice. This selects the current physical-base display proxy and does not reconstruct historical freight-line geometry. The absent Umeda freight line and historical geometry limits remain open.
+
+
+The additional regional packet records six named-service/operator opening constraints: Odoriko 1981-10-01, Super Hakuto 1994-12-03, Ibara 1999-01-11, Wakasa 1987-10-14 and Nishikigawa 1987-07-25. Their initial full outer endpoints remain explicitly unconfirmed. Super Inaba's erroneous 1994 opening assertion is replaced by the operator's month-precision predecessor (1997-11) and named-service (2003-10) chronology. Sunrise's competing official July 10/11 extracts and Hashidate's unresolved exact historical boundaries remain unknown. The current count is 76 explicit starts and 100 unspecified starts among 176 records; explicit starts include limited opening constraints and do not certify complete history. Evidence packets are retained in `ios/ThroughWorkbench/Reports/Evidence`.

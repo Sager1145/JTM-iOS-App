@@ -76,9 +76,11 @@ class MinHeap {
 
 function getMatchedRouteFeatures(train) {
   let candidates = RouteService.featuresForTrain(train);
+  const applicableFallback = candidates.length ? [] :
+    RouteService.fallbackFeaturesForTrain(train, matchedRoutesGeoJson.features);
 
   if (!candidates.length) {
-    candidates = matchedRoutesGeoJson.features
+    candidates = applicableFallback
       .filter((feature) => {
         const p = feature.properties || {};
         return p.train_id === train.id && p.is_primary !== false;
@@ -96,7 +98,7 @@ function getMatchedRouteFeatures(train) {
       // Features store the DIGEST of this key, never the key itself
       // (routeKeyDigest); compare like with like.
       const templateDigest = routeKeyDigest(templateKey);
-      candidates = matchedRoutesGeoJson.features
+      candidates = applicableFallback
         .filter((feature) => {
           const p = feature.properties || {};
           return (

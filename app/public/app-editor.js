@@ -242,7 +242,6 @@ function renderStopsTable(train) {
       }
       saveTrainStore();
       perfMeasure("renderTrainLayers", renderTrainLayers);
-      scheduleExportTextareaRefresh();
       renderStopsTable(t);
     });
   });
@@ -314,7 +313,6 @@ function renderStopsTable(train) {
 
       saveTrainStore();
       perfMeasure("renderTrainLayers", renderTrainLayers);
-      scheduleExportTextareaRefresh();
       if (refreshStopsTable) renderStopsTable(train);
     });
   });

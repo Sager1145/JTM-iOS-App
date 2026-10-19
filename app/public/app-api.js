@@ -23,18 +23,12 @@
 // /something/) instead of only from the domain root.
 const API_BASE = "./api";
 const APP_RUNTIME_CONFIG = window.APP_RUNTIME_CONFIG || {
-  hasBackend: true,
-  apiFileSuffix: "",
+  hasBackend: false,
+  apiFileSuffix: ".json",
 };
-// True on the Node/Express deployment, whose backend answers the write/live
-// endpoints — /api/events (SSE live-refresh) and PUT/DELETE /api/train-store
-// (server autosave / clear). The GitHub Pages STATIC build has no backend, so
-// the deploy workflow rewrites this line to `false`; the app then skips those
-// backend-only calls instead of firing requests that 404 on a static host. The
-// read-only dataset/seed GETs (fetchJson, loadTrainStoreFromServer) are served
-// as plain files on Pages and stay enabled either way. Local-file save/load via
-// the File System Access API is independent of this flag.
-const HAS_BACKEND = APP_RUNTIME_CONFIG.hasBackend !== false;
+// The shipped application is static. A host retaining backend endpoints must
+// opt in explicitly; missing configuration uses the same file URLs as release.
+const HAS_BACKEND = APP_RUNTIME_CONFIG.hasBackend === true;
 function apiResourceUrl(path) {
   return `${API_BASE}/${path}${APP_RUNTIME_CONFIG.apiFileSuffix || ""}`;
 }

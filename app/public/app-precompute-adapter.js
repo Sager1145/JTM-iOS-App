@@ -7,6 +7,7 @@
 
 async function preparePrecomputeTrainStore(host) {
   activeCountry = host.country;
+  if (host.physicalJunctions) AppDatasets.installPhysicalRailJunctions(host.physicalJunctions);
   for (const [country, overlay] of Object.entries(host.historyOverlays || {}))
     loadRailHistoryOverlay(overlay, country);
   applyLoadedRailHistoryToStations(host.stations, host.country);
@@ -92,30 +93,13 @@ async function precomputeTrainStoreParts(host) {
           features: RouteService.get(cacheKey),
         };
       } else if (RouteService.isNegative(cacheKey)) {
-        const matched = (host.matchedRoutes.features || [])
-          .filter((feature) => {
-            const props = feature.properties || {};
-            return props.train_id === id && props.is_primary !== false;
-          })
-          .sort(
-            (a, b) =>
-              Number(a.properties?.segment_index ?? 0) -
-              Number(b.properties?.segment_index ?? 0),
-          );
-        if (matched.length) {
-          RouteService.seed(cacheKey, matched);
-          route = {
-            cache_key: cacheKey,
-            solver_context: serializedSolveContext,
-            features: matched,
-          };
-        } else {
-          route = {
-            cache_key: cacheKey,
-            solver_context: serializedSolveContext,
-            unsolvable: true,
-          };
-        }
+        // The current physical solve is definitive. Retained matched geometry
+        // from an older coordinate/group solver cannot acquire fresh provenance.
+        route = {
+          cache_key: cacheKey,
+          solver_context: serializedSolveContext,
+          unsolvable: true,
+        };
       } else {
         throw new Error(
           `Route solve for train ${id} produced neither a positive nor negative cache entry.`,

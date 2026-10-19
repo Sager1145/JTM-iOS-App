@@ -777,7 +777,6 @@ async function restoreUserStore({ bootLoadOptions = null } = {}) {
     setStatus(els.importStatus, I18N.t("status.noUserStore"), "warn");
     return false;
   }
-  PersistenceService.seedStoredRoutes(userData.routes);
   dataSourceMode = "user";
   sampleModeDate = null;
   userStoreAvailable = true;
@@ -822,7 +821,6 @@ async function saveCurrentAsUserStore() {
 async function bootStaticData(bootLoadOptions) {
   const userData = await PersistenceService.readUserStore();
   if (userData) {
-    PersistenceService.seedStoredRoutes(userData.routes);
     dataSourceMode = "user";
     userStoreAvailable = true;
     await replaceTrainStoreFromStoreProgressive(

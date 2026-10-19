@@ -8,17 +8,17 @@
   "solver_context": {
     "solver_version": "25",
     "history_revisions": {
-      "jp": "2026-09-28.3"
+      "jp": "2026-10-07.1"
     },
     "history_hashes": {
-      "jp": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3"
+      "jp": "6107ddc2b7e9bf1959292491cd67a82bbe6ec5616c5ba9089d6ce67def8d6bf2"
     }
   },
   "source_hashes": {
-    "jp-2025.json": "03632f69aa742c0096685ec80d125191975986459aa2a36d221af065648e5325",
+    "jp-2025.json": "e53dd792d7d4e36dc8f59bb856e60f49cd4b0995051c0072604b8218065ecdda",
     "matched-routes.json": "e53bfa63157c64aedfbd2a1e78c553d212d6753b3d6e16cbd0b9dda65b057226",
     "matched-stops.json": "8468a0e34e19e22822a7933ec376505ecc2e933b1529af67eddb7e1a306f36c7",
-    "rail-history.json": "c6feed755ece7a664434592e0b910386493611e62b4d82b5e5aede98c3e99cb3",
+    "rail-history.json": "6107ddc2b7e9bf1959292491cd67a82bbe6ec5616c5ba9089d6ce67def8d6bf2",
     "rail-sections.json": "88bb7fa1fb4c90c5618bce0349fa97cb54a3eba7f2a641108f24d064adde659b",
     "stations.json": "42ee2b75cde8449a881bfe699768d01da9fe5a12388556736d78c032e179a97f"
   },

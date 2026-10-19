@@ -63,6 +63,13 @@ const STAT_CATEGORIES_BY_COUNTRY = {
     { mask: STAT_MASK_PRIV, i18n: "stat.priv" },
   ],
   mo: [{ mask: STAT_MASK_METRO, i18n: "stat.metro" }],
+  cn: [
+    { mask: STAT_MASK_HSR, i18n: "stat.hsr" },
+    { mask: STAT_MASK_CONV, i18n: "stat.conv" },
+    { mask: STAT_MASK_METRO, i18n: "stat.metro" },
+    { mask: STAT_MASK_TRAM, i18n: "stat.tram" },
+    { mask: STAT_MASK_PRIV, i18n: "stat.priv" },
+  ],
   // South Korea, over the code space build-korea-rail-package.py assigns:
   // institution 1 = 고속철도 (경부/호남/수서평택고속선), 2 = 한국철도공사 일반철도,
   // 3 = municipally operated urban rail, 4 = private light rail / monorail,
@@ -134,7 +141,7 @@ function exclusiveTrackBucket(mask) {
 // category always hides its lines and its dots together. Taiwan records no
 // JR-style union, so its incumbent conventional railway (臺鐵, CONV-only
 // masks) fills the slot the filter calls "jr" — the national-railway toggle.
-const NATIONAL_RAILWAY_IN_CONV_SLOT = new Set(["tw"]);
+const NATIONAL_RAILWAY_IN_CONV_SLOT = new Set(["tw", "cn"]);
 
 function filterCategoryForMask(mask) {
   if (mask & STAT_MASK_HSR) return "hsr";
@@ -168,6 +175,7 @@ function classifySectionMask(props) {
   if (activeCountry === "hk") return classifyHkSectionMask(props);
   if (activeCountry === "mo") return classifyMoSectionMask(props);
   if (activeCountry === "kr") return classifyKrSectionMask(props);
+  if (activeCountry === "cn") return classifyCnSectionMask(props);
   return classifyJpSectionMask(props);
 }
 
@@ -214,6 +222,19 @@ function classifyKrSectionMask(props) {
   if (cls === "21") return STAT_MASK_TRAM;
   if (code === "3") return STAT_MASK_METRO;
   if (code === "4") return STAT_MASK_METRO;
+  return STAT_MASK_CONV;
+}
+
+// China uses the shared institution codes: high speed, national conventional,
+// urban rail and other rail, with class 21 identifying tram/light rail.
+function classifyCnSectionMask(props) {
+  const code = sectionInstitutionTypeCode(props);
+  const cls = sectionRailwayClassCode(props);
+  if (code === "1") return STAT_MASK_HSR;
+  if (cls === "21") return STAT_MASK_TRAM;
+  if (cls === "31") return STAT_MASK_PRIV;
+  if (code === "3") return STAT_MASK_METRO;
+  if (code === "4") return STAT_MASK_PRIV;
   return STAT_MASK_CONV;
 }
 
@@ -422,6 +443,7 @@ function statsRegionCivilToday(country) {
     hk: "Asia/Hong_Kong",
     mo: "Asia/Macau",
     kr: "Asia/Seoul",
+    cn: "Asia/Shanghai",
   };
   const zone = zones[country] || zones.jp;
   const parts = new Intl.DateTimeFormat("en-US", {
@@ -604,6 +626,11 @@ function serviceGroupOfTrain(train) {
       return "ltd";
     return "other";
   }
+  if (activeCountry === "cn") {
+    if (/高铁|高鐵|高速|动车|動車|^\s*[GDC]\d*\s*$/i.test(t)) return "hsr";
+    if (/直达|直達|特快|快速|^\s*[ZTK]\d*\s*$/i.test(t)) return "ltd";
+    return "other";
+  }
   if (activeCountry === "kr") {
     // KTX and SRT are the high-speed services; ITX-새마을 / ITX-마음 and
     // 무궁화호 are the reserved-seat intercity tier 有料特急 corresponds to.
@@ -628,6 +655,7 @@ const SERVICE_ROWS_BY_COUNTRY = {
   jp: ["hsr", "ltd", "other"],
   tw: ["hsr", "ltd", "other"],
   kr: ["hsr", "ltd", "other"],
+  cn: ["hsr", "ltd", "other"],
   hk: ["other"],
   mo: ["other"],
 

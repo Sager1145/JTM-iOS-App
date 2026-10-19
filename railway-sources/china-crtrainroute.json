@@ -1,0 +1,1086 @@
+{
+  "country": "CN",
+  "counts": {
+    "coordinateOccurrences": 2401153,
+    "excludedRegionalFeatures": 2128,
+    "mainlandCoordinateOccurrences": 2380472,
+    "mainlandFeatures": 322506,
+    "mainlandProvinces": 31,
+    "stationCoordinates": 2879,
+    "stationIdentities": 3404,
+    "stationNames": 3404,
+    "stationsWithoutCoordinates": 525,
+    "syntheticConnections": 0,
+    "upstreamAliasCandidates": 6
+  },
+  "inputs": [
+    {
+      "bytes": 5350386,
+      "path": "data/geojson/110000.geojson",
+      "sha256": "74b08f42d9426453e45ae46bcfabf44fc560250ddcf157206220a3e5fdf2034d",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/110000.geojson"
+    },
+    {
+      "bytes": 2583912,
+      "path": "data/geojson/120000.geojson",
+      "sha256": "6244e8e210e02d1c2f786ae36c1a6a43b6e37eb687be7053500c1c17a31e9d8e",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/120000.geojson"
+    },
+    {
+      "bytes": 11280053,
+      "path": "data/geojson/130000.geojson",
+      "sha256": "3b456b7f95611b981dda377f4776269b3e02edb45480df9c7fe38dab7b49e9a5",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/130000.geojson"
+    },
+    {
+      "bytes": 6020921,
+      "path": "data/geojson/140000.geojson",
+      "sha256": "698a7ae7372125234482fffe752b6fc019f0a3bdd24dd2e8b3344f56b178d54d",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/140000.geojson"
+    },
+    {
+      "bytes": 6978359,
+      "path": "data/geojson/150000.geojson",
+      "sha256": "cea81757b107dede7c4da534859ee73602991815a4badbf4450eb6a4e15159e7",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/150000.geojson"
+    },
+    {
+      "bytes": 5800162,
+      "path": "data/geojson/210000.geojson",
+      "sha256": "1b6e39cd22117ee58bf16ea8bbd186c49c568dc490e02c3f7d9abe116ee19a46",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/210000.geojson"
+    },
+    {
+      "bytes": 2611396,
+      "path": "data/geojson/220000.geojson",
+      "sha256": "befbc19a74cfdfab760f19fe71cb3c29f254abaa290e696db84b3ec31a4a3bf9",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/220000.geojson"
+    },
+    {
+      "bytes": 7584692,
+      "path": "data/geojson/230000.geojson",
+      "sha256": "e33b8b0330d2d874a96f44d0473e786d3b4291ab97a22a7cd0a5751559661abb",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/230000.geojson"
+    },
+    {
+      "bytes": 2672106,
+      "path": "data/geojson/310000.geojson",
+      "sha256": "95644cdb51e3c21e4cc14ae927fcd1d65114829284e75634efe2310d1be3c83a",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/310000.geojson"
+    },
+    {
+      "bytes": 5395760,
+      "path": "data/geojson/320000.geojson",
+      "sha256": "a3beef4e18c126627114e5b09a4ee9423c2710b52578adcb84ad0582d1dbd152",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/320000.geojson"
+    },
+    {
+      "bytes": 5183513,
+      "path": "data/geojson/330000.geojson",
+      "sha256": "33d45fbb332753053cfd9796b20965901dcf41842a66a31a61672c6b0f53246f",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/330000.geojson"
+    },
+    {
+      "bytes": 3567621,
+      "path": "data/geojson/340000.geojson",
+      "sha256": "a97b9c29a4421e83676791f772e06a6df6c1118640cc44c91fcc479aa3add4a9",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/340000.geojson"
+    },
+    {
+      "bytes": 3468394,
+      "path": "data/geojson/350000.geojson",
+      "sha256": "3805b76b2f850b39d5a9b2302e10463ad14244a63f620d848e2eeb1723b333bc",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/350000.geojson"
+    },
+    {
+      "bytes": 3930451,
+      "path": "data/geojson/360000.geojson",
+      "sha256": "a893f6336122d446f8d9fa43add1b3040b39549ac157fc5114bd8f5e296a2fc4",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/360000.geojson"
+    },
+    {
+      "bytes": 6954880,
+      "path": "data/geojson/370000.geojson",
+      "sha256": "3c311838e43bda43c6726e890b55e673e5dfb3cf410d604d977872ef4248db67",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/370000.geojson"
+    },
+    {
+      "bytes": 5136633,
+      "path": "data/geojson/410000.geojson",
+      "sha256": "c3028e24c0ad0b98a4133bc0e49690f94367f042e82e1b397983e2869acfb831",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/410000.geojson"
+    },
+    {
+      "bytes": 5556788,
+      "path": "data/geojson/420000.geojson",
+      "sha256": "04ecf7bccd00d647ec11d3a871c99ad525018fc1e7bc30b105f85d2cc47afb3b",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/420000.geojson"
+    },
+    {
+      "bytes": 5300199,
+      "path": "data/geojson/430000.geojson",
+      "sha256": "c918fffaf789bad44a402cd62aab42cc8556eb0cb4742426bd5370ac89699f81",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/430000.geojson"
+    },
+    {
+      "bytes": 8817216,
+      "path": "data/geojson/440000.geojson",
+      "sha256": "c55bae832ec8991eba910472986621e3fbc8aaa566303de68aba60c837bd3494",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/440000.geojson"
+    },
+    {
+      "bytes": 3826472,
+      "path": "data/geojson/450000.geojson",
+      "sha256": "1ab05c4e9586061434dac3c01ccbea752dc1da69fb75ce232ecb69de0d713c5f",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/450000.geojson"
+    },
+    {
+      "bytes": 703209,
+      "path": "data/geojson/460000.geojson",
+      "sha256": "58befa0944a02afbb6a79a98c6675a97bd3f22fc47c22209b85ca879b354603f",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/460000.geojson"
+    },
+    {
+      "bytes": 2976328,
+      "path": "data/geojson/500000.geojson",
+      "sha256": "1a32c80996526c5cd4d5804fd19c167195385fb46f00372df94403dfcac30835",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/500000.geojson"
+    },
+    {
+      "bytes": 5950384,
+      "path": "data/geojson/510000.geojson",
+      "sha256": "201ac8fe25eb95c8be74a0265af576449bda485ffa1f5881741aa1c35261f8d6",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/510000.geojson"
+    },
+    {
+      "bytes": 3762878,
+      "path": "data/geojson/520000.geojson",
+      "sha256": "313d41c5c14957b1b623f18909dbc666b557a257266ec92b3876903cdc918163",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/520000.geojson"
+    },
+    {
+      "bytes": 4258683,
+      "path": "data/geojson/530000.geojson",
+      "sha256": "b92a76fecbc81e5997510d4bdae89dbabcbddcdc89178bf5e06ae3aede5ea7c6",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/530000.geojson"
+    },
+    {
+      "bytes": 644120,
+      "path": "data/geojson/540000.geojson",
+      "sha256": "d80a34dc31b33c2313ddf49967af9fa592d11bf3939ac99701359640b79021ca",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/540000.geojson"
+    },
+    {
+      "bytes": 4655176,
+      "path": "data/geojson/610000.geojson",
+      "sha256": "b17ac4c0005d2d67bf7f5092bdea3ed910d7e919583b289e862220761d21d79f",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/610000.geojson"
+    },
+    {
+      "bytes": 4009902,
+      "path": "data/geojson/620000.geojson",
+      "sha256": "8a0b36d2a1f506e51bcdf8c7345170247e6c67b097be26fd8aa410bdefe6ffb8",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/620000.geojson"
+    },
+    {
+      "bytes": 1455403,
+      "path": "data/geojson/630000.geojson",
+      "sha256": "28200ee948ffe03cbf98b619ee9737c283bc812468bd163f60b8d74da6e832e7",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/630000.geojson"
+    },
+    {
+      "bytes": 868326,
+      "path": "data/geojson/640000.geojson",
+      "sha256": "a77fd09e0994fb6a8322a27cf4fa70b05cbcd4c8c1e802534158baa2a27bb6c4",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/640000.geojson"
+    },
+    {
+      "bytes": 3530156,
+      "path": "data/geojson/650000.geojson",
+      "sha256": "d7f7f190813a85bd492f9930925df8e785f608635d299770c0b1fc9f89823562",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/650000.geojson"
+    },
+    {
+      "bytes": 1065388,
+      "path": "data/geojson/810000.geojson",
+      "sha256": "cbfed3b08d5205ade95bc9b6fbb53f09672e72081b4f5859763bf59b8f7fdaae",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/810000.geojson"
+    },
+    {
+      "bytes": 41944,
+      "path": "data/geojson/820000.geojson",
+      "sha256": "f047ac6b2d6f46209690258b5ee6779e62e87317ff1b79d2a488d1a00a35d41f",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/geojson/820000.geojson"
+    },
+    {
+      "bytes": 63382,
+      "path": "data/station_names.json",
+      "sha256": "97405660302ffd8aded4d60a509b42ed464683a810b350d325693c3f26539593",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/station_names.json"
+    },
+    {
+      "bytes": 418743,
+      "path": "data/stations.json",
+      "sha256": "8c6ee303e1eb9f8b9060dfc10e74d33022f1bdb7763111ad1cb0d4f3493ab2be",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/stations.json"
+    },
+    {
+      "bytes": 1340,
+      "path": "data/station_lanes.json",
+      "sha256": "929498004f9bf71cd32c0df149916f7e002e7a1a3e58c03557bf201d5a96f028",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/data/station_lanes.json"
+    }
+  ],
+  "licensing": {
+    "code": {
+      "license": "MIT",
+      "notice": "Copyright (c) 2026 Laide",
+      "url": "https://github.com/Laide140/CRTrainRoute/blob/d75307df9c812abf1259b86b75202ba7b0048679/LICENSE"
+    },
+    "geometry": {
+      "extractionMetadata": "not supplied by upstream",
+      "license": "ODbL-1.0",
+      "provider": "OpenStreetMap contributors via next.laide.net.cn",
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    "stations": {
+      "provider": "12306, as attributed by upstream",
+      "redistributionTerms": "not documented by upstream; unresolved"
+    }
+  },
+  "mainlandModes": {
+    "funicular": 49,
+    "light_rail": 514,
+    "miniature_railway": 45,
+    "monorail": 663,
+    "narrow_gauge": 1143,
+    "rail": 298224,
+    "subway": 20201,
+    "tram": 1667
+  },
+  "modes": {
+    "funicular": 68,
+    "light_rail": 954,
+    "miniature_railway": 46,
+    "monorail": 663,
+    "narrow_gauge": 1171,
+    "rail": 298960,
+    "subway": 20957,
+    "tram": 1815
+  },
+  "notes": [
+    "All modes are retained as candidates; fclass=rail is not proof of passenger service.",
+    "Hong Kong/Macao track files are inventoried but excluded from CN candidates.",
+    "Station coordinate records are retained in their declared source datum; no WGS84 anchor is inferred.",
+    "Candidate feature IDs are source locators, not persistent runtime station/line IDs.",
+    "No features are merged across source ways, parts, provinces or equal coordinates."
+  ],
+  "productionContinuation": {
+    "basis": "Separately acquired original OSM topology and official identities/order; this historical upstream candidate graph remains unpromoted",
+    "manifest": "china-production.json",
+    "status": "runtime-integrated"
+  },
+  "provinces": [
+    {
+      "code": "110000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "110000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 93169,
+      "disposition": "candidate",
+      "features": 11986,
+      "modes": {
+        "funicular": 1,
+        "light_rail": 56,
+        "miniature_railway": 17,
+        "monorail": 74,
+        "narrow_gauge": 14,
+        "rail": 9212,
+        "subway": 2590,
+        "tram": 22
+      }
+    },
+    {
+      "code": "120000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "120000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 41829,
+      "disposition": "candidate",
+      "features": 6191,
+      "modes": {
+        "narrow_gauge": 4,
+        "rail": 5647,
+        "subway": 505,
+        "tram": 35
+      }
+    },
+    {
+      "code": "130000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "130000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 171314,
+      "disposition": "candidate",
+      "features": 28535,
+      "modes": {
+        "monorail": 7,
+        "narrow_gauge": 4,
+        "rail": 28473,
+        "subway": 51
+      }
+    },
+    {
+      "code": "140000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "140000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 97250,
+      "disposition": "candidate",
+      "features": 14430,
+      "modes": {
+        "miniature_railway": 1,
+        "narrow_gauge": 4,
+        "rail": 14418,
+        "subway": 7
+      }
+    },
+    {
+      "code": "150000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "150000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 132094,
+      "disposition": "candidate",
+      "features": 14293,
+      "modes": {
+        "miniature_railway": 4,
+        "narrow_gauge": 25,
+        "rail": 14188,
+        "subway": 76
+      }
+    },
+    {
+      "code": "210000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "210000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 106032,
+      "disposition": "candidate",
+      "features": 12311,
+      "modes": {
+        "funicular": 3,
+        "narrow_gauge": 136,
+        "rail": 11324,
+        "subway": 635,
+        "tram": 213
+      }
+    },
+    {
+      "code": "220000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "220000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 50115,
+      "disposition": "candidate",
+      "features": 5103,
+      "modes": {
+        "light_rail": 195,
+        "narrow_gauge": 37,
+        "rail": 4786,
+        "subway": 65,
+        "tram": 20
+      }
+    },
+    {
+      "code": "230000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "230000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 151280,
+      "disposition": "candidate",
+      "features": 13834,
+      "modes": {
+        "miniature_railway": 1,
+        "narrow_gauge": 31,
+        "rail": 13666,
+        "subway": 132,
+        "tram": 4
+      }
+    },
+    {
+      "code": "310000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "310000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 50932,
+      "disposition": "candidate",
+      "features": 5416,
+      "modes": {
+        "funicular": 13,
+        "light_rail": 44,
+        "monorail": 26,
+        "narrow_gauge": 20,
+        "rail": 3078,
+        "subway": 2084,
+        "tram": 151
+      }
+    },
+    {
+      "code": "320000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "320000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 91595,
+      "disposition": "candidate",
+      "features": 12325,
+      "modes": {
+        "funicular": 1,
+        "light_rail": 1,
+        "miniature_railway": 3,
+        "monorail": 13,
+        "narrow_gauge": 27,
+        "rail": 9830,
+        "subway": 2027,
+        "tram": 423
+      }
+    },
+    {
+      "code": "330000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "330000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 93460,
+      "disposition": "candidate",
+      "features": 11070,
+      "modes": {
+        "funicular": 1,
+        "light_rail": 10,
+        "miniature_railway": 6,
+        "monorail": 7,
+        "narrow_gauge": 7,
+        "rail": 8124,
+        "subway": 2885,
+        "tram": 30
+      }
+    },
+    {
+      "code": "340000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "340000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 59805,
+      "disposition": "candidate",
+      "features": 8240,
+      "modes": {
+        "funicular": 2,
+        "light_rail": 1,
+        "miniature_railway": 3,
+        "monorail": 97,
+        "narrow_gauge": 11,
+        "rail": 7835,
+        "subway": 291
+      }
+    },
+    {
+      "code": "350000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "350000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 54547,
+      "disposition": "candidate",
+      "features": 8488,
+      "modes": {
+        "light_rail": 39,
+        "rail": 8152,
+        "subway": 297
+      }
+    },
+    {
+      "code": "360000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "360000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 59612,
+      "disposition": "candidate",
+      "features": 9840,
+      "modes": {
+        "light_rail": 4,
+        "monorail": 1,
+        "narrow_gauge": 17,
+        "rail": 9657,
+        "subway": 160,
+        "tram": 1
+      }
+    },
+    {
+      "code": "370000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "370000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 108855,
+      "disposition": "candidate",
+      "features": 16994,
+      "modes": {
+        "monorail": 9,
+        "narrow_gauge": 6,
+        "rail": 16487,
+        "subway": 461,
+        "tram": 31
+      }
+    },
+    {
+      "code": "410000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "410000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 85648,
+      "disposition": "candidate",
+      "features": 11969,
+      "modes": {
+        "monorail": 20,
+        "narrow_gauge": 28,
+        "rail": 11482,
+        "subway": 439
+      }
+    },
+    {
+      "code": "420000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "420000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 94668,
+      "disposition": "candidate",
+      "features": 12649,
+      "modes": {
+        "funicular": 12,
+        "miniature_railway": 3,
+        "monorail": 30,
+        "narrow_gauge": 4,
+        "rail": 11686,
+        "subway": 764,
+        "tram": 150
+      }
+    },
+    {
+      "code": "430000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "430000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 82436,
+      "disposition": "candidate",
+      "features": 13030,
+      "modes": {
+        "funicular": 1,
+        "miniature_railway": 4,
+        "monorail": 65,
+        "narrow_gauge": 3,
+        "rail": 12767,
+        "subway": 175,
+        "tram": 15
+      }
+    },
+    {
+      "code": "440000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "440000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 173080,
+      "disposition": "candidate",
+      "features": 17057,
+      "modes": {
+        "funicular": 8,
+        "light_rail": 97,
+        "monorail": 39,
+        "narrow_gauge": 36,
+        "rail": 13258,
+        "subway": 3379,
+        "tram": 240
+      }
+    },
+    {
+      "code": "450000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "450000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 61334,
+      "disposition": "candidate",
+      "features": 9190,
+      "modes": {
+        "miniature_railway": 1,
+        "monorail": 2,
+        "rail": 8880,
+        "subway": 307
+      }
+    },
+    {
+      "code": "460000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "460000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 9397,
+      "disposition": "candidate",
+      "features": 1825,
+      "modes": {
+        "light_rail": 25,
+        "monorail": 1,
+        "rail": 1795,
+        "tram": 4
+      }
+    },
+    {
+      "code": "500000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "500000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 46642,
+      "disposition": "candidate",
+      "features": 7265,
+      "modes": {
+        "funicular": 5,
+        "light_rail": 15,
+        "monorail": 233,
+        "narrow_gauge": 10,
+        "rail": 5870,
+        "subway": 1084,
+        "tram": 48
+      }
+    },
+    {
+      "code": "510000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "510000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 97509,
+      "disposition": "candidate",
+      "features": 13969,
+      "modes": {
+        "miniature_railway": 1,
+        "monorail": 10,
+        "narrow_gauge": 91,
+        "rail": 12707,
+        "subway": 1016,
+        "tram": 144
+      }
+    },
+    {
+      "code": "520000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "520000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 53563,
+      "disposition": "candidate",
+      "features": 9791,
+      "modes": {
+        "miniature_railway": 1,
+        "monorail": 21,
+        "rail": 9653,
+        "subway": 116
+      }
+    },
+    {
+      "code": "530000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "530000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 74329,
+      "disposition": "candidate",
+      "features": 9386,
+      "modes": {
+        "funicular": 2,
+        "light_rail": 27,
+        "narrow_gauge": 566,
+        "rail": 8599,
+        "subway": 166,
+        "tram": 26
+      }
+    },
+    {
+      "code": "540000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "540000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 10712,
+      "disposition": "candidate",
+      "features": 1551,
+      "modes": {
+        "rail": 1551
+      }
+    },
+    {
+      "code": "610000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "610000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 67899,
+      "disposition": "candidate",
+      "features": 11975,
+      "modes": {
+        "monorail": 5,
+        "narrow_gauge": 2,
+        "rail": 11668,
+        "subway": 300
+      }
+    },
+    {
+      "code": "620000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "620000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 64299,
+      "disposition": "candidate",
+      "features": 9741,
+      "modes": {
+        "narrow_gauge": 44,
+        "rail": 9464,
+        "subway": 149,
+        "tram": 84
+      }
+    },
+    {
+      "code": "630000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "630000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 24282,
+      "disposition": "candidate",
+      "features": 3464,
+      "modes": {
+        "narrow_gauge": 6,
+        "rail": 3432,
+        "tram": 26
+      }
+    },
+    {
+      "code": "640000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "640000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 14116,
+      "disposition": "candidate",
+      "features": 2069,
+      "modes": {
+        "monorail": 3,
+        "rail": 2066
+      }
+    },
+    {
+      "code": "650000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "650000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 58669,
+      "disposition": "candidate",
+      "features": 8519,
+      "modes": {
+        "narrow_gauge": 10,
+        "rail": 8469,
+        "subway": 40
+      }
+    },
+    {
+      "code": "810000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "810000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 19756,
+      "disposition": "existing-region-hk",
+      "features": 2063,
+      "modes": {
+        "funicular": 18,
+        "light_rail": 377,
+        "miniature_railway": 1,
+        "narrow_gauge": 28,
+        "rail": 735,
+        "subway": 756,
+        "tram": 148
+      }
+    },
+    {
+      "code": "820000",
+      "collectionMetadata": {
+        "crs": {
+          "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+          },
+          "type": "name"
+        },
+        "name": "820000",
+        "type": "FeatureCollection"
+      },
+      "coordinateOccurrences": 925,
+      "disposition": "existing-region-mo",
+      "features": 65,
+      "modes": {
+        "funicular": 1,
+        "light_rail": 63,
+        "rail": 1
+      }
+    }
+  ],
+  "regionalOwnershipPolicy": {
+    "CN": "Mainland rail and entire Hong Kong high-speed rail, including West Kowloon",
+    "HK": "Other Hong Kong railway services; no high-speed duplicate",
+    "MO": "Entire Macau LRT including Hengqin; no CN duplicate",
+    "sharedRegionGraphs": false
+  },
+  "runtimeRelease": {
+    "blockers": [
+      "Original OSM node IDs and relation membership are absent; coordinate coincidence does not prove connectivity.",
+      "Passenger operation, line/operator identity and ordered station-to-track membership are not established.",
+      "12306 station datum is declared GCJ02 by upstream, not independently verified; WGS84 anchors are unresolved.",
+      "OSM snapshot/version and extraction metadata are absent; 12306 data redistribution terms are not documented upstream."
+    ],
+    "eligible": false,
+    "filesWrittenToAppResources": [],
+    "graphImported": false
+  },
+  "schema": "jtm-crtrainroute-source-intake-v1",
+  "sourcePropertyFields": [
+    "bridge",
+    "code",
+    "fclass",
+    "layer",
+    "name",
+    "osm_id",
+    "tunnel"
+  ],
+  "status": "candidate-only",
+  "storage": {
+    "candidates": "local/china/crtrainroute/candidates-d75307df",
+    "pathsRelativeTo": "this manifest's directory",
+    "rawInputsTracked": false,
+    "sourceRoot": "local/china/crtrainroute/d75307df9c812abf1259b86b75202ba7b0048679"
+  },
+  "upstream": {
+    "commit": "d75307df9c812abf1259b86b75202ba7b0048679",
+    "osmSnapshotDate": null,
+    "repository": "https://github.com/Laide140/CRTrainRoute",
+    "retrievedAt": "2026-10-18",
+    "stationSnapshotDate": null
+  }
+}

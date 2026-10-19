@@ -1,0 +1,109 @@
+{
+  "schema": "cn-reviewed-station-bindings/1",
+  "reviewedAt": "2026-10-19",
+  "source": "https://download.geofabrik.de/asia/china-261017.osm.pbf",
+  "sourceSha256": "f38c0bfc91bab9451fb7a0a2a5a808fe150585e8785edf78cfdeddb2c2563175",
+  "stations": [
+    {
+      "markerNodeId": 5485730495,
+      "markerVersion": 4,
+      "officialTelecode": "WRQ",
+      "sourceRelations": [
+        {
+          "id": 8381929,
+          "version": 75
+        }
+      ],
+      "evidence": [
+        "https://search.12306.cn/search/v1/train/search?keyword=G6&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=6x000G604806&leftTicketDTO.train_date=2026-10-18&rand_code=",
+        "https://www.openstreetmap.org/node/5485730495",
+        "https://www.openstreetmap.org/relation/8381929",
+        "https://www.12306.cn/mormhweb/zxdtzz/201806/t20180629_421954.html",
+        "https://www.yjlz.gov.cn/zhyw/content/post_14930.html"
+      ],
+      "decision": "Bind the observed G6045 Jiangmen–Taishan–Kaipingnan–Enping–Yangjiang–Maoming–Zhanjiangxi passenger identity to the original Yangjiang station marker explicitly owned by the continuous Shenzhan railway relation. The separate Yangyang railway marker 9192805744 retains its original OSM identity; no closure or freight-only status is inferred.",
+      "excludedHomonym": {
+        "markerNodeId": 9192805744,
+        "markerVersion": 2,
+        "sourceRelationId": 13354149,
+        "sourceRelationVersion": 7
+      },
+      "coordinateEvidence": "Original marker coordinates and exact own-relation track anchors only; official timetable supplies stop identity/order, not coordinates."
+    },
+    {
+      "markerNodeId": 5242587077,
+      "markerVersion": 7,
+      "officialTelecode": "ENM",
+      "sourceRelations": [
+        {
+          "id": 8415510,
+          "version": 85
+        }
+      ],
+      "operatingStationDespiteConstructionTag": true,
+      "evidence": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=800000C29603&leftTicketDTO.train_date=2026-10-18&rand_code=",
+        "https://search.12306.cn/search/v1/train/search?keyword=D2&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=760000D27104&leftTicketDTO.train_date=2026-10-18&rand_code=",
+        "https://www.openstreetmap.org/node/5242587077",
+        "https://www.openstreetmap.org/relation/8415510"
+      ],
+      "decision": "Published 12306 timetables for C293 and D271 on 2026-10-18 explicitly terminate at Xishuangbanna after Puer. Admit this reviewed railway=station/train=yes marker despite its retained construction=station tag. No track construction tag is ignored, no opening date is inferred, and all original geometry remains required.",
+      "coordinateEvidence": "Original marker and own-relation source-node strand selection; existing published source interval17 vertex88 is node12949100728 v1."
+    },
+    {
+      "markerNodeId": 9087403304,
+      "markerVersion": 5,
+      "officialTelecode": "SAO",
+      "sourceRelations": [
+        {
+          "id": 7963957,
+          "version": 62
+        },
+        {
+          "id": 12149467,
+          "version": 213
+        }
+      ],
+      "evidence": [
+        "https://search.12306.cn/search/v1/train/search?keyword=C8&date=20261018",
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=880000C88103&leftTicketDTO.train_date=2026-10-18&rand_code=",
+        "https://www.openstreetmap.org/node/9087403304",
+        "https://www.openstreetmap.org/relation/7963957",
+        "https://www.openstreetmap.org/relation/12149467",
+        "https://www.mot.gov.cn/xinwen/jiaotongyaowen/202606/t20260626_4208256.html",
+        "https://www.lasa.gov.cn/lasa/shwx/202606/24dfcfafab6b409f92747ff583f91eb2.shtml"
+      ],
+      "decision": "Bind the observed C881 Lhasa-Shannan-Jiacha-Langxian-Milin-Nyingchi passenger identity to original Shannan marker9087403304, an explicit member of both Lhasa-Nyingchi and Sichuan-Tibet infrastructure relations. Preserve the distinct Gaoyi railway Shannan marker4022925840 as cn-osm-node-4022925840; no geographic join or operational status change is inferred.",
+      "excludedHomonym": {
+        "markerNodeId": 4022925840,
+        "markerVersion": 1,
+        "sourceRelationId": 6002511,
+        "sourceRelationVersion": 7
+      },
+      "coordinateEvidence": "Original station marker [91.7556747,29.2499495] and exact own-route anchor11833278312 v1 only. The official timetable supplies stop identity and order, not coordinates. No nearest-station identity match or global name merge."
+    },
+    {
+      "officialTelecode": "DOP",
+      "markerNodeId": 8401357513,
+      "markerVersion": 2,
+      "sourceRelations": [
+        {
+          "id": 12265072,
+          "version": 185
+        }
+      ],
+      "evidence": [
+        "https://kyfw.12306.cn/otn/queryTrainInfo/query?leftTicketDTO.train_no=240000G67100&leftTicketDTO.train_date=2026-10-18&rand_code=",
+        "https://kyfw.12306.cn/mormhweb/zxdt/202205/t20220514_37392.html",
+        "https://kyfw.12306.cn/otn/resources/js/framework/station_name.js",
+        "https://www.openstreetmap.org/relation/12265072",
+        "https://www.openstreetmap.org/node/8401357513"
+      ],
+      "reviewedAt": "2026-10-19",
+      "reason": "Official 12306 station table binds Dingzhoudong to DOP. The official Beijing-Guangzhou HSR fare publication explicitly lists Dingzhoudong and its Beijing West/Shijiazhuang passenger pairs. Original node8401357513 is an explicit station member of Jingguang HSR relation12265072 between Baodingdong and Zhengdingjichang, with source railway reference22516 and mileage196.400. Same-name node3915753122 belongs instead to Shuohuang relation3028521 between Dingzhouxi and Anguo. Selection uses independent official corridor identity and exact original relation membership, not geographic distance."
+    }
+  ]
+}

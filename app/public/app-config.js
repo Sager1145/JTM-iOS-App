@@ -70,7 +70,7 @@ function installLongTaskObserver() {
 // reachable.
 let TRAIN_STORE_API = "train-store";
 const COUNTRY_STORAGE_KEY = "n02-active-country";
-const SUPPORTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr"];
+const SUPPORTED_COUNTRIES = ["jp", "tw", "hk", "mo", "kr", "cn"];
 let activeCountry = "jp";
 // Every per-country resource name flows through AppCore.countrySuffixed
 // (Japan keeps the historical unsuffixed name, others get "-{country}") —
@@ -239,7 +239,7 @@ const ROUTE_CACHE_STORE_NAME = "routes";
 // cannot settle a route made only from station-transfer connectors.
 // 25: source station memberships prevent transfer connectors from attaching
 // to a sibling branch that does not serve the station.
-const ROUTE_SOLVER_CACHE_VERSION = "25";
+const ROUTE_SOLVER_CACHE_VERSION = "27";
 const JAPAN_MAIN_ISLANDS_BOUNDS = [
   [30.85, 129.1],
   [45.75, 146.2],
@@ -277,12 +277,18 @@ const KOREA_FULL_TERRITORY_BOUNDS = [
   [33.0, 124.5],
   [38.7, 131.1],
 ];
+// Mainland China, including its Hong Kong high-speed railway scope.
+const CHINA_BOUNDS = [
+  [18.0, 73.0],
+  [54.0, 135.2],
+];
 const COUNTRY_OVERVIEW_BOUNDS = {
   jp: JAPAN_MAIN_ISLANDS_BOUNDS,
   tw: TAIWAN_MAIN_ISLAND_BOUNDS,
   hk: HONG_KONG_BOUNDS,
   mo: MACAO_BOUNDS,
   kr: KOREA_MAINLAND_BOUNDS,
+  cn: CHINA_BOUNDS,
 };
 const COUNTRY_TERRITORY_BOUNDS = {
   jp: JAPAN_FULL_TERRITORY_BOUNDS,
@@ -290,6 +296,7 @@ const COUNTRY_TERRITORY_BOUNDS = {
   hk: HONG_KONG_BOUNDS,
   mo: MACAO_BOUNDS,
   kr: KOREA_FULL_TERRITORY_BOUNDS,
+  cn: CHINA_BOUNDS,
 };
 // The map frames / clamps to the ACTIVE country (see loadActiveCountry).
 function activeCountryOverviewBounds() {

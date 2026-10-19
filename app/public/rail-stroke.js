@@ -552,15 +552,21 @@
     // reappears untapered on each of them. Cached per distinct canonical
     // array so N follows onto one canonical taper it once.
     const taperedCanonicals = new Map();
-    const taperCanonical = (canon, canonCumulative) => {
-      if (taperedCanonicals.has(canon)) return taperedCanonicals.get(canon);
+    const taperCanonical = (canon, canonCumulative, shapeBoundaryMeasures) => {
+      const boundaryKey = JSON.stringify(shapeBoundaryMeasures || []);
+      let byBoundary = taperedCanonicals.get(canon);
+      if (!byBoundary) taperedCanonicals.set(canon, byBoundary = new Map());
+      if (byBoundary.has(boundaryKey)) return byBoundary.get(boundaryKey);
       const canonPxTotal = cumulativeLengths(canon)[canon.length - 1];
       const canonMetresTotal = canonCumulative[canonCumulative.length - 1] - canonCumulative[0];
       const metresPerPx =
         canonPxTotal > 0 && canonMetresTotal > 0 ? canonMetresTotal / canonPxTotal : 0;
-      const tapered = taperJogs(canon, canonCumulative, new Set(), metresPerPx);
+      const boundaryAnchors = new Set(canonCumulative.map((measure, index) =>
+        (shapeBoundaryMeasures || []).some(boundary => Math.abs(boundary - measure) < 1e-9) ? index : -1,
+      ).filter(index => index >= 0));
+      const tapered = taperJogs(canon, canonCumulative, boundaryAnchors, metresPerPx);
       const result = { points: tapered.points, measures: tapered.measures };
-      taperedCanonicals.set(canon, result);
+      byBoundary.set(boundaryKey, result);
       return result;
     };
     // Each follow with the canonical's own metre measures; an unusable
@@ -584,7 +590,9 @@
       const weightFrom = Math.max(follow.from, weightFloor);
       const weightTo = Math.min(follow.to, weightCeiling);
       if (!(weightTo > weightFrom)) continue;
-      const { points: canon, measures: canonCumulative } = taperCanonical(rawCanon, rawCanonCumulative);
+      const { points: canon, measures: canonCumulative } = taperCanonical(
+        rawCanon, rawCanonCumulative, follow.shapeBoundaryMeasures,
+      );
       const canonTotal = canonCumulative[canonCumulative.length - 1];
       prepared.push({
         from: follow.from,
@@ -596,6 +604,7 @@
         canon,
         canonCumulative,
         canonTotalPx: canonTotal,
+        exactShared: !!follow.exactShared,
       });
     }
     if (!prepared.length) return identity;
@@ -616,9 +625,13 @@
     // what makes it one: the held-back bound can no longer reach either test,
     // so the kernel runs a full ramp from zero AT the shared vertex.
     const weightsAt = (s) => {
+      const exact = prepared.filter(follow => follow.exactShared &&
+        s >= follow.from - DEGENERATE_EDGE_PX && s <= follow.to + DEGENERATE_EDGE_PX);
+      if (exact.length) return exact.map(follow => ({ w: 1 / exact.length, follow }));
       const held = [];
       let sum = 0;
       for (const follow of prepared) {
+        if (follow.exactShared) continue;
         const rise =
           follow.weightFrom <= first + DEGENERATE_EDGE_PX
             ? 1
@@ -655,6 +668,8 @@
         const sc = follow.canonCumulative[index];
         if (sc <= low || sc >= high) continue;
         const s = follow.from + ((sc - follow.canonFrom) / span) * (follow.to - follow.from);
+        if (!follow.exactShared && prepared.some(exact => exact.exactShared &&
+          s >= exact.from - DEGENERATE_EDGE_PX && s <= exact.to + DEGENERATE_EDGE_PX)) continue;
         if (s > 0 && s < total) extra.push(s);
       }
     }
@@ -695,6 +710,49 @@
       emit(s, points[index], index);
     }
     return { points: out, measures: outMeasures, map };
+  }
+
+  // Ownership follows remain in the display model for family coverage, but a
+  // byte-for-byte identity mapping contributes no geometry. Keeping it in the
+  // blend would dilute a different canonical follow where their 300 m kernels
+  // overlap. Compare the raw inputs here: both sides subsequently take the
+  // same deterministic centreline/taper passes, while comparing after only
+  // the canonical pass would make an identical source appear different.
+  function isExactIdentityFollow(follow, points, measures) {
+    if (follow.from !== follow.canonFrom || follow.to !== follow.canonTo) return false;
+    if (!Array.isArray(follow.points) || follow.points.length !== points.length) return false;
+    if (!Array.isArray(follow.measures) || follow.measures.length !== measures.length) return false;
+    for (let index = 0; index < points.length; index += 1) {
+      if (follow.measures[index] !== measures[index]) return false;
+      if (follow.points[index]?.[0] !== points[index][0] || follow.points[index]?.[1] !== points[index][1])
+        return false;
+    }
+    return true;
+  }
+
+  // A reviewed fork can share an exact prefix with its canonical line and
+  // then leave on a different real alignment. Blending that short common
+  // prefix is harmful: each line's different continuation gives the curve
+  // and jog passes different context, so the blend reopens geometry whose
+  // raw correspondence is exact. Check both rulers, including canonical
+  // vertices between follower samples, before granting the hard boundary.
+  function isExactSharedFollow(follow, points, measures) {
+    if (!(follow.to > follow.from) || !Array.isArray(follow.points) || follow.points.length < 2 ||
+        !Array.isArray(follow.measures) || follow.measures.length !== follow.points.length) return false;
+    const ownPoint = s => pointAlong(points, measures, s, 0, points.length - 1);
+    const canonPoint = sc => pointAlong(follow.points, follow.measures, sc, 0, follow.points.length - 1);
+    const samePoint = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]) <= DEGENERATE_EDGE_PX;
+    const canonAt = s => follow.canonFrom + (follow.canonTo - follow.canonFrom) *
+      ((s - follow.from) / (follow.to - follow.from));
+    const ownAt = sc => follow.from + (follow.to - follow.from) *
+      ((sc - follow.canonFrom) / (follow.canonTo - follow.canonFrom));
+    if (!Number.isFinite(ownAt(follow.canonFrom))) return false;
+    const ownSamples = [follow.from, follow.to,
+      ...measures.filter(s => s > follow.from && s < follow.to)];
+    if (ownSamples.some(s => !samePoint(ownPoint(s), canonPoint(canonAt(s))))) return false;
+    const low = Math.min(follow.canonFrom, follow.canonTo), high = Math.max(follow.canonFrom, follow.canonTo);
+    const canonSamples = follow.measures.filter(sc => sc >= low && sc <= high);
+    return canonSamples.every(sc => samePoint(canonPoint(sc), ownPoint(ownAt(sc))));
   }
 
   // Redraw every seam jog as a taper. Returns the new polyline and, for
@@ -1182,7 +1240,7 @@
   //     the corner is being given.
   // With `floor` 0 no run is ever formed and every corner is exactly the
   // single-vertex fillet this function has always drawn.
-  function filletPolyline(points, radius, floorRadius, anchorSet, measures, enforceMinimumRadius) {
+  function filletPolyline(points, radius, floorRadius, anchorSet, measures, enforceMinimumRadius, hardCorners = new Set()) {
     if (enforceMinimumRadius) radius = Math.max(radius, floorRadius);
     const count = points.length;
     if (!(radius > 0) || count < 3) return { points, measures };
@@ -1211,6 +1269,7 @@
     }
     for (const index of anchorSet)
       if (index > 0 && index + 1 < count) hard[index] = true;
+    for (const i of hardCorners) if (i > 0 && i + 1 < count) hard[i] = true;
     const cumulative = cumulativeLengths(points);
     const out = [points[0]];
     const outMeasures = [measures[0]];
@@ -1480,7 +1539,7 @@
     };
     let index = 1;
     while (index + 1 < count) {
-      if (!enforceMinimumRadius && anchorSet.has(index)) {
+      if (!enforceMinimumRadius && anchorSet.has(index) && !hardCorners.has(index)) {
         const arc = anchorCornerOf(index);
         if (arc) {
           for (let sample = 0; sample < arc.curve.length; sample += 1) {
@@ -1747,19 +1806,55 @@
    *                no borrowed alignment can move it. See laneProfile(),
    *                offsetPolyline() and substituteFollows().
    */
-  function tangentJoin(points, mainChain, atEnd, lane) {
-    if (points.length < 2 || mainChain.length < 3) return null;
+  // Endpoint inheritance requires a caller-confirmed junction, beyond mere
+  // coordinate coincidence. Ordinary callers remain interior-only.
+  function tangentJoin(points, mainChain, atEnd, lane, mainLane = null, allowMainEndpoint = false) {
+    if (points.length < 2 || mainChain.length < (allowMainEndpoint ? 2 : 3)) return null;
     const endpoint = atEnd ? points.at(-1) : points[0];
     const index = mainChain.findIndex(p => p[0] === endpoint[0] && p[1] === endpoint[1]);
-    if (index <= 0 || index + 1 >= mainChain.length) return null;
-    const a = mainChain[index - 1], b = mainChain[index + 1];
+    if (index < 0 || (!allowMainEndpoint && (index === 0 || index + 1 === mainChain.length))) return null;
+    const a = mainChain[Math.max(index - 1,0)], b = mainChain[Math.min(index + 1,mainChain.length - 1)];
     const size = Math.hypot(b[0] - a[0], b[1] - a[1]);
     if (!(size > DEGENERATE_EDGE_PX)) return null;
-    const tangent = [(b[0] - a[0]) / size, (b[1] - a[1]) / size];
+    let tangent = [(b[0] - a[0]) / size, (b[1] - a[1]) / size];
     const branch = atEnd ? [endpoint[0] - points.at(-2)[0], endpoint[1] - points.at(-2)[1]]
       : [points[1][0] - endpoint[0], points[1][1] - endpoint[1]];
+    // Orient the through-track tangent in this branch's measure direction;
+    // the caller's lane sign continues to use the branch's normal.
+    const reversed = branch[0] * tangent[0] + branch[1] * tangent[1] < 0;
+    if (reversed)
+      tangent = tangent.map(value => value === 0 ? 0 : -value);
     if (vectorAngle(branch, tangent) > JOIN_MAX_TANGENT_DEGREES) return null;
-    return {lane, incoming: tangent, outgoing: tangent, mainTangent: tangent, mainChain};
+    const targetLane = mainLane == null ? null : reversed ? -mainLane : mainLane;
+    return {lane, targetLane, incoming: tangent, outgoing: tangent, mainTangent: tangent, mainChain};
+  }
+
+  // Resolve inherited endpoints against the complete smoothed profile. Nearby
+  // lane changes and the opposite end can both contribute inside the ramp.
+  // Coalescing uses spans before merging equal lanes, so this response is linear.
+  function inheritedLaneProfile(rows, total, width, joinStart, joinEnd) {
+    let start = joinStart?.lane ?? null, end = joinEnd?.lane ?? null;
+    const targetStart = joinStart?.targetLane, targetEnd = joinEnd?.targetLane;
+    const resolveStart = targetStart != null, resolveEnd = targetEnd != null;
+    const profileAt = (s, e) => laneProfile(rows, total, s, e);
+    if (total > 0 && (resolveStart || resolveEnd)) {
+      const baseStart = resolveStart ? 0 : start, baseEnd = resolveEnd ? 0 : end;
+      const base = profileAt(baseStart, baseEnd);
+      const b0 = laneAt(base, 0, width), b1 = laneAt(base, total, width);
+      const startUnit = resolveStart ? profileAt(1, baseEnd) : base;
+      const endUnit = resolveEnd ? profileAt(baseStart, 1) : base;
+      const a00 = laneAt(startUnit, 0, width) - b0;
+      const a10 = laneAt(startUnit, total, width) - b1;
+      const a01 = laneAt(endUnit, 0, width) - b0;
+      const a11 = laneAt(endUnit, total, width) - b1;
+      if (resolveStart && resolveEnd) {
+        const determinant = a00 * a11 - a01 * a10;
+        start = ((targetStart - b0) * a11 - (targetEnd - b1) * a01) / determinant;
+        end = (a00 * (targetEnd - b1) - a10 * (targetStart - b0)) / determinant;
+      } else if (resolveStart) start = (targetStart - b0) / a00;
+      else end = (targetEnd - b1) / a11;
+    }
+    return {profile: profileAt(start, end), start, end};
   }
   const CURVE_HARD_WINDOW_PX = 3;
   const CURVE_PROTECT_PX = 12;
@@ -1792,28 +1887,55 @@
     }
     return sum;
   }
+  // Preserve sharp source corners and short opposing bends through every
+  // drawing stage; relative support lengths keep this independent of zoom.
+  function surveyedCornerIndices(points) {
+    const result = new Set();
+    for (let i = 1; i + 1 < points.length; i++) {
+      const turn = turnAt(points, i);
+      if (Math.max(Math.abs(turn), Math.abs(windowedTurn(points, i))) > CURVE_HARD_TURN_DEGREES * Math.PI / 180) result.add(i);
+      const previousTurn = i > 1 ? Math.abs(turnAt(points, i - 1)) : 0;
+      const nextTurn = i + 2 < points.length ? Math.abs(turnAt(points, i + 1)) : 0;
+      if (Math.abs(turn) >= Math.PI / 6 && Math.max(previousTurn, nextTurn) < 0.75 * Math.abs(turn)) result.add(i);
+      if (i + 2 >= points.length) continue;
+      const next = turnAt(points, i + 1);
+      const distance = (a, b) => Math.hypot(points[a][0] - points[b][0], points[a][1] - points[b][1]);
+      if (turn * next < 0 && Math.min(Math.abs(turn), Math.abs(next)) >= Math.PI / 6
+          && distance(i, i + 1) < 0.5 * Math.min(distance(i - 1, i), distance(i + 1, i + 2))) {
+        result.add(i); result.add(i + 1);
+      }
+    }
+    return result;
+  }
   // Rendering-only centripetal (alpha=0.5) centreline, paired with RailCore.
-  function smoothCentreline(points, measures, anchorMeasures = []) {
+  function smoothCentreline(points, measures, anchorMeasures = [], hardMeasures = []) {
     if (points.length < 4 || measures.length !== points.length) return { points, measures };
     const length = cumulativeLengths(points).at(-1) || 0;
     const metres = measures.at(-1) - measures[0];
     const metresPerPx = length > 0 && metres > 0 ? metres / length : 1;
     const kept = [0];
+    const corners = surveyedCornerIndices(points);
     for (let i = 1; i + 1 < points.length; i++) {
       const previous = kept.at(-1);
-      const short = Math.min(measures[i] - measures[previous], measures[i + 1] - measures[i]) < CURVE_MERGE_METRES;
-      const lateral = distanceToPolyline(points[i], [points[previous], points[i + 1]]) * metresPerPx;
+      const a = points[previous], b = points[i], c = points[i + 1];
+      const ab = [b[0] - a[0], b[1] - a[1]], bc = [c[0] - b[0], c[1] - b[1]];
+      // A small lateral deviation may be a real curve. Remove only an
+      // exactly collinear, forward-going redundant support.
+      const collinear = ab[0] * bc[1] === ab[1] * bc[0]
+        && ab[0] * bc[0] + ab[1] * bc[1] >= 0;
       let nearHard = false;
       for (let j = Math.max(1, i - 2); j <= Math.min(points.length - 2, i + 2); j++)
-        if (Math.abs(windowedTurn(points, j)) > Math.PI * CURVE_HARD_TURN_DEGREES / 180) nearHard = true;
-      const isAnchor = anchorMeasures.some(a => Math.abs(a - measures[i]) < 1e-9);
-      if (short && lateral <= CURVE_MERGE_LATERAL_METRES && lateral / metresPerPx <= CURVE_MERGE_LATERAL_PX && !nearHard && !isAnchor) continue;
+        if (corners.has(j)) nearHard = true;
+      const isAnchor = [...anchorMeasures, ...hardMeasures].some(a => Math.abs(a - measures[i]) < 1e-9);
+      if (collinear && !nearHard && !isAnchor) continue;
       kept.push(i);
     }
     kept.push(points.length - 1);
     const p = kept.map(i => points[i]), m = kept.map(i => measures[i]);
     if (p.length < 4) return { points, measures };
-    const hard = p.map((_, i) => i === 0 || i === p.length - 1 || Math.abs(windowedTurn(p, i)) > CURVE_HARD_TURN_DEGREES * Math.PI / 180);
+    const retainedCorners = surveyedCornerIndices(p);
+    const hard = p.map((_, i) => i === 0 || i === p.length - 1 || retainedCorners.has(i) ||
+      hardMeasures.some(boundary => Math.abs(boundary - m[i]) < 1e-9));
     const out = [p[0]], outMeasures = [m[0]];
     let runStart = 0;
     while (runStart + 1 < p.length) {
@@ -1975,11 +2097,29 @@
     // The one global ratio still used: for the pixel floors of the taper
     // windows and the lane ramp, where a tenth either way is nothing.
     const metresPerPx = cleanTotalPx > 0 && totalMetres > 0 ? totalMetres / cleanTotalPx : 0;
-    const curvedFollows = (opts.follows || []).map(follow => {
-      if (opts.curveCentreline === false || !(Number(opts.cornerRadiusPx) > 0)) return follow;
-      const simplified = simplifyForFillet(follow.points, follow.measures, new Set(), STROKE_SIMPLIFY_TOLERANCE_PX);
-      return { ...follow, ...smoothCentreline(simplified.points, simplified.measures) };
+    const curvedFollows = (opts.follows || []).filter(
+      follow => !isExactIdentityFollow(follow, clean, cleanMeasures),
+    ).map(follow => {
+      const exactShared = isExactSharedFollow(follow, clean, cleanMeasures);
+      const boundaries = [
+        ...(follow.shapeBoundaryMeasures || []),
+        ...(exactShared ? [follow.canonFrom, follow.canonTo] : []),
+      ];
+      if (opts.curveCentreline === false || !(Number(opts.cornerRadiusPx) > 0))
+        return { ...follow, shapeBoundaryMeasures: boundaries, exactShared };
+      return { ...follow, ...smoothCentreline(follow.points, follow.measures, [], boundaries),
+        shapeBoundaryMeasures: boundaries, exactShared };
     });
+    const shapeBoundaryMeasures = [
+      ...(opts.shapeBoundaryMeasures || []),
+      ...curvedFollows.filter(follow => follow.exactShared)
+        .flatMap(follow => [follow.from, follow.to]),
+    ];
+    for (const follow of curvedFollows) if (follow.exactShared) {
+      cleanMeasures.forEach((measure, index) => {
+        if (measure === follow.from || measure === follow.to) anchorSet.add(index);
+      });
+    }
     const substituted = substituteFollows(
       clean,
       cleanMeasures,
@@ -2013,16 +2153,17 @@
       };
     }
     const curveEnabled = opts.curveCentreline !== false && Number(opts.cornerRadiusPx) > 0;
+    const cornerMeasures = [
+      ...(curveEnabled ? [...surveyedCornerIndices(followed.points)].map(i => followed.measures[i]) : []),
+      ...shapeBoundaryMeasures,
+    ];
     if (curveEnabled) {
-      // anchorSet indexes `clean`; carry each anchor onto followed.points by its map.
-      const protectedVertices = new Set();
-      for (const index of anchorSet) if (followed.map[index] >= 0) protectedVertices.add(followed.map[index]);
-      if (followed.points.length >= 3) for (let i = 1; i + 1 < followed.points.length; i++) if (Math.abs(turnAt(followed.points, i)) > CURVE_HARD_TURN_DEGREES * Math.PI / 180)
-        protectAround(followed.points, i, protectedVertices);
-      const simplified = simplifyForFillet(followed.points, followed.measures, protectedVertices, STROKE_SIMPLIFY_TOLERANCE_PX);
-      let curved = smoothCentreline(simplified.points, simplified.measures, anchorMeasures);
-      const startCandidates = anchorMeasures.filter(m => m > cleanMeasures[0]);
-      const endCandidates = anchorMeasures.filter(m => m < cleanMeasures.at(-1));
+      // Interpolate surveyed supports; pixel decimation can erase a real
+      // small curve before interpolation gets a chance to round its facets.
+      let curved = smoothCentreline(followed.points, followed.measures, anchorMeasures, shapeBoundaryMeasures);
+      const boundaries = [...anchorMeasures, ...cornerMeasures];
+      const startCandidates = boundaries.filter(m => m > cleanMeasures[0]);
+      const endCandidates = boundaries.filter(m => m < cleanMeasures.at(-1));
       const startInterval = startCandidates.length ? Math.min(...startCandidates) - cleanMeasures[0] : totalMetres;
       const endInterval = endCandidates.length ? cleanMeasures.at(-1) - Math.max(...endCandidates) : totalMetres;
       curved = blendJunction(curved.points, curved.measures, opts.joinStart, false, startInterval, gap);
@@ -2031,6 +2172,7 @@
     }
     const followedAnchors = new Set();
     for (const index of anchorSet) if (followed.map[index] >= 0) followedAnchors.add(followed.map[index]);
+    followed.measures.forEach((m, i) => { if (cornerMeasures.some(c => Math.abs(c - m) < 1e-9)) followedAnchors.add(i); });
     const taperedStep = taperJogs(followed.points, followed.measures, followedAnchors, metresPerPx);
     // Compose the two index maps so an original vertex resolves through both.
     let tapered = {
@@ -2040,13 +2182,12 @@
     };
     const joinStart = opts.joinStart || null;
     const joinEnd = opts.joinEnd || null;
-    const joinLaneStart = joinStart ? joinStart.lane : null;
-    const joinLaneEnd = joinEnd ? joinEnd.lane : null;
-    const profile = laneProfile(rows, totalMetres, joinLaneStart, joinLaneEnd);
     const width = Math.max(
       LANE_RAMP_HALF_WIDTH_METRES,
       (Number(opts.minRampPx) || 0) * metresPerPx,
     );
+    const {profile, start: joinLaneStart, end: joinLaneEnd} =
+      inheritedLaneProfile(rows, totalMetres, width, joinStart, joinEnd);
     if (enforceMinimumCornerRadius && gap && totalMetres > 0) {
       const sampled = sampleLaneRamps(
         tapered.points,
@@ -2110,7 +2251,8 @@
     // to survive.
     const drawn = curveEnabled
       ? { points: cleaned.points, measures: cleanedMeasures,
-          anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i => anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
+          anchors: new Set(cleanedMeasures.map((_, i) => i).filter(i =>
+            anchorMeasures.some(a => Math.abs(a - cleanedMeasures[i]) < 1e-9))) }
       : simplifyForFillet(cleaned.points, cleanedMeasures, finalAnchors, STROKE_SIMPLIFY_TOLERANCE_PX);
     const filleted = filletPolyline(
       drawn.points,
@@ -2119,6 +2261,7 @@
       drawn.anchors,
       drawn.measures,
       enforceMinimumCornerRadius,
+      new Set(drawn.measures.map((_, i) => i).filter(i => cornerMeasures.some(m => Math.abs(m - drawn.measures[i]) < 1e-9))),
     );
     const anchors = (opts.anchors || []).map((index, anchorIndex) => {
       if (curveEnabled) {

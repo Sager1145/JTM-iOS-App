@@ -191,6 +191,7 @@ function normalizeExportRouteSection(section) {
     normalized.operator_names = [...section.operator_names];
   for (const field of ["line_ids", "section_codes"])
     if (Array.isArray(section[field]) && section[field].length) normalized[field] = [...section[field]];
+  if (section.section_codes_origin) normalized.section_codes_origin = section.section_codes_origin;
   // Branch-portion train number / name (optional; see normalizeImportedRouteSection).
   if (section.number) normalized.number = String(section.number);
   if (section.name) normalized.name = String(section.name);
@@ -292,31 +293,16 @@ function findRouteSectionForStopPair(
 
 function routeSectionMatchesStopPair(section, fromStop, toStop) {
   if (!section) return false;
-  const fromCode = stopStationCode(fromStop);
-  const toCode = stopStationCode(toStop);
-  const sectionFromCode = section.from_n02_station_code || null;
-  const sectionToCode = section.to_n02_station_code || null;
-  const codeMatches = Boolean(
-    fromCode &&
-    toCode &&
-    sectionFromCode &&
-    sectionToCode &&
-    String(fromCode) === String(sectionFromCode) &&
-    String(toCode) === String(sectionToCode),
-  );
-  const nameMatches = Boolean(
-    stopName(fromStop) &&
-    stopName(toStop) &&
-    stopName(fromStop) === (section.from || "") &&
-    stopName(toStop) === (section.to || ""),
-  );
-
-  // Official source station codes are line/operator-specific. A stop can be displayed with one
-  // line-code while the route_section intentionally uses another line-code
-  // for the same physical station transfer/through-running point.  Treat a
-  // same-name adjacent pair as the same route section instead of forcing the
-  // stop code and route-section code to be identical.
-  return codeMatches || nameMatches;
+  function endpointMatches(stop, sectionCode, sectionName) {
+    const stopCode = canonicalStationCode(stopStationCode(stop) || null);
+    const code = canonicalStationCode(sectionCode || null);
+    if (stopCode && code) return String(stopCode) === String(code);
+    const name = stopName(stop);
+    return Boolean(name && name === (sectionName || ""));
+  }
+  // A name fills an absent identity; it cannot override a conflicting code.
+  return endpointMatches(fromStop, section.from_n02_station_code, section.from) &&
+    endpointMatches(toStop, section.to_n02_station_code, section.to);
 }
 
 function normalizeExportTrain(train) {
@@ -383,6 +369,7 @@ function leanExportSection(section) {
     out.operator_names = [...section.operator_names];
   for (const field of ["line_ids", "section_codes"])
     if (Array.isArray(section[field]) && section[field].length) out[field] = [...section[field]];
+  if (section.section_codes_origin) out.section_codes_origin = section.section_codes_origin;
   if (section.number) out.number = String(section.number);
   if (section.name) out.name = String(section.name);
   return out;
@@ -495,6 +482,7 @@ function normalizeImportedRouteSection(section) {
       "operator_names",
       "line_ids",
       "section_codes",
+      "section_codes_origin",
       "number",
       "name",
     ],
@@ -520,6 +508,11 @@ function normalizeImportedRouteSection(section) {
   };
   for (const field of ["line_ids", "section_codes"])
     if (Array.isArray(section[field])) normalized[field] = section[field].map(String).filter(Boolean);
+  if (section.section_codes_origin != null) {
+    if (!["corridorPreference", "packageInference"].includes(section.section_codes_origin))
+      throw new Error("Route section section_codes_origin must be corridorPreference or packageInference.");
+    normalized.section_codes_origin = section.section_codes_origin;
+  }
   // Optional per-section branch train number / name: some limited expresses run
   // a branch portion under a DIFFERENT 号 (e.g. はやぶさ↔こまち, しおかぜ↔いしづち).
   // When present it is shown for that segment in the route popup.
@@ -739,6 +732,21 @@ function waitForImportPaint() {
 // never carries Japanese stops into the Taiwan store.
 function createBlankTrain() {
   if (activeCountry === "tw") return createBlankTrainTw();
+  if (activeCountry === "cn")
+    return createBlankRegionalTrain({
+      id: "CN-HSR",
+      trainType: "高速铁路",
+      region: "cn",
+      company: "",
+      lineId: "cn-guangshengan-hsr",
+      origin: "深圳北",
+      destination: "香港西九龙",
+      originCode: "CN-12306-IOQ",
+      destinationCode: "CN-12306-XJA",
+      lineName: "广深港高速铁路",
+      color: "#D2232A",
+      institutionCode: "1",
+    });
   if (activeCountry === "hk")
     return createBlankRegionalTrain({
       id: "HK-MTR",
@@ -781,6 +789,7 @@ function createBlankTrain() {
 
 function createBlankRegionalTrain(config) {
   return {
+    ...(config.region ? { region: config.region } : {}),
     id: config.id,
     number: "",
     train_type: config.trainType,
@@ -797,7 +806,7 @@ function createBlankRegionalTrain(config) {
       allow_browser_straight_line_fallback: false,
       allowed_institution_type_codes: [config.institutionCode || "4"],
       preferred_line_names: [config.lineName],
-      preferred_operator_names: [config.company],
+      preferred_operator_names: config.company ? [config.company] : [],
       institution_filter_mode: "hard",
     },
     route_sections: [
@@ -805,7 +814,8 @@ function createBlankRegionalTrain(config) {
         from_n02_station_code: config.originCode,
         to_n02_station_code: config.destinationCode,
         line_names: [config.lineName],
-        operator_names: [config.company],
+        operator_names: config.company ? [config.company] : [],
+        ...(config.lineId ? { line_ids: [config.lineId] } : {}),
       },
     ],
     stops: [

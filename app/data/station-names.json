@@ -146824,16 +146824,6 @@
       "katakana": "ニシフナバシ",
       "romaji": "Nishi-Funabashi"
     },
-    "jp-東日本旅客鉄道-京葉線-2:003682": {
-      "name": "二俣新町",
-      "zh_Hant": "二俣新町",
-      "zh_Hans": "二俣新町",
-      "en": "Futamatashimmachi",
-      "ja": "二俣新町",
-      "kana": "ふたまたしんまち",
-      "katakana": "フタマタシンマチ",
-      "romaji": "Futamata-Shinmachi"
-    },
     "jp-東日本旅客鉄道-京葉線:003682": {
       "name": "二俣新町",
       "zh_Hant": "二俣新町",
@@ -162603,16 +162593,6 @@
       "kana": "うみしばうら",
       "katakana": "ウミシバウラ",
       "romaji": "Umi-Shibaura"
-    },
-    "jp-東日本旅客鉄道-鶴見線-3:004517": {
-      "name": "武蔵白石",
-      "zh_Hant": "武藏白石",
-      "zh_Hans": "武藏白石",
-      "en": "Musashi-Shiraishi",
-      "ja": "武蔵白石",
-      "kana": "むさししらいし",
-      "katakana": "ムサシシライシ",
-      "romaji": "Musashi-Shiraishi"
     },
     "jp-東日本旅客鉄道-鶴見線-3:004540": {
       "name": "大川",
@@ -200733,6 +200713,46 @@
       "kana": "",
       "katakana": "",
       "romaji": "Keyakidaira"
+    },
+    "jp-東日本旅客鉄道-京葉線-2:003761": {
+      "name": "南船橋",
+      "zh_Hant": "南船橋",
+      "zh_Hans": "南船桥",
+      "en": "Minami-Funabashi",
+      "ja": "南船橋",
+      "kana": "みなみふなばし",
+      "katakana": "ミナミフナバシ",
+      "romaji": "Minami-Funabashi"
+    },
+    "jp-東日本旅客鉄道-京葉線-3:003547": {
+      "name": "西船橋",
+      "zh_Hant": "西船橋",
+      "zh_Hans": "西船桥",
+      "en": "Nishi-Funabashi",
+      "ja": "西船橋",
+      "kana": "にしふなばし",
+      "katakana": "ニシフナバシ",
+      "romaji": "Nishi-Funabashi"
+    },
+    "jp-東日本旅客鉄道-京葉線-3:003870": {
+      "name": "市川塩浜",
+      "zh_Hant": "",
+      "zh_Hans": "",
+      "en": "Ichikawashiohama",
+      "ja": "市川塩浜",
+      "kana": "いちかわしおはま",
+      "katakana": "イチカワシオハマ",
+      "romaji": "Ichikawa-Shiohama"
+    },
+    "jp-東日本旅客鉄道-鶴見線-3:004522": {
+      "name": "安善",
+      "zh_Hant": "安善",
+      "zh_Hans": "安善",
+      "en": "Anzen",
+      "ja": "安善",
+      "kana": "あんぜん",
+      "katakana": "アンゼン",
+      "romaji": "Anzen"
     }
   },
   "byName": {

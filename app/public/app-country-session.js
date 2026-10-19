@@ -7,6 +7,13 @@
 // =========================================================================
 
 let countrySwitchInFlight = false;
+let countrySessionGeneration = 0;
+
+function captureCountrySessionOwnership() {
+  const generation = countrySessionGeneration;
+  const country = activeCountry;
+  return () => generation === countrySessionGeneration && country === activeCountry;
+}
 
 function updateCountrySelect() {
   const select = document.getElementById("country-select");
@@ -49,6 +56,7 @@ async function switchCountrySession(next) {
     return;
   }
   countrySwitchInFlight = true;
+  countrySessionGeneration += 1;
   updateCountrySelect();
   try {
     // Land all network, IndexedDB, and recovery-journal work in the old
@@ -68,6 +76,7 @@ async function switchCountrySession(next) {
     // from the outgoing session can then observe that it no longer owns the
     // runtime cache, even if IndexedDB delivers it after the switch.
     RouteService.resetForCountry();
+    AppActions.resetWorkspaceForCountry();
     activeCountry = next;
     if (window.I18N && typeof I18N.setCountry === "function") {
       I18N.setCountry(next);
@@ -106,7 +115,6 @@ async function switchCountrySession(next) {
           ),
       );
     }
-    AppActions.resetWorkspaceForCountry();
 
     applyUiDateStateForCountrySwitch();
     updateDataSourceUi();
@@ -153,6 +161,13 @@ async function switchCountrySession(next) {
         "ok",
       );
     }
+  } catch (err) {
+    countrySessionGeneration += 1;
+    // A preparation/import failure leaves an incomplete incoming workspace.
+    // Keep it read-only until a successful explicit load replaces it.
+    PersistenceService.enterRecoveryMode({ message: err.message || String(err) });
+    renderAll();
+    throw err;
   } finally {
     countrySwitchInFlight = false;
     updateCountrySelect();

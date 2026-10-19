@@ -323,6 +323,8 @@
   // names ship inside the official TDX record, so no OSM credit applies there.
   // Keep each string in sync with the package's own .sources.md.
   const RAIL_ATTRIBUTIONS = {
+    cn:
+      "站名資料：中國鐵路 12306｜軌道幾何 © OpenStreetMap contributors, ODbL",
     jp:
       "出典「国土数値情報（鉄道データ N02）」（国土交通省）を加工して作成 (CC BY 4.0)" +
       "｜Romanizations © OpenStreetMap contributors, ODbL",

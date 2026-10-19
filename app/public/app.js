@@ -139,6 +139,8 @@ async function loadAppData() {
 // share station names (松山, 板橋, 岡山 …), so the failure would not look like
 // an error, it would look like a route.
 async function reloadSolverDatasetsForCountrySwitch() {
+  const country = activeCountry;
+  const isCurrent = captureCountrySessionOwnership();
   AppDatasets.clearRailSections();
   RouteService.invalidateDataset();
   _statsEdgeIndex = null;
@@ -157,17 +159,20 @@ async function reloadSolverDatasetsForCountrySwitch() {
   );
   const [stationTexts] = await Promise.all([
     Promise.all(
-      stationsApisForCountry(activeCountry).map((resource) => fetchText(resource)),
+      stationsApisForCountry(country).map((resource) => fetchText(resource)),
     ),
     loadActiveCountryRailHistory(),
   ]);
+  if (!isCurrent()) return;
   const stationCollections = [];
-  for (const text of stationTexts)
+  for (const text of stationTexts) {
     stationCollections.push(await parseFeatureCollectionChunked(text));
+    if (!isCurrent()) return;
+  }
   const mergedStations = mergeFeatureCollections(stationCollections);
   applyLoadedRailHistoryToStations(mergedStations);
   AppDatasets.installStations(mergedStations);
-  await buildStationIndexesSliced(stationsGeoJson);
+  await buildStationIndexesSliced(mergedStations, { isCurrent });
 }
 
 async function loadActiveCountryRailHistory() {
@@ -407,7 +412,7 @@ async function loadActiveCountryStore(bootLoadOptions) {
         /* rescue text is best-effort */
       }
       enterStoreRecoveryMode({ message: (err && err.message) || "", rawText });
-      renderAll({ updateJsonTextarea: false });
+      renderAll();
       updateDataSourceUi();
     }
   } else {

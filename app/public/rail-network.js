@@ -11,6 +11,37 @@
   "use strict";
 
   const DEFAULT_LINE_COLOR = "#7C8A82";
+
+  // The window and classic worker execute the same read/decode/merge/build
+  // implementation. Hosts only choose the execution surface and transfer the
+  // completed network; optional review/lane files keep package-local fallback.
+  async function loadNetwork({ packageUrls, reviewedUrl, lanesUrl } = {}) {
+    if (!Array.isArray(packageUrls) || !packageUrls.length)
+      throw new Error("A rail package URL is required.");
+    const responses = await Promise.all(
+      packageUrls.map((url) => fetch(url, { cache: "no-cache" })),
+    );
+    const failed = responses.find((response) => !response.ok);
+    if (failed) throw new Error(`rail package request failed: HTTP ${failed.status}`);
+    const packages = await Promise.all(responses.map((response) => response.json()));
+    const merged = mergeCompactPackages(packages);
+    if (!merged) throw new Error("rail packages are not compact-v1");
+
+    async function optionalJson(url, description) {
+      if (!url) return null;
+      try {
+        const response = await fetch(url, { cache: "no-cache" });
+        if (response.ok) return await response.json();
+        console.warn(`[rail-network] ${description} unavailable: HTTP ${response.status} (${url})`);
+      } catch (error) {
+        console.warn(`[rail-network] ${description} unavailable:`, url, error);
+      }
+      return null;
+    }
+    const reviewed = await optionalJson(reviewedUrl, "shared-corridor review");
+    const lanes = await optionalJson(lanesUrl, "display lanes");
+    return buildNetworkFromCompactPackage(merged, reviewed, lanes);
+  }
   const RANK_MINZOOM = [3, 4, 5, 6, 7];
   const STATION_DOT_GAP_PX = 22;
   const STATION_LOD_K =
@@ -333,23 +364,20 @@
     return null;
   }
 
-  // A branch only truly joins its trunk AT A STATION. The rail between the
-  // station and the physical switch is shared, so the branch must be DRAWN over
-  // it — but as its own coordinates, because the two are separate strokes and
-  // must not be mathematically one connected line.
-  //
-  // So walk BACK along the track the branch leaves, from the divergence point
-  // to the first station it passes: that slice, station-first, is the branch's
-  // lead-in. Walking back is what makes it the "previous" station in the
-  // branch's own direction of travel — never one reached by a hairpin.
+  // Legacy station-to-switch slicing helper. Physical network branches now
+  // start at the switch and do not append this slice to their displayed ink.
+  // Retained for callers that explicitly need a traversal lead-in.
   function branchLeadIn(sourceCoordinates, divergenceIndex, stationPoints) {
     for (let index = divergenceIndex; index >= 0; index -= 1) {
-      const station = stationAt(stationPoints, sourceCoordinates[index]);
+      // Interval anchoring already puts platforms onto their own track.
+      // A nearby platform on the spur is not a station on this main track:
+      // borrowing it would append a diagonal and a closed hairpin loop.
+      const station = stationPoints.find(point => sameCoordinate(point, sourceCoordinates[index]));
       if (!station) continue;
       const leadIn = sourceCoordinates
         .slice(index, divergenceIndex + 1)
         .map((c) => [c[0], c[1]]);
-      // Start exactly on the platform anchor, not on the nearby track vertex.
+      // Preserve the exact platform anchor belonging to this track.
       leadIn[0] = [station[0], station[1]];
       return leadIn;
     }
@@ -688,6 +716,12 @@
   // at the two ends of an open line, where the platform is a terminal and the
   // stroke simply stops on it.
   function anchorStationApproach(incoming, outgoing, anchor, budgets) {
+    // Two exact shared survey edges prove a real platform retrace. A
+    // station-approach warp must not replace that spur with a through curve.
+    if (incoming?.length >= 3 && outgoing?.length >= 3 &&
+        sameCoordinate(incoming.at(-1), anchor) && sameCoordinate(outgoing[0], anchor) &&
+        sameCoordinate(incoming.at(-2), outgoing[1]) &&
+        sameCoordinate(incoming.at(-3), outgoing[2])) return null;
     const head = incoming ? incoming.slice(0, -1) : [];
     // Where the departing interval's own vertices begin. The package re-emits
     // the vertex next to a platform on BOTH sides of it; read once, or the
@@ -1393,14 +1427,20 @@
       currentWithheldKeys = new Set();
     };
 
-    // Station approaches are rebuilt on the interval chain, BEFORE any of the
-    // branch machinery below runs, so a branch lead-in copied off a trunk
-    // copies the finished geometry and the two strokes stay coincident to the
-    // vertex over the metres they share.
+    // Confirm shared physical track on the survey before station anchoring.
+    // Display splitting must find that same exact switch after anchoring.
+    const surveyedIntervals = decodedOverride || decodeIntervals(compactLine);
+    const exactSwitches = surveyedIntervals.map((interval, index) => {
+      const previous = surveyedIntervals[index - 1];
+      if (!previous) return null;
+      let shared = 0;
+      while (shared < previous.length && shared < interval.length &&
+        sameCoordinate(previous[previous.length - 1 - shared], interval[shared])) shared++;
+      return shared >= 3 && shared < previous.length && shared < interval.length
+        ? interval[shared - 1] : null;
+    });
     const intervals = anchorIntervalsToStations(
-      (decodedOverride || decodeIntervals(compactLine)).map((interval) =>
-        interval.map((point) => [point[0], point[1]]),
-      ),
+      surveyedIntervals.map(interval => interval.map(point => [point[0], point[1]])),
       compactLine,
       skippedStationCodes,
     );
@@ -1414,8 +1454,28 @@
       if (current.length) dropStationRepeat(current, decoded);
 
       let coordinates = decoded;
+      // A station spur must be exact retraced survey geometry,
+      // not a nearby-track match. Draw the spur once from its physical switch;
+      // only a shallow continuation stays one main. Never append a reversed main
+      // lead-in that would make a hairpin at that switch.
+      let exactShared = 0;
+      while (exactShared < current.length && exactShared < decoded.length &&
+             sameCoordinate(current[current.length - 1 - exactShared], decoded[exactShared])) exactShared++;
+      const exactHead = exactShared - 1;
+      const exactSpur = exactShared >= 3 && exactShared < current.length && exactShared < decoded.length &&
+        exactSwitches[intervalIndex] && sameCoordinate(exactSwitches[intervalIndex], decoded[exactHead]) &&
+        !stationPoints.some(point => sameCoordinate(point, decoded[exactHead])) &&
+        pathLength(decoded.slice(exactHead)) >= RETRACE_MIN_TAIL_METERS;
       const head = retracedHeadIndex(decoded, laid);
-      if (head > 0) {
+      if (exactSpur) {
+        const cut = current.length - exactShared;
+        parts.push(current.slice(cut));
+        partsWithheldKeys.push(new Set(currentWithheldKeys));
+        const continuesMain = spliceTurnDegrees(current, cut, decoded.slice(exactHead)) <= 30;
+        current = current.slice(0, cut + 1);
+        if (!continuesMain) flush();
+        coordinates = decoded.slice(exactHead);
+      } else if (head > 0) {
         const tail = decoded.slice(head);
         if (pathLength(tail) < RETRACE_MIN_TAIL_METERS) {
           // Nothing new at all — the interval is pure duplicate track. Skip it
@@ -1450,15 +1510,8 @@
           // interval's tail runs to (its own lead-in, reversed).
           const excursion = current.slice(inCurrent.index);
           current = current.slice(0, inCurrent.index + 1);
-          const leadIn = branchLeadIn(
-            tail.slice().reverse(),
-            tail.length - 1,
-            stationPoints,
-          );
           if (excursion.length >= 2) {
-            const branch = leadIn
-              ? leadIn.concat(excursion.slice(1))
-              : excursion;
+            const branch = excursion;
             // `excursion` is a slice of `current`, so its withheld vertices
             // (if any) are a subset of the keys `current` has accumulated so
             // far; a copy, since the trunk (`current`, continuing below) may
@@ -1490,12 +1543,10 @@
           coordinates = tail;
         } else {
           // The retrace lands on track from an already-closed part. Open a new
-          // one at the divergence point — and lead it in along the retraced
-          // head itself, which IS the trunk this branch leaves and is
-          // guaranteed to reach a station (it starts at one).
+          // one at the divergence point. Its shared head is already drawn,
+          // so only the newly diverging track contributes network ink.
           flush();
-          const leadIn = branchLeadIn(decoded, head, stationPoints);
-          coordinates = leadIn ? leadIn.concat(tail.slice(1)) : tail;
+          coordinates = tail;
         }
       } else if (current.length && isReversalJoint(current, coordinates)) {
         // No shared track, but the line turns back on itself at the joint:
@@ -1512,6 +1563,17 @@
       laid.add(decoded);
     });
     flush();
+
+    // Keep withheld-key provenance parallel to every split drawing leg.
+    const splitParts = [], splitWithheld = [];
+    parts.forEach((points, i) => {
+      for (const part of splitReviewedRetraces([points], compactLine.displayReversalBranches)) {
+        splitParts.push(part);
+        splitWithheld.push(new Set(partsWithheldKeys[i]));
+      }
+    });
+    parts.splice(0, parts.length, ...splitParts);
+    partsWithheldKeys.splice(0, partsWithheldKeys.length, ...splitWithheld);
 
     // Trim on both sides of grooming. Before, because a fold hides real
     // corners from the groomer; after, because dropping a barb can expose a
@@ -2677,6 +2739,21 @@
     return { ...best, ...corrected, lineIds: correctedIds };
   }
 
+  function splitReviewedRetraces(parts, stems) {
+    let result = parts;
+    for (const stem of stems || []) {
+      if (stem.length < 2) continue;
+      const retrace = stem.concat(stem.slice(0, -1).reverse());
+      result = result.flatMap(points => {
+        const start = points.findIndex((_, i) => i + retrace.length <= points.length &&
+          retrace.every((v, j) => sameCoordinate(points[i + j], v)));
+        return start < 0 ? [points] : [points.slice(0, start + 1), stem.map(v => v.slice()),
+          points.slice(start + retrace.length - 1)].filter(p => p.length >= 2);
+      });
+    }
+    return result;
+  }
+
   function canonicalizeRouteFeature(network, feature, options) {
     // A junction station sits on TWO display parts (a trunk and its branch),
     // both a perfect match for a hop that starts or ends there. Picking by
@@ -2733,6 +2810,11 @@
         if (forward ? !allowed.forward : !allowed.reverse) return null;
         exactSections.push({
           lineId: section.lineId,
+          reviewedCoordinates: (() => {
+            const line = network.lineById.get(section.lineId);
+            const points = line?.displayReversalBranches?.length && line.displayIntervalCoordinates?.[section.intervalIndex];
+            return points ? (forward ? points : points.slice().reverse()) : null;
+          })(),
           sourceCoordinates: forward ? [section.from, section.to] : [section.to, section.from],
           coordinates: (() => {
             const anchors = network.lineById.get(section.lineId)?.displayStationCoordinates || {};
@@ -2864,6 +2946,11 @@
       const rawStart = rawCoordinates[0];
       const rawEnd = rawCoordinates[rawCoordinates.length - 1];
       const exactSection = exactSections[rawIndex];
+      if (exactSection?.reviewedCoordinates) {
+        canonicalLines.push(exactSection.reviewedCoordinates.map(p => p.slice()));
+        usedLineIds.push(exactSection.lineId);
+        continue;
+      }
       let best = bestFitFor(exactSection
         ? [network.lineById.get(exactSection.lineId)] : candidates, rawStart, rawEnd);
 
@@ -2913,6 +3000,18 @@
       snapEndpoint(canonical, canonical.length - 1, rawEnd, best.end.distance);
       canonicalLines.push(canonical);
       usedLineIds.push(best.line.lineId);
+    }
+
+    // A source-qualified CN solve is evidence of the actual traversed tracks.
+    // Every display choice must retain that full identity; a nearby stroke,
+    // matching name, or matching line ID alone does not establish it. Returning
+    // null lets the caller keep the original surveyed geometry.
+    if (Object.hasOwn(properties, "source_physical_identity_keys")) {
+      const sourceIdentities = new Set(properties.source_physical_identity_keys || []);
+      if (!usedLineIds.length || usedLineIds.some((id) => {
+        const identity = network.lineById.get(id)?.sourcePhysicalIdentityKey;
+        return !identity || !sourceIdentities.has(identity);
+      })) return null;
     }
 
     // A ride drawn onto a CONTINUOUS stroke (rail-stroke.js, us/ca) can be
@@ -2968,6 +3067,8 @@
         previous.push(...coordinates.slice(1));
       else outputLines.push(coordinates);
     }
+    const branchLines = splitReviewedRetraces(outputLines, [...new Set(usedLineIds)].flatMap(id =>
+      network.lineById.get(id)?.displayReversalBranches || []));
     return {
       ...feature,
       properties: {
@@ -2985,9 +3086,9 @@
           : {}),
       },
       geometry:
-        feature.geometry.type === "MultiLineString" || outputLines.length > 1
-          ? { type: "MultiLineString", coordinates: outputLines }
-          : { type: "LineString", coordinates: outputLines[0] },
+        feature.geometry.type === "MultiLineString" || branchLines.length > 1
+          ? { type: "MultiLineString", coordinates: branchLines }
+          : { type: "LineString", coordinates: branchLines[0] },
     };
   }
 
@@ -3815,6 +3916,16 @@
         nameNorm: compactLine.nameNorm || compactLine.name,
         country: compactLine.country || pkg.country || "",
         operator: compactLine.operator,
+        // CN's original-source graph uses the compact line ID as its track
+        // identity (build-china-physical-junctions.py endpoint_identity).
+        // Retain all five identity components for source-qualified route fits.
+        sourcePhysicalIdentityKey:
+          String(compactLine.country || pkg.country || compactLine.region || "").toLowerCase() === "cn" &&
+          compactLine.operator && compactLine.name && compactLine.railwayClassCode
+            ? JSON.stringify([compactLine.operator, compactLine.name,
+                String(compactLine.railwayClassCode), String(compactLine.level ?? ""),
+                String(compactLine.trackID ?? compactLine.track_id ?? lineId)])
+            : null,
         nameRoma: compactLine.nameRoma,
         isHSR: Boolean(compactLine.isHSR),
         isLoop: Boolean(compactLine.isLoop),
@@ -3846,6 +3957,8 @@
           : compactLine.operatorLogo || null,
         stationOrder: stationIds,
         displayStationCoordinates: compactLine.displayStationCoordinates || {},
+        displayIntervalCoordinates: compactLine.displayIntervalCoordinates || {},
+        displayReversalBranches: compactLine.displayReversalBranches || [],
         km: totalKm,
         visibilityKm,
         minZoom: lineMinZoom,
@@ -4332,11 +4445,13 @@
         if (circleOwner && circleOwner !== lineId) {
           const owner = pkg.lines.find((line) => line.id === circleOwner);
           const ownerStation = owner && displayLineForCoordinates(owner).stations.find((member) => member[0] === row[0]);
-          if (!ownerStation || distanceMeters([displayRow[2], displayRow[3]], ownerStation.slice(2, 4)) > 1)
-            throw new Error(`${lineId}: station circle owner ${circleOwner} does not share the platform`);
-          // stationById/groupMembers retain this platform alias for routes and
-          // popup membership; only the duplicate visual mark is omitted.
-          return;
+          if (!ownerStation)
+            throw new Error(`${lineId}: station circle owner ${circleOwner} does not serve the station`);
+          // Only an explicitly reviewed same-operator representative anchor
+          // can suppress a circle. Through running retains company identity.
+          if (compactLine.operator && compactLine.operator === owner.operator &&
+              displayRow[2] === ownerStation[2] && displayRow[3] === ownerStation[3])
+            return; // Logical stationById/groupMembers remain available.
         }
 
         if (isTenantCandidate)
@@ -4567,6 +4682,7 @@
 
   return Object.freeze({
     DEFAULT_LINE_COLOR,
+    loadNetwork,
     mergeCompactPackages,
     buildNetworkFromCompactPackage,
     reviewedSharedCorridorOverrides,

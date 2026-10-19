@@ -987,6 +987,8 @@ function openUtilityWorkspace(id) {
   if (sidebar) sidebar.scrollTop = 0;
   if (typeof renderPanelDockedSummary === "function")
     renderPanelDockedSummary();
+  if (id === "data-manager" && document.getElementById("export-json-details")?.open)
+    refreshExportTextarea();
   const target = document.getElementById(id);
   if (target && typeof target.focus === "function")
     target.focus({ preventScroll: true });
@@ -1400,7 +1402,7 @@ function bindEvents() {
   // were byte-for-byte identical, so they now literally share one function.
   const saveLocalJsonHandler = async () => {
     try {
-      const jsonText = exportTrainStore();
+      const jsonText = exportJsonText();
       // Touch devices go through the system share sheet first (存到「檔案」/
       // AirDrop / …) — the anonymous-download fallback on iOS Safari buries
       // the file in a hard-to-find list. Desktop keeps the save picker.
@@ -1519,12 +1521,27 @@ function bindEvents() {
       }
     });
   // ── §7 export and download ──
+  const exportPreview = document.getElementById("export-json-details");
+  exportPreview?.addEventListener("toggle", () => {
+    if (exportPreview.open && activeUtilityWorkspace === "data-manager")
+      refreshExportTextarea();
+  });
+  els.json?.addEventListener("focus", refreshExportTextarea);
+  els.json?.addEventListener("copy", (event) => {
+    const start = els.json.selectionStart;
+    const end = els.json.selectionEnd;
+    const selectedAll = start === 0 && end === els.json.value.length;
+    const text = refreshExportTextarea();
+    const selected = selectedAll ? text : text.slice(start, end);
+    if (event.clipboardData) {
+      event.clipboardData.setData("text/plain", selected);
+      event.preventDefault();
+    }
+  });
   document.getElementById("export-json").addEventListener("click", () => {
-    els.json.value = exportTrainStore();
-    // The preview lives in a details block that ships collapsed on mobile —
-    // exporting INTO a hidden textarea would look like a no-op.
     const exportDetails = document.getElementById("export-json-details");
-    if (exportDetails) exportDetails.open = true;
+    if (exportDetails && !exportDetails.open) exportDetails.open = true;
+    else refreshExportTextarea();
     setStatus(
       els.jsonStatus,
       I18N.t("status.exported"),

@@ -47,11 +47,9 @@ function edgeHasPreferredInstitution(edge, allowedCodes) {
   const allowed = preferredInstitutionSet(allowedCodes);
   if (!allowed.size) return true;
   if (edge?.is_station_connector) {
-    // A transfer connector bridges two physical platforms in the same station
-    // group. Only allow it when every platform institution it joins is permitted,
-    // so a JR-only train cannot hop onto an Osaka-Metro / private platform that
-    // happens to share the station group (e.g. 天王寺 group 007439). Unknown
-    // institutions are treated as acceptable to avoid over-filtering.
+    // Reviewed physical junction edges carry both track institutions. A hard
+    // policy must permit both; passenger station groups never create edges.
+    // Unknown institutions retain the existing policy behavior.
     const codes = edge.institution_type_codes || [];
     if (!codes.length) return true;
     return codes.every((code) => !code || allowed.has(String(code)));
@@ -89,177 +87,175 @@ function graphNodeHasPreferredInstitution(meta, allowedCodes) {
   return routeGraphApi.intersects(meta?.institution_type_codes, preferred);
 }
 
-function addStationTransferConnectorEdges(graph, stationFeatures) {
-  const stations =
-    stationFeatures || (stationsGeoJson && stationsGeoJson.features) || [];
-  const groups = new Map();
-  const edgeKeys = new Set();
-  const surveyedReachability = new Map();
-
-  function hasLocalSurveyedConnection(a, b, lineName, operator) {
-    const cacheKey = `${a}\u0000${lineName}\u0000${operator}`;
-    let reachable = surveyedReachability.get(cacheKey);
-    if (!reachable) {
-      reachable = new Set([a]);
-      const queue = [a];
-      const anchor = graph.nodes.get(a);
-      for (let index = 0; index < queue.length; index++) {
-        for (const edge of graph.adjacency.get(queue[index]) || []) {
-          if (edge.is_station_connector || edge.valid_from || edge.valid_to ||
-              edge.line_name !== lineName || edge.operator !== operator || reachable.has(edge.to)) continue;
-          const point = graph.nodes.get(edge.to);
-          if (!point || distanceMeters(anchor, point) > 900) continue;
-          reachable.add(edge.to);
-          queue.push(edge.to);
-        }
+// Passenger groups and display relationships never add edges. Only the
+// retained reviewed registry can join distinct surveyed track identities.
+function addReviewedPhysicalJunctionEdges(graph, junctions =
+  typeof physicalRailJunctions === "undefined" ? [] : physicalRailJunctions) {
+  if (!graph.ensurePhysicalNode) return;
+  graph.reviewedJunctionIDs ||= new Set();
+  graph.reviewedJunctionPairs ||= new Set();
+  graph.surveyedNodeKeys ||= new Set(graph.nodes.keys());
+  const nodeKey = (endpoint) => graph.resolvePhysicalNode
+    ? graph.resolvePhysicalNode(endpoint.coordinate, endpoint.identity)
+    : physicalRailIdentityKey(endpoint.identity) + "@" + coordKey(endpoint.coordinate);
+  const validPoint = (point) => Array.isArray(point) && point.length >= 2 &&
+    Number.isFinite(point[0]) && Number.isFinite(point[1]) &&
+    Math.abs(point[0]) <= 180 && Math.abs(point[1]) <= 90;
+  const later = (...bounds) => bounds.filter(Boolean).sort().pop() || null;
+  const earlier = (...bounds) => bounds.filter(Boolean).sort()[0] || null;
+  function windowsAt(key) {
+    return (graph.adjacency.get(key) || [])
+      .filter((edge) => !edge.physical_junction_id)
+      .map((edge) => ({ from: edge.valid_from, to: edge.valid_to }));
+  }
+  function connect(a, b, properties, junction, window, isTrack = false) {
+    if (a === b) return;
+    const institutions = [...new Set([
+      ...(graph.nodeMeta.get(a)?.institution_type_codes || []),
+      ...(graph.nodeMeta.get(b)?.institution_type_codes || []),
+    ])];
+    const edge = {
+      to: b, length: Math.max(distanceMeters(graph.nodes.get(a), graph.nodes.get(b)), 0.01),
+      institution_type_code: isTrack ? (institutions[0] || "") : "",
+      institution_type_codes: institutions,
+      railway_class_code: isTrack ? String(properties.railwayClassCode || "") : "",
+      line_name: isTrack ? properties.lineName : "",
+      operator: isTrack ? properties.operatorName : "",
+      valid_from: window.from, valid_to: window.to,
+      is_station_connector: !isTrack,
+      physical_junction_id: junction.id,
+    };
+    graph.adjacency.get(a).push(edge);
+    graph.adjacency.get(b).push({...edge, to: a});
+  }
+  // Official identity periods describe copies of the same surveyed track.
+  // Retarget the reviewed endpoints only through those explicit periods,
+  // retaining their windows; equal names or nearby coordinates are insufficient.
+  const periods = typeof railHistoryOverlays === "undefined" ? [] :
+    (railHistoryOverlays.get(activeCountry)?.identity_periods || [])
+      .filter(period => railHistoryTargetAllows(period.match, "sections"));
+  function endpointCopies(endpoint) {
+    if (!endpoint?.identity || !validPoint(endpoint.coordinate)) return [];
+    const copies = [{endpoint, from: null, to: null}];
+    const named = endpoint.identity;
+    for (const period of periods) {
+      const [lon, lat] = endpoint.coordinate, [west, south, east, north] = period.match.bbox;
+      if (lon < west || lon > east || lat < south || lat > north) continue;
+      if (period.match.line_name === named.lineName && period.match.operator === named.operatorName) {
+        copies.push({endpoint: {...endpoint, identity: {...named,
+          lineName: period.as.N02_003, operatorName: period.as.N02_004,
+          railwayClassCode: period.as.N02_001 || named.railwayClassCode}},
+        from: period.valid_from, to: period.valid_to});
       }
-      surveyedReachability.set(cacheKey, reachable);
-    }
-    return reachable.has(b);
-  }
-
-  function stationTransferGroupKey(feature) {
-    const groupCode = stationGroupCode(feature);
-    if (groupCode) return `group:${groupCode}`;
-    const coord = getFeatureDisplayCoordinate(feature) || [0, 0];
-    const lonBucket = Math.round(Number(coord[0]) * 10) / 10;
-    const latBucket = Math.round(Number(coord[1]) * 10) / 10;
-    return `name:${stationName(feature)}@${lonBucket},${latBucket}`;
-  }
-
-  function getGroup(key) {
-    if (!groups.has(key)) groups.set(key, new Map());
-    return groups.get(key);
-  }
-
-  function membershipOf(nearest, feature) {
-    return {
-      key: nearest.key,
-      distance: nearest.distance,
-      station_name: stationName(feature),
-      n02_group_code: stationGroupCode(feature),
-      line_name: stationLineName(feature),
-      operator: stationOperator(feature),
-      institution_type_code: stationInstitutionTypeCode(feature),
-      valid_from: railServiceBounds(feature.properties).valid_from,
-      valid_to: railServiceBounds(feature.properties).valid_to,
-    };
-  }
-
-  function rememberNode(group, nearest, feature) {
-    if (
-      !nearest ||
-      !nearest.key ||
-      nearest.distance > STATION_TRANSFER_MAX_SNAP_METERS
-    )
-      return;
-    if (typeof RailMap !== "undefined" && typeof RailMap.permitsStationConnectorNode === "function" &&
-        !RailMap.permitsStationConnectorNode(stationCode(feature), graph.nodes.get(nearest.key))) return;
-    const membership = membershipOf(nearest, feature);
-    const existing = group.get(nearest.key);
-    if (!existing || nearest.distance < existing[0].distance) {
-      group.set(nearest.key, [membership]);
-      return;
-    }
-    if (nearest.distance > existing[0].distance) return;
-    const duplicate = existing.some(
-      (item) =>
-        item.valid_from === membership.valid_from &&
-        item.valid_to === membership.valid_to,
-    );
-    if (!duplicate) existing.push(membership);
-  }
-
-  stations.forEach((feature) => {
-    const key = stationTransferGroupKey(feature);
-    const group = getGroup(key);
-    const sourceLines = iterateGeometryLines(feature.geometry);
-    const sourceCoords = sourceLines.length
-      ? sourceLines.flat()
-      : [getFeatureDisplayCoordinate(feature)];
-    sourceCoords.forEach((coord) => {
-      routeGraphApi.nearbyNodes(
-        coord,
-        graph,
-        STATION_TRANSFER_NODE_RADIUS_DEG,
-        30,
-      ).forEach((nearest) => rememberNode(group, nearest, feature));
-    });
-  });
-
-  function addConnectorEdge(infoA, infoB) {
-    const a = infoA?.key;
-    const b = infoB?.key;
-    if (!a || !b || a === b) return;
-    // ADR 0011: a transfer exists only while BOTH platforms do — the later
-    // valid_from and the earlier valid_to (mirrors Swift's connector overlap).
-    const laterFrom = [infoA?.valid_from, infoB?.valid_from]
-      .filter((v) => typeof v === "string" && v !== "")
-      .sort()
-      .pop() ?? null;
-    const earlierTo = [infoA?.valid_to, infoB?.valid_to]
-      .filter((v) => typeof v === "string" && v !== "")
-      .sort()
-      .shift() ?? null;
-    if (laterFrom && earlierTo && laterFrom >= earlierTo) return;
-    const key =
-      [a, b].sort().join("|") + "|" + (laterFrom ?? "") + "|" + (earlierTo ?? "");
-    if (edgeKeys.has(key)) return;
-    const aCoord = graph.nodes.get(a);
-    const bCoord = graph.nodes.get(b);
-    if (!aCoord || !bCoord) return;
-    // A transfer must not shortcut rail already connected by the station's
-    // own current surveyed track. Distinct lines and dated memberships retain
-    // the existing transfer behavior; a disconnected platform can still join.
-    if (infoA.line_name && infoA.operator && infoA.line_name === infoB.line_name &&
-        infoA.operator === infoB.operator && !infoA.valid_from && !infoA.valid_to &&
-        !infoB.valid_from && !infoB.valid_to &&
-        hasLocalSurveyedConnection(a, b, infoA.line_name, infoA.operator)) return;
-    const gap = distanceMeters(aCoord, bCoord);
-    if (gap > STATION_TRANSFER_MAX_NODE_GAP_METERS) return;
-    edgeKeys.add(key);
-    // Record the institution of each bridged platform so the institution filter
-    // can reject connectors that would cross into a non-allowed operator class.
-    const institutionTypeCodes = [
-      ...new Set(
-        [infoA?.institution_type_code, infoB?.institution_type_code]
-          .map((c) => String(c || ""))
-          .filter(Boolean),
-      ),
-    ];
-    const baseEdge = {
-      to: b,
-      length: Math.max(gap + STATION_TRANSFER_EDGE_PENALTY, 0.01),
-      institution_type_code: "",
-      institution_type_codes: institutionTypeCodes,
-      railway_class_code: "",
-      line_name: "",
-      operator: "",
-      valid_from: laterFrom,
-      valid_to: earlierTo,
-      is_station_connector: true,
-      station_name: infoA?.station_name || "",
-      n02_group_code: infoA?.n02_group_code || "",
-    };
-    graph.adjacency.get(a).push(baseEdge);
-    graph.adjacency.get(b).push({ ...baseEdge, to: a });
-  }
-
-  groups.forEach((nodeMap) => {
-    // Reachability is reused only among candidate pairs at this station.
-    // Keeping earlier stations' sets would retain the whole survey graph.
-    surveyedReachability.clear();
-    const nodes = [...nodeMap.values()]
-      .sort((a, b) => a[0].distance - b[0].distance)
-      .slice(0, STATION_TRANSFER_MAX_NODES_PER_GROUP);
-    for (let i = 0; i < nodes.length - 1; i += 1) {
-      for (let j = i + 1; j < nodes.length; j += 1) {
-        for (const infoA of nodes[i]) {
-          for (const infoB of nodes[j]) addConnectorEdge(infoA, infoB);
+      if (period.as.N02_003 === named.lineName && period.as.N02_004 === named.operatorName &&
+          String(period.as.N02_001 || named.railwayClassCode) === String(named.railwayClassCode)) {
+        const bucket = graph.grid.get(graphGridKey(endpoint.coordinate, graph.cellSize)) || [];
+        for (const key of bucket) {
+          const meta = graph.nodeMeta.get(key);
+          if (!graph.surveyedNodeKeys.has(key) ||
+              coordKey(graph.nodes.get(key)) !== coordKey(endpoint.coordinate) ||
+              !meta.line_names.has(period.match.line_name) || !meta.operators.has(period.match.operator)) continue;
+          for (const code of meta.railway_class_codes) {
+            const identity = {...named, lineName: period.match.line_name,
+              operatorName: period.match.operator, railwayClassCode: code};
+            if (!graph.surveyedNodeKeys.has(nodeKey({...endpoint, identity}))) continue;
+            copies.push({endpoint: {...endpoint, identity}, from: period.valid_to, to: null});
+          }
         }
       }
     }
+    return copies;
+  }
+  const expandedJunctions = junctions.flatMap(junction => {
+    if (junction.kind === "osmTrack") return [junction];
+    return endpointCopies(junction.from).flatMap(from => endpointCopies(junction.to).map(to => ({
+      ...junction, from: from.endpoint, to: to.endpoint,
+      validFrom: later(junction.validFrom, from.from, to.from),
+      validTo: earlier(junction.validTo, from.to, to.to),
+    })));
   });
+  for (const junction of expandedJunctions) {
+    if (junction.region !== activeCountry || !junction.id ||
+        !junction.evidence?.some((item) => typeof item === "string" && item.trim()) ||
+        !junction.from?.identity || !junction.to?.identity ||
+        !validPoint(junction.from.coordinate) || !validPoint(junction.to.coordinate)) continue;
+    const pairKey = junction.id + "|" + nodeKey(junction.from) + "|" + nodeKey(junction.to) +
+      "|" + (junction.validFrom || "") + "|" + (junction.validTo || "");
+    if (graph.reviewedJunctionPairs.has(pairKey)) continue;
+    const kind = junction.kind || "zeroLength";
+    const from = nodeKey(junction.from), to = nodeKey(junction.to);
+    const deadEnd = kind === "osmTrack" && junction.terminus?.end === "to";
+    if (!graph.surveyedNodeKeys.has(from) || (!deadEnd && !graph.surveyedNodeKeys.has(to))) continue;
+    const fromIdentity = physicalRailIdentityKey(junction.from.identity);
+    const toIdentity = physicalRailIdentityKey(junction.to.identity);
+    let chain;
+    let ownIdentity;
+    if (kind === "zeroLength" || kind === "shortLink") {
+      const gap = distanceMeters(graph.nodes.get(from), graph.nodes.get(to));
+      if (fromIdentity === toIdentity ||
+          (kind === "zeroLength" && coordKey(junction.from.coordinate) !== coordKey(junction.to.coordinate)) ||
+          (kind === "shortLink" && gap > 30)) continue;
+      chain = [from, to];
+    } else if (kind === "osmConnector" || kind === "osmTrack") {
+      const path = junction.path;
+      if (!Array.isArray(path) || path.length < 2 || !path.every(validPoint) ||
+          junction.source?.provider !== "OpenStreetMap" ||
+          junction.source?.license !== "ODbL-1.0" || !junction.source?.ways?.length) continue;
+      const foreign = kind === "osmTrack" ? junction.endJunction : null;
+      if (kind === "osmConnector" && fromIdentity === toIdentity) continue;
+      if (kind === "osmTrack" && !foreign && fromIdentity !== toIdentity) continue;
+      if (foreign && (!['from', 'to'].includes(foreign.end) || fromIdentity === toIdentity ||
+          physicalRailIdentityKey(foreign.identity) !== (foreign.end === 'to' ? toIdentity : fromIdentity) ||
+          !validPoint(foreign.coordinate) ||
+          coordKey(foreign.coordinate) !== coordKey(foreign.end === 'to' ? junction.to.coordinate : junction.from.coordinate) ||
+          !junction.evidence.some(item => !/openstreetmap\.org|^way \d+$/i.test(item)))) continue;
+      if (junction.terminus && (!deadEnd || foreign || !validPoint(junction.terminus.coordinate))) continue;
+      const fromAttach = distanceMeters(graph.nodes.get(from), path[0]);
+      const toAttach = deadEnd ? 0 : distanceMeters(graph.nodes.get(to), path[path.length - 1]);
+      if (fromAttach > 50 || toAttach > 50 ||
+          (deadEnd && distanceMeters(path[path.length - 1], junction.terminus.coordinate) > 300)) continue;
+      let pathMeters = 0, broken = false;
+      for (let i = 1; i < path.length; i++) {
+        const step = distanceMeters(path[i - 1], path[i]);
+        if (step > 2000) broken = true;
+        pathMeters += step;
+      }
+      if (broken || (kind === "osmConnector" && fromAttach + pathMeters + toAttach > 1500)) continue;
+      ownIdentity = kind === "osmTrack"
+        ? (foreign?.end === 'from' ? junction.to.identity : junction.from.identity)
+        : {operatorName: "", lineName: `reviewed-junction:${junction.id}`, railwayClassCode: ""};
+      // An unqualified coordinate cannot choose between distinct source nodes.
+      if (graph.canEnsurePhysicalNode &&
+          path.some(point => !graph.canEnsurePhysicalNode(point, ownIdentity))) continue;
+      chain = [from, ...path.map(point => graph.ensurePhysicalNode(point, ownIdentity)), ...(deadEnd ? [] : [to])];
+      if (chain.some(key => key === null)) continue;
+      if (kind === "osmTrack") for (const key of chain.slice(1, deadEnd ? undefined : -1)) {
+        graph.recordPhysicalNodeMeta(key, {
+          operator: ownIdentity.operatorName, line_name: ownIdentity.lineName,
+          railway_class_code: ownIdentity.railwayClassCode,
+          institution_type_code: [...(graph.nodeMeta.get(from)?.institution_type_codes || [])][0] || "",
+        });
+      }
+    } else continue;
+    const fromWindows = windowsAt(from);
+    const toWindows = deadEnd ? [{from: null, to: null}] : windowsAt(to);
+    const seenWindows = new Set();
+    for (const a of fromWindows) for (const b of toWindows) {
+      const window = {from: later(a.from, b.from, junction.validFrom), to: earlier(a.to, b.to, junction.validTo)};
+      if (window.from && window.to && window.from >= window.to) continue;
+      const key = JSON.stringify(window);
+      if (seenWindows.has(key)) continue;
+      seenWindows.add(key);
+      for (let i = 1; i < chain.length; i++) {
+        const ownTrack = kind === "osmTrack" &&
+          !(junction.endJunction?.end === 'from' && i === 1) &&
+          !(junction.endJunction?.end === 'to' && i === chain.length - 1);
+        connect(chain[i - 1], chain[i], ownIdentity || junction.from.identity, junction, window, ownTrack);
+      }
+    }
+    graph.reviewedJunctionIDs.add(junction.id);
+    graph.reviewedJunctionPairs.add(pairKey);
+  }
 }
 
 function stationMatchesPreferredInstitution(feature, allowedCodes) {
@@ -412,6 +408,94 @@ function includeDatedExplicitCodeIdentityAliases(
     : candidates;
 }
 
+// A station-only identity period can rename the membership's line onto a label
+// no section edge carries (西大阪線 before 阪神なんば線). The pinned code then
+// has no date-valid line in common with the section. Follow the N02 group to
+// the date-valid sibling on the section's line (007308 → 007309). Skip this
+// when the pinned line already serves the section.
+let stationGroupIndexSource = null;
+let stationGroupIndex = null;
+function featuresSharingStationGroup(groupCode) {
+  if (stationGroupIndexSource !== stationsGeoJson) {
+    const map = new Map();
+    (stationsGeoJson?.features || []).forEach((feature) => {
+      const group = stationGroupCode(feature);
+      if (!group) return;
+      let list = map.get(group);
+      if (!list) {
+        list = [];
+        map.set(group, list);
+      }
+      list.push(feature);
+    });
+    stationGroupIndex = map;
+    stationGroupIndexSource = stationsGeoJson;
+  }
+  return (stationGroupIndex && stationGroupIndex.get(groupCode)) || [];
+}
+
+function includeDatedGroupSiblingMemberships(
+  candidates,
+  code,
+  rideDate,
+  sectionLineNames,
+) {
+  if (
+    !code ||
+    typeof rideDate !== "string" ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(rideDate)
+  ) {
+    return candidates;
+  }
+  const sectionLines = new Set((sectionLineNames || []).filter(Boolean));
+  const codePool = dedupeStationFeatures(
+    stationCandidatesIndex.get(String(code).trim()) || [],
+  );
+  const available = (feature) => {
+    const bounds = railServiceBounds(feature?.properties);
+    return isRailValid(bounds.valid_from, bounds.valid_to, rideDate);
+  };
+  const datedLines = new Set(
+    codePool
+      .filter(available)
+      .map((feature) => stationLineName(feature))
+      .filter((line) => line && line !== "-"),
+  );
+  if (
+    sectionLines.size &&
+    [...datedLines].some((line) => sectionLines.has(line))
+  ) {
+    return candidates;
+  }
+  const groupSource = codePool.find(available) || codePool[0];
+  const group = groupSource ? stationGroupCode(groupSource) : null;
+  if (!group) return candidates;
+  const pinned = String(code).trim();
+  const siblings = featuresSharingStationGroup(group).filter((feature) => {
+    if (stationCode(feature) === pinned) return false;
+    if (!available(feature)) return false;
+    if (!sectionLines.size) return true;
+    return sectionLines.has(stationLineName(feature));
+  });
+  return siblings.length
+    ? dedupeStationFeatures([...(candidates || []), ...siblings])
+    : candidates;
+}
+
+function sameCodeEdgeLineNames(feature) {
+  const code = stationCode(feature);
+  if (!code) return new Set();
+  const own = stationLineName(feature);
+  const lines = new Set();
+  (stationCandidatesIndex.get(String(code).trim()) || []).forEach((other) => {
+    if (stationCode(other) !== code) return;
+    const line = stationLineName(other);
+    if (!line || line === "-" || line === own) return;
+    lines.add(line);
+  });
+  return lines;
+}
+
 function resolveRouteEndpointStationCandidates(
   endpoint,
   train,
@@ -426,6 +510,12 @@ function resolveRouteEndpointStationCandidates(
     name,
     code,
     train?.date,
+  );
+  candidates = includeDatedGroupSiblingMemberships(
+    candidates,
+    code,
+    train?.date,
+    sectionLineNames,
   );
   const datedCandidates = suppressRetiredExplicitNameFallback(
     candidates,
@@ -449,8 +539,17 @@ function resolveRouteEndpointStationCandidates(
     sameNameCandidates,
     allowedCodes,
   );
+  const anchored = candidates.filter((feature) =>
+    Object.hasOwn(feature.properties || {}, "source_anchor_node_id"),
+  );
+  const groups = new Set(anchored.map(stationGroupCode).filter(Boolean));
+  const identityPreferred = anchored.length
+    ? sameNamePreferred.filter((feature) =>
+        stationCode(feature) === code || groups.has(stationGroupCode(feature)),
+      )
+    : sameNamePreferred;
   const nearbySameNamePreferred = filterStationCandidatesNear(
-    sameNamePreferred,
+    identityPreferred,
     candidates,
     1800,
   );
@@ -483,7 +582,9 @@ function resolveRouteEndpointStationCandidates(
     return dedupeStationFeatures([...candidates, ...sameStationLineAdditions]);
   }
 
-  if (preferredCandidates.length) return candidates;
+  // Anchored memberships already considered only their explicit identity
+  // above. The legacy institution fallback cannot widen that identity pool.
+  if (anchored.length || preferredCandidates.length) return candidates;
 
   const sameNamePreferredFallback = filterStationsByPreferredInstitution(
     sameNameCandidates,
@@ -524,9 +625,8 @@ function edgeMatchesRequiredHints(edge, segmentHints) {
   const requiredOperators = segmentHints.requiredOperators || new Set();
 
   // route_sections[].line_names / operator_names are explicit per-segment
-  // constraints.  Short in-station connector edges are allowed so line-specific
-  // station codes can still reach the actual RailroadSection geometry at the
-  // same physical station.
+  // constraints. Reviewed physical junction hops may cross those named tracks;
+  // passenger transfer relationships never enter this graph.
   if (edge.is_station_connector) return true;
   if (requiredLines.size && !requiredLines.has(edge.line_name || ""))
     return false;
@@ -848,6 +948,14 @@ function solveRouteSectionOnN02Graph(
   }
 
   const segmentHints = usedHints || baseHints;
+  // Keep the surveyed track identities when a CN fallback used original
+  // source-node topology. Display proximity cannot substitute another railway.
+  const sourcePhysicalIdentityKeys = String(train.region || activeCountry || "").toLowerCase() === "cn"
+    ? [...new Set(best.pathKeys.flatMap((key) => {
+        const marker = key.lastIndexOf("@source-node:");
+        return marker < 0 ? [] : [key.slice(0, marker)];
+      }))]
+    : [];
   const rawCoordinates = best.pathKeys.map((key) => graph.nodes.get(key));
   let coordinates = completeRouteEndpointCoordinates(
     rawCoordinates,
@@ -875,6 +983,9 @@ function solveRouteSectionOnN02Graph(
       geometry_role: "single_primary_segment",
       source:
         "browser_dijkstra_on_embedded_n02_railroadsection_graph_python_equivalent",
+      ...(sourcePhysicalIdentityKeys.length
+        ? { source_physical_identity_keys: sourcePhysicalIdentityKeys }
+        : {}),
       segment_index: segmentIndex,
       from: section.from || stationName(fromStations[0]),
       to: section.to || stationName(toStations[0]),
@@ -1415,6 +1526,16 @@ function collectStationCandidateGraphNodes(
   return candidates;
 }
 
+function recordedStationSourceAnchorKey(feature) {
+  const properties = feature.properties || {};
+  const anchor = properties.source_anchor_node_id;
+  if ((typeof anchor !== "number" && typeof anchor !== "string") ||
+      !/^[0-9]+$/.test(String(anchor)) || !/[1-9]/.test(String(anchor)) ||
+      typeof properties.line_id !== "string" || !properties.line_id) return null;
+  return physicalRailIdentityKey({ ...properties, trackID: properties.line_id }) +
+    "@source-node:osm-node-" + String(anchor);
+}
+
 function getStationCandidateGraphNodes(
   stationFeature,
   graph,
@@ -1422,6 +1543,8 @@ function getStationCandidateGraphNodes(
   allowedCodes = [...DEFAULT_ALLOWED_INSTITUTION_TYPE_CODES],
 ) {
   const allowedKey = (allowedCodes || []).map(String).sort().join(",");
+  const hasRecordedAnchor = Object.hasOwn(stationFeature.properties || {}, "source_anchor_node_id");
+  const sourceAnchorKey = hasRecordedAnchor ? recordedStationSourceAnchorKey(stationFeature) : null;
   // N02 can contain multiple physical station geometries with the same code,
   // line and operator (for example the two 白島線 八丁堀 records).  Geometry
   // must therefore participate in the cache key or one platform can reuse
@@ -1431,7 +1554,7 @@ function getStationCandidateGraphNodes(
       getFeatureDisplayCoordinate(stationFeature) ||
       null,
   );
-  const cacheKey = `${stationCode(stationFeature) || stationName(stationFeature)}|${stationLineName(stationFeature)}|${stationOperator(stationFeature)}|geometry:${stationGeometryKey}|${allowedKey}|home:${hints.requirePreferredInstitution ? 1 : 0}|reqL:${[...(hints.requiredLines || [])].join("/")}|reqO:${[...(hints.requiredOperators || [])].join("/")}|prefL:${[...(hints.preferredLines || [])].join("/")}|prefO:${[...(hints.preferredOperators || [])].join("/")}`;
+  const cacheKey = `${stationCode(stationFeature) || stationName(stationFeature)}|${stationLineName(stationFeature)}|${stationOperator(stationFeature)}|geometry:${stationGeometryKey}|anchor:${hasRecordedAnchor ? sourceAnchorKey || "invalid" : "legacy"}|${allowedKey}|home:${hints.requirePreferredInstitution ? 1 : 0}|reqL:${[...(hints.requiredLines || [])].join("/")}|reqO:${[...(hints.requiredOperators || [])].join("/")}|prefL:${[...(hints.preferredLines || [])].join("/")}|prefO:${[...(hints.preferredOperators || [])].join("/")}`;
   if (cacheKey && graph.stationSnapCache.has(cacheKey))
     return graph.stationSnapCache.get(cacheKey);
 
@@ -1442,6 +1565,30 @@ function getStationCandidateGraphNodes(
     : [getFeatureDisplayCoordinate(stationFeature)];
   const stationLine = stationLineName(stationFeature);
   const stationOperatorName = stationOperator(stationFeature);
+  const nearby = [];
+  if (hasRecordedAnchor) {
+    const point = sourceAnchorKey && graph.nodes.get(sourceAnchorKey);
+    if (!point || !sourceCoords.length) {
+      graph.stationSnapCache.set(cacheKey, []);
+      return [];
+    }
+    nearby.push({ key: sourceAnchorKey, distance: Math.min(...sourceCoords.map(
+      (coord) => routeSolverApi.distanceMeters(coord, point),
+    )) });
+  } else {
+    sourceCoords.forEach((coord) => {
+      routeGraphApi.nearbyNodes(coord, graph, 0.006, 160).forEach((nearest) => {
+        if (nearest.distance <= STATION_SNAP_MAX_DISTANCE_METERS) nearby.push(nearest);
+      });
+    });
+  }
+  const lineOnGraph =
+    stationLine &&
+    stationLine !== "-" &&
+    nearby.some((nearest) =>
+      graph.nodeMeta.get(nearest.key)?.line_names?.has(stationLine),
+    );
+  const alternateLines = lineOnGraph ? new Set() : sameCodeEdgeLineNames(stationFeature);
 
   function maybeUpsertCandidate(nearest) {
     if (!nearest || !nearest.key) return;
@@ -1463,7 +1610,11 @@ function getStationCandidateGraphNodes(
     )
       return;
     let score = nearest.distance;
-    if (stationLine && meta.line_names?.has(stationLine)) score -= 40;
+    if (stationLine && stationLine !== "-" && meta.line_names?.has(stationLine)) {
+      score -= 40;
+    } else if ([...alternateLines].some((line) => meta.line_names?.has(line))) {
+      score -= 40;
+    }
     if (stationOperatorName && meta.operators?.has(stationOperatorName))
       score -= 15;
     if (routeGraphApi.intersects(hints.preferredLines, meta.line_names)) {
@@ -1495,15 +1646,10 @@ function getStationCandidateGraphNodes(
     }
   }
 
-  sourceCoords.forEach((coord) => {
-    // Station geometries are often LineString objects. The same railroad node can be
-    // discovered from multiple station-geometry vertices; keep the best snap per node
-    // instead of freezing the first, possibly hundreds-of-meters-away encounter.
-    routeGraphApi.nearbyNodes(coord, graph, 0.006, 160).forEach((nearest) => {
-      if (nearest.distance <= STATION_SNAP_MAX_DISTANCE_METERS)
-        maybeUpsertCandidate(nearest);
-    });
-  });
+  // Station geometries are often LineString objects. The same railroad node can be
+  // discovered from multiple station-geometry vertices; keep the best snap per node
+  // instead of freezing the first, possibly hundreds-of-meters-away encounter.
+  nearby.forEach((nearest) => maybeUpsertCandidate(nearest));
 
   const candidates = [...candidateMap.values()].sort(
     (a, b) => a.score - b.score || a.distance - b.distance,
