@@ -28165,3 +28165,4 @@
 {"id":"st:cn:14799","scheme":"station-code","value":"CN-12306-IIQ","run":1}
 {"id":"st:cn:14800","scheme":"derivation","value":"cx:cn:14065|op:cn:2","run":1}
 {"id":"st:cn:14800","scheme":"station-code","value":"CN-12306-QBQ","run":1}
+{"id":"st:cn:5301","scheme":"station-code","value":"CN-12306-XCE","run":5}

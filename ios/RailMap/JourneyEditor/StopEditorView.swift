@@ -87,6 +87,7 @@ struct StopEditorView: View {
     @FocusState private var stationNameFocused: Bool
     @State private var catalog: EditorCatalog?
     @State private var retiredOpenStations: [RetiredStation] = []
+    @State private var qualifierByCode: [String: String] = [:]
 
     private var selectedLines: [CatalogLine] {
         guard let catalog else { return [] }
@@ -95,6 +96,18 @@ struct StopEditorView: View {
                 if lhs.name != rhs.name { return lhs.name < rhs.name }
                 return lhs.id < rhs.id
             }
+    }
+
+    private var confirmedQualifier: String? {
+        guard let code = stop.n02StationCode, !code.isEmpty else { return nil }
+        return qualifierByCode[code]
+    }
+
+    private func confirmedCopyText(qualifier: String) -> String {
+        guard let catalog, let code = stop.n02StationCode, !code.isEmpty,
+              let station = catalog.station(StationKey(regionCode: region.code, sourceCode: code))
+        else { return StationQualifierCopy.full(name: stop.name, qualifier: qualifier) }
+        return StationReferenceResolution.copyLabel(for: station, catalog: catalog)
     }
 
     private var hasStationLineConflict: Bool {
@@ -149,10 +162,30 @@ struct StopEditorView: View {
                         stationNameFocused = false
                     },
                     inlineQuery: stationName, showsSuggestions: stationNameFocused,
-                    onLoad: { loaded, retired in
+                    onLoad: { loaded, retired, qualifiers in
                         catalog = loaded
                         retiredOpenStations = retired
+                        qualifierByCode = qualifiers
                     })
+                if let qualifier = confirmedQualifier {
+                    StationQualifierCaption(text: qualifier)
+                        .accessibilityLabel(StationQualifierCopy.spoken(
+                            name: stop.name, countryCode: region.code.uppercased(),
+                            qualifier: qualifier, localization: localization))
+                        .contextMenu {
+                            let full = confirmedCopyText(qualifier: qualifier)
+                            Button {
+                                StationQualifierCopy.copy(full)
+                            } label: {
+                                Label(localization.text("ios.editor.copyStation", fallback: "Copy"),
+                                      systemImage: "doc.on.doc")
+                            }
+                            ShareLink(item: full) {
+                                Label(localization.text("ios.share", fallback: "Share"),
+                                      systemImage: "square.and.arrow.up")
+                            }
+                        }
+                }
                 if stop.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Text(localization.text("ios.editor.stationGuide"))
                         .font(.footnote)

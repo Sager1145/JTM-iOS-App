@@ -15,11 +15,18 @@ public extension JourneyCompletion {
         public var departure: String?
         public var platformNumber: Int?
         public var candidates: [CatalogStation]
+        /// Full label for each candidate, same order: `府中 (JP, 京王線)`.
+        public var candidateLabels: [String]
+        /// A base matched more than one station, or the bundle says the base is not unique.
+        /// A single visible candidate is still not an automatic choice.
+        public var ambiguous: Bool
 
         public init(
             id: Int, sourceText: String, matchedName: String,
             arrival: String? = nil, departure: String? = nil,
-            platformNumber: Int? = nil, candidates: [CatalogStation]
+            platformNumber: Int? = nil, candidates: [CatalogStation],
+            candidateLabels: [String] = [],
+            ambiguous: Bool = false
         ) {
             self.id = id
             self.sourceText = sourceText
@@ -28,10 +35,25 @@ public extension JourneyCompletion {
             self.departure = departure
             self.platformNumber = platformNumber
             self.candidates = candidates
+            self.candidateLabels = candidateLabels
+            self.ambiguous = ambiguous
         }
 
         public var automaticSelection: StationKey? {
-            candidates.count == 1 ? candidates[0].key : nil
+            guard !ambiguous, candidates.count == 1 else { return nil }
+            return candidates[0].key
+        }
+
+        /// One unambiguous candidate is already chosen. An ambiguous stop stays in the
+        /// selectable list even when only one candidate is visible, so the rider can
+        /// write a selection.
+        public var confirmsSingleCandidate: Bool {
+            !ambiguous && candidates.count == 1
+        }
+
+        /// Candidates the chooser must list. Empty when the single row is already chosen.
+        public var selectableCandidates: [CatalogStation] {
+            confirmsSingleCandidate ? [] : candidates
         }
     }
 
@@ -100,7 +122,8 @@ public extension JourneyCompletion {
     }
 
     static func rawDraft(
-        text: String, catalog: EditorCatalog, regionCode: String, seed: Train
+        text: String, catalog: EditorCatalog, regionCode: String, seed: Train,
+        directory: StationNameDirectory? = nil
     ) -> RawDraft {
         let rawLines = text.components(separatedBy: .newlines)
             .map(TransferGuide.Text.normalize)
@@ -111,7 +134,9 @@ public extension JourneyCompletion {
         var infos = segments.map { segment in
             RawLine(
                 text: segment,
-                match: stationMatch(in: segment, searchable: names),
+                match: stationMatch(
+                    in: segment, searchable: names, catalog: catalog, regionCode: regionCode,
+                    directory: directory),
                 times: times(in: segment),
                 platformNumber: platform(in: segment))
         }
@@ -120,7 +145,9 @@ public extension JourneyCompletion {
         let stops = rawStops(from: infos)
 
         let rideDate = rawLines.lazy.compactMap(date(in:)).first
-        let service = firstService(in: rawLines, names: names)
+        let service = firstService(
+            in: rawLines, names: names, catalog: catalog, regionCode: regionCode,
+            directory: directory)
         let claimed = Set(infos.filter { $0.match != nil || !$0.times.isEmpty }.map(\.text))
         let unmatched = rawLines.filter { !claimed.contains($0) && date(in: $0) == nil && $0 != service }
         return RawDraft(
@@ -139,6 +166,8 @@ private extension JourneyCompletion {
     struct StationMatch {
         var name: String
         var candidates: [CatalogStation]
+        var labels: [String]
+        var ambiguous: Bool = false
     }
 
     struct RawLine {
@@ -197,7 +226,9 @@ private extension JourneyCompletion {
                 arrival: assigned.arrival,
                 departure: assigned.departure,
                 platformNumber: info.platformNumber,
-                candidates: match.candidates)
+                candidates: match.candidates,
+                candidateLabels: match.labels,
+                ambiguous: match.ambiguous)
             // Repeated headers and copied transfer rows can say the same station twice. Preserve
             // a genuine revisit, but collapse adjacent duplicate rows with identical times.
             if let last = stops.last,
@@ -213,9 +244,14 @@ private extension JourneyCompletion {
         return stops
     }
 
-    static func firstService(in rawLines: [String], names: [SearchableName]) -> String? {
+    static func firstService(
+        in rawLines: [String], names: [SearchableName], catalog: EditorCatalog, regionCode: String,
+        directory: StationNameDirectory? = nil
+    ) -> String? {
         let service = rawLines.lazy.compactMap { line -> String? in
-            guard stationMatch(in: line, searchable: names) == nil,
+            guard stationMatch(
+                in: line, searchable: names, catalog: catalog, regionCode: regionCode,
+                directory: directory) == nil,
                   times(in: line).isEmpty,
                   looksLikeService(line)
             else { return nil }
@@ -255,24 +291,154 @@ private extension JourneyCompletion {
     }
 
     static func stationMatch(
-        in line: String, searchable: [SearchableName]
+        in line: String, searchable: [SearchableName], catalog: EditorCatalog, regionCode: String,
+        directory: StationNameDirectory? = nil
     ) -> StationMatch? {
-        let foldedLine = line.precomposedStringWithCompatibilityMapping.lowercased()
-        guard let first = searchable.first(where: { foldedLine.contains($0.folded) }) else {
+        let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
+        let foldedLine = fold(trimmed)
+        guard !foldedLine.isEmpty else { return nil }
+        let stored = directory ?? StationNameLookup.directory(forRegion: regionCode)
+        let catalogs = [regionCode: catalog]
+        // 1. The whole segment is a catalog name, brackets included.
+        // An exact catalog name wins over a bare base of a bracketed station.
+        // A missing bundle still refuses to treat that full name as a qualifier.
+        if let exact = searchable.first(where: { $0.folded == foldedLine }) {
+            return unqualifiedMatch(exact, searchable: searchable, catalog: catalog)
+        }
+        // 2. A stored official name (or its longest leading part) is the name.
+        // Only a bracket group after that name can be a qualifier.
+        // No catalog row for that spelling falls through to the older contained-name steps.
+        if let stored, let leading = stored.leadingOfficialName(in: trimmed),
+           let match = storedNameMatch(
+            official: leading.official, remainder: leading.remainder, directory: stored,
+            searchable: searchable, catalog: catalog, regionCode: regionCode, catalogs: catalogs)
+        {
+            return match
+        }
+        // 3. A base with no brackets of its own matches one bracketed station only
+        // when the bundle says that base is unique and no station is named the base.
+        if let stored, let base = baseOnlyMatch(
+            in: trimmed, directory: stored, searchable: searchable, catalog: catalog,
+            regionCode: regionCode, catalogs: catalogs)
+        {
+            return base
+        }
+        // 4. A trailing bracket is a qualifier only when it is not part of a known
+        // name, it immediately follows a catalog name, and its contents are a
+        // country and/or a known line alias.
+        if let prefix = StationReference.immediateBracketName(in: trimmed),
+           let parsed = StationReference.parse(trimmed),
+           parsed.name == prefix,
+           stored?.parts(forOfficialName: trimmed) == nil,
+           stored?.leadingOfficialName(in: trimmed) == nil,
+           StationReferenceResolution.recognizedQualifier(parsed, in: catalogs),
+           searchable.contains(where: { $0.folded == fold(prefix) })
+        {
+            let reference = StationReference(
+                name: prefix, country: parsed.country, line: parsed.line,
+                unsupportedCountry: parsed.unsupportedCountry)
+            let matches = StationReferenceResolution.resolve(
+                reference, in: catalogs, limitingToRegion: regionCode)
+            return StationMatch(
+                name: prefix, candidates: matches.map(\.station), labels: matches.map(\.label))
+        }
+        // 5. The longest catalog name outside the bracket, then anywhere in the text.
+        let foldedScope = fold(StationReference.nameScope(in: trimmed))
+        if let outside = searchable.first(where: { foldedScope.contains($0.folded) }) {
+            return unqualifiedMatch(outside, searchable: searchable, catalog: catalog)
+        }
+        guard let contained = searchable.first(where: { foldedLine.contains($0.folded) }) else {
             return nil
         }
-        // All station complexes reached through the same spelling remain candidates. A name
-        // shared by several cities therefore cannot silently pick the first database row.
+        return unqualifiedMatch(contained, searchable: searchable, catalog: catalog)
+    }
+
+    private static func storedNameMatch(
+        official: String, remainder: String, directory: StationNameDirectory,
+        searchable: [SearchableName], catalog: EditorCatalog,
+        regionCode: String, catalogs: [String: EditorCatalog]
+    ) -> StationMatch? {
+        guard searchable.contains(where: { fold($0.text) == fold(official) }) else { return nil }
+        let quoted = remainder.isEmpty ? official : "\(official) \(remainder)"
+        if !remainder.isEmpty,
+           let parsed = StationReference.parse(quoted, names: directory),
+           parsed.name == official,
+           StationReferenceResolution.recognizedQualifier(parsed, in: catalogs)
+        {
+            let matches = StationReferenceResolution.resolve(
+                parsed, in: catalogs, limitingToRegion: regionCode)
+            return StationMatch(
+                name: official, candidates: matches.map(\.station), labels: matches.map(\.label),
+                ambiguous: matches.count != 1)
+        }
+        guard let entry = searchable.first(where: { fold($0.text) == fold(official) }) else { return nil }
+        return unqualifiedMatch(entry, searchable: searchable, catalog: catalog)
+    }
+
+    private static func baseOnlyMatch(
+        in trimmed: String, directory: StationNameDirectory, searchable: [SearchableName],
+        catalog: EditorCatalog, regionCode: String, catalogs: [String: EditorCatalog]
+    ) -> StationMatch? {
+        guard let parsed = StationReference.parse(trimmed) else { return nil }
+        let base = parsed.name
+        guard directory.baseNameCounts[base] != nil, directory.parts(forOfficialName: base) == nil else {
+            return nil
+        }
+        let officials = directory.officialNames(withBase: base)
+        var stations: [CatalogStation] = []
+        for official in officials {
+            for station in catalog.candidates(named: official, regionCode: regionCode)
+            where !stations.contains(where: { $0.key == station.key }) {
+                stations.append(station)
+            }
+        }
+        let exact = catalog.candidates(named: base, regionCode: regionCode)
+        for station in exact where !stations.contains(where: { $0.key == station.key }) {
+            stations.append(station)
+        }
+        guard !stations.isEmpty else {
+            return StationMatch(name: base, candidates: [], labels: [], ambiguous: true)
+        }
+        stations.sort { $0.key.sourceCode < $1.key.sourceCode }
+        let unique = directory.baseNameCounts[base] == 1 && exact.isEmpty && officials.count == 1
+            && stations.count == 1
+        if unique, parsed.country != nil || parsed.line != nil, let official = officials.first {
+            let reference = StationReference(
+                name: official, country: parsed.country, line: parsed.line,
+                unsupportedCountry: parsed.unsupportedCountry)
+            if StationReferenceResolution.recognizedQualifier(reference, in: catalogs) {
+                let matches = StationReferenceResolution.resolve(
+                    reference, in: catalogs, limitingToRegion: regionCode)
+                return StationMatch(
+                    name: official, candidates: matches.map(\.station),
+                    labels: matches.map(\.label), ambiguous: matches.count != 1)
+            }
+        }
+        let labels = stations.map { StationReferenceResolution.copyLabel(for: $0, catalog: catalog) }
+        let shown = unique ? (officials.first ?? base) : base
+        return StationMatch(name: shown, candidates: stations, labels: labels, ambiguous: !unique)
+    }
+
+    private static func fold(_ value: String) -> String {
+        value.trimmingCharacters(in: .whitespacesAndNewlines)
+            .precomposedStringWithCompatibilityMapping
+            .lowercased()
+    }
+
+    private static func unqualifiedMatch(
+        _ first: SearchableName, searchable: [SearchableName], catalog: EditorCatalog
+    ) -> StationMatch {
         var candidates = first.stations
-        for entry in searchable
-        where entry.folded == first.folded {
+        for entry in searchable where entry.folded == first.folded {
             for station in entry.stations where !candidates.contains(where: { $0.key == station.key }) {
                 candidates.append(station)
             }
         }
-        return StationMatch(name: first.text, candidates: candidates.sorted {
-            $0.key.sourceCode < $1.key.sourceCode
-        })
+        candidates.sort { $0.key.sourceCode < $1.key.sourceCode }
+        let labels = candidates.map {
+            StationReferenceResolution.copyLabel(for: $0, catalog: catalog)
+        }
+        return StationMatch(name: first.text, candidates: candidates, labels: labels)
     }
 
     static func times(in line: String) -> [String] {

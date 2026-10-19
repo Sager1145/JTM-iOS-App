@@ -25,6 +25,12 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
     public var stationOperator: [String: String]
     /// Package line id → `lp:<region>:<seq>`. Unused by the ride upgrade.
     public var lines: [String: String]
+    /// Official station or line-station name → the stored bracket split.
+    /// Absent in a bundle written before the field existed.
+    public var bracketedNames: [String: StationNameRecord]
+    /// Distinct complexes whose official name or base equals the key.
+    /// Only bases that appear in ``bracketedNames``.
+    public var baseNameCounts: [String: Int]
 
     public init(
         schema: String = RegistryBundle.currentSchema,
@@ -34,7 +40,9 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         groupCodes: [String: [String]] = [:],
         operators: [String: [String]] = [:],
         stationOperator: [String: String] = [:],
-        lines: [String: String] = [:]
+        lines: [String: String] = [:],
+        bracketedNames: [String: StationNameRecord] = [:],
+        baseNameCounts: [String: Int] = [:]
     ) {
         self.schema = schema
         self.region = region
@@ -44,6 +52,8 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         self.operators = operators
         self.stationOperator = stationOperator
         self.lines = lines
+        self.bracketedNames = bracketedNames
+        self.baseNameCounts = baseNameCounts
     }
 
     public init(from decoder: Decoder) throws {
@@ -62,10 +72,13 @@ public struct RegistryBundle: Decodable, Equatable, Sendable {
         operators = try container.decode([String: [String]].self, forKey: .operators)
         stationOperator = try container.decode([String: String].self, forKey: .stationOperator)
         lines = try container.decode([String: String].self, forKey: .lines)
+        bracketedNames = try container.decodeIfPresent([String: StationNameRecord].self, forKey: .bracketedNames) ?? [:]
+        baseNameCounts = try container.decodeIfPresent([String: Int].self, forKey: .baseNameCounts) ?? [:]
     }
 
     private enum CodingKeys: String, CodingKey {
         case schema, region, run, stationCodes, groupCodes, operators, stationOperator, lines
+        case bracketedNames, baseNameCounts
     }
 }
 

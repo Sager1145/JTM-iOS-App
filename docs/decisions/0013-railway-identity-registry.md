@@ -110,11 +110,25 @@ UNIQUE(scheme, value, valid_from)
 
 ```sql
 name(entity_kind, entity_id, lang, form, value, valid_from, valid_to, source, status)
--- lang: ja | zh-Hant | zh-Hans | ko | en ...   form: official | kana | romaji | short | alias
+-- lang: ja | zh-Hant | zh-Hans | ko | en ...
+-- form: official | kana | romaji | short | alias | base | bracket
 ```
 
 替代 `station_name`、`line_station_name`、`station_english*`、`line_station_english`、`line_name` 视图；
 `translation_may_be_wrong` 由 `status` 派生成视图列。裸名查询只返回候选集合。
+
+官方全名（`form='official'`）在包、`stations*.json`、乘车记录和 `rail.db` 核心表里保持原样。
+名称里恰好有一对匹配括号（`（）`、`()`、`〈〉`、`<>`）时，另写两行：`form='base'` 是去掉该组、
+收拢内部空白并去掉首尾空白后的文字；`form='bracket'` 是括号内文字去掉首尾空白。
+`bracket` 行的 `status` 只看整段括号文字（拉丁文不区分大小写，不按子串）：与状态表一致时为
+`reserved`（预留、預留）、`planned`（规划、規劃、计划、計画、計画中、仮称、在建、建設中）、
+`closed`（废止、廢止、廃止、停办、停辦、关闭、關閉、已关闭、已停用、停用、closed）、
+`suspended`（休止、停运、停運、暂停、暫停、運休）或
+`historical`（旧、舊、原、前、历史、歷史、旧駅、旧站、舊站、former、old），否则为 `subname`。
+括号组结束该名称时 `position` 为 suffix，否则为 infix。没有括号、两组及以上、括号不成对，
+或去掉后基名或括号为空，则不拆，并列入 `bracket-name-unsplit`。状态只用于显示，不作为乘车过滤（0011）。
+同一规则只实现在 `registry.mjs` 的 `splitBracketName`；应用读取 bundle 字段，不在运行时从站名里拆括号。
+行程导入与补全（§11.2）里，目录车站名称若恰好等于输入，精确名称优先于基名匹配：唯一精确站名即选中，多个精确站名按既有歧义处理。`baseNameCounts[base] == 1` 的带括号站只在没有任何目录车站恰好叫这个基名时才自动选中。
 
 ### 3.6 同名消歧规则（数据层 + 显示层）
 
@@ -250,7 +264,7 @@ CN（P3，单独项目）的边界（准备文档 L24、L26、L75、L92–93）�
 | P0 身份账本 | 只追加账本、唯一 mint 入口、只读 builder、旧身份 crosswalk、索引空间映射、例外与同名报告（§9） | app、compact 包、display-network、乘车记录不切换；CN 不归并 | 唯一性、只追加、retire/alias、歧义拒绝、重跑稳定 |
 | P1 公司车站与记录引用 | 经现有 alias/import 路径解析旧记录，按公司车站层写新引用；审定后的 station 覆写、line crosswalk、facility | 不在包里收拢 `-N`/`-pN`；不从站群制造乘降面或换乘物理边；不猜缺失身份 | 旧记录可读且无歧义升级；新记录往返稳定；已知同名异站不误合并 |
 | P1b 导入语法与小字标签 | §11 | 不阻塞 P1 的身份迁移 | 见 §11.6 |
-| P2 历史改键 | 有效期与改名/运营者关系按 id 引用；路由缓存 key 的 overlay revision 随之升级 | 不补造开通日期；半开区间规则不变 | 已知日期边界与旧记录解析结果保留 |
+| P2 历史交叉引用 | `history-crosswalk.json` 把 retirements / identity_periods 解析到活的 lp、op；唯一且有日期的 identity_period 追加 operation / operation-end，并写入 `line_operation`。运行时仍用名字 + bbox | 不补造开通日期；retirement 不写成 retire；不改历史匹配运行时；半开区间规则不变 | 交叉引用可复现；同一 lp 的有日期运营区间不重叠；未解析与两端都无日期的周期进报告 |
 | P3 CN 单独归并 | §4 CN 边界 | 不合成单一布尔 | 固定车次逐项差异可解释，GZS/SBT/PNE 等未证边界仍显式存在 |
 | P4 | **排除**：NA 已退役（`ios/AGENTS.md`），不实施 | — | — |
 | P5 下游切换 | Swift/JS、现有 builders（`build-display-lanes.mjs`、`build-display-network.py`）、chunks、history、cached routes、诊断引用切到注册表 id | 不新增第二套长期 writer / renderer / 求解器 / 显示编译器 | manifest、catalog、blob、joins、资源 revision 同步更新；受影响字段可追踪映射；临时兼容有移除条件 |
@@ -501,6 +515,8 @@ P0 之后各期（准备文档 L96）：
 
 P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序与界面小字标签。
 
+P2（本仓库数据侧，已落地）：`app/scripts/railway/registry-history-crosswalk.mjs` 生成 `app/data/registry/jp/history-crosswalk.json`（schema `jtm-history-crosswalk/1`）。铸造只把 status 为 unique、op 非空、且至少有一个日期的 `identity_period` 写成 `operation` / `operation-end`，由 `line_operation` 承接带日期的 operator 区间；每条活 lp 另有一行当前包运营者（无日期）。retirement 仍由历史叠加持有（0011），不写成 retire。同一 lp 上与已接受区间相交、且起止不同的周期不追加，在 `history-unresolved` 里标 `overlap`；区段与车站两条引用若起止相同，视为同一区间。运行时把历史匹配从名字 + bbox 改成注册表 id 放到 P5：N02 区段上没有注册表 id，要等网站仓库的包构建器在区段上写出 lp。
+
 ## 11. 行程导入（所有受支持地区；CN 的唯一性保证在 P3 后）
 
 ### 11.1 最少输入
@@ -529,7 +545,7 @@ P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序
 站名 (CC, 线名)
 ```
 
-- 括号可用半角 `()` 或全角 `（）`；分隔符可用 `,` `，` `、` `·`；空格可有可无。
+- 括号可用半角 `()` 或全角 `（）`；分隔符可用 `,` `，` `、`；空格可有可无。`·` 与 `・` 属于线名，不是分隔符。
 - **CC** 是 ISO 3166-1 alpha-2 大写：`JP TW HK MO KR CN`（NA 已退役，`US`/`CA` 不受支持；CN 可用，但 P3 前 `(站名, 线名)` 不保证唯一，歧义按 §11.3 第 6 步拒绝）；输入不区分大小写，`jp` 等地区 slug 也接受。
   括号里只有一个元素时：属于受支持国家代码集合就当作 CC，否则当作线名；有两个元素时，第一个一定是 CC，第二个一定是线名。
   因此与国家代码相同的线路记号（如東京モノレール的 `MO`，与澳门 `MO` 相同）只能写成 `浜松町 (JP, MO)`；`浜松町 (MO)` 表示澳门。
@@ -540,6 +556,7 @@ P1b（不在身份迁移关键路径上）：§11 的导入语法、解析顺序
   分别解析到メトロ与小田急的车站。
   也接受只写公司简称（`押上 (JP, 京成)`），只要在该站群内唯一。
 - **站名**可以是任一支持语言的名称或读音（官方名、英文、假名/罗马字、繁简），经 `name` 表匹配。
+- 属于官方站名的括号（bundle 的 `bracketedNames`）永远不是这里的限定语。先按半角/全角括号折叠对照官方全名；文字本身或其最长前缀是带括号的官方名时，它就是站名，只有写在该全名之后的括号组才是 `(CC, 线名)`。目录里若有车站的名称恰好等于输入，精确站名优先于只写基名：唯一精确站名即选中，多个精确站名沿用既有歧义处理，不再改走基名规则。只写基名、且没有任何目录车站恰好叫这个名字时，仅当 `baseNameCounts[base] == 1` 才匹配到那个带括号的站；计数大于 1 则拒绝自动选择，并返回带标签的候选。区域 bundle 缺失时仍按官方全名精确匹配，且整段文字等于目录站名时不把括号当成限定语。
 - 同一行程内，后续站点省略 CC 时继承行程或前一站的国家。
 
 ### 11.3 解析顺序（每一步只做筛选，绝不任意挑一个）

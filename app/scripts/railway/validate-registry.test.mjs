@@ -7,7 +7,8 @@ import { DatabaseSync } from "node:sqlite";
 import { test } from "node:test";
 import { fileURLToPath } from "node:url";
 
-import { KEY_ORDERS, appendLedger, canonical, mint, nextSeq, readLedger, reports } from "../build/rail-database/registry.mjs";
+import { BRACKET_STATUS_MARKERS, KEY_ORDERS, appendLedger, bracketNameRows, canonical, mint, nextSeq, operationIntervalsOverlap, planLineOperationRows, readLedger, reports, splitBracketName } from "../build/rail-database/registry.mjs";
+import { buildHistoryCrosswalk } from "./registry-history-crosswalk.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const MINT = path.resolve(HERE, "../build/mint-registry.mjs");
@@ -863,6 +864,623 @@ test("registry bundle is deterministic and drops conflicted or retired ids", () 
     assert.equal(next.lines["jp-jr-yamanote"], "lp:jp:1");
     assert.equal(Object.values(next.stationOperator).includes("st:jp:1"), false);
     assert.equal(Object.values(next.groupCodes).some((ids) => ids.includes("st:jp:1")), false);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+function openHistoryDb() {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`
+    CREATE TABLE operator (id INTEGER PRIMARY KEY, country_code TEXT, name TEXT);
+    CREATE TABLE line (id TEXT PRIMARY KEY, country_code TEXT, operator_id INTEGER, name TEXT);
+    CREATE TABLE "interval" (id INTEGER PRIMARY KEY, line_id TEXT);
+    CREATE TABLE interval_vertex (
+      interval_id INTEGER, seq INTEGER, lon REAL, lat REAL,
+      PRIMARY KEY (interval_id, seq)
+    );
+    CREATE TABLE registry_entity (id TEXT PRIMARY KEY, kind TEXT, region TEXT, retired TEXT);
+    CREATE TABLE external_ref (entity_id TEXT, scheme TEXT, value TEXT, valid_from TEXT);
+  `);
+  const operator = db.prepare("INSERT INTO operator (id, country_code, name) VALUES (?, 'JP', ?)");
+  operator.run(1, "JR東日本");
+  operator.run(2, "京王電鉄");
+  const line = db.prepare("INSERT INTO line (id, country_code, operator_id, name) VALUES (?, 'JP', ?, ?)");
+  line.run("line-a", 1, "山手線");
+  line.run("line-b", 1, "山手線");
+  line.run("line-c", 1, "山手線");
+  line.run("line-other", 1, "山手線2");
+  line.run("line-keio", 2, "京王線");
+  const interval = db.prepare('INSERT INTO "interval" (id, line_id) VALUES (?, ?)');
+  const vertex = db.prepare("INSERT INTO interval_vertex (interval_id, seq, lon, lat) VALUES (?, 0, ?, ?)");
+  interval.run(1, "line-a");
+  vertex.run(1, 139, 35);
+  interval.run(2, "line-b");
+  vertex.run(2, 140, 36);
+  interval.run(3, "line-c");
+  vertex.run(3, 139, 35);
+  interval.run(4, "line-other");
+  vertex.run(4, 139, 35);
+  interval.run(5, "line-keio");
+  vertex.run(5, 139.5, 35.5);
+  const entity = db.prepare("INSERT INTO registry_entity (id, kind, region, retired) VALUES (?, ?, 'jp', ?)");
+  entity.run("lp:jp:1", "lp", null);
+  entity.run("lp:jp:2", "lp", null);
+  entity.run("lp:jp:3", "lp", "2020-01-01");
+  entity.run("lp:jp:4", "lp", null);
+  entity.run("op:jp:1", "op", null);
+  entity.run("op:jp:9", "op", null);
+  const ref = db.prepare("INSERT INTO external_ref (entity_id, scheme, value, valid_from) VALUES (?, ?, ?, NULL)");
+  ref.run("lp:jp:1", "package-line", "line-a");
+  ref.run("lp:jp:2", "package-line", "line-b");
+  ref.run("lp:jp:3", "package-line", "line-c");
+  ref.run("lp:jp:4", "package-line", "line-keio");
+  ref.run("op:jp:1", "package-operator", "JR東日本");
+  ref.run("op:jp:1", "package-operator", "京王電鉄");
+  ref.run("op:jp:9", "package-operator", "京王電鉄");
+  return db;
+}
+
+test("history crosswalk resolves unique, multiple, and unmatched package lines", () => {
+  const db = openHistoryDb();
+  try {
+    const doc = buildHistoryCrosswalk(db, {
+      retirements: [{
+        history_id: "edge",
+        match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 139, 35] },
+        valid_to: "1990-01-01",
+      }],
+      identity_periods: [
+        {
+          history_id: "one",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [138.9, 34.9, 139.1, 35.1] },
+          valid_from: "2001-01-01",
+          valid_to: "2010-01-01",
+        },
+        {
+          history_id: "many",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [138, 34, 141, 37] },
+          valid_to: "2015-01-01",
+        },
+        {
+          history_id: "none",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [100, 0, 101, 1] },
+        },
+        {
+          history_id: "numbered",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [138.9, 34.9, 139.1, 35.1] },
+        },
+        {
+          history_id: "other-operator",
+          match: { line_name: "京王線", operator: "京王電鉄", bbox: [139, 35, 140, 36] },
+          valid_from: "2000-01-01",
+        },
+      ],
+    });
+    const byId = new Map(doc.entries.map((entry) => [entry.history_id, entry]));
+    assert.equal(doc.schema, "jtm-history-crosswalk/1");
+    assert.deepEqual(doc.entries.map((entry) => entry.history_id), ["edge", "many", "none", "numbered", "one", "other-operator"]);
+    assert.equal(byId.get("one").status, "unique");
+    assert.deepEqual(byId.get("one").lp, ["lp:jp:1"]);
+    assert.equal(byId.get("one").op, "op:jp:1");
+    assert.equal(byId.get("one").kind, "identity_period");
+    assert.equal(byId.get("edge").status, "unique");
+    assert.equal(byId.get("edge").kind, "retirement");
+    assert.deepEqual(byId.get("edge").lp, ["lp:jp:1"]);
+    assert.equal(byId.get("many").status, "multiple");
+    assert.deepEqual(byId.get("many").lp, ["lp:jp:1", "lp:jp:2"]);
+    assert.equal(byId.get("none").status, "unmatched");
+    assert.deepEqual(byId.get("none").lp, []);
+    assert.equal(byId.get("numbered").status, "unique");
+    assert.deepEqual(byId.get("numbered").lp, ["lp:jp:1"]);
+    assert.equal(byId.get("other-operator").status, "unique");
+    assert.equal(byId.get("other-operator").op, null);
+  } finally {
+    db.close();
+  }
+});
+
+test("identity periods append operation events once and skip undated periods", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const crosswalk = {
+      schema: "jtm-history-crosswalk/1",
+      entries: [
+        {
+          history_id: "dated",
+          kind: "identity_period",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          valid_from: "2001-01-01",
+          valid_to: "2010-01-01",
+          lp: ["lp:jp:1"],
+          op: "op:jp:1",
+          status: "unique",
+        },
+        {
+          history_id: "open",
+          kind: "identity_period",
+          match: { line_name: "中央線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          valid_to: "2012-04-01",
+          lp: ["lp:jp:2"],
+          op: "op:jp:1",
+          status: "unique",
+        },
+        {
+          history_id: "undated",
+          kind: "identity_period",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          lp: ["lp:jp:1"],
+          op: "op:jp:1",
+          status: "unique",
+        },
+        {
+          history_id: "multi",
+          kind: "identity_period",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          valid_from: "1999-01-01",
+          lp: ["lp:jp:1", "lp:jp:2"],
+          op: "op:jp:1",
+          status: "multiple",
+        },
+        {
+          history_id: "missing",
+          kind: "identity_period",
+          match: { line_name: "無い線", operator: "JR東日本", bbox: [0, 0, 1, 1] },
+          valid_from: "1999-01-01",
+          lp: [],
+          op: null,
+          status: "unmatched",
+        },
+        {
+          history_id: "retired-line",
+          kind: "retirement",
+          match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+          valid_to: "1980-01-01",
+          lp: ["lp:jp:1"],
+          op: "op:jp:1",
+          status: "unique",
+        },
+      ],
+    };
+    fs.mkdirSync(path.join(fixture.root, "jp"), { recursive: true });
+    fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify(crosswalk, null, 2)}\n`);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    assert.equal(minted.stdout.includes("retire refused"), false);
+    const ledger = readLedger(fixture.root);
+    const operations = ledger.events.filter((event) => event.event === "operation" || event.event === "operation-end");
+    assert.deepEqual(operations.map((event) => [event.event, event.id, event.on ?? null, event.why]), [
+      ["operation", "lp:jp:1", "2001-01-01", "dated"],
+      ["operation-end", "lp:jp:1", "2010-01-01", "dated"],
+      ["operation", "lp:jp:2", null, "open"],
+      ["operation-end", "lp:jp:2", "2012-04-01", "open"],
+    ]);
+    assert.equal(ledger.events.some((event) => event.why === "undated" || event.why === "retired-line" || event.why === "multi"), false);
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.deepEqual(report["history-period-undated"].map((row) => row.history_id), ["undated"]);
+    assert.deepEqual(report["history-unresolved"].map((row) => [row.history_id, row.status]), [
+      ["missing", "unmatched"],
+      ["multi", "multiple"],
+    ]);
+    const before = snapshot(fixture.root);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.match(again.stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("overlapping operation intervals are rejected and adjacent ones are not", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify({
+      schema: "jtm-history-crosswalk/1",
+      entries: [{
+        history_id: "dated",
+        kind: "identity_period",
+        match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+        valid_from: "2001-01-01",
+        valid_to: "2010-01-01",
+        lp: ["lp:jp:1"],
+        op: "op:jp:1",
+        status: "unique",
+      }],
+    })}\n`);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+
+    const overlap = path.join(fixture.dir, "overlap");
+    fs.cpSync(fixture.root, overlap, { recursive: true });
+    const overlapping = canonical({
+      id: "lp:jp:1", event: "operation", value: "op:jp:1", on: "2005-06-01", why: "clash", run: 2,
+    }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(overlap, "jp", "events.jsonl"), `${overlapping}\n`);
+    const rejected = runNode(VALIDATE, ["--root", overlap, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(rejected.status, 1);
+    assert.match(rejected.stdout, /operation overlap lp:jp:1/);
+
+    const adjacent = path.join(fixture.dir, "adjacent");
+    fs.cpSync(fixture.root, adjacent, { recursive: true });
+    const nextStart = canonical({
+      id: "lp:jp:1", event: "operation", value: "op:jp:1", on: "2010-01-01", why: "next", run: 2,
+    }, KEY_ORDERS.event);
+    const nextEnd = canonical({
+      id: "lp:jp:1", event: "operation-end", value: "op:jp:1", on: "2020-01-01", why: "next", run: 2,
+    }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(adjacent, "jp", "events.jsonl"), `${nextStart}\n${nextEnd}\n`);
+    const accepted = runNode(VALIDATE, ["--root", adjacent, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(accepted.status, 0, accepted.stdout + accepted.stderr);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("unequal overlapping identity periods are withheld on both sides and compensated", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    const period = (historyId, from, to) => ({
+      history_id: historyId,
+      kind: "identity_period",
+      match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+      valid_from: from,
+      valid_to: to,
+      lp: ["lp:jp:1"],
+      op: "op:jp:1",
+      status: "unique",
+    });
+    const write = (entries) => {
+      fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify({
+        schema: "jtm-history-crosswalk/1", entries,
+      }, null, 2)}\n`);
+    };
+    write([period("left", "2001-01-01", "2005-01-01"), period("right", "2005-01-01", "2010-01-01")]);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    write([period("left", "2001-01-01", "2010-01-01"), period("right", "2005-01-01", "2012-01-01")]);
+    const compensated = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(compensated.status, 0, compensated.stdout + compensated.stderr);
+    const ledger = readLedger(fixture.root);
+    const operations = ledger.events.filter((event) => event.event === "operation");
+    assert.deepEqual(operations.map((event) => [event.why, event.on]), [
+      ["left", "2001-01-01"],
+      ["right", "2005-01-01"],
+    ]);
+    const withdrawn = ledger.events.filter((event) => event.event === "operation-withdrawn");
+    assert.deepEqual(withdrawn.map((event) => [event.id, event.value, event.on, event.why]), [
+      ["lp:jp:1", "op:jp:1", "2001-01-01", "left"],
+      ["lp:jp:1", "op:jp:1", "2005-01-01", "right"],
+    ]);
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.deepEqual(report["history-unresolved"].map((row) => [row.history_id, row.status]), [
+      ["left", "overlap"],
+      ["right", "overlap"],
+    ]);
+    const passed = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+    const hidden = path.join(fixture.dir, "hidden-overlap");
+    fs.cpSync(fixture.root, hidden, { recursive: true });
+    const clash = canonical({
+      id: "lp:jp:1", event: "operation", value: "op:jp:1", on: "2004-01-01", why: "clash", run: 3,
+    }, KEY_ORDERS.event);
+    const withdrawnClash = canonical({
+      id: "lp:jp:1", event: "operation-withdrawn", value: "op:jp:1", on: "2004-01-01", why: "clash", run: 3,
+    }, KEY_ORDERS.event);
+    fs.appendFileSync(path.join(hidden, "jp", "events.jsonl"), `${clash}\n${withdrawnClash}\n`);
+    const ignored = runNode(VALIDATE, ["--root", hidden, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(ignored.status, 0, ignored.stdout + ignored.stderr);
+    const before = snapshot(fixture.root);
+    const again = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.match(again.stdout, /no changes/);
+    sameSnapshot(before, snapshot(fixture.root));
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("a unique row with several line ids is multiple, not overlap", () => {
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const first = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(first.status, 0, first.stdout + first.stderr);
+    fs.writeFileSync(path.join(fixture.root, "jp", "history-crosswalk.json"), `${JSON.stringify({
+      schema: "jtm-history-crosswalk/1",
+      entries: [{
+        history_id: "split",
+        kind: "identity_period",
+        match: { line_name: "山手線", operator: "JR東日本", bbox: [139, 35, 140, 36] },
+        valid_from: "1990-01-01",
+        lp: ["lp:jp:1", "lp:jp:2"],
+        op: "op:jp:1",
+        status: "unique",
+      }],
+    }, null, 2)}\n`);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    const report = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.deepEqual(report["history-unresolved"].map((row) => [row.history_id, row.status]), [["split", "multiple"]]);
+    assert.equal(readLedger(fixture.root).events.some((event) => event.why === "split"), false);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("line_operation bounds the current operator and rejects overlaps", () => {
+  const entities = ["lp:jp:1", "op:jp:1", "op:jp:2", "ln:jp:1"];
+  const ledger = {
+    entities: new Map(entities.map((id) => [id, { id }])),
+    refs: [],
+    events: [
+      { id: "lp:jp:1", event: "line", value: "ln:jp:1" },
+      { id: "lp:jp:1", event: "operation", value: "op:jp:1", on: "2001-01-01", why: "dated" },
+      { id: "lp:jp:1", event: "operation-end", value: "op:jp:1", on: "2010-01-01", why: "dated" },
+    ],
+  };
+  const changed = planLineOperationRows(ledger, [{ lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:2" }]);
+  assert.deepEqual(changed.omitted, []);
+  assert.deepEqual(changed.rows.map((row) => [row.operatorId, row.validFrom, row.validTo]), [
+    ["op:jp:1", "2001-01-01", "2010-01-01"],
+    ["op:jp:2", "2010-01-01", null],
+  ]);
+  const same = planLineOperationRows(ledger, [{ lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:1" }]);
+  assert.deepEqual(same.rows.map((row) => row.operatorId), ["op:jp:1"]);
+  const open = {
+    ...ledger,
+    events: [
+      { id: "lp:jp:1", event: "operation", value: "op:jp:1", why: "open" },
+    ],
+  };
+  const unclean = planLineOperationRows(open, [{ lp: "lp:jp:1", lineId: "lp:jp:1", operatorId: "op:jp:2" }]);
+  assert.deepEqual(unclean.omitted, ["lp:jp:1"]);
+  assert.equal(unclean.rows.some((row) => row.operatorId === "op:jp:2"), false);
+  const bare = planLineOperationRows(
+    { entities: ledger.entities, refs: [], events: [] },
+    [{ lp: "lp:jp:1", lineId: "lp:jp:1", operatorId: "op:jp:1" }],
+  );
+  assert.deepEqual(bare.rows, [{
+    lp: "lp:jp:1", lineId: "lp:jp:1", operatorId: "op:jp:1", role: "operator", validFrom: null, validTo: null,
+  }]);
+  const withdrawn = planLineOperationRows({
+    entities: ledger.entities,
+    refs: [],
+    events: [
+      ...ledger.events,
+      { id: "lp:jp:1", event: "operation-withdrawn", value: "op:jp:1", on: "2001-01-01", why: "dated" },
+    ],
+  }, [{ lp: "lp:jp:1", lineId: "ln:jp:1", operatorId: "op:jp:1" }]);
+  assert.deepEqual(withdrawn.rows.map((row) => [row.validFrom, row.validTo]), [[null, null]]);
+  for (const planned of [changed, same, bare, withdrawn]) {
+    const intervals = planned.rows.map((row) => ({ from: row.validFrom, to: row.validTo }));
+    for (let i = 0; i < intervals.length; i += 1) {
+      for (let j = i + 1; j < intervals.length; j += 1) {
+        assert.equal(operationIntervalsOverlap(intervals[i], intervals[j]), false);
+      }
+    }
+  }
+
+  const fixture = openFixture();
+  try {
+    freeze(fixture.root);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    fixture.db.exec(`CREATE TABLE line_operation (
+      line_id TEXT, operator_id TEXT, role TEXT, valid_from TEXT, valid_to TEXT
+    )`);
+    const insert = fixture.db.prepare("INSERT INTO line_operation (line_id, operator_id, role, valid_from, valid_to) VALUES (?, ?, 'operator', ?, ?)");
+    insert.run("lp:jp:1", "op:jp:1", "2001-01-01", "2010-01-01");
+    insert.run("lp:jp:1", "op:jp:2", "2005-01-01", "2012-01-01");
+    const rejected = runNode(VALIDATE, ["--root", fixture.root, "--db", fixture.dbPath, "--no-base"]);
+    assert.equal(rejected.status, 1);
+    assert.match(rejected.stdout, /line_operation overlap lp:jp:1/);
+  } finally {
+    fixture.db.close();
+    fs.rmSync(fixture.dir, { recursive: true, force: true });
+  }
+});
+
+test("history crosswalk equates a blank operator and matches station points", () => {
+  const db = new DatabaseSync(":memory:");
+  db.exec(`
+    CREATE TABLE operator (id INTEGER PRIMARY KEY, country_code TEXT, name TEXT);
+    CREATE TABLE line (id TEXT PRIMARY KEY, country_code TEXT, operator_id INTEGER, name TEXT);
+    CREATE TABLE "interval" (id INTEGER PRIMARY KEY, line_id TEXT);
+    CREATE TABLE interval_vertex (
+      interval_id INTEGER, seq INTEGER, lon REAL, lat REAL,
+      PRIMARY KEY (interval_id, seq)
+    );
+    CREATE TABLE line_station (
+      line_id TEXT, seq INTEGER, station_id INTEGER, name TEXT, lon REAL, lat REAL,
+      PRIMARY KEY (line_id, seq)
+    );
+    CREATE TABLE registry_entity (id TEXT PRIMARY KEY, kind TEXT, region TEXT, retired TEXT);
+    CREATE TABLE external_ref (entity_id TEXT, scheme TEXT, value TEXT, valid_from TEXT);
+  `);
+  db.prepare("INSERT INTO operator (id, country_code, name) VALUES (1, 'JP', '')").run();
+  db.prepare("INSERT INTO line (id, country_code, operator_id, name) VALUES ('line-blank', 'JP', 1, '空白線')").run();
+  db.prepare('INSERT INTO "interval" (id, line_id) VALUES (1, ?)').run("line-blank");
+  db.prepare("INSERT INTO interval_vertex (interval_id, seq, lon, lat) VALUES (1, 0, 0, 0)").run();
+  db.prepare("INSERT INTO line_station (line_id, seq, station_id, name, lon, lat) VALUES (?, 0, 1, ?, ?, ?)").run(
+    "line-blank", "駅A", 139.5, 35.5,
+  );
+  db.prepare("INSERT INTO registry_entity (id, kind, region, retired) VALUES ('lp:jp:1', 'lp', 'jp', NULL)").run();
+  db.prepare("INSERT INTO external_ref (entity_id, scheme, value, valid_from) VALUES ('lp:jp:1', 'package-line', 'line-blank', NULL)").run();
+  const match = {
+    line_name: "空白線",
+    operator: null,
+    station_name: "駅A",
+    targets: ["stations"],
+    bbox: [139, 35, 140, 36],
+  };
+  try {
+    const doc = buildHistoryCrosswalk(db, {
+      identity_periods: [{ history_id: "station", match }],
+      retirements: [],
+    });
+    assert.equal(doc.entries[0].status, "unique");
+    assert.deepEqual(doc.entries[0].lp, ["lp:jp:1"]);
+    assert.equal(doc.entries[0].match.operator, "");
+    const empty = buildHistoryCrosswalk(db, {
+      identity_periods: [{ history_id: "station", match: { ...match, operator: "" } }],
+      retirements: [],
+    });
+    assert.deepEqual(empty.entries[0].lp, ["lp:jp:1"]);
+    const vertices = buildHistoryCrosswalk(db, {
+      identity_periods: [{
+        history_id: "vertex",
+        match: { line_name: "空白線", operator: "", bbox: [139, 35, 140, 36] },
+      }],
+      retirements: [],
+    });
+    assert.equal(vertices.entries[0].status, "unmatched");
+  } finally {
+    db.close();
+  }
+});
+
+test("splitBracketName keeps one group and classifies status markers exactly", () => {
+  const split = splitBracketName;
+  assert.deepEqual(split("西鉄福岡（天神）"), {
+    base: "西鉄福岡", bracket: "天神", kind: "subname", position: "suffix",
+  });
+  assert.deepEqual(split("西鉄福岡（天神） "), {
+    base: "西鉄福岡", bracket: "天神", kind: "subname", position: "suffix",
+  });
+  assert.deepEqual(split("広島港（宇品）"), {
+    base: "広島港", bracket: "宇品", kind: "subname", position: "suffix",
+  });
+  assert.deepEqual(split("粟島（大阪屋ショップ前）"), {
+    base: "粟島", bracket: "大阪屋ショップ前", kind: "subname", position: "suffix",
+  });
+  assert.deepEqual(split("上環 (西港城) 總站"), {
+    base: "上環 總站", bracket: "西港城", kind: "subname", position: "infix",
+  });
+  assert.deepEqual(split("上環  (西港城)  總站"), {
+    base: "上環 總站", bracket: "西港城", kind: "subname", position: "infix",
+  });
+  assert.deepEqual(split("山景 (北)"), {
+    base: "山景", bracket: "北", kind: "subname", position: "suffix",
+  });
+  assert.deepEqual(split("洞噶（预留）"), {
+    base: "洞噶", bracket: "预留", kind: "status", position: "suffix", status: "reserved",
+  });
+  assert.equal(split("洞噶（預留）").status, "reserved");
+  assert.equal(split("洞噶（预留站）").kind, "subname");
+  assert.equal(split("駅（計画中）").status, "planned");
+  assert.equal(split("駅（仮称）").status, "planned");
+  assert.equal(split("駅（建設中）").status, "planned");
+  assert.equal(split("旧駅（廃止）").status, "closed");
+  assert.equal(split("站（廢止）").status, "closed");
+  assert.equal(split("站（已关闭）").status, "closed");
+  assert.deepEqual(split("Foo (Closed)"), {
+    base: "Foo", bracket: "Closed", kind: "status", position: "suffix", status: "closed",
+  });
+  assert.equal(split("駅（運休）").status, "suspended");
+  assert.equal(split("站（停运）").status, "suspended");
+  assert.equal(split("駅（旧）").status, "historical");
+  assert.equal(split("站（舊站）").status, "historical");
+  assert.equal(split("駅〈旧〉").status, "historical");
+  assert.equal(split("駅<old>").status, "historical");
+  assert.equal(split("駅（FORMER）").status, "historical");
+  assert.equal(split("駅（ 旧 ）").status, "historical");
+  assert.equal(split("東京"), null);
+  assert.equal(split("（预留）"), null);
+  assert.equal(split("foo（ ）"), null);
+  assert.equal(split("foo（bar"), null);
+  assert.equal(split("a（b)"), null);
+  assert.equal(split("a (b) (c)"), null);
+  assert.equal(split("a（b（c））"), null);
+  assert.equal(split("a〈b>"), null);
+  for (const [status, words] of Object.entries(BRACKET_STATUS_MARKERS)) {
+    for (const word of words) assert.equal(split(`駅（${word}）`).status, status, word);
+  }
+  assert.deepEqual(bracketNameRows("洞噶（预留）"), [
+    { form: "base", value: "洞噶", status: null },
+    { form: "bracket", value: "预留", status: "reserved" },
+  ]);
+  assert.deepEqual(bracketNameRows("西鉄福岡（天神）"), [
+    { form: "base", value: "西鉄福岡", status: null },
+    { form: "bracket", value: "天神", status: "subname" },
+  ]);
+  assert.deepEqual(bracketNameRows("a (b) (c)"), []);
+});
+
+test("bracketed names export deterministically and unsplit names are reported", () => {
+  const fixture = openFixture();
+  try {
+    const insert = fixture.db.prepare("INSERT INTO station (id, country_code, code, name, name_norm, lon, lat) VALUES (?, 'JP', ?, ?, ?, 1, 1)");
+    insert.run(3, "300", "西鉄福岡（天神）", "西鉄福岡（天神）");
+    insert.run(4, "301", "西鉄福岡", "西鉄福岡");
+    insert.run(5, "302", "洞噶（预留）", "洞噶（预留）");
+    insert.run(6, "303", "a (b) (c)", "a (b) (c)");
+    insert.run(7, "304", "（预留）", "（预留）");
+    insert.run(8, "305", "旧駅（廃止）", "旧駅（廃止）");
+    insert.run(9, "306", "元町（旧）", "元町（旧）");
+    fixture.db.prepare("UPDATE line_station SET name = ? WHERE line_id = ? AND seq = ?").run("foo（bar", "jp-jr-yamanote", 0);
+    fixture.db.prepare("UPDATE line_station SET name = ? WHERE line_id = ? AND seq = ?").run("上環 (西港城) 總站", "jp-jr-yamanote", 1);
+    freeze(fixture.root);
+    const minted = runNode(MINT, ["--db", fixture.dbPath, "--root", fixture.root, "--region", "jp", "--at", AT]);
+    assert.equal(minted.status, 0, minted.stdout + minted.stderr);
+    const exceptions = JSON.parse(fs.readFileSync(path.join(fixture.root, "jp", "station-derivation-exceptions.json"), "utf8"));
+    assert.deepEqual(
+      exceptions["bracket-name-unsplit"].map((row) => `${row.source}|${row.name}|${row.code}|${row.line ?? ""}`),
+      [
+        "line_station|foo（bar|100|jp-jr-yamanote",
+        "station|a (b) (c)|303|",
+        "station|（预留）|304|",
+      ],
+    );
+    const out = path.join(fixture.dir, "bundle");
+    const exported = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(exported.status, 0, exported.stdout + exported.stderr);
+    const file = path.join(out, "jp.json");
+    const text = fs.readFileSync(file);
+    const again = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out]);
+    assert.equal(again.status, 0, again.stdout + again.stderr);
+    assert.ok(fs.readFileSync(file).equals(text));
+    const check = runNode(EXPORT, ["--db", fixture.dbPath, "--root", fixture.root, "--out", out, "--check"]);
+    assert.equal(check.status, 0, check.stdout + check.stderr);
+    const bundle = JSON.parse(text.toString("utf8"));
+    const names = bundle.bracketedNames;
+    assert.deepEqual(Object.keys(names), Object.keys(names).slice().sort((a, b) => (a < b ? -1 : a > b ? 1 : 0)));
+    assert.deepEqual(names["西鉄福岡（天神）"], {
+      base: "西鉄福岡", bracket: "天神", kind: "subname", position: "suffix",
+    });
+    assert.equal("status" in names["西鉄福岡（天神）"], false);
+    assert.deepEqual(names["洞噶（预留）"], {
+      base: "洞噶", bracket: "预留", kind: "status", position: "suffix", status: "reserved",
+    });
+    assert.equal(names["旧駅（廃止）"].status, "closed");
+    assert.equal(names["元町（旧）"].status, "historical");
+    assert.deepEqual(names["上環 (西港城) 總站"], {
+      base: "上環 總站", bracket: "西港城", kind: "subname", position: "infix",
+    });
+    assert.equal(names["a (b) (c)"], undefined);
+    assert.equal(bundle.baseNameCounts["西鉄福岡"], 2);
+    assert.equal(bundle.baseNameCounts["洞噶"], 1);
+    assert.equal(bundle.baseNameCounts["旧駅"], 1);
+    assert.equal(bundle.baseNameCounts["元町"], 1);
+    assert.equal(bundle.baseNameCounts["上環 總站"], 0);
+    assert.equal(Object.keys(bundle.baseNameCounts).includes("西鉄福岡"), true);
+    assert.equal(bundle.baseNameCounts["東京"], undefined);
   } finally {
     fixture.db.close();
     fs.rmSync(fixture.dir, { recursive: true, force: true });

@@ -39,6 +39,10 @@ enum BundledRegistry {
         RegistryIdentityUpgrade.installBundleProvider { region in
             bundle(for: region)
         }
+        StationNameLookup.install { region in
+            guard let bundle = bundle(for: region) else { return nil }
+            return StationNameDirectory(bundle: bundle)
+        }
     }
 
     /// Decode path: the ride's own region, never the session country.

@@ -7,11 +7,14 @@
   "ambiguous-company-text": [],
   "identity-not-a-railway": [],
   "history-unmatched": [],
+  "history-unresolved": [],
+  "history-period-undated": [],
   "shared-facility-candidate": [],
   "name-line-not-unique": [],
   "line-label-collision": [],
   "line-alias-is-country-code": [],
   "station-code-conflict": [],
   "crosswalk-conflict": [],
-  "operator-rename-invalid": []
+  "operator-rename-invalid": [],
+  "bracket-name-unsplit": []
 }

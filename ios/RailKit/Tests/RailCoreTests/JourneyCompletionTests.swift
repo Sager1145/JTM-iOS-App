@@ -797,6 +797,35 @@ struct JourneyCompletionTests {
         #expect(draft.stops.first?.automaticSelection == nil)
     }
 
+    @Test("an ambiguous stop with one candidate stays selectable")
+    func ambiguousOneCandidateStaysSelectable() throws {
+        let directory = StationNameDirectory(
+            bracketedNames: [
+                "神代（北）": StationNameRecord(
+                    base: "神代", bracket: "北", kind: .subname, position: .suffix),
+                "神代（南）": StationNameRecord(
+                    base: "神代", bracket: "南", kind: .subname, position: .suffix),
+            ],
+            baseNameCounts: ["神代": 2])
+        let catalog = EditorCatalogBuilder.build([
+            EditorCatalogLineSource(
+                regionCode: "jp", lineID: "north", name: "北線", operatorName: "北鉄道",
+                stations: [
+                    EditorCatalogStationSource(
+                        sourceCode: "N", name: "神代（北）", longitude: 139, latitude: 35),
+                ]),
+        ])
+        let seed = Self.train(id: "draft", date: nil, number: "")
+        let draft = JourneyCompletion.rawDraft(
+            text: "神代", catalog: catalog, regionCode: "jp", seed: seed, directory: directory)
+        let stop = try #require(draft.stops.first)
+        #expect(stop.candidates.count == 1)
+        #expect(stop.ambiguous == true)
+        #expect(stop.automaticSelection == nil)
+        #expect(stop.confirmsSingleCandidate == false)
+        #expect(stop.selectableCandidates.map(\.key.sourceCode) == ["N"])
+    }
+
     @Test("AI sheet resolves unique typed station names but preserves ambiguity")
     func uniqueTypedStationsResolveFromCatalog() {
         let catalog = EditorCatalogBuilder.build([

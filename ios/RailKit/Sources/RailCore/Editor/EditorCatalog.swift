@@ -46,15 +46,22 @@ public struct CatalogLine: Hashable, Codable, Sendable {
     public var operatorIDs: [String]
     public var name: String
     public var aliases: [String]
+    /// Passenger route symbol (`MO`, `JY`). Absent when the package has none.
+    public var lineCode: String?
+    /// Package rank. Lower is the more important line and sorts first in a label.
+    public var rank: Int
 
     public init(
-        id: String, regionCode: String, operatorIDs: [String], name: String, aliases: [String] = []
+        id: String, regionCode: String, operatorIDs: [String], name: String, aliases: [String] = [],
+        lineCode: String? = nil, rank: Int = 0
     ) {
         self.id = id
         self.regionCode = regionCode
         self.operatorIDs = operatorIDs
         self.name = name
         self.aliases = aliases
+        self.lineCode = lineCode
+        self.rank = rank
     }
 }
 
@@ -115,11 +122,14 @@ public struct EditorCatalogLineSource: Sendable {
     public var operatorName: String?
     public var operatorShort: String?
     public var stations: [EditorCatalogStationSource]
+    public var lineCode: String?
+    public var rank: Int
 
     public init(
         regionCode: String, lineID: String, name: String, nameNorm: String? = nil,
         nameRoma: String? = nil, operatorName: String? = nil, operatorShort: String? = nil,
-        stations: [EditorCatalogStationSource] = []
+        stations: [EditorCatalogStationSource] = [],
+        lineCode: String? = nil, rank: Int = 0
     ) {
         self.regionCode = regionCode
         self.lineID = lineID
@@ -129,6 +139,8 @@ public struct EditorCatalogLineSource: Sendable {
         self.operatorName = operatorName
         self.operatorShort = operatorShort
         self.stations = stations
+        self.lineCode = lineCode
+        self.rank = rank
     }
 }
 
@@ -159,6 +171,8 @@ public struct EditorCatalog: Sendable {
     private let stationIndex: [StationKey: CatalogStation]
     private let membershipsByLine: [EditorCatalogLineKey: [StationLineMembership]]
     private let membershipsByStation: [StationKey: [StationLineMembership]]
+    /// `StationLabel` line labels, keyed by region then line id. Built once.
+    private let lineLabelsByRegion: [String: [String: String]]
 
     fileprivate init(
         issues: [EditorCatalogIssue],
@@ -176,6 +190,22 @@ public struct EditorCatalog: Sendable {
         self.stationIndex = stationIndex
         self.membershipsByLine = membershipsByLine
         self.membershipsByStation = membershipsByStation
+        var linesByRegion: [String: [CatalogLine]] = [:]
+        for line in lineIndex.values {
+            linesByRegion[line.regionCode, default: []].append(line)
+        }
+        var labels: [String: [String: String]] = [:]
+        for region in Set(linesByRegion.keys).union(operatorsByRegion.keys) {
+            labels[region] = StationLabel.lineLabels(
+                lines: linesByRegion[region] ?? [],
+                operators: operatorsByRegion[region] ?? [])
+        }
+        self.lineLabelsByRegion = labels
+    }
+
+    /// Line labels for one country. Computed when the catalog is built.
+    public func storedLineLabels(regionCode: String) -> [String: String] {
+        lineLabelsByRegion[regionCode] ?? [:]
     }
 
     public func operators(in regionCode: String) -> [CatalogOperator] {
@@ -310,7 +340,9 @@ public enum EditorCatalogBuilder {
                 regionCode: line.regionCode,
                 operatorIDs: [operatorID],
                 name: line.name,
-                aliases: EditorCatalogIdentity.lineAliases(line)
+                aliases: EditorCatalogIdentity.lineAliases(line),
+                lineCode: line.lineCode,
+                rank: line.rank
             ))
 
             appendMemberships(
@@ -426,7 +458,9 @@ extension EditorCatalogBuilder {
                         longitude: station.coordinate.lon,
                         latitude: station.coordinate.lat
                     )
-                }
+                },
+                lineCode: line.lineCode,
+                rank: line.rank
             )
         }
     }

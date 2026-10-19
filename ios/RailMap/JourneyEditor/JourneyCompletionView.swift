@@ -154,33 +154,94 @@ struct JourneyCompletionView: View {
     private func rawStopRow(_ stop: JourneyCompletion.RawStop) -> some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                Text(stop.matchedName).font(.headline)
+                Text(stop.matchedName).font(.headline).lineLimit(2).layoutPriority(1)
                 Spacer()
                 Text([stop.arrival, stop.departure].compactMap { $0 }.joined(separator: " / "))
                     .font(.caption.monospacedDigit())
                     .foregroundStyle(.secondary)
             }
-            if stop.candidates.count == 1, let station = stop.candidates.first {
-                Label("\(station.name) · \(station.key.sourceCode)", systemImage: "checkmark.circle.fill")
+            if stop.candidates.isEmpty {
+                Text(text("stationMatch"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
+                Text(text("chooseStation"))
+                    .foregroundStyle(.secondary)
+            } else if stop.confirmsSingleCandidate, let station = stop.candidates.first {
+                candidateRow(stop, index: 0, station: station, selected: true)
             } else {
-                Picker(
-                    text("stationMatch"),
-                    selection: Binding<StationKey?>(
-                        get: { rawSelections[stop.id] },
-                        set: { value in
-                            guard rawSelections[stop.id] != value else { return }
-                            rawSelections[stop.id] = value
-                            invalidateRawConfirmation()
-                        })
-                ) {
-                    Text(text("chooseStation")).tag(nil as StationKey?)
-                    ForEach(stop.candidates, id: \.key) { station in
-                        Text("\(station.name) · \(station.key.sourceCode)")
-                            .tag(station.key as StationKey?)
+                Text(text("stationMatch"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Button {
+                    guard rawSelections[stop.id] != nil else { return }
+                    rawSelections[stop.id] = nil
+                    invalidateRawConfirmation()
+                } label: {
+                    HStack {
+                        Text(text("chooseStation"))
+                        Spacer()
+                        if rawSelections[stop.id] == nil {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.secondary)
+                                .accessibilityHidden(true)
+                        }
                     }
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
                 }
+                .buttonStyle(.plain)
+                ForEach(Array(stop.candidates.enumerated()), id: \.element.key) { index, station in
+                    Button {
+                        guard rawSelections[stop.id] != station.key else { return }
+                        rawSelections[stop.id] = station.key
+                        invalidateRawConfirmation()
+                    } label: {
+                        candidateRow(
+                            stop, index: index, station: station,
+                            selected: rawSelections[stop.id] == station.key)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+    }
+
+    private func candidateRow(
+        _ stop: JourneyCompletion.RawStop, index: Int, station: CatalogStation, selected: Bool
+    ) -> some View {
+        let full = stop.candidateLabels.indices.contains(index) ? stop.candidateLabels[index] : station.name
+        let qualifier = StationQualifierCopy.qualifier(fromFull: full, name: station.name)
+        let country = station.key.regionCode.uppercased()
+        return HStack(alignment: .firstTextBaseline, spacing: 8) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(localization.stationName(
+                    station.name, code: station.key.sourceCode,
+                    region: Region(rawValue: station.key.regionCode)))
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .layoutPriority(1)
+                if !qualifier.isEmpty {
+                    StationQualifierCaption(text: qualifier)
+                }
+            }
+            Spacer(minLength: 8)
+            if selected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+            }
+        }
+        .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(StationQualifierCopy.spoken(
+            name: station.name, countryCode: country, qualifier: qualifier, localization: localization))
+        .contextMenu {
+            Button {
+                StationQualifierCopy.copy(full)
+            } label: {
+                Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+            }
+            ShareLink(item: full) {
+                Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
             }
         }
     }

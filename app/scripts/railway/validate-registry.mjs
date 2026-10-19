@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
-import { ID_RE, REGIONS, classifyLedgerName, parseLedger } from "../build/rail-database/registry.mjs";
+import { ID_RE, REGIONS, classifyLedgerName, operationEventWithdrawn, operationIntervalsOverlap, parseLedger, withdrawnOperationPairs } from "../build/rail-database/registry.mjs";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
 
@@ -85,6 +85,7 @@ function referenceViolations(ledger) {
   for (const [id, count] of retired) {
     if (count > 1) violations.push(`multiple retire ${id}`);
   }
+  violations.push(...operationViolations(ledger, retired));
   for (const event of ledger.events) {
     if (event.event !== "member") continue;
     if (kindOf(event.id) !== "rp" || !ID_RE.test(event.id)) {
@@ -120,6 +121,50 @@ function referenceViolations(ledger) {
   for (const ref of ledger.refs) checkRun(ref, `ref ${ref.id}`);
   for (const event of ledger.events) checkRun(event, `event ${event.id}`);
   for (const alias of ledger.aliases) checkRun(alias, `alias ${alias.id}`);
+  return violations;
+}
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+function operationViolations(ledger, retired) {
+  const violations = [];
+  const liveKind = (id, kind) => ledger.entities.has(id) && kindOf(id) === kind && !retired.has(id);
+  const withdrawn = withdrawnOperationPairs(ledger.events);
+  const endByKey = new Map();
+  for (const event of ledger.events) {
+    if (event.event !== "operation" && event.event !== "operation-end") continue;
+    if (operationEventWithdrawn(event, withdrawn)) continue;
+    if (!liveKind(event.id, "lp")) violations.push(`operation not live ${event.id}`);
+    if (!liveKind(event.value, "op")) violations.push(`operation not live ${event.value}`);
+    if (event.event === "operation-end") {
+      if (!ISO_DATE.test(String(event.on ?? ""))) violations.push(`operation date ${event.id}`);
+    } else if (event.on != null && event.on !== "" && !ISO_DATE.test(String(event.on))) {
+      violations.push(`operation date ${event.id}`);
+    }
+    if (event.event === "operation-end") {
+      endByKey.set(`${event.id}\0${event.value ?? ""}\0${event.why ?? ""}`, event.on ?? null);
+    }
+  }
+  const byLp = new Map();
+  for (const event of ledger.events) {
+    if (event.event !== "operation" || operationEventWithdrawn(event, withdrawn)) continue;
+    const key = `${event.id}\0${event.value ?? ""}\0${event.why ?? ""}`;
+    const interval = { from: event.on ?? null, to: endByKey.has(key) ? endByKey.get(key) : null };
+    if (!byLp.has(event.id)) byLp.set(event.id, []);
+    byLp.get(event.id).push(interval);
+  }
+  for (const [lp, intervals] of byLp) {
+    let overlapped = false;
+    for (let i = 0; i < intervals.length && !overlapped; i += 1) {
+      for (let j = i + 1; j < intervals.length; j += 1) {
+        if (operationIntervalsOverlap(intervals[i], intervals[j])) {
+          violations.push(`operation overlap ${lp}`);
+          overlapped = true;
+          break;
+        }
+      }
+    }
+  }
   return violations;
 }
 
@@ -189,8 +234,34 @@ function coverageViolations(dbPath, ledger) {
     for (const entity of ledger.entities.values()) {
       if (entity.parent && !ledger.entities.has(entity.parent)) violations.push(`orphan parent ${entity.id}`);
     }
+    violations.push(...lineOperationViolations(db));
   } finally {
     db.close();
+  }
+  return violations;
+}
+
+function lineOperationViolations(db) {
+  const violations = [];
+  const present = db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'line_operation'").get();
+  if (!present) return violations;
+  const rows = db.prepare("SELECT line_id, valid_from, valid_to FROM line_operation ORDER BY line_id").all();
+  const byLine = new Map();
+  for (const row of rows) {
+    if (!byLine.has(row.line_id)) byLine.set(row.line_id, []);
+    byLine.get(row.line_id).push({ from: row.valid_from ?? null, to: row.valid_to ?? null });
+  }
+  for (const [lineId, intervals] of byLine) {
+    let overlapped = false;
+    for (let i = 0; i < intervals.length && !overlapped; i += 1) {
+      for (let j = i + 1; j < intervals.length; j += 1) {
+        if (operationIntervalsOverlap(intervals[i], intervals[j])) {
+          violations.push(`line_operation overlap ${lineId}`);
+          overlapped = true;
+          break;
+        }
+      }
+    }
   }
   return violations;
 }
@@ -200,7 +271,7 @@ function git(args, cwd) {
   for (const key of ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_PREFIX", "GIT_OBJECT_DIRECTORY", "GIT_COMMON_DIR"]) {
     delete env[key];
   }
-  return execFileSync("git", args, { cwd, env, maxBuffer: 64 * 1024 * 1024 });
+  return execFileSync("git", ["-c", "core.fsmonitor=false", ...args], { cwd, env, maxBuffer: 64 * 1024 * 1024 });
 }
 
 function isLedgerRel(rel) {

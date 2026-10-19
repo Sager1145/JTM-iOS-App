@@ -67,6 +67,7 @@ struct NewTripView: View {
     /// Catalog display name → `CompactPackage.Line.operator`, the string the planner compares.
     @State private var packageOperatorByDisplayName: [String: String] = [:]
     @State private var companyOptions: [String] = []
+    @State private var lineLabelByID: [String: String] = [:]
 
     init(
         train: Train,
@@ -602,12 +603,41 @@ struct NewTripView: View {
     private func timetablePassStations(_ timetable: Train) -> some View {
         DisclosureGroup {
             ForEach(Array(timetable.stops.enumerated()), id: \.offset) { _, stop in
-                HStack {
-                    Text(localization.stationName(stop.name, code: stop.n02StationCode, region: region))
-                    Spacer()
+                let qualifier = recordedQualifier(code: stop.n02StationCode)
+                HStack(alignment: .firstTextBaseline) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(BracketedStationText.title(
+                            officialName: stop.name,
+                            localizedTitle: localization.stationName(
+                                stop.name, code: stop.n02StationCode, region: region),
+                            regionCode: region.code, localization: localization))
+                            .lineLimit(3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
+                        StationQualifierCaption(text: BracketedStationText.secondary(
+                            officialName: stop.name, regionCode: region.code,
+                            qualifier: qualifier, localization: localization))
+                    }
+                    Spacer(minLength: 8)
                     Text([stop.arrival, stop.departure].compactMap { $0 }.joined(separator: " / "))
                         .font(.caption.monospacedDigit())
                         .foregroundStyle(.secondary)
+                }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(
+                    StationQualifierCopy.spoken(
+                        name: stop.name, countryCode: region.code.uppercased(),
+                        qualifier: qualifier, localization: localization))
+                .contextMenu {
+                    let full = copyText(code: stop.n02StationCode, fallbackName: stop.name)
+                    Button {
+                        StationQualifierCopy.copy(full)
+                    } label: {
+                        Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+                    }
+                    ShareLink(item: full) {
+                        Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+                    }
                 }
             }
         } label: {
@@ -755,17 +785,39 @@ struct NewTripView: View {
         let stations = corridor.choice.stations
         return DisclosureGroup {
             ForEach(Array(stations.enumerated()), id: \.offset) { index, visit in
+                let qualifier = visitQualifier(visit, corridor: corridor)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(localization.stationName(visit.name, code: visit.code, region: region))
+                    Text(BracketedStationText.title(
+                        officialName: visit.name,
+                        localizedTitle: localization.stationName(
+                            visit.name, code: visit.code, region: region),
+                        regionCode: region.code, localization: localization))
                         .fontWeight(index == 0 || index == stations.count - 1 ? .bold : .regular)
-                    if let caption = lineChangeCaption(for: visit, junctions: corridor.junctions) {
-                        Text(caption)
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .layoutPriority(1)
+                    StationQualifierCaption(text: BracketedStationText.secondary(
+                        officialName: visit.name, regionCode: region.code,
+                        qualifier: qualifier, localization: localization))
                 }
                 .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(StationQualifierCopy.spoken(
+                    name: visit.name, countryCode: region.code.uppercased(),
+                    qualifier: qualifier, localization: localization))
+                .contextMenu {
+                    let full = copyText(
+                        code: visit.code, fallbackName: visit.name,
+                        contextLineIDs: Set(corridor.choice.lineIDs))
+                    Button {
+                        StationQualifierCopy.copy(full)
+                    } label: {
+                        Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+                    }
+                    ShareLink(item: full) {
+                        Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+                    }
+                }
             }
         } label: {
             Text(text(
@@ -804,6 +856,7 @@ struct NewTripView: View {
                     Text(subtitle)
                         .font(.caption)
                         .foregroundStyle(.secondary)
+                        .lineLimit(2)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -812,7 +865,23 @@ struct NewTripView: View {
         }
         .buttonStyle(.plain)
         .disabled(catalog == nil)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isButton)
+        .accessibilityLabel(stationAccessibility(title: title, station: station, line: line))
         .accessibilityIdentifier(identifier)
+        .contextMenu {
+            if let station {
+                let full = copyText(for: station, line: line)
+                Button {
+                    StationQualifierCopy.copy(full)
+                } label: {
+                    Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+                }
+                ShareLink(item: full) {
+                    Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+                }
+            }
+        }
     }
 
     private var canSave: Bool {
@@ -856,12 +925,14 @@ struct NewTripView: View {
             operatorNameByID = [:]
             packageOperatorByDisplayName = [:]
             companyOptions = []
+            lineLabelByID = [:]
             return
         }
         let names = Dictionary(
             catalog.operators(in: region.code).map { ($0.id, $0.name) },
             uniquingKeysWith: { first, _ in first })
         operatorNameByID = names
+        lineLabelByID = StationLabel.lineLabels(in: catalog, regionCode: region.code)
         if let package {
             packageOperatorByDisplayName = Self.packageOperatorNames(package)
         }
@@ -895,31 +966,92 @@ struct NewTripView: View {
         return chosen
     }
 
-    private func stationTitle(_ station: CatalogStation?) -> String {
-        guard let station else { return text("chooseStation", fallback: "Choose station") }
-        return localization.stationName(station.name, code: station.key.sourceCode, region: region)
+    private func copyText(for station: CatalogStation, line: CatalogLine?) -> String {
+        guard let catalog else {
+            return StationLabel.countryOnly(
+                name: station.name, countryCode: station.key.regionCode.uppercased()).full
+        }
+        return StationReferenceResolution.copyLabel(
+            for: station, catalog: catalog, preferredLineID: line?.id)
     }
 
-    /// Picked line as "line · operator". Without a picked line, the first two memberships.
+    private func copyText(
+        code: String?, fallbackName: String, contextLineIDs: Set<String> = []
+    ) -> String {
+        let country = region.code.uppercased()
+        guard let catalog, let code, !code.isEmpty,
+              let station = catalog.station(StationKey(regionCode: region.code, sourceCode: code))
+        else { return StationLabel.countryOnly(name: fallbackName, countryCode: country).full }
+        return StationReferenceResolution.copyLabel(
+            for: station, catalog: catalog, contextLineIDs: contextLineIDs)
+    }
+
+    private func stationTitle(_ station: CatalogStation?) -> String {
+        guard let station else { return text("chooseStation", fallback: "Choose station") }
+        return BracketedStationText.title(
+            officialName: station.name,
+            localizedTitle: localization.stationName(
+                station.name, code: station.key.sourceCode, region: region),
+            regionCode: station.key.regionCode, localization: localization)
+    }
+
+    /// Bracket qualifier for the chosen station. A picked line names that line.
+    private func stationQualifier(_ station: CatalogStation, line: CatalogLine?) -> String {
+        guard let catalog else {
+            return StationLabel.caption(countryCode: station.key.regionCode.uppercased(), detail: nil)
+        }
+        let labels = lineLabelByID.isEmpty
+            ? StationLabel.lineLabels(in: catalog, regionCode: station.key.regionCode) : lineLabelByID
+        return StationLabel.text(
+            for: station, catalog: catalog, labels: labels, preferredLineID: line?.id).qualifier
+    }
+
     private func stationSubtitle(_ station: CatalogStation, line: CatalogLine?) -> String? {
-        if let line {
-            if let name = line.operatorIDs.compactMap({ operatorNameByID[$0] }).first(where: { !$0.isEmpty }) {
-                return "\(line.name) · \(name)"
-            }
-            return line.name
+        let qualifier = stationQualifier(station, line: line)
+        return BracketedStationText.secondary(
+            officialName: station.name, regionCode: station.key.regionCode,
+            qualifier: qualifier, localization: localization)
+    }
+
+    private func stationAccessibility(title: String, station: CatalogStation?, line: CatalogLine?) -> String {
+        guard let station else { return title }
+        let qualifier = stationQualifier(station, line: line)
+        return title + "，" + StationQualifierCopy.spoken(
+            name: station.name, countryCode: station.key.regionCode.uppercased(),
+            qualifier: qualifier, localization: localization)
+    }
+
+    private func recordedQualifier(code: String?) -> String {
+        let country = region.code.uppercased()
+        guard let catalog, let code, !code.isEmpty,
+              let station = catalog.station(StationKey(regionCode: region.code, sourceCode: code))
+        else { return StationLabel.caption(countryCode: country, detail: nil) }
+        let labels = lineLabelByID.isEmpty
+            ? StationLabel.lineLabels(in: catalog, regionCode: region.code) : lineLabelByID
+        return StationLabel.text(for: station, catalog: catalog, labels: labels).qualifier
+    }
+
+    private func visitQualifier(
+        _ visit: RailwayRouteChoices.Visit, corridor: TripRoutePlanner.Corridor
+    ) -> String {
+        let country = region.code.uppercased()
+        if let change = lineChangeCaption(for: visit, junctions: corridor.junctions) {
+            let detail = change.replacingOccurrences(of: "\n", with: " · ")
+            return StationLabel.caption(countryCode: country, detail: detail)
         }
-        guard let catalog else { return nil }
-        let labels = catalog.memberships(stationKey: station.key).prefix(2).map { member -> String in
-            guard let memberLine = catalog.line(id: member.lineID, regionCode: member.regionCode) else {
-                return member.lineID
+        guard let catalog,
+              let station = catalog.station(StationKey(regionCode: region.code, sourceCode: visit.code))
+        else {
+            if corridor.lineNames.count == 1, let name = corridor.lineNames.first {
+                return StationLabel.caption(countryCode: country, detail: name)
             }
-            if let name = memberLine.operatorIDs.compactMap({ operatorNameByID[$0] }).first(where: { !$0.isEmpty }) {
-                return "\(memberLine.name) · \(name)"
-            }
-            return memberLine.name
+            return StationLabel.caption(countryCode: country, detail: nil)
         }
-        let joined = labels.joined(separator: "\n")
-        return joined.isEmpty ? nil : joined
+        let labels = lineLabelByID.isEmpty
+            ? StationLabel.lineLabels(in: catalog, regionCode: region.code) : lineLabelByID
+        return StationLabel.text(
+            for: station, catalog: catalog, labels: labels,
+            contextLineIDs: Set(corridor.choice.lineIDs)).qualifier
     }
 
     private func swapStations() {

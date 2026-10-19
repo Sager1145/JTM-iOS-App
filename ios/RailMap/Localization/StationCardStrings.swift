@@ -74,5 +74,20 @@ enum StationCardStrings {
         "ios.station.validTo": [
             .en: "Valid until", .ja: "有効期間終了", .zhHans: "有效结束日期", .zhHant: "有效結束日期",
         ],
+        "ios.station.status.reserved": [
+            .en: "Reserved", .ja: "予備", .zhHans: "预留", .zhHant: "預留",
+        ],
+        "ios.station.status.planned": [
+            .en: "Planned", .ja: "計画中", .zhHans: "规划", .zhHant: "規劃",
+        ],
+        "ios.station.status.closed": [
+            .en: "Closed", .ja: "廃止", .zhHans: "停用", .zhHant: "停用",
+        ],
+        "ios.station.status.suspended": [
+            .en: "Suspended", .ja: "休止", .zhHans: "暂停", .zhHant: "暫停",
+        ],
+        "ios.station.status.historical": [
+            .en: "Former", .ja: "旧駅", .zhHans: "历史", .zhHant: "歷史",
+        ],
     ]
 }

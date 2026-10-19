@@ -464,10 +464,12 @@ extension CompactPackage {
             public let `operator`: String?
             public let operatorShort: String?
             public let nameNorm: String?
+            public let lineCode: String?
+            public let rank: Int
             public let stations: [CompactPackage.Station]
 
             enum CodingKeys: String, CodingKey {
-                case id, name, nameRoma, `operator`, operatorShort, nameNorm, stations
+                case id, name, nameRoma, `operator`, operatorShort, nameNorm, lineCode, rank, stations
             }
 
             public init(from decoder: Decoder) throws {
@@ -478,6 +480,8 @@ extension CompactPackage {
                 self.operator = try row.decodeIfPresent(String.self, forKey: .operator)
                 operatorShort = try row.decodeIfPresent(String.self, forKey: .operatorShort)
                 nameNorm = try row.decodeIfPresent(String.self, forKey: .nameNorm)
+                lineCode = try row.decodeIfPresent(String.self, forKey: .lineCode)
+                rank = try row.decodeIfPresent(Int.self, forKey: .rank) ?? 0
                 stations = try row.decodeIfPresent([CompactPackage.Station].self, forKey: .stations) ?? []
             }
         }
@@ -509,7 +513,9 @@ extension CompactPackage {
                             longitude: station.coordinate.lon,
                             latitude: station.coordinate.lat
                         )
-                    }
+                    },
+                    lineCode: line.lineCode,
+                    rank: line.rank
                 )
             }
         }

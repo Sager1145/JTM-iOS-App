@@ -50,6 +50,8 @@ export const REPORT_RULES = [
   "ambiguous-company-text",
   "identity-not-a-railway",
   "history-unmatched",
+  "history-unresolved",
+  "history-period-undated",
   "shared-facility-candidate",
   "name-line-not-unique",
   "line-label-collision",
@@ -57,7 +59,72 @@ export const REPORT_RULES = [
   "station-code-conflict",
   "crosswalk-conflict",
   "operator-rename-invalid",
+  "bracket-name-unsplit",
 ];
+
+// Whole trimmed bracket text, exact. Latin markers compare case-insensitively.
+// Unknown text stays a subname. Extend this table; do not match substrings.
+export const BRACKET_STATUS_MARKERS = {
+  reserved: ["预留", "預留"],
+  planned: ["规划", "規劃", "计划", "計画", "計画中", "仮称", "在建", "建設中"],
+  closed: ["废止", "廢止", "廃止", "停办", "停辦", "关闭", "關閉", "已关闭", "已停用", "停用", "closed"],
+  suspended: ["休止", "停运", "停運", "暂停", "暫停", "運休"],
+  historical: ["旧", "舊", "原", "前", "历史", "歷史", "旧駅", "旧站", "舊站", "former", "old"],
+};
+
+const BRACKET_PAIRS = { "（": "）", "(": ")", "〈": "〉", "<": ">" };
+const BRACKET_CLOSERS = new Set(Object.values(BRACKET_PAIRS));
+const BRACKET_STATUS_BY_TEXT = new Map();
+for (const [status, words] of Object.entries(BRACKET_STATUS_MARKERS)) {
+  for (const word of words) BRACKET_STATUS_BY_TEXT.set(word.toLowerCase(), status);
+}
+
+export function containsBracketChar(name) {
+  return /[（）()〈〉<>]/.test(String(name ?? ""));
+}
+
+// One matching bracket group → { base, bracket, kind, position, status? }.
+// Zero groups, two or more groups, unbalanced pairs, or an empty base/bracket → null.
+export function splitBracketName(name) {
+  const text = String(name ?? "");
+  const groups = [];
+  const stack = [];
+  for (let index = 0; index < text.length; index += 1) {
+    const character = text[index];
+    if (BRACKET_PAIRS[character]) {
+      stack.push({ character, index });
+      continue;
+    }
+    if (!BRACKET_CLOSERS.has(character)) continue;
+    if (!stack.length || BRACKET_PAIRS[stack[stack.length - 1].character] !== character) return null;
+    const open = stack.pop();
+    groups.push({ start: open.index, end: index });
+  }
+  if (stack.length || groups.length !== 1) return null;
+  const group = groups[0];
+  const bracket = text.slice(group.start + 1, group.end).trim();
+  const base = `${text.slice(0, group.start)}${text.slice(group.end + 1)}`.replace(/\s+/g, " ").trim();
+  if (!bracket || !base) return null;
+  const status = BRACKET_STATUS_BY_TEXT.get(bracket.toLowerCase()) ?? null;
+  const split = {
+    base,
+    bracket,
+    kind: status ? "status" : "subname",
+    position: text.slice(group.end + 1).trim() === "" ? "suffix" : "infix",
+  };
+  if (status) split.status = status;
+  return split;
+}
+
+// Rows for `name.form` base/bracket. Status column is the category, or `subname`.
+export function bracketNameRows(official) {
+  const split = splitBracketName(official);
+  if (!split) return [];
+  return [
+    { form: "base", value: split.base, status: null },
+    { form: "bracket", value: split.bracket, status: split.kind === "status" ? split.status : "subname" },
+  ];
+}
 
 const NOT_MAPPED = [
   "raw/display vertex ordinal",
@@ -457,6 +524,125 @@ function readRoutePatterns(root, region) {
   return readReviewed(root, region, "route-patterns.json", "jtm-route-patterns/1", "patterns");
 }
 
+function readHistoryCrosswalk(root, region) {
+  return readReviewed(root, region, "history-crosswalk.json", "jtm-history-crosswalk/1", "entries");
+}
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+function datedBound(value) {
+  if (value == null || value === "") return null;
+  const text = String(value);
+  return ISO_DATE.test(text) ? text : null;
+}
+
+function operationEventKey(event) {
+  return [event.id, event.event, event.value ?? "", event.on ?? "", event.why ?? ""].join("\0");
+}
+
+function operationPairPrefix(event) {
+  return [event.id, event.value ?? "", event.why ?? ""].join("\0");
+}
+
+/** operation-withdrawn matches the operation's `on` (the interval from). */
+export function withdrawnOperationPairs(events) {
+  const starts = new Set();
+  const prefixes = new Set();
+  for (const event of events) {
+    if (event.event !== "operation-withdrawn") continue;
+    const prefix = operationPairPrefix(event);
+    prefixes.add(prefix);
+    starts.add(`${prefix}\0${event.on ?? ""}`);
+  }
+  return { starts, prefixes };
+}
+
+export function operationEventWithdrawn(event, withdrawn) {
+  if (event.event !== "operation" && event.event !== "operation-end") return false;
+  const prefix = operationPairPrefix(event);
+  if (event.event === "operation") return withdrawn.starts.has(`${prefix}\0${event.on ?? ""}`);
+  return withdrawn.prefixes.has(prefix);
+}
+
+function historyCrosswalkEntries(root, region) {
+  const doc = readHistoryCrosswalk(root, region);
+  if (!doc) return [];
+  return [...doc.entries].sort((a, b) => compareText(String(a.history_id ?? ""), String(b.history_id ?? ""))
+    || compareText(String(a.kind ?? ""), String(b.kind ?? "")));
+}
+
+function historyReportRow(entry, status = null) {
+  return {
+    history_id: String(entry.history_id ?? ""),
+    kind: String(entry.kind ?? ""),
+    status: status ?? String(entry.status ?? ""),
+    line_name: String(entry.match?.line_name ?? ""),
+    operator: String(entry.match?.operator ?? ""),
+    lp: Array.isArray(entry.lp) ? [...entry.lp].map(String).sort(compareId) : [],
+    op: entry.op ?? null,
+  };
+}
+
+export function operationIntervalsOverlap(left, right) {
+  if ((left.from ?? null) === (right.from ?? null) && (left.to ?? null) === (right.to ?? null)) return false;
+  const leftBeforeRightEnd = left.from == null || right.to == null || left.from < right.to;
+  const rightBeforeLeftEnd = right.from == null || left.to == null || right.from < left.to;
+  return leftBeforeRightEnd && rightBeforeLeftEnd;
+}
+
+export function planHistoryCrosswalk(entries) {
+  const unresolved = [];
+  const undated = [];
+  const candidates = [];
+  for (const entry of entries) {
+    const op = entry.op ? String(entry.op) : "";
+    const status = String(entry.status ?? "");
+    if (status === "multiple" || status === "unmatched" || !op) {
+      unresolved.push(historyReportRow(entry));
+      continue;
+    }
+    if (entry.kind !== "identity_period" || status !== "unique") continue;
+    const validFrom = datedBound(entry.valid_from);
+    const validTo = datedBound(entry.valid_to);
+    if (!validFrom && !validTo) {
+      undated.push(historyReportRow(entry));
+      continue;
+    }
+    const lpIds = Array.isArray(entry.lp) ? entry.lp.map(String) : [];
+    if (lpIds.length !== 1) {
+      unresolved.push(historyReportRow(entry, "multiple"));
+      continue;
+    }
+    candidates.push({
+      entry, lp: lpIds[0], op, validFrom, validTo, interval: { from: validFrom, to: validTo },
+    });
+  }
+  const blocked = new Set();
+  for (let i = 0; i < candidates.length; i += 1) {
+    for (let j = i + 1; j < candidates.length; j += 1) {
+      if (candidates[i].lp !== candidates[j].lp) continue;
+      if (operationIntervalsOverlap(candidates[i].interval, candidates[j].interval)) {
+        blocked.add(i);
+        blocked.add(j);
+      }
+    }
+  }
+  const accepted = [];
+  const withheld = [];
+  for (let i = 0; i < candidates.length; i += 1) {
+    if (blocked.has(i)) {
+      unresolved.push(historyReportRow(candidates[i].entry, "overlap"));
+      withheld.push(candidates[i]);
+    } else {
+      accepted.push(candidates[i]);
+    }
+  }
+  unresolved.sort((a, b) => compareText(a.history_id, b.history_id) || compareText(a.kind, b.kind) || compareText(a.status, b.status));
+  undated.sort((a, b) => compareText(a.history_id, b.history_id) || compareText(a.kind, b.kind));
+  withheld.sort((a, b) => compareText(String(a.entry.history_id ?? ""), String(b.entry.history_id ?? "")));
+  return { unresolved, undated, accepted, withheld };
+}
+
 function sortedCrosswalkGroups(doc) {
   return [...doc.groups].sort((a, b) => compareText(String(a.slug ?? ""), String(b.slug ?? ""))
     || compareText(crosswalkKey(a.lp), crosswalkKey(b.lp)));
@@ -832,6 +1018,47 @@ export function mint(db, ledger, { region, runId, at, root } = {}) {
     }
     additions.crosswalkConflicts.sort((a, b) => compareText(a.slug, b.slug) || compareText(a.lp.join(","), b.lp.join(",")));
   }
+
+  const seenOperation = new Set();
+  const operationEvents = new Set(["operation", "operation-end", "operation-withdrawn"]);
+  for (const event of ledger.events) {
+    if (operationEvents.has(event.event)) seenOperation.add(operationEventKey(event));
+  }
+  for (const item of additions.events) {
+    if (operationEvents.has(item.rec.event)) seenOperation.add(operationEventKey(item.rec));
+  }
+  const queued = [];
+  const historyPlan = planHistoryCrosswalk(historyCrosswalkEntries(root, region));
+  for (const planned of historyPlan.accepted) {
+    const { lp, op, validFrom, validTo } = planned;
+    if (!entities.has(lp) || retired.has(lp) || !entities.has(op) || retired.has(op)) continue;
+    const why = String(planned.entry.history_id ?? "");
+    const start = { id: lp, event: "operation", value: op, why, run: runId };
+    if (validFrom) start.on = validFrom;
+    const pair = [start];
+    if (validTo) pair.push({ id: lp, event: "operation-end", value: op, on: validTo, why, run: runId });
+    for (const rec of pair) {
+      if (seenOperation.has(operationEventKey(rec))) continue;
+      seenOperation.add(operationEventKey(rec));
+      queued.push(rec);
+    }
+  }
+  for (const planned of historyPlan.withheld) {
+    const why = String(planned.entry.history_id ?? "");
+    const prior = ledger.events.filter((event) => event.event === "operation"
+      && event.id === planned.lp && (event.value ?? "") === planned.op && (event.why ?? "") === why);
+    for (const event of prior) {
+      const withdrawn = {
+        id: event.id, event: "operation-withdrawn", value: event.value, why, run: runId,
+      };
+      if (event.on != null && event.on !== "") withdrawn.on = event.on;
+      if (seenOperation.has(operationEventKey(withdrawn))) continue;
+      seenOperation.add(operationEventKey(withdrawn));
+      queued.push(withdrawn);
+    }
+  }
+  queued.sort((a, b) => compareText(a.why ?? "", b.why ?? "") || compareText(a.event, b.event) || compareId(a.id, b.id));
+  for (const rec of queued) additions.events.push({ region, rec });
   return additions;
 }
 
@@ -905,6 +1132,30 @@ function loadFacts(db, region) {
     ? db.prepare("SELECT alias, label FROM operator_alias WHERE scope = ? ORDER BY alias").all(country)
     : [];
   return { operators, lines, stations, stops, sources, aliases };
+}
+
+function unsplitBracketNames(facts) {
+  const rows = [];
+  const seen = new Set();
+  const push = (row) => {
+    const key = [row.source, row.name, row.code ?? "", row.line ?? ""].join("\0");
+    if (seen.has(key)) return;
+    seen.add(key);
+    rows.push(row);
+  };
+  for (const station of facts.stations) {
+    if (!containsBracketChar(station.name) || splitBracketName(station.name)) continue;
+    push({ source: "station", name: station.name, code: station.code });
+  }
+  for (const stop of facts.stops) {
+    if (!containsBracketChar(stop.name) || splitBracketName(stop.name)) continue;
+    push({ source: "line_station", name: stop.name, code: stop.code, line: stop.line_id });
+  }
+  rows.sort((a, b) => compareText(a.source, b.source)
+    || compareText(a.name, b.name)
+    || compareText(a.code ?? "", b.code ?? "")
+    || compareText(a.line ?? "", b.line ?? ""));
+  return rows;
 }
 
 function qualifiedLabel(operatorName, shortName, lineName) {
@@ -1076,6 +1327,9 @@ export function reports(db, ledger, region, root) {
   out["identity-not-a-railway"] = identityRows;
 
   out["history-unmatched"] = historyUnmatched(facts, region, lpOf);
+  const historyPlan = planHistoryCrosswalk(historyCrosswalkEntries(root, region));
+  out["history-unresolved"] = historyPlan.unresolved;
+  out["history-period-undated"] = historyPlan.undated;
 
   const facility = sharedFacilities(facts, index, opOf, cxOfCode);
   out["shared-facility-candidate"] = facility;
@@ -1137,6 +1391,7 @@ export function reports(db, ledger, region, root) {
   }
   out["crosswalk-conflict"] = crosswalkRows;
   out["operator-rename-invalid"] = operatorRenameRows(root, region, ledger, index);
+  out["bracket-name-unsplit"] = unsplitBracketNames(facts);
 
   const ordered = {};
   for (const rule of REPORT_RULES) ordered[rule] = out[rule];
@@ -1581,8 +1836,164 @@ export function loadRegistryTables(db, root) {
       }
     }
   }
+  fillLineOperation(db, ledger, tally);
   fillNames(db, ledger, tally);
   return counts;
+}
+
+/**
+ * Dated rows for live, non-withdrawn operation pairs. An undated current
+ * operator is kept only when that lp has no dated rows. Otherwise it starts
+ * at the latest operation-end when the current operator differs, or it is
+ * omitted (and listed) when that bound cannot be derived.
+ */
+export function planLineOperationRows(ledger, currents) {
+  const retired = new Set();
+  for (const event of ledger.events) {
+    if (event.event === "retire") retired.add(event.id);
+  }
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const lnByLp = new Map();
+  for (const event of ledger.events) {
+    if (event.event === "line" && event.value && ledger.entities.has(event.value)) lnByLp.set(event.id, event.value);
+  }
+  const lineIdOf = (lp) => lnByLp.get(lp) ?? lp;
+  const withdrawn = withdrawnOperationPairs(ledger.events);
+  const endByKey = new Map();
+  for (const event of ledger.events) {
+    if (event.event !== "operation-end" || operationEventWithdrawn(event, withdrawn)) continue;
+    endByKey.set(operationPairPrefix(event), event.on ?? null);
+  }
+  const datedByLp = new Map();
+  const seenPair = new Set();
+  const rows = [];
+  for (const event of ledger.events) {
+    if (event.event !== "operation" || operationEventWithdrawn(event, withdrawn)) continue;
+    if (!live(event.id) || !live(event.value)) continue;
+    const key = operationPairPrefix(event);
+    if (seenPair.has(key)) continue;
+    seenPair.add(key);
+    const lineId = lineIdOf(event.id);
+    if (!ledger.entities.has(lineId)) continue;
+    const row = {
+      lp: event.id,
+      lineId,
+      operatorId: event.value,
+      role: "operator",
+      validFrom: event.on ?? null,
+      validTo: endByKey.has(key) ? endByKey.get(key) : null,
+    };
+    rows.push(row);
+    if (!datedByLp.has(event.id)) datedByLp.set(event.id, []);
+    datedByLp.get(event.id).push(row);
+  }
+  const omitted = [];
+  for (const current of currents) {
+    const dated = datedByLp.get(current.lp) ?? [];
+    const bound = boundCurrentOperator(dated, current.operatorId);
+    if (bound.omit) {
+      omitted.push(current.lp);
+      continue;
+    }
+    if (!bound.row) continue;
+    rows.push({
+      lp: current.lp,
+      lineId: current.lineId,
+      operatorId: current.operatorId,
+      role: "operator",
+      validFrom: bound.row.validFrom,
+      validTo: bound.row.validTo,
+    });
+  }
+  omitted.sort(compareId);
+  return { rows, omitted };
+}
+
+function boundCurrentOperator(dated, operatorId) {
+  if (!dated.length) return { row: { validFrom: null, validTo: null } };
+  const open = dated.filter((row) => row.validTo == null || row.validTo === "");
+  if (open.length) {
+    const operators = new Set(open.map((row) => row.operatorId));
+    if (operators.size === 1 && operators.has(operatorId)) return { row: null };
+    return { omit: true };
+  }
+  const latest = dated.map((row) => row.validTo).filter(Boolean).sort(compareText).at(-1);
+  if (!latest) return { omit: true };
+  const atLatest = dated.filter((row) => row.validTo === latest);
+  const operators = new Set(atLatest.map((row) => row.operatorId));
+  if (operators.size !== 1) return { omit: true };
+  if (operators.has(operatorId)) return { row: null };
+  return { row: { validFrom: latest, validTo: null } };
+}
+
+function fillLineOperation(db, ledger, tally) {
+  if (!hasTable(db, "line") || !hasTable(db, "operator")) return;
+  const retired = new Set();
+  for (const event of ledger.events) {
+    if (event.event === "retire") retired.add(event.id);
+  }
+  const live = (id) => ledger.entities.has(id) && !retired.has(id);
+  const lnByLp = new Map();
+  for (const event of ledger.events) {
+    if (event.event === "line" && event.value && ledger.entities.has(event.value)) lnByLp.set(event.id, event.value);
+  }
+  const lineIdOf = (lp) => lnByLp.get(lp) ?? lp;
+  const operatorByLine = new Map();
+  for (const row of db.prepare(`
+    SELECT l.id AS id, o.name AS operator_name
+      FROM line l
+      JOIN operator o ON o.id = l.operator_id
+  `).all()) {
+    operatorByLine.set(row.id, row.operator_name);
+  }
+  const opsByName = new Map();
+  const packageLineOfLp = new Map();
+  for (const ref of ledger.refs) {
+    if (!live(ref.id)) continue;
+    if (ref.scheme === "package-operator" && String(ref.id).startsWith("op:")) {
+      if (!opsByName.has(ref.value)) opsByName.set(ref.value, new Set());
+      opsByName.get(ref.value).add(ref.id);
+    }
+    if (ref.scheme === "package-line" && String(ref.id).startsWith("lp:") && !ref.from) {
+      packageLineOfLp.set(ref.id, ref.value);
+    }
+  }
+  const currents = [];
+  for (const entity of ledger.entities.values()) {
+    if (!String(entity.id).startsWith("lp:") || !live(entity.id)) continue;
+    const packageId = packageLineOfLp.get(entity.id);
+    const operatorName = packageId ? operatorByLine.get(packageId) : null;
+    if (!operatorName) continue;
+    const ops = [...(opsByName.get(operatorName) ?? [])].sort(compareId);
+    if (ops.length !== 1) continue;
+    const lineId = lineIdOf(entity.id);
+    if (!ledger.entities.has(lineId) || !live(ops[0])) continue;
+    currents.push({ lp: entity.id, lineId, operatorId: ops[0] });
+  }
+  currents.sort((a, b) => compareId(a.lp, b.lp));
+  const planned = planLineOperationRows(ledger, currents);
+  for (const lp of planned.omitted) console.log(`line_operation omitted ${lp}`);
+  const rows = planned.rows;
+  rows.sort((a, b) => compareId(a.lineId, b.lineId)
+    || compareId(a.operatorId, b.operatorId)
+    || compareText(a.validFrom ?? "", b.validFrom ?? "")
+    || compareText(a.validTo ?? "", b.validTo ?? ""));
+  const seenRow = new Set();
+  const uniqueRows = [];
+  for (const row of rows) {
+    const key = [row.lineId, row.operatorId, row.role, row.validFrom ?? "", row.validTo ?? ""].join("\0");
+    if (seenRow.has(key)) continue;
+    seenRow.add(key);
+    uniqueRows.push(row);
+  }
+  const insert = db.prepare(`
+    INSERT INTO line_operation (line_id, operator_id, role, valid_from, valid_to)
+    VALUES (?, ?, ?, ?, ?)
+  `);
+  for (const row of uniqueRows) {
+    insert.run(row.lineId, row.operatorId, row.role, row.validFrom, row.validTo);
+    tally("line_operation");
+  }
 }
 
 function officialLang(region) {
@@ -1637,6 +2048,11 @@ function fillNames(db, ledger, tally) {
     seen.add(key);
     rows.push({ entityId, region, lang, form, value: text, source, status });
   };
+  const pushBracket = (entityId, region, lang, official, source) => {
+    for (const row of bracketNameRows(official)) {
+      push(entityId, region, lang, row.form, row.value, source, row.status);
+    }
+  };
   if (hasTable(db, "operator")) {
     for (const row of db.prepare("SELECT country_code, name, short_name FROM operator").all()) {
       const region = String(row.country_code).toLowerCase();
@@ -1666,6 +2082,7 @@ function fillNames(db, ledger, tally) {
       const cx = cxByGroup.get(`${region}\0${row.code}`);
       if (!cx) continue;
       push(cx, region, officialLang(region), "official", row.name, "station.name");
+      pushBracket(cx, region, officialLang(region), row.name, "station.name");
       push(cx, region, "en", "romaji", row.name_roma, "station.name_roma");
     }
   }
@@ -1720,6 +2137,7 @@ function fillNames(db, ledger, tally) {
       const st = stByDeriv.get(`${cx}|${op}`);
       if (!st || row.stop_name === row.cx_name) continue;
       push(st, row.region, officialLang(row.region), "official", row.stop_name, "line_station.name");
+      pushBracket(st, row.region, officialLang(row.region), row.stop_name, "line_station.name");
     }
   }
   rows.sort((a, b) => compareId(a.entityId, b.entityId)

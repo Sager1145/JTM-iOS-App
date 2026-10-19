@@ -1,5 +1,6 @@
 import RailCore
 import SwiftUI
+import UIKit
 
 enum StationCatalogText {
     static func subtitle(
@@ -18,6 +19,17 @@ enum StationCatalogText {
         var text = labels.joined(separator: " · ")
         if memberships.count > 3 { text += " · +\(memberships.count - 3)" }
         return text
+    }
+
+    /// Tokens in the old `line · operator` subtitle that the round-trip qualifier
+    /// does not already show. Empty means that subtitle would only repeat the qualifier.
+    static func detailBeyondQualifier(_ legacy: String, qualifier: String) -> String {
+        legacy.components(separatedBy: " · ")
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter { token in
+                !token.isEmpty && !token.hasPrefix("+") && !qualifier.contains(token)
+            }
+            .joined(separator: " · ")
     }
 
     static func rows(catalog: EditorCatalog, regionCode: String) -> [CatalogStationRow] {
@@ -63,7 +75,7 @@ struct StationPickerView: View {
     /// A stop keeps free text; only its suggestions use the shared picker.
     var inlineQuery: Binding<String>? = nil
     var showsSuggestions = true
-    var onLoad: ((EditorCatalog?, [RetiredStation]) -> Void)? = nil
+    var onLoad: ((EditorCatalog?, [RetiredStation], [String: String]) -> Void)? = nil
     var accessibilityPrefix = "rideEditorStation"
     @State private var query = ""
     @State private var onlyCompany = false
@@ -71,6 +83,8 @@ struct StationPickerView: View {
     @State private var catalog: EditorCatalog?
     @State private var retiredByID: [String: RetiredStation] = [:]
     @State private var subtitleByCode: [String: String] = [:]
+    @State private var copyByCode: [String: String] = [:]
+    @State private var lineLabelByID: [String: String] = [:]
     @State private var didLoad = false
     @State private var loadError: String?
 
@@ -81,13 +95,30 @@ struct StationPickerView: View {
     }
     private var companyName: String? { onlyCompany ? companyFilter : nil }
 
+    private var operatorNames: [String: String] {
+        guard let catalog else { return [:] }
+        return Dictionary(
+            uniqueKeysWithValues: catalog.operators(in: regionCode).map { ($0.id, $0.name) })
+    }
+
     private var lineGroups: [CatalogStationLineGroup] {
         guard let catalog else { return [] }
         return search.output.lines.compactMap { line in
             let rows = line.hits.compactMap { hit -> CatalogStationRow? in
                 guard case .current(let key, _) = hit.subject,
                       let station = catalog.station(key) else { return nil }
-                return CatalogStationRow(station: station, subtitle: subtitleByCode[station.key.sourceCode] ?? "")
+                let detail = lineLabelByID[line.id] ?? ""
+                let caption = detail.isEmpty
+                    ? (subtitleByCode[station.key.sourceCode] ?? "")
+                    : StationLabel.caption(countryCode: regionCode.uppercased(), detail: detail)
+                let legacy = StationCatalogText.subtitle(
+                    for: station, catalog: catalog, operators: operatorNames)
+                let copy = StationReferenceResolution.copyLabel(
+                    for: station, catalog: catalog, preferredLineID: line.id)
+                return CatalogStationRow(
+                    station: station, subtitle: caption,
+                    detail: StationCatalogText.detailBeyondQualifier(legacy, qualifier: caption),
+                    copyText: copy)
             }
             guard !rows.isEmpty,
                   let catalogLine = catalog.line(id: line.id, regionCode: regionCode) else { return nil }
@@ -100,7 +131,9 @@ struct StationPickerView: View {
         return search.output.suggestions.compactMap { hit in
             guard case .current(let key, _) = hit.subject,
                   let station = catalog.station(key) else { return nil }
-            return CatalogStationRow(station: station, subtitle: subtitleByCode[key.sourceCode] ?? "")
+            return CatalogStationRow(
+                station: station, subtitle: subtitleByCode[key.sourceCode] ?? "",
+                copyText: copyByCode[key.sourceCode] ?? "")
         }
     }
     private var retiredStations: [RetiredStation] {
@@ -241,7 +274,9 @@ struct StationPickerView: View {
         catalog = nil
         retiredByID = [:]
         subtitleByCode = [:]
-        onLoad?(nil, [])
+        copyByCode = [:]
+        lineLabelByID = [:]
+        onLoad?(nil, [], [:])
         guard let region = Region(rawValue: regionCode) else {
             loadError = EditorCatalogLoadError.missingResource(regionCode).localizedDescription
             return
@@ -259,11 +294,17 @@ struct StationPickerView: View {
                 let directory = includesRetired ? RiddenRouteStore.retiredStations(region: regionCode) : []
                 let output = index.search(StationSearchQuery(regionCode: regionCode, rideDate: rideDate,
                     eligibility: includesRetired ? [.current, .retired] : .current, lineIDs: lineIDs), retired: directory)
-                let subtitles = Dictionary(StationCatalogText.rows(catalog: catalog, regionCode: regionCode).map {
-                    ($0.station.key.sourceCode, $0.subtitle)
-                }, uniquingKeysWith: { first, _ in first })
+                let labels = StationLabel.lineLabels(in: catalog, regionCode: regionCode)
+                var qualifiers: [String: String] = [:]
+                var copies: [String: String] = [:]
+                for station in catalog.stations(in: regionCode) {
+                    qualifiers[station.key.sourceCode] = StationLabel.text(
+                        for: station, catalog: catalog, labels: labels).qualifier
+                    copies[station.key.sourceCode] = StationReferenceResolution.copyLabel(
+                        for: station, catalog: catalog)
+                }
                 let openRetired = index.eligibleRetired(directory, rideDate: rideDate, lineIDs: lineIDs)
-                return (catalog, index, directory, output, subtitles, openRetired)
+                return (catalog, index, directory, output, qualifiers, openRetired, labels, copies)
             }.value
             guard !Task.isCancelled, search.acceptsLoad(loadID),
                   search.install(index: loaded.1, retired: loaded.2, request: request,
@@ -271,7 +312,9 @@ struct StationPickerView: View {
             catalog = loaded.0
             retiredByID = Dictionary(loaded.2.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
             subtitleByCode = loaded.4
-            onLoad?(loaded.0, loaded.5)
+            lineLabelByID = loaded.6
+            copyByCode = loaded.7
+            onLoad?(loaded.0, loaded.5, loaded.4)
             didLoad = true
             if isSearching || onlyCompany { search.apply(query: searchText, companyName: companyName) }
         } catch {
@@ -294,7 +337,7 @@ struct StationPickerView: View {
         Button {
             onSelectRetired?(station)
             if inlineQuery == nil { dismiss() }
-        } label: { RetiredStationLabel(station: station, rideDate: rideDate) }
+        } label: { RetiredStationLabel(station: station, rideDate: rideDate, regionCode: regionCode) }
             .buttonStyle(RailRowPressStyle(cornerRadius: 0))
             .accessibilityIdentifier("stationPickerRetired-\(station.id)")
     }
@@ -309,11 +352,17 @@ struct RetiredStationLabel: View {
     @Environment(AppLocalization.self) private var localization
     let station: RetiredStation
     let rideDate: String?
+    let regionCode: String
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(station.name)
-            Text("\(station.lineName) · \(station.operatorName)")
+            Text(BracketedStationText.title(
+                officialName: station.name, localizedTitle: station.name,
+                regionCode: regionCode, localization: localization))
+            Text(BracketedStationText.secondary(
+                officialName: station.name, regionCode: regionCode,
+                qualifier: "\(station.lineName) · \(station.operatorName)",
+                localization: localization))
                 .font(.caption).foregroundStyle(.secondary)
             Label(
                 closedText, systemImage: "clock.arrow.circlepath"
@@ -341,14 +390,63 @@ private struct CatalogStationLabel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(localization.stationName(row.station.name, code: row.station.key.sourceCode,
-                                          region: Region(rawValue: row.station.key.regionCode)))
-            if !row.subtitle.isEmpty {
-                Text(row.subtitle).font(.caption).foregroundStyle(.secondary)
+            Text(visibleName)
+                .lineLimit(3)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+            if !caption.isEmpty {
+                StationQualifierCaption(text: caption)
+            }
+            if !row.detail.isEmpty {
+                Text(row.detail)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
         .contentShape(.rect)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(spoken)
+        .contextMenu {
+            Button {
+                StationQualifierCopy.copy(full)
+            } label: {
+                Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+            }
+            ShareLink(item: full) {
+                Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+            }
+        }
+    }
+
+    private var visibleName: String {
+        BracketedStationText.title(
+            officialName: row.station.name,
+            localizedTitle: localization.stationName(
+                row.station.name, code: row.station.key.sourceCode,
+                region: Region(rawValue: row.station.key.regionCode)),
+            regionCode: row.station.key.regionCode, localization: localization)
+    }
+
+    private var caption: String {
+        BracketedStationText.secondary(
+            officialName: row.station.name, regionCode: row.station.key.regionCode,
+            qualifier: row.subtitle, localization: localization)
+    }
+
+    private var full: String {
+        if !row.copyText.isEmpty { return row.copyText }
+        return StationQualifierCopy.full(name: row.station.name, qualifier: row.subtitle)
+    }
+
+    private var spoken: String {
+        StationQualifierCopy.spoken(
+            name: row.station.name,
+            countryCode: row.station.key.regionCode.uppercased(),
+            qualifier: row.subtitle,
+            localization: localization)
     }
 }
 
@@ -368,6 +466,53 @@ private struct StationLinePickerView: View {
         }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+@MainActor
+enum StationQualifierCopy {
+    static func qualifier(fromFull full: String, name: String) -> String {
+        let prefix = name + " "
+        guard full.hasPrefix(prefix) else { return "" }
+        return String(full.dropFirst(prefix.count))
+    }
+
+    static func full(name: String, qualifier: String) -> String {
+        if qualifier.isEmpty { return name }
+        if qualifier.hasPrefix("(") { return name + " " + qualifier }
+        return qualifier
+    }
+
+    static func countryName(_ code: String, localization: AppLocalization) -> String? {
+        guard let region = Region(rawValue: code.lowercased()) else { return nil }
+        let value = localization.text(region.localizationKey, fallback: region.fallbackName)
+        if value.isEmpty || value == region.localizationKey { return nil }
+        return value
+    }
+
+    static func spoken(
+        name: String, countryCode: String, qualifier: String, localization: AppLocalization
+    ) -> String {
+        StationLabel.accessibility(
+            name: name, countryCode: countryCode,
+            spokenDetail: StationLabel.spokenDetail(in: qualifier),
+            countryName: countryName(countryCode, localization: localization))
+    }
+
+    static func copy(_ full: String) {
+        UIPasteboard.general.string = full
+    }
+}
+
+struct StationQualifierCaption: View {
+    var text: String
+
+    var body: some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .lineLimit(2)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 

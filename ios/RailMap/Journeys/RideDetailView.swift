@@ -423,15 +423,33 @@ struct RideDetailContent: View {
         let platform = stop?.platformNumber.flatMap { $0 >= 0 ? $0 : nil }
         // The record's own spelling goes to the readings table with the code
         // the record carries; what the reader sees is the answer.
-        let display = localization.stationName(
-            stop?.name ?? fallbackName, in: train, code: stop == nil ? fallbackCode : stop?.n02StationCode)
+        let official = stop?.name ?? fallbackName
+        let localized = localization.stationName(
+            official, in: train, code: stop == nil ? fallbackCode : stop?.n02StationCode)
+        let identity = endpointIdentity(stop: stop, isArrival: isArrival)
+        let display = BracketedStationText.title(
+            officialName: official, localizedTitle: localized,
+            regionCode: detailRegion.code, localization: localization)
+        let caption = BracketedStationText.secondary(
+            officialName: official, regionCode: detailRegion.code,
+            qualifier: identity.qualifier, localization: localization)
         return VStack(alignment: isArrival ? .trailing : .leading, spacing: 4) {
             Text(role)
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
             Text(display)
                 .font(.title3.bold())
+                .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+            if stop != nil {
+                Text(caption)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+                    .multilineTextAlignment(isArrival ? .trailing : .leading)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
             if let time, !time.isEmpty {
                 HStack(spacing: 5) {
                     Text(time).font(.headline).monospacedDigit()
@@ -442,12 +460,23 @@ struct RideDetailContent: View {
                 PlatformBadge(number: platform, compact: true)
             }
         }
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            [role, display, time, time.map(nextDayVoiceOver) ?? nil,
+            [role, stationSpoken(identity), time, time.map(nextDayVoiceOver) ?? nil,
              platform.map { localization.platformText($0) }]
                 .compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: ", ")
         )
+        .contextMenu {
+            let copied = stationCopyText(stop: stop, index: isArrival ? max(train.stops.count - 1, 0) : 0)
+            Button {
+                StationQualifierCopy.copy(copied)
+            } label: {
+                Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+            }
+            ShareLink(item: copied) {
+                Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+            }
+        }
     }
 
     // MARK: - 3. Stop timeline (§7.4)
@@ -530,6 +559,7 @@ struct RideDetailContent: View {
     private func timelineRow(_ stop: Stop, index: Int, detail: JourneyDetailSnapshot, section: RouteSection?,
                              showsLineNames: Bool) -> some View {
         let lines = timelineLines(for: section)
+        let identity = stopIdentity(index: index)
         let markerColor = lines.first?.color ?? JourneyBranding.color(of: train)
         return HStack(alignment: .top, spacing: 12) {
             VStack(spacing: 0) {
@@ -562,12 +592,26 @@ struct RideDetailContent: View {
             }
             VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    Text(localization.stationName(
-                        stop.name, code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
-                        region: detailRegion))
-                        .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
-                        .foregroundStyle(stop.rideSegment ? .primary : .secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(BracketedStationText.title(
+                            officialName: stop.name,
+                            localizedTitle: localization.stationName(
+                                stop.name, code: detail.stationCode(named: stop.name, recorded: stop.n02StationCode),
+                                region: detailRegion),
+                            regionCode: detailRegion.code, localization: localization))
+                            .font(.body.weight(stop.stopType == "pass_through" ? .regular : .semibold))
+                            .foregroundStyle(stop.rideSegment ? .primary : .secondary)
+                            .lineLimit(3)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .layoutPriority(1)
+                        Text(BracketedStationText.secondary(
+                            officialName: stop.name, regionCode: detailRegion.code,
+                            qualifier: identity.qualifier, localization: localization))
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     if stop.stopType != "passenger_stop" && stop.stopType != "pass_through" {
                         Text(stopTypeName(stop.stopType))
                             .font(.caption)
@@ -603,10 +647,82 @@ struct RideDetailContent: View {
             timeColumn(stop)
         }
         .frame(minHeight: 44, alignment: .top)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel(([accessibilityLabel(for: stop)]
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(([accessibilityLabel(for: stop, stationSpoken: stationSpoken(identity))]
             + (showsLineNames ? lines.map(\.name) : [])).joined(separator: ", "))
         .accessibilityIdentifier("rideDetailStop-\(index)")
+        .contextMenu {
+            let copied = stationCopyText(stop: stop, index: index)
+            Button {
+                StationQualifierCopy.copy(copied)
+            } label: {
+                Label(localization.text("ios.editor.copyStation", fallback: "Copy"), systemImage: "doc.on.doc")
+            }
+            ShareLink(item: copied) {
+                Label(localization.text("ios.share", fallback: "Share"), systemImage: "square.and.arrow.up")
+            }
+        }
+    }
+
+    /// Copy and share use the catalog name and one country-unique line, not the transfer caption.
+    private func stationCopyText(stop: Stop?, index: Int) -> String {
+        let country = detailRegion.code.uppercased()
+        guard let stop else {
+            return StationLabel.countryOnly(name: "", countryCode: country).full
+        }
+        guard let code = stop.n02StationCode, !code.isEmpty,
+              let catalog = try? loadCatalog(for: detailRegion),
+              let station = catalog.station(StationKey(regionCode: detailRegion.code, sourceCode: code))
+        else {
+            return StationLabel.countryOnly(name: stop.name, countryCode: country).full
+        }
+        return StationReferenceResolution.copyLabel(
+            for: station, catalog: catalog, contextLineIDs: contextLineIDs(around: index))
+    }
+
+    private func contextLineIDs(around index: Int) -> Set<String> {
+        let sections = prepared?.sections ?? []
+        var ids: Set<String> = []
+        for sectionIndex in [index - 1, index] {
+            guard sections.indices.contains(sectionIndex) else { continue }
+            for id in sections[sectionIndex].lineIDs ?? [] { ids.insert(id) }
+        }
+        return ids
+    }
+
+    private func endpointIdentity(stop: Stop?, isArrival: Bool) -> StationLabel.Text {
+        let index = isArrival ? train.stops.count - 1 : 0
+        if stop != nil, train.stops.indices.contains(index) {
+            return stopIdentity(index: index)
+        }
+        return StationLabel.countryOnly(name: stop?.name ?? "", countryCode: detailRegion.code.uppercased())
+    }
+
+    /// Arrival line is the section before this stop. Departure line is the section after it.
+    private func stopIdentity(index: Int) -> StationLabel.Text {
+        let stop = train.stops[index]
+        let sections = prepared?.sections ?? []
+        func lineName(_ sectionIndex: Int) -> String? {
+            guard sections.indices.contains(sectionIndex) else { return nil }
+            return timelineLines(for: sections[sectionIndex]).first?.name
+        }
+        let country = detailRegion.code.uppercased()
+        let depart = lineName(index)
+        let arrive = lineName(index - 1)
+        if let arrive, let depart, arrive != depart {
+            return StationLabel.transferText(name: stop.name, countryCode: country, from: arrive, to: depart)
+        }
+        if let line = depart ?? arrive {
+            return StationLabel.make(name: stop.name, countryCode: country, detail: line)
+        }
+        return StationLabel.countryOnly(name: stop.name, countryCode: country)
+    }
+
+    private func stationSpoken(_ identity: StationLabel.Text) -> String {
+        StationLabel.accessibility(
+            name: identity.name, countryCode: identity.countryCode,
+            spokenDetail: identity.spokenDetail,
+            countryName: StationQualifierCopy.countryName(identity.countryCode, localization: localization))
     }
 
     /// Each connecting straight line follows the recorded section's railway
@@ -800,7 +916,8 @@ struct RideDetailContent: View {
                 }
             },
             onEditStops: onEditStops,
-            resourceWarnings: routeResourceWarnings)
+            resourceWarnings: routeResourceWarnings,
+            regionCode: detailRegion.code)
     }
 
     private var routeResourceWarnings: [String] {
@@ -974,8 +1091,8 @@ struct RideDetailContent: View {
     }
 
     /// §7.4's reading order: 站名，类型，到达时间，出发时间，是否乘坐.
-    private func accessibilityLabel(for stop: Stop) -> String {
-        var values = [stop.name, stopTypeName(stop.stopType)]
+    private func accessibilityLabel(for stop: Stop, stationSpoken: String) -> String {
+        var values = [stationSpoken, stopTypeName(stop.stopType)]
         if stop.stopType == "pass_through",
            stop.arrival?.isEmpty != false, stop.departure?.isEmpty != false {
             values.append(localization.text(stop.routeEditing?.generatedBy != nil
@@ -1045,6 +1162,7 @@ private struct RideRouteStateCard: View {
     let onRebuild: (() -> Void)?
     let onEditStops: (() -> Void)?
     var resourceWarnings: [String] = []
+    let regionCode: String
 
     @Environment(AppLocalization.self) private var localization
 
@@ -1286,10 +1404,16 @@ private struct RideRouteStateCard: View {
     private func name(_ value: String?, stopIndex: Int) -> String {
         let stop = train.stops.indices.contains(stopIndex) ? train.stops[stopIndex] : nil
         if let value, !value.isEmpty {
-            return localization.stationName(value, in: train, code: stop?.n02StationCode)
+            return BracketedStationText.title(
+                officialName: value,
+                localizedTitle: localization.stationName(value, in: train, code: stop?.n02StationCode),
+                regionCode: regionCode, localization: localization)
         }
         if let stop, !stop.name.isEmpty {
-            return localization.stationName(stop.name, in: train, code: stop.n02StationCode)
+            return BracketedStationText.title(
+                officialName: stop.name,
+                localizedTitle: localization.stationName(stop.name, in: train, code: stop.n02StationCode),
+                regionCode: regionCode, localization: localization)
         }
         return localization.text("ios.route.unnamedStation")
     }

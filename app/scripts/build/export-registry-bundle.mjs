@@ -5,7 +5,7 @@ import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { fileURLToPath } from "node:url";
 
-import { REGIONS, compareId, compareText, readLedger } from "./rail-database/registry.mjs";
+import { REGIONS, compareId, compareText, readLedger, splitBracketName } from "./rail-database/registry.mjs";
 
 function parseArgs(argv) {
   const options = {
@@ -39,6 +39,57 @@ function pushUnique(list, value) {
   if (value === null || value === undefined || value === "") return;
   const text = String(value);
   if (!list.includes(text)) list.push(text);
+}
+
+function bracketFields(db, region) {
+  const bracketedNames = {};
+  const collected = new Set();
+  if (db && hasTable(db, "station")) {
+    const country = region.toUpperCase();
+    for (const row of db.prepare("SELECT name FROM station WHERE country_code = ?").all(country)) {
+      if (row.name) collected.add(String(row.name));
+    }
+    if (hasTable(db, "line") && hasTable(db, "line_station")) {
+      const stops = db.prepare(`
+        SELECT ls.name AS name
+          FROM line_station ls
+          JOIN line l ON l.id = ls.line_id
+         WHERE l.country_code = ?
+      `).all(country);
+      for (const row of stops) {
+        if (row.name) collected.add(String(row.name));
+      }
+    }
+  }
+  for (const name of [...collected].sort(compareText)) {
+    const split = splitBracketName(name);
+    if (!split) continue;
+    const entry = {
+      base: split.base,
+      bracket: split.bracket,
+      kind: split.kind,
+      position: split.position,
+    };
+    if (split.kind === "status") entry.status = split.status;
+    bracketedNames[name] = entry;
+  }
+  const bases = new Set(Object.values(bracketedNames).map((entry) => entry.base));
+  const baseNameCounts = {};
+  for (const base of [...bases].sort(compareText)) baseNameCounts[base] = 0;
+  if (db && hasTable(db, "station") && bases.size) {
+    const seen = new Set();
+    const country = region.toUpperCase();
+    for (const row of db.prepare("SELECT code, name FROM station WHERE country_code = ?").all(country)) {
+      if (seen.has(row.code)) continue;
+      seen.add(row.code);
+      const split = splitBracketName(row.name);
+      const hit = new Set();
+      if (bases.has(row.name)) hit.add(row.name);
+      if (split && bases.has(split.base)) hit.add(split.base);
+      for (const base of hit) baseNameCounts[base] += 1;
+    }
+  }
+  return { bracketedNames, baseNameCounts };
 }
 
 function operatorList(packageValues, shorts, aliases) {
@@ -147,6 +198,7 @@ export function bundleDocument(db, ledger, region) {
     if (ids.size === 1) lines[lineId] = [...ids][0];
   }
   const run = ledger.runs.reduce((max, item) => Math.max(max, Number(item.run) || 0), 0);
+  const brackets = bracketFields(db, region);
   return {
     schema: "jtm-registry-bundle/1",
     region,
@@ -156,6 +208,8 @@ export function bundleDocument(db, ledger, region) {
     operators,
     stationOperator,
     lines,
+    bracketedNames: brackets.bracketedNames,
+    baseNameCounts: brackets.baseNameCounts,
   };
 }
 

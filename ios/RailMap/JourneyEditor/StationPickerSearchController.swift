@@ -5,6 +5,10 @@ import RailCore
 struct CatalogStationRow: Identifiable, Hashable, Sendable {
     var station: CatalogStation
     var subtitle: String
+    /// Line or operator text the round-trip qualifier does not already contain.
+    var detail: String = ""
+    /// `name (CC, lineLabel)` for copy and share. Empty falls back to the subtitle.
+    var copyText: String = ""
     var id: String { station.key.sourceCode }
 }
 
