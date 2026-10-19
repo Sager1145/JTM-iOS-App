@@ -58,12 +58,34 @@ struct TimetableSearchTests {
                   label: "test", origin: "西船橋", destination: "東京", stopRefs: [],
                   optionalStopRefs: [], via: [], confidence: nil, source: nil)
         }
-        #expect(!TimetableSearch("JR西").matches(pattern(company: "JR東日本")))
-        #expect(TimetableSearch("JR西").matches(pattern(company: "JR西日本")))
-        #expect(TimetableSearch("Tokyo 地铁").matches(pattern(company: "東京メトロ")))
-        #expect(TimetableSearch("Tokyo 地铁").matches(pattern(company: "東京都交通局")))
-        let results = TrainServicePatterns.search("JR西")
-        #expect(!results.isEmpty)
-        #expect(results.allSatisfy { OperatorIdentity.codes(forJoined: $0.company).contains("jp.jr-west") })
+        RegistryIdentityTestGate.withProvider(Self.discoveryBundle) {
+            #expect(!TimetableSearch("JR西").matches(pattern(company: "JR東日本")))
+            #expect(TimetableSearch("JR西").matches(pattern(company: "JR西日本")))
+            #expect(TimetableSearch("东京地铁").matches(pattern(company: "東京メトロ")))
+            #expect(TimetableSearch("东京地铁").matches(pattern(company: "東京都交通局")))
+            #expect(!TimetableSearch("Tokyo 地铁").matches(pattern(company: "東京メトロ")))
+            let results = TrainServicePatterns.search("JR西")
+            let identity = RegistryIdentityCache.identity(forRegion: "jp")
+            let west = identity?.operatorIDs(matchingQuery: "JR西") ?? []
+            #expect(!results.isEmpty)
+            #expect(!west.isEmpty)
+            #expect(results.allSatisfy { pattern in
+                !Set(identity?.operatorIDs(forCatalogName: pattern.company) ?? []).isDisjoint(with: west)
+            })
+        }
+    }
+
+    private static let discoveryBundle: RegistryIdentityLookup.Provider = { region in
+        guard region == "jp" else { return nil }
+        return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:west": RegistryOperatorRecord(
+                names: ["JR西日本", "西日本旅客鉄道"], label: "JR西日本", identity: "jp.jr-west"),
+            "op:jp:east": RegistryOperatorRecord(
+                names: ["JR東日本", "東日本旅客鉄道"], label: "JR東日本", identity: "jp.jr-east"),
+            "op:jp:metro": RegistryOperatorRecord(
+                names: ["東京メトロ"], label: "東京メトロ", identity: "jp.tokyo-metro"),
+            "op:jp:toei": RegistryOperatorRecord(
+                names: ["東京都交通局"], label: "都営", identity: "jp.toei"),
+        ]))
     }
 }

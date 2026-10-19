@@ -400,7 +400,8 @@ public enum TrainServicePatterns {
 
     public static func search(_ query: String, region: String = "jp", filter: Filter) -> [Pattern] {
         let prepared = SearchFold.PreparedQuery(query)
-        let operatorCodes = OperatorIdentity.exactCodes(query: query)
+        let identity = RegistryIdentityCache.identity(forRegion: region)
+        let operatorIDs = identity?.operatorIDs(matchingQuery: query) ?? []
         let normalizedQuery = normalizedText(
             query.trimmingCharacters(in: .whitespacesAndNewlines))
         let servicesByID = Dictionary(
@@ -410,17 +411,18 @@ public enum TrainServicePatterns {
             servicesByID[pattern.serviceId]?.region == region
         }
 
-        filterCandidates(&candidates, using: filter)
+        filterCandidates(&candidates, using: filter, region: region)
 
         let matched: [Pattern]
         if normalizedQuery.isEmpty {
             matched = candidates
+        } else if !operatorIDs.isEmpty, let identity {
+            matched = candidates.filter { pattern in
+                !Set(identity.operatorIDs(forCatalogName: pattern.company)).isDisjoint(with: operatorIDs)
+            }
         } else {
             matched = candidates.filter { pattern in
-                if let operatorCodes {
-                    return !Set(OperatorIdentity.codes(forJoined: pattern.company)).isDisjoint(with: operatorCodes)
-                }
-                return prepared.matches(fields: haystacksByPatternID[pattern.id] ?? [])
+                prepared.matches(fields: haystacksByPatternID[pattern.id] ?? [])
             }
         }
 
@@ -428,9 +430,14 @@ public enum TrainServicePatterns {
             prepared: prepared, rideDate: filter.rideDate)
     }
 
-    private static func filterCandidates(_ candidates: inout [Pattern], using filter: Filter) {
+    private static func filterCandidates(_ candidates: inout [Pattern], using filter: Filter, region: String) {
         if let company = filter.company {
-            candidates = candidates.filter { OperatorIdentity.sameCompany($0.company, company) }
+            let identity = RegistryIdentityCache.identity(forRegion: region)
+            let wanted = identity.map { Set($0.operatorIDs(forCatalogName: company)) } ?? []
+            candidates = candidates.filter { pattern in
+                guard let identity, !wanted.isEmpty else { return false }
+                return !Set(identity.operatorIDs(forCatalogName: pattern.company)).isDisjoint(with: wanted)
+            }
         }
         switch filter.status {
         case .any: break
@@ -500,15 +507,12 @@ public enum TrainServicePatterns {
         return Array(Set(names)).sorted()
     }
 
-    /// Search fields include multilingual operator and family names. Keep the
-    /// fields separate so query tokens can match across languages and fields.
+    /// Free-text fields. Operator identity is matched by id, not by these strings.
     private static let haystacksByPatternID: [String: [String]] = {
         let servicesByID = Dictionary(
             uniqueKeysWithValues: TrainServiceBranding.services.map { ($0.id, $0) })
         return Dictionary(uniqueKeysWithValues: patterns.map { pattern in
-            var haystacks = [pattern.name, pattern.label, pattern.origin,
-                              pattern.destination, pattern.companyLabel]
-            haystacks.append(contentsOf: OperatorIdentity.searchNames(for: pattern.company))
+            var haystacks = [pattern.name, pattern.label, pattern.origin, pattern.destination]
             haystacks.append(contentsOf: pattern.lines)
             haystacks.append(contentsOf: pattern.stops)
             if let service = servicesByID[pattern.serviceId] {

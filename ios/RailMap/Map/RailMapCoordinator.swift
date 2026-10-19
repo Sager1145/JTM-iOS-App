@@ -692,10 +692,27 @@ extension RailMapView.Surface {
             /// name would come back untouched. Callers that hold a ride pass
             /// its region. See `StationNaming.swift`.
             func localized(
-                _ name: String, code: String? = nil, region: Region? = nil
+                _ name: String, code: String? = nil, region: Region? = nil, stationID: String? = nil
             ) -> Named {
                 guard !name.isEmpty, let localization else {
                     return Named(display: name, readings: [])
+                }
+                if let stationID, !stationID.isEmpty {
+                    let display = RegistryStationDisplay.resolve(
+                        storedName: name, stationID: stationID, region: region?.code)
+                    if display.unresolved {
+                        return Named(display: name, readings: [
+                            .init(kind: .zh, text: localization.text(RegistryStationDisplay.unresolvedKey))
+                        ])
+                    }
+                    let readingCode = display.readingCodes.first ?? code
+                    return MainActor.assumeIsolated {
+                        Named(
+                            display: localization.stationName(
+                                display.primary, code: readingCode, region: region, allowNameFallback: false),
+                            readings: localization.nameReadingsTyped(
+                                display.primary, code: readingCode, region: region, allowNameFallback: false))
+                    }
                 }
                 return MainActor.assumeIsolated {
                     Named(
@@ -2256,6 +2273,10 @@ extension RailMapView.Surface {
                         routeColors[item.routeColorHex] = color
                         routeColor = color
                     }
+                    let stationID = ridesByID[feature.tid]?.stops.first { stop in
+                        stop.name == record.name
+                            && (item.stationCode == nil || stop.n02StationCode == item.stationCode)
+                    }?.stationID
                     let annotation = RideStationAnnotation(
                         rideID: feature.tid, drawsInOverlay: !hasSelection,
                         coordinate: displayCoordinate,
@@ -2264,6 +2285,7 @@ extension RailMapView.Surface {
                         stationCode: item.stationCode,
                         region: item.region,
                         role: feature.role,
+                        stationID: stationID,
                         radius: CGFloat(feature.radius) * (feature.role == "pass" ? 0.75 : 1),
                         lineWidth: CGFloat(feature.lineWidth) * (feature.role == "pass" ? 0.75 : 1),
                         ordinaryRadius: CGFloat(display.markers.passRadius),
@@ -2300,7 +2322,8 @@ extension RailMapView.Surface {
                     // which record carries a name never depends on the
                     // reader's language.
                     let stationName = localized(
-                        labelName, code: item.stationCode, region: item.region).display
+                        labelName, code: item.stationCode, region: item.region,
+                        stationID: annotation.stationID).display
                     let roleTag = selected && !RailwayLinePreview.isPreviewRide(feature.tid)
                         ? (feature.role == "pass" ? naming.passTag
                         : feature.role == "stop" ? naming.stopTag : "") : ""
@@ -2313,7 +2336,8 @@ extension RailMapView.Surface {
                         region: item.region,
                         tier: tier,
                         dotRadiusToken: annotation.drawnRadiusToken(atZoom: zoom),
-                        selected: annotation.selected)
+                        selected: annotation.selected,
+                        stationID: annotation.stationID)
                     let importance = StationLabelVisibility.rideLabelPriority(
                         role: feature.role, lineCount: connectionCount,
                         isNetworkTerminal: isNetworkTerminal)
@@ -2349,6 +2373,7 @@ extension RailMapView.Surface {
                         coordinate: position, name: spec.name, rawName: spec.rawName,
                         stationCode: endpoint?.stop.n02StationCode,
                         region: Region(rawValue: ride.country), role: "terminal",
+                        stationID: endpoint?.stop.stationID,
                         radius: CGFloat(display.markers.terminalRadius),
                         lineWidth: CGFloat(MapRideMarkers.ringWidth(1, settings: display.markers)),
                         ordinaryRadius: CGFloat(display.markers.passRadius),
@@ -3319,7 +3344,8 @@ extension RailMapView.Surface {
                 }
                 let named = localized(
                     endpoint.stop.name, code: endpoint.stop.n02StationCode,
-                    region: Region(rawValue: ride.country))
+                    region: Region(rawValue: ride.country), stationID: endpoint.stop.stationID)
+                let unresolved = endpoint.stop.stationID?.isEmpty != false
                 // An origin shows when the ride LEFT and a destination when it
                 // arrived — never both, because a card that showed both would
                 // be describing the timetable rather than the journey's end.
@@ -3327,12 +3353,14 @@ extension RailMapView.Surface {
                 let tag = kind == .origin ? naming.departureTag : naming.arrivalTag
                 let time = (clock?.isEmpty == false) ? "\(tag) \(clock!)" : ""
                 let badge = kind == .origin ? naming.startTag : naming.endTag
+                let unresolvedWord = localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved"
                 return MapEndpointLabels.spec(
                     trainID: ride.id, kind: kind,
                     at: Coordinate(lon: position.longitude, lat: position.latitude),
-                    name: named.display, rawName: endpoint.stop.name,
+                    name: unresolved ? endpoint.stop.name : named.display,
+                    rawName: endpoint.stop.name,
                     badge: badge, time: time,
-                    readings: named.readings.map(\.text))
+                    readings: unresolved ? [unresolvedWord] : named.readings.map(\.text))
             }
 
             /// Re-runs the endpoint cards' overlap-avoidance layout.
@@ -4024,7 +4052,7 @@ extension RailMapView.Surface {
                 guard let card = interaction.stationCard(for: annotation, named: { [self] name, code in
                     let named = localized(name, code: code)
                     return (named.display, localization == nil ? nil : named.readings.map(\.text))
-                }) else { return }
+                }, unresolvedLabel: localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved") else { return }
                 mapView.deselectAnnotation(annotation, animated: false)
                 if interaction.suppressesStationSelection {
                     return

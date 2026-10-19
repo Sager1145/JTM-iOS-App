@@ -50,6 +50,51 @@ public enum JourneyRouteIdentity {
             ? detected.compactMap(\.operatorName) : []))
     }
 
+    /// Operator ids for the recorded names, plus `train.operatorID` when set.
+    /// A name that does not convert is omitted. With no registry, only `train.operatorID` remains.
+    public static func operatorIDs(of train: Train, detected: [Statistics.TraversedLine] = []) -> [String] {
+        var ids: [String] = []
+        if let operatorID = train.operatorID, !operatorID.isEmpty { ids.append(operatorID) }
+        if let identity = identity(for: train) {
+            for name in operatorNames(of: train, detected: detected) {
+                ids.append(contentsOf: identity.operatorIDs(forCatalogName: name))
+            }
+        }
+        return unique(ids)
+    }
+
+    /// Facade label when the name converts. An unconverted name stays as stored text.
+    public static func operatorLabels(of train: Train, detected: [Statistics.TraversedLine] = []) -> [String] {
+        let names = operatorNames(of: train, detected: detected)
+        guard let identity = identity(for: train) else { return names }
+        return unique(names.map { name in
+            let ids = identity.operatorIDs(forCatalogName: name)
+            if let identifier = ids.first, let label = identity.operatorLabel(identifier), !label.isEmpty {
+                return label
+            }
+            return name
+        })
+    }
+
+    /// Logo for a known operator id, else the first catalog name that converts.
+    public static func operatorLogo(of train: Train, detected: [Statistics.TraversedLine] = []) -> String? {
+        let identity = identity(for: train)
+        if let operatorID = train.operatorID, let logo = identity?.operatorLogo(operatorID) { return logo }
+        guard let identity else { return nil }
+        for name in operatorNames(of: train, detected: detected) {
+            if let identifier = identity.operatorIDs(forCatalogName: name).first,
+               let logo = identity.operatorLogo(identifier) {
+                return logo
+            }
+        }
+        return nil
+    }
+
+    private static func identity(for train: Train) -> RegistryIdentity? {
+        guard let region = train.region, !region.isEmpty else { return nil }
+        return RegistryIdentityCache.identity(forRegion: region)
+    }
+
     /// A limited express never wears a line mark: it resolves the service mark
     /// for the trip date, then falls back to its operator's logo, then to the
     /// default train glyph (a nil result) — never to a line mark.

@@ -167,6 +167,17 @@ extension RecordedRouteAdmissionTests {
 
     @Test("Legal line labels relax to physical branch rows as reviewable candidates")
     func relaxedLineLabels() throws {
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(names: ["Operator"], label: "Operator"),
+            ]))
+        }) {
+            try relaxedLineLabelsBody()
+        }
+    }
+
+    private func relaxedLineLabelsBody() throws {
         let package = try fixture([line("Branch", ["A", "B"], [1])])
         var draft = train(["A", "B"])
         draft.routeSections = [RouteSection(fromN02StationCode: "A", toN02StationCode: "B",
@@ -226,6 +237,20 @@ extension RecordedRouteAdmissionTests {
 
     @Test("Published JR operator labels match their physical package company identities")
     func operatorAlias() throws {
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:east": RegistryOperatorRecord(
+                    names: ["JR東日本", "東日本旅客鉄道"], label: "JR東日本", identity: "jp.jr-east"),
+                "op:jp:central": RegistryOperatorRecord(
+                    names: ["JR東海"], label: "JR東海", identity: "jp.jr-central"),
+            ]))
+        }) {
+            try operatorAliasBody()
+        }
+    }
+
+    private func operatorAliasBody() throws {
         var row = line("joban", ["A", "X", "B"], [1, 1])
         row["operator"] = "東日本旅客鉄道"
         let package = try fixture([row])
@@ -251,6 +276,21 @@ extension RecordedRouteAdmissionTests {
 
     @Test("Super Oki and Shirasagi do not gain an unreviewed cross-row path from station-group aliases")
     func superOkiAndShirasagi() throws {
+        // Shirasagi's sections name 西日本旅客鉄道, the same string as the Hokuriku
+        // package row. Admission compares operator ids, so the name converts here.
+        // Super Oki has no section operators. Both stay empty for topology.
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:west": RegistryOperatorRecord(
+                    names: ["西日本旅客鉄道", "JR西日本"], label: "JR西日本", identity: "jp.jr-west"),
+            ]))
+        }) {
+            try superOkiAndShirasagiBody()
+        }
+    }
+
+    private func superOkiAndShirasagiBody() throws {
         let root = try PortFixtures.repositoryRoot()
         let package = try CompactPackage.load(contentsOf: root.appending(path: "app/public/rail/jp-2025.json"))
         let store = try JSONDecoder().decode(TrainStore.self,
@@ -268,14 +308,12 @@ extension RecordedRouteAdmissionTests {
                 package: package) { groups[$0] }
             let result = RecordedRouteAdmission.search(in: train, package: package, stationAliases: aliases)
             #expect(!result.topologyIsComplete)
-            if id == "20260719_03_super_oki5" {
-                // 山陰線 and 山口線 meet at a station, but compact rows carry no
-                // reviewed track junction. Aliases rename stops; they do not connect rows.
-                #expect(result.choices.isEmpty)
-                #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
-            } else {
-                #expect(!result.choices.isEmpty)
-            }
+            // Aliases rename stops; they do not connect rows. Super Oki's 山陰線 and
+            // 山口線 meet at a station with no reviewed junction. Shirasagi's first
+            // 北陸線 interval is the opposite direction of the paired alignment, and
+            // the paired row is not a reviewed continuation.
+            #expect(result.choices.isEmpty)
+            #expect(RecordedRouteAdmission.uniqueChoice(for: result) == nil)
         }
     }
 

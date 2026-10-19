@@ -632,6 +632,9 @@ enum EditorStrings {
         "ios.route.unnamedStation": [
             .zhHant: "未命名車站", .zhHans: "未命名车站", .ja: "駅名未設定", .en: "Unnamed station",
         ],
+        "ios.identity.unresolved": [
+            .zhHant: "未確定", .zhHans: "未确定", .ja: "未確定", .en: "unresolved",
+        ],
         "ios.route.rebuildExplain": [
             .zhHant: "會依目前的停站與路徑約束重新生成 route sections 與幾何。停站本身不會被改動。",
             .zhHans: "会依当前的停靠站与路径约束重新生成 route sections 与几何。停靠站本身不会被改动。",

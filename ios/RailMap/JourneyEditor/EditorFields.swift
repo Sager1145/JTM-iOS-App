@@ -68,13 +68,30 @@ struct EditorSearchField: View {
     var prompt: String? = nil
     var focus: FocusState<RideDraftIssue.Field?>.Binding?
     var field: RideDraftIssue.Field?
+    /// Company suggestions match operator ids. Other fields stay free text.
+    var matchesIdentity: Bool = false
+    var identityRegion: String? = nil
     @FocusState private var hasFocus: Bool
 
     private var matches: [String] {
         let query = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        let prepared = SearchFold.PreparedQuery(query)
-        return Array(Set(suggestions.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }))
-            .filter { query.isEmpty || prepared.matches(fields: OperatorIdentity.searchNames(for: $0)) }
+        let values = Array(Set(suggestions.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }))
+        let matched: [String]
+        if query.isEmpty {
+            matched = values
+        } else if matchesIdentity {
+            guard let identityRegion,
+                  let identity = RegistryIdentityCache.identity(forRegion: identityRegion) else { return [] }
+            let wanted = identity.operatorIDs(matchingQuery: query)
+            guard !wanted.isEmpty else { return [] }
+            matched = values.filter {
+                !Set(identity.operatorIDs(forCatalogName: $0)).isDisjoint(with: wanted)
+            }
+        } else {
+            let prepared = SearchFold.PreparedQuery(query)
+            matched = values.filter { prepared.matches(fields: [$0]) }
+        }
+        return matched
             .sorted { $0.localizedStandardCompare($1) == .orderedAscending }
             .prefix(6).map { $0 }
     }

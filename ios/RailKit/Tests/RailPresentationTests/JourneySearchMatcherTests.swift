@@ -20,7 +20,9 @@ struct JourneySearchMatcherTests {
         company: String? = "JR東日本",
         origin: String = "東京",
         destination: String = "伊豆急下田",
-        stops: [Stop]? = nil
+        stops: [Stop]? = nil,
+        region: String? = nil,
+        operatorID: String? = nil
     ) -> Train {
         Train(
             id: id,
@@ -35,7 +37,22 @@ struct JourneySearchMatcherTests {
                 Stop(name: origin, departure: "09:00", rideSegment: true),
                 Stop(name: "熱海", arrival: "10:19", departure: "10:20", rideSegment: true),
                 Stop(name: destination, arrival: "11:40", rideSegment: false),
-            ])
+            ],
+            region: region,
+            operatorID: operatorID)
+    }
+
+    static let eastOperator: RegistryIdentityLookup.Provider = { region in
+        guard region == "jp" else { return nil }
+        return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+            "op:jp:1": RegistryOperatorRecord(
+                names: ["JR East", "JR東日本"], label: "TEST-LABEL", logo: "/logos/test.svg",
+                identity: "jp.jr-east"),
+            "op:jp:9": RegistryOperatorRecord(
+                names: ["JR東海"], label: "JR東海", identity: "jp.jr-central"),
+            "op:jp:west": RegistryOperatorRecord(
+                names: ["JR西日本"], label: "JR西日本", identity: "jp.jr-west"),
+        ]))
     }
 
     // MARK: - every field §5.1 names
@@ -52,6 +69,16 @@ struct JourneySearchMatcherTests {
         "JR東日本",  // operator
     ])
     func everyContractedFieldIsSearchable(needle: String) {
+        if needle == "JR東日本" {
+            RegistryIdentityTestGate.withProvider(Self.eastOperator) {
+                let train = Self.train(region: "jp", operatorID: "op:jp:1")
+                #expect(JourneySearchMatcher.matches(train, query: needle))
+                var unresolved = train
+                unresolved.operatorID = nil
+                #expect(!JourneySearchMatcher.matches(unresolved, query: needle))
+            }
+            return
+        }
         #expect(JourneySearchMatcher.matches(Self.train(), query: needle))
     }
 
@@ -85,9 +112,13 @@ struct JourneySearchMatcherTests {
 
     @Test
     func matchingIsCaseInsensitive() {
-        let train = Self.train(number: "Odoriko 1", company: "JR East")
-        #expect(JourneySearchMatcher.matches(train, query: "odoriko"))
-        #expect(JourneySearchMatcher.matches(train, query: "JR EAST"))
+        RegistryIdentityTestGate.withProvider(Self.eastOperator) {
+            let train = Self.train(number: "Odoriko 1", company: "JR East", region: "jp", operatorID: "op:jp:1")
+            #expect(JourneySearchMatcher.matches(train, query: "odoriko"))
+            #expect(JourneySearchMatcher.matches(train, query: "JR EAST"))
+            #expect(JourneyRouteIdentity.operatorLabels(of: train) == ["TEST-LABEL"])
+            #expect(JourneyRouteIdentity.operatorLogo(of: train) == "/logos/test.svg")
+        }
     }
 
     @Test
@@ -207,8 +238,10 @@ struct JourneySearchMatcherTests {
             return Self.englishNames(train)
         }
         // Every recorded field, in scan order — none of them may ask.
+        // Company text is not one of those fields: a ride matches an operator
+        // query only through operatorID.
         for needle in ["桃園機場捷運", "機場第二航廈站", "台北車站", "新北產業園區站",
-                       "2026-08-02", "up", "直達車", "桃園捷運", "20260802_01"] {
+                       "2026-08-02", "up", "直達車", "20260802_01"] {
             #expect(JourneySearchMatcher.matches(ride, query: needle, alsoNamed: names))
         }
         #expect(counter.calls == 0)
@@ -217,6 +250,9 @@ struct JourneySearchMatcherTests {
         #expect(counter.calls == 1)
         #expect(!JourneySearchMatcher.matches(ride, query: "のぞみ", alsoNamed: names))
         #expect(counter.calls == 2)
+        // The stored company does not match, and the caller's station names cannot supply it.
+        #expect(!JourneySearchMatcher.matches(ride, query: "桃園捷運", alsoNamed: names))
+        #expect(counter.calls == 3)
     }
 
     /// §5.1 is reviewed by reading ``JourneySearchMatcher/fields(of:)``, so
@@ -493,12 +529,24 @@ struct JourneySearchMatcherFastPathTests {
         }
     }
     @Test func numericAndOperatorPrecision() {
-        let east = JourneySearchMatcherTests.train(id: "ride-2024-05-01", date: "2024-05-01", origin: "西船橋")
-        #expect(!JourneySearchMatcher.matches(east, query: "501"))
-        #expect(!JourneySearchMatcher.matches(east, query: "405"))
-        #expect(!JourneySearchMatcher.matches(east, query: "JR西"))
-        #expect(JourneySearchMatcher.matches(JourneySearchMatcherTests.train(company: "JR西日本"), query: "JR西"))
-        #expect(JourneySearchMatcher.matches(JourneySearchMatcherTests.train(number: "のぞみ501号"), query: "501"))
+        RegistryIdentityTestGate.withProvider(JourneySearchMatcherTests.eastOperator) {
+            let east = JourneySearchMatcherTests.train(
+                id: "ride-2024-05-01", date: "2024-05-01", origin: "西船橋",
+                region: "jp", operatorID: "op:jp:1")
+            #expect(!JourneySearchMatcher.matches(east, query: "501"))
+            #expect(!JourneySearchMatcher.matches(east, query: "405"))
+            #expect(!JourneySearchMatcher.matches(east, query: "JR西"))
+            let west = JourneySearchMatcherTests.train(
+                company: "JR西日本", region: "jp", operatorID: "op:jp:west")
+            #expect(JourneySearchMatcher.matches(west, query: "JR西"))
+            var unresolved = west
+            unresolved.operatorID = nil
+            #expect(!JourneySearchMatcher.matches(unresolved, query: "JR西"))
+            let other = JourneySearchMatcherTests.train(
+                company: "JR西日本", region: "jp", operatorID: "op:jp:9")
+            #expect(!JourneySearchMatcher.matches(other, query: "JR西"))
+            #expect(JourneySearchMatcher.matches(JourneySearchMatcherTests.train(number: "のぞみ501号"), query: "501"))
+        }
     }
 
     @Test(.enabled(if: ProcessInfo.processInfo.environment["SEARCH_BENCH"] == "1"))
@@ -519,13 +567,17 @@ struct JourneySearchMatcherFastPathTests {
 
 private func referenceMatch(_ train: Train, needle: String, aliases: [String] = []) -> Bool {
     guard !SearchFold.fold(needle).isEmpty else { return false }
-    if let codes = OperatorIdentity.exactCodes(query: needle) {
-        return !Set(OperatorIdentity.codes(forJoined: train.company ?? "")).isDisjoint(with: codes)
+    if let region = train.region, !region.isEmpty,
+       let identity = RegistryIdentityCache.identity(forRegion: region) {
+        let operatorIDs = identity.operatorIDs(matchingQuery: needle)
+        if !operatorIDs.isEmpty {
+            guard let operatorID = train.operatorID else { return false }
+            return operatorIDs.contains(operatorID)
+        }
     }
     let names = [train.number, train.numberEn, train.origin, train.destination,
                  train.direction, train.trainType].compactMap { $0 }
         + train.stops.map(\.name) + aliases
-        + OperatorIdentity.searchNames(for: train.company ?? "")
     return names.contains { SearchFold.matches(query: needle, fields: [$0]) }
         || train.date?.localizedCaseInsensitiveContains(needle) == true
         || train.id.localizedCaseInsensitiveContains(needle)

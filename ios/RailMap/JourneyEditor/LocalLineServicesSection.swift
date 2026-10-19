@@ -139,13 +139,14 @@ private struct LocalLineServiceBrowser: View {
     @State private var query = ""
     private var lines: [LineServiceCatalog.LineCoverage] {
         let prepared = SearchFold.PreparedQuery(query)
-        let operatorCodes = OperatorIdentity.exactCodes(query: query)
+        let identity = RegistryIdentityCache.identity(forRegion: package.country)
+        let operatorIDs = identity?.operatorIDs(matchingQuery: query) ?? []
         return catalog.lines.filter { line in
-            if let operatorCodes {
-                return !Set(OperatorIdentity.codes(forJoined: line.operatorName)).isDisjoint(with: operatorCodes)
+            if !operatorIDs.isEmpty, let identity {
+                return !Set(identity.operatorIDs(forCatalogName: line.operatorName)).isDisjoint(with: operatorIDs)
             }
-            return query.isEmpty || prepared.matches(fields: [line.lineName, line.operatorName] + line.aliases
-                + line.kinds.map(\.displayName) + OperatorIdentity.searchNames(for: line.operatorName))
+            return query.isEmpty || prepared.matches(fields: [line.lineName] + line.aliases
+                + line.kinds.map(\.displayName))
         }
     }
     var body: some View {

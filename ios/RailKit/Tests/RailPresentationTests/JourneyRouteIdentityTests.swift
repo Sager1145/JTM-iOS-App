@@ -192,4 +192,25 @@ struct JourneyRouteIdentityTests {
         #expect(JourneyRouteIdentity.lineNames(of: local, detected: []) == ["山手線"])
         #expect(JourneyRouteIdentity.operatorNames(of: local, detected: []) == ["JR東日本"])
     }
+
+    @Test func labelsAndLogosComeFromTheFacadeWhenTheNameConverts() {
+        RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(
+                    names: ["JR東日本"], label: "TEST-LABEL", logo: "/logos/test.svg", identity: "jp.jr-east"),
+            ]))
+        }) {
+            var ride = train(type: "普通", lines: ["山手線"])
+            ride.operatorID = "op:jp:1"
+            #expect(JourneyRouteIdentity.operatorIDs(of: ride).contains("op:jp:1"))
+            #expect(JourneyRouteIdentity.operatorLabels(of: ride) == ["TEST-LABEL"])
+            #expect(JourneyRouteIdentity.operatorLogo(of: ride) == "/logos/test.svg")
+            ride.operatorID = nil
+            ride.company = "未登録会社"
+            #expect(JourneyRouteIdentity.operatorIDs(of: ride).isEmpty)
+            #expect(JourneyRouteIdentity.operatorLabels(of: ride) == ["未登録会社"])
+            #expect(JourneyRouteIdentity.operatorLogo(of: ride) == nil)
+        }
+    }
 }

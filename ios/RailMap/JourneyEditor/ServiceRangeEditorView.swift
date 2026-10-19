@@ -154,7 +154,10 @@ struct ServiceRangeEditorView: View {
 
     private func station(at index: Int) -> String {
         let stop = train.stops[index]
-        return "\(index + 1). \(localization.stationName(stop.name, in: train, code: stop.n02StationCode))"
+        let name = localization.stationName(stop.name, in: train, code: stop.n02StationCode)
+        let mark = stop.stationID?.isEmpty != false
+            ? " " + localization.text(RegistryStationDisplay.unresolvedKey) : ""
+        return "\(index + 1). \(name)\(mark)"
     }
 
     private static func clampedRange(from: Int, to: Int, stopCount: Int) -> (from: Int, to: Int) {

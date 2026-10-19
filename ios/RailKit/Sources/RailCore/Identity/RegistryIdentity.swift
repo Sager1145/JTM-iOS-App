@@ -23,9 +23,116 @@ public struct RegistryStationLabel: Equatable, Sendable {
 /// forward code tables. The value is pure: it does not read the clock or disk.
 public struct RegistryIdentity: Equatable, Sendable {
     public var bundle: RegistryBundle
+    /// NFKC exact key → the one operator that owns it. A key two operators share is omitted.
+    private var exactOperatorByName: [String: String]
+    /// SearchFold key → every operator that published that name, label, identity code, or identity-bridge alias.
+    private var operatorsByFoldedQuery: [String: Set<String>]
 
     public init(bundle: RegistryBundle) {
         self.bundle = bundle
+        let maps = Self.conversionMaps(bundle)
+        self.exactOperatorByName = maps.exact
+        self.operatorsByFoldedQuery = maps.folded
+    }
+
+    public static func == (lhs: RegistryIdentity, rhs: RegistryIdentity) -> Bool {
+        lhs.bundle == rhs.bundle
+    }
+
+    /// Unique exact name or identity-code string. Ambiguous and unknown names are nil.
+    public func operatorID(forExactName name: String) -> String? {
+        let key = Self.exactKey(name, region: bundle.region)
+        guard !key.isEmpty else { return nil }
+        return exactOperatorByName[key]
+    }
+
+    /// Exact folded match of operator names, labels, aliases, and identity codes.
+    /// An empty query and a query that names no operator both return an empty set.
+    public func operatorIDs(matchingQuery query: String) -> Set<String> {
+        let folded = SearchFold.fold(JSString.trim(query))
+        guard !folded.isEmpty else { return [] }
+        return operatorsByFoldedQuery[folded] ?? []
+    }
+
+    /// Catalog company text → operator ids. A slash-joined string that is itself a
+    /// bundle name stays one operator. Otherwise each `/` part converts on its own,
+    /// and a part that does not convert is dropped.
+    public func operatorIDs(forCatalogName name: String) -> [String] {
+        let trimmed = JSString.trim(name)
+        guard !trimmed.isEmpty else { return [] }
+        if let whole = operatorID(forExactName: trimmed) { return [whole] }
+        let parts = trimmed.components(separatedBy: CharacterSet(charactersIn: "/／"))
+        guard parts.count > 1 else { return [] }
+        var seen: Set<String> = []
+        var result: [String] = []
+        for part in parts {
+            guard let identifier = operatorID(forExactName: part), seen.insert(identifier).inserted else { continue }
+            result.append(identifier)
+        }
+        return result
+    }
+
+    /// Exact catalog name, then a stored identity code, then `jp.` plus a timetable token.
+    public func operatorID(forCatalogOrTimetableToken token: String) -> String? {
+        let trimmed = JSString.trim(token)
+        guard !trimmed.isEmpty else { return nil }
+        if let exact = operatorID(forExactName: trimmed) { return exact }
+        if let coded = operatorID(forIdentityCode: trimmed) { return coded }
+        let prefixed = trimmed.hasPrefix("jp.") ? trimmed : "jp." + trimmed
+        if prefixed != trimmed {
+            if let coded = operatorID(forIdentityCode: prefixed) { return coded }
+            if let exact = operatorID(forExactName: prefixed) { return exact }
+        }
+        return nil
+    }
+
+    /// Passenger label. The stored short label wins; a schema-1 record falls back to its first name.
+    public func operatorLabel(_ identifier: String) -> String? {
+        guard let record = bundle.operatorRecords[identifier] else { return nil }
+        if !record.label.isEmpty { return record.label }
+        return record.names.first
+    }
+
+    /// Logo path stored on the operator. Empty and missing logos are nil.
+    public func operatorLogo(_ identifier: String) -> String? {
+        guard let logo = bundle.operatorRecords[identifier]?.logo, !logo.isEmpty else { return nil }
+        return logo
+    }
+
+    private static func exactKey(_ value: String, region: String) -> String {
+        let folded = JSString.trim(value).precomposedStringWithCompatibilityMapping
+        guard region.lowercased() == "tw" else { return folded }
+        return OperatorBranding.normalizeTaiwanCompanyName(folded)
+    }
+
+    private static func conversionMaps(_ bundle: RegistryBundle) -> (exact: [String: String], folded: [String: Set<String>]) {
+        var owners: [String: Set<String>] = [:]
+        var folded: [String: Set<String>] = [:]
+        for (identifier, record) in bundle.operatorRecords {
+            var exactSources = record.names
+            if let identity = record.identity, !identity.isEmpty { exactSources.append(identity) }
+            for raw in exactSources {
+                let key = exactKey(raw, region: bundle.region)
+                guard !key.isEmpty else { continue }
+                owners[key, default: []].insert(identifier)
+            }
+            var foldSources = record.names
+            if !record.label.isEmpty { foldSources.append(record.label) }
+            if let identity = record.identity, !identity.isEmpty {
+                foldSources.append(identity)
+                foldSources.append(contentsOf: OperatorIdentity.searchNames(for: identity))
+            }
+            for raw in foldSources {
+                let key = SearchFold.fold(raw)
+                guard !key.isEmpty else { continue }
+                folded[key, default: []].insert(identifier)
+            }
+        }
+        var exact: [String: String] = [:]
+        for (key, identifiers) in owners where identifiers.count == 1 {
+            exact[key] = identifiers.first
+        }
+        return (exact, folded)
     }
 
     public func station(_ identifier: String) -> RegistryStationRecord? {
@@ -148,10 +255,19 @@ public enum RegistryIdentityLookup {
 
     private static let lock = NSLock()
     nonisolated(unsafe) private static var provider: Provider?
+    nonisolated(unsafe) private static var generation: UInt64 = 0
+
+    /// Bumps every time ``install(_:)`` replaces the provider. The cache keys on this.
+    public static var providerGeneration: UInt64 {
+        lock.lock()
+        defer { lock.unlock() }
+        return generation
+    }
 
     public static func install(_ provider: Provider?) {
         lock.lock()
         self.provider = provider
+        generation &+= 1
         lock.unlock()
     }
 
@@ -162,5 +278,83 @@ public enum RegistryIdentityLookup {
         let current = provider
         lock.unlock()
         return current?(cc)
+    }
+}
+
+/// One ``RegistryIdentity`` per region for the currently installed provider.
+///
+/// Maps are built in ``RegistryIdentity/init(bundle:)``. This cache keeps that
+/// build off the per-row path. The lookup lock is never taken while this lock is held.
+public enum RegistryIdentityCache {
+    private static let lock = NSLock()
+    nonisolated(unsafe) private static var generation: UInt64 = .max
+    nonisolated(unsafe) private static var identities: [String: RegistryIdentity] = [:]
+    nonisolated(unsafe) private static var misses: Set<String> = []
+
+    public static func identity(forRegion region: String) -> RegistryIdentity? {
+        let cc = region.lowercased()
+        guard !cc.isEmpty else { return nil }
+        let current = RegistryIdentityLookup.providerGeneration
+        lock.lock()
+        if generation != current {
+            identities.removeAll(keepingCapacity: true)
+            misses.removeAll(keepingCapacity: true)
+            generation = current
+        } else if let cached = identities[cc] {
+            lock.unlock()
+            return cached
+        } else if misses.contains(cc) {
+            lock.unlock()
+            return nil
+        }
+        lock.unlock()
+        guard let built = RegistryIdentityLookup.identity(forRegion: cc) else {
+            lock.lock()
+            if generation == current { misses.insert(cc) }
+            lock.unlock()
+            return nil
+        }
+        lock.lock()
+        defer { lock.unlock() }
+        guard generation == current else { return built }
+        identities[cc] = built
+        return identities[cc]
+    }
+}
+
+/// Station text for a ride stop. A missing id, region, or station record is unresolved:
+/// the stored name is shown and readings are not looked up by that name.
+public struct RegistryStationDisplay: Equatable, Sendable {
+    public var primary: String
+    public var caption: String?
+    public var unresolved: Bool
+    public var readingCodes: [String]
+    public static let unresolvedKey = "ios.identity.unresolved"
+
+    public init(primary: String, caption: String?, unresolved: Bool, readingCodes: [String]) {
+        self.primary = primary
+        self.caption = caption
+        self.unresolved = unresolved
+        self.readingCodes = readingCodes
+    }
+
+    public static func resolve(
+        storedName: String, stationID: String?, region: String?, lineID: String? = nil
+    ) -> RegistryStationDisplay {
+        func unresolved() -> RegistryStationDisplay {
+            RegistryStationDisplay(primary: storedName, caption: nil, unresolved: true, readingCodes: [])
+        }
+        guard let stationID, !stationID.isEmpty, let region, !region.isEmpty,
+              let identity = RegistryIdentityCache.identity(forRegion: region),
+              let label = identity.label(for: stationID, line: lineID, country: region)
+        else { return unresolved() }
+        let secondary = label.presentation.secondary
+        let qualifier = label.text.qualifier
+        let caption = !secondary.isEmpty ? secondary : (qualifier.isEmpty ? nil : qualifier)
+        return RegistryStationDisplay(
+            primary: label.presentation.label,
+            caption: caption,
+            unresolved: false,
+            readingCodes: identity.codes(of: stationID))
     }
 }

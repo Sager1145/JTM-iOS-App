@@ -39,6 +39,33 @@ struct TravelDirectionTests {
         }
     }
 
+    @Test("A station id is placed by its registry codes and does not fall back to the stored name")
+    func stationIDPrefersRegistryCodes() throws {
+        let package = try fixture([line("main", ["A", "B"], kilometers: 10, order: "down")])
+        let byCode = ride(["B", "A"])
+        let reverse = try #require(try TravelDirection.infer(train: byCode, package: package))
+        #expect(reverse.direction == .up)
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(
+                region: "jp", run: 1,
+                stations: [
+                    "st:jp:1": RegistryStationRecord(
+                        cx: "cx:jp:1", group: "A", codes: ["A"], op: "op:jp:1", name: "A", lines: []),
+                    "st:jp:2": RegistryStationRecord(
+                        cx: "cx:jp:1", group: "B", codes: ["B"], op: "op:jp:1", name: "B", lines: []),
+                ]))
+        }) {
+            var byID = byCode
+            byID.stops[0].stationID = "st:jp:1"
+            byID.stops[1].stationID = "st:jp:2"
+            let forward = try #require(try TravelDirection.infer(train: byID, package: package))
+            #expect(forward.direction == .down)
+            byID.stops[0].stationID = "st:jp:missing"
+            #expect(try TravelDirection.infer(train: byID, package: package) == nil)
+        }
+    }
+
     @Test("An explicit down station order calls forward travel down and reverse travel up")
     func explicitDown() throws {
         let package = try fixture([line("main", ["A", "B", "C", "D"], kilometers: 10, order: "down")])

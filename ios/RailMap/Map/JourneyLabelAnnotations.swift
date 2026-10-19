@@ -12,6 +12,7 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
     /// as a tap on the mark, without going back to the dot for it.
     let rawName: String
     let stationCode: String?
+    let stationID: String?
     /// See ``RideStationAnnotation/region``.
     let region: Region?
     let tier: StationDisplay.RideLabelTier
@@ -25,12 +26,13 @@ final class RideLabelAnnotation: NSObject, MKAnnotation {
         coordinate: CLLocationCoordinate2D, text: String,
         rawName: String, stationCode: String?, region: Region?,
         tier: StationDisplay.RideLabelTier, dotRadiusToken: CGFloat,
-        selected: Bool
+        selected: Bool, stationID: String? = nil
     ) {
         self.coordinate = coordinate
         self.text = text
         self.rawName = rawName
         self.stationCode = stationCode
+        self.stationID = stationID
         self.region = region
         self.tier = tier
         self.dotRadiusToken = dotRadiusToken

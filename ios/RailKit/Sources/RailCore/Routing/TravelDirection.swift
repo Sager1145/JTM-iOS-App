@@ -66,11 +66,13 @@ public enum TravelDirection {
 
     private struct PackageIndex {
         var lines: [CompactPackage.Line]
+        var country: String
         var byCode: [String: [(line: Int, station: Int)]] = [:]
         var byName: [String: [(line: Int, station: Int)]] = [:]
 
         init(_ package: CompactPackage) {
             lines = package.lines
+            country = package.country
             for (lineIndex, line) in package.lines.enumerated() {
                 for (stationIndex, station) in line.stations.enumerated() {
                     byCode[station.id, default: []].append((lineIndex, stationIndex))
@@ -83,6 +85,16 @@ public enum TravelDirection {
         /// name onto a different station. Name fallback is only for a code the
         /// package does not contain, and for a stop with no code.
         func stationIndex(of stop: Stop, on line: Int) -> Int? {
+            if let stationID = stop.stationID, !stationID.isEmpty {
+                let codes = RegistryIdentityCache.identity(forRegion: country)?.codes(of: stationID) ?? []
+                for code in codes {
+                    if let hits = byCode[code],
+                       let index = unique(hits.filter { $0.line == line }.map(\.station)) {
+                        return index
+                    }
+                }
+                return nil
+            }
             if let code = stop.n02StationCode, !code.isEmpty, let hits = byCode[code] {
                 return unique(hits.filter { $0.line == line }.map(\.station))
             }

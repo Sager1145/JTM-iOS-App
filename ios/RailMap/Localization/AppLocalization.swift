@@ -205,16 +205,18 @@ final class AppLocalization {
     }
 
     /// `I18N.stationName` — the localised base name.
-    func stationName(_ name: String?, code: String? = nil, region: Region? = nil) -> String {
-        naming(region, code)?.stationName(name, code: code) ?? (name ?? "")
+    func stationName(
+        _ name: String?, code: String? = nil, region: Region? = nil, allowNameFallback: Bool = true
+    ) -> String {
+        naming(region, code)?.stationName(name, code: code, allowNameFallback: allowNameFallback) ?? (name ?? "")
     }
 
     /// `I18N.nameReadingsTyped` — the enabled readings for a name, typed so a
     /// paired display can align the same kind of reading on the same line.
     func nameReadingsTyped(
-        _ name: String?, code: String? = nil, region: Region? = nil
+        _ name: String?, code: String? = nil, region: Region? = nil, allowNameFallback: Bool = true
     ) -> [Localization.Reading] {
-        naming(region, code)?.nameReadingsTyped(name, code: code) ?? []
+        naming(region, code)?.nameReadingsTyped(name, code: code, allowNameFallback: allowNameFallback) ?? []
     }
 
     /// Every name the readings table holds for a station, in every language it

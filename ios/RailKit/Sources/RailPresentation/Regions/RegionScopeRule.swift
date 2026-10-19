@@ -104,6 +104,11 @@ public struct RegionScopeRule: Sendable {
     /// the app's `RegionCodeIndex`.
     public func regionCode(forStationCode code: String?) -> String? {
         guard let code, !code.isEmpty else { return nil }
+        let pieces = code.split(separator: ":", omittingEmptySubsequences: false)
+        if pieces.count >= 3, pieces[0] == "st" || pieces[0] == "op" {
+            let region = String(pieces[1]).lowercased()
+            if regionCodes.contains(region) { return region }
+        }
         if let numericCodeRegion, code.count == numericCodeLength,
             code.allSatisfy({ $0.isASCII && $0.isNumber })
         {
@@ -133,6 +138,10 @@ public struct RegionScopeRule: Sendable {
     /// and the country it set out from is the one that says which.
     public func matched(_ train: Train) -> String? {
         if let declared = train.region, regionCodes.contains(declared) { return declared }
+        for stop in train.stops {
+            if let region = regionCode(forStationCode: stop.stationID) { return region }
+        }
+        if let region = regionCode(forStationCode: train.operatorID) { return region }
         for stop in train.stops {
             if let region = regionCode(forStationCode: stop.n02StationCode) { return region }
         }
@@ -164,6 +173,8 @@ public struct RegionScopeRule: Sendable {
             seen.append(region)
         }
         if let declared = train.region, regionCodes.contains(declared) { add(declared) }
+        for stop in train.stops { add(regionCode(forStationCode: stop.stationID)) }
+        add(regionCode(forStationCode: train.operatorID))
         for stop in train.stops { add(regionCode(forStationCode: stop.n02StationCode)) }
         for section in train.routeSections ?? [] {
             add(regionCode(forStationCode: section.fromN02StationCode))

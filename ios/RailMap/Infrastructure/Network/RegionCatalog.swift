@@ -483,7 +483,15 @@ actor RegionCodeIndex {
     /// Japanese either way, and writing that guess into the record would make
     /// it permanent.
     func tagging(_ trains: [Train]) throws -> [Train] {
-        let known = trains.map { $0.taggingRegion() }
+        let known = trains.map { train -> Train in
+            var tagged = train.taggingRegion()
+            if tagged.region == nil,
+               let prefixed = tagged.stops.lazy.compactMap(\.stationID).compactMap(Region.fromStationCode).first
+                ?? tagged.operatorID.flatMap(Region.fromStationCode) {
+                tagged.region = prefixed.code
+            }
+            return tagged
+        }
         guard known.contains(where: { $0.region == nil }) else { return known }
         let table = try table()
         guard !table.isEmpty else { return known }

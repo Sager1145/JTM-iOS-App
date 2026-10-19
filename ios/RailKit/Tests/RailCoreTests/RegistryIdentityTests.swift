@@ -157,18 +157,92 @@ struct RegistryIdentityTests {
         #expect(identity.label(for: "st:jp:1", country: "jp") == nil)
         #expect(identity.stationID(forCode: "003700", operator: nil) == "st:jp:1")
         #expect(identity.stationID(forCode: "GRP", operator: "op:jp:1") == "st:jp:2")
+        #expect(identity.operatorID(forExactName: "JR東日本") == "op:jp:1")
+        #expect(identity.operatorLabel("op:jp:1") == "JR東日本")
+        #expect(identity.operatorLogo("op:jp:1") == nil)
     }
 
     @Test func lookupInstallsAndClears() {
-        defer { RegistryIdentityLookup.install(nil) }
-        RegistryIdentityLookup.install { region in
+        RegistryIdentityTestGate.withProvider({ region in
             guard region == "jp" else { return nil }
             return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1))
+        }) {
+            #expect(RegistryIdentityLookup.identity(forRegion: "JP")?.bundle.region == "jp")
+            #expect(RegistryIdentityLookup.identity(forRegion: "tw") == nil)
+            #expect(RegistryIdentityLookup.identity(forRegion: "") == nil)
+            RegistryIdentityLookup.install(nil)
+            #expect(RegistryIdentityLookup.identity(forRegion: "jp") == nil)
         }
-        #expect(RegistryIdentityLookup.identity(forRegion: "JP")?.bundle.region == "jp")
-        #expect(RegistryIdentityLookup.identity(forRegion: "tw") == nil)
-        #expect(RegistryIdentityLookup.identity(forRegion: "") == nil)
-        RegistryIdentityLookup.install(nil)
-        #expect(RegistryIdentityLookup.identity(forRegion: "jp") == nil)
+    }
+
+    @Test func exactNamesStayUniqueAndQueriesUseTheIdentityBridge() {
+        let identity = RegistryIdentity(bundle: tokyoBundle())
+        #expect(identity.operatorID(forExactName: "JR東日本") == "op:jp:1")
+        #expect(identity.operatorID(forExactName: "JR東海") == "op:jp:2")
+        #expect(identity.operatorID(forExactName: "共用") == "op:jp:3")
+        #expect(identity.operatorID(forExactName: "jp.jr-east") == nil)
+        #expect(identity.operatorID(forExactName: "not-a-company") == nil)
+        #expect(identity.operatorIDs(matchingQuery: "jp.jr-east") == Set(["op:jp:1", "op:jp:3"]))
+        #expect(identity.operatorIDs(matchingQuery: "共用") == Set(["op:jp:3"]))
+        #expect(identity.operatorIDs(matchingQuery: " ") == [])
+        #expect(identity.operatorIDs(forCatalogName: "JR東日本/JR東海") == ["op:jp:1", "op:jp:2"])
+        #expect(identity.operatorIDs(forCatalogName: "not-a-company") == [])
+        #expect(identity.operatorIDs(forCatalogName: "JR東日本/not-a-company") == ["op:jp:1"])
+        #expect(identity.operatorLabel("op:jp:1") == "JR東日本")
+        #expect(identity.operatorLogo("op:jp:1") == "/logos/jr-east.svg")
+        #expect(identity.operatorLogo("op:jp:2") == nil)
+        let branded = RegistryBundle(
+            region: "jp", run: 2,
+            operatorRecords: [
+                "op:jp:1": RegistryOperatorRecord(
+                    names: ["東日本旅客鉄道"], label: "TEST-LABEL", logo: "/logos/test.svg",
+                    identity: "jp.jr-east"),
+            ])
+        let facade = RegistryIdentity(bundle: branded)
+        #expect(facade.operatorLabel("op:jp:1") == "TEST-LABEL")
+        #expect(facade.operatorLogo("op:jp:1") == "/logos/test.svg")
+        #expect(facade.operatorID(forCatalogOrTimetableToken: "jr-east") == "op:jp:1")
+        #expect(facade.operatorID(forCatalogOrTimetableToken: "missing") == nil)
+        #expect(facade.operatorIDs(matchingQuery: "JR西").isEmpty)
+    }
+
+    @Test func unresolvedStationKeepsTheStoredName() {
+        RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: self.tokyoBundle())
+        }) {
+            let missing = RegistryStationDisplay.resolve(storedName: "東京", stationID: nil, region: "jp")
+            #expect(missing.unresolved)
+            #expect(missing.primary == "東京")
+            #expect(missing.readingCodes.isEmpty)
+            #expect(RegistryStationDisplay.unresolvedKey == "ios.identity.unresolved")
+            let namedOnly = RegistryStationDisplay.resolve(storedName: "熱海", stationID: "", region: "jp")
+            #expect(namedOnly.unresolved)
+            #expect(namedOnly.primary == "熱海")
+            let resolved = RegistryStationDisplay.resolve(
+                storedName: "ignored", stationID: "st:jp:1", region: "jp", lineID: "lp:jp:1")
+            #expect(!resolved.unresolved)
+            #expect(resolved.primary == "東京")
+            #expect(resolved.readingCodes == ["003700"])
+            let unknown = RegistryStationDisplay.resolve(storedName: "東京", stationID: "st:jp:9", region: "jp")
+            #expect(unknown.unresolved)
+            #expect(unknown.primary == "東京")
+        }
+    }
+
+    @Test func readingsWithoutACodeDoNotUseTheNameGloss() throws {
+        let catalog = try Localization.Catalog(data: Data(#"{"sourceLanguage":"en","version":"1.0","strings":{}}"#.utf8))
+        let row = Localization.StationReadingRow(kana: "トウキョウ")
+        let readings = Localization.StationReadings(
+            country: "jp",
+            byCode: ["003700": row],
+            byName: ["別駅": Localization.StationReadingRow(kana: "ベツエキ")])
+        let localization = Localization(
+            catalog: catalog, language: .ja, country: "jp",
+            readingPrefs: Localization.ReadingPrefs(kana: true, romaji: false, zh: false),
+            stationReadings: readings)
+        #expect(localization.nameReadingsTyped("別駅", code: "003700", allowNameFallback: false).map(\.text) == ["トウキョウ"])
+        #expect(localization.nameReadingsTyped("北斗", allowNameFallback: false).isEmpty)
+        #expect(localization.nameReadingsTyped("北斗", allowNameFallback: true).map(\.text) == ["ほくと"])
     }
 }

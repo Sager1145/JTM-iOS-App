@@ -2,10 +2,10 @@ import Foundation
 
 /// Selectable timetable browse rows and fallback visibility, independent of view lifecycle.
 public enum ServicePatternBrowsePolicy {
-    private static let jrAndNationalOperatorNames: Set<String> = [
-        "北海道旅客鉄道", "東日本旅客鉄道", "東海旅客鉄道",
-        "西日本旅客鉄道", "四国旅客鉄道", "九州旅客鉄道",
-        "日本国有鉄道", "国鉄",
+    /// Passenger JR companies, by identity code. 国鉄 has no identity code and is not in this set.
+    private static let jrIdentityCodes: Set<String> = [
+        "jp.jr-hokkaido", "jp.jr-east", "jp.jr-central",
+        "jp.jr-west", "jp.jr-shikoku", "jp.jr-kyushu",
     ]
 
     /// A row carries the object the editor will select. Occurrences never
@@ -25,16 +25,6 @@ public enum ServicePatternBrowsePolicy {
             switch self {
             case .occurrence(let trip): trip.service.canonicalName
             case .pattern(let pattern): pattern.name
-            }
-        }
-
-        fileprivate var companyLabel: String {
-            switch self {
-            case .occurrence(let trip):
-                var seen: Set<String> = []
-                return OperatorBranding.companyLabel(trip.operatorSegments.map(\.displayName)
-                    .filter { seen.insert($0).inserted }.joined(separator: "/"))
-            case .pattern(let pattern): return pattern.companyLabel
             }
         }
     }
@@ -130,7 +120,7 @@ public enum ServicePatternBrowsePolicy {
     }
 
     public static func makeSearchSnapshot(_ input: SearchInput) -> SearchSnapshot {
-        let search = TimetableSearch(input.query)
+        let search = TimetableSearch(input.query, region: input.region)
         let sources = input.sources
         let patternMatches = sources.patterns.filter { pattern in
             matchesFilters(companies: [pattern.company], lines: pattern.lines, input: input)
@@ -181,7 +171,7 @@ public enum ServicePatternBrowsePolicy {
         } else if input.region == "jp", let rideDate = input.rideDate {
             unknownPatterns = patternMatches.filter { pattern in
                 pattern.applicability(on: rideDate) != .notApplicable
-                    && (shouldShowLegacyFallback || !isJROrNationalRailway(pattern))
+                    && (shouldShowLegacyFallback || !isJROrNationalRailway(pattern, region: input.region))
             }
         } else {
             unknownPatterns = []
@@ -194,13 +184,10 @@ public enum ServicePatternBrowsePolicy {
         } else {
             outsidePatterns = []
         }
-        let companyNames = sources.patterns.map(\.companyLabel)
+        let companyNames = sources.patterns.map(\.company)
             + sources.occurrences.flatMap { $0.operatorSegments.map(\.displayName) }
         let companyLabels = Array(Set(companyNames.flatMap { name -> [String] in
-            name.components(separatedBy: "/").map {
-                let part = $0.trimmingCharacters(in: .whitespacesAndNewlines)
-                return OperatorIdentity.code(for: part) ?? part
-            }.filter { !$0.isEmpty }
+            catalogLabels(name, region: input.region)
         })).sorted {
             companyDisplayName($0, language: input.language)
                 .localizedStandardCompare(companyDisplayName($1, language: input.language))
@@ -217,7 +204,8 @@ public enum ServicePatternBrowsePolicy {
             byName[row.name, default: []].append(row)
         }
         let groups = order.map { name in
-            SearchGroup(name: name, companyLabel: byName[name]?.first?.companyLabel ?? "",
+            SearchGroup(name: name,
+                        companyLabel: byName[name]?.first.map { brandedCompany($0, region: input.region) } ?? "",
                         rows: byName[name] ?? [])
         }
         return SearchSnapshot(
@@ -233,8 +221,13 @@ public enum ServicePatternBrowsePolicy {
     }
 
     private static func matchesFilters(companies: [String], lines: [String], input: SearchInput) -> Bool {
-        if let companyFilter = input.companyFilter,
-           !companies.contains(where: { OperatorIdentity.sameCompany($0, companyFilter) }) { return false }
+        if let companyFilter = input.companyFilter {
+            guard let identity = RegistryIdentityCache.identity(forRegion: input.region) else { return false }
+            let wanted = Set(identity.operatorIDs(forCatalogName: companyFilter))
+            guard !wanted.isEmpty else { return false }
+            let got = Set(companies.flatMap { identity.operatorIDs(forCatalogName: $0) })
+            if got.isDisjoint(with: wanted) { return false }
+        }
         if let lineFilter = input.lineFilter {
             let line = TrainServiceBranding.canonicalLineName(lineFilter)
             guard lines.contains(where: {
@@ -249,11 +242,39 @@ public enum ServicePatternBrowsePolicy {
     }
 
     private static func isJROrNationalRailway(
-        _ pattern: TrainServicePatterns.Pattern
+        _ pattern: TrainServicePatterns.Pattern, region: String
     ) -> Bool {
-        pattern.company.split(separator: "/").contains { component in
-            jrAndNationalOperatorNames.contains(
-                component.trimmingCharacters(in: .whitespacesAndNewlines))
+        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return false }
+        return identity.operatorIDs(forCatalogName: pattern.company).contains { identifier in
+            guard let code = identity.operator(for: identifier)?.identity else { return false }
+            return jrIdentityCodes.contains(code)
+        }
+    }
+
+    /// Facade label for each part that converts. A part that does not convert stays as written.
+    private static func catalogLabels(_ name: String, region: String) -> [String] {
+        let parts = name.components(separatedBy: "/").map {
+            $0.trimmingCharacters(in: .whitespacesAndNewlines)
+        }.filter { !$0.isEmpty }
+        guard let identity = RegistryIdentityCache.identity(forRegion: region) else { return parts }
+        return parts.map { part in
+            if let identifier = identity.operatorID(forExactName: part),
+               let label = identity.operatorLabel(identifier) {
+                return label
+            }
+            return part
+        }
+    }
+
+    private static func brandedCompany(_ row: Row, region: String) -> String {
+        switch row {
+        case .occurrence(let trip):
+            var seen: Set<String> = []
+            let names = trip.operatorSegments.map(\.displayName).filter { seen.insert($0).inserted }
+            return names.flatMap { catalogLabels($0, region: region) }.joined(separator: " / ")
+        case .pattern(let pattern):
+            let labels = catalogLabels(pattern.company, region: region)
+            return labels.isEmpty ? pattern.company : labels.joined(separator: " / ")
         }
     }
 }

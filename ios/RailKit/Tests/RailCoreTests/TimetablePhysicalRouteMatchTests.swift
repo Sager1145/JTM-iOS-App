@@ -126,6 +126,20 @@ struct TimetablePhysicalRouteMatchTests {
     }
 
     @Test func suppliedLineOperatorServiceAndTimeConstraintsMustAllAgree() {
+        RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:west": RegistryOperatorRecord(
+                    names: ["JR西日本"], label: "JR西日本", identity: "jp.jr-west"),
+                "op:jp:east": RegistryOperatorRecord(
+                    names: ["JR東日本"], label: "JR東日本", identity: "jp.jr-east"),
+            ]))
+        }) {
+            suppliedLineOperatorServiceAndTimeConstraintsMustAllAgreeBody()
+        }
+    }
+
+    private func suppliedLineOperatorServiceAndTimeConstraintsMustAllAgreeBody() {
         let trip = fixture()
         var train = journey(["B", "D"])
         let base = TrainValidation.routeSectionsForSolving(for: train)[0]

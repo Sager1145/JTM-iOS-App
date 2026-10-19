@@ -88,6 +88,8 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
     /// GROUP, which is the identity `DrawnStation.stationCode`
     /// carries on the network's side of the same station.
     let stationCode: String?
+    /// Registry station id when the ride stop has one. Nil keeps the code-then-name card.
+    let stationID: String?
     /// The region whose network a tap on this dot should resolve against —
     /// the ride's own region, so a stop cannot resolve to another country's
     /// platform. See ``Coordinator/rideStationCard(name:code:region:at:)``.
@@ -151,6 +153,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         rideID: String, drawsInOverlay: Bool,
         coordinate: CLLocationCoordinate2D, name: String,
         rawName: String, stationCode: String?, region: Region?, role: String,
+        stationID: String? = nil,
         radius: CGFloat, lineWidth: CGFloat,
         ordinaryRadius: CGFloat, ordinaryLineWidth: CGFloat,
         focusScale: CGFloat,
@@ -163,6 +166,7 @@ final class RideStationAnnotation: NSObject, MKAnnotation {
         self.name = name
         self.rawName = rawName
         self.stationCode = stationCode
+        self.stationID = stationID
         self.region = region
         self.role = role
         self.radius = radius

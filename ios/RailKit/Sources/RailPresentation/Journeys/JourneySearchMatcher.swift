@@ -40,8 +40,8 @@ public enum JourneySearchMatcher {
     /// Whether one journey answers a query.
     ///
     /// Multilingual folded matching for names; dates and IDs retain separators.
-    /// Operator aliases
-    /// and related operator families included in company discovery.
+    /// An operator query matches `operatorID` only. A ride with no id does not
+    /// match that query by its company string.
     ///
     /// An empty or whitespace-only query matches everything, so a caller can
     /// hand the raw text field through without deciding first whether the
@@ -56,18 +56,19 @@ public enum JourneySearchMatcher {
     ) -> Bool {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return true }
-        return matches(train, prepared: SearchFold.PreparedQuery(needle), needle: needle,
-                       operatorCodes: OperatorIdentity.exactCodes(query: needle), alsoNamed: alsoNamed)
+        return matches(train, prepared: SearchFold.PreparedQuery(needle), needle: needle, alsoNamed: alsoNamed)
     }
 
     /// A prepared query is shared across all journeys in a filter operation.
     private static func matches(
         _ train: Train, prepared: SearchFold.PreparedQuery, needle: String,
-        operatorCodes: Set<String>?, alsoNamed: (Train) -> [String]
+        alsoNamed: (Train) -> [String]
     ) -> Bool {
         guard !prepared.whole.isEmpty else { return false }
-        if let operatorCodes {
-            return !Set(OperatorIdentity.codes(forJoined: train.company ?? "")).isDisjoint(with: operatorCodes)
+        let operatorIDs = queryOperatorIDs(needle, region: train.region)
+        if !operatorIDs.isEmpty {
+            guard let operatorID = train.operatorID else { return false }
+            return operatorIDs.contains(operatorID)
         }
         func hit(_ field: String?) -> Bool {
             guard let field, !field.isEmpty else { return false }
@@ -79,11 +80,17 @@ public enum JourneySearchMatcher {
         for stop in train.stops where hit(stop.name) { return true }
         if train.date?.localizedCaseInsensitiveContains(needle) == true
             || hit(train.direction) || hit(train.trainType)
-            || train.company.map({ prepared.matches(fields: OperatorIdentity.searchNames(for: $0)) }) == true
             || train.id.localizedCaseInsensitiveContains(needle) {
             return true
         }
         return alsoNamed(train).contains(where: { hit($0) })
+    }
+
+    /// Operator ids the query names in this ride's region. Empty when the query is not an operator.
+    private static func queryOperatorIDs(_ query: String, region: String?) -> Set<String> {
+        guard let region, !region.isEmpty,
+              let identity = RegistryIdentityCache.identity(forRegion: region) else { return [] }
+        return identity.operatorIDs(matchingQuery: query)
     }
 
     /// Every string one journey is searchable by, in §3.2's scan order.
@@ -131,8 +138,6 @@ public enum JourneySearchMatcher {
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !needle.isEmpty else { return trains }
         let prepared = SearchFold.PreparedQuery(needle)
-        let operatorCodes = OperatorIdentity.exactCodes(query: needle)
-        return trains.filter { matches($0, prepared: prepared, needle: needle,
-                                       operatorCodes: operatorCodes, alsoNamed: alsoNamed) }
+        return trains.filter { matches($0, prepared: prepared, needle: needle, alsoNamed: alsoNamed) }
     }
 }

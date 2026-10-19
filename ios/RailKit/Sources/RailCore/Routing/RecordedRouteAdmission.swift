@@ -116,9 +116,7 @@ public enum RecordedRouteAdmission {
                                !names.contains(line.name), !names.contains(line.nameNorm ?? line.name) { return false }
                         }
                         if let operators = section.operatorNames, !operators.isEmpty,
-                           !operators.contains(where: {
-                               OperatorIdentity.sameCompany($0, line.operator ?? "")
-                           }) { return false }
+                           !operatorsAgree(operators, line.operator ?? "", region: package.country) { return false }
                         return true
                     }
                 })
@@ -152,6 +150,7 @@ public enum RecordedRouteAdmission {
         _ choice: RailwayRouteChoices.Choice, train: Train, package: CompactPackage,
         stationAliases: [String: String], relaxLineConstraints: Bool
     ) -> Bool {
+        let identity = RegistryIdentityCache.identity(forRegion: package.country)
         let packageCodes = Set(package.lines.flatMap { $0.stations.map(\.id) })
         func canonical(_ code: String) -> String {
             packageCodes.contains(code) ? code : stationAliases[code] ?? code
@@ -179,7 +178,7 @@ public enum RecordedRouteAdmission {
                    }) { return false }
                 if let operators = section.operatorNames, !operators.isEmpty,
                    !(interval.operatorNames ?? []).allSatisfy({ actual in
-                       operators.contains { OperatorIdentity.sameCompany($0, actual) }
+                       operatorsAgree(operators, actual, identity: identity)
                    }) { return false }
             }
             if !relaxLineConstraints, let expected = section.sectionCodes, !expected.isEmpty,
@@ -187,5 +186,18 @@ public enum RecordedRouteAdmission {
             cursor = end
         }
         return true
+    }
+
+    private static func operatorsAgree(_ required: [String], _ actual: String, region: String) -> Bool {
+        operatorsAgree(required, actual, identity: RegistryIdentityCache.identity(forRegion: region))
+    }
+
+    private static func operatorsAgree(
+        _ required: [String], _ actual: String, identity: RegistryIdentity?
+    ) -> Bool {
+        guard let identity else { return false }
+        let wanted = Set(required.flatMap { identity.operatorIDs(forCatalogName: $0) })
+        guard !wanted.isEmpty else { return false }
+        return !Set(identity.operatorIDs(forCatalogName: actual)).isDisjoint(with: wanted)
     }
 }

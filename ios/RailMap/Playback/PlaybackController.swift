@@ -319,8 +319,19 @@ final class PlaybackController {
             let localizedStations = Dictionary(
                 train.stops.map { stop in
                     let key = StationKey(name: stop.name, code: stop.n02StationCode)
-                    let localized = localization?.stationName(
-                        stop.name, code: stop.n02StationCode, region: region) ?? stop.name
+                    let display = RegistryStationDisplay.resolve(
+                        storedName: stop.name, stationID: stop.stationID,
+                        region: train.region ?? region.code)
+                    let localized: String
+                    if display.unresolved {
+                        let word = localization?.text(RegistryStationDisplay.unresolvedKey) ?? "unresolved"
+                        localized = stop.name + "\n" + word
+                    } else {
+                        localized = localization?.stationName(
+                            display.primary,
+                            code: display.readingCodes.first ?? stop.n02StationCode,
+                            region: region, allowNameFallback: false) ?? display.primary
+                    }
                     return (key, localized)
                 },
                 uniquingKeysWith: { first, _ in first })

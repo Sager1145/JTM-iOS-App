@@ -35,9 +35,13 @@ enum JourneyPoster {
             guard let value, !value.isEmpty else { return }
             result.append(Block(text: label + ": " + value))
         }
-        func station(_ name: String, _ code: String?) -> String {
+        func station(_ name: String, _ code: String?, stop: Stop? = nil) -> String {
             let translated = l.stationName(name, in: train, code: code)
-            return translated == name ? name : translated + " (" + name + ")"
+            var shown = translated == name ? name : translated + " (" + name + ")"
+            if let stop, stop.stationID?.isEmpty != false {
+                shown += "\n" + l.text(RegistryStationDisplay.unresolvedKey)
+            }
+            return shown
         }
         // Preserve 24+ hour service notation while spelling out its actual day.
         func time(_ raw: String?) -> String? {
@@ -60,9 +64,9 @@ enum JourneyPoster {
         let arrival = l.countryText("popup.arrival", fallback: "Arrival")
         let first = train.stops.first(where: { $0.stopType == "origin" }) ?? train.stops.first
         let last = train.stops.last(where: { $0.stopType == "destination" }) ?? train.stops.last
-        result.append(Block(text: departure + " · " + station(train.origin, train.originStationCode)
+        result.append(Block(text: departure + " · " + station(train.origin, train.originStationCode, stop: first)
                             + "\n" + (time(first?.departure ?? first?.arrival) ?? "—"), style: .importantStop))
-        result.append(Block(text: arrival + " · " + station(train.destination, train.destinationStationCode)
+        result.append(Block(text: arrival + " · " + station(train.destination, train.destinationStationCode, stop: last)
                             + "\n" + (time(last?.arrival ?? last?.departure) ?? "—"), style: .importantStop))
 
         result.append(Block(text: l.text(kind == .full ? "ios.journeyShare.timeline" : "ios.journeyShare.stops"), style: .heading))
@@ -76,7 +80,7 @@ enum JourneyPoster {
         if indices.isEmpty { result.append(Block(text: l.text("ios.journeyShare.noStops"))) }
         for index in indices {
             let stop = train.stops[index]
-            var lines = [station(stop.name, stop.n02StationCode)]
+            var lines = [station(stop.name, stop.n02StationCode, stop: stop)]
             var timing: [String] = []
             if let value = time(stop.arrival) { timing.append(arrival + " " + value) }
             if let value = time(stop.departure) { timing.append(departure + " " + value) }

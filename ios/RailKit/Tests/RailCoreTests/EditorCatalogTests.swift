@@ -362,6 +362,32 @@ struct EditorCatalogTests {
             eligibility: .current, lineIDs: ["line-a"]), retired: [retired])
         #expect(currentOnly.retired.isEmpty)
     }
+
+    @Test func companyFilterKeepsLinesWhoseOperatorConverts() {
+        let catalog = EditorCatalogBuilder.build([
+            sourceLine("line-a", name: "東北本線", operatorName: "JR East", stations: [
+                station("S1", name: "大宮", longitude: 139.6, latitude: 35.9),
+            ]),
+            sourceLine("line-b", name: "東海道本線", operatorName: "JR West", stations: [
+                station("S2", name: "大宮", longitude: 135.5, latitude: 35.0),
+            ]),
+        ])
+        let index = catalog.stationSearchIndex(regionCode: "jp")
+        RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: [
+                "op:jp:east": RegistryOperatorRecord(names: ["JR East"], label: "TEST-EAST", identity: "jp.jr-east"),
+                "op:jp:west": RegistryOperatorRecord(names: ["JR West"], label: "TEST-WEST", identity: "jp.jr-west"),
+            ]))
+        }) {
+            let east = index.search(StationSearchQuery(
+                regionCode: "jp", needle: "大宮", companyName: "JR East"))
+            #expect(east.lines.map(\.id) == ["line-a"])
+            let unknown = index.search(StationSearchQuery(
+                regionCode: "jp", needle: "大宮", companyName: "not-a-company"))
+            #expect(unknown.lines.isEmpty)
+        }
+    }
 }
 
 private extension StationSearchHit {

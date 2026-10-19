@@ -479,11 +479,11 @@ public struct Localization: Sendable {
     /// The readings row for a station: the exact code first, then a tolerant
     /// name match. Code before name because the code is the official identity
     /// and two stations share a name often enough to matter.
-    func stationReadingRow(code: String?, name: String?) -> StationReadingRow? {
+    func stationReadingRow(code: String?, name: String?, allowNameFallback: Bool = true) -> StationReadingRow? {
         if let code, !code.isEmpty, let row = stationReadings.byCode[JSStringKey(code)] {
             return row
         }
-        if let name, !name.isEmpty,
+        if allowNameFallback, let name, !name.isEmpty,
             let row = stationReadings.byName[JSStringKey(Self.normalizedReadingKey(name))]
         {
             return row
@@ -498,12 +498,12 @@ public struct Localization: Sendable {
     /// the official Traditional Chinese one; the table itself stores those as
     /// empty strings, which is why every test here is emptiness rather than
     /// presence.
-    public func stationName(_ name: String?, code: String? = nil) -> String {
+    public func stationName(_ name: String?, code: String? = nil, allowNameFallback: Bool = true) -> String {
         guard let name, !name.isEmpty else { return "" }
         guard Self.localizedNameCountries.contains(stationReadings.country) else {
             return name
         }
-        guard let row = stationReadingRow(code: code, name: name) else { return name }
+        guard let row = stationReadingRow(code: code, name: name, allowNameFallback: allowNameFallback) else { return name }
         switch language {
         case .zhHans: return nonEmpty(row.zhHans) ?? nonEmpty(row.zhHant) ?? name
         case .zhHant: return nonEmpty(row.zhHant) ?? name
@@ -518,7 +518,7 @@ public struct Localization: Sendable {
     /// The equality test is by UTF-16 code unit, which is not pedantry here: a
     /// decomposed ガ (カ + U+3099) and a composed ガ are canonically equal, so
     /// Swift's `==` would suppress a reading the web app prints.
-    public func nameReadingsTyped(_ name: String?, code: String? = nil) -> [Reading] {
+    public func nameReadingsTyped(_ name: String?, code: String? = nil, allowNameFallback: Bool = true) -> [Reading] {
         guard let name, !name.isEmpty else { return [] }
         // TW/HK/MO/KR localise the base name itself into the active language.
         // They have no Japanese-style reading subline at all.
@@ -526,19 +526,21 @@ public struct Localization: Sendable {
             return []
         }
         let prefs = activeReadingPrefs
-        let row = stationReadingRow(code: code, name: name)
+        let row = stationReadingRow(code: code, name: name, allowNameFallback: allowNameFallback)
         var parts: [Reading] = []
         if prefs.kana {
             // `(r && r.kana) || KANA[jp]`: an empty field in the table falls
             // through to the gloss dictionary rather than winning as a blank.
-            if let kana = nonEmpty(row?.kana) ?? Self.kanaGlosses[JSStringKey(name)],
+            let gloss = allowNameFallback ? Self.kanaGlosses[JSStringKey(name)] : nil
+            if let kana = nonEmpty(row?.kana) ?? gloss,
                 !kana.isEmpty, !utf16Equal(kana, name)
             {
                 parts.append(Reading(kind: .kana, text: kana))
             }
         }
         if prefs.romaji {
-            if let romaji = nonEmpty(row?.romaji) ?? Self.romajiGlosses[JSStringKey(name)],
+            let gloss = allowNameFallback ? Self.romajiGlosses[JSStringKey(name)] : nil
+            if let romaji = nonEmpty(row?.romaji) ?? gloss,
                 !romaji.isEmpty, !utf16Equal(romaji, name)
             {
                 parts.append(Reading(kind: .romaji, text: romaji))

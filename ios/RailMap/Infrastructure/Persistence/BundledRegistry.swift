@@ -14,6 +14,7 @@ enum BundledRegistry {
 
     struct DecodeCache {
         private var bundles: [String: RegistryBundle] = [:]
+        private var identities: [String: RegistryIdentity] = [:]
         private var failed: Set<String> = []
         private(set) var logCount = 0
 
@@ -33,6 +34,16 @@ enum BundledRegistry {
             bundles[cc] = decoded
             return decoded
         }
+
+        mutating func identity(region: String, load: () -> Data?) -> RegistryIdentity? {
+            let cc = region.lowercased()
+            guard !cc.isEmpty else { return nil }
+            if let cached = identities[cc] { return cached }
+            guard let bundle = lookup(region: cc, load: load) else { return nil }
+            let built = RegistryIdentity(bundle: bundle)
+            identities[cc] = built
+            return built
+        }
     }
 
     static func install() {
@@ -44,15 +55,22 @@ enum BundledRegistry {
             return StationNameDirectory(bundle: bundle)
         }
         RegistryIdentityLookup.install { region in
-            guard let bundle = bundle(for: region) else { return nil }
-            return RegistryIdentity(bundle: bundle)
+            identity(for: region)
         }
     }
 
-    /// Registry identity for one region. Nil when that file is missing or failed to decode.
+    /// Registry identity for one region. The decoded bundle and its maps are cached together.
     static func identity(for region: String) -> RegistryIdentity? {
-        guard let bundle = bundle(for: region) else { return nil }
-        return RegistryIdentity(bundle: bundle)
+        let cc = region.lowercased()
+        guard !cc.isEmpty else { return nil }
+        lock.lock()
+        defer { lock.unlock() }
+        let before = decodeCache.logCount
+        let built = decodeCache.identity(region: cc) { loadData(region: cc) }
+        if decodeCache.logCount > before {
+            log.error("registry-\(cc, privacy: .public).json failed to decode")
+        }
+        return built
     }
 
     /// Decode path: the ride's own region, never the session country.
@@ -66,14 +84,16 @@ enum BundledRegistry {
         lock.lock()
         defer { lock.unlock() }
         let before = decodeCache.logCount
-        let decoded = decodeCache.lookup(region: cc) {
-            guard let url = Bundle.main.url(forResource: "registry-\(cc)", withExtension: "json"),
-                  let data = try? Data(contentsOf: url) else { return nil }
-            return data
-        }
+        let decoded = decodeCache.lookup(region: cc) { loadData(region: cc) }
         if decodeCache.logCount > before {
             log.error("registry-\(cc, privacy: .public).json failed to decode")
         }
         return decoded
+    }
+
+    private static func loadData(region: String) -> Data? {
+        guard let url = Bundle.main.url(forResource: "registry-\(region)", withExtension: "json"),
+              let data = try? Data(contentsOf: url) else { return nil }
+        return data
     }
 }

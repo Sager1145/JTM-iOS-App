@@ -450,6 +450,11 @@ struct RideDetailContent: View {
                     .multilineTextAlignment(isArrival ? .trailing : .leading)
                     .fixedSize(horizontal: false, vertical: true)
             }
+            if stop?.stationID?.isEmpty != false {
+                Text(localization.text(RegistryStationDisplay.unresolvedKey))
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
             if let time, !time.isEmpty {
                 HStack(spacing: 5) {
                     Text(time).font(.headline).monospacedDigit()
@@ -611,6 +616,11 @@ struct RideDetailContent: View {
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
                             .fixedSize(horizontal: false, vertical: true)
+                        if stop.stationID?.isEmpty != false {
+                            Text(localization.text(RegistryStationDisplay.unresolvedKey))
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                        }
                     }
                     if stop.stopType != "passenger_stop" && stop.stopType != "pass_through" {
                         Text(stopTypeName(stop.stopType))

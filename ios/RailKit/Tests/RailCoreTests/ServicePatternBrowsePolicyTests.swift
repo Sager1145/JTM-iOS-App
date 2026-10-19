@@ -87,8 +87,10 @@ struct ServicePatternBrowsePolicyTests {
     }
 
     @Test func undatedBrowseUsesTheProvidedPatternCatalog() throws {
-        let result = ServicePatternBrowsePolicy.makeSearchSnapshot(input(
-            query: "Route", date: nil, patterns: [pattern], availability: .notRequested))
+        let result = RegistryIdentityTestGate.withProvider(Self.passengerJR) {
+            ServicePatternBrowsePolicy.makeSearchSnapshot(input(
+                query: "Route", date: nil, patterns: [pattern], availability: .notRequested))
+        }
         let row = try #require(result.groups.first?.rows.first)
         guard case .pattern(let selected) = row else {
             Issue.record("A route pattern became an occurrence")
@@ -96,14 +98,17 @@ struct ServicePatternBrowsePolicyTests {
         }
         #expect(selected.id == pattern.id)
         #expect(result.primaryRowsArePatterns)
-        #expect(result.companyLabels.contains("jp.jr-east"))
+        #expect(result.companyLabels.contains("TEST-EAST"))
+        #expect(!result.companyLabels.contains("jp.jr-east"))
         #expect(result.lineNames == ["中央本線"])
         #expect(ServicePatternBrowsePolicy.makeSearchSnapshot(input(
             date: nil, patterns: [pattern], company: "西日本旅客鉄道")).groups.isEmpty)
     }
 
     @Test func verifiedCoverageAndHardFailuresDoNotSubstituteLegacyRows() {
-        let verified = ServicePatternBrowsePolicy.makeSearchSnapshot(input(query: "はちおうじ"))
+        let verified = RegistryIdentityTestGate.withProvider(Self.passengerJR) {
+            ServicePatternBrowsePolicy.makeSearchSnapshot(input(query: "はちおうじ"))
+        }
         #expect(verified.groups.isEmpty)
         #expect(verified.unknownPatterns.isEmpty)
         #expect(!verified.primaryRowsArePatterns)
@@ -152,5 +157,23 @@ struct ServicePatternBrowsePolicyTests {
         let result = ServicePatternBrowsePolicy.makeSearchSnapshot(searchInput)
         #expect(result.groups.isEmpty)
         #expect(result.incompleteTrips.isEmpty)
+    }
+
+    private static let passengerJR: RegistryIdentityLookup.Provider = { region in
+        guard region == "jp" else { return nil }
+        let companies: [(String, String, String)] = [
+            ("op:jp:h", "北海道旅客鉄道", "jp.jr-hokkaido"),
+            ("op:jp:e", "東日本旅客鉄道", "jp.jr-east"),
+            ("op:jp:c", "東海旅客鉄道", "jp.jr-central"),
+            ("op:jp:w", "西日本旅客鉄道", "jp.jr-west"),
+            ("op:jp:s", "四国旅客鉄道", "jp.jr-shikoku"),
+            ("op:jp:k", "九州旅客鉄道", "jp.jr-kyushu"),
+        ]
+        var records: [String: RegistryOperatorRecord] = [:]
+        for (identifier, name, code) in companies {
+            records[identifier] = RegistryOperatorRecord(
+                names: [name], label: code == "jp.jr-east" ? "TEST-EAST" : name, identity: code)
+        }
+        return RegistryIdentity(bundle: RegistryBundle(region: "jp", run: 1, operatorRecords: records))
     }
 }

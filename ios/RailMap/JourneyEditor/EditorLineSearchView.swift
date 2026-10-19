@@ -53,15 +53,16 @@ struct EditorLineSearchView: View {
             ? regionLines.filter { stationLineIDs.contains($0.id) } : regionLines
         let needle = query.trimmingCharacters(in: .whitespacesAndNewlines)
         let prepared = SearchFold.PreparedQuery(needle)
-        let operatorCodes = OperatorIdentity.exactCodes(query: needle)
+        let identity = RegistryIdentityCache.identity(forRegion: region.code)
+        let operatorIDs = identity?.operatorIDs(matchingQuery: needle) ?? []
         let matches = candidates.filter { line in
-            if let operatorCodes {
-                return line.operatorIDs.contains {
-                    !Set(OperatorIdentity.codes(forJoined: operatorNameByID[$0] ?? "")).isDisjoint(with: operatorCodes)
+            if !operatorIDs.isEmpty, let identity {
+                return line.operatorIDs.contains { packageOperator in
+                    let name = operatorNameByID[packageOperator] ?? ""
+                    return !Set(identity.operatorIDs(forCatalogName: name)).isDisjoint(with: operatorIDs)
                 }
             }
-            return needle.isEmpty || prepared.matches(fields: [line.name] + line.aliases
-                + line.operatorIDs.flatMap { OperatorIdentity.searchNames(for: operatorNameByID[$0] ?? "") })
+            return needle.isEmpty || prepared.matches(fields: [line.name] + line.aliases)
         }
         let selected = regionLines.filter { selectedIDs.contains($0.id) }
         let conflicts = resolvedStation ? selected.filter { !stationLineIDs.contains($0.id) } : []

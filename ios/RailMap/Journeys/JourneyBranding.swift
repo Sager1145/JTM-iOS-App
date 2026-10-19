@@ -72,7 +72,7 @@ enum JourneyBranding {
     static func operatorLabels(
         of train: Train, detected: [Statistics.TraversedLine] = []
     ) -> [String] {
-        let labelled = uniqueNonEmpty(operatorNames(of: train, detected: detected).map(OperatorBranding.companyLabel))
+        let labelled = uniqueNonEmpty(JourneyRouteIdentity.operatorLabels(of: train, detected: detected))
         // One more collapse, and it is not the table's job. The table maps a
         // LEGAL name to a short one (京浜急行電鉄 → 京急); a record whose own
         // `company` field is already half-short (京急電鉄, 都営地下鉄) is left
@@ -132,8 +132,16 @@ enum JourneyBranding {
     private static func operatorLogoPath(
         of train: Train, detected: [Statistics.TraversedLine]
     ) -> String? {
+        if let logo = JourneyRouteIdentity.operatorLogo(of: train, detected: detected) { return logo }
+        let identity = train.region.flatMap { RegistryIdentityCache.identity(forRegion: $0) }
         for operatorName in operatorLogoCandidates(of: train, detected: detected) {
-            if let logo = OperatorBranding.operatorLogoForAnySpelling(operatorName) {
+            if let identity,
+               let identifier = identity.operatorID(forExactName: operatorName),
+               let logo = identity.operatorLogo(identifier) {
+                return logo
+            }
+            if identity == nil || identity?.operatorID(forExactName: operatorName) == nil,
+               let logo = OperatorBranding.operatorLogoForAnySpelling(operatorName) {
                 return logo
             }
         }

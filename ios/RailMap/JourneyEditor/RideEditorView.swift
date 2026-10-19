@@ -1133,7 +1133,9 @@ struct RideEditorView: View {
             EditorSearchField(
                 title: localization.countryText("field.company", fallback: "Operator"),
                 text: companyText,
-                suggestions: regionalHistory.compactMap(\.company) + regionalLines.compactMap(\.operatorName))
+                suggestions: regionalHistory.compactMap(\.company) + regionalLines.compactMap(\.operatorName),
+                matchesIdentity: true,
+                identityRegion: Region.resolved(draft).code)
         } header: {
             Text(localization.text("ios.editor.serviceDetails"))
         } footer: {

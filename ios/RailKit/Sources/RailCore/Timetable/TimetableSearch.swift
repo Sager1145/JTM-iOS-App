@@ -10,9 +10,9 @@ public struct TimetableSearch: Sendable {
     private let prepared: SearchFold.PreparedQuery
     private let preparedRoute: [SearchFold.PreparedQuery]
     private let rawQuery: String
-    private let operatorCodes: Set<String>?
+    private let region: String
 
-    public init(_ text: String) {
+    public init(_ text: String, region: String = "jp") {
         let normalized = text.precomposedStringWithCompatibilityMapping.replacingOccurrences(of: "->", with: "→")
         let parts = normalized.components(separatedBy: "→")
         route = parts.count > 1 ? parts.map {
@@ -21,7 +21,7 @@ public struct TimetableSearch: Sendable {
         rawQuery = normalized
         prepared = SearchFold.PreparedQuery(normalized)
         preparedRoute = route.map(SearchFold.PreparedQuery.init)
-        operatorCodes = OperatorIdentity.exactCodes(query: normalized)
+        self.region = region
         terms = normalized.split(whereSeparator: { $0.isWhitespace }).map(String.init)
     }
 
@@ -43,9 +43,15 @@ public struct TimetableSearch: Sendable {
     }
 
     public func matches(_ trip: TrainTimetableDatabase.Trip) -> Bool {
-        if route.isEmpty, let operatorCodes {
-            return trip.operatorSegments.contains {
-                !Set(OperatorIdentity.codes(forJoined: $0.displayName)).isDisjoint(with: operatorCodes)
+        if route.isEmpty, let identity = RegistryIdentityCache.identity(forRegion: region) {
+            let wanted = identity.operatorIDs(matchingQuery: rawQuery)
+            if !wanted.isEmpty {
+                return trip.operatorSegments.contains { segment in
+                    guard let identifier = identity.operatorID(forCatalogOrTimetableToken: segment.displayName)
+                        ?? identity.operatorID(forCatalogOrTimetableToken: segment.operatorID)
+                    else { return false }
+                    return wanted.contains(identifier)
+                }
             }
         }
         return matches(fields: [trip.service.canonicalName, trip.service.englishName ?? "",
@@ -53,20 +59,21 @@ public struct TimetableSearch: Sendable {
                          trip.service.canonicalName + (trip.publicNumber ?? trip.trainNumber),
                          trip.service.canonicalName + (trip.publicNumber ?? trip.trainNumber) + "号",
                          (trip.service.englishName ?? "") + (trip.publicNumber ?? trip.trainNumber)]
-                + trip.lineSegments.map(\.lineName)
-                + trip.operatorSegments.flatMap { OperatorIdentity.searchNames(for: $0.displayName) },
+                + trip.lineSegments.map(\.lineName),
                 stops: trip.passengerStops.map { $0.station.name },
                 plainFields: [trip.origin?.departureTime ?? "", trip.destination?.arrivalTime ?? ""])
     }
 
     public func matches(_ pattern: TrainServicePatterns.Pattern) -> Bool {
-        if route.isEmpty, let operatorCodes {
-            return !Set(OperatorIdentity.codes(forJoined: pattern.company)).isDisjoint(with: operatorCodes)
+        if route.isEmpty, let identity = RegistryIdentityCache.identity(forRegion: region) {
+            let wanted = identity.operatorIDs(matchingQuery: rawQuery)
+            if !wanted.isEmpty {
+                return !Set(identity.operatorIDs(forCatalogName: pattern.company)).isDisjoint(with: wanted)
+            }
         }
-        return matches(fields: [pattern.name, pattern.label, pattern.companyLabel,
+        return matches(fields: [pattern.name, pattern.label,
                          pattern.origin, pattern.destination] + pattern.lines
-                + (Self.serviceNamesByID[pattern.serviceId] ?? [])
-                + OperatorIdentity.searchNames(for: pattern.company),
+                + (Self.serviceNamesByID[pattern.serviceId] ?? []),
                 stops: pattern.stops)
     }
 

@@ -308,11 +308,18 @@ public enum TimetablePhysicalRouteMatch {
 
     private static func operatorConstraint(_ inputs: [String], trip: TrainTimetableDatabase.Trip,
                                            from: Int, to: Int) -> Agreement {
-        let allowed = inputs.compactMap(OperatorIdentity.code(for:))
+        guard let identity = RegistryIdentityCache.identity(forRegion: "jp") else { return .unknown }
+        let allowed = inputs.compactMap { identity.operatorID(forCatalogOrTimetableToken: $0) }
         guard allowed.count == inputs.count else { return .unknown }
         let segments = trip.operatorSegments.filter { $0.fromSequence < to && $0.toSequence > from }
         guard !segments.isEmpty else { return .unknown }
-        let actual = segments.map { OperatorIdentity.code(for: $0.displayName) ?? "jp." + $0.operatorID }
+        var actual: [String] = []
+        for segment in segments {
+            guard let identifier = identity.operatorID(forCatalogOrTimetableToken: segment.displayName)
+                ?? identity.operatorID(forCatalogOrTimetableToken: segment.operatorID)
+            else { return .unknown }
+            actual.append(identifier)
+        }
         return Set(actual).isSubset(of: Set(allowed)) ? .yes : .no
     }
 

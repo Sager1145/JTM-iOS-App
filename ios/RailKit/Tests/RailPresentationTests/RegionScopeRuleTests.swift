@@ -74,6 +74,22 @@ struct RegionScopeRuleTests {
         #expect(rule.regionCode(forStationCode: nil) == nil)
         // A prefix that looks like a region but is not one in this catalog.
         #expect(rule.regionCode(forStationCode: "MX-FERROMEX-1") == nil)
+        #expect(rule.regionCode(forStationCode: "st:jp:1") == "jp")
+        #expect(rule.regionCode(forStationCode: "op:TW:9") == "tw")
+        #expect(rule.regionCode(forStationCode: "st:xx:1") == nil)
+        #expect(rule.regionCode(forStationCode: "st:jp") == nil)
+    }
+
+    @Test("a registry id is read before the stored station code")
+    func registryIdentifierPrecedesStationCode() {
+        var ride = train(stops: ["005853"])
+        ride.stops[0].stationID = "st:hk:4"
+        #expect(rule.matched(ride) == "hk")
+        #expect(rule.regionCodesTouched(ride) == ["hk", "jp"])
+        ride.stops[0].stationID = nil
+        ride.operatorID = "op:kr:2"
+        #expect(rule.matched(ride) == "kr")
+        #expect(rule.regionCodesTouched(ride) == ["kr", "jp"])
     }
 
     @Test("Hong Kong high speed is wholly China while Hong Kong transit remains independent")

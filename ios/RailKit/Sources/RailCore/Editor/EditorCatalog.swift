@@ -771,6 +771,14 @@ public struct StationSearchIndex: Sendable {
         let needle = query.needle.trimmingCharacters(in: .whitespacesAndNewlines)
         let prepared = SearchFold.PreparedQuery(needle)
         let browsing = needle.isEmpty
+        let company = query.companyName?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let identity = (company?.isEmpty == false)
+            ? RegistryIdentityCache.identity(forRegion: regionCode) : nil
+        let companyIDs = company.flatMap { name -> Set<String>? in
+            guard !name.isEmpty else { return nil }
+            guard let identity else { return [] }
+            return Set(identity.operatorIDs(forCatalogName: name))
+        }
         var sections: [StationSearchLine] = []
         var suggestionPool: [(hit: StationSearchHit, name: String, code: String)] = []
         var seenSuggestion: Set<StationKey> = []
@@ -780,9 +788,10 @@ public struct StationSearchIndex: Sendable {
             for line in lines {
                 if Task.isCancelled { break }
                 if !query.lineIDs.isEmpty && !query.lineIDs.contains(line.id) { continue }
-                if let company = query.companyName?.trimmingCharacters(in: .whitespacesAndNewlines),
-                   !company.isEmpty, !line.operatorNames.contains(company) {
-                    continue
+                if let companyIDs {
+                    guard let identity, !companyIDs.isEmpty else { continue }
+                    let lineIDs = Set(line.operatorNames.flatMap { identity.operatorIDs(forCatalogName: $0) })
+                    if lineIDs.isDisjoint(with: companyIDs) { continue }
                 }
                 let lineMatched = !browsing && Self.matches(prepared, fields: line.matchFields)
                 var hits: [StationSearchHit] = []

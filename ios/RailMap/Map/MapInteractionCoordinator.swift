@@ -78,7 +78,7 @@ final class MapInteractionCoordinator {
 
     /// The card one tapped annotation opens, or `nil` when the thing
     /// tapped was not a station at all.
-    func stationCard(for annotation: any MKAnnotation, named: Naming) -> StationCard? {
+    func stationCard(for annotation: any MKAnnotation, named: Naming, unresolvedLabel: String = "unresolved") -> StationCard? {
         if let station = annotation as? StationAnnotation {
             return StationCard(
                 station: station.station,
@@ -88,13 +88,16 @@ final class MapInteractionCoordinator {
         if let dot = annotation as? RideStationAnnotation {
             return rideStationCard(
                 name: dot.rawName, code: dot.stationCode, region: dot.region,
-                at: Coordinate(lon: dot.coordinate.longitude, lat: dot.coordinate.latitude), named: named)
+                stationID: dot.stationID,
+                at: Coordinate(lon: dot.coordinate.longitude, lat: dot.coordinate.latitude),
+                named: named, unresolvedLabel: unresolvedLabel)
         }
         if let caption = annotation as? RideLabelAnnotation {
             return rideStationCard(
                 name: caption.rawName, code: caption.stationCode, region: caption.region,
+                stationID: caption.stationID,
                 at: Coordinate(lon: caption.coordinate.longitude, lat: caption.coordinate.latitude),
-                named: named)
+                named: named, unresolvedLabel: unresolvedLabel)
         }
         return nil
     }
@@ -114,10 +117,11 @@ final class MapInteractionCoordinator {
     /// station is what they get; the alternative is a mark that answers
     /// a tap with silence, which is the fault this replaced.
     private func rideStationCard(
-        name: String, code: String?, region: Region?, at position: Coordinate, named: Naming
+        name: String, code: String?, region: Region?, stationID: String? = nil,
+        at position: Coordinate, named: Naming, unresolvedLabel: String = "unresolved"
     ) -> StationCard {
         if let station = networkStation(
-            code: code, name: name, region: region, near: position)
+            code: code, name: name, region: region, near: position, stationID: stationID)
         {
             // Named and read exactly as `StationAnnotation` names and
             // reads the same platform — the readings table is keyed on
@@ -128,11 +132,16 @@ final class MapInteractionCoordinator {
                 readings: named.readings)
         }
         let named = named(name, code)
+        var readings = named.readings
+        let unresolved = stationID?.isEmpty != false
+        if unresolved {
+            readings = (readings ?? []) + [unresolvedLabel]
+        }
         return StationCard(
             id: "stop:\(Stations.normalizeStationName(name))"
                 + "@\(position.lat),\(position.lon)",
             coordinate: position,
-            displayName: named.display,
+            displayName: unresolved ? name : named.display,
             rawName: name,
             // A stop that resolved to no platform still names a
             // region well enough to search in: the store's own
@@ -140,7 +149,7 @@ final class MapInteractionCoordinator {
             // hand-typed ride with no code at all is Japanese for the
             // same reason `naming` reads it as Japanese.
             region: region ?? Region.fromStationCode(code) ?? .jp,
-            readings: named.readings,
+            readings: readings,
             nameRoma: "",
             lines: [],
             stationCode: code)
@@ -162,7 +171,7 @@ final class MapInteractionCoordinator {
     /// common enough (中山, 大手町) that an uncapped one would hand the
     /// reader another prefecture's railways.
     private func networkStation(
-        code: String?, name: String, region: Region?, near position: Coordinate
+        code: String?, name: String, region: Region?, near position: Coordinate, stationID: String? = nil
     ) -> RailNetworkStore.DrawnStation? {
         // A known region is part of station identity, not a ranking hint.
         func nearest(_ indexes: [Int], within metres: Double) -> RailNetworkStore.DrawnStation? {
@@ -171,6 +180,15 @@ final class MapInteractionCoordinator {
                 .map { (station: $0, distance: Geometry.distanceMeters($0.coordinate, position)) }
                 .filter { $0.distance <= metres }
                 .min { $0.distance < $1.distance }?.station
+        }
+        if let stationID, !stationID.isEmpty {
+            let codes = RegistryIdentityCache.identity(forRegion: region?.code ?? "")?.codes(of: stationID) ?? []
+            for stationCode in codes {
+                if let group = stationsByCode[stationCode], let hit = nearest(group, within: .infinity) {
+                    return hit
+                }
+            }
+            return nil
         }
         if let code, !code.isEmpty, let group = stationsByCode[code],
             let hit = nearest(group, within: .infinity)

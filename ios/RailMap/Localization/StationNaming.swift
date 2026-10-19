@@ -130,10 +130,27 @@ extension AppLocalization {
     /// before the table's by-name fallback is relied on.
     func stationName(_ name: String?, in train: Train, code: String? = nil) -> String {
         guard let name, !name.isEmpty else { return "" }
+        let stop = train.stops.first { candidate in
+            if let code, let recorded = candidate.n02StationCode, recorded == code, candidate.name == name {
+                return true
+            }
+            return false
+        } ?? train.stops.first { candidate in
+            if let code, let recorded = candidate.n02StationCode, recorded == code { return true }
+            return false
+        } ?? train.stops.first { $0.name == name && $0.stationID?.isEmpty == false }
+            ?? train.stops.first { $0.name == name }
+        let region = Region.resolved(train)
+        let display = RegistryStationDisplay.resolve(
+            storedName: name, stationID: stop?.stationID, region: train.region ?? region.code)
+        if display.unresolved {
+            return name
+        }
         return stationName(
-            name,
-            code: code ?? train.stationCode(named: name),
-            region: Region.resolved(train))
+            display.primary,
+            code: display.readingCodes.first ?? code ?? train.stationCode(named: name),
+            region: region,
+            allowNameFallback: false)
     }
 
     /// Lean sections may omit their names. An adjacent stop can supply one

@@ -534,11 +534,25 @@ struct TrainServicePatternsTests {
             #expect(results.contains { $0.id == discontinued.id })
         }
 
-        let company = try #require(all.first?.companyLabel)
-        let byCompany = TrainServicePatterns.search(
-            "", filter: TrainServicePatterns.Filter(company: company))
-        #expect(byCompany.isEmpty == false)
-        #expect(byCompany.allSatisfy { OperatorIdentity.sameCompany($0.company, company) })
+        let company = try #require(all.first?.company)
+        try RegistryIdentityTestGate.withProvider({ region in
+            guard region == "jp" else { return nil }
+            return RegistryIdentity(bundle: RegistryBundle(
+                region: "jp", run: 1,
+                operatorRecords: [
+                    "op:jp:filter": RegistryOperatorRecord(names: [company], label: "FILTER", identity: nil),
+                ]))
+        }) {
+            let byCompany = TrainServicePatterns.search(
+                "", filter: TrainServicePatterns.Filter(company: company))
+            let identity = try #require(RegistryIdentityCache.identity(forRegion: "jp"))
+            #expect(byCompany.isEmpty == false)
+            #expect(byCompany.allSatisfy { pattern in
+                identity.operatorIDs(forCatalogName: pattern.company).contains("op:jp:filter")
+            })
+            #expect(TrainServicePatterns.search(
+                "", filter: TrainServicePatterns.Filter(company: "not-a-company")).isEmpty)
+        }
 
         if let lineName = all.first(where: { $0.lines.isEmpty == false })?.lines.first {
             let byLine = TrainServicePatterns.search(lineName)
