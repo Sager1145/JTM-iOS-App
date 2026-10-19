@@ -1,4 +1,32 @@
+# Verification update — 2026-10-10
+
+Stop the retired JTM verification pipelines. Follow `AGENTS.md` and
+`ios/VERIFICATION.md`: changed-scope chat review, reuse applicable evidence,
+focused existing tests/queries or one shared incremental build only when needed.
+Do not recreate retired scripts or start broad tests, full-tree hash workflows,
+evaluator campaigns or automatic verification-to-delivery loops. Existing
+production constraints still apply. This supersedes older verification guidance
+below.
+
 # CLAUDE.md
+
+## Repository Scope — iOS App Only
+
+Changes to this repository change the iOS app only.
+
+Allowed here:
+
+- `ios/` — the app, RailKit, tests (verify.sh was retired 2026-10-10; see `ios/VERIFICATION.md`)
+- the Swift parity reference under `app/` (`app/public/rail-stroke.js`, `app/scripts/build/port-fixtures/`, `port-fixtures/`), and only to mirror a Swift change so the fixture parity check (`node app/scripts/build/build-port-fixtures.mjs --check`) stays green
+- data under `app/data/` that the iOS app bundles, when an iOS fix needs it
+
+Not allowed here:
+
+- website work: web UI, `app/public/railmap.js` and other web-map/UI scripts, the web preview, web-only features or builders
+
+Website changes belong in the separate repo `~/Documents/GitHub/Japan-Train-Map` (github.com/Sager1145/Japan-Train-Map). If an iOS task seems to need a website change, stop and report it instead of editing either repo.
+
+---
 
 ## Core Operating Model
 

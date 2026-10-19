@@ -1,4 +1,6 @@
 .DS_Store
+__pycache__/
+*.pyc
 
 # Xcode / SwiftPM
 .build/
@@ -32,9 +34,8 @@ outputs/
 #
 # Official GIS/CSV/GTFS downloads (MLIT N02, data.go.kr, FRA/BTS NARN, the
 # state and operator publications behind us-2025/ca-2025), OpenStreetMap
-# extracts, and Apple Maps captures are not ours to redistribute: the
-# publications carry their own attribution and use terms, OSM is ODbL, and the
-# captures are Apple's imagery. What this repository ships is the processed
+# extracts, and Apple Maps captures remain local under the user's publication
+# policy. Source licences and output attribution still apply. This repository ships the processed
 # output in app/public/rail/ and app/data/, with per-source provenance recorded
 # in app/public/rail/*.sources.md.
 #
@@ -66,6 +67,123 @@ app/data/station-english-sources/
 app/data/station-english-verification-candidates/
 app/data/station-english-verification-review/
 
-# Explicitly requested offline North America repository backup.
+# Offline North America payloads are preserved locally and in the verified
+# draft GitHub backup asset. Git tracks the inventory and restore metadata.
 # App inputs and other raw downloads retain the exclusions above.
-!backups/north-america/2026-10-03/app/data/raw/**
+backups/north-america/2026-10-03/**
+!backups/north-america/2026-10-03/README.md
+!backups/north-america/2026-10-03/manifest.json
+!backups/north-america/2026-10-03/legacy-sources-manifest.json
+!backups/north-america/2026-10-03/raw-source-files-manifest.json
+!backups/north-america/2026-10-03/storage.json
+
+# The complete offline backup package is kept locally and uploaded separately
+# to the user-authorized draft backup; it is not a Git source blob.
+/backups/north-america/north-america-2026-10-03.tar.gz
+
+# Central source store and ignored compatibility aliases (2026-10-10).
+# Products and reviewed runtime topology remain in app/data and app/public/rail.
+/railway-sources/local/
+/app/data/raw
+/app/data/jp-history-sources
+/app/data/generated
+/app/data/station-name-sources
+/app/data/station-english-sources
+/app/data/station-english-verification-candidates
+/app/data/station-english-verification-review
+/app/data/train-service-history/sources
+/app/data/train-service-history/normalized
+/app/data/train-service-history/candidates
+/app/data/train-service-history/audits
+/app/data/train-service-history/migration
+/app/data/train-service-history/manifest.json
+/app/data/conventional-timetable
+/outputs/apple-maps-rail/network-cache
+/outputs/apple-maps-rail/metadata
+/outputs/apple-maps-rail/rail
+/outputs/apple-maps-rail/no_rail
+/outputs/apple-maps-rail/pending
+/outputs/apple-maps-rail/merged
+/app/data/station-english-verified-jp-east.json
+/app/data/station-english-verified-jp-fukuoka.json
+/app/data/station-english-verified-jp-nankai.json
+/app/data/station-english-verified-jp-private-extra.json
+/app/data/station-english-verified-jp-private.json
+/app/data/station-english-verified-jp-shikoku.json
+/app/data/station-english-verified-jp-west.json
+/app/data/station-english-verified-jp.json
+/app/data/station-english-verified-kr-second-pass.json
+/app/data/station-english-verified-kr.json
+/app/data/station-english-verified-next-official.json
+/app/data/station-english-verified-tw-afr.json
+/app/data/station-english-verified-tw.json
+/app/data/jp-station-english-jre-source.json
+/app/data/jp-station-english-kyushu-source.json
+/app/data/jp-station-english-metro-source.json
+/app/data/jp-station-english-toei-source.json
+/app/data/jp-station-english-official.json
+/app/data/jp-station-english-manual.json
+/app/data/hk-mo-station-english-official.json
+/app/data/tw-station-english-afr-source.json
+/app/data/station-english-kr-second-pass-first-baseline.json
+/app/data/station-english-kr-second-pass-review.json
+/app/scripts/railway/jp-manual-corrections/n02-fragments.json
+/wl.html
+/yk.html
+*.gml
+*.pbf
+
+# Generated static site; source lives in app/.
+/_site/
+
+# Audit publication policy (2026-10-19): commit source, processed data,
+# documentation and evidence summaries; keep raw capture/source payloads local.
+/docs/reports/**/captures/
+/ios/auxiliary/**/Evidence/**/captures/
+/docs/reports/**/*.png
+/docs/reports/**/*.jpg
+/docs/reports/**/*.jpeg
+/docs/reports/**/*.gif
+/docs/reports/**/*.webp
+/docs/reports/**/*.pdf
+/docs/reports/**/*.geojson
+/docs/reports/**/*.xml
+/docs/reports/**/*.html
+/ios/auxiliary/**/Evidence/**/*.png
+/ios/auxiliary/**/Evidence/**/*.jpg
+/ios/auxiliary/**/Evidence/**/*.jpeg
+/ios/auxiliary/**/Evidence/**/*.gif
+/ios/auxiliary/**/Evidence/**/*.webp
+/docs/reports/**/identity-plan-*.json
+/docs/reports/**/plan*.json
+/docs/reports/**/view.json
+/docs/reports/**/view [0-9]*.json
+/docs/reports/**/distance-samples*.json
+/docs/reports/**/display-stage-distance-samples*.json
+/docs/reports/**/alignment-full-plan.json
+/docs/reports/**/through-working-document.json
+/ios/auxiliary/**/Evidence/**/identity-plan-*.json
+/ios/auxiliary/**/Evidence/**/plan*.json
+/ios/auxiliary/**/Evidence/**/through-working-document.json
+/docs/reports/**/osm-*-full.json
+/docs/reports/**/osm-*-relations.json
+
+# Unreferenced local numbered sync copies; keep the canonical source filename.
+/app/data/* [2-9].json
+/app/public/rail/* [2-9].json
+/app/scripts/railway/* [2-9].mjs
+/docs/reports/**/* [2-9].json
+
+# Full capture checkpoints/global inventories remain with the local originals.
+/docs/reports/**/checkpoint*.json
+/docs/reports/**/capture-state*.json
+/docs/reports/**/report.json
+/docs/reports/**/permanent-capture-index*.json
+/docs/reports/**/README.txt
+/docs/reports/**/japan-rail-inspection-plan-*.json
+/docs/reports/**/hakone-corridor-final-native-viewpoints-*.json
+/docs/reports/**/*-ax.txt
+/docs/reports/**/*-AX.txt
+/docs/reports/**/*.ax.txt
+/ios/auxiliary/**/Evidence/**/checkpoint*.json
+/ios/auxiliary/**/Evidence/**/report.json
