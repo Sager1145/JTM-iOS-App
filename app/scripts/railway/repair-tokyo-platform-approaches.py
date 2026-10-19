@@ -13,6 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 PACKAGE = ROOT / "public/rail/jp-2025.json"
+SHINAGAWA_REFERENCE = ROOT.parent / "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/shinagawa/sources/passenger-pair-reference-20261011.json"
 JR = "jp-東日本旅客鉄道-"
 SHINKANSEN = "jp-東海旅客鉄道-東海道新幹線"
 SPUR = [[139.7401467, 35.6296413], [139.7404284, 35.6293804]]
@@ -46,10 +47,10 @@ def repair(package):
         assert row[2:4] == landlord[2:4]
         lines[alias].setdefault("stationCircleOwnerByCode", {})["003766"] = owner
         lines[alias].setdefault("stationLaneByCode", {})["003766"] = 0
-    # Restore the surveyed tunnel through Shimbashi. The current display policy
-    # joins the conventional family at Shinagawa, not south of Yurakucho.
+    # Restore the retained tunnel through Shimbashi and the independent
+    # Yokosuka / Hinkaku platform family at Shinagawa (JR platforms 13–15).
     # Original stations/segments/km remain physical inputs.
-    surface, tunnel = lines[JR+"東海道線"], lines[JR+"総武線-3"]
+    tunnel = lines[JR+"総武線-3"]
     def decode(line):
         paths, previous = [], None
         for index, row in enumerate(line["segments"]):
@@ -59,42 +60,67 @@ def repair(package):
             previous = points[-1]
             paths.append(points)
         return paths
-    surface_paths, tunnel_paths = decode(surface), decode(tunnel)
+    # The terminal N02 station centroid adds an 8.6 m sideways barb after
+    # the retained Tohoku platform support. End display on that existing
+    # support; do not merge the independently drawn Shinkansen families.
+    tohoku = lines[JR+"東北新幹線"]
+    tohoku_terminal = decode(tohoku)[21]
+    assert tohoku["stations"][-1][0] == "003766"
+    assert tohoku_terminal[-1] == [139.767579, 35.68113]
+    assert tohoku_terminal[-2] == [139.7676701, 35.681109], "Tokyo terminal support changed; re-review before applying"
+    tohoku.setdefault("displayStationCoordinates", {})["003766"] = tohoku_terminal[-2][:]
+    tohoku.setdefault("displayIntervalCoordinates", {})["21"] = tohoku_terminal[:-1]
+    tunnel_paths = decode(tunnel)
     # N02's Shimbashi point is 1.5 m east of the retained OSM tunnel vertex.
     # Use that already-surveyed seam for display instead of a two-vertex barb.
     shimbashi = tunnel_paths[1][1]
     assert km(shimbashi, tunnel_paths[1][0]) < 0.002
-    anchors = {"003872": shimbashi[:],
-               "004095": next(s[2:4] for s in surface["stations"] if s[0] == "004095")}
-    # Transition along the reviewed station throat rather than dragging the
-    # last tunnel vertex 130 m sideways onto the surface station centroid.
-    incoming = [p[:] for p in tunnel_paths[1][1:]]
-    remaining = [0.0] * len(incoming)
-    for i in range(len(incoming)-2, -1, -1):
-        remaining[i] = remaining[i+1] + 1000*km(incoming[i], incoming[i+1])
-    shift = [anchors["004095"][i]-incoming[-1][i] for i in (0, 1)]
-    for i, point in enumerate(incoming):
-        t = max(0.0, 1.0-remaining[i]/350.0)
-        weight = t*t*(3-2*t)
-        incoming[i] = [point[j] + weight*shift[j] for j in (0, 1)]
-    incoming[-1] = anchors["004095"]
+    anchors = dict(tunnel.get("displayStationCoordinates", {}))
+    anchors["003872"] = shimbashi[:]
+    anchors.pop("004095", None)
     overrides = tunnel.setdefault("displayIntervalCoordinates", {})
     overrides["0"] = tunnel_paths[0][:-1]
     assert overrides["0"][-1] == shimbashi
-    overrides["1"] = incoming
-    # Keep the outbound approach on the old shared N02 trunk as well. This
-    # preserves the eastern trunk fork and the later western branch fork.
-    common = [139.73881, 35.62549]
-    departure = surface_paths[6][:surface_paths[6].index(common)+1]
-    departure += tunnel_paths[2][tunnel_paths[2].index(common)+1:]
-    overrides["2"] = departure
+    overrides["1"] = [p[:] for p in tunnel_paths[1][1:]]
+    # Start from physical inputs on every replay; apply the independently
+    # identified normal passenger pair below before inserting the reviewed Osaki southern shared-tail points.
+    overrides["2"] = [p[:] for p in tunnel_paths[2]]
+    reference = json.loads(SHINAGAWA_REFERENCE.read_text())
+    assert reference["status"] == "bounded-display-corridor-ready"
+    assert reference["lineId"] == tunnel["id"]
+    evidence_ways = {row["id"]: row for row in json.loads(
+        SHINAGAWA_REFERENCE.with_name("osm-bounded-rail-ways.json").read_text())["elements"]}
+    main_ways = reference["identity"]["upMainWays"] + reference["identity"]["downMainWays"]
+    assert 853189601 not in main_ways, "Station siding cannot define the passenger corridor"
+    for way_id in main_ways:
+        tags = evidence_ways[way_id]["tags"]
+        assert tags.get("usage") == "main" and tags.get("operator") == "東日本旅客鉄道"
+        assert tags.get("railway:traffic_mode") == "passenger" and tags.get("gauge") == "1067"
+        assert tags.get("service") != "siding"
+    boundaries = reference["boundaries"]
+    assert tunnel["stations"][2][2:4] == boundaries["physicalStation"] == [139.739427, 35.629035]
+    north_support = boundaries["northRetainedSource"]
+    south_support = boundaries["southRetainedSource"]
+    assert north_support == [139.7396393, 35.6297092]
+    assert south_support == [139.73205, 35.61655]
+    north_transition = reference["displayPaths"]["northTransition"]
+    south_centre = reference["displayPaths"]["south"]
+    centre = boundaries["displayStation"]
+    assert north_transition[0] == north_support and north_transition[-1] == centre
+    assert south_centre[0] == centre and south_centre[-1] == south_support
+    # This is a representative display centre, not a new platform survey or
+    # crossover topology. Both exact source bounds remain; all physical inputs
+    # and every source support outside the reviewed window are unchanged.
+    north_index = overrides["1"].index(north_support)
+    south_index = overrides["2"].index(south_support)
+    overrides["1"] = overrides["1"][:north_index] + north_transition
+    overrides["2"] = south_centre[:-1] + overrides["2"][south_index:]
+    anchors["004095"] = centre[:]
     tunnel["displayStationCoordinates"] = anchors
     tunnel.setdefault("stationCircleOwnerByCode", {}).pop("003872", None)
     tunnel.setdefault("stationLaneByCode", {})["003872"] = 0
-    for code in ("004095",):
-        tunnel.setdefault("stationCircleOwnerByCode", {})[code] = surface["id"]
-        tunnel.setdefault("stationLaneByCode", {}).pop(code, None)
-        surface.setdefault("stationLaneByCode", {}).pop(code, None)
+    tunnel.setdefault("stationCircleOwnerByCode", {}).pop("004095", None)
+    tunnel.setdefault("stationLaneByCode", {})["004095"] = 0
     package["version"] = "2025.5.2"
     package["geometrySource"].setdefault("manualOverrides", {})["tokyo-platform-approaches"] = {
         "reviewedAt": "2026-09-30", "crs": "WGS84",
@@ -104,18 +130,36 @@ def repair(package):
         "stationDisplay": "Four main JR Tokyo platform families; duplicate conventional/Sobu members share circle and endpoint lane",
     }
     package["geometrySource"]["manualOverrides"]["tokyo-conventional-display-corridor"] = {
-        "reviewedAt": "2026-10-01", "crs": "WGS84",
+        "reviewedAt": "2026-10-11", "crs": "WGS84",
         "script": "app/scripts/railway/repair-tokyo-platform-approaches.py",
-        "policy": "User-requested schematic; not physical track topology",
-        "source": "Existing N02 surface paths and registered OSM Tokyo tunnel",
-        "transformation": "Restore the surveyed Tokyo/Shimbashi tunnel; alias only the Shinagawa throat to the conventional display family; preserve the outbound N02 eastern and western forks and physical intervals",
-        "junction": anchors["004095"],
-        "transitionMeters": 350,
-        "transitionPolicy": "Smoothstep endpoint alias within the last 350 m of the retained tunnel; display only, source stations/intervals/km unchanged",
+        "policy": "Independently routed passenger platform families retain separate circles and approaches",
+        "source": "Existing N02 / registered OSM Tokyo tunnel; JR East Shinagawa platform map, July 2026, platforms 13–15 distinct from 6–12",
+        "transformation": "Retain the Shimbashi surveyed display seam; remove the Shinagawa conventional-family alias and restore both retained Sobu source approaches; preserve physical intervals and the outbound eastern/western display fork projections",
+        "stationDisplay": "Independent Sobu platform family; bounded normal-passenger-pair override supplies its representative display centre",
+        "stationLanePinMeters": 300,
+    }
+    package["geometrySource"]["manualOverrides"]["shinagawa-normal-passenger-pair"] = {
+        "reviewedAt": "2026-10-11", "crs": "WGS84",
+        "script": "app/scripts/railway/repair-tokyo-platform-approaches.py",
+        "reference": str(SHINAGAWA_REFERENCE.relative_to(ROOT.parent)),
+        "source": "Identified OSM JR East main passenger up/down pair; GSI large-scale railway coordinates, 2026-07-01 snapshot; GSI2019 ortho; dated track diagram v7 and JR East July2026 platform family13–15",
+        "northRetainedSource": north_support, "southRetainedSource": south_support,
+        "displayStation": centre, "physicalStation": boundaries["physicalStation"],
+        "transformation": "Representative centre of two identified normal passenger rails through Shinagawa and actual western curve; north transition remains inside that pair; exact retained source prefix/tail and Osaki southern shared-tail supports preserved",
+        "limits": reference["limits"],
+        "stationLanePinMeters": 300,
+    }
+    package["geometrySource"]["manualOverrides"]["tokyo-tohoku-terminal-display"] = {
+        "reviewedAt": "2026-10-11", "crs": "WGS84",
+        "script": "app/scripts/railway/repair-tokyo-platform-approaches.py",
+        "source": "Existing registered survey support; native Tokyo overlay/basemap terminal comparison",
+        "transformation": "End the displayed Tohoku Shinkansen terminal at its final retained platform support; remove only the sideways connection to the physical station centroid; retain all non-anchor survey supports and physical stations/segments/km",
+        "stationDisplay": "Independent Tohoku Shinkansen platform circle on retained support; no Tokaido Shinkansen merge or added lane pin",
+        "derivedDisplay": "Refresh the terminal ruler/end lane cap; remove only the excluded jp-tokyo Tohoku overlap diagnostic sampled inside the old centroid-warped terminal approach, since its start has no exact retained support for remapping",
     }
     # The new branches must be integrated after restoring the outbound trunk.
-    # Calling this replay command therefore cannot resurrect the old appended
-    # parallel main or leave stale fork aliases from an earlier display policy.
+    # The branch owner preserves physical forks but retires capped display
+    # leads, binding the local station stem and southern tail to their owners.
     if JR+"大崎支線" in lines:
         path = Path(__file__).with_name('repair-tokyo-southern-branches.py')
         spec = importlib.util.spec_from_file_location('tokyo_southern', path)
@@ -139,7 +183,7 @@ def main():
         print("Tokyo platform override is current")
     elif before.rstrip() != after:
         PACKAGE.write_text(after)
-        print("Restored Tokyo tunnel, Shinagawa display join and legacy-compatible Osaki forks")
+        print("Restored independent Shinagawa passenger approaches and independent Osaki passenger approaches")
 
 
 if __name__ == "__main__":

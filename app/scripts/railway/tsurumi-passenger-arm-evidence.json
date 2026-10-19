@@ -1,0 +1,1326 @@
+{
+  "format": "jtm-tsurumi-passenger-arms-v1",
+  "reviewedAt": "2026-10-10",
+  "crs": "WGS84",
+  "identity": "jp-東日本旅客鉄道-鶴見線",
+  "source": "app/data/rail-sections.json",
+  "stationSource": "app/data/stations.json",
+  "dataset": "MLIT N02-25",
+  "license": "国土数値情報（鉄道データ N02） attribution; see app/public/rail/jp-2025.sources.md",
+  "oldBranches": {
+    "jp-東日本旅客鉄道-鶴見線-2": {
+      "id": "jp-東日本旅客鉄道-鶴見線-2",
+      "name": "鶴見線",
+      "operator": "東日本旅客鉄道",
+      "rank": 2,
+      "color": "#a68a00",
+      "nameRoma": "Tsurumi Line",
+      "stations": [
+        [
+          "004531",
+          "浅野",
+          139.695675,
+          35.497605,
+          "Asano",
+          1
+        ],
+        [
+          "004547",
+          "新芝浦",
+          139.700125,
+          35.491915,
+          "Shin-Shibaura",
+          1
+        ],
+        [
+          "004564",
+          "海芝浦",
+          139.700675,
+          35.48613,
+          "Umi-Shibaura",
+          1
+        ]
+      ],
+      "segments": [
+        [
+          0.894,
+          0,
+          [
+            [
+              139.695675,
+              35.497605
+            ],
+            [
+              139.69537,
+              35.4975
+            ],
+            [
+              139.69488,
+              35.49732
+            ],
+            [
+              139.69542,
+              35.49731
+            ],
+            [
+              139.69607,
+              35.49726
+            ],
+            [
+              139.69617,
+              35.49723
+            ],
+            [
+              139.69632,
+              35.49719
+            ],
+            [
+              139.69644,
+              35.49714
+            ],
+            [
+              139.69662,
+              35.49702
+            ],
+            [
+              139.69673,
+              35.49694
+            ],
+            [
+              139.69689,
+              35.49679
+            ],
+            [
+              139.69707,
+              35.49657
+            ],
+            [
+              139.69977,
+              35.49245
+            ],
+            [
+              139.69985,
+              35.49233
+            ],
+            [
+              139.700125,
+              35.491915
+            ]
+          ]
+        ],
+        [
+          0.788,
+          1,
+          [
+            [
+              139.7004,
+              35.4915
+            ],
+            [
+              139.70247,
+              35.48838
+            ],
+            [
+              139.70257,
+              35.48816
+            ],
+            [
+              139.70262,
+              35.48799
+            ],
+            [
+              139.70264,
+              35.48783
+            ],
+            [
+              139.70264,
+              35.48759
+            ],
+            [
+              139.70258,
+              35.48739
+            ],
+            [
+              139.70252,
+              35.48727
+            ],
+            [
+              139.70242,
+              35.48713
+            ],
+            [
+              139.70232,
+              35.487
+            ],
+            [
+              139.70221,
+              35.48688
+            ],
+            [
+              139.7021,
+              35.48679
+            ],
+            [
+              139.70194,
+              35.48668
+            ],
+            [
+              139.70163,
+              35.48653
+            ],
+            [
+              139.70149,
+              35.48648
+            ],
+            [
+              139.70106,
+              35.48629
+            ],
+            [
+              139.700675,
+              35.48613
+            ]
+          ]
+        ]
+      ],
+      "colorDark": "#ffd400",
+      "colorSource": "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf",
+      "kind": "jr_conventional",
+      "colorPolicy": "operator",
+      "labelPolicy": "operator",
+      "nameNorm": "鶴見線",
+      "operatorShort": "JR東日本",
+      "logo": 1,
+      "railwayIdentity": "jp-東日本旅客鉄道-鶴見線",
+      "colorReference": "#ffd400"
+    },
+    "jp-東日本旅客鉄道-鶴見線-3": {
+      "id": "jp-東日本旅客鉄道-鶴見線-3",
+      "name": "鶴見線",
+      "operator": "東日本旅客鉄道",
+      "rank": 2,
+      "color": "#a68a00",
+      "nameRoma": "Tsurumi Line",
+      "stations": [
+        [
+          "004517",
+          "武蔵白石",
+          139.70653,
+          35.50193,
+          "Musashi-Shiraishi",
+          1
+        ],
+        [
+          "004540",
+          "大川",
+          139.71138,
+          35.495405,
+          "Okawa",
+          1
+        ]
+      ],
+      "segments": [
+        [
+          1.021,
+          0,
+          [
+            [
+              139.70653,
+              35.50193
+            ],
+            [
+              139.70619,
+              35.50181
+            ],
+            [
+              139.70555,
+              35.50155
+            ],
+            [
+              139.70582,
+              35.50161
+            ],
+            [
+              139.7061,
+              35.50162
+            ],
+            [
+              139.70629,
+              35.50162
+            ],
+            [
+              139.70646,
+              35.5016
+            ],
+            [
+              139.70659,
+              35.50158
+            ],
+            [
+              139.70673,
+              35.50154
+            ],
+            [
+              139.7069,
+              35.5015
+            ],
+            [
+              139.7071,
+              35.50142
+            ],
+            [
+              139.70719,
+              35.50137
+            ],
+            [
+              139.70732,
+              35.50129
+            ],
+            [
+              139.70746,
+              35.5012
+            ],
+            [
+              139.70758,
+              35.50109
+            ],
+            [
+              139.7077,
+              35.50097
+            ],
+            [
+              139.70779,
+              35.50085
+            ],
+            [
+              139.70786,
+              35.50076
+            ],
+            [
+              139.70793,
+              35.50066
+            ],
+            [
+              139.708,
+              35.50055
+            ],
+            [
+              139.70808,
+              35.50042
+            ],
+            [
+              139.70952,
+              35.49822
+            ],
+            [
+              139.70975,
+              35.49787
+            ],
+            [
+              139.70997,
+              35.49753
+            ],
+            [
+              139.71095,
+              35.49605
+            ],
+            [
+              139.71119,
+              35.49567
+            ],
+            [
+              139.71138,
+              35.495405
+            ]
+          ]
+        ]
+      ],
+      "colorDark": "#ffd400",
+      "colorSource": "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf",
+      "kind": "jr_conventional",
+      "colorPolicy": "operator",
+      "labelPolicy": "operator",
+      "nameNorm": "鶴見線",
+      "operatorShort": "JR東日本",
+      "logo": 1,
+      "structure": [
+        [
+          675,
+          735,
+          2,
+          1
+        ]
+      ],
+      "railwayIdentity": "jp-東日本旅客鉄道-鶴見線",
+      "colorReference": "#ffd400"
+    }
+  },
+  "stationRows": {
+    "004531": [
+      "004531",
+      "浅野",
+      139.695675,
+      35.497605,
+      "Asano",
+      1
+    ],
+    "004522": [
+      "004522",
+      "安善",
+      139.701245,
+      35.49984,
+      "Anzen",
+      1
+    ],
+    "004517": [
+      "004517",
+      "武蔵白石",
+      139.70653,
+      35.50193,
+      "Musashi-Shiraishi",
+      1
+    ],
+    "004547": [
+      "004547",
+      "新芝浦",
+      139.700125,
+      35.491915,
+      "Shin-Shibaura",
+      1
+    ],
+    "004564": [
+      "004564",
+      "海芝浦",
+      139.700675,
+      35.48613,
+      "Umi-Shibaura",
+      1
+    ],
+    "004540": [
+      "004540",
+      "大川",
+      139.71138,
+      35.495405,
+      "Okawa",
+      1
+    ]
+  },
+  "stationFeatures": {
+    "7592": {
+      "type": "Feature",
+      "properties": {
+        "railway_class_code": "11",
+        "institution_type_code": "2",
+        "line_name": "鶴見線",
+        "operator": "東日本旅客鉄道",
+        "station_name": "安善",
+        "n02_station_code": "004522",
+        "n02_group_code": "004522",
+        "display_point": [
+          139.701245,
+          35.49984
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70088,
+            35.4997
+          ],
+          [
+            139.70161,
+            35.49998
+          ]
+        ]
+      }
+    },
+    "7597": {
+      "type": "Feature",
+      "properties": {
+        "railway_class_code": "11",
+        "institution_type_code": "2",
+        "line_name": "鶴見線",
+        "operator": "東日本旅客鉄道",
+        "station_name": "浅野",
+        "n02_station_code": "004531",
+        "n02_group_code": "004531",
+        "display_point": [
+          139.695675,
+          35.497605
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.69598,
+            35.49771
+          ],
+          [
+            139.69537,
+            35.4975
+          ]
+        ]
+      }
+    },
+    "7599": {
+      "type": "Feature",
+      "properties": {
+        "railway_class_code": "11",
+        "institution_type_code": "2",
+        "line_name": "鶴見線",
+        "operator": "東日本旅客鉄道",
+        "station_name": "浅野",
+        "n02_station_code": "004531",
+        "n02_group_code": "004531",
+        "display_point": [
+          139.695745,
+          35.497285
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.69542,
+            35.49731
+          ],
+          [
+            139.69607,
+            35.49726
+          ]
+        ]
+      }
+    },
+    "7600": {
+      "type": "Feature",
+      "properties": {
+        "railway_class_code": "11",
+        "institution_type_code": "2",
+        "line_name": "鶴見線",
+        "operator": "東日本旅客鉄道",
+        "station_name": "武蔵白石",
+        "n02_station_code": "004517",
+        "n02_group_code": "004517",
+        "display_point": [
+          139.70653,
+          35.50193
+        ]
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70619,
+            35.50181
+          ],
+          [
+            139.70687,
+            35.50205
+          ]
+        ]
+      }
+    }
+  },
+  "sourceFeatures": {
+    "16125": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.69542,
+            35.49731
+          ],
+          [
+            139.69607,
+            35.49726
+          ]
+        ]
+      }
+    },
+    "16130": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.69985,
+            35.49233
+          ],
+          [
+            139.69977,
+            35.49245
+          ],
+          [
+            139.69707,
+            35.49657
+          ],
+          [
+            139.69689,
+            35.49679
+          ],
+          [
+            139.69673,
+            35.49694
+          ],
+          [
+            139.69662,
+            35.49702
+          ],
+          [
+            139.69644,
+            35.49714
+          ],
+          [
+            139.69632,
+            35.49719
+          ],
+          [
+            139.69617,
+            35.49723
+          ],
+          [
+            139.69607,
+            35.49726
+          ]
+        ]
+      }
+    },
+    "16116": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.7004,
+            35.4915
+          ],
+          [
+            139.69985,
+            35.49233
+          ]
+        ]
+      }
+    },
+    "16114": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70106,
+            35.48629
+          ],
+          [
+            139.70149,
+            35.48648
+          ],
+          [
+            139.70163,
+            35.48653
+          ],
+          [
+            139.70194,
+            35.48668
+          ],
+          [
+            139.7021,
+            35.48679
+          ],
+          [
+            139.70221,
+            35.48688
+          ],
+          [
+            139.70232,
+            35.487
+          ],
+          [
+            139.70242,
+            35.48713
+          ],
+          [
+            139.70252,
+            35.48727
+          ],
+          [
+            139.70258,
+            35.48739
+          ],
+          [
+            139.70264,
+            35.48759
+          ],
+          [
+            139.70264,
+            35.48783
+          ],
+          [
+            139.70262,
+            35.48799
+          ],
+          [
+            139.70257,
+            35.48816
+          ],
+          [
+            139.70247,
+            35.48838
+          ],
+          [
+            139.7004,
+            35.4915
+          ]
+        ]
+      }
+    },
+    "16128": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70029,
+            35.48597
+          ],
+          [
+            139.70106,
+            35.48629
+          ]
+        ]
+      }
+    },
+    "16110": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70088,
+            35.4997
+          ],
+          [
+            139.70161,
+            35.49998
+          ]
+        ]
+      }
+    },
+    "16111": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.70161,
+            35.49998
+          ],
+          [
+            139.70224,
+            35.50022
+          ],
+          [
+            139.70355,
+            35.50074
+          ],
+          [
+            139.70396,
+            35.50091
+          ],
+          [
+            139.70428,
+            35.50103
+          ],
+          [
+            139.70448,
+            35.5011
+          ],
+          [
+            139.70468,
+            35.50119
+          ],
+          [
+            139.7047,
+            35.5012
+          ],
+          [
+            139.70487,
+            35.50127
+          ],
+          [
+            139.70516,
+            35.50139
+          ],
+          [
+            139.70555,
+            35.50155
+          ]
+        ]
+      }
+    },
+    "16124": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.71119,
+            35.49567
+          ],
+          [
+            139.71095,
+            35.49605
+          ],
+          [
+            139.70997,
+            35.49753
+          ],
+          [
+            139.70975,
+            35.49787
+          ],
+          [
+            139.70952,
+            35.49822
+          ],
+          [
+            139.70808,
+            35.50042
+          ],
+          [
+            139.708,
+            35.50055
+          ],
+          [
+            139.70793,
+            35.50066
+          ],
+          [
+            139.70786,
+            35.50076
+          ],
+          [
+            139.70779,
+            35.50085
+          ],
+          [
+            139.7077,
+            35.50097
+          ],
+          [
+            139.70758,
+            35.50109
+          ],
+          [
+            139.70746,
+            35.5012
+          ],
+          [
+            139.70732,
+            35.50129
+          ],
+          [
+            139.70719,
+            35.50137
+          ],
+          [
+            139.7071,
+            35.50142
+          ],
+          [
+            139.7069,
+            35.5015
+          ],
+          [
+            139.70673,
+            35.50154
+          ],
+          [
+            139.70659,
+            35.50158
+          ],
+          [
+            139.70646,
+            35.5016
+          ],
+          [
+            139.70629,
+            35.50162
+          ],
+          [
+            139.7061,
+            35.50162
+          ],
+          [
+            139.70582,
+            35.50161
+          ],
+          [
+            139.70555,
+            35.50155
+          ]
+        ]
+      }
+    },
+    "16115": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "鶴見線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.71157,
+            35.49514
+          ],
+          [
+            139.71119,
+            35.49567
+          ]
+        ]
+      }
+    }
+  },
+  "arms": [
+    {
+      "id": "jp-東日本旅客鉄道-鶴見線-2",
+      "stationCodes": [
+        "004531",
+        "004547",
+        "004564"
+      ],
+      "platformFeature": 7599,
+      "intervals": [
+        [
+          [
+            16125,
+            false
+          ],
+          [
+            16130,
+            true
+          ],
+          [
+            16116,
+            true
+          ]
+        ],
+        [
+          [
+            16116,
+            true
+          ],
+          [
+            16114,
+            true
+          ],
+          [
+            16128,
+            true
+          ]
+        ]
+      ]
+    },
+    {
+      "id": "jp-東日本旅客鉄道-鶴見線-3",
+      "stationCodes": [
+        "004522",
+        "004540"
+      ],
+      "intervals": [
+        [
+          [
+            16110,
+            false
+          ],
+          [
+            16111,
+            false
+          ],
+          [
+            16124,
+            true
+          ],
+          [
+            16115,
+            true
+          ]
+        ]
+      ]
+    }
+  ],
+  "passengerEvidence": [
+    {
+      "train": "704",
+      "url": "https://timetables.jreast.co.jp/2610/train/015/015631.html",
+      "stations": [
+        "大川",
+        "安善",
+        "浅野"
+      ],
+      "scope": "Current passenger stopping route, independently opened by parent; does not establish a historical change date or special track permission."
+    },
+    {
+      "train": "2101B",
+      "url": "https://timetables.jreast.co.jp/2610/train/055/056061.html",
+      "stations": [
+        "浅野",
+        "新芝浦",
+        "海芝浦"
+      ],
+      "scope": "Current passenger arm, independently opened by parent."
+    },
+    {
+      "train": "600B",
+      "url": "https://timetables.jreast.co.jp/2610/train/010/014071.html",
+      "stations": [
+        "海芝浦",
+        "新芝浦",
+        "浅野"
+      ],
+      "scope": "Opposite passenger direction, independently opened by parent."
+    }
+  ],
+  "businessIdentity": {
+    "branch3": "武蔵白石–大川",
+    "scope": "Original business-line description retained in provenance; current passenger geometry starts at 安善.",
+    "passengerRoutingEffectiveFrom": null,
+    "historicalUncertainty": "No 1996 transition date or earlier routing validity is asserted by these current timetables."
+  },
+  "sourceOwner": {
+    "earliest": "Package builder station/group anchor selection and passenger branch endpoint selection",
+    "rawAsanoPlatform": "stations.json feature7599 already carries the branch platform for group004531; published branch2 instead uses main-platform feature7597 anchor.",
+    "rawOkawaSurvey": "Survey fork is west of 武蔵白石 main platform; original branch3 backtracks to that fork. Current official passenger sequence instead supports 安善→大川.",
+    "upstreamBuilder": "Historical notes name external Japan-Train-Map builder; this repository replay owns scoped correction and pinned source records.",
+    "historicalNoteToSupersede": "jp-2025.sources.md:379-382 claims N02 lacks branch-platform points; Asano feature7599 refutes this for 鶴見線-2."
+  },
+  "structurePolicy": "Selected N02 features carry no structural annotations. Remove original branch3 measure675–735 rather than attach its unreconstructed chainage to the rebuilt longer interval; trunk annotations stay unchanged.",
+  "dependencyBaseline": {
+    "nativeParts": [
+      [
+        "jp-東日本旅客鉄道-鶴見線-2",
+        0,
+        -1,
+        -1,
+        26,
+        1549.8,
+        "complex",
+        [
+          [
+            139.695675,
+            35.497605
+          ],
+          [
+            139.69644,
+            35.49714
+          ],
+          [
+            139.69662,
+            35.49702
+          ],
+          [
+            139.69673,
+            35.49694
+          ],
+          [
+            139.69689,
+            35.49679
+          ],
+          [
+            139.69707,
+            35.49657
+          ],
+          [
+            139.69977,
+            35.49245
+          ],
+          [
+            139.69985,
+            35.49233
+          ],
+          [
+            139.700125,
+            35.491915
+          ],
+          [
+            139.7004,
+            35.4915
+          ],
+          [
+            139.70247,
+            35.48838
+          ],
+          [
+            139.70257,
+            35.48816
+          ],
+          [
+            139.70262,
+            35.48799
+          ],
+          [
+            139.70264,
+            35.48783
+          ],
+          [
+            139.70264,
+            35.48759
+          ],
+          [
+            139.70258,
+            35.48739
+          ],
+          [
+            139.70252,
+            35.48727
+          ],
+          [
+            139.70242,
+            35.48713
+          ],
+          [
+            139.70232,
+            35.487
+          ],
+          [
+            139.70221,
+            35.48688
+          ],
+          [
+            139.7021,
+            35.48679
+          ],
+          [
+            139.70194,
+            35.48668
+          ],
+          [
+            139.70163,
+            35.48653
+          ],
+          [
+            139.70149,
+            35.48648
+          ],
+          [
+            139.70106,
+            35.48629
+          ],
+          [
+            139.700675,
+            35.48613
+          ]
+        ],
+        []
+      ],
+      [
+        "jp-東日本旅客鉄道-鶴見線-3",
+        0,
+        -1,
+        -1,
+        21,
+        867.1,
+        "complex",
+        [
+          [
+            139.70653,
+            35.50193
+          ],
+          [
+            139.70659,
+            35.50158
+          ],
+          [
+            139.70673,
+            35.50154
+          ],
+          [
+            139.7069,
+            35.5015
+          ],
+          [
+            139.7071,
+            35.50142
+          ],
+          [
+            139.70719,
+            35.50137
+          ],
+          [
+            139.70732,
+            35.50129
+          ],
+          [
+            139.70746,
+            35.5012
+          ],
+          [
+            139.70758,
+            35.50109
+          ],
+          [
+            139.7077,
+            35.50097
+          ],
+          [
+            139.70779,
+            35.50085
+          ],
+          [
+            139.70786,
+            35.50076
+          ],
+          [
+            139.70793,
+            35.50066
+          ],
+          [
+            139.708,
+            35.50055
+          ],
+          [
+            139.70808,
+            35.50042
+          ],
+          [
+            139.70952,
+            35.49822
+          ],
+          [
+            139.70975,
+            35.49787
+          ],
+          [
+            139.70997,
+            35.49753
+          ],
+          [
+            139.71095,
+            35.49605
+          ],
+          [
+            139.71119,
+            35.49567
+          ],
+          [
+            139.71138,
+            35.495405
+          ]
+        ],
+        []
+      ]
+    ],
+    "obsoleteFollows": [
+      [
+        "jp-東日本旅客鉄道-鶴見線-2",
+        0,
+        0,
+        50,
+        "jp-東日本旅客鉄道-鶴見線",
+        0,
+        2941.1419509362036,
+        2975
+      ],
+      [
+        "jp-東日本旅客鉄道-鶴見線-3",
+        0,
+        0,
+        25,
+        "jp-東日本旅客鉄道-鶴見線",
+        0,
+        4036.7030017117413,
+        4025
+      ]
+    ]
+  },
+  "dependencyProposal": {
+    "display-lanes.json": "Refresh only the two arms via partRowsForLine; remove exactly the two pinned obsolete follows. No replacement follow or other measured lane refs guessed.",
+    "station-names.json": "Replace -3:004517 with verified trunk -3:004522 alias. Branch2 names unchanged.",
+    "station-english.json": "Remove branch3 membership from004517; clone verified trunk004522 membership with lineId branch3,seq0; official identityEvidence stays exact.",
+    "station-names-coverage.json": "Replace branch3:004517 with branch3:004522; reuse existing verified Anzen source locator; membership and language counts unchanged.",
+    "station-english-verified-jp-east.json": "Replace branch3:004517 alias with trunk004522 clone changing lineId only; coverage counts unchanged.",
+    "jp-kana-evidence.json": "Same scoped alias replacement with unchanged station evidence and counts.",
+    "jp-render-groups.json": "No identity/map/reason changes: trunk and both arms already same railway identity and render group.",
+    "line-service-catalog.json": "Existing same branch IDs and unknown coverage retained; no researched class claim added.",
+    "japan-through-services.json": "No affected pattern found; no mutation proposed.",
+    "jp-2025.sources.md": "Append scope and replace stale Asano point-absence claim with raw feature7599 evidence; retain historical business identity and unresolved effective date.",
+    "inputSha256": "Update exact relevant package/English/kana source references only when integration is authorized."
+  },
+  "verification": {
+    "focusedCommand": "node --test app/scripts/railway/tests/tsurumi-passenger-arms.test.mjs",
+    "initialRed": "Three regressions failed against the unchanged package: wrong Okawa origin, unsurveyed interior edges, and no changed-source refusal.",
+    "result": "5 focused Node tests passed on 2026-10-10, including refusing concurrent raw-source and destination edits before any write. Explicit --dry-run produced scratch candidates; shared --apply was not executed.",
+    "scope": "Exact surveyed chain continuity, station anchors, passenger membership correction, unchanged trunk/unrelated data, idempotence, obsolete follow removal and source identity evidence preservation.",
+    "nativeLimits": "No Swift build, native route solve, or Apple visual alignment capture run for the Tsurumi candidate. Parent integration owns native validation and shared resource writes.",
+    "swiftRegression": "ios/RailKit/Tests/RailCoreTests/TsurumiPassengerArmsTests.swift: distinct surveyed Asano platform anchors and Anzen–Okawa directed interval binding. Added and source-reviewed only; not compiled or executed by this subagent."
+  },
+  "integration": {
+    "default": "Scratch candidates only; --dry-run explicit synonym.",
+    "applyCommand": "node app/scripts/railway/repair-tsurumi-passenger-arms.mjs --apply",
+    "ownedDestinations": [
+      "app/public/rail/jp-2025.json",
+      "app/public/rail/display-lanes.json",
+      "app/data/station-names.json",
+      "app/data/station-english.json",
+      "app/data/station-names-coverage.json",
+      "app/data/station-english-verified-jp-east.json",
+      "app/data/station-name-sources/jp-kana-evidence.json"
+    ],
+    "checks": "All package, raw section/station, pinned evidence and dependency input text must equal the exact captured input before the first shared write. Only changed owned destination text is written. Render-group, catalog and through-service resources are read and retained unchanged.",
+    "ownership": "Parent reviews/applies the shared integration and owns native test execution."
+  }
+}

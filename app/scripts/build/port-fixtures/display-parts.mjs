@@ -782,20 +782,7 @@ export function build({ RailNetwork, railPackage }) {
   return {
     describes:
       "rail-network.js displayPartsForLine and continuousCoordinatesForLine",
-    contract:
-      "displayPartsForLine emits DISJOINT strokes: a branch is cut off its " +
-      "trunk and re-drawn from the station it leaves, over the trunk's own " +
-      "coordinates, so the map reads continuous while the topology stays " +
-      "separate and nothing can slice through a junction. The order of the " +
-      "passes is load-bearing — station approaches are rebuilt on the " +
-      "interval chain BEFORE any branch splitting, so a lead-in copied off a " +
-      "trunk copies the finished geometry and the two strokes stay coincident " +
-      "to the vertex. Fold trimming runs on both sides of grooming, and " +
-      "neither may touch a platform anchor. Every line of all five packages " +
-      "is pinned by part count, per-part vertex count and a digest of every " +
-      "COPIED output vertex; the 6.82% of vertices the approach pass computes " +
-      "are listed explicitly and held to a measured ULP ceiling — see " +
-      "`tolerance`.",
+    contract: "Physical network strokes draw an exact shared station spur once from its surveyed switch. Raw survey and anchored display geometry must agree on that switch. Main continuations merge only when shallow; sharp main legs remain separate. Source intervals preserve true station traversal and reversals. Artificial station-to-switch main lead-ins are not duplicated. Station approach anchoring preserves exact return tracks; fold trimming and grooming preserve platform anchors. Fixture cases pin part lengths, verbatim vertex digests and explicitly computed vertices; stored geometry remains diagnostic evidence, not basemap or rendered-pixel certification.",
     digestAlgorithm:
       "FNV-1a over 64-bit words: h = 0xcbf29ce484222325; for each part, mix " +
       "its vertex count, then — for each vertex that is a COPY of an input " +

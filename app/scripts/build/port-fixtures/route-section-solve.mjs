@@ -19,7 +19,7 @@ function loadScope(APP_DIR, AppCore, RailNetwork) {
     configureStationRouteResolver({ allowedInstitutionCodes: getAllowedInstitutionTypeCodes,
       filterPreferredStations: filterStationsByPreferredInstitution, distanceMeters });
     configureRouteSolverApi({
-      addStationTransferConnectorEdges: (...a) => addStationTransferConnectorEdges(...a),
+      addReviewedPhysicalJunctionEdges: (...a) => addReviewedPhysicalJunctionEdges(...a),
       coordKey: (...a) => coordKey(...a), coordinatesClose: (...a) => coordinatesClose(...a),
       distanceMeters: (...a) => distanceMeters(...a), graphGridKey: (...a) => graphGridKey(...a),
       normalizeGraphCoord: (...a) => normalizeGraphCoord(...a),
@@ -39,7 +39,7 @@ function loadScope(APP_DIR, AppCore, RailNetwork) {
       install: (country, sections, stations) => { activeCountry = country;
         AppDatasets.installRailSections(sections); AppDatasets.installStations(stations);
         buildStationIndexesSliced(stations); },
-      stationNameForCode, buildRouteGraphFromFeatures, addStationTransferConnectorEdges,
+      stationNameForCode, buildRouteGraphFromFeatures, addReviewedPhysicalJunctionEdges,
       solveRouteSectionOnN02Graph, solveTaiwanRouteSectionOnOfficialInterval,
       getAllowedInstitutionTypeCodes, routeKeyDigest,
     };`)({ AppCore, RailNetwork });
@@ -77,7 +77,7 @@ function countryCase(js, APP_DIR, country) {
   const store = read("train-store");
   js.install(country, sections, stations);
   const graph = js.buildRouteGraphFromFeatures(sections.features);
-  js.addStationTransferConnectorEdges(graph, stations.features);
+  js.addReviewedPhysicalJunctionEdges(graph, stations.features);
   const train = store.trains[0];
   const allowed = js.getAllowedInstitutionTypeCodes(train);
   const solved = [];

@@ -19,6 +19,7 @@
       "stationCode": "003526",
       "lineIds": ["jp-京成電鉄-押上線", "jp-東京都-1号線浅草線"],
       "circleOwner": "jp-東京都-1号線浅草線",
+      "baseOverride": "oshiage-b1-passenger-display",
       "evidence": ["https://www.keisei.co.jp/keisei/tetudou/accessj/oshiage.php", "https://www.keisei.co.jp/keisei/tetudou/accessj/assets/pdf/sta_oshiage.pdf"]
     },
     {

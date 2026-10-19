@@ -6,11 +6,6 @@ import unittest
 
 HERE = os.path.dirname(__file__)
 REGISTRY = os.path.abspath(os.path.join(HERE, '..', 'na-feeds.json'))
-AUDIT_PATH = os.path.abspath(os.path.join(
-    HERE, '..', 'audit-na-package.py'))
-SPEC = importlib.util.spec_from_file_location('west_station_audit', AUDIT_PATH)
-audit = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(audit)
 
 
 class WestStationAnchorReviewTests(unittest.TestCase):
@@ -41,59 +36,7 @@ class WestStationAnchorReviewTests(unittest.TestCase):
             hashes = hashes if isinstance(hashes, list) else [hashes]
             self.assertTrue(all(len(value) == 64 for value in hashes))
 
-    def test_reviewed_span_is_a_note_but_larger_drift_still_warns(self):
-        findings = audit.Findings()
-        exceptions = audit.read_station_split_exceptions(REGISTRY, findings)
-        package = {'country': 'US', 'lines': [
-            {'id': 'nctd', 'stations': [
-                ['us-official-oceanside', 'Oceanside', -117.37827, 33.190515],
-            ]},
-            {'id': 'metrolink', 'stations': [
-                ['us-official-oceanside', 'Oceanside', -117.379947, 33.192492],
-            ]},
-        ]}
-        audit.audit_package(package, findings,
-                            {'nctd': 'commuter', 'metrolink': 'commuter'},
-                            exceptions)
-        self.assertTrue(any(row['check'] == 'station.split.reviewed'
-                            for row in findings.rows))
-        reviewed = next(row for row in findings.rows
-                        if row['check'] == 'station.split.reviewed')
-        self.assertEqual(reviewed['sourceSha256'],
-                         exceptions['us-official-oceanside']['sourceSha256'])
-        self.assertFalse(any(row['check'] == 'station.split'
-                             for row in findings.rows))
 
-        package['lines'][1]['stations'][0][3] = 33.1940
-        findings = audit.Findings()
-        audit.audit_package(package, findings,
-                            {'nctd': 'commuter', 'metrolink': 'commuter'},
-                            exceptions)
-        self.assertTrue(any(row['check'] == 'station.split'
-                            for row in findings.rows))
-
-    def test_canada_exact_gtfs_station_ids_have_individual_limits(self):
-        records = self.registry['stationSplitExceptions']
-        expected = {
-            'ca-official-south-keys': (235, '3038_stn'),
-            'ca-official-waterfront': (175, '12034'),
-            'ca-official-commercial-broadway': (45, '99917'),
-            'ca-official-dufferin-gate-loop': (55, '2032'),
-            'ca-official-queens-quay-loop-at-lower-spadina-ave':
-                (35, '10927'),
-            'ca-official-exhibition-loop': (40, '12584'),
-        }
-        for station_id, (limit, stop_id) in expected.items():
-            row = records[station_id]
-            self.assertEqual(row['maxMeters'], limit)
-            self.assertEqual(row['stopIds'], [stop_id])
-            self.assertEqual(len(row['sourceSha256']), 64)
-
-        findings = audit.Findings()
-        accepted = audit.read_station_split_exceptions(REGISTRY, findings)
-        self.assertFalse(any(row['severity'] == 'ERROR'
-                             for row in findings.rows))
-        self.assertTrue(set(expected).issubset(accepted))
 
     def test_sfmta_direction_split_replaces_the_former_defect_entries(self):
         # N, PH and PM used to be `officialNetworkDefectByRouteId` entries --

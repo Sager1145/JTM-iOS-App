@@ -1,0 +1,292 @@
+{
+  "format": "jtm-manyo-complete-display-v5",
+  "status": "accepted-display-cartography",
+  "reviewedAt": "2026-10-13",
+  "lineIDs": [
+    "jp-万葉線-新湊港線",
+    "jp-万葉線-高岡軌道線"
+  ],
+  "candidate": {
+    "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5",
+    "manifest": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/manifest.json",
+    "manifestSha256": "0e6e818dd70effdf4c434198aef0d1096ea6b591cba072c384d07da5382d2420",
+    "candidateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/candidate.json",
+    "candidateSha256": "2491759e8cc0317d5f29c82c7935b4370a7c30baf45439086cd59d61db3b60ba",
+    "v4RejectedFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/candidate-v4-rejected-gap-aliases.json",
+    "v4RejectedSha256": "aae384fc1f15ecf3fe06dd80985c9674955e2f0f55b1c0f02343753adb621729",
+    "picksFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/picks.json",
+    "picksSha256": "fc1c02eebb65c8a16fc4688181d1c3e8b38481fa8e6a8c855c67f09079f60494",
+    "rawFrameCount": 76,
+    "finalReprojectionFrameCount": 76,
+    "reusedV4ReprojectionFrameCount": 52,
+    "newV5ReprojectionFrameCount": 24,
+    "intervalCounts": {
+      "jp-万葉線-新湊港線": 7,
+      "jp-万葉線-高岡軌道線": 17
+    },
+    "sharedStationID": "001802",
+    "sharedCoordinate": [
+      137.0663481914712,
+      36.788932402036366
+    ],
+    "retainedTerminalStationID": "001870",
+    "retainedTerminalCoordinate": [
+      137.015077,
+      36.741553
+    ],
+    "changedStationIDs": [
+      "001826",
+      "001834",
+      "001845",
+      "001851",
+      "001861"
+    ],
+    "changedHighIntervals": [
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      14
+    ],
+    "manualPicks": [
+      {
+        "stationID": "001826",
+        "fromRawInterval": 5,
+        "viewIndex": 1,
+        "pixel": [
+          470,
+          367
+        ],
+        "coordinate": [
+          137.03766674966806,
+          36.77010811484489
+        ],
+        "oldCoordinate": [
+          137.03758628339762,
+          36.76991044644015
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            479,
+            344
+          ],
+          [
+            462,
+            390
+          ]
+        ],
+        "localRampSupportMetres": 30
+      },
+      {
+        "stationID": "001834",
+        "fromRawInterval": 7,
+        "viewIndex": 2,
+        "pixel": [
+          607,
+          180
+        ],
+        "coordinate": [
+          137.0324666749384,
+          36.76394673201305
+        ],
+        "oldCoordinate": [
+          137.03263297189733,
+          36.764127225918116
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            629,
+            151
+          ],
+          [
+            574,
+            207
+          ]
+        ],
+        "localRampSupportMetres": 30
+      },
+      {
+        "stationID": "001845",
+        "fromRawInterval": 10,
+        "viewIndex": 2,
+        "pixel": [
+          543,
+          244
+        ],
+        "coordinate": [
+          137.02375335218431,
+          36.755661730116074
+        ],
+        "oldCoordinate": [
+          137.02400547983171,
+          36.75586803111289
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            573,
+            208
+          ],
+          [
+            513,
+            277
+          ]
+        ],
+        "localRampSupportMetres": 30
+      },
+      {
+        "stationID": "001851",
+        "fromRawInterval": 11,
+        "viewIndex": 2,
+        "pixel": [
+          502,
+          310
+        ],
+        "coordinate": [
+          137.02069941104514,
+          36.75258006800441
+        ],
+        "oldCoordinate": [
+          137.0211071068154,
+          36.75304426311316
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            540,
+            281
+          ],
+          [
+            464,
+            340
+          ]
+        ],
+        "localRampSupportMetres": 30
+      },
+      {
+        "stationID": "001861",
+        "fromRawInterval": 13,
+        "viewIndex": 2,
+        "pixel": [
+          505,
+          294
+        ],
+        "coordinate": [
+          137.0149065042993,
+          36.747557847238795
+        ],
+        "oldCoordinate": [
+          137.0150137926599,
+          36.74751916165422
+        ],
+        "visibleLongitudinalEndsApproxPixels": [
+          [
+            553,
+            267
+          ],
+          [
+            465,
+            321
+          ]
+        ],
+        "localRampSupportMetres": 30
+      }
+    ],
+    "minimumEdgeMetres": 0.05,
+    "frameMapFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/manyo-complete-display-candidate-v5/v5-frame-map.json",
+    "frameMapSha256": "f68e0089056a8b02a3b81b805164252a5f95a94ee519324f7da51bd9dbd219c7"
+  },
+  "baseline": {
+    "packageIndices": {
+      "jp-万葉線-新湊港線": 34,
+      "jp-万葉線-高岡軌道線": 35
+    },
+    "lineSha256": {
+      "jp-万葉線-新湊港線": "4d33c08359f298f24526b9a936dceff9c829550546ddb8e76160ddef6a51716b",
+      "jp-万葉線-高岡軌道線": "d50d856e9d7fa672eacc69c496acabb066870453107b01d5bac4cf148acc49c2"
+    },
+    "nativeRowSha256": {
+      "jp-万葉線-新湊港線": "998532dae2bb390797b2408a7b95e5fa7f2a3f6e500d9869122357edf5fd3da5",
+      "jp-万葉線-高岡軌道線": "7744af1da04a8d793495fdcb6084ec7bc7f117fd4861fdfb4f374c8ed1714fc7"
+    },
+    "nativeSummary": {
+      "jp-万葉線-新湊港線": {
+        "partCount": 1,
+        "pointCount": 57,
+        "metres": 4928.6,
+        "classification": null
+      },
+      "jp-万葉線-高岡軌道線": {
+        "partCount": 1,
+        "pointCount": 121,
+        "metres": 7953.7,
+        "classification": "station-approach/groomed"
+      }
+    },
+    "measuredReferences": {}
+  },
+  "nativeReplay": {
+    "candidateRowSha256": {
+      "jp-万葉線-新湊港線": "db451d667dbe50d991d31dc2af7e87ab16531473ef4a01a10f4c63e38057f067",
+      "jp-万葉線-高岡軌道線": "885672ad499dc9f2a55bbb368e4180c392ce9c29acd5659c5357d91af76c1d71"
+    },
+    "candidateSummary": {
+      "jp-万葉線-新湊港線": {
+        "partCount": 1,
+        "pointCount": 746,
+        "metres": 4895.7,
+        "classification": null
+      },
+      "jp-万葉線-高岡軌道線": {
+        "partCount": 1,
+        "pointCount": 1672,
+        "metres": 8003.6,
+        "classification": "station-approach/groomed"
+      }
+    }
+  },
+  "policy": {
+    "scope": "Own every display interval and display station alias on Shinminatoko 0...6 and Takaoka 0...16; physical geometry, station IDs, mileage and unrelated lines remain exact.",
+    "representation": "Apple cartographic display; not surveyed track or platform geometry",
+    "acceptanceGate": "accepted-display-cartography",
+    "dependencyRefresh": "Refresh only the four established package dependency references.",
+    "validation": "All 76 raw frames and final reprojections frozen. Actual nine changed complete intervals reviewed in all three Inspectors and five own-frame Main close pairs plus whole changed range and complete two-record group accepted.",
+    "warning": "Travel-direction identity and metre survey precision remain WARNING. The five points are reviewed own visible Apple frame representatives; this stated limitation is not a separate apply approval gate."
+  },
+  "rootAcceptance": {
+    "reviewedAt": "2026-10-13",
+    "native": {
+      "apps": 3,
+      "changedCompleteIntervalsPerApp": 9,
+      "viewpointsPerApp": 23,
+      "panelsPerApp": 69,
+      "captureFailures": 0,
+      "allPanelsActuallyViewed": 207,
+      "actualInterval12Viewpoints": 2
+    },
+    "reuse": {
+      "unchangedV4Views": 49,
+      "newV5Views": 23,
+      "wholeCurrentViews": 72,
+      "basis": "Exact unchanged seven Shin and eight High interval arrays/aliases/native geographic slices; fixed renderer/style; full reuse receipt retained."
+    },
+    "main": {
+      "fiveFramePairs": [
+        "manyo-hirokouji-main-candidate-v5",
+        "manyo-shin-nomachi-main-candidate-v5",
+        "manyo-asahigaoka-main-candidate-v5",
+        "manyo-shikino-junior-high-main-candidate-v5",
+        "manyo-sakashitamachi-main-candidate-v5"
+      ],
+      "completePairs": [
+        "manyo-five-frame-complete-intervals-main-candidate-v5",
+        "manyo-whole-group-main-candidate-v5"
+      ],
+      "budgetDrops": 0,
+      "result": "All five dots lie in their own visible frames; no road-gap representative, new hook or broken join. Full changed range and all three remote boundaries visible; station card retains Manyo High identity."
+    },
+    "remainingWarning": "Travel-direction identity and metre survey precision remain WARNING. The five points are reviewed own visible Apple frame representatives; this stated limitation is not a separate apply approval gate."
+  }
+}

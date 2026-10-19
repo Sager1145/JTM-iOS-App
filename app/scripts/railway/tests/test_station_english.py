@@ -18,6 +18,24 @@ def line(key, name="同名", en="Package Label"):
 
 
 class StationEnglishTests(unittest.TestCase):
+    def test_china_osm_english_retains_candidate_provenance(self):
+        evidence = [{"source": "original-OSM-name:en", "markerNodeId": 123, "markerVersion": 4}]
+        result = builder.build_region("cn", package(line("cn-source")), {"byCode": {
+            "cn-source:test-group": {"en": "Source Label", "englishSourceType": "original-OSM",
+                "englishSource": "https://www.openstreetmap.org/node/123",
+                "englishIdentityEvidence": evidence}}})
+        member = result["byCode"]["test-group"]["memberships"][0]
+        self.assertEqual(member["status"], "osm_candidate")
+        self.assertEqual(member["source"], "https://www.openstreetmap.org/node/123")
+        self.assertEqual(member["identityEvidence"], evidence)
+        self.assertTrue(member["translationMayBeWrong"])
+
+    def test_china_pinyin_is_not_promoted_to_an_english_name(self):
+        result = builder.build_region("cn", package(line("cn-source", name="北京", en="beijing")),
+                                      {"byCode": {"test-group": {"name": "北京", "pinyin": "beijing", "en": ""}}})
+        self.assertIsNone(result["byCode"]["test-group"]["en"])
+        self.assertEqual(result["byCode"]["test-group"]["status"], "missing")
+
     def test_official_package_marker_is_not_verification(self):
         result = builder.build_region("hk", package(line("first")), {"byCode": {}})
         row = result["byCode"]["test-group"]

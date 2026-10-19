@@ -1,0 +1,73 @@
+{
+  "format": "jtm-hongo-sanchome-display-v1",
+  "reviewedAt": "2026-10-12",
+  "stationID": "003546",
+  "stationName": "本郷三丁目",
+  "sourceDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/hongo-sanchome/primary-sources",
+  "aggregateSearchCoordinate": [139.760393, 35.7071575],
+  "sources": [
+    { "id": 665043832, "sha256": "f9107658a1d8f5bc59ff29a2075be6a95849875d1eac5b4307ca353845c1515b", "version": 22, "timestamp": "2026-07-10T07:09:34Z" },
+    { "id": 184693566, "sha256": "37f520d0e3b33547d00adfcdf1eca6239a99052e97bb2f63580c2d77f20f72a3", "version": 35, "timestamp": "2026-07-10T07:09:34Z" },
+    { "id": 1320384459, "sha256": "0c8686ad8398fd5bf8e7e2a62ca4806a40e36ad0fab01c40d6b16c8736b3c175", "version": 3, "timestamp": "2025-11-28T13:56:30Z" },
+    { "id": 670283248, "sha256": "d26870380abfd395b15199c3bb840e1628752f7190383a6ab507202019ecf3e5", "version": 21, "timestamp": "2025-11-28T13:56:30Z" },
+    { "id": 670283240, "sha256": "cf7941a186763785f0d79f5fdfe7d597ca22c73e554507761d94d6e2cd3616f6", "version": 19, "timestamp": "2025-11-28T13:56:30Z" }
+  ],
+  "lines": [
+    {
+      "key": "Marunouchi003546",
+      "lineID": "jp-東京地下鉄-4号線丸ノ内線",
+      "operator": "東京メトロ",
+      "sourceOperator": "東京地下鉄",
+      "sourceName": "東京メトロ丸ノ内線",
+      "layer": "-1",
+      "stationIndex": 4,
+      "physicalStation": ["003546", "本郷三丁目", 139.760174, 35.706735, "Hongo-sanchome", 1],
+      "baselineLineSha256": "d8d406fc336546505ca6f62667a4af4b20460bd030dbc53b640dfc4335a46b9e",
+      "opposedStops": [
+        { "wayID": 665043832, "nodeID": 7911713352, "ref": "M21", "coordinate": [139.7601008, 35.7064853] },
+        { "wayID": 184693566, "nodeID": 6276986007, "ref": "M21", "coordinate": [139.760147, 35.7065156] }
+      ],
+      "displayAnchor": [139.7601239, 35.70650045],
+      "approaches": [
+        { "interval": 3, "endpoint": "last", "boundaryIndex": 12, "boundaryCoordinate": [139.75831, 35.70747], "outsideCoordinate": [139.75809, 35.70747] },
+        { "interval": 4, "endpoint": "first", "boundaryIndex": 5, "boundaryCoordinate": [139.76118, 35.70487], "outsideCoordinate": [139.76136, 35.70469] }
+      ],
+      "nativePart": { "partIndex": 0, "anchorIndex": 72, "vertexCount": 339, "totalMetres": 24436.1, "baselineRowSha256": "63125699b569e20b93cb193a63f658530b4baf78bf742b68251c98c0100aee4f" },
+      "measuredReferences": {
+        "byRegion": ["jp-東京地下鉄-4号線丸ノ内線", 0, 9125, 9450, 1],
+        "hubs": [
+          { "hubId": "jp-tokyo", "fields": { "from": 9125, "to": 9450 } },
+          { "hubId": "jp-shinjuku", "fields": { "alongsideFrom": 17075, "alongsideTo": 17075 } }
+        ]
+      }
+    },
+    {
+      "key": "Oedo003546",
+      "lineID": "jp-東京都-12号線大江戸線-2",
+      "operator": "東京都",
+      "sourceOperator": "東京都交通局",
+      "sourceName": "都営地下鉄大江戸線",
+      "layer": "-3",
+      "stationIndex": 20,
+      "physicalStation": ["003546", "本郷三丁目", 139.760612, 35.70758, "Hongo-sanchome", 1],
+      "baselineLineSha256": "d75ea53185e8be56476334bcfd7abf2b2e69d517685e94ec7c8bd8674f23f7d9",
+      "opposedStops": [
+        { "wayID": 1320384459, "nodeID": 6277044396, "ref": "E08", "coordinate": [139.7605517, 35.7074901] },
+        { "wayID": 670283240, "nodeID": 6276956065, "ref": "E08", "coordinate": [139.7605269, 35.7075797] }
+      ],
+      "displayAnchor": [139.7605393, 35.7075349],
+      "approaches": [
+        { "interval": 19, "endpoint": "last", "boundaryIndex": 23, "boundaryCoordinate": [139.7626, 35.70756], "outsideCoordinate": [139.76309, 35.70755] },
+        { "interval": 20, "endpoint": "first", "boundaryIndex": 4, "boundaryCoordinate": [139.75831, 35.70747], "outsideCoordinate": [139.75809, 35.70747] }
+      ],
+      "nativePart": { "partIndex": 0, "anchorIndex": 407, "vertexCount": 519, "totalMetres": 28583.3, "baselineRowSha256": "8c123a0238ff6472a733a455d442819d9d6dd288aeff39115e97e45678b7e918" },
+      "measuredReferences": {
+        "byRegion": ["jp-東京都-12号線大江戸線-2", 0, 0, 28583.3, 0],
+        "hubs": [
+          { "hubId": "jp-shinjuku", "fields": { "from": 0, "to": 28583.3 } }
+        ]
+      }
+    }
+  ],
+  "policy": "Display-only aliases from the centres of identified opposing passenger stop positions. The two operators, platform groups and circles remain independent. Underground source geometry is secondary dated mapping evidence, not surveyed platform-length or Apple basemap proof."
+}

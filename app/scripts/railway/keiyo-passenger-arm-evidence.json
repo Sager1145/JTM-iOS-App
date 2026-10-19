@@ -1,0 +1,1300 @@
+{
+  "format": "jtm-keiyo-passenger-arms-v1",
+  "reviewedAt": "2026-10-10",
+  "crs": "WGS84",
+  "source": "app/data/rail-sections.json",
+  "dataset": "MLIT N02-25",
+  "license": "国土数値情報（鉄道データ N02） attribution; see app/public/rail/jp-2025.sources.md",
+  "policy": "Passenger station intervals only. Evidence supports the two arms and reverse services; no invented branch platform, special reversal, crossover permission or freight-only edge.",
+  "identity": "jp-東日本旅客鉄道-京葉線",
+  "oldBranch": {
+    "id": "jp-東日本旅客鉄道-京葉線-2",
+    "name": "京葉線",
+    "operator": "東日本旅客鉄道",
+    "rank": 2,
+    "color": "#c9252f",
+    "nameRoma": "Keiyo Line",
+    "stations": [
+      [
+        "003547",
+        "西船橋",
+        139.95953,
+        35.707218,
+        "Nishi-Funabashi",
+        1
+      ],
+      [
+        "003682",
+        "二俣新町",
+        139.959555,
+        35.69132,
+        "Futamata-Shinmachi",
+        1
+      ]
+    ],
+    "segments": [
+      [
+        2.21,
+        0,
+        [
+          [
+            139.95953,
+            35.707218
+          ],
+          [
+            139.95948,
+            35.70714
+          ],
+          [
+            139.95935,
+            35.70696
+          ],
+          [
+            139.95932,
+            35.70692
+          ],
+          [
+            139.95915,
+            35.70669
+          ],
+          [
+            139.95885,
+            35.70621
+          ],
+          [
+            139.95821,
+            35.70521
+          ],
+          [
+            139.95756,
+            35.7042
+          ],
+          [
+            139.95739,
+            35.70397
+          ],
+          [
+            139.95731,
+            35.70387
+          ],
+          [
+            139.95712,
+            35.70357
+          ],
+          [
+            139.9571,
+            35.70352
+          ],
+          [
+            139.95683,
+            35.70307
+          ],
+          [
+            139.9567,
+            35.70286
+          ],
+          [
+            139.95653,
+            35.70247
+          ],
+          [
+            139.95638,
+            35.70208
+          ],
+          [
+            139.95589,
+            35.70025
+          ],
+          [
+            139.95572,
+            35.69945
+          ],
+          [
+            139.95563,
+            35.69901
+          ],
+          [
+            139.95558,
+            35.69864
+          ],
+          [
+            139.95556,
+            35.69831
+          ],
+          [
+            139.95557,
+            35.6977
+          ],
+          [
+            139.9556,
+            35.69726
+          ],
+          [
+            139.95562,
+            35.69702
+          ],
+          [
+            139.95566,
+            35.69677
+          ],
+          [
+            139.95579,
+            35.6962
+          ],
+          [
+            139.95595,
+            35.69561
+          ],
+          [
+            139.95622,
+            35.69479
+          ],
+          [
+            139.95624,
+            35.69475
+          ],
+          [
+            139.95631,
+            35.69447
+          ],
+          [
+            139.95641,
+            35.69427
+          ],
+          [
+            139.95667,
+            35.69385
+          ],
+          [
+            139.95706,
+            35.69338
+          ],
+          [
+            139.95752,
+            35.69295
+          ],
+          [
+            139.95796,
+            35.69261
+          ],
+          [
+            139.95833,
+            35.69237
+          ],
+          [
+            139.95876,
+            35.69215
+          ],
+          [
+            139.95925,
+            35.69196
+          ],
+          [
+            139.96018,
+            35.69174
+          ],
+          [
+            139.96044,
+            35.69171
+          ],
+          [
+            139.9611,
+            35.69164
+          ],
+          [
+            139.96057,
+            35.69153
+          ],
+          [
+            139.9604,
+            35.6915
+          ],
+          [
+            139.959555,
+            35.69132
+          ]
+        ]
+      ]
+    ],
+    "colorDark": "#c9252f",
+    "colorSource": "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf",
+    "kind": "jr_conventional",
+    "colorPolicy": "operator",
+    "labelPolicy": "operator",
+    "nameNorm": "京葉線",
+    "operatorShort": "JR東日本",
+    "logo": 1,
+    "structure": [
+      [
+        0,
+        68,
+        2,
+        2
+      ],
+      [
+        68,
+        1493,
+        2,
+        2
+      ],
+      [
+        1500,
+        2066,
+        2,
+        2
+      ],
+      [
+        2066,
+        2131,
+        2,
+        1
+      ],
+      [
+        2131,
+        2210,
+        2,
+        1
+      ]
+    ],
+    "railwayIdentity": "jp-東日本旅客鉄道-京葉線",
+    "colorReference": "#c9252f"
+  },
+  "stationRows": {
+    "003547": [
+      "003547",
+      "西船橋",
+      139.95953,
+      35.707218,
+      "Nishi-Funabashi",
+      1
+    ],
+    "003761": [
+      "003761",
+      "南船橋",
+      139.9957,
+      35.681665,
+      "Minami-Funabashi",
+      1
+    ],
+    "003870": [
+      "003870",
+      "市川塩浜",
+      139.923651,
+      35.666478,
+      "Ichikawa-Shiohama",
+      1
+    ]
+  },
+  "sourceFeatures": {
+    "14124": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.95915,
+            35.70669
+          ],
+          [
+            139.95932,
+            35.70692
+          ],
+          [
+            139.95935,
+            35.70696
+          ],
+          [
+            139.95948,
+            35.70714
+          ],
+          [
+            139.95957,
+            35.70728
+          ],
+          [
+            139.95966,
+            35.70738
+          ],
+          [
+            139.95984,
+            35.70768
+          ],
+          [
+            139.95989,
+            35.70775
+          ]
+        ]
+      }
+    },
+    "14126": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.95915,
+            35.70669
+          ],
+          [
+            139.95885,
+            35.70621
+          ],
+          [
+            139.95821,
+            35.70521
+          ],
+          [
+            139.95756,
+            35.7042
+          ],
+          [
+            139.95739,
+            35.70397
+          ],
+          [
+            139.95731,
+            35.70387
+          ],
+          [
+            139.95712,
+            35.70357
+          ],
+          [
+            139.9571,
+            35.70352
+          ],
+          [
+            139.95683,
+            35.70307
+          ],
+          [
+            139.9567,
+            35.70286
+          ],
+          [
+            139.95653,
+            35.70247
+          ],
+          [
+            139.95638,
+            35.70208
+          ],
+          [
+            139.95589,
+            35.70025
+          ],
+          [
+            139.95572,
+            35.69945
+          ],
+          [
+            139.95563,
+            35.69901
+          ],
+          [
+            139.95558,
+            35.69864
+          ],
+          [
+            139.95556,
+            35.69831
+          ],
+          [
+            139.95557,
+            35.6977
+          ],
+          [
+            139.9556,
+            35.69726
+          ],
+          [
+            139.95562,
+            35.69702
+          ],
+          [
+            139.95566,
+            35.69677
+          ],
+          [
+            139.95579,
+            35.6962
+          ],
+          [
+            139.95595,
+            35.69561
+          ],
+          [
+            139.95622,
+            35.69479
+          ],
+          [
+            139.95624,
+            35.69475
+          ],
+          [
+            139.95631,
+            35.69447
+          ]
+        ]
+      }
+    },
+    "14132": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.95631,
+            35.69447
+          ],
+          [
+            139.95641,
+            35.69427
+          ],
+          [
+            139.95667,
+            35.69385
+          ],
+          [
+            139.95706,
+            35.69338
+          ],
+          [
+            139.95752,
+            35.69295
+          ],
+          [
+            139.95796,
+            35.69261
+          ],
+          [
+            139.95833,
+            35.69237
+          ],
+          [
+            139.95876,
+            35.69215
+          ],
+          [
+            139.95925,
+            35.69196
+          ],
+          [
+            139.96018,
+            35.69174
+          ],
+          [
+            139.96044,
+            35.69171
+          ],
+          [
+            139.9611,
+            35.69164
+          ]
+        ]
+      }
+    },
+    "14135": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.99497,
+            35.68202
+          ],
+          [
+            139.99483,
+            35.68208
+          ],
+          [
+            139.9937,
+            35.68261
+          ],
+          [
+            139.99249,
+            35.68318
+          ],
+          [
+            139.98988,
+            35.68445
+          ],
+          [
+            139.98957,
+            35.68459
+          ],
+          [
+            139.98923,
+            35.6847
+          ],
+          [
+            139.98891,
+            35.68477
+          ],
+          [
+            139.98762,
+            35.6851
+          ],
+          [
+            139.98358,
+            35.68614
+          ],
+          [
+            139.98291,
+            35.68632
+          ],
+          [
+            139.97817,
+            35.68756
+          ],
+          [
+            139.97303,
+            35.6889
+          ],
+          [
+            139.97297,
+            35.68892
+          ],
+          [
+            139.96838,
+            35.69013
+          ],
+          [
+            139.96535,
+            35.69091
+          ],
+          [
+            139.96381,
+            35.69131
+          ],
+          [
+            139.96337,
+            35.6914
+          ],
+          [
+            139.96244,
+            35.69156
+          ],
+          [
+            139.96202,
+            35.69163
+          ],
+          [
+            139.96187,
+            35.69164
+          ],
+          [
+            139.96166,
+            35.69165
+          ],
+          [
+            139.96147,
+            35.69165
+          ],
+          [
+            139.9611,
+            35.69164
+          ]
+        ]
+      }
+    },
+    "14127": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.99643,
+            35.68131
+          ],
+          [
+            139.99497,
+            35.68202
+          ]
+        ]
+      }
+    },
+    "14147": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.95346,
+            35.68953
+          ],
+          [
+            139.9542,
+            35.69007
+          ],
+          [
+            139.95459,
+            35.69043
+          ],
+          [
+            139.95488,
+            35.69075
+          ],
+          [
+            139.95517,
+            35.69106
+          ],
+          [
+            139.95546,
+            35.69147
+          ],
+          [
+            139.95564,
+            35.69183
+          ],
+          [
+            139.95602,
+            35.69278
+          ],
+          [
+            139.95617,
+            35.69336
+          ],
+          [
+            139.95623,
+            35.69376
+          ],
+          [
+            139.95631,
+            35.69447
+          ]
+        ]
+      }
+    },
+    "14150": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.92413,
+            35.66742
+          ],
+          [
+            139.92454,
+            35.66825
+          ],
+          [
+            139.9249,
+            35.66888
+          ],
+          [
+            139.92522,
+            35.66942
+          ],
+          [
+            139.92547,
+            35.66973
+          ],
+          [
+            139.92561,
+            35.66991
+          ],
+          [
+            139.92618,
+            35.67042
+          ],
+          [
+            139.92695,
+            35.67107
+          ],
+          [
+            139.92775,
+            35.67175
+          ],
+          [
+            139.92976,
+            35.67345
+          ],
+          [
+            139.93152,
+            35.67498
+          ],
+          [
+            139.93321,
+            35.67647
+          ],
+          [
+            139.93326,
+            35.67651
+          ],
+          [
+            139.93552,
+            35.67842
+          ],
+          [
+            139.937,
+            35.67965
+          ],
+          [
+            139.9381,
+            35.68053
+          ],
+          [
+            139.93828,
+            35.68067
+          ],
+          [
+            139.93867,
+            35.68093
+          ],
+          [
+            139.93924,
+            35.68127
+          ],
+          [
+            139.94036,
+            35.68192
+          ],
+          [
+            139.94102,
+            35.6823
+          ],
+          [
+            139.9414,
+            35.68251
+          ],
+          [
+            139.94145,
+            35.68254
+          ],
+          [
+            139.94483,
+            35.6844
+          ],
+          [
+            139.94726,
+            35.68559
+          ],
+          [
+            139.94835,
+            35.68616
+          ],
+          [
+            139.94911,
+            35.68658
+          ],
+          [
+            139.94997,
+            35.6871
+          ],
+          [
+            139.95049,
+            35.68743
+          ],
+          [
+            139.9506,
+            35.68751
+          ],
+          [
+            139.95107,
+            35.68783
+          ],
+          [
+            139.95161,
+            35.68822
+          ],
+          [
+            139.95295,
+            35.68918
+          ],
+          [
+            139.95346,
+            35.68953
+          ]
+        ]
+      }
+    },
+    "14152": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "11",
+        "N02_002": "2",
+        "N02_003": "京葉線",
+        "N02_004": "東日本旅客鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            139.92413,
+            35.66742
+          ],
+          [
+            139.92351,
+            35.6662
+          ],
+          [
+            139.92329,
+            35.66577
+          ],
+          [
+            139.92317,
+            35.66554
+          ]
+        ]
+      }
+    }
+  },
+  "arms": [
+    {
+      "id": "jp-東日本旅客鉄道-京葉線-2",
+      "toStationID": "003761",
+      "featureChain": [
+        [
+          14124,
+          true
+        ],
+        [
+          14126,
+          false
+        ],
+        [
+          14132,
+          false
+        ],
+        [
+          14135,
+          true
+        ],
+        [
+          14127,
+          true
+        ]
+      ]
+    },
+    {
+      "id": "jp-東日本旅客鉄道-京葉線-3",
+      "toStationID": "003870",
+      "featureChain": [
+        [
+          14124,
+          true
+        ],
+        [
+          14126,
+          false
+        ],
+        [
+          14147,
+          true
+        ],
+        [
+          14150,
+          true
+        ],
+        [
+          14152,
+          false
+        ]
+      ]
+    }
+  ],
+  "passengerEvidence": [
+    {
+      "url": "https://timetables.jreast.co.jp/2610/train/130/132751.html",
+      "train": "459E",
+      "from": "西船橋 05:55 platform12",
+      "to": "南船橋 06:01 platform3"
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/train/165/166891.html",
+      "train": "3226E",
+      "from": "南船橋 23:11 platform4",
+      "to": "西船橋 23:16 platform9"
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/train/130/134601.html",
+      "train": "445E",
+      "from": "西船橋 05:45 platform11",
+      "to": "市川塩浜 05:51"
+    },
+    {
+      "url": "https://timetables.jreast.co.jp/2610/train/165/166961.html",
+      "train": "2624E",
+      "from": "市川塩浜 06:59",
+      "to": "西船橋 07:05 platform10"
+    },
+    {
+      "url": "https://www.jreast.co.jp/chiba/news/pdf/pre1508_netrains.pdf",
+      "description": "JR East separately identifies the two Keiyo passenger arms"
+    }
+  ],
+  "structurePolicy": "No bridge/tunnel/layer attributes exist in the selected raw N02 features. Omit structure on the rebuilt arms rather than reusing invalid source-branch measures. Trunk annotations stay unchanged.",
+  "dependencyBaseline": {
+    "nativeParts": [
+      [
+        "jp-東日本旅客鉄道-京葉線-2",
+        0,
+        -1,
+        -1,
+        38,
+        1965.3,
+        "complex",
+        [
+          [
+            139.95953,
+            35.707218
+          ],
+          [
+            139.95948,
+            35.70714
+          ],
+          [
+            139.95935,
+            35.70696
+          ],
+          [
+            139.95932,
+            35.70692
+          ],
+          [
+            139.95915,
+            35.70669
+          ],
+          [
+            139.95885,
+            35.70621
+          ],
+          [
+            139.95821,
+            35.70521
+          ],
+          [
+            139.95756,
+            35.7042
+          ],
+          [
+            139.95739,
+            35.70397
+          ],
+          [
+            139.95731,
+            35.70387
+          ],
+          [
+            139.95712,
+            35.70357
+          ],
+          [
+            139.9571,
+            35.70352
+          ],
+          [
+            139.95683,
+            35.70307
+          ],
+          [
+            139.9567,
+            35.70286
+          ],
+          [
+            139.95653,
+            35.70247
+          ],
+          [
+            139.95638,
+            35.70208
+          ],
+          [
+            139.95589,
+            35.70025
+          ],
+          [
+            139.95572,
+            35.69945
+          ],
+          [
+            139.95563,
+            35.69901
+          ],
+          [
+            139.95558,
+            35.69864
+          ],
+          [
+            139.95556,
+            35.69831
+          ],
+          [
+            139.95557,
+            35.6977
+          ],
+          [
+            139.9556,
+            35.69726
+          ],
+          [
+            139.95562,
+            35.69702
+          ],
+          [
+            139.95566,
+            35.69677
+          ],
+          [
+            139.95579,
+            35.6962
+          ],
+          [
+            139.95595,
+            35.69561
+          ],
+          [
+            139.95622,
+            35.69479
+          ],
+          [
+            139.95624,
+            35.69475
+          ],
+          [
+            139.95631,
+            35.69447
+          ],
+          [
+            139.95641,
+            35.69427
+          ],
+          [
+            139.95667,
+            35.69385
+          ],
+          [
+            139.95706,
+            35.69338
+          ],
+          [
+            139.95752,
+            35.69295
+          ],
+          [
+            139.95796,
+            35.69261
+          ],
+          [
+            139.95833,
+            35.69237
+          ],
+          [
+            139.95876,
+            35.69215
+          ],
+          [
+            139.959555,
+            35.69132
+          ]
+        ],
+        []
+      ]
+    ],
+    "obsoleteFollows": [
+      [
+        "jp-東日本旅客鉄道-京葉線-2",
+        0,
+        1925,
+        1965.299298387448,
+        "jp-東日本旅客鉄道-京葉線",
+        0,
+        20400,
+        20394.96649978948
+      ]
+    ],
+    "englishMemberships": {
+      "003547": [
+        {
+          "lineId": "jp-東日本旅客鉄道-京葉線-2",
+          "seq": 0,
+          "operator": "東日本旅客鉄道",
+          "name": "西船橋",
+          "en": "Nishi-Funabashi",
+          "status": "official_verified",
+          "translationMayBeWrong": false,
+          "source": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+          "readingKey": null,
+          "identityEvidence": [
+            {
+              "operator": "東日本旅客鉄道",
+              "stationId": "1171",
+              "ja": "西船橋",
+              "en": "Nishi-Funabashi",
+              "prefecture": "千葉県",
+              "englishPrefecture": "Chiba",
+              "officialRoutes": [
+                "京葉線",
+                "武蔵野線",
+                "総武線"
+              ],
+              "officialEnglishRoutes": [
+                "Keiyo Line",
+                "Musashino Line",
+                "Sobu Line"
+              ],
+              "packageRoute": "京葉線",
+              "source": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+              "japaneseSource": "https://timetables.jreast.co.jp/cgi-bin/st_search.cgi?mode=1&rosen=25",
+              "stationSource": "https://timetables.jreast.co.jp/en/timetable/list1171.html",
+              "japaneseStationSource": "https://timetables.jreast.co.jp/timetable/list1171.html",
+              "sha256": "a473dae0726a8ce4611ac5b108aea62c015980f354968a802bf6b5828d49a862",
+              "japaneseSha256": "e8289c8ddbbfde67e6d145543da993f4a156a270c42dccc8e9b4c8e0f9744cb3",
+              "retrievedAt": "2026-10-01T01:24:45.204896+00:00",
+              "rawSource": "data/station-english-sources/jp-east/en-letter-a.html.gz",
+              "japaneseRawSource": "data/station-english-sources/jp-east/ja-route-25.html.gz",
+              "nativeIdentity": "exact",
+              "nativePackageName": "西船橋",
+              "matchMethod": "native-name-and-operator-route-paired-by-official-timetable-station-id"
+            }
+          ]
+        }
+      ],
+      "003682": [
+        {
+          "lineId": "jp-東日本旅客鉄道-京葉線-2",
+          "seq": 1,
+          "operator": "東日本旅客鉄道",
+          "name": "二俣新町",
+          "en": "Futamatashimmachi",
+          "status": "official_verified",
+          "translationMayBeWrong": false,
+          "source": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+          "readingKey": null,
+          "identityEvidence": [
+            {
+              "operator": "東日本旅客鉄道",
+              "stationId": "1372",
+              "ja": "二俣新町",
+              "en": "Futamatashimmachi",
+              "prefecture": "千葉県",
+              "englishPrefecture": "Chiba",
+              "officialRoutes": [
+                "京葉線"
+              ],
+              "officialEnglishRoutes": [
+                "Keiyo Line"
+              ],
+              "packageRoute": "京葉線",
+              "source": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+              "japaneseSource": "https://timetables.jreast.co.jp/cgi-bin/st_search.cgi?mode=1&rosen=25",
+              "stationSource": "https://timetables.jreast.co.jp/en/timetable/list1372.html",
+              "japaneseStationSource": "https://timetables.jreast.co.jp/timetable/list1372.html",
+              "sha256": "a473dae0726a8ce4611ac5b108aea62c015980f354968a802bf6b5828d49a862",
+              "japaneseSha256": "e8289c8ddbbfde67e6d145543da993f4a156a270c42dccc8e9b4c8e0f9744cb3",
+              "retrievedAt": "2026-10-01T01:24:45.204896+00:00",
+              "rawSource": "data/station-english-sources/jp-east/en-letter-a.html.gz",
+              "japaneseRawSource": "data/station-english-sources/jp-east/ja-route-25.html.gz",
+              "nativeIdentity": "exact",
+              "nativePackageName": "二俣新町",
+              "matchMethod": "native-name-and-operator-route-paired-by-official-timetable-station-id"
+            }
+          ]
+        }
+      ]
+    },
+    "nameRows": {
+      "jp-東日本旅客鉄道-京葉線-2:003547": {
+        "name": "西船橋",
+        "zh_Hant": "西船橋",
+        "zh_Hans": "西船桥",
+        "en": "Nishi-Funabashi",
+        "ja": "西船橋",
+        "kana": "にしふなばし",
+        "katakana": "ニシフナバシ",
+        "romaji": "Nishi-Funabashi"
+      },
+      "jp-東日本旅客鉄道-京葉線-2:003682": {
+        "name": "二俣新町",
+        "zh_Hant": "二俣新町",
+        "zh_Hans": "二俣新町",
+        "en": "Futamatashimmachi",
+        "ja": "二俣新町",
+        "kana": "ふたまたしんまち",
+        "katakana": "フタマタシンマチ",
+        "romaji": "Futamata-Shinmachi"
+      }
+    },
+    "coverageRows": [
+      {
+        "key": "jp-東日本旅客鉄道-京葉線-2:003547",
+        "group": "003547",
+        "name": "西船橋",
+        "platformCodes": [
+          "003553"
+        ],
+        "englishSource": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+        "englishStatus": "official_verified",
+        "kanaEvidence": "data/station-name-sources/jp-kana-evidence.json#byLineStation/jp-東日本旅客鉄道-京葉線-2:003547",
+        "chineseSource": "OpenCC character rendering; not official translation"
+      },
+      {
+        "key": "jp-東日本旅客鉄道-京葉線-2:003682",
+        "group": "003682",
+        "name": "二俣新町",
+        "platformCodes": [
+          "003682"
+        ],
+        "englishSource": "https://timetables.jreast.co.jp/cgi-bin/en/st_search.cgi?mode=0&ekimei=a",
+        "englishStatus": "official_verified",
+        "kanaEvidence": "data/station-name-sources/jp-kana-evidence.json#byLineStation/jp-東日本旅客鉄道-京葉線-2:003682",
+        "chineseSource": "OpenCC character rendering; not official translation"
+      }
+    ],
+    "catalogRows": [
+      {
+        "lineID": "jp-東日本旅客鉄道-京葉線-2",
+        "operatorName": "東日本旅客鉄道",
+        "lineName": "京葉線",
+        "aliases": [],
+        "coverage": "unknown",
+        "kinds": [],
+        "note": "Service classes not yet researched; absence is not evidence of no service."
+      }
+    ]
+  }
+}

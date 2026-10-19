@@ -206,9 +206,9 @@
             "010186",
             "004256"
           ],
-          "alignmentDirection": "down",
-          "alignmentSource": "https://ja.wikipedia.org/wiki/北陸本線",
-          "mainAlignmentDirection": "up"
+          "alignmentDirection": "up",
+          "alignmentSource": "https://www.westjr.co.jp/company/info/issue/bsignal/26_vol_207/area/",
+          "mainAlignmentDirection": "down"
         }
       ]
     }

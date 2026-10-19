@@ -3,7 +3,7 @@
 
     python3 scripts/railway/print-network-bounds.py public/rail/us-2025.json
 
-`Region.networkBounds` in `ios/RailMap/RegionCatalog.swift` is a written-down
+`Region.networkBounds` in `ios/RailMap/Infrastructure/Network/RegionCatalog.swift` is a written-down
 constant rather than a measurement, and its own documentation says why: the
 packages decode at wildly different speeds, so a camera that waits for lines
 before framing a country is a camera that moves seconds after launch, over

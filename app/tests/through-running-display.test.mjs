@@ -10,6 +10,13 @@ const RailStroke = require('../public/rail-stroke.js');
 const full = JSON.parse(fs.readFileSync(new URL('../public/rail/jp-2025.json', import.meta.url)));
 const lanes = JSON.parse(fs.readFileSync(new URL('../public/rail/display-lanes.json', import.meta.url)));
 const ids = new Set([...registry.joins.flatMap(join => join.lineIds), 'jp-東武鉄道-伊勢崎線']);
+// Include canonical corridors used by the production follow adapter.
+for (let size = -1; size !== ids.size;) {
+  size = ids.size;
+  for (const follow of lanes.followsByRegion.jp || []) {
+    if (ids.has(follow[0])) ids.add(follow[4]);
+  }
+}
 const pkg = { ...full, lines: full.lines.filter(line => ids.has(line.id)) };
 const network = RailNetwork.buildNetworkFromCompactPackage(pkg, null, lanes);
 
@@ -29,10 +36,17 @@ for (const join of registry.joins) {
         const index = line.stations.findIndex(station => station[0] === join.stationCode);
         const parts = network.strokeModel.lines.find(line => line.lineId === id).parts;
         const part = index === 0 ? parts[0] : parts.at(-1);
+        const follows = (part.follows || []).map(follow => {
+          const canonical = network.strokeModel.lines.find(line => line.lineId === follow.canonLineId)
+            ?.parts[follow.canonPartIndex];
+          assert.ok(canonical, `missing canonical corridor ${follow.canonLineId}`);
+          return { ...follow, points: canonical.coordinates.map(point => RailStroke.project(point, zoom)),
+            measures: canonical.measures };
+        });
         const stroke = RailStroke.buildStroke(part.coordinates.map(point => RailStroke.project(point, zoom)), {
           measures: part.measures, rows: part.rows, totalMetres: part.totalMetres,
           laneGapPx: 4, cornerRadiusPx: 6, minRampPx: 2,
-          anchors: part.anchors, follows: part.follows,
+          anchors: part.anchors, follows,
         });
         const source = part.coordinates.map(point => RailStroke.project(point, zoom));
         return { drawn: index === 0 ? stroke.points.slice(0, 2).reverse() : stroke.points.slice(-2),
@@ -61,7 +75,9 @@ for (const join of registry.joins) {
       }
       const circles = network.stations.features.filter(feature =>
         join.lineIds.includes(feature.properties.lineId) && feature.properties.stationGroupId === join.stationCode);
-      assert.deepEqual(circles.map(feature => feature.properties.lineId), [join.circleOwner]);
+      const operators = new Set(join.lineIds.map(id => pkg.lines.find(line => line.id === id).operator));
+      assert.deepEqual(new Set(circles.map(feature => feature.properties.lineId)),
+        new Set(operators.size === 1 ? [join.circleOwner] : join.lineIds));
       for (const id of join.lineIds) assert.ok(network.stationById.has(`${id}:${join.stationCode}`));
     });
   }

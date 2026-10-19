@@ -24,6 +24,7 @@ def inputs():
             'evidence': proof, 'geometry': {'source': 'N02', 'licence_status': 'redistributable'}}
     rename = dict(copy.deepcopy(base), id='rename', kind='operator_rename', date='2020-01-01',
                   before={'line': 'L', 'operator': 'Old'}, after={'line': 'L', 'operator': 'New'})
+    rename['_force_geometry_history'] = True
     opening = dict(copy.deepcopy(base), id='extension', kind='opening', line='L', operator='Old',
                    after={'line': 'L', 'operator': 'New'},
                    service_periods=[['2010-01-01', None]], predecessor_event_ids=['rename'])

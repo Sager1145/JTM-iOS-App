@@ -1,0 +1,110 @@
+{
+  "format": "jtm-karatsu-nishi-display-v1",
+  "status": "accepted-display-cartography",
+  "reviewedAt": "2026-10-12",
+  "lineID": "jp-九州旅客鉄道-唐津線",
+  "packageIndex": 50,
+  "intervalIndex": 0,
+  "candidate": {
+    "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/karatsu-nishi-display-candidate",
+    "manifest": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/karatsu-nishi-display-candidate/manifest.json",
+    "manifestSha256": "8ee16ea449ede937399f8885d44e64857f5efc92c98b2fd3eb3c3853d97d3917",
+    "candidateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/karatsu-nishi-display-candidate/candidate.json",
+    "candidateSha256": "fcf089037a37b0d140b491d53e4b6fd12b8e46ae52bd0b758dccd096c05a654a",
+    "intervalFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/karatsu-nishi-display-candidate/interval-0.geojson",
+    "intervalSha256": "a2a47ab2a37e8334a3c20fb364c3241ddc03d48d42941e38cd9c3ccbe7d54bc4",
+    "baselineFrameCount": 8,
+    "rawFrameCount": 8,
+    "finalReprojectionFrameCount": 8,
+    "sourcePointCount": 28,
+    "candidatePointCount": 208,
+    "guard": {
+      "sourceIndex": 19,
+      "candidateIndex": 199,
+      "coordinate": [
+        129.96077,
+        33.44912
+      ]
+    },
+    "stationAliases": {
+      "009270": [
+        129.95756081712705,
+        33.461123024527026
+      ],
+      "009278": [
+        129.968481,
+        33.445981
+      ]
+    },
+    "minimumEdgeMetres": 0.5
+  },
+  "baseline": {
+    "lineSha256": "7fd277eadaee78f5856d7938197881f47d48bf24084986ca8f06210c3d417179",
+    "nativeRowSha256": "32cb256577c42446a19a238d9b8c8670891c5dfc1a5a995deacd7c0ec0b9129d",
+    "nativeSummary": {
+      "partCount": 1,
+      "pointCount": 513,
+      "metres": 42527.3,
+      "classification": "station-approach/groomed"
+    },
+    "measuredReferences": {
+      "byRegion": [
+        [
+          "jp-九州旅客鉄道-唐津線",
+          0,
+          0,
+          42527.3,
+          -0.5
+        ]
+      ]
+    }
+  },
+  "nativeReplay": {
+    "candidateRowSha256": "56a3904f3872511b17bfc57b84520f05a0e00d01cfbc55740bbe9d4ab03c83ed",
+    "candidateSummary": {
+      "partCount": 1,
+      "pointCount": 693,
+      "metres": 42502.5,
+      "classification": "station-approach/groomed"
+    },
+    "commonPrefixPoints": 0,
+    "commonSuffixPoints": 494,
+    "candidateMeasuredReferences": {
+      "byRegion": [
+        [
+          "jp-九州旅客鉄道-唐津線",
+          0,
+          0,
+          42502.5,
+          -0.5
+        ]
+      ]
+    }
+  },
+  "policy": {
+    "scope": "Display-only replacement of Karatsu interval 0 and aliases 009270/009278; 009278 remains the exact physical tuple.",
+    "preserve": "All physical stations, IDs, mileage and segments; intervals 1...11; source guard 19 and suffix 19...27; unrelated lines and measured references.",
+    "representation": "candidate Apple cartographic display; not surveyed track or platform geometry",
+    "acceptanceGate": "accepted-display-cartography",
+    "dependencyRefresh": "Refresh only the four established package dependency references.",
+    "validation": "Eight original baseline triples, eight regional raw frames and eight final reprojections reviewed; actual candidate native eight triples/24 panels accepted, and Main same-camera terminal, passenger-yard throat, complete interval with both ends, and actual JR Kyushu Karatsu station card accepted. Platform physical end-definition and metre-level precision remain WARNING."
+  },
+  "rootAcceptance": {
+    "native": {
+      "scope": "complete interval 0",
+      "viewpointCount": 8,
+      "wholeLineRenderDependency": "d28e1050a09a143f2c207e284370a4b91991bcfb6d0380b8f07e447b261aaa90",
+      "evidence": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/karatsu-nishi-display-candidate/native-candidate"
+    },
+    "main": [
+      "karatsu-nishi-karatsu-terminus-main-candidate",
+      "karatsu-nishi-passenger-yard-throat-main-candidate",
+      "karatsu-nishi-complete-interval-main-candidate",
+      "karatsu-nishi-karatsu-station-members-main-candidate"
+    ],
+    "limits": [
+      "Actual cartographic frame placement accepted; not surveyed platform end positions",
+      "Remaining whole-line thin-blue-guide and Kubota shared-platform identity WARNING retained"
+    ]
+  }
+}

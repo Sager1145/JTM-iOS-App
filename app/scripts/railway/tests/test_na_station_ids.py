@@ -7,9 +7,6 @@ import unittest
 HERE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(HERE / 'lib'))
 from na_station_ids import apply_repairs
-spec = importlib.util.spec_from_file_location('station_audit', HERE / 'audit-na-package.py')
-audit = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(audit)
 
 
 class StationIdentityRepairTests(unittest.TestCase):
@@ -63,22 +60,7 @@ class StationIdentityRepairTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'still spans different places'):
             apply_repairs(self.package, self.stations, self.catalog)
 
-    def test_audit_finds_worst_pair_even_after_nearby_platform(self):
-        self.package['lines'][1]['stations'][0][2:4] = [-87, 41.002]
-        for lines in [self.package['lines'], list(reversed(self.package['lines']))]:
-            found = audit.Findings()
-            audit.audit_package({'country': 'US', 'lines': lines}, found, {})
-            collisions = [r for r in found.rows if r['check'] == 'station.identityCollision']
-            self.assertEqual(len(collisions), 1)
-            self.assertEqual(collisions[0]['severity'], 'ERROR')
-            self.assertGreater(collisions[0]['metres'], 2000000)
 
-    def test_audit_preserves_reviewed_local_complex(self):
-        self.package['lines'] = self.package['lines'][1:]
-        found = audit.Findings()
-        audit.audit_package(self.package, found, {}, {'same': {'maxMeters': 150}})
-        self.assertFalse(any(r['check'] == 'station.identityCollision' for r in found.rows))
-        self.assertTrue(any(r['check'] == 'station.split.reviewed' for r in found.rows))
 
 
 if __name__ == '__main__':

@@ -23,7 +23,7 @@ function loadScope(APP_DIR, AppCore, RailNetwork) {
       distanceMeters,
     });
     configureRouteSolverApi({
-      addStationTransferConnectorEdges: (...a) => addStationTransferConnectorEdges(...a),
+      addReviewedPhysicalJunctionEdges: (...a) => addReviewedPhysicalJunctionEdges(...a),
       coordKey: (...a) => coordKey(...a), coordinatesClose: (...a) => coordinatesClose(...a),
       distanceMeters: (...a) => distanceMeters(...a), graphGridKey: (...a) => graphGridKey(...a),
       normalizeGraphCoord: (...a) => normalizeGraphCoord(...a),

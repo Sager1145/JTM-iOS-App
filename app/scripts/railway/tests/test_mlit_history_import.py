@@ -149,7 +149,7 @@ class MlitHistoryImportTests(unittest.TestCase):
             (ROOT / "app/scripts/railway/jp-rail-history-events.json").read_text(encoding="utf-8")
         )
         verified = {}
-        for bucket in ("events", "temporal_events"):
+        for bucket in ("events", "temporal_events", "retirements"):
             for event in canonical.get(bucket, []):
                 source_row_id = event.get("official_event_id")
                 evidence = event.get("evidence")
@@ -167,10 +167,11 @@ class MlitHistoryImportTests(unittest.TestCase):
         self.assertEqual(set(reviewed), set(verified))
         for source_row_id, decision in reviewed.items():
             event = verified[source_row_id]
-            self.assertEqual(decision["event_id"], event["id"])
+            self.assertEqual(decision["event_id"], event.get("id", event.get("history_id")))
             self.assertEqual(decision["evidence"], event["evidence"])
-            self.assertEqual(decision["selector"]["line_name"], event.get("after", event)["line"])
-            self.assertEqual(decision["selector"]["operator"], event.get("after", event)["operator"])
+            identity = event.get("after", event.get("match", event))
+            self.assertEqual(decision["selector"]["line_name"], identity.get("line", identity.get("line_name")))
+            self.assertEqual(decision["selector"]["operator"], identity["operator"])
 
     def test_check_rejects_resolved_selector_not_in_review_ledger(self):
         with tempfile.TemporaryDirectory() as temporary:
@@ -242,11 +243,11 @@ class MlitHistoryImportTests(unittest.TestCase):
             "jp-id-hankai-uemachi-sumiyoshikoen-closure-2016": "ready_isolated_segment",
             "jp-id-kitahinode-closure-2021": "ready_historical_station",
             "jp-id-ir-kanazawa-daishoji-transfer-2024": "ready_isolated_segment",
+            "jp-id-aoimori-hachinohe-aomori-transfer-2010": "ready_isolated_segment",
         }
         for event_id, status in promoted.items():
             seed = seeds[event_id]
-            event = canonical[event_id]
-            self.assertEqual(seed["canonical_event_id"], event_id)
+            event = canonical[seed["canonical_event_id"]]
             self.assertEqual(seed["review"]["status"], "reviewed_seed")
             self.assertEqual(seed["geometry"]["status"], status)
             self.assertEqual(seed["basis"], event["review"]["basis"])
@@ -260,10 +261,7 @@ class MlitHistoryImportTests(unittest.TestCase):
             if "shared_predecessor_stations" in event:
                 self.assertEqual(seed["shared_predecessor_stations"], event["shared_predecessor_stations"])
 
-        for event_id in (
-            "jp-id-aoimori-metoki-hachinohe-transfer-2002",
-            "jp-id-aoimori-hachinohe-aomori-transfer-2010",
-        ):
+        for event_id in ("jp-id-aoimori-metoki-hachinohe-transfer-2002",):
             self.assertEqual(seeds[event_id]["review"]["status"], "reviewed_source_only")
             self.assertEqual(seeds[event_id]["geometry"]["status"], "unresolved_segment_selector")
 
@@ -327,7 +325,7 @@ class MlitHistoryImportTests(unittest.TestCase):
         self.assertEqual(len({event["station_entity_id"] for event in payload["events"]}), 6)
         self.assertEqual(len({event["membership_id"] for event in payload["events"]}), 6)
 
-        retirements = []
+        identity_periods = []
         for event in payload["events"]:
             after = event["after"]
             matches = [
@@ -347,21 +345,26 @@ class MlitHistoryImportTests(unittest.TestCase):
 
             compiled = TEMPORAL.compile_event(event, sections, stations)
             self.assertEqual(compiled["sections"], [], event["id"])
-            self.assertEqual(len(compiled["stations"]), 1, event["id"])
+            self.assertEqual(compiled["stations"], [], event["id"])
+            self.assertEqual(compiled["retirements"], [], event["id"])
+            self.assertEqual(len(compiled["identity_periods"]), 1, event["id"])
+            period = compiled["identity_periods"][0]
             self.assertEqual(
-                compiled["stations"][0]["properties"]["station_name"],
+                period["as"]["N02_005"],
                 event["before"]["station"],
                 event["id"],
             )
             self.assertEqual(
-                compiled["stations"][0]["properties"]["service_validity"],
-                [None, "2020-03-14"],
+                [period.get("valid_from"), period.get("valid_to")],
+                [None, event["date"]],
                 event["id"],
             )
-            self.assertEqual(len(compiled["retirements"]), 1, event["id"])
-            self.assertEqual(compiled["retirements"][0]["match"]["targets"], ["stations"])
-            retirements.extend(compiled["retirements"])
-        self.assertEqual(len(TEMPORAL.normalize_stamps(retirements, sections, stations)), 6)
+            self.assertEqual(period["match"]["targets"], ["stations"])
+            identity_periods.extend(compiled["identity_periods"])
+        self.assertEqual(
+            len(TEMPORAL.normalize_identity_periods(identity_periods, sections, stations)),
+            6,
+        )
 
 
 if __name__ == "__main__":

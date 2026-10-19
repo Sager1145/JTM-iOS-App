@@ -1,0 +1,120 @@
+{
+  "format": "jtm-matsumoto-oito-display-v1",
+  "status": "accepted-display-cartography",
+  "reviewedAt": "2026-10-13",
+  "lineID": "jp-東日本旅客鉄道-大糸線",
+  "packageIndex": 349,
+  "intervalIndex": 31,
+  "stationID": "002506",
+  "candidate": {
+    "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/matsumoto-direction-review-20261013/display-candidate/candidate.json",
+    "sha256": "1afd9f5898a054cd39a5cc0df98145ef38578261df28683fc976775fa2e96052",
+    "sourcePointCount": 9,
+    "candidatePointCount": 8,
+    "retainedThroughIndex": 6,
+    "physicalJunction": [
+      137.96405,
+      36.2314
+    ],
+    "displayAnchor": [
+      137.96367165960635,
+      36.23167271499838
+    ],
+    "minimumEdgeMetres": 1,
+    "maximumTurnDegrees": 13
+  },
+  "baseline": {
+    "lineSha256": "819efd988ea4086943edf7eb5ac9e43011de778a0aa3d245f01c583936c30414",
+    "nativeRowSha256": "235c4f9a775549455d7883e0c5985973c4d1f6ee6448539732c267f9d81288e1",
+    "nativeSummary": {
+      "partCount": 1,
+      "pointCount": 959,
+      "metres": 70301.1,
+      "classification": "station-approach/groomed"
+    },
+    "measuredReferences": {
+      "byRegion": [
+        [
+          "jp-東日本旅客鉄道-大糸線",
+          0,
+          0,
+          70301.1,
+          -0.5
+        ]
+      ]
+    }
+  },
+  "nativeReplay": {
+    "candidateRowSha256": "41b3a1710c5484135f31387c9225f4ce12aaa6d8fd9618c2c519bdd9ac656b97",
+    "candidateSummary": {
+      "partCount": 1,
+      "pointCount": 958,
+      "metres": 70230.4,
+      "classification": "station-approach/groomed"
+    },
+    "commonPrefixPoints": 957,
+    "candidateMeasuredReferences": {
+      "byRegion": [
+        [
+          "jp-東日本旅客鉄道-大糸線",
+          0,
+          0,
+          70230.4,
+          -0.5
+        ]
+      ]
+    }
+  },
+  "related": {
+    "shinonoiID": "jp-東日本旅客鉄道-篠ノ井線",
+    "shinonoiLineSha256": "d7fb18281296719b9f165811a469d1c2f2344b169153a306766ac8630aa24f2e",
+    "shinonoiLane": [
+      "jp-東日本旅客鉄道-篠ノ井線",
+      1,
+      13257.1,
+      14975,
+      -0.5
+    ],
+    "kamikochiID": "jp-アルピコ交通-上高地線",
+    "kamikochiLineSha256": "e83c353e9c3d1e485755fc9895a62a7fbe582b4f3ab05aad49a61abff53a4488",
+    "junctionRegistry": "data/physical-rail-junctions.json",
+    "junctionRegistrySha256": "07968aaa10fbda0601d829697cab4ad8cebd9c343826b1e50217d63189cf3cd6",
+    "junctionID": "matsumoto-east-56"
+  },
+  "policy": {
+    "scope": "Display-only replacement of Oito interval 31 tail and station alias 002506.",
+    "preserve": "Physical J, stations, IDs, kilometre data and routes; all other Oito intervals; Shinonoi and Kamikochi lines and measured references.",
+    "representation": "Apple cartographic display; not surveyed track or platform geometry",
+    "acceptanceGate": "accepted-display-cartography",
+    "dependencyRefresh": "Refresh only the four established package dependency references."
+  },
+  "rootAcceptance": {
+    "reviewedAt": "2026-10-13",
+    "native": {
+      "apps": 3,
+      "fullIntervalsPerApp": 5,
+      "viewpointsPerApp": 47,
+      "panelsPerApp": 141,
+      "captureFailures": 0,
+      "actualVisualReview": "All 423 panels viewed; three independent capture receipts and reviews preserved in report scope."
+    },
+    "main": {
+      "actualOnOffPairs": [
+        "matsumoto-station-short-tail-main-candidate",
+        "matsumoto-north-real-fork-main-candidate",
+        "matsumoto-north-shared-span-main-candidate",
+        "matsumoto-shinonoi-4-complete-main-candidate",
+        "matsumoto-shinonoi-5-complete-main-candidate"
+      ],
+      "completeCoverage": "Shared-span pair includes complete Oito#30/#31 and Kamikochi#0, including all endpoints; separate complete pairs cover Shinonoi#4/#5. Station card retains all three original line members.",
+      "budgetDrops": 0,
+      "result": "No station hook, false reverse U, broken seam or Alpico/JR track merge."
+    },
+    "physicalDirection": {
+      "southShinonoiToNorthOitoDegrees": 0.217,
+      "northTazawaToNorthOito": "Station reversal required, independently documented by JR East; no direct reverse-direction fork invented.",
+      "officialSource": "https://www.jreast.co.jp/railway/joyful/pdf/nagano/oito202503.pdf"
+    },
+    "remainingWarning": "Apple platform/rail cartographic alignment accepted; regional 2011 aerial and simplified rural basemap do not certify surveyed metre accuracy."
+  }
+}

@@ -211,3 +211,17 @@ test("a shared near-reversal join uses the incoming normal without a mitre tip",
   assert.deepEqual(result.anchors[0], result.points[0]);
   assert.ok(result.points.every((point) => Math.abs(point[1] - 3) < 1e-8));
 });
+
+test("centreline interpolation keeps a real shallow curve below simplification and merge tolerances", () => {
+  const source = [[0, 0], [10, 0], [10.1, 0.01], [20, 0], [30, 0.2], [40, 0.4], [50, 0.6]];
+  const measures = cumulative(source);
+  const curved = RailStroke.smoothCentreline(source, measures);
+  for (const index of [1, 2]) {
+    const at = curved.measures.indexOf(measures[index]);
+    assert.ok(at >= 0, "both ends of the shallow curve remain interpolation supports");
+    assert.deepEqual(curved.points[at], source[index]);
+  }
+  const stroke = RailStroke.buildStroke(source, { measures, rows: [], cornerRadiusPx: 3 });
+  assert.ok(stroke.points.some(p => p[0] > 10 && p[0] < 10.2 && p[1] >= 0.009),
+    "the full drawing pipeline must not replace the small bend with a straight chord");
+});

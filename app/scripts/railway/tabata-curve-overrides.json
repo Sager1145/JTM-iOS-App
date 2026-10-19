@@ -1,0 +1,270 @@
+{
+  "format": "jtm-tabata-curve-evidence-v1",
+  "reviewedAt": "2026-10-10",
+  "crs": "WGS84",
+  "source": {
+    "publisher": "OpenStreetMap contributors",
+    "role": "secondary physical-track geometry cross-check against Apple basemap; not official MLIT survey",
+    "cacheRepository": "Japan-Train-Map",
+    "cacheRelativePath": "outputs/osm-basemap-cache/E139N35.json",
+    "fetchedAt": "2026-08-18T10:37:59.411Z",
+    "endpoint": "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+    "licence": "ODbL 1.0",
+    "attribution": "© OpenStreetMap contributors",
+    "url": "https://www.openstreetmap.org/copyright"
+  },
+  "ways": {
+    "144126045": {
+      "tags": {
+        "colour": "#B1CB39",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "Línea Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          139.7548269,
+          35.7402672
+        ],
+        [
+          139.7549093,
+          35.7402976
+        ],
+        [
+          139.7550734,
+          35.7403475
+        ],
+        [
+          139.7552863,
+          35.7404065
+        ],
+        [
+          139.7556212,
+          35.7404744
+        ],
+        [
+          139.7558013,
+          35.7404975
+        ],
+        [
+          139.7560497,
+          35.7405191
+        ],
+        [
+          139.7563102,
+          35.7405254
+        ],
+        [
+          139.7565553,
+          35.7405155
+        ],
+        [
+          139.756848,
+          35.7404786
+        ],
+        [
+          139.7571164,
+          35.74043
+        ],
+        [
+          139.7574113,
+          35.7403571
+        ],
+        [
+          139.7576896,
+          35.7402671
+        ]
+      ]
+    },
+    "183185952": {
+      "tags": {
+        "bridge": "yes",
+        "colour": "#B1CB39",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "2",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "Línea Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          139.7576896,
+          35.7402671
+        ],
+        [
+          139.7580478,
+          35.7401348
+        ]
+      ]
+    },
+    "183185960": {
+      "tags": {
+        "colour": "#B1CB39",
+        "electrified": "contact_line",
+        "frequency": "0",
+        "gauge": "1067",
+        "layer": "1",
+        "maxspeed": "90",
+        "name": "山手線",
+        "name:de": "Yamanote-Linie",
+        "name:en": "Yamanote Line",
+        "name:es": "Línea Yamanote",
+        "name:it": "Linea Yamanote",
+        "name:ja": "山手線",
+        "name:ja-Hira": "やまのてせん",
+        "name:ja-Latn": "Yamanote-sen",
+        "name:ko": "야마노테선",
+        "name:ru": "Линия JR Яманотэ",
+        "name:th": "สายยามาโนเตะ",
+        "oneway": "yes",
+        "operator": "東日本旅客鉄道",
+        "operator:en": "East Japan Railway",
+        "operator:ja": "東日本旅客鉄道",
+        "operator:ja_rm": "Higashi-Nihon Ryokaku Tetsudō",
+        "railway": "rail",
+        "railway:atc": "D",
+        "railway:traffic_mode": "passenger",
+        "ref": "JY",
+        "source": "Bing",
+        "usage": "main",
+        "voltage": "1500"
+      },
+      "coordinates": [
+        [
+          139.7580478,
+          35.7401348
+        ],
+        [
+          139.7583849,
+          35.7399908
+        ],
+        [
+          139.7585889,
+          35.7398828
+        ],
+        [
+          139.7588295,
+          35.7397478
+        ],
+        [
+          139.7590768,
+          35.7395966
+        ],
+        [
+          139.7593075,
+          35.7394327
+        ],
+        [
+          139.7595669,
+          35.7392086
+        ],
+        [
+          139.7599059,
+          35.7389255
+        ]
+      ]
+    }
+  },
+  "path": [
+    144126045,
+    183185952,
+    183185960
+  ],
+  "displayPolicy": "One continuous outer-direction surveyed track represents the single display centreline; no directional surveys are averaged. This does not change routing direction or physical interval provenance.",
+  "lineId": "jp-東日本旅客鉄道-山手線",
+  "interval": 15,
+  "start": [
+    139.75683,
+    35.74048
+  ],
+  "end": [
+    139.75992,
+    35.7389
+  ],
+  "replaced": [
+    [
+      139.7585,
+      35.74006
+    ],
+    [
+      139.759,
+      35.73967
+    ]
+  ],
+  "surveySlice": [
+    10,
+    -1
+  ],
+  "directionEvidence": {
+    "connectingWay": {
+      "id": 183187946,
+      "coordinates": [
+        [
+          139.7599059,
+          35.7389255
+        ],
+        [
+          139.7600983,
+          35.7387738
+        ]
+      ]
+    },
+    "adjoiningWay": {
+      "id": 834998693,
+      "firstCoordinate": [
+        139.7600983,
+        35.7387738
+      ],
+      "trackRef": "山手線 : 外回り"
+    },
+    "interpretation": "Selected curve follows exact coordinate joins to the adjoining way tagged 山手線 : 外回り; representative display only, not a new routing direction restriction."
+  }
+}

@@ -67,15 +67,9 @@ class SouthernBranchEvidenceTests(unittest.TestCase):
             self.assertIn(track['northJunction'], main)
         result = module.repair(self.package, evidence)
         owner = next(row for row in result['lines'] if row['id'] == module.BASE_ID)
-        shown = owner['displayBranchLeadIns'][1]
-        self.assertEqual(shown[0], [139.7328, 35.61677])
-        self.assertEqual(shown[-1], [139.72321, 35.62672])
-        self.assertEqual(owner['displayFreightMainPolicy']['sourceVertexCount'], 99)
-        self.assertLess(owner['displayFreightMainPolicy']['startAliasMeters'], 4)
-        self.assertLess(owner['displayFreightMainPolicy']['endAliasMeters'], 14)
-        self.assertTrue(all(point[1] < 35.628135 for point in shown))
-        for track in module.reviewed_tracks(evidence):
-            self.assertIn(track['northJunction'], shown)
+        self.assertEqual(len(owner['displayBranchLeadIns']), 1,
+                         'A station-free freight main must not become passenger display ink')
+        self.assertNotIn('displayFreightMainPolicy', owner)
         self.assertEqual(len(owner['stations']), 2)
         for direction, p in evidence['paths'].items():
             branch = module.concatenate(evidence, p['branch'])
@@ -102,18 +96,39 @@ class SouthernBranchEvidenceTests(unittest.TestCase):
             self.assertIn(feature['properties']['display_line_id'], (module.BASE_ID, module.PAIR_ID))
         self.assertEqual(module.repair_stations(result, self.package), result)
 
-    def test_legacy_display_reuses_old_corridors_and_keeps_physical_intervals(self):
+    def test_osaki_passenger_family_retires_electric_alias_and_preserves_source_forks(self):
         original = module.repair(self.package, self.evidence)
         result = module.integrate_legacy_display(copy.deepcopy(original), self.evidence)
         rows = {l['id']: l for l in result['lines']}
         for before, after in zip(original['lines'], result['lines']):
             self.assertEqual(before['stations'], after['stations'])
             self.assertEqual(before['segments'], after['segments'])
+        self.assertEqual(rows[module.JR+'総武線-3']['displayIntervalCoordinates']['2'],
+                         next(row for row in original['lines'] if row['id'] == module.JR+'総武線-3')['displayIntervalCoordinates']['2'],
+                         'Replaying reviewed forks must retain the exact canonical supports')
+        electric = rows[module.JR+'山手線']
+        self.assertNotIn('1', electric.get('displayIntervalCoordinates', {}))
+        base = rows[module.BASE_ID]
+        centre = base['displayStationCoordinates']['004135']
+        self.assertNotEqual(centre, electric['stations'][1][2:4])
         for name in (module.BASE_ID, module.PAIR_ID):
             row = rows[name]
             aliases = row['southernBranchTopology']['displayAliases']
             self.assertEqual(len(row['displayBranchLeadIns']), 1)
-            self.assertIn(aliases['northJunction'], rows[module.JR+'山手線']['displayIntervalCoordinates']['1'])
+            self.assertNotIn('northJunction', aliases)
+            self.assertEqual(row['displayStationCoordinates']['004135'], centre)
+            self.assertEqual(row['stationCircleOwnerByCode']['004135'], module.BASE_ID)
+            lead_in = row['displayBranchLeadIns'][0]
+            self.assertEqual(lead_in[0], row['southernBranchTopology']['northJunction'])
+            self.assertEqual(lead_in[-1], centre)
+            self.assertEqual(row['displayIntervalCoordinates']['0'][0], centre)
+            # The short lead-in and body meet once on the passenger family;
+            # every non-transition support still comes from the own survey.
+            source = row['southernBranchTopology']['northLeadInGeometry']
+            self.assertEqual(len(source), len(lead_in))
+            self.assertLess(module.distance(centre, row['stations'][0][2:4]), 30)
+            self.assertEqual(row['permittedTraversal'],
+                             next(l for l in original['lines'] if l['id'] == name)['permittedTraversal'])
             self.assertIn(aliases['southJunction'], rows[module.JR+'総武線-3']['displayIntervalCoordinates']['2'])
             own = row['displayIntervalCoordinates']['0']
             main = rows[module.JR+'総武線-3']['displayIntervalCoordinates']['2']
@@ -121,6 +136,40 @@ class SouthernBranchEvidenceTests(unittest.TestCase):
         pair = rows[module.BASE_ID]['alignmentPairs'][0]
         self.assertEqual(pair['with'], module.PAIR_ID)
         self.assertEqual(pair['direction'], 'unassigned')
+
+    def test_southern_shared_tail_has_explicit_canonical_owner_and_measure_bounds(self):
+        result = module.integrate_legacy_display(module.repair(self.package, self.evidence), self.evidence)
+        rows = {l['id']: l for l in result['lines']}
+        canonical = rows[module.JR+'総武線-3']['displayIntervalCoordinates']['2']
+        for name in (module.BASE_ID, module.PAIR_ID):
+            row = rows[name]
+            own = row['displayIntervalCoordinates']['0']
+            shared = row['southernBranchTopology']['displaySharedTail']
+            self.assertEqual(shared['canonicalLineId'], module.JR+'総武線-3')
+            self.assertEqual(shared['canonicalIntervalIndex'], 2)
+            self.assertEqual(shared['branchPartIndex'], 0)
+            self.assertEqual(shared['lanePolicy'], 'inherit-canonical-shared-span')
+            self.assertFalse(shared['routing'])
+            start = shared['fromCoordinate']
+            self.assertEqual(own[own.index(start):], canonical[canonical.index(start):])
+            self.assertAlmostEqual(shared['branchFromMeters'], module.length(own[:own.index(start)+1]))
+            self.assertAlmostEqual(shared['branchToMeters'], module.length(own))
+            self.assertAlmostEqual(shared['canonicalIntervalFromMeters'], module.length(canonical[:canonical.index(start)+1]))
+            self.assertAlmostEqual(shared['canonicalIntervalToMeters'], module.length(canonical))
+
+    def test_rinkai_keeps_cross_company_identity_at_shared_passenger_family(self):
+        once = module.integrate_legacy_display(module.repair(self.package, self.evidence), self.evidence)
+        rows = {l['id']: l for l in once['lines']}
+        rinkai_id = 'jp-東京臨海高速鉄道-臨海副都心線'
+        rinkai = rows[rinkai_id]
+        before = next(l for l in self.package['lines'] if l['id'] == rinkai_id)
+        self.assertEqual(rinkai['stations'], before['stations'])
+        self.assertEqual(rinkai['segments'], before['segments'])
+        centre = rows[module.BASE_ID]['displayStationCoordinates']['004135']
+        self.assertEqual(rinkai['displayStationCoordinates']['004135'], centre)
+        self.assertEqual(rinkai['displayIntervalCoordinates']['0'][0], centre)
+        self.assertNotIn('004135', rinkai.get('stationCircleOwnerByCode', {}))
+        self.assertEqual(module.integrate_legacy_display(module.repair(once, self.evidence), self.evidence), once)
 
 
 if __name__ == '__main__':

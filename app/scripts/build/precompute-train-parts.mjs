@@ -60,7 +60,7 @@ const OUT_DIR = process.env.PRECOMPUTE_OUT_DIR
 // per-country and MUST match the store: feeding Taiwanese stops to the
 // Japanese network would bake wrong-country geometry into published parts.
 // Japan stays the default.
-const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr"]);
+const SUPPORTED_COUNTRIES = new Set(["jp", "tw", "hk", "mo", "kr", "cn"]);
 const requestedCountry = process.env.PRECOMPUTE_COUNTRY || "jp";
 if (!SUPPORTED_COUNTRIES.has(requestedCountry)) throw new Error(`Unsupported precompute country: ${requestedCountry}`);
 const COUNTRY = requestedCountry;
@@ -211,7 +211,8 @@ export function deriveManifestSolverContext(contexts, scopeContext = null) {
 // through finalize/restamp; only a solve may attest changed source bytes.
 export function currentPrecomputeSourceHashes({country = COUNTRY, dataDir = DATA_DIR,
   railDir = path.join(APP_DIR, "public", "rail")} = {}) {
-  const files = [[dataDir, "matched-routes.json"], [dataDir, "matched-stops.json"]];
+  const files = [[dataDir, "matched-routes.json"], [dataDir, "matched-stops.json"],
+    [dataDir, "physical-rail-junctions.json"]];
   for (const region of precomputeScopeCountries(country)) {
     const suffix = region === "jp" ? "" : `-${region}`;
     files.push([railDir, `${region}-2025.json`],
@@ -614,6 +615,7 @@ async function main() {
 
   const baseHost = {
     country: COUNTRY,
+    physicalJunctions: readJson(path.join(DATA_DIR, "physical-rail-junctions.json")),
     railSections,
     stations,
     matchedStops,

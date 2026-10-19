@@ -10,7 +10,7 @@ test("station naming loads the joined tables for every country scope", () => {
   context.RailMapStyle = { RAILWAY_STYLE: { riddenWidthPx: 4 } };
   for (const file of ["../shared/app-core.js", "../public/app-config.js"])
     vm.runInContext(readFileSync(new URL(file, import.meta.url), "utf8"), context);
-  for (const country of ["jp", "tw", "hk", "mo", "kr"]) {
+  for (const country of ["jp", "tw", "hk", "mo", "kr", "cn"]) {
     const resources = vm.runInContext(`stationReadingsApisForCountry("${country}")`, context);
     const expected = [country === "jp" ? "station-names" : `station-names-${country}`];
     assert.deepEqual(Array.from(resources), expected);
@@ -56,4 +56,30 @@ test("shipped Taiwan transfer platforms use line-specific English names", () => 
   assert.ok(varying);
   for (const member of varying[1].memberships)
     assert.equal(context.I18N.stationName(member.name, `${member.lineId}:${varying[0]}`), member.en);
+});
+
+
+test("China uses its localized station names and country strings", () => {
+  const context = vm.createContext({
+    document: { readyState: "loading", documentElement: {}, addEventListener() {}, querySelectorAll() { return []; }, getElementById() { return null; } },
+    localStorage: { getItem() { return null; } },
+  });
+  context.window = context;
+  for (const file of ["../shared/app-core.js", "../public/i18n-strings.js", "../public/i18n.js"])
+    vm.runInContext(readFileSync(new URL(file, import.meta.url), "utf8"), context);
+  context.I18N.setCountry("cn");
+  context.I18N.setStationReadings({country:"CN", byCode:{"CN-12306-XJA": {
+    name:"香港西九龙", zh_Hant:"香港西九龍", zh_Hans:"香港西九龙", en:"Hong Kong West Kowloon", ja:""}}, byName:{}});
+  const cases = [
+    ["zh-Hant", "香港西九龍", "中國", "高速鐵路"],
+    ["zh-Hans", "香港西九龙", "中国", "高速铁路"],
+    ["ja", "香港西九龍", "中国", "高速鉄道"],
+    ["en", "Hong Kong West Kowloon", "China", "High speed rail"],
+  ];
+  for (const [lang, station, country, hsr] of cases) {
+    context.I18N.setLang(lang);
+    assert.equal(context.I18N.stationName("香港西九龙", "CN-12306-XJA"), station);
+    assert.equal(context.I18N.t("country.cn"), country);
+    assert.equal(context.I18N.tc("stat.hsr"), hsr);
+  }
 });

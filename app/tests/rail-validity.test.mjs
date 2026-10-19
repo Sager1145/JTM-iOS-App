@@ -242,6 +242,41 @@ test("applyRailHistory stamps matched features and rejects unmatched retirements
   assert.equal(untouched.properties.valid_to, undefined);
 });
 
+test("identity periods switch line and operator at a half-open boundary", () => {
+  const { run } = load();
+  const applyRailHistory = run("applyRailHistory");
+  const isRailValid = run("isRailValid");
+  const current = section("New Line", "New Operator", [[135, 35], [135.1, 35]]);
+  current.properties.N02_001 = "12";
+  current.properties.N02_002 = "5";
+  const sections = [current];
+  applyRailHistory({
+    sections: [], stations: [], retirements: [],
+    identity_periods: [{
+      history_id: "rename.sections",
+      match: { line_name: "New Line", operator: "New Operator",
+        bbox: [134, 34, 136, 36], targets: ["sections"] },
+      valid_to: "2019-10-01",
+      as: { N02_001: "11", N02_002: "2", N02_003: "Old Line", N02_004: "Old Operator" },
+      source: "synthetic",
+    }],
+  }, sections, []);
+  assert.equal(sections.length, 2);
+  const active = (date) => sections.find(({ properties }) => {
+    const bounds = run(`railServiceBounds(${JSON.stringify(properties)})`);
+    return isRailValid(bounds.valid_from, bounds.valid_to, date);
+  }).properties.N02_004;
+  assert.equal(active("2019-09-30"), "Old Operator");
+  assert.equal(active("2019-10-01"), "New Operator");
+  assert.equal(active(null), "New Operator");
+  const predecessor = sections.find(({ properties }) => properties.N02_004 === "Old Operator");
+  assert.equal(predecessor.properties.N02_001, "11");
+  assert.equal(predecessor.properties.N02_002, "2");
+  assert.equal(predecessor.properties.railway_class_code, "11");
+  assert.equal(predecessor.properties.institution_type_code, "2");
+  assert.strictEqual(sections[0].geometry, sections[1].geometry);
+});
+
 test("dijkstraFromCandidateSources skips edges invalid on the ride date", () => {
   const { run } = load();
   const dijkstra = run("dijkstraFromCandidateSources");
@@ -351,70 +386,39 @@ test("isRailValid treats empty-string bounds as missing", () => {
   assert.equal(isRailValid("", "2020-01-01", null), false);
 });
 
-test("station transfer connectors carry the stations' valid_to", () => {
-  const { run } = load();
-  const buildGraph = run("buildRouteGraphFromFeatures");
-  const addConnectors = run("addStationTransferConnectorEdges");
-  const section = (lineName, coordinates) => ({
-    type: "Feature",
-    properties: { N02_002: "1", N02_001: "11", N02_003: lineName, N02_004: "O" },
-    geometry: { type: "LineString", coordinates },
+function reviewedValidityGraph(sectionWindows) {
+  const point = [135, 35];
+  const section = (lineName, bounds) => ({
+    type: "Feature", properties: {
+      N02_002: "1", N02_001: "11", N02_003: lineName, N02_004: "O", ...bounds,
+    }, geometry: {type: "LineString", coordinates: [point, [135.001, lineName === "L1" ? 35 : 35.001]]},
   });
-  const station = (coord, validTo) => ({
-    type: "Feature",
-    properties: {
-      station_name: "S",
-      n02_group_code: "G1",
-      ...(validTo ? { valid_to: validTo } : {}),
-    },
-    geometry: { type: "Point", coordinates: coord },
-  });
-  const connectors = (validTo) => {
-    const graph = buildGraph([
-      section("L1", [[135.0, 35.0], [135.02, 35.0]]),
-      section("L2", [[135.001, 35.001], [135.001, 35.02]]),
-    ]);
-    addConnectors(graph, [station([135.0, 35.0], validTo), station([135.001, 35.001], null)]);
-    return [...graph.adjacency.values()].flat().filter((edge) => edge.is_station_connector);
-  };
-  const dated = connectors("2020-01-01");
-  assert.ok(dated.length > 0);
+  const endpoint = (lineName) => ({coordinate: point, identity: {operatorName: "O", lineName, railwayClassCode: "11"}});
+  return load().run("buildRouteGraphFromFeatures")([
+    ...sectionWindows.map(bounds => section("L1", bounds)), section("L2", {}),
+  ], [{id: "reviewed-validity", region: "jp", from: endpoint("L1"), to: endpoint("L2"),
+    evidence: ["https://operator.example/surveyed-junction"]}]);
+}
+
+test("reviewed physical junctions carry surveyed endpoint validity", () => {
+  const dated = [...reviewedValidityGraph([{valid_to: "2020-01-01"}]).adjacency.values()]
+    .flat().filter(edge => edge.physical_junction_id);
+  assert.equal(dated.length, 2);
   for (const edge of dated) assert.equal(edge.valid_to, "2020-01-01");
-  const undated = connectors(null);
-  assert.ok(undated.length > 0);
-  for (const edge of undated) assert.equal(edge.valid_to ?? null, null);
+  const undated = [...reviewedValidityGraph([{}]).adjacency.values()]
+    .flat().filter(edge => edge.physical_junction_id);
+  assert.equal(undated.length, 2);
+  for (const edge of undated) assert.equal(edge.valid_to, null);
 });
 
-test("colocated retired and current memberships keep a current transfer", () => {
-  const { run } = load();
-  const buildGraph = run("buildRouteGraphFromFeatures");
-  const addConnectors = run("addStationTransferConnectorEdges");
-  const section = (lineName, coordinates) => ({
-    type: "Feature",
-    properties: { N02_002: "1", N02_001: "11", N02_003: lineName, N02_004: "O" },
-    geometry: { type: "LineString", coordinates },
-  });
-  const station = (coord, bounds) => ({
-    type: "Feature",
-    properties: { station_name: "S", n02_group_code: "G1", ...bounds },
-    geometry: { type: "Point", coordinates: coord },
-  });
-  const retired = station([135.0, 35.0], { valid_to: "2020-01-01" });
-  const current = station([135.0, 35.0], { valid_from: "2020-01-01" });
-  const other = station([135.001, 35.001], {});
-  for (const shared of [[retired, current], [current, retired]]) {
-    const graph = buildGraph([
-      section("L1", [[135.0, 35.0], [135.02, 35.0]]),
-      section("L2", [[135.001, 35.001], [135.001, 35.02]]),
-    ]);
-    addConnectors(graph, [...shared, other]);
-    const connectors = [...graph.adjacency.values()]
-      .flat()
-      .filter((edge) => edge.is_station_connector);
-    const currentEdges = connectors.filter((edge) => (edge.valid_to ?? null) !== "2020-01-01");
-    assert.ok(currentEdges.length > 0, "current∩current connector");
-    for (const edge of currentEdges) assert.notEqual(edge.valid_to, "2020-01-01");
-    assert.ok(connectors.some((edge) => edge.valid_to === "2020-01-01"));
+test("colocated retired and current surveyed windows retain both reviewed junction windows", () => {
+  const retired = {valid_to: "2020-01-01"}, current = {valid_from: "2020-01-01"};
+  for (const windows of [[retired, current], [current, retired]]) {
+    const connectors = [...reviewedValidityGraph(windows).adjacency.values()]
+      .flat().filter(edge => edge.physical_junction_id);
+    assert.equal(connectors.length, 4);
+    assert.equal(connectors.filter(edge => edge.valid_to === "2020-01-01").length, 2);
+    assert.equal(connectors.filter(edge => edge.valid_from === "2020-01-01" && edge.valid_to === null).length, 2);
   }
 });
 
@@ -519,7 +523,7 @@ test("buildTrainRouteSolveContext keys on ride date and history revision", () =>
   assert.ok(undated.cacheKey.endsWith("|date:none|history:jp:none"), undated.cacheKey);
   assert.deepEqual({ ...dated.historyRevisions }, { jp: "none" });
   const serialized = get(train("2019-12-31"));
-  assert.equal(serialized.solver_version, "25");
+  assert.equal(serialized.solver_version, "27");
   assert.equal(serialized.ride_date, "2019-12-31");
   assert.equal(
     serialized.route_cache_digest,
@@ -531,32 +535,19 @@ test("buildTrainRouteSolveContext keys on ride date and history revision", () =>
   assert.match(slashDated.route_cache_digest, /^[a-z0-9]+$/);
 });
 
-test("history provenance follows the regions each train actually touches", () => {
-  const context = makeSandbox();
-  evaluateAppScripts(context);
+test("history provenance follows supported train regions and does not revive retired regions", () => {
+  const context = makeSandbox(); evaluateAppScripts(context);
   const run = (source) => vm.runInContext(source, context);
-  run(`loadRailHistoryOverlay({
-    schema_version: "1", revision: "ca-r1",
-    sections: [], stations: [], retirements: []
-  }, "ca")`);
-  run(`loadRailHistoryOverlay({
-    schema_version: "1", revision: "us-r2",
-    sections: [], stations: [], retirements: []
-  }, "us")`);
+  run(`loadRailHistoryOverlay({schema_version:"1",revision:"tw-r1",sections:[],stations:[],retirements:[]},"tw")`);
   const regionsFor = run("railHistoryRegionsForTrain");
   const revisionsFor = run("getRailHistoryRevisionsForRegions");
   const canonicalFor = run("canonicalRailHistoryRevisionsForRegions");
-  const caCode = "CA-VIA-VIA-RAIL-CANADA-119-CA-OFFICIAL-TORONTO";
-  const usCode = "US-AMTRAK-AMTRAK-NYP-US-OFFICIAL-NEW-YORK";
-  assert.deepEqual([...regionsFor({ region: "ca", stops: [{ n02_station_code: caCode }] })], ["ca"]);
-  const crossing = regionsFor({
-    region: "ca",
-    stops: [{ n02_station_code: caCode }, { n02_station_code: usCode }],
-  });
-  assert.deepEqual([...crossing], ["ca", "us"]);
-  assert.deepEqual({ ...revisionsFor(crossing) }, { ca: "ca-r1", us: "us-r2" });
-  assert.equal(canonicalFor(crossing), "ca:ca-r1|us:us-r2");
-  assert.deepEqual([...regionsFor({ stops: [] })], ["jp"]);
+  const taiwan = regionsFor({region: "tw", stops: []});
+  assert.deepEqual([...taiwan], ["tw"]);
+  assert.deepEqual({...revisionsFor(taiwan)}, {tw: "tw-r1"});
+  assert.equal(canonicalFor(taiwan), "tw:tw-r1");
+  assert.deepEqual([...regionsFor({stops: []})], ["jp"]);
+  assert.deepEqual([...regionsFor({region:"ca",stops:[{n02_station_code:"CA-VIA-RETIRED"}]})], ["jp"]);
 });
 
 test("an existing history section's solver validity strings are unchanged", () => {

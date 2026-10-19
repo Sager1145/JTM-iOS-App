@@ -1,0 +1,447 @@
+{
+  "format": "jtm-jounan-west-display-evidence-draft-v1",
+  "status": "accepted-display-cartography",
+  "reviewedAt": "2026-10-13",
+  "lineIDs": [
+    "jp-伊予鉄道-城南線",
+    "jp-伊予鉄道-城北線",
+    "jp-伊予鉄道-大手町線",
+    "jp-伊予鉄道-本町線",
+    "jp-伊予鉄道-花園線",
+    "jp-伊予鉄道-連絡線"
+  ],
+  "owners": {
+    "jp-伊予鉄道-城南線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "stationIDs": [
+        "008756",
+        "008761",
+        "008768",
+        "008764",
+        "008755",
+        "008754",
+        "008753",
+        "008749",
+        "008742",
+        "008738",
+        "008732",
+        "008729"
+      ]
+    },
+    "jp-伊予鉄道-城北線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "stationIDs": [
+        "008736",
+        "008734",
+        "008733",
+        "008730",
+        "008726",
+        "008720",
+        "008719",
+        "008725",
+        "008739"
+      ]
+    },
+    "jp-伊予鉄道-大手町線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stationIDs": [
+        "008761",
+        "008760",
+        "008758",
+        "008751",
+        "008739"
+      ]
+    },
+    "jp-伊予鉄道-本町線": {
+      "intervalIndexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "stationIDs": [
+        "008719",
+        "008727",
+        "008735",
+        "008748",
+        "008756"
+      ]
+    },
+    "jp-伊予鉄道-花園線": {
+      "intervalIndexes": [
+        0
+      ],
+      "stationIDs": [
+        "008772",
+        "008768"
+      ]
+    },
+    "jp-伊予鉄道-連絡線": {
+      "intervalIndexes": [
+        0
+      ],
+      "stationIDs": [
+        "008736",
+        "008742"
+      ]
+    }
+  },
+  "policy": {
+    "representation": "display-cartography",
+    "sourceApplyEnabled": true,
+    "physicalTopologyChanged": false,
+    "legalInventoryWarning": {
+      "lineID": "jp-伊予鉄道-城南線",
+      "intervalIndex": 0,
+      "deflectionDegrees": 174.05,
+      "junction": [
+        132.7587421412088,
+        33.839930180417824
+      ],
+      "interpretation": "legal-inventory transition at the literal south-facing non-station junction",
+      "derivedParts": [
+        "H1-to-junction",
+        "reversed-west-arm"
+      ],
+      "constraints": [
+        "Both derived parts are individually continuous.",
+        "Do not redraw the inventory transition as a display U.",
+        "Do not claim a train-passable H1-to-west movement."
+      ]
+    },
+    "sharedAliasRules": {
+      "lineScoped": true,
+      "exactShared": {
+        "008736": [
+          "jp-伊予鉄道-城北線",
+          "jp-伊予鉄道-連絡線"
+        ],
+        "008742": [
+          "jp-伊予鉄道-城南線",
+          "jp-伊予鉄道-連絡線"
+        ],
+        "008756": [
+          "jp-伊予鉄道-城南線",
+          "jp-伊予鉄道-本町線"
+        ],
+        "008739": [
+          "jp-伊予鉄道-城北線",
+          "jp-伊予鉄道-大手町線"
+        ]
+      },
+      "noGlobalStationIDCollapse": true
+    },
+    "h1DisplayNormalization": {
+      "distanceMetres": 0.0003796680270841466,
+      "from": [
+        132.75875461,
+        33.84042974
+      ],
+      "to": [
+        132.75875460615157,
+        33.84042973881059
+      ],
+      "jounanLocations": [
+        "displayStationCoordinates.008756",
+        "displayIntervalCoordinates.0[0]"
+      ],
+      "physicalChanged": false,
+      "extraConnectorVertexAdded": false
+    },
+    "acceptanceGate": "accepted-display-cartography"
+  },
+  "acceptanceScope": {
+    "lineIDs": [
+      "jp-伊予鉄道-城南線",
+      "jp-伊予鉄道-城北線",
+      "jp-伊予鉄道-大手町線",
+      "jp-伊予鉄道-本町線",
+      "jp-伊予鉄道-花園線",
+      "jp-伊予鉄道-連絡線"
+    ],
+    "intervalCount": 29,
+    "baselineViewpointCount": 70,
+    "candidateViewpointCount": 71,
+    "candidateReport": {
+      "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+      "lineIDs": [
+        "jp-伊予鉄道-城南線",
+        "jp-伊予鉄道-城北線",
+        "jp-伊予鉄道-大手町線",
+        "jp-伊予鉄道-本町線",
+        "jp-伊予鉄道-花園線",
+        "jp-伊予鉄道-連絡線"
+      ],
+      "intervalCount": 29,
+      "viewpointCount": 71,
+      "panelCount": 213,
+      "inspectorReports": [
+        {
+          "id": "primary",
+          "reportFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/primary/current-equivalent-report.json",
+          "reportSha256": "3ab788a4d6c11ba7e36efb3b69764b0f5eabf5640bcb728bf7464001d79bd57f",
+          "reviewFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/primary/current-equivalent-review.md",
+          "reviewSha256": "f398612dfc2e5d9ac71e7f2de1bcd68376aa0af034911552522cc6eb08b4e18c"
+        },
+        {
+          "id": "secondary",
+          "reportFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/secondary/current-equivalent-report.json",
+          "reportSha256": "0a38956a77af2e076d90d65cd2f5cbd3b8d849540ea88becb70e53d3c1ee1783",
+          "reviewFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/secondary/current-equivalent-review.md",
+          "reviewSha256": "adbf4178a6650c498a030085c0ebbeb5fbd79b666e8f7b4ea80049f1a1922634"
+        },
+        {
+          "id": "third",
+          "reportFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/third/current-equivalent-report.json",
+          "reportSha256": "81ade2a00a86583a38febd4341a76168154590a3755140204a583d0960853230",
+          "reviewFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/native-candidate/third/current-equivalent-review.md",
+          "reviewSha256": "cb84e28ba9fdf7b8773b672f7bc5d0b4e0746584e86c6e5a372ee97bf2eeffd3"
+        }
+      ],
+      "mainReceipt": {
+        "file": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/main-candidate/main-native-review.md",
+        "sha256": "e0d246c2baf2117ddec219be13f5117ff896dc1baa3971ea9e99362470a98d26",
+        "coverage": {
+          "lineIDs": [
+            "jp-伊予鉄道-城南線",
+            "jp-伊予鉄道-城北線",
+            "jp-伊予鉄道-大手町線",
+            "jp-伊予鉄道-本町線",
+            "jp-伊予鉄道-花園線",
+            "jp-伊予鉄道-連絡線"
+          ],
+          "intervalCount": 29,
+          "completeIntervals": true,
+          "sharedStationDirections": true,
+          "fullLineContext": true
+        }
+      }
+    },
+    "requiredActualReceipts": {
+      "inspectors": 3,
+      "main": true
+    }
+  },
+  "candidate": {
+    "format": "jtm-jounan-west-display-candidate-v1",
+    "manifest": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/manifest.json",
+    "manifestFormat": "jtm-jounan-west-display-candidate-manifest-v3",
+    "manifestSha256": "ff5a5158f35444562f542042262719a15f67664c3e98a992c3807d854bec4854",
+    "candidateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3/candidate.json",
+    "candidateSha256": "e5c87f0e10dfa935f766a39fdd8d2cc87b96bfa521bae4dfbef3c609a100a491",
+    "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/jounan-group-display-candidate-v3",
+    "rawProposalReview": {
+      "status": "accepted-raw-cartography-only",
+      "nativeCandidate": "accepted-three-inspectors-current-equivalent-full-group",
+      "mainCandidate": "accepted-29-complete-interval-pairs-and-full-context",
+      "clarityWarnings": [
+        "Johoku Red Cross Hospital frame midpoint",
+        "Johoku Shimizumachi frame midpoint",
+        "Johoku Hommachi 6-chome east-west face midpoint"
+      ]
+    }
+  },
+  "baseline": {
+    "packageIndices": {
+      "jp-伊予鉄道-城南線": 112,
+      "jp-伊予鉄道-城北線": 111,
+      "jp-伊予鉄道-大手町線": 113,
+      "jp-伊予鉄道-本町線": 114,
+      "jp-伊予鉄道-花園線": 116,
+      "jp-伊予鉄道-連絡線": 117
+    },
+    "intervalCounts": {
+      "jp-伊予鉄道-城南線": 11,
+      "jp-伊予鉄道-城北線": 8,
+      "jp-伊予鉄道-大手町線": 4,
+      "jp-伊予鉄道-本町線": 4,
+      "jp-伊予鉄道-花園線": 1,
+      "jp-伊予鉄道-連絡線": 1
+    },
+    "stationIDs": {
+      "jp-伊予鉄道-城南線": [
+        "008756",
+        "008761",
+        "008768",
+        "008764",
+        "008755",
+        "008754",
+        "008753",
+        "008749",
+        "008742",
+        "008738",
+        "008732",
+        "008729"
+      ],
+      "jp-伊予鉄道-城北線": [
+        "008736",
+        "008734",
+        "008733",
+        "008730",
+        "008726",
+        "008720",
+        "008719",
+        "008725",
+        "008739"
+      ],
+      "jp-伊予鉄道-大手町線": [
+        "008761",
+        "008760",
+        "008758",
+        "008751",
+        "008739"
+      ],
+      "jp-伊予鉄道-本町線": [
+        "008719",
+        "008727",
+        "008735",
+        "008748",
+        "008756"
+      ],
+      "jp-伊予鉄道-花園線": [
+        "008772",
+        "008768"
+      ],
+      "jp-伊予鉄道-連絡線": [
+        "008736",
+        "008742"
+      ]
+    },
+    "lineSha256": {
+      "jp-伊予鉄道-城南線": "0ae451b3d3584e775fc7d2114515979649cac83d6a99362c80c6049f0f5de866",
+      "jp-伊予鉄道-城北線": "01f6aed3c7da5707a6437fd53ade1c2d9263130f46b271c35c741cec62f1994e",
+      "jp-伊予鉄道-大手町線": "355a12ed5981797d8d981e44f5660bda655818afdcf8c980f102850a9858208e",
+      "jp-伊予鉄道-本町線": "9356718990c9afd7b31bcb1659c37087c94cd77c2dd9a103770f969fad1ad96f",
+      "jp-伊予鉄道-花園線": "6debf0745328ea727a4f32dfefc0e8fbc5811faffb7dbd097db2d8cb18ca90b2",
+      "jp-伊予鉄道-連絡線": "6b53281e765e1cec10a3c852f2a8942d7f797131b6f6ee945564f885c23a3af5"
+    },
+    "sourceIntervalSha256": {
+      "jp-伊予鉄道-城南線": "cdc9cb78fc3b5ba94323a82b0e1a8e2b59e88b2a35bf1300ad9a545eb390f47c",
+      "jp-伊予鉄道-城北線": "bc3c6015c656a11f9a8e09f9b933d7d04f3d7aa122bcea7a0965b45daa1617f9",
+      "jp-伊予鉄道-大手町線": "daeeef41c2501a8a64f39e32695fa7c653413178db69fff1d63a8011ce510ec2",
+      "jp-伊予鉄道-本町線": "141e7f97061cd59f46d0c7299cd1629c6cc931097c2b4a0b96edc71e36c9a8d9",
+      "jp-伊予鉄道-花園線": "a5de9e4cfe8af6b49491e72de9b4a1252a3981100ac0dc6261ce83236bf5bf60",
+      "jp-伊予鉄道-連絡線": "76389a426cbe3d7983f4bfc36cb79206734fbd98cd36e041b123f44f79fa7acb"
+    },
+    "unownedDisplayIntervals": {
+      "jp-伊予鉄道-城南線": {},
+      "jp-伊予鉄道-城北線": {},
+      "jp-伊予鉄道-大手町線": {},
+      "jp-伊予鉄道-本町線": {},
+      "jp-伊予鉄道-花園線": {},
+      "jp-伊予鉄道-連絡線": {}
+    },
+    "unownedDisplayStations": {
+      "jp-伊予鉄道-城南線": {},
+      "jp-伊予鉄道-城北線": {},
+      "jp-伊予鉄道-大手町線": {},
+      "jp-伊予鉄道-本町線": {},
+      "jp-伊予鉄道-花園線": {},
+      "jp-伊予鉄道-連絡線": {}
+    },
+    "nativeRowsSha256": {
+      "jp-伊予鉄道-城南線": "114ee3e4b6d0f11d875f69782357c6485342cd36951155b4099d2c8b6d6255bd",
+      "jp-伊予鉄道-城北線": "98acbef4fad77717dd57b5e711bf4ab95412db3ee3d25712af854b18fdb1fce5",
+      "jp-伊予鉄道-大手町線": "065659d98875cf81d2ad1ce4f710a46eb98215489d59420b32dcd52205957404",
+      "jp-伊予鉄道-本町線": "afd81179efabf1409ace157419083e3bccbcbc61d07dceeacea414b5d9daba55",
+      "jp-伊予鉄道-花園線": "4e528755173992ed5ceb74fd5fa8334f9ebf2c7b9a9b5ef1bd147887de27ef92",
+      "jp-伊予鉄道-連絡線": "e5e853181d421937cda0801f84c04732e576b03af4f853c50c1978a289ffb7b1"
+    },
+    "measuredReferences": {},
+    "packageFileSha256": "a128bf177b2a13b0dd27e9520c04bc96691a0972bfdbdb9bfb939d85d2391942",
+    "lanesFileSha256": "63a39f601f6e63cf068123c0298d3912ecc58a0cbed3112478b1cc862235d7e4"
+  },
+  "nativeReplay": {
+    "status": "derived-candidate-only-not-native-reviewed",
+    "candidateRowsSha256": {
+      "jp-伊予鉄道-城南線": "22512e659a0b5bfd6c162ad4cc3fe5526e44761bec89088c31532b98dd10ac19",
+      "jp-伊予鉄道-城北線": "c0c3cf1daa717425085dc3d5f684743be7a97ee2c05b489198c941f45a7fe1cc",
+      "jp-伊予鉄道-大手町線": "cfe4aff3c349aeb90b1b0bc3c76fbfaca6ead43e0c957cbcb78db25576cc7421",
+      "jp-伊予鉄道-本町線": "d8853d76a7db7ae34b4eafd02b29f771f65361e67db1bd4e5c5811ddc8b1f917",
+      "jp-伊予鉄道-花園線": "573af37e8a1fb7b41a8171ff5c6d58a388920e82f1a98c20edc761fa864bb6f0",
+      "jp-伊予鉄道-連絡線": "5cd043867d4d5014598871ee823771399ff24f862f53217f9395fe2d2a003b62"
+    },
+    "summaries": {
+      "jp-伊予鉄道-城南線": [
+        {
+          "partIndex": 0,
+          "pointCount": 12,
+          "metres": 49.9,
+          "classification": "complex"
+        },
+        {
+          "partIndex": 1,
+          "pointCount": 532,
+          "metres": 3520.7,
+          "classification": "station-approach/groomed"
+        }
+      ],
+      "jp-伊予鉄道-城北線": [
+        {
+          "partIndex": 0,
+          "pointCount": 980,
+          "metres": 2714.8,
+          "classification": "station-approach/groomed"
+        }
+      ],
+      "jp-伊予鉄道-大手町線": [
+        {
+          "partIndex": 0,
+          "pointCount": 204,
+          "metres": 1406.1,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-本町線": [
+        {
+          "partIndex": 0,
+          "pointCount": 194,
+          "metres": 1423.4,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-花園線": [
+        {
+          "partIndex": 0,
+          "pointCount": 58,
+          "metres": 370.5,
+          "classification": null
+        }
+      ],
+      "jp-伊予鉄道-連絡線": [
+        {
+          "partIndex": 0,
+          "pointCount": 53,
+          "metres": 166.1,
+          "classification": null
+        }
+      ]
+    }
+  }
+}

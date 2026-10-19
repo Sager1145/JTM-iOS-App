@@ -22,16 +22,39 @@ const stationRenameEvents = JSON.parse(fs.readFileSync(
 assert.equal(stationRenameEvents.length, 5, "Five reviewed 2019 station renames");
 const historicalStations = JSON.parse(fs.readFileSync(
   new URL("../../../data/rail-history.json", import.meta.url), "utf8")).stations;
+const openingStationAliases = new Map([
+  ["東部丘陵線|愛知高速交通|万博八草", "八草"],
+  ["成田空港線|京成電鉄|空港第二ビル", "空港第2ビル"],
+]);
 function priorDay(iso) {
   const date = new Date(iso + "T00:00:00Z");
   date.setUTCDate(date.getUTCDate() - 1);
   return date.toISOString().slice(0, 10);
 }
 function openingStationCode(name, line, operator) {
-  const codes = [...new Set(currentStations.filter(({ properties: p }) =>
+  let codes = [...new Set(currentStations.filter(({ properties: p }) =>
     p.station_name.normalize("NFKC") === name.normalize("NFKC") &&
       p.line_name === line && p.operator === operator
   ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+  if (codes.length === 0) {
+    const currentAliases = temporalEvents.filter((event) => event.kind === "station_rename" &&
+      event.before?.station === name && event.after?.line === line &&
+      event.after?.operator === operator).map((event) => event.after.station);
+    codes = [...new Set(currentStations.filter(({ properties: p }) =>
+      currentAliases.includes(p.station_name) && p.line_name === line && p.operator === operator
+    ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+  }
+  if (codes.length === 0) {
+    const currentName = openingStationAliases.get(`${line}|${operator}|${name}`);
+    codes = [...new Set(currentStations.filter(({ properties: p }) =>
+      p.station_name === currentName && p.line_name === line && p.operator === operator
+    ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+  }
+  if (codes.length === 0) {
+    codes = [...new Set(currentStations.filter(({ properties: p }) =>
+      p.station_name.normalize("NFKC") === name.normalize("NFKC") && p.operator === operator
+    ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+  }
   assert.equal(codes.length, 1, "One surveyed station membership for " + line + ": " + name);
   return codes[0];
 }
@@ -50,13 +73,25 @@ function transferStationCode(event, side, name) {
     p.history_id?.startsWith(sourceId + ".") && p.station_name === name &&
       p.line_name === event.before.line && p.operator === event.before.operator
   ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+  if (shared && codes.length === 0 && currentStations.some(({ properties: p }) =>
+    p.station_name === name && p.n02_station_code === shared.n02_station_code)) {
+    return shared.n02_station_code;
+  }
   // A transfer endpoint can retain an active predecessor membership when the
   // old railway continues beyond the transferred interval (直江津 on JR's
   // 信越線 is one such junction). The history compiler correctly does not
   // duplicate that still-current station into the overlay, so fall back to
   // the uniquely surveyed current membership for the predecessor identity.
-  if (!shared && codes.length === 0)
+  if (!shared && codes.length === 0) {
+    // Identity-period transfers reuse the successor's current station
+    // membership and project its earlier line/operator identity at solve time.
+    const successorCodes = [...new Set(currentStations.filter(({ properties: p }) =>
+      p.station_name === name && p.line_name === event.after.line &&
+        p.operator === event.after.operator
+    ).map(({ properties: p }) => p.n02_station_code).filter(Boolean))];
+    if (successorCodes.length === 1) return successorCodes[0];
     return openingStationCode(name, event.before.line, event.before.operator);
+  }
   assert.equal(codes.length, 1, "One surveyed predecessor membership for " + event.id + ": " + name);
   if (shared) assert.equal(codes[0], shared.n02_station_code, "Reviewed shared predecessor station code");
   return codes[0];
@@ -78,13 +113,39 @@ const partialOpeningControls = {
   "jp.opening.kyoto-tozai-rokujizo": ["小野", "醍醐"],
   "jp.opening.osaka-monorail-minami-ibaraki-kadomashi": ["宇野辺", "南茨木"],
 };
-const isolatedOpeningEvents = temporalEvents.filter((event) => event.kind === "opening" &&
+const automaticOpeningFixtureExemptions = new Map([
+  // The official endpoint is a non-passenger junction, so no passenger-station
+  // route can represent this event directly. Explicit approach fixtures below
+  // cover both sides of the same 2025-08-03 boundary instead.
+  ["jp.h2005.h1.hiroden-minami-matsukawacho",
+    "official endpoint is a non-passenger junction"],
+]);
+const allIsolatedOpeningEvents = temporalEvents.filter((event) => event.kind === "opening" &&
   event.geometry?.selector?.scope === "isolated_current_segment");
+for (const eventID of automaticOpeningFixtureExemptions.keys()) {
+  assert(allIsolatedOpeningEvents.some((event) => event.id === eventID),
+    "Automatic opening fixture exemption must name an isolated opening: " + eventID);
+}
+const isolatedOpeningEvents = allIsolatedOpeningEvents.filter((event) =>
+  !automaticOpeningFixtureExemptions.has(event.id));
+const isolatedOpeningControlEvents = isolatedOpeningEvents.filter((event) =>
+  partialOpeningControls[event.id] || (event.route_acceptance?.existing_from_station &&
+    event.route_acceptance?.control_to_station));
 const reviewedPartialOpenings = JSON.parse(fs.readFileSync(
   new URL("../../../data/jp-history-sources/reviewed-partial-opening-events.json",
     import.meta.url), "utf8")).events;
-assert.deepEqual(isolatedOpeningEvents.map((event) => event.id).sort(),
-  reviewedPartialOpenings.map((event) => event.id).sort(), "All reviewed isolated partial openings");
+const reviewedMlitSelectors = JSON.parse(fs.readFileSync(
+  new URL("../../../data/jp-history-sources/reviewed-mlit-row-selectors.json",
+    import.meta.url), "utf8")).reviews;
+const reviewedMlitPartialOpeningIDs = reviewedMlitSelectors.filter((review) =>
+  review.kind === "opening" && review.selector?.scope === "isolated_current_segment"
+).map((review) => review.event_id);
+assert.deepEqual(allIsolatedOpeningEvents.map((event) => event.id).sort(),
+  [...new Set([
+    ...reviewedPartialOpenings.map((event) => event.id),
+    ...reviewedMlitPartialOpeningIDs,
+    ...allIsolatedOpeningEvents.filter((event) => !event.official_event_id).map((event) => event.id),
+  ])].sort(), "All reviewed isolated partial openings");
 
 const ROUTES = [
   {
@@ -104,7 +165,7 @@ const ROUTES = [
   },
   ...temporalEvents.filter((event) => event.kind === "opening" &&
       event.geometry.selector.scope === "whole_identity").map((event) => ({
-      id: event.id.replace("jp.opening.", ""),
+      id: event.id.replace("jp.opening.", "").replaceAll(".", "-"),
       from: event.segment.from_station,
       // MLIT's 支線接続点 is a track junction, not a passenger station.
       // Exercise that opening using the nearest real station on the branch.
@@ -121,32 +182,33 @@ const ROUTES = [
   ...isolatedOpeningEvents.map((event) => {
     const currentIdentity = event.after || { line: event.line, operator: event.operator };
     return {
-      id: event.id.replace("jp.opening.", ""),
+      id: event.id.replace("jp.opening.", "").replaceAll(".", "-"),
       from: event.segment.from_station,
       to: event.segment.to_station,
       from_n02_station_code: openingStationCode(event.segment.from_station,
         currentIdentity.line, currentIdentity.operator),
       to_n02_station_code: openingStationCode(event.segment.to_station,
         currentIdentity.line, currentIdentity.operator),
-      line_names: [event.line], operator_names: [event.operator],
+      line_names: [...new Set([event.line, currentIdentity.line])],
+      operator_names: [...new Set([event.operator, currentIdentity.operator])],
       ride_date: event.service_periods[0][0], event_date: event.service_periods[0][0],
       opening: true, history_id: event.id,
     };
   }),
-  ...isolatedOpeningEvents.map((event) => {
+  ...isolatedOpeningControlEvents.map((event) => {
     const currentIdentity = event.after || { line: event.line, operator: event.operator };
     const acceptance = event.route_acceptance;
     const endpoints = partialOpeningControls[event.id] || (acceptance?.existing_from_station &&
       acceptance.control_to_station ? [acceptance.existing_from_station, acceptance.control_to_station] : null);
-    assert(endpoints, "Shared-station control for " + event.id);
     return {
-      id: event.id.replace("jp.opening.", "") + "-shared-control",
+      id: event.id.replace("jp.opening.", "").replaceAll(".", "-") + "-shared-control",
       from: endpoints[0], to: endpoints[1],
       from_n02_station_code: openingStationCode(endpoints[0],
         currentIdentity.line, currentIdentity.operator),
       to_n02_station_code: openingStationCode(endpoints[1],
         currentIdentity.line, currentIdentity.operator),
-      line_names: [event.line], operator_names: [event.operator],
+      line_names: [...new Set([event.line, currentIdentity.line])],
+      operator_names: [...new Set([event.operator, currentIdentity.operator])],
       ride_date: priorDay(event.service_periods[0][0]),
       event_date: event.service_periods[0][0], opening_control: true, history_id: event.id,
     };
@@ -209,6 +271,24 @@ const ROUTES = [
     history_id: "jp.jrh.sassho.iryodaigaku-shintotsukawa",
     pinned: [{ role: "legal-closure-2020-05-07", date: "2020-05-07" }],
   },
+  // Pin both station memberships so the fixture distinguishes the retired
+  // street approach from the replacement elevated approach at the boundary.
+  {
+    id: "hiroden-ekimae-old-approach", from: "広島駅", to: "的場町",
+    from_n02_station_code: "008038", to_n02_station_code: "008063",
+    line_names: ["本線"], operator_names: ["広島電鉄"],
+    ride_date: "2025-08-02", event_date: "2025-08-03",
+    history_id: "jp.h2005.h1.hiroden-ekimae-old-closure",
+    boundary_expectations: { before: "solved", at: "solved", path_change: true },
+  },
+  {
+    id: "hiroden-ekimae-new-approach", from: "広島駅", to: "松川町",
+    from_n02_station_code: "008038", to_n02_station_code: "010190",
+    line_names: ["本線", "皆実線"], operator_names: ["広島電鉄"],
+    ride_date: "2025-08-03", event_date: "2025-08-03",
+    history_id: "jp.h2005.h1.hiroden-minami-matsukawacho",
+    boundary_expectations: { before: "unsolvable", at: "solved" },
+  },
 ];
 
 const CHILD = `
@@ -225,6 +305,7 @@ const readJson = (file) => JSON.parse(fs.readFileSync(path.join(appDir, "data", 
 const overlay = readJson("rail-history.json");
 
 function eventDate(route) {
+  if (route.boundary_expectations) return route.event_date;
   if (route.service_end) {
     const entries = [...overlay.sections, ...overlay.stations].filter((feature) =>
       feature.properties.history_id.startsWith(route.history_id));
@@ -244,21 +325,30 @@ function eventDate(route) {
     return route.event_date;
   }
   if (route.name_side) {
-    assert(overlay.stations.some((feature) =>
+    const hasHistoricalStation = overlay.stations.some((feature) =>
       feature.properties.history_id.startsWith(route.history_id + ".") &&
         feature.properties.station_name === route.old_name &&
-        feature.properties.valid_to === route.event_date),
-    "Rename boundary must have the old surveyed station: " + route.id);
-    assert(overlay.retirements.some((entry) =>
+        feature.properties.valid_to === route.event_date);
+    const hasIdentityPeriod = overlay.identity_periods?.some((period) =>
+      period.history_id?.startsWith(route.history_id + ".identity.") &&
+        period.valid_to === route.event_date && period.as?.N02_005 === route.old_name);
+    assert(hasHistoricalStation || hasIdentityPeriod,
+      "Rename boundary must have the old surveyed station: " + route.id);
+    const hasSuccessorRetirement = overlay.retirements.some((entry) =>
       entry.history_id === route.history_id + ".current.stations" &&
-        entry.valid_from === route.event_date),
-    "Rename boundary must stamp the successor station: " + route.id);
+        entry.valid_from === route.event_date);
+    assert(hasSuccessorRetirement || hasIdentityPeriod,
+      "Rename boundary must stamp the successor station: " + route.id);
     return route.event_date;
   }
   if (route.identity_side) {
-    assert(overlay.sections.some((feature) =>
+    const hasHistoricalGeometry = overlay.sections.some((feature) =>
       feature.properties.history_id === route.history_id + ".sections" &&
-        feature.properties.valid_to === route.event_date),
+        feature.properties.valid_to === route.event_date);
+    const hasIdentityPeriod = overlay.identity_periods?.some((period) =>
+      period.history_id?.startsWith(route.history_id + ".identity.") &&
+        period.valid_to === route.event_date);
+    assert(hasHistoricalGeometry || hasIdentityPeriod,
       "Transfer boundary must have compiled predecessor geometry: " + route.id);
     return route.event_date;
   }
@@ -487,18 +577,19 @@ function runFixture(APP_DIR) {
   const scratch = fs.mkdtempSync(path.join(os.tmpdir(), "historical-routes-fixture-"));
   const childFile = path.join(scratch, "child.mjs");
   const outFile = path.join(scratch, "out.json");
+  const batchSize = Number(process.env.HISTORICAL_ROUTES_BATCH_SIZE || 1);
   try {
     fs.writeFileSync(childFile, CHILD);
     const result = { cases: [], eventBoundaries: [], pinned: [] };
     // Each dated graph retains a large national station/section index. Release
     // it between batches instead of retaining all opening eras in one child.
-    for (let start = 0; start < ROUTES.length; start += 1) {
+    for (let start = 0; start < ROUTES.length; start += batchSize) {
       execFileSync(process.execPath, ['--expose-gc', '--max-old-space-size=8192', childFile], {
       env: {
         ...process.env,
         HISTORICAL_ROUTES_APP_DIR: APP_DIR,
         HISTORICAL_ROUTES_OUT: outFile,
-        HISTORICAL_ROUTES_INPUTS: JSON.stringify(ROUTES.slice(start, start + 1)),
+        HISTORICAL_ROUTES_INPUTS: JSON.stringify(ROUTES.slice(start, start + batchSize)),
       },
       stdio: ["ignore", "ignore", "inherit"],
       });
@@ -559,6 +650,17 @@ export function build({ APP_DIR }) {
     const boundary = result.eventBoundaries.find((entry) => entry.id === route.id);
     assert.equal(boundary.before.outcome, "solved", route.id + " on final service day");
     assert.equal(boundary.at.outcome, "unsolvable", route.id + " after final service day");
+  }
+  for (const route of ROUTES.filter((route) => route.boundary_expectations)) {
+    const boundary = result.eventBoundaries.find((entry) => entry.id === route.id);
+    assert.equal(boundary.before.outcome, route.boundary_expectations.before,
+      route.id + " before boundary");
+    assert.equal(boundary.at.outcome, route.boundary_expectations.at,
+      route.id + " at boundary");
+    if (route.boundary_expectations.path_change) {
+      assert.notEqual(boundary.before.path_digest, boundary.at.path_digest,
+        route.id + " must stop using the retired approach");
+    }
   }
   for (const entry of result.pinned) {
     assert.equal(entry.outcome, PINNED_OUTCOME[entry.id], entry.id);

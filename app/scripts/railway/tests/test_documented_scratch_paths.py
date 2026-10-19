@@ -32,10 +32,7 @@ NA_PIPELINE = {
     'download-north-america-osm-crosscheck.py': ['--output-dir'],
     'download-north-america-osm-inventory.py': ['--output'],
     'download-north-america-osm-routes.py': ['--coverage', '--output-dir'],
-    'crosscheck-na-stations.py': ['--tile-dir', '--out'],
     'make-na-feed-registry.py': ['--scan'],
-    'report-na-coverage.py': ['--inventory', '--out'],
-    'audit-na-package.py': ['--out'],
     'build-north-america-rail-package.py': ['--source-dir'],
     'build-display-network.py': ['--output'],
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the five-region English catalog without treating attribution as verification."""
+"""Build the supported-region English catalog without treating attribution as verification."""
 import argparse
 from collections import Counter, defaultdict
 import hashlib
@@ -7,7 +7,7 @@ import json
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[2]
-REGIONS = ("jp", "tw", "hk", "mo", "kr")
+REGIONS = ("jp", "tw", "hk", "mo", "kr", "cn")
 VERIFIED_STATUSES = {"official_verified", "multiple_official_names"}
 
 
@@ -39,6 +39,12 @@ def build_region(region, package, readings, jp_catalog=None, overrides=None, mem
             source = f"data/station-readings{'-' + region if region != 'jp' else ''}.json"
             status = "official_dataset_candidate" if english else "missing"
             evidence = []
+            if region == "cn" and english and reading_key:
+                reading = readings["byCode"][reading_key]
+                if reading.get("englishSourceType") == "original-OSM":
+                    status = "osm_candidate"
+                    source = reading["englishSource"]
+                    evidence = reading.get("englishIdentityEvidence", [])
             if region == "jp":
                 row = jp_catalog["byCode"][code]
                 if row["ja"] != name:
@@ -56,7 +62,7 @@ def build_region(region, package, readings, jp_catalog=None, overrides=None, mem
                         # A reviewed spelling for one operator does not prove
                         # another operator's label at a shared station group.
                         status = "official_spelling_candidate"
-            elif not english and len(station) > 4 and station[4]:
+            elif region != "cn" and not english and len(station) > 4 and station[4]:
                 english = station[4]
                 status = "package_unverified"
                 source = f"public/rail/{region}-2025.json:nameRoma"
@@ -137,7 +143,7 @@ def build(app=APP):
     overrides = {region: {} for region in REGIONS}
     member_overrides = {region: {} for region in REGIONS}
     review_reasons = {}
-    for suffix in ("tw", "tw-afr", "kr", "jp", "jp-private", "jp-east", "jp-west", "jp-nankai", "jp-private-extra", "jp-shikoku", "jp-fukuoka", "next-official", "kr-second-pass"):
+    for suffix in ("cn", "tw", "tw-afr", "kr", "jp", "jp-private", "jp-east", "jp-west", "jp-nankai", "jp-private-extra", "jp-shikoku", "jp-fukuoka", "next-official", "kr-second-pass"):
         relative = f"data/station-english-verified-{suffix}.json"
         if not (app / relative).exists():
             continue
@@ -177,6 +183,12 @@ def build(app=APP):
     catalog = {"schema": "station-english/1", "note":
         "All shipped station groups and line memberships. official_verified and multiple_official_names have reviewed station-specific official evidence for every membership. Multiple official names retain the operator-specific spellings. Dataset attribution and English coverage alone do not prove official correctness.",
         "inputSha256": inputs, "byCountry": by_country}
+    return catalog, build_coverage(by_country, review_reasons)
+
+
+def build_coverage(by_country, review_reasons=None):
+    """Report retained regional catalogs without rereading national sources."""
+    review_reasons = review_reasons or {}
     report = {"schema": "station-english-coverage/1", "regions": {}, "unresolved": [], "unresolvedMemberships": []}
     for region, country in by_country.items():
         rows = country["byCode"]
@@ -209,7 +221,7 @@ def build(app=APP):
                 coverage["verifiedLineMemberships"] += sum(m["status"] == "official_verified" for m in memberships)
     report["allStationsHaveEnglish"] = all(s["withEnglish"] == s["stations"] for s in report["regions"].values())
     report["allStationsOfficialVerified"] = not report["unresolved"]
-    return catalog, report
+    return report
 
 
 def main():

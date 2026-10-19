@@ -109,27 +109,31 @@ class SourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'exact-day evidence'):
             source.validate(e)
 
-    def test_surveyed_period_inherits_code_before_stable_id_hash(self):
+    def test_surveyed_period_on_current_geometry_becomes_identity_period(self):
         e = historical_transfer_event()
-        old_section = {'type': 'Feature', 'properties': {'N02_003': 'Old L', 'N02_004': 'JR'},
+        old_section = {'type': 'Feature', 'properties': {
+            'N02_001': '11', 'N02_002': '2', 'N02_003': 'Old L', 'N02_004': 'JR'},
                        'geometry': {'type': 'LineString', 'coordinates': [[139, 35], [139.1, 35]]}}
         old_station = {'type': 'Feature', 'properties': {
-            'line_name': 'Old L', 'operator': 'JR', 'station_name': 'S'},
+            'line_name': 'Old L', 'operator': 'JR', 'station_name': 'S',
+            'railway_class_code': '11', 'institution_type_code': '2'},
             'geometry': {'type': 'Point', 'coordinates': [139, 35]}}
         for period in e['geometry']['historical_periods']:
             period['historical_sections'] = [copy.deepcopy(old_section)]
             period['historical_stations'] = [copy.deepcopy(old_station)]
         sections, stations = fixtures()
+        sections[0]['properties'].update(N02_001='12', N02_002='5')
+        stations[0]['properties'].update(railway_class_code='12', institution_type_code='5')
         stations[0]['properties']['n02_station_code'] = '001602'
         stations[0]['properties']['n02_group_code'] = '001602'
         compiled = source.compile_event(e, sections, stations)
-        self.assertEqual([f['properties']['n02_station_code'] for f in compiled['stations']],
-                         ['001602', '001602'])
-        self.assertTrue(all(f['properties']['station_code_basis'] == 'exact_current_geometry_identity'
-                            for f in compiled['stations']))
-        bases = [f['properties']['history_id'].rsplit('.period', 1)[0]
-                 for f in compiled['stations']]
-        self.assertEqual(bases[0], bases[1])
+        self.assertEqual(compiled['stations'], [])
+        self.assertEqual(len(compiled['identity_periods']), 4)
+        self.assertEqual(sum(p['match']['targets'] == ['stations']
+                             for p in compiled['identity_periods']), 2)
+        self.assertTrue(all(p['as']['N02_001'] == '11'
+                            and p['as']['N02_002'] == '2'
+                            for p in compiled['identity_periods']))
 
     def test_nonperiod_station_history_id_keeps_legacy_full_feature_hash(self):
         e = event()
@@ -189,18 +193,68 @@ class SourceTests(unittest.TestCase):
         sections, stations = fixtures()
         result = source.compile_event(e, sections, stations)
         self.assertEqual(result['sections'], [])
-        self.assertEqual(result['stations'][0]['properties']['station_name'], 'Old')
-        self.assertEqual(result['stations'][0]['properties']['valid_to'], '2010-04-01')
-        self.assertEqual(result['retirements'][0]['match']['targets'], ['stations'])
+        self.assertEqual(result['stations'], [])
+        self.assertEqual(result['retirements'], [])
+        self.assertEqual(result['identity_periods'][0]['as']['N02_005'], 'Old')
+        self.assertEqual(result['identity_periods'][0]['valid_to'], '2010-04-01')
+        self.assertEqual(result['identity_periods'][0]['match']['targets'], ['stations'])
+
+    def test_operator_change_without_predecessor_codes_requires_before_codes(self):
+        e = event()
+        e.update(kind='operator_transfer', date='2015-03-14',
+                 before={'line': 'Old L', 'operator': 'JR'},
+                 after={'line': 'L', 'operator': 'O'})
+        e.pop('service_periods')
+        e.pop('infrastructure_periods')
+        e['geometry']['selector'] = {'scope': 'whole_identity'}
+        with self.assertRaisesRegex(ValueError, r'before\.N02_001'):
+            source.compile_event(e, *fixtures())
+
+    def test_line_rename_omits_unchanged_class_codes(self):
+        e = event()
+        e.update(kind='line_rename', date='2015-03-14',
+                 before={'line': 'Old L', 'operator': 'O'},
+                 after={'line': 'L', 'operator': 'O'})
+        e.pop('service_periods')
+        e.pop('infrastructure_periods')
+        e['geometry']['selector'] = {'scope': 'whole_identity'}
+        sections, stations = fixtures()
+        sections[0]['properties'].update(N02_001='12', N02_002='5')
+        stations[0]['properties'].update(railway_class_code='12', institution_type_code='5')
+        result = source.compile_event(e, sections, stations)
+        self.assertTrue(result['identity_periods'])
+        self.assertTrue(all('N02_001' not in period['as'] and 'N02_002' not in period['as']
+                            for period in result['identity_periods']))
+
+    def test_same_geometry_station_copies_keep_explicit_predecessor_codes(self):
+        e = event()
+        e.update(kind='operator_transfer', date='2015-03-14',
+                 before={'line': 'Old L', 'operator': 'JR', 'N02_001': '11', 'N02_002': '2'},
+                 after={'line': 'L', 'operator': 'O'})
+        e.pop('service_periods')
+        e.pop('infrastructure_periods')
+        e['geometry']['selector'] = {'scope': 'whole_identity'}
+        sections, stations = fixtures()
+        sections[0]['properties'].update(N02_001='12', N02_002='5')
+        stations[0]['properties'].update(railway_class_code='12', institution_type_code='5',
+                                         n02_station_code='C')
+        result = source.compile_event(e, sections, stations)
+        self.assertEqual(result['stations'], [])
+        self.assertEqual(result['retirements'], [])
+        self.assertTrue(all(period['as']['N02_001'] == '11' and period['as']['N02_002'] == '2'
+                            for period in result['identity_periods']))
 
     def test_transfer_clones_old_identity_on_same_geometry(self):
         e = event()
         e.update(kind='operator_rename', date='2015-03-14', valid_from='1980-01-01',
-                 before={'line': 'Old L', 'operator': 'JR'}, after={'line': 'L', 'operator': 'O'})
+                 before={'line': 'Old L', 'operator': 'JR', 'N02_001': '11', 'N02_002': '2'},
+                 after={'line': 'L', 'operator': 'O'})
         result = source.compile_event(e, *fixtures())
-        self.assertEqual(result['sections'][0]['properties']['N02_004'], 'JR')
-        self.assertEqual(result['stations'][0]['properties']['line_name'], 'Old L')
-        self.assertEqual(result['retirements'][0]['valid_from'], '2015-03-14')
+        self.assertEqual(result['sections'], [])
+        self.assertEqual(result['stations'], [])
+        self.assertEqual(result['retirements'], [])
+        self.assertEqual({p['as']['N02_004'] for p in result['identity_periods']}, {'JR'})
+        self.assertEqual({p['as']['N02_003'] for p in result['identity_periods']}, {'Old L'})
 
     def test_ambiguous_station_selector_fails_instead_of_dating_neighbor(self):
         e = event()
@@ -253,14 +307,16 @@ class SourceTests(unittest.TestCase):
         old['properties'].pop('n02_station_code')
         e = event()
         e.update(kind='operator_transfer', date='2015-01-01', valid_from='1980-01-01',
-                 before={'line': 'Old', 'operator': 'Old O'},
+                 before={'line': 'Old', 'operator': 'Old O', 'N02_001': '11', 'N02_002': '2'},
                  after={'line': 'L', 'operator': 'O'})
         e['geometry']['historical_stations'] = [old]
         compiled = source.compile_event(e, sections, stations)
-        self.assertEqual(compiled['stations'][0]['properties']['n02_station_code'], 'C')
+        self.assertEqual(compiled['stations'], [])
+        self.assertEqual(len(compiled['identity_periods']), 2)
         old['geometry']['coordinates'][0] += 0.001
         compiled = source.compile_event(e, sections, stations)
         self.assertNotIn('n02_station_code', compiled['stations'][0]['properties'])
+        self.assertEqual(len(compiled['identity_periods']), 1)
 
     def test_partition_retains_measured_vertices_and_shared_cut(self):
         points = [[140, 35], [141, 36], [143, 38]]

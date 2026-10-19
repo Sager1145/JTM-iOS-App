@@ -33,18 +33,9 @@ header fields (``geometrySource.verifiedOfficialNetworks``,
 ``officialGeometryComparison.byLine/lines/maxDeviationMeters``,
 ``syntheticConnectors``) using the same rules ``build_region()`` uses to
 compute them, patches the feed's entry into ``na-2025-build-report.json``,
-and then -- for a real (non-dry-run) merge -- calls this repo's own
-``audit-na-package.py`` and ``make-na-line-review.py`` to regenerate
-``{region}-2025.audit.json``, ``na-2025.audit.json`` and
-``na-2025-line-review.{json,md}`` from the merged package, rather than
-reimplementing their logic here. ``{region}-2025.audit.md`` and
-``{region}-2025.sources.md`` have no such generator in this repo (they are
-hand-authored prose); this tool refreshes only their numeric lead paragraph
-from the freshly regenerated audit, leaving the rest of the prose alone.
-
-Usage::
-
-    merge-na-feed-build.py --candidate <dir> --feed lirr --region us [--dry-run]
+and retains the existing derived audit/review reports as historical evidence.
+The standalone audit generation pipeline was retired on 2026-10-10; a merge
+no longer refreshes those reports or certifies the changed package.
 """
 from __future__ import annotations
 
@@ -1453,43 +1444,8 @@ def run(cmd):
 
 
 def regenerate_derived(app_root, region, paths):
-    """Call this repo's own audit/review scripts on the merged package.
-
-    Regenerates {region}-2025.audit.json, na-2025.audit.json and
-    na-2025-line-review.{json,md} from the files already written to disk --
-    the same way a full rebuild's own pipeline produces them -- instead of
-    templating their content by hand.
-    """
-    audit_script = os.path.join(HERE, 'audit-na-package.py')
-    review_script = os.path.join(HERE, 'make-na-line-review.py')
-    reports = []
-
-    region_only = run([sys.executable, audit_script,
-                       '--package', paths['package'],
-                       '--registry', paths['registry'],
-                       '--out', paths['region_audit_json']])
-    reports.append(('%s-2025.audit.json' % region, region_only))
-
-    na_packages = [paths['package']]
-    if os.path.exists(paths['sibling_package']):
-        na_packages.append(paths['sibling_package'])
-    na_cmd = [sys.executable, audit_script]
-    for p in na_packages:
-        na_cmd += ['--package', p]
-    na_cmd += ['--registry', paths['registry'], '--out', paths['na_audit_json']]
-    na_run = run(na_cmd)
-    reports.append(('na-2025.audit.json', na_run))
-
-    review_cmd = [sys.executable, review_script]
-    for p in na_packages:
-        review_cmd += ['--package', p]
-    review_cmd += ['--audit', paths['na_audit_json'],
-                  '--build-report', paths['build_report'],
-                  '--output', paths['line_review_base']]
-    review_run = run(review_cmd)
-    reports.append(('na-2025-line-review.{json,md}', review_run))
-
-    return reports
+    """Legacy audit generation was retired; existing reports are historical only."""
+    return []
 
 
 def main(argv=None):
@@ -1576,13 +1532,7 @@ def merge_candidate(args):
         if result.returncode == 1:
             print(result.stdout, file=sys.stderr)
 
-    region_audit = load_json(paths['region_audit_json'])
-    region_stats = plan.build_report['regions'][args.region]
-    audit_md = refresh_audit_md(paths['region_audit_md'], plan.package,
-                               region_audit, region_stats['stationGroups'],
-                               region_stats['sections'], today)
-    write_text(paths['region_audit_md'], audit_md)
-    print('refreshed %s-2025.audit.md lead paragraph' % args.region)
+    print('Existing audit/review reports remain historical; no verification was run.')
 
     official, gtfs, narn, chord = source_band_counts(plan.package)
     sources_text = load_text(paths['region_sources_md'])

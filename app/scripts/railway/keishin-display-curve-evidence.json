@@ -1,0 +1,740 @@
+{
+  "format": "jtm-keishin-display-curve-v1",
+  "reviewedAt": "2026-10-10",
+  "crs": "WGS84",
+  "lineId": "jp-京阪電気鉄道-京津線",
+  "interval": 4,
+  "stations": [
+    "006037",
+    "005987"
+  ],
+  "start": [
+    135.85879,
+    35.00019
+  ],
+  "end": [
+    135.85877,
+    35.00142
+  ],
+  "replaced": [
+    [
+      135.85919,
+      35.00058
+    ]
+  ],
+  "rawSource": {
+    "path": "app/data/rail-sections.json",
+    "featureIndex": 1381,
+    "faultVertexIndex": 17,
+    "feature": {
+      "type": "Feature",
+      "properties": {
+        "N02_001": "21",
+        "N02_002": "4",
+        "N02_003": "京津線",
+        "N02_004": "京阪電気鉄道"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            135.8536,
+            34.99424
+          ],
+          [
+            135.85381,
+            34.99418
+          ],
+          [
+            135.85431,
+            34.9941
+          ],
+          [
+            135.85459,
+            34.99409
+          ],
+          [
+            135.85489,
+            34.99413
+          ],
+          [
+            135.85504,
+            34.99417
+          ],
+          [
+            135.85551,
+            34.99429
+          ],
+          [
+            135.85561,
+            34.99444
+          ],
+          [
+            135.85804,
+            34.99542
+          ],
+          [
+            135.85818,
+            34.99553
+          ],
+          [
+            135.8582,
+            34.99565
+          ],
+          [
+            135.85813,
+            34.99591
+          ],
+          [
+            135.85779,
+            34.99696
+          ],
+          [
+            135.8577,
+            34.99777
+          ],
+          [
+            135.85796,
+            34.99863
+          ],
+          [
+            135.85834,
+            34.99955
+          ],
+          [
+            135.85879,
+            35.00019
+          ],
+          [
+            135.85919,
+            35.00058
+          ],
+          [
+            135.85877,
+            35.00142
+          ],
+          [
+            135.85873,
+            35.00171
+          ],
+          [
+            135.85881,
+            35.00188
+          ],
+          [
+            135.85925,
+            35.00228
+          ],
+          [
+            135.85965,
+            35.00305
+          ],
+          [
+            135.85972,
+            35.00323
+          ],
+          [
+            135.85977,
+            35.00337
+          ],
+          [
+            135.85977,
+            35.00388
+          ],
+          [
+            135.85979,
+            35.00438
+          ],
+          [
+            135.86004,
+            35.00486
+          ]
+        ]
+      }
+    }
+  },
+  "source": {
+    "publisher": "OpenStreetMap contributors",
+    "role": "Secondary traced passenger railway geometry, cross-checked qualitatively against Apple passenger alignment and parent-viewed official GSI ort imagery; not a new MLIT survey or a certified imagery year.",
+    "cacheRepository": "Japan-Train-Map",
+    "cacheRelativePath": "outputs/osm-basemap-cache/E135N35.json",
+    "cacheAbsolutePath": "/Users/sager/Documents/GitHub/Japan-Train-Map/outputs/osm-basemap-cache/E135N35.json",
+    "fetchedAt": "2026-08-18T10:31:02.971Z",
+    "endpoint": "https://overpass-api.de/api/interpreter",
+    "licence": "ODbL 1.0",
+    "attribution": "© OpenStreetMap contributors",
+    "url": "https://www.openstreetmap.org/copyright"
+  },
+  "way": {
+    "id": 30662150,
+    "tags": {
+      "KSJ2:LIN": "京津線",
+      "electrified": "contact_line",
+      "frequency": "0",
+      "gauge": "1435",
+      "name": "京阪電気鉄道京津線",
+      "name:en": "Keihan Electoric Railway Keishin line",
+      "name:ja": "京阪電気鉄道京津線",
+      "name:ja-Hira": "けいはんでんきてつどうけいしんせん",
+      "name:ja-Latn": "Keihan denkitetsudō Keishin sen",
+      "note": "National-Land Numerical Information (Railway) 2007, MLIT Japan",
+      "note:ja": "国土数値情報（鉄道データ）平成19年　国土交通省",
+      "operator": "京阪電気鉄道",
+      "operator:ja": "京阪電気鉄道",
+      "passenger_lines": "2",
+      "railway": "rail",
+      "short_name": "京阪京津線",
+      "short_name:en": "Keihan Keishin line",
+      "short_name:ja": "京阪京津線",
+      "short_name:ja-Hira": "けいはんけいしんせん",
+      "short_name:ja-Latn": "Keihan Keishin sen",
+      "source": "KSJ2",
+      "source_ref": "http://nlftp.mlit.go.jp/ksj/jpgis/datalist/KsjTmplt-N02-v1_1.html",
+      "usage": "branch",
+      "voltage": "1500"
+    },
+    "coordinates": [
+      [
+        135.8578801,
+        34.9953677
+      ],
+      [
+        135.8579384,
+        34.9953973
+      ],
+      [
+        135.8580031,
+        34.9954424
+      ],
+      [
+        135.8580553,
+        34.9954806
+      ],
+      [
+        135.8581004,
+        34.9955315
+      ],
+      [
+        135.8581205,
+        34.9955704
+      ],
+      [
+        135.8581416,
+        34.9956291
+      ],
+      [
+        135.8581466,
+        34.9956903
+      ],
+      [
+        135.8581433,
+        34.9957614
+      ],
+      [
+        135.8581204,
+        34.9958344
+      ],
+      [
+        135.8580823,
+        34.9959294
+      ],
+      [
+        135.857686,
+        34.9968297
+      ],
+      [
+        135.85762,
+        34.9969785
+      ],
+      [
+        135.857584,
+        34.9970824
+      ],
+      [
+        135.8575638,
+        34.9972046
+      ],
+      [
+        135.857564,
+        34.9972837
+      ],
+      [
+        135.8575743,
+        34.9973878
+      ],
+      [
+        135.8575981,
+        34.9975298
+      ],
+      [
+        135.8576199,
+        34.9976603
+      ],
+      [
+        135.8576263,
+        34.9977077
+      ],
+      [
+        135.8576383,
+        34.9977638
+      ],
+      [
+        135.8576598,
+        34.9978412
+      ],
+      [
+        135.8576769,
+        34.9979037
+      ],
+      [
+        135.8577484,
+        34.9981239
+      ],
+      [
+        135.8578123,
+        34.9983247
+      ],
+      [
+        135.8578919,
+        34.9985409
+      ],
+      [
+        135.85795,
+        34.9987092
+      ],
+      [
+        135.8579917,
+        34.99883
+      ],
+      [
+        135.858015,
+        34.9988864
+      ],
+      [
+        135.8580736,
+        34.9990229
+      ],
+      [
+        135.8581118,
+        34.9991178
+      ],
+      [
+        135.8581777,
+        34.9992519
+      ],
+      [
+        135.858216,
+        34.9993212
+      ],
+      [
+        135.8582812,
+        34.9994397
+      ],
+      [
+        135.858384,
+        34.9996131
+      ],
+      [
+        135.8584514,
+        34.9997136
+      ],
+      [
+        135.8584925,
+        34.999768
+      ],
+      [
+        135.858659,
+        35.0000062
+      ],
+      [
+        135.8588544,
+        35.0002907
+      ],
+      [
+        135.8588961,
+        35.0003642
+      ],
+      [
+        135.8589369,
+        35.0004617
+      ],
+      [
+        135.8589583,
+        35.000544
+      ],
+      [
+        135.8589637,
+        35.0006217
+      ],
+      [
+        135.8589557,
+        35.0007271
+      ],
+      [
+        135.8589246,
+        35.0008753
+      ],
+      [
+        135.8588923,
+        35.0009618
+      ],
+      [
+        135.8588502,
+        35.0010637
+      ],
+      [
+        135.8588288,
+        35.0011158
+      ],
+      [
+        135.8587988,
+        35.0011888
+      ],
+      [
+        135.8587602,
+        35.0012836
+      ],
+      [
+        135.8587231,
+        35.0013891
+      ],
+      [
+        135.8586855,
+        35.0015071
+      ],
+      [
+        135.8586708,
+        35.0015988
+      ],
+      [
+        135.858674,
+        35.0016806
+      ],
+      [
+        135.8586998,
+        35.0017719
+      ],
+      [
+        135.8587391,
+        35.0018479
+      ],
+      [
+        135.8587914,
+        35.0019245
+      ],
+      [
+        135.8588487,
+        35.0019823
+      ],
+      [
+        135.8589116,
+        35.0020402
+      ],
+      [
+        135.8590653,
+        35.0021652
+      ],
+      [
+        135.8592417,
+        35.0023118
+      ],
+      [
+        135.8593528,
+        35.0023951
+      ],
+      [
+        135.8594107,
+        35.0024475
+      ],
+      [
+        135.8594658,
+        35.0025075
+      ],
+      [
+        135.8594806,
+        35.0025316
+      ],
+      [
+        135.8595137,
+        35.0025847
+      ],
+      [
+        135.8595355,
+        35.0026709
+      ],
+      [
+        135.8597808,
+        35.0034758
+      ],
+      [
+        135.8597968,
+        35.0035288
+      ],
+      [
+        135.8598068,
+        35.0035621
+      ],
+      [
+        135.8598113,
+        35.0036165
+      ],
+      [
+        135.8598079,
+        35.0036846
+      ],
+      [
+        135.8597979,
+        35.0037413
+      ],
+      [
+        135.8597857,
+        35.0038235
+      ],
+      [
+        135.8597688,
+        35.0038934
+      ],
+      [
+        135.8597567,
+        35.0039492
+      ],
+      [
+        135.8597443,
+        35.0040293
+      ],
+      [
+        135.8597424,
+        35.004095
+      ],
+      [
+        135.8597447,
+        35.0041479
+      ],
+      [
+        135.8597499,
+        35.0041876
+      ],
+      [
+        135.8597576,
+        35.0042293
+      ],
+      [
+        135.8597726,
+        35.0042843
+      ],
+      [
+        135.8597937,
+        35.004346
+      ],
+      [
+        135.8600311,
+        35.0050388
+      ],
+      [
+        135.8600944,
+        35.0052401
+      ],
+      [
+        135.8601333,
+        35.0053301
+      ],
+      [
+        135.860161,
+        35.0053844
+      ],
+      [
+        135.8601935,
+        35.0054396
+      ],
+      [
+        135.8602199,
+        35.0054772
+      ],
+      [
+        135.8602579,
+        35.0055217
+      ],
+      [
+        135.8602864,
+        35.0055535
+      ],
+      [
+        135.8603039,
+        35.0055673
+      ],
+      [
+        135.8603574,
+        35.0056129
+      ],
+      [
+        135.8604018,
+        35.0056427
+      ],
+      [
+        135.8604907,
+        35.0057042
+      ],
+      [
+        135.860973,
+        35.0060303
+      ],
+      [
+        135.8612989,
+        35.0062555
+      ],
+      [
+        135.8613538,
+        35.0062939
+      ],
+      [
+        135.8614293,
+        35.0063466
+      ]
+    ]
+  },
+  "surveySlice": [
+    38,
+    51
+  ],
+  "projectionAliases": {
+    "start": {
+      "original": [
+        135.85879,
+        35.00019
+      ],
+      "surveyEdge": [
+        37,
+        38
+      ],
+      "distanceMetres": 0.3785062911860757,
+      "scope": "Display-only seam alias; physical N02 seam retained. No interpolated projection vertex is added."
+    },
+    "end": {
+      "original": [
+        135.85877,
+        35.00142
+      ],
+      "surveyEdge": [
+        50,
+        51
+      ],
+      "distanceMetres": 5.006815850440958,
+      "scope": "Display-only seam alias; physical N02 seam retained. No interpolated projection vertex is added."
+    }
+  },
+  "corroboratingTrack": {
+    "id": 518501760,
+    "tags": {
+      "electrified": "contact_line",
+      "frequency": "0",
+      "gauge": "1435",
+      "name": "京阪電気鉄道京津線",
+      "name:en": "Keihan Electoric Railway Keishin line",
+      "name:ja": "京阪電気鉄道京津線",
+      "name:ja-Hira": "けいはんでんきてつどうけいしんせん",
+      "name:ja-Latn": "Keihan denkitetsudō Keishin sen",
+      "operator": "京阪電気鉄道",
+      "operator:ja": "京阪電気鉄道",
+      "passenger_lines": "2",
+      "railway": "rail",
+      "short_name": "京阪京津線",
+      "short_name:en": "Keihan Keishin line",
+      "short_name:ja": "京阪京津線",
+      "short_name:ja-Hira": "けいはんけいしんせん",
+      "short_name:ja-Latn": "Keihan Keishin sen",
+      "usage": "branch",
+      "voltage": "1500"
+    },
+    "pointCount": 98,
+    "scope": "Parallel passenger track corroborates rounded curve; geometry is not averaged or substituted. No direction or crossover permission inferred."
+  },
+  "displayPolicy": "Replace only the isolated off-track N02 vertex inside reviewed seams with exact ordered nodes38–50 of one existing passenger way30662150. Retain N02 seams as display aliases within15m; preserve physical N02 segments, mileage, station anchors/IDs, topology and dates.",
+  "sourceOwner": "Raw N02feature1381 vertex17 is copied by the external rebuild-japan-package-geometry.py builder; display grooming retains the inherited kink. No endpoint override creates it.",
+  "nativePartBaseline": [
+    [
+      "jp-京阪電気鉄道-京津線",
+      0,
+      0,
+      5,
+      112,
+      7492.4,
+      null,
+      null,
+      []
+    ]
+  ],
+  "historicalUncertainty": "OSM cache fetch date is known; parent-viewed GSI ort image capture year was not certified. This display correction asserts no historical track change date.",
+  "candidateReview": {
+    "lineID": "jp-京阪電気鉄道-京津線",
+    "intervalIndex": 4,
+    "partIndex": 0,
+    "chosenWay": 30662150,
+    "surveySlice": [
+      38,
+      51
+    ],
+    "insertedSourceVertices": 13,
+    "seamAliases": {
+      "start": {
+        "metres": 0.3780808766257867,
+        "sourceEdge": 37
+      },
+      "end": {
+        "metres": 5.001116105699776,
+        "sourceEdge": 50
+      },
+      "metric": "Local metric projection using mean Earth radius; not Apple pixel residual"
+    },
+    "partVertexIndices": {
+      "oldStart": 84,
+      "oldEnd": 86,
+      "newStart": 84,
+      "newEnd": 98
+    },
+    "partMeasuresMetres": {
+      "oldStart": 6036.565709734248,
+      "oldEnd": 6194.316946204266,
+      "newStart": 6036.565709734248,
+      "newEnd": 6181.81645849559,
+      "oldTotal": 7492.403846043322,
+      "newTotal": 7479.903358334646,
+      "metric": "Production display equirectangular ruler,111320m/degree; not physical mileage"
+    },
+    "nativePartRows": [
+      [
+        "jp-京阪電気鉄道-京津線",
+        0,
+        -1,
+        -1,
+        124,
+        7479.9,
+        "station-approach/groomed"
+      ]
+    ],
+    "scope": "Source diagnosis and repeatable scratch display candidate; no native visual recheck or shared integration"
+  },
+  "verification": {
+    "command": "node --test app/scripts/railway/tests/keishin-display-curve.test.mjs",
+    "initialRed": "Unchanged package failed missing rounded display override and changed-source refusal; unrelated preservation already passed.",
+    "result": "5 focused Node tests passed on 2026-10-10. Existing source/geometry/cache checks still pass; dependency refresh updates only established hash references and preserves all station/membership/identity evidence. Shared --apply was not executed by the preparing subagent.",
+    "nativeLimits": "Existing native display.png and smooth.png were viewed; candidate native capture, pixel residual, image-year certification and runtime route validation were not performed.",
+    "counterpartReview": "JS rail-network.js displayLineForLine/displayIntervalCoordinates and Swift CompactPackage.decodeDisplayIntervals plus DisplayParts.parts consume the separate display intervals; canonical RailIntervalCodes continues to decode physical segments.",
+    "swiftRegression": "ios/RailKit/Tests/RailCoreTests/KeishinDisplayCurveTests.swift: LoadedPackage keeps physical N02 apex/mileage while display interval4 carries all13exact OSM curve nodes and all other intervals remain unchanged. Source-reviewed, not compiled or executed here.",
+    "appliedByPreparingSubagent": false
+  },
+  "integration": {
+    "default": "Scratch candidates only, with --dry-run synonym.",
+    "applyCommand": "node app/scripts/railway/repair-keishin-display-curve.mjs --apply",
+    "ownedDestinations": [
+      "app/public/rail/jp-2025.json",
+      "app/public/rail/display-lanes.json",
+      "app/data/station-english-verified-jp-east.json",
+      "app/data/station-name-sources/jp-kana-evidence.json",
+      "app/data/station-english.json",
+      "app/data/station-names-coverage.json"
+    ],
+    "dependencyHelper": "repair-three-reversal-extents.mjs refreshDependencyReferences and applyPreparedWrites",
+    "checks": "Exact input text snapshots for package, lanes, evidence, raw N02, selected OSM cache, shared corridors and directly used code/helper files are checked before the first shared write. Only changed owned destination text is written; cache/raw survey remain read-only.",
+    "owner": "Parent reviews and applies; parent owns the focused Swift run and native capture."
+  }
+}

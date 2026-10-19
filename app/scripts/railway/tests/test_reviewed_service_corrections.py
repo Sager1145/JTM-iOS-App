@@ -87,7 +87,7 @@ class ReviewedServiceCorrectionTests(unittest.TestCase):
             self.selector_reviews[correction["official_event_id"]]["event_id"], event["id"]
         )
 
-    def test_nose_operator_dates_preserve_canonical_and_reject_conflicting_mlit_row(self):
+    def test_nose_operator_dates_preserve_canonical_while_reconciling_mlit_row(self):
         correction = self.corrections["jp.nose.cable"]
         event = self.events[correction["canonical_event_id"]]
         proposed = correction["proposed"]
@@ -104,7 +104,10 @@ class ReviewedServiceCorrectionTests(unittest.TestCase):
             self.official[correction["official_event_id"]]["effective_date"],
             proposed["legal_closure_date"],
         )
-        self.assertNotIn(correction["official_event_id"], self.selector_reviews)
+        self.assertEqual(
+            self.selector_reviews[correction["official_event_id"]]["event_id"],
+            event["id"],
+        )
         self.assertEqual(
             correction["evidence"][0]["reference"],
             "https://noseden.hankyu.co.jp/upload_file/noseden/information/newsrelease20230922.pdf",
@@ -138,14 +141,17 @@ class ReviewedServiceCorrectionTests(unittest.TestCase):
                     self.assertTrue(all(feature["properties"]["valid_to"] ==
                                         correction["existing"]["valid_to"] for feature in sections))
 
-    def test_nemuro_gap_is_recorded_without_promoting_row_074(self):
+    def test_nemuro_gap_remains_recorded_after_reconciling_row_074(self):
         note, = self.payload["unresolved_geometry_notes"]
         self.assertEqual(note["source_row_id"], "mlit-closures-20260401:074")
         self.assertEqual(note["status"], "unresolved_geometry_coverage_gap")
         self.assertEqual(note["official_interval"]["business_km"], 81.7)
         self.assertEqual(note["compiled_n02_23_overlay"]["surveyed_overlay_km"], 54.49)
         self.assertEqual(note["coverage_length_gap_km"], 27.21)
-        self.assertNotIn(note["source_row_id"], self.selector_reviews)
+        self.assertEqual(
+            self.selector_reviews[note["source_row_id"]]["event_id"],
+            "jp.jrh.nemuro.furano-shintoku",
+        )
 
 
 if __name__ == "__main__":

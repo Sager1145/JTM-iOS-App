@@ -94,6 +94,7 @@ test("an old solver failure cannot clear a newer solver promise", async () => {
       calls += 1;
       return calls === 1 ? oldLoad.promise : Promise.resolve();
     },
+    ensurePhysicalRailJunctionsLoaded: async () => {},
     warmRouteCacheFromIndexedDb: async () => {},
   });
   const readiness = routeServiceSource.match(

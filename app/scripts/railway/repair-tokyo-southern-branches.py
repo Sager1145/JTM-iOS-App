@@ -16,6 +16,8 @@ EVIDENCE = Path(__file__).resolve().with_name('tokyo-southern-branches-overrides
 BASE_ID = 'jp-東日本旅客鉄道-大崎支線'
 PAIR_ID = BASE_ID + '-p1'
 JR = 'jp-東日本旅客鉄道-'
+DISPLAY_REVIEWED_AT = '2026-10-11'
+OSAKI_PLATFORM_REFERENCE = 'docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/osaki/sources/jrtt-osaki-chapter4.pdf'
 
 
 def distance(a, b):
@@ -121,34 +123,6 @@ def reviewed_freight_main(evidence):
     return result
 
 
-def display_freight_main(package, evidence):
-    """Bounded display aliases only; the 99 source vertices remain in evidence."""
-    source = reviewed_freight_main(evidence)
-    megurogawa = [139.7328, 35.61677]
-    gotanda = [139.72321, 35.62672]
-    line = next(row for row in package['lines'] if row['id'] == JR+'山手線')
-    source_vertices = [point for row in line['segments'] for point in row[2]]
-    assert megurogawa in source_vertices and gotanda in source_vertices
-    start = project(megurogawa, source)
-    assert start['distance'] < 4
-    assert distance(source[-1], gotanda) < 14
-    shown = [megurogawa] + source[start['index']+1:]
-    shown[-1] = gotanda
-    for track in reviewed_tracks(evidence):
-        assert track['northJunction'] in shown
-    policy = {
-        'kind': 'explicit-display-only-representative-corridor',
-        'sourceEvidence': 'app/scripts/railway/tokyo-southern-branches-overrides.json:freightMain',
-        'sourceVertexCount': len(source),
-        'sourceWayIDs': evidence['freightMain']['sourceWayIDs'],
-        'displayStart': megurogawa, 'projectedSourceStart': start['point'],
-        'startAliasMeters': start['distance'],
-        'displayEnd': gotanda, 'sourceEnd': source[-1],
-        'endAliasMeters': distance(source[-1], gotanda),
-        'note': 'Only the uncovered freight main north of the displayed Megurogawa fork is shown. Both endpoints alias existing N02 Yamanote stroke vertices; source interval geometry, source graph and physical junctions are unchanged. These aliases never imply physical interchange with parallel Yamanote electric tracks.'}
-    return shown, policy
-
-
 def intervals(line):
     result, previous = [], None
     for row in line['segments']:
@@ -161,10 +135,11 @@ def intervals(line):
 def insert_projections(points, projections):
     """Insert reviewed fork aliases without changing the old N02 polyline."""
     result = []
+    existing = {tuple(point) for point in points}
     for i, point in enumerate(points):
         result.append(point[:])
         for anchor in sorted((p for p in projections if p['index'] == i), key=lambda p: p['t']):
-            if anchor['point'] != result[-1] and anchor['point'] != points[i+1]:
+            if tuple(anchor['point']) not in existing and anchor['point'] != result[-1] and anchor['point'] != points[i+1]:
                 result.append(anchor['point'][:])
     return result
 
@@ -186,28 +161,45 @@ def alias_approach(points, target, start=False, meters=200):
 
 
 def integrate_legacy_display(package, evidence):
-    """Seat the supplement on the existing N02 representative, not a new main.
+    """Replay the passenger display policy (the historical entry point is kept).
 
-    Physical forks/intervals remain in southernBranchTopology and segments.
-    Every displayed shared tail copies the old N02 vertices exactly. The old
-    station table and paired-alignment fields remain the consumer contract.
+    Osaki's Saikyo/Rinkai family is separate from the Yamanote electric family.
+    Only the reviewed southern representative tail aliases the Sobu corridor;
+    none of these display coordinates add physical edges or traversal rights.
     """
     lines = {line['id']: line for line in package['lines']}
     yamanote, sobu = lines[JR+'山手線'], lines[JR+'総武線-3']
-    north = intervals(yamanote)[1]
-    south = copy.deepcopy(sobu.get('displayIntervalCoordinates', {}).get('2', intervals(sobu)[2]))
     tracks = reviewed_tracks(evidence)
-    north_aliases = [project(track['northJunction'], north) for track in tracks]
+    north = intervals(yamanote)[1]
+    # Retire only the two projections inserted by this owning script. Keep
+    # other interval overrides and every original electric-line support.
+    legacy_north_keys = {tuple(project(track['northJunction'], north)['point']) for track in tracks}
+    electric_overrides = yamanote.get('displayIntervalCoordinates', {})
+    if '1' in electric_overrides:
+        restored = [point for point in electric_overrides['1']
+                    if tuple(point) not in legacy_north_keys or point in north]
+        if restored == north:
+            electric_overrides.pop('1')
+        else:
+            electric_overrides['1'] = restored
+    south = copy.deepcopy(sobu.get('displayIntervalCoordinates', {}).get('2', intervals(sobu)[2]))
     south_aliases = [project(track['southJunction'], south) for track in tracks]
-    assert all(anchor['distance'] < 15 for anchor in north_aliases+south_aliases)
-    # Projections subdivide existing edges, so the representative shape stays
-    # exactly on its old corridor even at the two newly explicit junctions.
-    north_display = insert_projections(north, north_aliases)
+    assert all(anchor['distance'] < 15 for anchor in south_aliases)
+    # Reprojection onto an already-inserted vertex can differ by a final
+    # floating-point bit. Keep that exact canonical support / native ruler.
+    for anchor in south_aliases:
+        existing = next((point for point in south if distance(point, anchor['point']) < 0.000001), None)
+        if existing is not None:
+            anchor['point'] = existing[:]
     south_display = insert_projections(south, south_aliases)
-    yamanote.setdefault('displayIntervalCoordinates', {})['1'] = north_display
     sobu.setdefault('displayIntervalCoordinates', {})['2'] = south_display
-    osaki, nishi = north[0], south[-1]
-    for track, north_alias, south_alias in zip(tracks, north_aliases, south_aliases):
+    # A cartographic centre of the retained passenger-direction anchors, not
+    # a surveyed new track. JRTT chapter 4 p207 identifies the shared Saikyo /
+    # Rinkai platforms separately from the Yamanote electric platforms.
+    osaki = [sum(track['stationProjection']['004135']['point'][i] for track in tracks)/2
+             for i in (0, 1)]
+    nishi = south[-1]
+    for track, south_alias in zip(tracks, south_aliases):
         row = lines[BASE_ID if track['direction'] == 'southbound' else PAIR_ID]
         fork_index = track['intervalGeometry'].index(track['southJunction'])
         own = alias_approach(track['intervalGeometry'][:fork_index+1], osaki, start=True)
@@ -215,26 +207,108 @@ def integrate_legacy_display(package, evidence):
         own += south_display[south_display.index(south_alias['point'])+1:]
         row['displayStationCoordinates'] = {'004135': osaki[:], '004235': nishi[:]}
         row['displayIntervalCoordinates'] = {'0': own}
-        row['stationCircleOwnerByCode'] = {'004135': yamanote['id'], '004235': sobu['id']}
-        # Copy the old main backwards from the reviewed north fork to Osaki.
-        # Both lines now paint the SAME coordinates, not two adjacent surveys.
-        row['displayBranchLeadIns'] = [list(reversed(north_display[:north_display.index(north_alias['point'])+1]))]
+        row['stationCircleOwnerByCode'] = {'004135': BASE_ID, '004235': sobu['id']}
+        # Bound the platform transition by this short lead-in's own length,
+        # so its exact physical fork remains fixed. Known compact parts meet
+        # at the same station coordinate; no electric-line alias is involved.
+        lead_in = alias_approach(track['northLeadInGeometry'], osaki,
+                                 meters=min(200, length(track['northLeadInGeometry'])))
+        lead_in[0] = track['northJunction'][:]
+        row['displayBranchLeadIns'] = [lead_in]
         row.pop('displayFreightMainPolicy', None)
-        row['southernBranchTopology']['displayAliases'] = {
-            'northJunction': north_alias['point'], 'southJunction': south_alias['point'],
-            'northOffsetMeters': north_alias['distance'], 'southOffsetMeters': south_alias['distance'],
-            'policy': 'Explicit representative display aliases onto existing N02; not physical junctions or source-graph edges',
+        topology = row['southernBranchTopology']
+        topology['displayAliases'] = {
+            'southJunction': south_alias['point'], 'southOffsetMeters': round(south_alias['distance'], 8),
+            'policy': 'Reviewed southern shared representative only; not a physical junction or routing edge',
             'approachAliasMeters': 200,
         }
+        topology['displaySharedTail'] = {
+            'canonicalLineId': sobu['id'], 'canonicalIntervalIndex': 2,
+            'branchPartIndex': 0, 'fromCoordinate': south_alias['point'][:],
+            'toCoordinate': nishi[:],
+            'branchFromMeters': length(own[:own.index(south_alias['point'])+1]),
+            'branchToMeters': length(own),
+            'canonicalIntervalFromMeters': length(south_display[:south_display.index(south_alias['point'])+1]),
+            'canonicalIntervalToMeters': length(south_display),
+            'lanePolicy': 'inherit-canonical-shared-span', 'routing': False,
+            'evidence': topology['evidence'], 'reviewedAt': DISPLAY_REVIEWED_AT,
+            'geometryReviewedAt': evidence['reviewedAt'],
+        }
+        topology['displayNorthJoin'] = {
+            'leadInPartIndex': 1, 'bodyPartIndex': 0, 'coordinate': osaki[:],
+            'leadInAtEnd': True, 'bodyAtEnd': False, 'routing': False,
+        }
+    # User-reviewed local station representation: two southern JR approaches
+    # share one continuous station/north stroke. This is a display alias only;
+    # the source direction tracks, junctions and passenger memberships remain.
+    electric_south = intervals(yamanote)[0]
+    station = electric_south[-1][:]
+    merge = [139.7295, 35.6183]
+    assert merge in electric_south
+    shared = list(reversed(electric_south[electric_south.index(merge):]))
+    for id in (BASE_ID, PAIR_ID):
+        row = lines[id]
+        own = row['displayIntervalCoordinates']['0']
+        anchor = project(merge, own)
+        remainder = [anchor['point']] + own[anchor['index']+1:]
+        # A 200 m transition keeps the west approach and the exact downstream
+        # shared-tail supports. The common stem itself uses existing supports.
+        remainder = alias_approach(remainder, merge, start=True, meters=200)
+        row['displayIntervalCoordinates']['0'] = shared + remainder[1:]
+        row['displayStationCoordinates']['004135'] = station[:]
+        row['stationCircleOwnerByCode']['004135'] = yamanote['id']
+        row['displayBranchLeadIns'] = []
+        topology = row['southernBranchTopology']
+        topology.pop('displayNorthJoin', None)
+        topology['displayStationStem'] = {
+            'canonicalLineId': yamanote['id'], 'fromCoordinate': station[:],
+            'toCoordinate': merge[:], 'policy': 'User-requested local JR representative: two south, one station, one north',
+            'routing': False, 'reviewedAt': '2026-10-12',
+        }
+        tail = topology['displaySharedTail']
+        updated = row['displayIntervalCoordinates']['0']
+        tail['branchFromMeters'] = length(updated[:updated.index(tail['fromCoordinate'])+1])
+        tail['branchToMeters'] = length(updated)
+    # Both directions already share one JR family representative in Main.
+    # Give that representative one actual path/ruler: a linear follow between
+    # two different directional rulers otherwise hands over at two south cuts
+    # 8 m apart, moving the ride/fallback stroke away from the shared junction.
+    # Physical directional tracks and traversal rights remain in segments and
+    # southernBranchTopology's original junction fields.
+    representative = lines[BASE_ID]
+    paired = lines[PAIR_ID]
+    paired['displayIntervalCoordinates']['0'] = copy.deepcopy(representative['displayIntervalCoordinates']['0'])
+    paired_topology = paired['southernBranchTopology']
+    paired_topology['displaySharedTail'] = copy.deepcopy(representative['southernBranchTopology']['displaySharedTail'])
+    cut = paired_topology['displaySharedTail']['fromCoordinate']
+    paired_topology['displayAliases']['southJunction'] = cut[:]
+    paired_topology['displayAliases']['southOffsetMeters'] = round(distance(paired_topology['southJunction'], cut), 8)
+    paired_topology['displayAliases']['policy'] = 'One reviewed JR directional-family display path/ruler; original physical directional junction retained'
+    # Rinkai is a separate company at the same through-running platform
+    # family. Keep its member/circle identity and its independently sourced
+    # approach; a bounded terminal transition supplies the shared centre.
+    rinkai = lines.get('jp-東京臨海高速鉄道-臨海副都心線')
+    if rinkai is not None:
+        assert rinkai['stations'][0][0] == '004135'
+        rinkai_source = intervals(rinkai)[0]
+        assert distance(rinkai_source[0], osaki) < 15
+        rinkai.setdefault('displayStationCoordinates', {})['004135'] = osaki[:]
+        rinkai.setdefault('displayIntervalCoordinates', {})['0'] = alias_approach(rinkai_source, osaki, start=True)
+        rinkai.get('stationCircleOwnerByCode', {}).pop('004135', None)
     lines[BASE_ID]['alignmentPairs'] = [{'with': PAIR_ID, 'from': '大崎', 'to': '西大井',
         'direction': 'unassigned', 'source': evidence['primaryTopologyEvidence'][0]['url']}]
     package['geometrySource']['manualOverrides']['tokyo-southern-branches']['displayIntegration'] = {
-        'format': 'existing compact-v1 station/interval display overrides and reciprocal alignmentPairs',
-        'stationFormat': 'ADR 0010 properties plus existing optional display_line_id; provenance in feature foreign member and evidence registry',
-        'transformation': 'Project only display fork aliases onto old N02 within 15 m, preserve exact shared tails and station anchors; remove duplicate appended freight main',
+        'reviewedAt': '2026-10-12',
+        'format': 'compact-v1 local station representative and explicit shared-stem/tail owners',
+        'transformation': 'User-requested local two-south / one-station / one-north JR display; both directions use one reviewed representative path/ruler; retain physical directional forks; Yamanote supplies the continuous station/north stroke; retire capped display leads',
+        'platformReference': 'JRTT Rinkai project chapter 4 p207: separate Yamanote electric and Saikyo/Rinkai platforms',
+        'platformReferenceURL': evidence['primaryTopologyEvidence'][0]['url'],
+        'localPlatformReference': OSAKI_PLATFORM_REFERENCE,
+        'localPlatformPlan': OSAKI_PLATFORM_REFERENCE.replace('jrtt-osaki-chapter4.pdf', 'jrtt-osaki-plan-page207.png'),
+        'stationCentrePolicy': 'User-requested display-only common JR station anchor; physical anchors and separate Rinkai representative retained',
+        'stationCentre': station,
     }
     return package
-
 
 def repair(package, evidence=None):
     """Return a copy with two directional compact rows; never mutate the input."""
@@ -243,7 +317,6 @@ def repair(package, evidence=None):
     old_lines = {row['id']: row for row in result['lines']}
     source_osaki = next(s for s in old_lines[JR+'山手線']['stations'] if s[0] == '004135')
     source_nishi = next(s for s in old_lines[JR+'総武線-3']['stations'] if s[0] == '004235')
-    main_display, main_display_policy = display_freight_main(package, evidence)
     result['lines'] = [row for row in result['lines'] if row['id'] not in [BASE_ID, PAIR_ID]]
     for track in reviewed_tracks(evidence):
         forward = track['direction'] == 'southbound'
@@ -260,8 +333,7 @@ def repair(package, evidence=None):
                     'segments': [[round(track['intervalMeters']/1000, 3), 0, track['intervalGeometry']]],
                     'railwayIdentity': BASE_ID, 'permittedTraversal': 'forward' if forward else 'reverse',
                     'alignmentDirection': 'unassigned', 'geometrySource': 'tokyo-southern-branches:OSM-2026-08-18',
-                    'displayBranchLeadIns': [track['northLeadInGeometry']] +
-                        ([main_display] if forward else []),
+                    'displayBranchLeadIns': [track['northLeadInGeometry']],
                     'southernBranchTopology': {'evidence': str(EVIDENCE.relative_to(ROOT)),
                          'physicalDirection': track['direction'], 'northJunction': track['northJunction'],
                          'southJunction': track['southJunction'], 'northLeadInGeometry': track['northLeadInGeometry'],
@@ -271,8 +343,6 @@ def repair(package, evidence=None):
         if not forward:
             row.update({'alignmentOf': BASE_ID, 'alignmentRole': 'paired_alignment',
                         'alignmentSplitSource': evidence['primaryTopologyEvidence'][0]['url']})
-        else:
-            row['displayFreightMainPolicy'] = main_display_policy
         result['lines'].append(row)
     result.setdefault('geometrySource', {}).setdefault('manualOverrides', {})['tokyo-southern-branches'] = {
         'reviewedAt': evidence['reviewedAt'], 'crs': evidence['crs'],
@@ -326,7 +396,7 @@ def main():
     parser.add_argument('--package', type=Path, default=ROOT/'public/rail/jp-2025.json')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--check', action='store_true', help='validate committed evidence without modifying the package')
-    parser.add_argument('--legacy-display', action='store_true', help='integrate against existing N02 representative display corridors')
+    parser.add_argument('--legacy-display', action='store_true', help='replay the passenger-family display policy (historical flag name)')
     args = parser.parse_args()
     evidence = json.loads(EVIDENCE.read_text())
     tracks = reviewed_tracks(evidence)

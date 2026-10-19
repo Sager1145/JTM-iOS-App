@@ -70,6 +70,7 @@ import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
 import { repairLanes as repairOshiageLanes } from './repair-oshiage-display.mjs';
+import { repairLanes as repairOnodaSuzumedaLanes } from './repair-onoda-suzumeda-follow.mjs';
 
 const require = createRequire(import.meta.url);
 const APP_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
@@ -175,6 +176,21 @@ const HUB_DIVERGE_METRES = 40;
 // elevated line several streets over. Membership is decided by nearness to
 // the TRACK, not nearness to the STATION POINT.
 const HUB_MEMBER_METRES = 60;
+
+// A non-follower is slotted only over the stretch where it actually runs
+// alongside the trunk: the contiguous run of its hub-window samples within
+// HUB_ALONGSIDE_METRES of the trunk (interior gaps of up to two samples above
+// that are bridged). Its hub window is clipped to that run, and a member whose
+// run is shorter than HUB_ALONGSIDE_MIN_RUN_METRES runs on its own surveyed
+// track, which already separates it on the map, so a slot would only displace
+// it off that track.
+const HUB_ALONGSIDE_METRES = 2 * HUB_MEMBER_METRES;
+const HUB_ALONGSIDE_MIN_RUN_METRES = 150;
+// ...and only samples roughly PARALLEL to the nearest trunk tangent count as
+// alongside (|dot| >= cos 45 degrees, so a reversed member still counts): a
+// member that merely crosses the trunk stays within HUB_ALONGSIDE_METRES for
+// hundreds of metres without ever running with it.
+const HUB_ALONGSIDE_MIN_ALIGNMENT = 0.7;
 
 // `na-render-groups.json` renamed its colour/identity map from `groups` to
 // `families` in the jtm-na-render-groups-v2 schema (adds `networkId` and
@@ -783,7 +799,7 @@ function computePartsByRegionRows(pkg, network, reviewedSharedCorridors, loopWin
   return { rows, excluded: skipped };
 }
 
-function samplesFor(part) {
+export function samplesFor(part) {
   const cumulative = cumulativeMeasures(part.coordinates);
   const total = cumulative[cumulative.length - 1];
   const samples = [];
@@ -998,7 +1014,7 @@ function longestUnclaimed(from, to, claimedRanges) {
   return best;
 }
 
-function computeHubOverrides(parts, metrics, follows, hubs, grid) {
+export function computeHubOverrides(parts, metrics, follows, hubs, grid) {
   const hubRowsByPart = new Map(); // partKey -> [{from, to, lane}]
   const report = [];
   if (!hubs || !hubs.length) return { hubRowsByPart, report };
@@ -1085,22 +1101,26 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
     // frame — every `side`/`measuredLateral` comes from probing a member's
     // real geometry against the trunk's own tangent, so the ordering itself
     // is unaffected by which way any member happens to be digitised. But a
-    // member that FOLLOWS the trunk (`follows`, resolved to its root
-    // canonical earlier) is rendered from the trunk's alignment, offset
-    // using the trunk's own tangent — the same "canonical frame" the general
-    // pass's cross-class collision fix above has to correct for. Writing the
-    // hub's slot straight into that member's own-frame `lane` field is only
-    // correct when the two frames agree; where the follow runs against the
-    // trunk's direction they are mirror images, and the slot has to be
-    // negated before it is written, or a member the hub placed firmly on one
-    // side renders on the other and can land back on top of whichever
-    // member the hub placed there instead.
-    const reversedAgainstTrunk = (key, window) => {
-      if (key === trunkKey) return false;
+    // member's `lane` is written in the frame it is DRAWN in, and that frame
+    // is the trunk's only when the member runs the trunk's way. A member that
+    // FOLLOWS the trunk (`follows`, resolved to its root canonical earlier)
+    // is rendered from the trunk's alignment, offset using the trunk's own
+    // tangent — the same "canonical frame" the general pass's cross-class
+    // collision fix above has to correct for — so it is reversed exactly
+    // when its follow row runs against the trunk. A member that does NOT
+    // follow is drawn from its OWN geometry, with lane positive to the right
+    // of its OWN digitised direction; it is reversed when that geometry runs
+    // anti-parallel to the trunk through the hub, measured from the summed
+    // dot product of its tangents against the nearest trunk tangents. Either
+    // way a reversed member's frame is the mirror image of the trunk's, and
+    // the slot has to be negated before it is written, or a member the hub
+    // placed firmly on one side renders on the other and can land back on
+    // top of whichever member the hub placed there instead.
+    const followRowOntoTrunk = (key, window) => {
       const [lineId, partIndexRaw] = key.split("#");
       const partIndex = Number(partIndexRaw);
       const mid = (window.from + window.to) / 2;
-      const row = follows.find(
+      return follows.find(
         (candidate) =>
           candidate[0] === lineId &&
           candidate[1] === partIndex &&
@@ -1108,7 +1128,32 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
           candidate[2] <= mid &&
           candidate[3] >= mid,
       );
-      return row ? row[7] < row[6] : false;
+    };
+    // Gaps from a member's hub-window samples to the nearest trunk sample,
+    // shared by the anti-parallel vote and the separate-alignment test.
+    const trunkProbes = (key, window) => {
+      const probes = [];
+      for (const sample of metrics.get(key).samples) {
+        if (sample.measure < window.from || sample.measure > window.to) continue;
+        const { sample: nearest, gap } = nearestTrunkSample(
+          sample.point,
+          trunkWindow.from - HUB_LOOKOUT_METRES,
+          trunkWindow.to + HUB_LOOKOUT_METRES,
+        );
+        if (nearest) probes.push({ sample, nearest, gap });
+      }
+      return probes;
+    };
+    const reversedAgainstTrunk = (key, window) => {
+      if (key === trunkKey) return false;
+      const row = followRowOntoTrunk(key, window);
+      if (row) return row[7] < row[6];
+      let alignment = 0;
+      for (const { sample, nearest, gap } of trunkProbes(key, window)) {
+        if (gap > HUB_LOOKOUT_METRES) continue;
+        alignment += sample.tangent[0] * nearest.tangent[0] + sample.tangent[1] * nearest.tangent[1];
+      }
+      return alignment < 0;
     };
 
     // Nearest trunk sample to an arbitrary point, searched only around the
@@ -1171,18 +1216,106 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
         memberKeys.splice(memberKeys.indexOf(key), 1);
       }
     }
-    if (memberKeys.length < 2) continue; // the trunk was alone after all
+    // 2.6. Clip every non-follower's window to where it runs alongside the
+    // trunk: within HUB_ALONGSIDE_METRES AND roughly parallel to the nearest
+    // trunk tangent (HUB_ALONGSIDE_MIN_ALIGNMENT). The run is anchored on the
+    // closest such sample (ties to the one nearest the hub centre). A member
+    // with no parallel sample at all is a "crossing"; one whose run is too
+    // short is a "separate-alignment". Followers and the trunk keep their
+    // full windows.
+    const separateAlignment = [];
+    for (const key of memberKeys.slice()) {
+      if (key === trunkKey) continue;
+      const window = windows.get(key);
+      if (followRowOntoTrunk(key, window)) continue;
+      const probes = trunkProbes(key, window);
+      if (!probes.length) continue;
+      const alongside = (index) => {
+        const { sample, nearest, gap } = probes[index];
+        const dot = sample.tangent[0] * nearest.tangent[0] + sample.tangent[1] * nearest.tangent[1];
+        return gap <= HUB_ALONGSIDE_METRES && Math.abs(dot) >= HUB_ALONGSIDE_MIN_ALIGNMENT;
+      };
+      let anchor = -1;
+      let anchorCentre = Infinity;
+      probes.forEach((probe, index) => {
+        if (!alongside(index)) return;
+        const toCentre = distanceMeters(probe.sample.point, hub.centre);
+        if (
+          anchor < 0 ||
+          probe.gap < probes[anchor].gap ||
+          (probe.gap === probes[anchor].gap && toCentre < anchorCentre)
+        ) {
+          anchor = index;
+          anchorCentre = toCentre;
+        }
+      });
+      if (anchor < 0) {
+        separateAlignment.push({ key, reason: "crossing" });
+        windows.delete(key);
+        memberKeys.splice(memberKeys.indexOf(key), 1);
+        continue;
+      }
+      let lo = anchor;
+      let hi = anchor;
+      for (let index = anchor - 1, misses = 0; index >= 0 && misses <= 2; index -= 1) {
+        if (alongside(index)) {
+          lo = index;
+          misses = 0;
+        } else misses += 1;
+      }
+      for (let index = anchor + 1, misses = 0; index < probes.length && misses <= 2; index += 1) {
+        if (alongside(index)) {
+          hi = index;
+          misses = 0;
+        } else misses += 1;
+      }
+      const from = probes[lo].sample.measure;
+      const to = probes[hi].sample.measure;
+      if (to - from < HUB_ALONGSIDE_MIN_RUN_METRES) {
+        separateAlignment.push({ key, reason: "separate-alignment", from, to });
+        windows.delete(key);
+        memberKeys.splice(memberKeys.indexOf(key), 1);
+      } else windows.set(key, { from, to });
+    }
+    const excludedReport = separateAlignment.map(({ key, reason, from, to }) => {
+      const part = partsByKey.get(key);
+      return {
+        lineId: part.lineId,
+        partIndex: part.partIndex,
+        excluded: reason,
+        ...(from == null
+          ? {}
+          : { alongsideFrom: Number(from.toFixed(1)), alongsideTo: Number(to.toFixed(1)) }),
+      };
+    });
+    if (memberKeys.length < 2) {
+      // The trunk was alone after all — but keep the exclusions on record.
+      if (excludedReport.length)
+        report.push({ hubId: hub.id, name: hub.name, trunkKey, members: excludedReport, classes: [] });
+      continue;
+    }
 
     // 3. Classify every member: which side its OWN geometry departs to
     // beyond the hub (left, continue, right), and its measured lateral
-    // against the trunk at the start of its own window, used only as a
-    // tie-break within a side.
+    // against the trunk at its window sample nearest the hub centre, used
+    // only as a tie-break within a side.
     const entries = memberKeys.map((key) => {
       const part = partsByKey.get(key);
       const metric = metrics.get(key);
       const window = windows.get(key);
       if (key === trunkKey) return { key, part, side: 0, measuredLateral: 0, window };
-      const startPoint = pointAndTangent(part.coordinates, metric.cumulative, window.from).point;
+      // Probe at the window sample nearest the hub centre, not the window
+      // start: the start is wherever the radius happened to clip the geometry.
+      let startPoint = pointAndTangent(part.coordinates, metric.cumulative, window.from).point;
+      let startCentre = Infinity;
+      for (const sample of metric.samples) {
+        if (sample.measure < window.from || sample.measure > window.to) continue;
+        const toCentre = distanceMeters(sample.point, hub.centre);
+        if (toCentre < startCentre) {
+          startCentre = toCentre;
+          startPoint = sample.point;
+        }
+      }
       const measuredLateral = probeAgainstTrunk(
         startPoint,
         trunkWindow.from - HUB_LOOKOUT_METRES,
@@ -1294,7 +1427,10 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
           }
           continue;
         }
-        if (!unbundledReasons.has(item)) unexplainedDrops.push(item);
+        // A line deliberately left out by step 2.6 (own surveyed track) is an
+        // explained absence too, not a silent drop.
+        const separated = separateAlignment.some(({ key }) => key.startsWith(`${item}#`));
+        if (!unbundledReasons.has(item) && !separated) unexplainedDrops.push(item);
       }
       if (unexplainedDrops.length)
         throw new Error(
@@ -1353,7 +1489,8 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
         lineIds: [...new Set(group.members.map((member) => member.part.lineId))],
       });
       for (const entry of group.members) {
-        const lane = reversedAgainstTrunk(entry.key, entry.window) ? -slot : slot;
+        const reversed = reversedAgainstTrunk(entry.key, entry.window);
+        const lane = reversed ? -slot : slot;
         const held = hubRowsByPart.get(entry.key) || [];
         held.push({ from: entry.window.from, to: entry.window.to, lane });
         hubRowsByPart.set(entry.key, held);
@@ -1366,11 +1503,13 @@ function computeHubOverrides(parts, metrics, follows, hubs, grid) {
           classKey: group.classKey,
           slot,
           side: entry.side,
+          reversed,
           from: Number(entry.window.from.toFixed(1)),
           to: Number(entry.window.to.toFixed(1)),
         });
       }
     });
+    memberReport.push(...excludedReport);
     report.push({ hubId: hub.id, name: hub.name, trunkKey, members: memberReport, classes: classReport });
   }
   return { hubRowsByPart, report };
@@ -2106,7 +2245,7 @@ export function deriveFamilyWindows(parts, follows, renderGroups, metrics, laneR
 // facts that differ between one country's railways and another's now all
 // arrive through the render-group policy (`renderGroups.policy.profile`) and
 // the reviewed corridor seeds, not through the code path.
-function deriveDisplayRows(
+export function deriveDisplayRows(
   region,
   pkg,
   reviewedSharedCorridors,
@@ -3015,6 +3154,45 @@ function deriveDisplayRows(
   };
 }
 
+// Exact shared-spur splits have three endpoint parts at their switch. A
+// sharp pair of main legs must stay independent on both clients after rebuild.
+export function physicalForkBoundaries(rows) {
+  const byLine = new Map();
+  for (const row of rows) {
+    if (!Array.isArray(row[7]) || row[7].length < 2) continue;
+    const group = byLine.get(row[0]) || [];
+    group.push(row); byLine.set(row[0], group);
+  }
+  const result = [];
+  const equal = (a,b) => a[0] === b[0] && a[1] === b[1];
+  for (const [lineId, group] of byLine) {
+    group.sort((a,b) => a[1]-b[1]);
+    const startingAt = new Map();
+    for (const row of group) {
+      const key = JSON.stringify(row[7][0]);
+      if (!startingAt.has(key)) startingAt.set(key, []);
+      startingAt.get(key).push(row);
+    }
+    for (const before of group) {
+      // A terminal stem can sit between the two main legs in part order.
+      // Discover exact endpoint peers rather than assuming adjacent indices.
+      for (const after of startingAt.get(JSON.stringify(before[7].at(-1))) || []) {
+        if (after[1] <= before[1]) continue;
+        const a = before[7], b = after[7], junction = a.at(-1);
+        if (!equal(junction,b[0]) || group.filter(row =>
+          equal(row[7][0],junction) || equal(row[7].at(-1),junction)).length < 3) continue;
+        const scale = Math.cos(junction[1]*Math.PI/180);
+        const incoming = [(junction[0]-a.at(-2)[0])*scale,junction[1]-a.at(-2)[1]];
+        const outgoing = [(b[1][0]-junction[0])*scale,b[1][1]-junction[1]];
+        const product = Math.hypot(...incoming)*Math.hypot(...outgoing);
+        if (product > 0 && (incoming[0]*outgoing[0]+incoming[1]*outgoing[1])/product < Math.cos(Math.PI/6))
+          result.push([lineId,before[1],after[1],"exact-shared-spur-main-legs"]);
+      }
+    }
+  }
+  return result.sort((a,b) => a[0].localeCompare(b[0]) || a[1]-b[1]);
+}
+
 // Package-reviewed station lane pins keep aliased platform approaches on
 // their owner's bead. The row measures are the final Web display geometry.
 export function applyStationLanePins(pkg, parts, rows, pinMetres = 300) {
@@ -3221,6 +3399,7 @@ if (args.length) {
     const pkg = JSON.parse(fs.readFileSync(path.join(RAIL_DIR, 'jp-2025.json'), 'utf8'));
     const existing = refreshJapanFamilyHandoffs(pkg, JSON.parse(before), reviewed);
     repairOshiageLanes(pkg, existing);
+    repairOnodaSuzumedaLanes(pkg, existing);
     const after = `${JSON.stringify(existing)}\n`;
     if (args.includes('--check')) {
       if (after !== before) throw new Error('Japan family handoffs are stale');
@@ -3275,11 +3454,17 @@ if (args.length) {
   if (existing.followsByRegion?.[region]) existing.followsByRegion[region] = existing.followsByRegion[region].filter(
     (row) => row[2] !== row[3] && row[6] !== row[7]);
   (existing.partsByRegion ||= {})[region] = rows;
+  if (region === "jp") {
+    const previous = existing.chainBoundariesByRegion?.jp || [];
+    (existing.chainBoundariesByRegion ||= {}).jp = previous.filter(row =>
+      row[3] !== "exact-shared-spur-main-legs").concat(physicalForkBoundaries(rows));
+  }
   (existing.strokeExcludedByRegion ||= {})[region] = excluded;
   (existing.reversedLoopParts ||= {})[region] = loopWinding?.reversed || [];
   if (region === 'jp') {
     refreshJapanFamilyHandoffs(pkg, existing, reviewed);
     repairOshiageLanes(pkg, existing);
+    repairOnodaSuzumedaLanes(pkg, existing);
   }
   fs.writeFileSync(OUTPUT, `${JSON.stringify(existing)}\n`);
   process.stdout.write(`${region}: refreshed ${rows.length} parts (${rows.filter((row) => row[2] >= 0).length} vertex-exact plain)\n`);
@@ -3497,6 +3682,7 @@ const outputDocument = {
   //   app/public/rail/README.md for how build-display-network.py consumes
   //   it.
   partsByRegion,
+  chainBoundariesByRegion: { jp: physicalForkBoundaries(partsByRegion.jp || []) },
   // `strokeExcludedByRegion[region] = [[lineId, reason], ...]` — the lines a
   // continuous-stroke region's own `partsByRegion` above has no rows for
   // because rail-network.js's web engine declines to build them into a
@@ -3531,7 +3717,9 @@ const outputDocument = {
   // and app/public/rail/README.md.
   hubReportByRegion,
 };
-repairOshiageLanes(JSON.parse(fs.readFileSync(path.join(RAIL_DIR, 'jp-2025.json'), 'utf8')), outputDocument);
+const japanPackage = JSON.parse(fs.readFileSync(path.join(RAIL_DIR, 'jp-2025.json'), 'utf8'));
+repairOshiageLanes(japanPackage, outputDocument);
+repairOnodaSuzumedaLanes(japanPackage, outputDocument);
 fs.writeFileSync(OUTPUT, `${JSON.stringify(outputDocument)}\n`);
 
 }

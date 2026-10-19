@@ -105,6 +105,7 @@ test("a delayed IndexedDB warm cannot repopulate the next country cache", async 
   const idb = controlledIndexedDb();
   const context = makeSandbox({ indexedDB: idb.api });
   evaluateAppScripts(context);
+  vm.runInContext(`AppDatasets.installPhysicalRailJunctions({format:"jtm-physical-rail-junctions-v1",junctions:[]});`, context);
 
   vm.runInContext(
     `
@@ -195,6 +196,7 @@ test("an IndexedDB open captured by the old country joins the reopened gate", as
   const idb = controlledIndexedDb();
   const context = makeSandbox({ indexedDB: idb.api });
   evaluateAppScripts(context);
+  vm.runInContext(`AppDatasets.installPhysicalRailJunctions({format:"jtm-physical-rail-junctions-v1",junctions:[]});`, context);
   vm.runInContext(
     `
       activeCountry = "jp";
@@ -272,6 +274,7 @@ test("an IndexedDB open captured by the old country joins the reopened gate", as
 function playbackHarness() {
   const context = makeSandbox();
   evaluateAppScripts(context);
+  vm.runInContext(`AppDatasets.installPhysicalRailJunctions({format:"jtm-physical-rail-junctions-v1",junctions:[]});`, context);
   const moveend = [];
   const handler = {
     enabled: true,

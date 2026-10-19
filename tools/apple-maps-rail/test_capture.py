@@ -124,7 +124,7 @@ class FullWorkflowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)
             (out/'calibration.json').write_text(json.dumps({'version':2,'coordinate_alignment_verified':True}))
-            with patch('capture.fetch'),patch('capture.NativeMaps') as native,patch('capture.plan'),patch('capture.audit_plan'),patch('capture.capture',side_effect=RuntimeError('preflight failed')) as capture:
+            with patch('capture.fetch'),patch('capture.NativeMaps') as native,patch('capture.plan'),patch('capture.capture',side_effect=RuntimeError('preflight failed')) as capture:
                 native.return_value.session.return_value={'locked':False}
                 with self.assertRaisesRegex(RuntimeError,'preflight failed'):
                     all_cities(argparse.Namespace(out=out))
@@ -138,7 +138,7 @@ class FullWorkflowTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)
             events=[]
-            with patch('capture.fetch'),patch('capture.NativeMaps') as native,patch('capture.time.sleep',side_effect=lambda seconds:events.append('wait')),patch('capture.probe',side_effect=lambda args:events.append('probe')),patch('capture.plan'),patch('capture.audit_plan'),patch('capture.capture'):
+            with patch('capture.fetch'),patch('capture.NativeMaps') as native,patch('capture.time.sleep',side_effect=lambda seconds:events.append('wait')),patch('capture.probe',side_effect=lambda args:events.append('probe')),patch('capture.plan'),patch('capture.capture'):
                 native.return_value.session.side_effect=[{'locked':True},{'locked':False}]
                 all_cities(argparse.Namespace(out=out))
             self.assertEqual(events,['wait','probe'])

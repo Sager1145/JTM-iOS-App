@@ -41,15 +41,18 @@ export function repairPackage(pkg) {
     }
     for (const { line } of members) {
       line.stationLaneByCode = { ...line.stationLaneByCode, [join.stationCode]: 0 };
-      if (line.id !== join.circleOwner)
+      const owner = lines.get(join.circleOwner);
+      if (line.id !== join.circleOwner && line.operator && line.operator === owner?.operator)
         line.stationCircleOwnerByCode = { ...line.stationCircleOwnerByCode, [join.stationCode]: join.circleOwner };
+      else if (line.id !== join.circleOwner && line.stationCircleOwnerByCode?.[join.stationCode] === join.circleOwner)
+        delete line.stationCircleOwnerByCode[join.stationCode];
     }
   }
   pkg.geometrySource.manualOverrides['through-running-display-joins'] = {
     reviewedAt: registry.reviewedAt, crs: 'WGS84',
     script: 'app/scripts/railway/repair-through-running-display.mjs',
     registry: 'app/scripts/railway/through-running-display-joins.json',
-    policy: 'Display only; explicit terminal platform pairs, a shared tangent and lane zero, one circle per platform family; preserve physical intervals, station identities and mileage',
+    policy: 'Display only; explicit terminal platform pairs, a shared tangent and lane zero, one representative circle only for a reviewed same-company platform family; different companies retain their marks; preserve physical intervals, station identities and mileage',
     windowMetres: registry.windowMetres, straightMetres: registry.straightMetres,
     joins: registry.joins.map(join => join.id),
   };

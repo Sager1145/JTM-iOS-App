@@ -34,7 +34,7 @@ function loadScope(APP_DIR, AppCore, RailNetwork) {
     "window",
     `${source}
      configureRouteSolverApi({
-       addStationTransferConnectorEdges: (...a) => addStationTransferConnectorEdges(...a),
+       addReviewedPhysicalJunctionEdges: (...a) => addReviewedPhysicalJunctionEdges(...a),
        coordKey: (...a) => coordKey(...a),
        coordinatesClose: (...a) => coordinatesClose(...a),
        distanceMeters: (...a) => distanceMeters(...a),

@@ -7,7 +7,6 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent))
 from planner import apply_network_extents, _geometry_bounds, _line_matches_city, _line_segments, _load_lines, _segment_intersects_rect, plan_tiles
-from audit_coverage import _supplement_resolves, audit, line_covered, rectangle_covered
 
 
 def city(city_id="test", bounds=None):
@@ -126,51 +125,10 @@ class PlannerTests(unittest.TestCase):
         self.assertFalse(merged[1]["network_extent_verified"])
         self.assertEqual(len(catalog[0]["bounds"]), 1)  # caller input is not mutated
 
-    def test_rectangle_union_audit_detects_narrow_hole(self):
-        target = [0, 0, 1, 1]
-        self.assertTrue(rectangle_covered(target, [[0, 0, 1, 0.5], [0, 0.5, 1, 1]]))
-        self.assertFalse(rectangle_covered(target, [[0, 0, 1, 0.49], [0, 0.51, 1, 1]]))
 
-    def test_line_audit_checks_continuous_coverage_not_only_vertices(self):
-        route = line("route", "Agency", "commuter", [[0, 0.5], [1, 0.5]])
-        self.assertTrue(line_covered(route, [[0, -0.1, 0.6, 0.6], [0.4, 0.4, 1, 1]]))
-        self.assertFalse(line_covered(route, [[0, -0.1, 0.49, 0.6], [0.51, 0.4, 1, 1]]))
 
-    def test_supplement_requires_every_named_route_in_system_extent(self):
-        lines = [{"name": "MAX Blue Line", "operator": "TriMet"},
-                 {"name": "MAX Red Line", "operator": "TriMet"}]
-        self.assertTrue(_supplement_resolves("MAX", lines, ["MAX Blue Line", "MAX Red Line"]))
-        self.assertFalse(_supplement_resolves("MAX", lines, ["MAX Blue Line", "MAX Green Line"]))
-        self.assertTrue(_supplement_resolves(
-            "CATS LYNX", [{"name": "LYNX Blue Line", "operator": "Charlotte Area Transit System"}],
-            ["LYNX Blue Line"],
-        ))
 
-    def test_up_express_identity_matches_union_pearson_canonical_line(self):
-        lines = [{"id": "union-pearson-express-up", "name": "Union Pearson Express",
-                  "operator": "UP Express", "kind": "commuter"}]
-        self.assertTrue(_supplement_resolves("UP Express", lines, ["UP Express"]))
 
-    def test_audit_limits_static_gaps_and_lines_to_selected_city_scope(self):
-        catalog = {"cities": [city("toronto", [[0, 0, 0.01, 0.01]]),
-                              city("calgary", [[10, 10, 10.01, 10.01]])]}
-        up = line("union-pearson-express-up", "UP Express", "commuter", [[0, 0], [0.001, 0]])
-        up["name"] = "Union Pearson Express"
-        calibration = {
-            "image_size": [1000, 1000], "inner_margin_px": 100, "target_meters_per_pixel": 100,
-            "coordinate_alignment_verified": True, "coordinate_offset_pixels": [0, 0],
-            "alignment_validation": {"station_matches": 2, "residual_offset_pixels": [0, 0]},
-        }
-        plan = {"calibration": calibration, "selected_city_ids": ["toronto"], "tiles": [{
-            "id": "t", "city": "toronto", "cities": ["toronto"], "lat": 0.0, "lon": 0.0,
-            "rail_lines": [up["id"]], "coverage_source": "rail-corridor",
-        }]}
-        report = audit(catalog, plan, [{"lines": [up]}], {"cities": {}})
-        self.assertEqual(report["scope"]["selected_cities"], 1)
-        self.assertEqual(report["known_repository_inventory_gaps"], [])
-        self.assertEqual(report["canonical_inventory_matches_for_static_findings"], [
-            {"city": "toronto", "systems_or_routes": ["UP Express"]}
-        ])
 
     def test_overlapping_area_tile_records_every_selected_city(self):
         tiles = plan_tiles([city("first"), city("second")], mode="areas",

@@ -158,7 +158,7 @@ def validate_selector_review_ledger(payload, inventories, label="reviewed MLIT r
     seen_events = set()
     allowed_scopes = {
         "whole_identity", "legacy_release_geometry", "isolated_historical_segment",
-        "isolated_current_segment",
+        "isolated_current_segment", "current_retirement",
     }
     for review in reviews:
         source_row_id = review.get("source_row_id")

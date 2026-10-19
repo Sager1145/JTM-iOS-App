@@ -72,7 +72,9 @@ def line_qualifies_for_overview(entry: dict) -> bool:
     )
 
 
-def build_overview_fragment(fragment: dict) -> tuple[dict, int]:
+def build_overview_fragment(
+    fragment: dict, protected_points: set[tuple[float, float]] | None = None,
+) -> tuple[dict, int]:
     """The overview variant of one full-chunk fragment (spec A3): parts are
     Douglas-Peucker simplified at ``OVERVIEW_SIMPLIFY_TOLERANCE_M``,
     lane/follow geometry is dropped (sub-pixel at the app zooms overview
@@ -86,7 +88,16 @@ def build_overview_fragment(fragment: dict) -> tuple[dict, int]:
         if len(part) < 3:
             simplified = [list(p) for p in part]
         else:
-            simplified = na_geo.simplify(part, OVERVIEW_SIMPLIFY_TOLERANCE_M)
+            # A reviewed sibling path can end at an interior switch on this
+            # path. Simplifying each path independently can erase that switch.
+            cuts = [0]
+            cuts.extend(index for index in range(1, len(part) - 1)
+                        if tuple(part[index]) in (protected_points or set()))
+            cuts.append(len(part) - 1)
+            simplified = []
+            for start, end in zip(cuts, cuts[1:]):
+                piece = na_geo.simplify(part[start:end + 1], OVERVIEW_SIMPLIFY_TOLERANCE_M)
+                simplified.extend(piece if not simplified else piece[1:])
         new_parts.append(simplified)
         vertex_count += len(simplified)
     overview["parts"] = new_parts
@@ -116,6 +127,109 @@ def build_overview_fragment(fragment: dict) -> tuple[dict, int]:
                 for window in fragment["familyWindows"]
             ]
     return overview, vertex_count
+
+
+def _fragment_polyline(fragment: dict) -> list[list[float]]:
+    return [point for index, part in enumerate(fragment["parts"])
+            for point in (part if index == 0 else part[1:])]
+
+
+def _family_ink_dependencies(fragments_by_key: dict[str, list[dict]]) -> dict[str, set[str]]:
+    """Load the explicit family ink owner; never infer a physical join.
+
+    Family group membership authorizes shared ink, not geography. Where a
+    follow maps a tenant window to a canonical chain, use that mapping to
+    select only landlords covering the mapped window. Older family rows
+    have no per-window owner: retain the group's explicit landlords rather
+    than guessing one from distance, colour or overlapping map rectangles.
+    """
+    landlords: dict[str, list[tuple[str, dict, list]]] = defaultdict(list)
+    dependencies: dict[str, set[str]] = defaultdict(set)
+    for key, fragments in fragments_by_key.items():
+        for fragment in fragments:
+            for window in fragment.get("familyWindows") or []:
+                if window[2] == 0:
+                    landlords[window[3]].append((key, fragment, window))
+    for key, fragments in fragments_by_key.items():
+        for fragment in fragments:
+            for window in fragment.get("familyWindows") or []:
+                if window[2] != 1:
+                    continue
+                follows = [row for row in fragment.get("follows") or []
+                           if min(row[1], window[1]) > max(row[0], window[0])]
+                for owner_key, owner, owner_window in landlords[window[3]]:
+                    if owner_key == key:
+                        continue
+                    if follows:
+                        matches = False
+                        for row in follows:
+                            if row[2] != owner_key or row[3] != owner.get("chain", 0):
+                                continue
+                            low, high = max(row[0], window[0]), min(row[1], window[1])
+                            mapped = [row[4] + (value - row[0]) / (row[1] - row[0])
+                                      * (row[5] - row[4]) for value in (low, high)]
+                            if min(max(mapped), owner_window[1]) > max(min(mapped), owner_window[0]):
+                                matches = True
+                                break
+                        if not matches:
+                            continue
+                    dependencies[key].add(owner_key.split("|", 1)[1])
+    return dependencies
+
+
+def _reviewed_display_joins(
+    document: dict, region: str, lines: list[dict], fragments_by_key: dict[str, list[dict]],
+) -> list[dict]:
+    """Emit only the registry's explicit terminal pairs, for drawing/loading.
+
+    These relations neither create physical route edges nor authorize track
+    traversal. Stable endpoints retain the reviewed line and station code;
+    chain numbers merely address this build's display geometry.
+    """
+    by_id = {line["id"]: line for line in lines}
+    joins = []
+    for row in document.get("joins") or []:
+        ids = row.get("lineIds") or []
+        if not any(line_id in by_id for line_id in ids):
+            continue
+        if len(ids) != 2 or len(set(ids)) != 2 or not row.get("id") \
+                or not row.get("evidence") or row.get("circleOwner") not in ids \
+                or not all(line_id in by_id for line_id in ids):
+            raise RuntimeError(f"{row.get('id')}: invalid reviewed display terminal pair")
+        code = row.get("stationCode")
+        endpoints = []
+        for line_id in ids:
+            line = by_id[line_id]
+            stations = line.get("stations") or []
+            indices = [index for index, station in enumerate(stations) if station[0] == code]
+            if len(indices) != 1 or indices[0] not in (0, len(stations) - 1):
+                raise RuntimeError(f"{row['id']}: {line_id} does not select one explicit terminal")
+            coordinate = rounded([(line.get("displayStationCoordinates") or {}).get(
+                code, stations[indices[0]][2:4])])[0]
+            key = f"{region}|{line_id}"
+            matches = []
+            for fragment in fragments_by_key.get(key, []):
+                points = _fragment_polyline(fragment)
+                for at_end, point in ((False, points[0]), (True, points[-1])):
+                    if point == coordinate:
+                        matches.append((fragment.get("chain", 0), at_end))
+            if len(matches) != 1:
+                raise RuntimeError(f"{row['id']}: {line_id} terminal has no unique display path endpoint")
+            chain, at_end = matches[0]
+            endpoints.append({
+                "lineId": line_id, "lineKey": key, "stationCode": code,
+                "endpointID": f"{key}:{code}", "chain": chain, "atEnd": at_end,
+                "coordinate": coordinate,
+            })
+        if endpoints[0]["coordinate"] != endpoints[1]["coordinate"]:
+            raise RuntimeError(f"{row['id']}: reviewed display pair does not share its exact anchor")
+        record = {"id": row["id"], "region": region, "kind": "throughDisplay",
+                  "stationCode": code, "hostLineId": row["circleOwner"],
+                  "endpoints": endpoints, "evidence": list(row["evidence"])}
+        if document.get("reviewedAt"):
+            record["reviewedAt"] = document["reviewedAt"]
+        joins.append(record)
+    return joins
 STATIONS_FORMAT = "jtm-display-stations-v2"
 REPORT_FORMAT = "jtm-display-network-report-v2"
 SHARED_CORRIDOR_FORMAT = "jtm-shared-corridors-v1"
@@ -140,7 +254,7 @@ RENDER_GROUP_POLICY_FORMATS = frozenset({
 # simply never gets a family palette, the same tolerance the single-file
 # reader always had.
 RENDER_GROUP_POLICY_FILENAMES = ("na-render-groups.json", "jp-render-groups.json")
-REGIONS = ("jp", "tw", "hk", "mo", "kr")
+REGIONS = ("jp", "tw", "hk", "mo", "kr", "cn")
 # Regions whose railways the native map draws as ONE continuous stroke per
 # chain of intervals, with the screen-space lane offset and corner rounding
 # baked into the geometry on device (RailCore ContinuousStroke, the port of
@@ -930,9 +1044,95 @@ def chains_from_parts_rows(
     return chains
 
 
+def _chain_vertex_measures(chain: dict, round_coordinates: bool = False) -> tuple[list, list]:
+    """Return one chain's vertices and cumulative renderer ruler.
+
+    Full chunks write coordinates at seven decimals, then both renderers
+    remeasure those written coordinates.  Exact shared follows need that
+    post-write ruler rather than a rounded copy of the source ruler.
+    """
+    points = chain.get("polyline") or []
+    if round_coordinates:
+        points = rounded(points)
+    measures = [0.0]
+    for first, second in zip(points, points[1:]):
+        measures.append(measures[-1] + lane_measure_metres(first, second))
+    return points, measures
+
+
+def _unique_vertex_at_measure(measures: list[float], target: float) -> int | None:
+    matches = [index for index, measure in enumerate(measures)
+               if abs(measure - target) <= EPSILON]
+    return matches[0] if len(matches) == 1 else None
+
+
+def exact_shared_boundary_overrides(
+    follows_by_line: dict[str, list[list]], chains_by_line: dict[str, list[dict]],
+) -> dict[tuple[str, int, float], float]:
+    """Recover exact shared endpoints on the ruler actually shipped.
+
+    A follow qualifies only when all four source measures name unique support
+    vertices and the complete raw vertex sequence is byte-identical (possibly
+    reversed).  The returned values are measured again after the normal
+    seven-decimal coordinate write.  No near-track or interpolated boundary
+    is promoted to exact ownership.
+    """
+    overrides: dict[tuple[str, int, float], float] = {}
+    for line_id, rows in follows_by_line.items():
+        for row in rows:
+            own_index, canon_id, canon_index = int(row[1]), str(row[4]), int(row[5])
+            own_chains, canon_chains = chains_by_line.get(line_id, []), chains_by_line.get(canon_id, [])
+            if own_index >= len(own_chains) or canon_index >= len(canon_chains):
+                continue
+            own, canon = own_chains[own_index], canon_chains[canon_index]
+            own_points, own_measures = _chain_vertex_measures(own)
+            canon_points, canon_measures = _chain_vertex_measures(canon)
+            indices = (
+                _unique_vertex_at_measure(own_measures, float(row[2])),
+                _unique_vertex_at_measure(own_measures, float(row[3])),
+                _unique_vertex_at_measure(canon_measures, float(row[6])),
+                _unique_vertex_at_measure(canon_measures, float(row[7])),
+            )
+            if any(index is None for index in indices):
+                continue
+            own_from, own_to, canon_from, canon_to = indices
+            if own_from >= own_to or canon_from == canon_to:
+                continue
+            own_span = own_points[own_from:own_to + 1]
+            if canon_from < canon_to:
+                canon_span = canon_points[canon_from:canon_to + 1]
+            else:
+                canon_span = list(reversed(canon_points[canon_to:canon_from + 1]))
+            if own_span != canon_span:
+                continue
+            rounded_own, rounded_own_measures = _chain_vertex_measures(own, True)
+            rounded_canon, rounded_canon_measures = _chain_vertex_measures(canon, True)
+            rounded_own_span = rounded_own[own_from:own_to + 1]
+            if canon_from < canon_to:
+                rounded_canon_span = rounded_canon[canon_from:canon_to + 1]
+            else:
+                rounded_canon_span = list(reversed(rounded_canon[canon_to:canon_from + 1]))
+            if rounded_own_span != rounded_canon_span:
+                continue
+            replacements = (
+                (line_id, own_index, float(row[2]), rounded_own_measures[own_from]),
+                (line_id, own_index, float(row[3]), rounded_own_measures[own_to]),
+                (canon_id, canon_index, float(row[6]), rounded_canon_measures[canon_from]),
+                (canon_id, canon_index, float(row[7]), rounded_canon_measures[canon_to]),
+            )
+            for owner, part_index, source, rendered in replacements:
+                key = (owner, part_index, source)
+                previous = overrides.get(key)
+                if previous is not None and abs(previous - rendered) > EPSILON:
+                    raise RuntimeError(f"conflicting exact shared boundary {key!r}")
+                overrides[key] = rendered
+    return overrides
+
+
 def chain_follow_rows(
     follows: list[list], chain: dict, chains_by_line: dict[str, list[dict]],
     region: str, line_id: str = "?",
+    exact_boundaries: dict[tuple[str, int, float], float] | None = None,
 ) -> list[list]:
     """The follow rows of this chain's web display part, clipped to the chain.
 
@@ -976,10 +1176,23 @@ def chain_follow_rows(
                 f"{region}|{line_id}: follow row {row!r} names canonical "
                 f"{row[4]!r} partIndex {canon_index}, which has no matching "
                 f"chain (canonical line has {len(canon_chains)} chains)")
+        exact_boundaries = exact_boundaries or {}
+        exact_own = (
+            abs(low - float(row[2])) <= EPSILON
+            and abs(high - float(row[3])) <= EPSILON
+            and all(key in exact_boundaries for key in (
+                (line_id, int(row[1]), float(row[2])),
+                (line_id, int(row[1]), float(row[3])),
+                (str(row[4]), canon_index, float(row[6])),
+                (str(row[4]), canon_index, float(row[7])),
+            ))
+        )
         out.append([
-            round(low, 1), round(high, 1),
+            exact_boundaries[(line_id, int(row[1]), float(row[2]))] if exact_own else round(low, 1),
+            exact_boundaries[(line_id, int(row[1]), float(row[3]))] if exact_own else round(high, 1),
             f"{region}|{row[4]}", canon_index,
-            round(canon_from, 1), round(canon_to, 1),
+            exact_boundaries[(str(row[4]), canon_index, float(row[6]))] if exact_own else round(canon_from, 1),
+            exact_boundaries[(str(row[4]), canon_index, float(row[7]))] if exact_own else round(canon_to, 1),
         ])
     return out
 
@@ -1009,6 +1222,7 @@ def chain_lane_rows(rows: list[list], chain: dict) -> list[list[float]]:
 def chain_family_windows(
     rows: list[list], chain: dict, group_colors: dict[str, dict],
     region: str, line_id: str,
+    exact_boundaries: dict[tuple[str, int, float], float] | None = None,
 ) -> list[list]:
     """The family-collapse windows of this chain's web display part, clipped
     to it — mirrors `chain_lane_rows`/`chain_follow_rows`.
@@ -1043,7 +1257,17 @@ def chain_family_windows(
             raise RuntimeError(
                 f"{region}|{line_id}: family window row {row!r} names group "
                 f"{group_id!r} with no colour in na-render-groups.json")
-        out.append([round(low, 1), round(high, 1), role, group_id])
+        exact_boundaries = exact_boundaries or {}
+        part_index = int(row[1])
+        low_key = (line_id, part_index, float(row[2]))
+        high_key = (line_id, part_index, float(row[3]))
+        exact_low = abs(low - float(row[2])) <= EPSILON and low_key in exact_boundaries
+        exact_high = abs(high - float(row[3])) <= EPSILON and high_key in exact_boundaries
+        out.append([
+            exact_boundaries[low_key] if exact_low else round(low, 1),
+            exact_boundaries[high_key] if exact_high else round(high, 1),
+            role, group_id,
+        ])
     return out
 
 
@@ -1735,7 +1959,12 @@ def _subchain_fragment(
 
 
 def _retarget_follow(row: list, pieces: list[dict]) -> list:
-    """Point one follow at the sub-chains its canonical span now covers."""
+    """Point one follow at the sub-chains its canonical span now covers.
+
+    On a split piece, canonical from/to are metres from that piece's
+    measure_start, including a span digitized high to low. One unsplit piece
+    only adopts a renumbered chain index and keeps its canonical metres.
+    """
     if len(pieces) == 1:
         if pieces[0]["new_index"] == int(row[3]):
             return [row]
@@ -1760,17 +1989,18 @@ def _retarget_follow(row: list, pieces: list[dict]) -> list:
         high = min(span_high, end)
         if high - low <= EPSILON:
             continue
+        origin = float(piece["measure_start"])
         if span <= EPSILON:
             frac0 = frac1 = 0.0
-            canon_a, canon_b = canon_from, canon_to
+            canon_a, canon_b = canon_from - origin, canon_to - origin
         elif not reverse:
             frac0 = (low - span_low) / span
             frac1 = (high - span_low) / span
-            canon_a, canon_b = low, high
+            canon_a, canon_b = low - origin, high - origin
         else:
             frac0 = (span_high - high) / span
             frac1 = (span_high - low) / span
-            canon_a, canon_b = high, low
+            canon_a, canon_b = high - origin, low - origin
         if own_span <= EPSILON:
             left = right = own_from
         else:
@@ -2807,6 +3037,21 @@ def build(
         input_sha256["display-hubs.json"] = hashlib.sha256(display_hubs_raw).hexdigest()
         display_hubs_doc = json.loads(display_hubs_raw)
 
+    # The existing reviewed terminal registry is a display input only. A
+    # rail-directory override permits bounded packages to supply their own
+    # reviewed pairs without consulting unrelated shipped identities.
+    joins_path = rail_dir / "through-running-display-joins.json"
+    if not joins_path.exists():
+        joins_path = Path(HERE) / "through-running-display-joins.json"
+    display_joins_doc: dict = {}
+    if joins_path.exists():
+        joins_raw = joins_path.read_bytes()
+        input_sha256["through-running-display-joins.json"] = hashlib.sha256(joins_raw).hexdigest()
+        display_joins_doc = json.loads(joins_raw)
+        if display_joins_doc.get("format") != "jtm-through-running-display-joins-v1":
+            raise RuntimeError(f"{joins_path}: unsupported display terminal registry format")
+    display_joins: list[dict] = []
+
     region_line_ids: dict[str, set[str]] = {}
     identity_summaries: dict[str, dict] = {}
     timings_seconds: dict[str, float] = {}
@@ -2961,6 +3206,9 @@ def build(
                     file=sys.stderr,
                 )
 
+        exact_shared_boundaries = exact_shared_boundary_overrides(
+            follow_rows_by_line, chains_by_line)
+
         line_keys_by_station: dict[str, list[str]] = defaultdict(list)
         region_fragments: list[dict] = []
         region_stations: list[dict] = []
@@ -3097,7 +3345,7 @@ def build(
                 for chain_index, chain in enumerate(continuous_chains_for_line):
                     family_windows = chain_family_windows(
                         family_rows_for_line, chain, region_render_group_colors,
-                        region, line["id"])
+                        region, line["id"], exact_shared_boundaries)
                     for window in family_windows:
                         group_id = window[3]
                         if group_id not in region_families:
@@ -3115,7 +3363,8 @@ def build(
                         "laneRows": chain_lane_rows(rows_for_line, chain),
                         "follows": chain_follow_rows(
                             follows_for_line, chain,
-                            chains_by_line, region, line["id"]),
+                            chains_by_line, region, line["id"],
+                            exact_shared_boundaries),
                         "totalMetres": round(
                             chain.get("endMetres", chain["startMetres"])
                             - chain["startMetres"], 1),
@@ -3235,11 +3484,17 @@ def build(
                 if circle_owner and circle_owner != line["id"]:
                     owner = next((candidate for candidate in package["lines"]
                                   if candidate["id"] == circle_owner), None)
-                    if owner is None or not any(station[0] == row[0]
-                                                for station in owner.get("stations") or []):
+                    owner_station = next((station for station in (owner or {}).get("stations", [])
+                                          if station[0] == row[0]), None)
+                    if owner_station is None:
                         raise RuntimeError(
                             f"{line['id']}: circle owner {circle_owner!r} does not serve {row[0]!r}")
-                    continue
+                    anchor = (line.get("displayStationCoordinates") or {}).get(row[0], row[2:4])
+                    owner_anchor = (owner.get("displayStationCoordinates") or {}).get(
+                        row[0], owner_station[2:4])
+                    if line.get("operator") and line["operator"] == owner.get("operator") \
+                            and anchor == owner_anchor:
+                        continue
                 region_stations.append(station_record)
 
         winners = label_winners(region_stations)
@@ -3290,6 +3545,15 @@ def build(
             key=lambda key: package_order[key])
 
         line_labels = display_identity.line_display_labels(region, package["lines"])
+        family_dependencies = _family_ink_dependencies(fragments_by_key)
+        region_display_joins = _reviewed_display_joins(
+            display_joins_doc, region, package["lines"], fragments_by_key) if region == "jp" else []
+        display_joins.extend(region_display_joins)
+        join_dependencies: dict[str, set[str]] = defaultdict(set)
+        for join in region_display_joins:
+            first, second = join["endpoints"]
+            join_dependencies[first["lineKey"]].add(second["lineId"])
+            join_dependencies[second["lineKey"]].add(first["lineId"])
 
         blob = bytearray()
         largest_chunk_bytes = 0
@@ -3311,7 +3575,8 @@ def build(
             max_lon = max_lat = -math.inf
             vertex_count = 0
             chain_values: set = set()
-            depends_on_ids: set[str] = set()
+            depends_on_ids: set[str] = (
+                family_dependencies.get(key, set()) | join_dependencies.get(key, set()))
             for fragment in line_fragments:
                 for part in fragment["parts"]:
                     vertex_count += len(part)
@@ -3378,16 +3643,48 @@ def build(
                 line_id = entry["id"]
                 line_fragments = fragments_by_key.get(key, [])
                 line_stations = stations_by_key.get(key, [])
+                overview_stations = [
+                    dict(station) for station in line_stations
+                    if station.get("minZoomMapLibre", 0) <= OVERVIEW_STATION_MAX_ZOOM
+                ]
+                # Only reviewed paths of this same railway establish sibling
+                # switches. A nearby or coincident unrelated railway does not.
+                protected_points = set()
+                full_chains = {}
+                for fragment in line_fragments:
+                    points = _fragment_polyline(fragment)
+                    if fragment.get("continuous"):
+                        protected_points.update((tuple(points[0]), tuple(points[-1])))
+                        full_chains[fragment.get("chain", 0)] = points
+                    else:
+                        for part in fragment["parts"]:
+                            protected_points.update((tuple(part[0]), tuple(part[-1])))
+                for station in overview_stations:
+                    slot = station.get("slot")
+                    if slot is not None:
+                        protected_points.add(tuple(full_chains[slot[0]][slot[1]]))
                 overview_fragments = []
                 overview_vertex_count = 0
                 for fragment in line_fragments:
-                    overview_fragment, vertex_count = build_overview_fragment(fragment)
+                    overview_fragment, vertex_count = build_overview_fragment(fragment, protected_points)
                     overview_fragments.append(overview_fragment)
                     overview_vertex_count += vertex_count
-                overview_stations = [
-                    station for station in line_stations
-                    if station.get("minZoomMapLibre", 0) <= OVERVIEW_STATION_MAX_ZOOM
-                ]
+                overview_chains = {
+                    fragment.get("chain", 0): _fragment_polyline(fragment)
+                    for fragment in overview_fragments if fragment.get("continuous")
+                }
+                # Slots refer to geometry vertices, so retained overview
+                # stations must address that geometry, not a stale full index.
+                for station in overview_stations:
+                    slot = station.get("slot")
+                    if slot is not None:
+                        point = full_chains[slot[0]][slot[1]]
+                        # Reversals and loops can revisit a coordinate; retain
+                        # the addressed occurrence rather than the first one.
+                        occurrence = full_chains[slot[0]][:slot[1] + 1].count(point) - 1
+                        indices = [index for index, candidate in enumerate(overview_chains[slot[0]])
+                                   if candidate == point]
+                        station["slot"] = [slot[0], indices[occurrence]]
                 overview_doc = {
                     "format": FORMAT, "region": region, "lineId": line_id,
                     "detail": "overview",
@@ -3507,6 +3804,7 @@ def build(
         },
         "lines": metadata,
         "regions": region_records,
+        "displayJoins": display_joins,
     }
     manifest_bytes = compact_json(manifest)
     (output / "manifest.json").write_bytes(manifest_bytes)

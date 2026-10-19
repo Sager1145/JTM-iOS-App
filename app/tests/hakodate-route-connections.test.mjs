@@ -37,7 +37,7 @@ async function legacySandbox(connectors = false) {
   `, context);
   context.RailMap.permitsStationConnectorNode = (stationCode, point) =>
     RailNetwork.permitsStationConnectorNode(network, stationCode, point);
-  if (connectors) vm.runInContext("addStationTransferConnectorEdges(__graph)", context);
+  if (connectors) vm.runInContext("addReviewedPhysicalJunctionEdges(__graph)", context);
   context.RailMap.canonicalizeRouteFeature = (feature, options) =>
     RailNetwork.canonicalizeRouteFeature(network, feature, options);
   return context;

@@ -1,0 +1,191 @@
+{
+  "format": "jtm-keikyu-airport-complete-display-v1",
+  "status": "accepted-display-cartography",
+  "reviewedAt": "2026-10-13",
+  "lineID": "jp-京浜急行電鉄-空港線",
+  "packageIndex": 86,
+  "intervalIndexes": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "stationIDs": [
+    "004349",
+    "004356",
+    "004364",
+    "004373",
+    "004382",
+    "004368"
+  ],
+  "candidate": {
+    "directory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5",
+    "manifest": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/manifest.json",
+    "manifestSha256": "4599e71618bca79a59e254623e647a364b18081eb14f2649a4b2fea930035ca6",
+    "candidateFile": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/candidate.json",
+    "candidateSha256": "4d815b72dc2b02154cb8b96fc6e54b28d928f980dd38b4ff5e215d6291eeb2e8",
+    "intervalFiles": [
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-0.geojson",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-1.geojson",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-2.geojson",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-3.geojson",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-4.geojson",
+      "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5/interval-5.geojson"
+    ],
+    "intervalSha256": [
+      "00d706e36a9c71abb5ccad93e78a20964b1b70402a1b08ec779277611f977a93",
+      "933c95476bbe71cbf73f03c6ae5b2a13a24b068172aaa27080a1a6477ca5f25f",
+      "ee9c58bca1db693db944430eb991d1f9c22c9609f62499e906bc0e70faf8f801",
+      "5a9cf8eb000e49e769e96820a038da857707681cc266864995ca28808555f5e2",
+      "17c6499f73b23968beb6a758b455c8d314769bc3ace2e29b5360d7cd0b7201dc",
+      "4290e38f1e6bcc5d9ef33ace27997fab3f86186f4b8d300eeae2a0098968eb1b"
+    ],
+    "sourcePointCounts": [
+      10,
+      15,
+      7,
+      14,
+      15,
+      21
+    ],
+    "candidatePointCounts": [
+      53,
+      53,
+      33,
+      40,
+      62,
+      94
+    ],
+    "minimumEdgeMetres": 1.5,
+    "stationAliases": {
+      "004331": [
+        139.724341,
+        35.561689
+      ],
+      "004349": [
+        139.7296463263893,
+        35.5545111000869
+      ],
+      "004356": [
+        139.7395571299553,
+        35.552546948974886
+      ],
+      "004364": [
+        139.74620288458635,
+        35.55049948698252
+      ],
+      "004373": [
+        139.75402342691427,
+        35.54833975657655
+      ],
+      "004382": [
+        139.76677632142656,
+        35.54511967376913
+      ],
+      "004368": [
+        139.78545198643883,
+        35.54937638200407
+      ]
+    },
+    "manualFramePixels": {
+      "004349": [
+        510,
+        313
+      ],
+      "004356": [
+        375,
+        275
+      ],
+      "004364": [
+        410,
+        290
+      ],
+      "004373": [
+        406,
+        297.5
+      ],
+      "004382": [
+        445.5,
+        295
+      ],
+      "004368": [
+        424,
+        405.5
+      ]
+    },
+    "stationEndIntervals": {
+      "004349": 0,
+      "004356": 1,
+      "004364": 2,
+      "004373": 3,
+      "004382": 4,
+      "004368": 5
+    },
+    "rejectedV1V2": {
+      "v1CandidateSha256": "6d6db7991ee0251c3940699d9fcc73e3bea6384448a6cffb308313719a73965a",
+      "v2CandidateSha256": "67cc314700f1fd665760a1c46c20298588f413f2a991a8f36def0aef2978f898",
+      "interval1": "upper building/frame-edge hump in views 2/3",
+      "interval5": "retained known south source offset across clear labelled Keikyu runway guide"
+    },
+    "rejectedEarlierCandidates": {
+      "v1": "6d6db7991ee0251c3940699d9fcc73e3bea6384448a6cffb308313719a73965a",
+      "v2": "67cc314700f1fd665760a1c46c20298588f413f2a991a8f36def0aef2978f898",
+      "v3": "a215b5873c82921f290a0c23bd3bb2d27fbf58ec0438ed8147687a84d42e21b0",
+      "v4": "7cb13f599fd50cdd53a56939584ca93c4f71feec928b85202e98623fbc7a8292",
+      "reason": "V1 interval-1 hump and V1/V2 interval-5 locus; V3 south residual; V4 north overshoot."
+    }
+  },
+  "baseline": {
+    "lineSha256": "cc7a6e7c56e0ccb10ba4f80486d5bfb376703f4841f46082ec3315a5c7b48ffe",
+    "nativeRow": [
+      "jp-京浜急行電鉄-空港線",
+      0,
+      0,
+      5,
+      77,
+      6512.4,
+      null,
+      null,
+      []
+    ],
+    "nativeRowSha256": "0aa80ada1e538b6e713e26376f0864827ea6a88fd68e616872f884933a34694e",
+    "nativeSummary": {
+      "partCount": 1,
+      "pointCount": 77,
+      "metres": 6512.4,
+      "classification": null
+    },
+    "measuredReferences": {}
+  },
+  "nativeReplay": {
+    "candidateRowSha256": "58c479482961afd683df03a0742d36e6929f2b18febdf9881e7e28ccddd8809f",
+    "candidateSummary": {
+      "partCount": 1,
+      "pointCount": 328,
+      "metres": 6422.3,
+      "classification": "station-approach/groomed"
+    },
+    "candidateMeasuredReferences": {}
+  },
+  "policy": {
+    "scope": "Display-only complete Keikyu Airport Line intervals 0...5 and six non-Kamata station aliases.",
+    "preserve": "Physical stations, IDs, kilometres, segments, Kamata shared endpoint, every other line and every measured reference.",
+    "representation": "Apple cartographic own Keikyu rail glyph and longitudinal station-frame centres; not surveyed track or platform geometry",
+    "acceptanceGate": "accepted-display-cartography",
+    "dependencyRefresh": "Refresh only the four established package dependency references.",
+    "validation": "Candidate-only until all six complete intervals in all three Inspectors and same-camera Main station/whole-line review."
+  },
+  "runtimeReview": {
+    "reviewedAt": "2026-10-13",
+    "inspectors": {
+      "primary": "27 views / 81 panels accepted",
+      "secondary": "27 views / 81 panels accepted",
+      "third": "27 views / 81 panels accepted"
+    },
+    "main": "seven station close ON/OFF pairs and complete-line pair accepted",
+    "receiptDirectory": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/keikyu-airport-complete-display-candidate-v5",
+    "limitation": "Identified Apple railway cartography; no surveyed tunnel accuracy claim"
+  }
+}

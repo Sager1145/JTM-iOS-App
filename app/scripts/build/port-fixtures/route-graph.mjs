@@ -15,7 +15,7 @@
 //  wires up. Of the nine functions it carries, graph construction uses four
 //  (coordKey, distanceMeters, graphGridKey, normalizeGraphCoord) and all four
 //  are pure coordinate arithmetic that this fixture takes from the real
-//  frontend files. The fifth it touches, addStationTransferConnectorEdges, is
+//  frontend files. The fifth it touches, addReviewedPhysicalJunctionEdges, is
 //  the solver's and is stubbed to a no-op here — see the note on `regions`
 //  below. Nothing else in this fixture reaches across the seam.
 //
@@ -116,7 +116,7 @@ function loadRouteGraphScope(APP_DIR, AppCore, RailNetwork) {
     `${source}
      // The four pure primitives graph construction needs, wired exactly as
      // app-route-service.js wires them — same functions, same file. The fifth
-     // (addStationTransferConnectorEdges) belongs to the solver and is a
+     // (addReviewedPhysicalJunctionEdges) belongs to the solver and is a
      // no-op here so that what this fixture records is the graph THIS module
      // builds, with no edge from the port that has not been written yet.
      configureRouteSolverApi({
@@ -124,7 +124,7 @@ function loadRouteGraphScope(APP_DIR, AppCore, RailNetwork) {
        distanceMeters: (...a) => distanceMeters(...a),
        graphGridKey: (...a) => graphGridKey(...a),
        normalizeGraphCoord: (...a) => normalizeGraphCoord(...a),
-       addStationTransferConnectorEdges: () => {},
+       addReviewedPhysicalJunctionEdges: () => {},
      });
      return {
        // §27 keys

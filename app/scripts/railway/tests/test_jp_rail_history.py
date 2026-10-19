@@ -4,6 +4,7 @@ Geometry here is synthetic. Shipped features still come only from an N02
 release plus an explicit date on jp-rail-history-events.json.
 """
 import importlib.util
+import json
 import os
 import unittest
 
@@ -12,6 +13,7 @@ PATH = os.path.abspath(os.path.join(HERE, '..', 'build-jp-rail-history.py'))
 SPEC = importlib.util.spec_from_file_location('build_jp_rail_history', PATH)
 mod = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(mod)
+from temporal_source import coords as temporal_coords
 
 
 def section(line, operator, coordinates):
@@ -31,6 +33,161 @@ def station(line, operator, name, coordinates):
 
 
 class RailHistoryEventTests(unittest.TestCase):
+
+    def test_shipped_hisatsu_service_timelines_cover_every_current_feature(self):
+        """The July reopening restores the south; it never reopens 八代—吉松."""
+        root = os.path.abspath(os.path.join(HERE, '..', '..', '..', '..'))
+
+        def load(relative):
+            with open(os.path.join(root, relative), encoding='utf-8') as handle:
+                return json.load(handle)
+
+        identity = {'line': '肥薩線', 'operator': '九州旅客鉄道'}
+        section_collection = load('app/data/rail-sections.json')
+        station_collection = load('app/data/stations.json')
+        self.assertEqual(section_collection['name'], 'N02-25_RailroadSection')
+        self.assertEqual(station_collection['name'], 'N02-25_Station')
+        current = {'sections': section_collection['features'],
+                   'stations': station_collection['features']}
+
+        def release(year):
+            # The checked-in N02-25 geometry supplies the same snapshot fields
+            # used by the builder; display_point is presentation metadata.
+            self.assertEqual(year, '25')
+            sections = [(dict(feature['properties']), temporal_coords(feature))
+                        for feature in current['sections']]
+            station_fields = {
+                'N02_001': 'railway_class_code', 'N02_002': 'institution_type_code',
+                'N02_003': 'line_name', 'N02_004': 'operator', 'N02_005': 'station_name',
+                'N02_005c': 'n02_station_code', 'N02_005g': 'n02_group_code',
+            }
+            stations = [({raw: feature['properties'][spelled]
+                          for raw, spelled in station_fields.items()
+                          if spelled in feature['properties']}, temporal_coords(feature))
+                        for feature in current['stations']]
+            return sections, stations
+        expected = {
+            'jp.hisatsu.yatsushiro-yoshimatsu.suspension': [[None, '2020-07-04']],
+            'jp.hisatsu.yoshimatsu-hayato.resumption': [
+                [None, '2020-07-06'], ['2020-07-11', '2025-08-07'],
+                ['2026-07-12', None]],
+        }
+        source = load('app/scripts/railway/jp-rail-history-events.json')
+        events = {event['id']: event for event in source['temporal_events']}
+        self.assertTrue(set(expected) <= set(events), 'Hisatsu source events are missing')
+        compiled = {key: [] for key in ('sections', 'stations', 'retirements')}
+        for event_id, timeline in expected.items():
+            self.assertEqual(events[event_id]['service_periods'], timeline)
+            result = mod.compile_temporal_event(
+                mod.source_event_geometry(events[event_id], release),
+                current['sections'], current['stations'])
+            for key in compiled:
+                compiled[key].extend(result[key])
+        compiled['retirements'] = mod.normalize_stamps(
+            compiled['retirements'], current['sections'], current['stations'])
+        shipped = load('app/data/rail-history.json')
+        for target in ('sections', 'stations', 'retirements'):
+            shipped_rows = [row for row in shipped[target]
+                            if any((row.get('properties', row).get('history_id', ''))
+                                   .startswith(event_id) for event_id in expected)]
+            key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=False)
+            self.assertEqual(sorted(compiled[target], key=key),
+                             sorted(shipped_rows, key=key),
+                             f'{target}: shipped Hisatsu rows differ from source replay')
+        south_stations = {'吉松', '栗野', '大隅横川', '植村', '霧島温泉',
+                          '嘉例川', '中福良', '表木山', '日当山', '隼人'}
+        dates = ['2020-07-03', '2020-07-05', '2020-07-06', '2020-07-10',
+                 '2020-07-11', '2025-08-06', '2025-08-07', '2026-06-28',
+                 '2026-07-11', '2026-07-12']
+
+        def geometry_key(feature):
+            return json.dumps(feature['geometry'], sort_keys=True, ensure_ascii=False)
+
+        def timeline_for(overlay, feature, target):
+            matches = []
+            for stamp in overlay['retirements']:
+                if not any(stamp['history_id'].startswith(event_id) for event_id in expected):
+                    continue
+                match = stamp['match']
+                if target not in match.get('targets', ['sections', 'stations']):
+                    continue
+                if mod.select_temporal([feature], {
+                        'line': match['line_name'], 'operator': match['operator']},
+                        match['bbox']):
+                    matches.append(stamp)
+            self.assertEqual(len(matches), 1, (target, feature['properties'], matches))
+            stamp = matches[0]
+            event_id = next(event_id for event_id in expected
+                            if stamp['history_id'].startswith(event_id))
+            timeline = [[stamp.get('valid_from'), stamp.get('valid_to')]]
+            for variant in overlay[target]:
+                properties = variant['properties']
+                if (properties.get('history_id', '').startswith(event_id)
+                        and geometry_key(variant) == geometry_key(feature)):
+                    timeline.append(properties.get('service_validity', [
+                        properties.get('valid_from'), properties.get('valid_to')]))
+            timeline.sort(key=lambda pair: pair[0] or '')
+            self.assertEqual(timeline, expected[event_id], (target, feature['properties']))
+            return event_id, timeline
+
+        for target, universe in current.items():
+            features = mod.select_temporal(universe, identity)
+            self.assertTrue(features)
+            for feature in features:
+                with self.subTest(target=target, properties=feature['properties']):
+                    event_id, timeline = timeline_for(compiled, feature, target)
+                    self.assertEqual(timeline_for(shipped, feature, target), (event_id, timeline))
+                    if target == 'stations':
+                        name = feature['properties']['station_name']
+                        self.assertEqual(event_id.endswith('.resumption'), name in south_stations)
+                    else:
+                        latitudes = [point[1] for point in temporal_coords(feature)]
+                        self.assertTrue(max(latitudes) <= 32.01245
+                                        or min(latitudes) >= 32.01245,
+                                        'Hisatsu raw section crosses the 吉松 platform boundary')
+                        self.assertEqual(event_id.endswith('.resumption'),
+                                         max(latitudes) <= 32.01245)
+                    if event_id.endswith('.suspension'):
+                        self.assertFalse(any((start is None or start <= '2020-07-04')
+                                             and (end is None or '2020-07-04' < end)
+                                             for start, end in timeline))
+                    actual = [any((start is None or start <= day)
+                                  and (end is None or day < end)
+                                  for start, end in timeline) for day in dates]
+                    self.assertEqual(actual, [True, False, False, False, False, False, False, False, False, False]
+                                     if event_id.endswith('.suspension') else
+                                     [True, True, False, False, True, True, False, False, False, True])
+
+    def test_identity_event_with_no_runtime_output_is_rejected(self):
+        event = {'id': 'missing-transfer', 'kind': 'operator_transfer'}
+        empty = {'sections': [], 'stations': [], 'retirements': [], 'identity_periods': []}
+        with self.assertRaisesRegex(ValueError, 'missing-transfer.*zero runtime output'):
+            mod.require_identity_event_output(event, empty)
+
+        emitted = dict(empty, identity_periods=[{'history_id': 'old.identity'}])
+        mod.require_identity_event_output(event, emitted)
+
+    def test_identity_output_must_cover_every_selected_current_feature(self):
+        event = {
+            'id': 'gap', 'kind': 'operator_transfer',
+            'after': {'line': 'L', 'operator': 'O'},
+            'geometry': {'selector': {}},
+        }
+        current = [section('L', 'O', [[0.0, 0.0], [1.0, 0.0]])]
+        compiled = {
+            'sections': [], 'stations': [], 'retirements': [],
+            'identity_periods': [{
+                'history_id': 'gap.identity.period0.sections',
+                'match': {
+                    'line_name': 'L', 'operator': 'O',
+                    'bbox': [2.0, 2.0, 3.0, 3.0], 'targets': ['sections'],
+                },
+            }],
+        }
+        with self.assertRaisesRegex(ValueError, 'misses selected current features'):
+            mod.require_identity_event_output(event, compiled, current, [])
+        compiled['identity_periods'][0]['match']['bbox'] = [-0.1, -0.1, 1.1, 0.1]
+        mod.require_identity_event_output(event, compiled, current, [])
 
     def test_materializes_each_surveyed_predecessor_release_independently(self):
         base = {'N02_001': '11', 'N02_002': '2', 'N02_003': 'Old L', 'N02_004': 'JR'}

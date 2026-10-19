@@ -3,7 +3,7 @@
  * build-rail-database.mjs — write data/rail.db, the relational mirror of the
  * published railway data.
  *
- * The five display packages, the multilingual station-name tables, the route
+ * The six display packages, the multilingual station-name tables, the route
  * solver's section/station datasets and the badge attribution files all
  * describe ONE network, but each is shaped for the consumer that reads it: a
  * package is per-line arrays tuned for transfer size, a reading table is two
@@ -25,7 +25,6 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { APP_DIR, buildDatabase } from "./rail-database/load.mjs";
@@ -57,12 +56,9 @@ function main() {
   const log = options.quiet ? () => {} : (message) => process.stdout.write(`${message}\n`);
   const startedAt = Date.now();
 
-  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-jp-station-english.py"), "--check"],
-    { stdio: options.quiet ? "pipe" : "inherit" });
-  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-station-english.py"), "--check", "--require-english"],
-    { stdio: options.quiet ? "pipe" : "inherit" });
-  execFileSync("python3", [path.join(APP_DIR, "scripts", "railway", "build-station-names.py"), "--check"],
-    { stdio: options.quiet ? "pipe" : "inherit" });
+  // Mirror the retained published catalogs. National source rebuild/checks are
+  // explicit maintenance work; absent official English stays absent here.
+  // The loader validates catalog schema, package identities and memberships.
   log(`Building ${path.relative(APP_DIR, options.outFile)}${options.geometry ? "" : " (no geometry)"}`);
   const counts = buildDatabase({ ...options, log });
 

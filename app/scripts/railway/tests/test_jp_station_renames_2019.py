@@ -56,7 +56,7 @@ class StationRenames2019Tests(unittest.TestCase):
             "jp.station-rename.hankyu.hk86.kyoto-kawaramachi": 1,
             "jp.station-rename.hanshin.hs13.naruo-mukogawajoshidai-mae": 1,
         }
-        retirements = []
+        identity_periods = []
         for event in self.payload["events"]:
             with self.subTest(event=event["id"]):
                 temporal.validate(event)
@@ -83,30 +83,17 @@ class StationRenames2019Tests(unittest.TestCase):
                 )
                 compiled = temporal.compile_event(event, self.sections, self.stations)
                 self.assertEqual(compiled["sections"], [])
-                self.assertEqual(len(compiled["stations"]), len(historical))
-                self.assertEqual(len(compiled["retirements"]), 1)
-                self.assertEqual(
-                    {feature["properties"]["station_name"] for feature in compiled["stations"]},
-                    {event["before"]["station"]},
-                )
-                self.assertEqual(
-                    {tuple(feature["properties"]["service_validity"])
-                     for feature in compiled["stations"]},
-                    {(None, "2019-10-01")},
-                )
-                self.assertEqual(
-                    {feature["properties"].get("n02_station_code")
-                     for feature in compiled["stations"]},
-                    {event["current_n02_station_code"]},
-                )
-                self.assertTrue(
-                    all(feature["properties"].get("station_code_basis")
-                        == "exact_current_geometry_identity"
-                        for feature in compiled["stations"])
-                )
-                retirements.extend(compiled["retirements"])
+                self.assertEqual(compiled["stations"], [])
+                self.assertEqual(compiled["retirements"], [])
+                self.assertEqual(len(compiled["identity_periods"]), 1)
+                period = compiled["identity_periods"][0]
+                self.assertEqual(period["as"]["N02_005"], event["before"]["station"])
+                self.assertEqual(period["valid_to"], "2019-10-01")
+                self.assertEqual(period["match"]["station_name"], event["after"]["station"])
+                identity_periods.extend(compiled["identity_periods"])
         self.assertEqual(
-            len(temporal.normalize_stamps(retirements, self.sections, self.stations)), 5
+            len(temporal.normalize_identity_periods(
+                identity_periods, self.sections, self.stations)), 5
         )
 
     def test_kyoto_line_hk01_is_withheld_because_current_selector_is_empty(self):

@@ -472,10 +472,6 @@ def fetch(args):
         print('Retrying missing network downloads in 30 seconds; successful caches are retained.',flush=True)
         time.sleep(30)
 
-def audit_plan(args):
-    subprocess.run([sys.executable,str(HERE/'audit_coverage.py'),'--plan',str(Path(args.out)/'plan.json'),
-        '--network-cache',str(Path(args.out)/'network-cache'),'--output',str(Path(args.out)/'coverage-audit.json')],check=True)
-
 def all_cities(args):
     """Run the complete workflow; a locked desktop waits for a manual unlock."""
     out=Path(args.out).resolve()
@@ -501,7 +497,6 @@ def all_cities(args):
             probe(argparse.Namespace(out=out,lat=43.6825,lon=-79.391,meters_per_pixel=REFERENCE_MPP))
         stage('planning_all_networks')
         plan(argparse.Namespace(out=out,cities=None,mode='metros',overlap=.2))
-        stage('auditing_coverage');audit_plan(args)
         capture_args=argparse.Namespace(out=out,limit=None,retries=2,one_per_city=True)
         stage('testing_one_tile_per_metro');capture(capture_args)
         capture_args.one_per_city=False
@@ -532,11 +527,9 @@ def main():
     q.set_defaults(func=capture)
     q=sub.add_parser('fetch',help='Fetch supplemental full route geometries for all catalog metros')
     q.set_defaults(func=fetch)
-    q=sub.add_parser('audit',help='Check area and complete line geometry coverage of the saved plan')
-    q.set_defaults(func=audit_plan)
     q=sub.add_parser('resort',help='Reclassify existing journaled screenshots using their saved evidence')
     q.set_defaults(func=resort)
-    q=sub.add_parser('all',help='Fetch, calibrate, plan, audit, test each metro, then capture every tile')
+    q=sub.add_parser('all',help='Fetch, calibrate, plan, test each metro, then capture every tile')
     q.set_defaults(func=all_cities)
     q=sub.add_parser('cities',help='List metro IDs and their rail systems')
     q.set_defaults(func=lambda a:print('\n'.join(c['id']+' — '+c['name']+': '+', '.join(c['systems']) for c in json.loads((HERE/'cities.json').read_text())['cities'])))

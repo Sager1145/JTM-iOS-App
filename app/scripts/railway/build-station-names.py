@@ -14,7 +14,7 @@ import re
 import unicodedata
 
 APP = Path(__file__).resolve().parents[2]
-REGIONS = ("jp", "tw", "hk", "mo", "kr")
+REGIONS = ("jp", "tw", "hk", "mo", "kr", "cn")
 FIELDS = ("name", "zh_Hant", "zh_Hans", "en", "ja", "kana", "katakana", "romaji")
 
 

@@ -32,12 +32,14 @@ https://nlftp.mlit.go.jp/ksj/gml/data/N02/N02-YY/N02-YY_GML.zip.
 Usage: python3 app/scripts/railway/build-jp-rail-history.py [--source-dir DIR]
        [--revision YYYY-MM-DD.N] [--report PATH]
 """
-import argparse, datetime, io, json, math, os, sys, zipfile
+import argparse, copy, datetime, io, json, math, os, re, sys, zipfile
 from collections import defaultdict
 import shapefile
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'history'))
-from temporal_source import (compile_event as compile_temporal_event, normalize_stamps,
-                             expand_legacy_periods, constrain_opening_predecessors)
+from temporal_source import (IDENTITY_KINDS, compile_event as compile_temporal_event,
+                             normalize_stamps, normalize_identity_periods,
+                             expand_legacy_periods, constrain_opening_predecessors,
+                             select as select_temporal)
 
 # Events with no kind are closures. The ride solver reads the service interval
 # only. A lone valid_from/valid_to pair is that interval; infrastructure_validity
@@ -52,7 +54,7 @@ EVENTS = os.path.join(ROOT, 'app/scripts/railway/jp-rail-history-events.json')
 SECTIONS = os.path.join(ROOT, 'app/data/rail-sections.json')
 STATIONS = os.path.join(ROOT, 'app/data/stations.json')
 OUT = os.path.join(ROOT, 'app/data/rail-history.json')
-DEFAULT_SRC = os.path.expanduser('~/Documents/GitHub/Japan-Train-Map/app/data/raw/railway/jp/history')
+DEFAULT_SRC = os.path.join(ROOT, 'railway-sources/local/raw/n02/history')
 
 COVER_M = 40.0          # sample within this of existing track = still there
 STEP_M = 20.0           # densify step for the coverage test
@@ -474,8 +476,28 @@ def walk_to_junction(end, feats, snap, junctions):
     return None
 
 
+def _new_since_release_label(ev):
+    selector = (ev.get('geometry') or {}).get('selector') or {}
+    return selector.get('new_since_release') or ev.get('new_since_release')
+
+
+def _drop_new_since_release(ev, features, snapshot_covered):
+    """Legacy openings: drop current features the named N02 release already covers."""
+    label = _new_since_release_label(ev)
+    if not label:
+        return features
+    if event_kind(ev) != 'opening':
+        sys.exit(f"{ev.get('id', '?')}: new_since_release is only valid on an opening")
+    if not isinstance(label, str) or not re.fullmatch(r'N02-\d{2}', label):
+        sys.exit(f"{ev.get('id', '?')}: new_since_release must be N02-YY")
+    if snapshot_covered is None:
+        sys.exit(f"{ev.get('id', '?')}: new_since_release requires snapshot coverage")
+    return [feature for feature in features if not snapshot_covered(label, feature)]
+
+
 def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
-                  sections, station_by_key, retirements, cover, joinable, retired_geometry):
+                  sections, station_by_key, retirements, cover, joinable, retired_geometry,
+                  snapshot_covered=None):
     """Kinds other than closure/relocation. Geometry comes only from a release
     the builder already reads, or from the current package. No match emits nothing
     invented: the event fails closed instead.
@@ -543,6 +565,7 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
             sys.exit(f"{ev['id']}: N02-{ev['year']} has no station {'/'.join(missing)}")
         chosen = features_of(cur_stations, ev['line'], ev['operator'], 'line_name', 'operator')
         chosen = [f for f in chosen if f['properties'].get('station_name') in names and in_event(f)]
+        chosen = _drop_new_since_release(ev, chosen, snapshot_covered)
         if len(chosen) != len(names):
             have = {f['properties'].get('station_name') for f in chosen}
             sys.exit(f"{ev['id']}: current package has no station {'/'.join(n for n in names if n not in have)}")
@@ -554,6 +577,9 @@ def emit_extended(ev, release, cur_sections, cur_stations, cur_station_pos,
         note = f"stations {'/'.join(names)}"
     elif kind in ('opening', 'suspension', 'resumption'):
         if current_secs:
+            current_secs = _drop_new_since_release(ev, current_secs, snapshot_covered)
+            if not current_secs:
+                sys.exit(f"{ev['id']}: new_since_release removed every current feature")
             entry = retirement_for(
                 ev, current_secs, cur_sections, ev['line'], ev['operator'], 'N02_003', 'N02_004')
             if not isinstance(entry, dict):
@@ -650,6 +676,61 @@ def source_event_geometry(event, release):
     return event
 
 
+def _selected_identity_features(event, current_sections, current_stations):
+    """Current features the temporal selector would stamp for this identity event."""
+    identity = event.get('after') or {'line': event.get('line'), 'operator': event.get('operator')}
+    if not identity.get('line') or not identity.get('operator'):
+        return []
+    selector = event.get('geometry', {}).get('selector', {})
+    bbox = selector.get('bbox', event.get('bbox'))
+    kind = event.get('kind')
+    station_only = kind in ('station_rename', 'station_relocation', 'station_opening', 'station_closure')
+    targets = ['stations'] if station_only else ['sections', 'stations']
+    universes = {'sections': current_sections or [], 'stations': current_stations or []}
+    chosen = []
+    for target in targets:
+        names = selector.get('stations')
+        if target == 'stations' and identity.get('station'):
+            names = [identity['station']]
+        elif target != 'stations':
+            names = None
+        chosen.extend((target, feature) for feature in select_temporal(
+            universes[target], identity, bbox, names))
+    return chosen
+
+
+def _output_covers_feature(compiled, feature, universe, target):
+    for entry in (compiled.get('identity_periods') or []) + (compiled.get('retirements') or []):
+        match = entry.get('match') or {}
+        if target not in match.get('targets', ['sections', 'stations']):
+            continue
+        names = [match['station_name']] if target == 'stations' and match.get('station_name') else None
+        hits = select_temporal(
+            universe, {'line': match.get('line_name'), 'operator': match.get('operator')},
+            match.get('bbox'), names)
+        if any(hit is feature for hit in hits):
+            return True
+    return False
+
+
+def require_identity_event_output(event, compiled, current_sections=None, current_stations=None):
+    if event.get('kind') not in IDENTITY_KINDS:
+        return
+    if not any(compiled.get(key) for key in ('sections', 'stations', 'identity_periods')):
+        raise ValueError(f"{event.get('id', '?')}: identity event produced zero runtime output")
+    if current_sections is None or current_stations is None:
+        return
+    universes = {'sections': current_sections, 'stations': current_stations}
+    missing = {}
+    for target, feature in _selected_identity_features(event, current_sections, current_stations):
+        if not _output_covers_feature(compiled, feature, universes[target], target):
+            missing[target] = missing.get(target, 0) + 1
+    if missing:
+        detail = ', '.join(f'{count} {target}' for target, count in sorted(missing.items()))
+        raise ValueError(
+            f"{event.get('id', '?')}: identity output misses selected current features ({detail})")
+
+
 def _historical_sections(rows, identity, bbox):
     return [{'type': 'Feature', 'properties': dict(props),
              'geometry': {'type': 'LineString', 'coordinates': [list(q(c)) for c in points]}}
@@ -674,6 +755,221 @@ def _historical_stations(rows, identity, bbox, names=None):
                 feature['properties'][key] = props[field]
         result.append(feature)
     return result
+
+
+def _feature_samples(feature, densify):
+    coordinates = (feature.get('geometry') or {}).get('coordinates') or []
+    if not coordinates:
+        return []
+    if isinstance(coordinates[0], (int, float)):
+        lines = [[coordinates]]
+    elif coordinates[0] and isinstance(coordinates[0][0], (int, float)):
+        lines = [coordinates]
+    else:
+        lines = coordinates
+    samples = []
+    for line in lines:
+        if line:
+            samples.extend(densify(line))
+    return samples
+
+
+class SnapshotCoverage:
+    """Whether current geometry is already in an N02 release.
+
+    Covered means at least 90 percent of 25 m samples lie within 40 m of
+    snapshot geometry of the same railway class (shinkansen vs conventional),
+    the rule in compare-jp-history-snapshots.py. Indexes are cached per
+    release and class. The content date of N02-YY is (2000+YY)-04-01.
+    """
+
+    def __init__(self, source_dir):
+        self.source_dir = source_dir
+        self._indexes = {}
+        self._rows = {}
+        self._compare = None
+        self._releases = None
+
+    def _cmp(self):
+        if self._compare is None:
+            import importlib.util
+            path = os.path.join(os.path.dirname(__file__), 'history',
+                                'compare-jp-history-snapshots.py')
+            spec = importlib.util.spec_from_file_location(
+                'compare_jp_history_snapshots', path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            self._compare = module
+        return self._compare
+
+    def available_labels(self):
+        if self._releases is None:
+            found = {}
+            if os.path.isdir(self.source_dir):
+                for name in os.listdir(self.source_dir):
+                    match = re.match(r'^N02-(\d{2})(?:_GML)?\.(?:zip|json)$', name)
+                    if match:
+                        found[f'N02-{match.group(1)}'] = int(match.group(1))
+            self._releases = found
+        return self._releases
+
+    def last_before(self, stamp_date):
+        """Greatest N02 edition whose content is earlier than stamp_date.
+
+        N02-YY is the fiscal-year edition, published after that year and
+        already containing openings from it. Its content date is 1 April of
+        the following year. N02-19 is therefore 2020-04-01: it contains the
+        2019-11-30 Hazawa link (measured 10/10 samples), and the last edition
+        before that opening is N02-18 (2019-04-01).
+        """
+        best = None
+        best_yy = None
+        for label, yy in self.available_labels().items():
+            if f'{2001 + yy:04d}-04-01' < stamp_date and (best_yy is None or yy > best_yy):
+                best, best_yy = label, yy
+        return best
+
+    def _rows_for(self, label):
+        if label not in self._rows:
+            opened = open_release(self.source_dir, label[4:])
+            try:
+                self._rows[label] = read_release(opened, 'RailroadSection')
+            finally:
+                close = getattr(opened, 'close', None)
+                if close:
+                    close()
+        return self._rows[label]
+
+    def _index(self, label, railway_class):
+        key = (label, railway_class)
+        if key not in self._indexes:
+            cmp = self._cmp()
+            polylines = []
+            for index, (props, pts) in enumerate(self._rows_for(label)):
+                if cmp.railway_class(props.get('N02_002'), props.get('N02_003')) != railway_class:
+                    continue
+                polylines.append(([(float(point[0]), float(point[1])) for point in pts], index + 1))
+            built = cmp.SegmentIndex()
+            built.build(polylines)
+            self._indexes[key] = built
+        return self._indexes[key]
+
+    def covered(self, label, feature):
+        cmp = self._cmp()
+        props = feature.get('properties') or {}
+        railway_class = cmp.railway_class(
+            props.get('N02_002') or props.get('institution_type_code'),
+            props.get('N02_003') or props.get('line_name'))
+        samples = _feature_samples(feature, cmp.densify)
+        if not samples:
+            return False
+        import numpy as np
+        points = np.asarray(samples, dtype=np.float64)
+        nearest = self._index(label, railway_class).nearest(points, limit_m=cmp.COVER_M)
+        return int((nearest >= 0).sum()) * 10 >= len(samples) * 9
+
+
+_HISTORY_SUFFIX = re.compile(
+    r'(?:(?:\.(?:sections|stations|identity|current))|(?:\.period\d+))+(?:\..*)?$'
+)
+
+
+def _event_prefix(history_id):
+    return _HISTORY_SUFFIX.sub('', history_id)
+
+
+def _event_index(spec):
+    return {event['id']: event
+            for event in spec.get('events', []) + spec.get('temporal_events', [])
+            if event.get('id')}
+
+
+def _resolve_stamp_event(history_id, events):
+    prefix = _event_prefix(history_id)
+    if prefix in events:
+        return events[prefix]
+    candidate = history_id
+    for suffix in ('.from', '.to'):
+        if candidate.endswith(suffix):
+            candidate = candidate[:-len(suffix)]
+    prefix = _event_prefix(candidate)
+    if prefix in events:
+        return events[prefix]
+    if '.new-' in history_id:
+        alt = _event_prefix(history_id.replace('.new-', '.old-', 1))
+        if alt in events:
+            return events[alt]
+    return None
+
+
+def _preexisting_reason(event):
+    """None when undeclared, '' when the flag lacks a reason, else the reason."""
+    flag = event.get('allow_preexisting_geometry')
+    if flag is True:
+        reason = event.get('allow_preexisting_geometry_reason')
+        if isinstance(reason, str) and reason.strip():
+            return reason.strip()
+        return ''
+    if isinstance(flag, dict):
+        reason = flag.get('reason')
+        if isinstance(reason, str) and reason.strip():
+            return reason.strip()
+        return ''
+    return None
+
+
+def preexisting_opening_violations(retirements, spec, cur_sections, cur_stations, coverage):
+    """Every valid_from stamp whose current features the pre-stamp N02 already contains.
+
+    Relocations and operator transfers are not openings. An event may keep
+    preexisting geometry only with allow_preexisting_geometry and a reason.
+    A release is skipped when none of its content date falls before the stamp.
+    """
+    events = _event_index(spec)
+    violations = []
+    for retirement in retirements:
+        stamp = retirement.get('valid_from')
+        if not stamp:
+            continue
+        event = _resolve_stamp_event(retirement.get('history_id', ''), events)
+        declared = next((row for row in spec.get('retirements', [])
+                         if row.get('history_id') == retirement.get('history_id')), None)
+        kind = (event or declared or {}).get('kind') or retirement.get('kind')
+        if kind in ('relocation', 'operator_transfer'):
+            continue
+        exemption = event if event is not None else declared
+        if exemption is not None:
+            reason = _preexisting_reason(exemption)
+            if reason:
+                continue
+            if reason == '':
+                violations.append(
+                    retirement['history_id'] + ': allow_preexisting_geometry requires a reason')
+                continue
+        label = coverage.last_before(stamp)
+        if label is None:
+            continue
+        match = retirement.get('match') or {}
+        targets = match.get('targets', ['sections', 'stations'])
+        for target, universe in (('sections', cur_sections), ('stations', cur_stations)):
+            if target not in targets:
+                continue
+            names = ([match['station_name']]
+                     if target == 'stations' and match.get('station_name') else None)
+            chosen = select_temporal(
+                universe,
+                {'line': match.get('line_name'), 'operator': match.get('operator')},
+                match.get('bbox'), names)
+            for feature in chosen:
+                if not coverage.covered(label, feature):
+                    continue
+                props = feature.get('properties') or {}
+                name = props.get('station_name') or props.get('N02_005') or ''
+                violations.append(
+                    f"{retirement['history_id']}: {target} "
+                    f"{match.get('line_name')}/{match.get('operator')} {name} "
+                    f"already in {label} before {stamp}")
+    return violations
 
 
 def main():
@@ -724,7 +1020,8 @@ def main():
             releases[year] = (read_release(zf, 'RailroadSection'), read_release(zf, 'Station'))
         return releases[year]
 
-    sections, retirements, report = [], [], []
+    coverage = SnapshotCoverage(args.source_dir)
+    sections, retirements, identity_periods, report = [], [], [], []
     station_by_key = {}
     events = sorted(enumerate(spec['events']), key=lambda ie: (-int(ie[1]['year']), ie[0]))
     for _, ev in events:
@@ -732,7 +1029,8 @@ def main():
         if kind not in ('closure', 'relocation'):
             entry = emit_extended(
                 ev, release, cur_sections, cur_stations, cur_station_pos,
-                sections, station_by_key, retirements, cover, joinable, retired_geometry)
+                sections, station_by_key, retirements, cover, joinable, retired_geometry,
+                snapshot_covered=coverage.covered)
             report.append(entry)
             print(f"{ev['id']}: {kind} {entry.get('note') or ''} "
                   f"{entry['runs']} runs, {len(entry['stations'])} stations", file=sys.stderr)
@@ -907,35 +1205,66 @@ def main():
         sections, stations = expand_legacy_periods(spec['events'], sections, stations)
     except ValueError as error:
         sys.exit(str(error))
+    predecessor_ids = {dependency
+                       for candidate in spec.get('temporal_events', [])
+                       for dependency in candidate.get('predecessor_event_ids', [])}
     for event in spec.get('temporal_events', []):
         try:
+            if event['id'] in predecessor_ids:
+                event = copy.deepcopy(event)
+                event['_force_geometry_history'] = True
             event = source_event_geometry(event, release)
-            compiled = compile_temporal_event(event, cur_sections, cur_stations)
+            compiled = compile_temporal_event(
+                event, cur_sections, cur_stations, snapshot_covered=coverage.covered)
+            require_identity_event_output(event, compiled, cur_sections, cur_stations)
         except (ValueError, KeyError) as error:
             sys.exit(f"{event.get('id', '?')}: {error}")
         sections.extend(compiled['sections'])
         stations.extend(compiled['stations'])
         retirements.extend(compiled['retirements'])
+        identity_periods.extend(compiled['identity_periods'])
+        identity_kind = event['kind'] in IDENTITY_KINDS
+        if not identity_kind:
+            storage_path = 'not_applicable'
+        elif compiled['identity_periods'] and (compiled['sections'] or compiled['stations']):
+            storage_path = 'mixed'
+        elif compiled['identity_periods']:
+            storage_path = 'identity_period'
+        else:
+            storage_path = 'geometry'
         report.append({'id': event['id'], 'kind': event['kind'],
                        'runs': len(compiled['sections']),
                        'stations': [s['properties']['station_name'] for s in compiled['stations']],
-                       'retirements': [r['history_id'] for r in compiled['retirements']]})
+                       'retirements': [r['history_id'] for r in compiled['retirements']],
+                       'identity_periods': [p['history_id'] for p in compiled['identity_periods']],
+                       'storage_path': storage_path})
     retirements.extend(spec.get('retirements', []))
     try:
-        sections, stations = constrain_opening_predecessors(
-            spec.get('temporal_events', []), sections, stations, cur_sections, cur_stations)
+        sections, stations, identity_periods = constrain_opening_predecessors(
+            spec.get('temporal_events', []), sections, stations,
+            cur_sections, cur_stations, identity_periods=identity_periods,
+            snapshot_covered=coverage.covered)
         retirements = normalize_stamps(retirements, cur_sections, cur_stations)
+        identity_periods = normalize_identity_periods(
+            identity_periods, cur_sections, cur_stations)
     except ValueError as error:
         sys.exit(str(error))
+    violations = preexisting_opening_violations(
+        retirements, spec, cur_sections, cur_stations, coverage)
+    if violations:
+        sys.exit('preexisting geometry in opening/valid_from stamps:\n' + '\n'.join(violations))
     out = {'schema_version': '1', 'revision': args.revision,
+           'features': ['identity_periods'],
            'source': '国土数値情報（鉄道データ N02）2005〜2025年度版（国土交通省）を加工して作成; 正確な運行日は各 source を参照',
-           'sections': sections, 'stations': stations, 'retirements': retirements}
+           'sections': sections, 'stations': stations, 'retirements': retirements,
+           'identity_periods': identity_periods}
     with open(args.output, 'w') as fh:
         json.dump(out, fh, ensure_ascii=False, separators=(',', ':'))
         fh.write('\n')
     if args.report:
         json.dump(report, open(args.report, 'w'), ensure_ascii=False, indent=1)
-    print(f'{len(sections)} sections, {len(stations)} stations, {len(retirements)} retirements -> {args.output}',
+    print(f'{len(sections)} sections, {len(stations)} stations, {len(retirements)} retirements, '
+          f'{len(identity_periods)} identity periods -> {args.output}',
           file=sys.stderr)
 
 

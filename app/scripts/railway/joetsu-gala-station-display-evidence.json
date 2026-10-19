@@ -1,0 +1,533 @@
+{
+  "format": "jtm-joetsu-gala-station-display-v1",
+  "reviewedAt": "2026-10-12",
+  "status": "accepted-display-cartography",
+  "lineID": "jp-東日本旅客鉄道-上越線-2",
+  "packageIndex": 319,
+  "stationID": "001717",
+  "stationIndex": 1,
+  "intervalIndex": 0,
+  "nativePart": 0,
+  "displayAnchor": [
+    138.809496,
+    36.935445
+  ],
+  "source": {
+    "savedCartography": [
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-gala-entry-before-basemap.png",
+        "sha256": "0fe4cb7bb3e12ceefefbb7d7e987f568f8553a80f3e92765b824374f27215515"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-gala-entry-before-basemap.ax.txt",
+        "sha256": "1e58f4085e61db7ed5aad3b285e0f4920b1f759a5d9ff5e97cc616c75a5bd92d"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-gala-entry-before-overlay.png",
+        "sha256": "a55b84bb0c92f1dd8f6f56ba62cbfc68acd9f54525b8e4eda4a4bc289c91b14b"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-gala-entry-before-overlay.ax.txt",
+        "sha256": "ea84f6bf56f5d4116a8e84ce1b77e12439af8a3e63cec1af73f36a9dd3644355"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-regional-aerial-z17.png",
+        "sha256": "c44341214427b1f33f8abf66794e882fd503d1b1c505a909c73a8548379736f2"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-regional-aerial-z17.ax.txt",
+        "sha256": "fd178f4e8e55e02ca1572cbc31a4acc7434e15c1b2b1db2979caca5bff7836d4"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-regional-aerial-z18.png",
+        "sha256": "fb5770b1407d0308f49e0e61ea1544188f5688011f949c2d02301c2b83d4f9a8"
+      },
+      {
+        "path": "docs/reports/japan/passenger-policy-native-check-20261011/through-stations-20261011/ordered-continuation-20261012/joetsu-echigo-yuzawa-regional-aerial-z18.ax.txt",
+        "sha256": "d4d0cc6edc5f00728c9e3740ac120e57be5805438481bff3070da193e84a6865"
+      }
+    ],
+    "referenceLine": {
+      "lineID": "jp-東日本旅客鉄道-上越新幹線",
+      "packageIndex": 317,
+      "stationIndex": 5,
+      "station": [
+        "001717",
+        "越後湯沢",
+        138.809496,
+        36.935445,
+        "Echigo-Yuzawa",
+        1
+      ],
+      "railwayIdentity": "jp-東日本旅客鉄道-上越新幹線"
+    },
+    "identityNote": "Saved Main and GSI regional views plus the reviewed official prefectural facility evidence identify the Gala branch with the Shinkansen-side station facility. The candidate reuses an existing registered app anchor; it is not a surveyed platform coordinate.",
+    "rawStationFeatures": [
+      {
+        "featureIndex": 6946,
+        "feature": {
+          "type": "Feature",
+          "properties": {
+            "railway_class_code": "11",
+            "institution_type_code": "1",
+            "line_name": "上越新幹線",
+            "operator": "東日本旅客鉄道",
+            "station_name": "越後湯沢",
+            "n02_station_code": "001718",
+            "n02_group_code": "001717",
+            "display_point": [
+              138.8092733,
+              36.93572
+            ]
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                138.80824,
+                36.93694
+              ],
+              [
+                138.80879,
+                36.93625
+              ],
+              [
+                138.81079,
+                36.93397
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "featureIndex": 6968,
+        "feature": {
+          "type": "Feature",
+          "properties": {
+            "railway_class_code": "11",
+            "institution_type_code": "2",
+            "line_name": "上越線",
+            "operator": "東日本旅客鉄道",
+            "station_name": "越後湯沢",
+            "n02_station_code": "001717",
+            "n02_group_code": "001717",
+            "display_point": [
+              138.8092733,
+              36.93572
+            ]
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                138.80824,
+                36.93694
+              ],
+              [
+                138.80879,
+                36.93625
+              ],
+              [
+                138.81079,
+                36.93397
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "featureIndex": 6983,
+        "feature": {
+          "type": "Feature",
+          "properties": {
+            "railway_class_code": "11",
+            "institution_type_code": "2",
+            "line_name": "上越線",
+            "operator": "東日本旅客鉄道",
+            "station_name": "越後湯沢",
+            "n02_station_code": "001717",
+            "n02_group_code": "001717",
+            "display_point": [
+              138.81002,
+              36.93594
+            ]
+          },
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [
+              [
+                138.81083,
+                36.93526
+              ],
+              [
+                138.81074,
+                36.93533
+              ],
+              [
+                138.81028,
+                36.93572
+              ],
+              [
+                138.80962,
+                36.93628
+              ],
+              [
+                138.80863,
+                36.93711
+              ]
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "guard": {
+    "finalSegmentMetres": 109.43798279284711,
+    "maximumFinalSegmentMetres": 115,
+    "oldFinalSegmentMetres": 122.02372983025481
+  },
+  "baseline": {
+    "line": {
+      "id": "jp-東日本旅客鉄道-上越線-2",
+      "name": "上越線",
+      "operator": "東日本旅客鉄道",
+      "rank": 3,
+      "color": "#0098c3",
+      "nameRoma": "Joetsu Line",
+      "stations": [
+        [
+          "001712",
+          "ガーラ湯沢",
+          138.799495,
+          36.950165,
+          "Gala-Yuzawa",
+          1
+        ],
+        [
+          "001717",
+          "越後湯沢",
+          138.810084,
+          36.935887,
+          "Echigo-Yuzawa",
+          1
+        ]
+      ],
+      "segments": [
+        [
+          1.885,
+          0,
+          [
+            [
+              138.799495,
+              36.950165
+            ],
+            [
+              138.79996,
+              36.94879
+            ],
+            [
+              138.80016,
+              36.94828
+            ],
+            [
+              138.80032,
+              36.94787
+            ],
+            [
+              138.80082,
+              36.9468
+            ],
+            [
+              138.80085,
+              36.94669
+            ],
+            [
+              138.80106,
+              36.94602
+            ],
+            [
+              138.80126,
+              36.94536
+            ],
+            [
+              138.80155,
+              36.94481
+            ],
+            [
+              138.80247,
+              36.94364
+            ],
+            [
+              138.80289,
+              36.94326
+            ],
+            [
+              138.80318,
+              36.94299
+            ],
+            [
+              138.80345,
+              36.94277
+            ],
+            [
+              138.80359,
+              36.94263
+            ],
+            [
+              138.80408,
+              36.94215
+            ],
+            [
+              138.80471,
+              36.94143
+            ],
+            [
+              138.80529,
+              36.94079
+            ],
+            [
+              138.80588,
+              36.94002
+            ],
+            [
+              138.80612,
+              36.93961
+            ],
+            [
+              138.8062,
+              36.93947
+            ],
+            [
+              138.80646,
+              36.93901
+            ],
+            [
+              138.80744,
+              36.93787
+            ],
+            [
+              138.80824,
+              36.93694
+            ],
+            [
+              138.80879,
+              36.93625
+            ],
+            [
+              138.810084,
+              36.935887
+            ]
+          ]
+        ]
+      ],
+      "colorDark": "#00b3e6",
+      "colorSource": "https://www.jreast.co.jp/map/pdf/map_tokyo.pdf",
+      "kind": "jr_conventional",
+      "colorPolicy": "operator",
+      "labelPolicy": "operator",
+      "nameNorm": "上越線",
+      "operatorShort": "JR東日本",
+      "structure": [
+        [
+          1336,
+          1406,
+          2,
+          2
+        ],
+        [
+          395,
+          1336,
+          2,
+          1
+        ],
+        [
+          274,
+          395,
+          1,
+          -1
+        ],
+        [
+          1407,
+          1685,
+          2,
+          2
+        ],
+        [
+          1685,
+          1885,
+          2,
+          2
+        ]
+      ],
+      "railwayIdentity": "jp-東日本旅客鉄道-上越線",
+      "colorReference": "#00b3e6"
+    },
+    "physicalInterval": [
+      [
+        138.799495,
+        36.950165
+      ],
+      [
+        138.79996,
+        36.94879
+      ],
+      [
+        138.80016,
+        36.94828
+      ],
+      [
+        138.80032,
+        36.94787
+      ],
+      [
+        138.80082,
+        36.9468
+      ],
+      [
+        138.80085,
+        36.94669
+      ],
+      [
+        138.80106,
+        36.94602
+      ],
+      [
+        138.80126,
+        36.94536
+      ],
+      [
+        138.80155,
+        36.94481
+      ],
+      [
+        138.80247,
+        36.94364
+      ],
+      [
+        138.80289,
+        36.94326
+      ],
+      [
+        138.80318,
+        36.94299
+      ],
+      [
+        138.80345,
+        36.94277
+      ],
+      [
+        138.80359,
+        36.94263
+      ],
+      [
+        138.80408,
+        36.94215
+      ],
+      [
+        138.80471,
+        36.94143
+      ],
+      [
+        138.80529,
+        36.94079
+      ],
+      [
+        138.80588,
+        36.94002
+      ],
+      [
+        138.80612,
+        36.93961
+      ],
+      [
+        138.8062,
+        36.93947
+      ],
+      [
+        138.80646,
+        36.93901
+      ],
+      [
+        138.80744,
+        36.93787
+      ],
+      [
+        138.80824,
+        36.93694
+      ],
+      [
+        138.80879,
+        36.93625
+      ],
+      [
+        138.810084,
+        36.935887
+      ]
+    ],
+    "lastFivePoints": [
+      [
+        138.80646,
+        36.93901
+      ],
+      [
+        138.80744,
+        36.93787
+      ],
+      [
+        138.80824,
+        36.93694
+      ],
+      [
+        138.80879,
+        36.93625
+      ],
+      [
+        138.810084,
+        36.935887
+      ]
+    ],
+    "oldDisplayAnchor": [
+      138.810084,
+      36.935887
+    ],
+    "nativeRows": [
+      [
+        "jp-東日本旅客鉄道-上越線-2",
+        0,
+        0,
+        0,
+        25,
+        1900.3,
+        null,
+        null,
+        []
+      ]
+    ],
+    "byRegion": [
+      [
+        "jp-東日本旅客鉄道-上越線-2",
+        0,
+        0,
+        1900.3,
+        -0.5
+      ]
+    ],
+    "measuredReferences": {
+      "byRegion": [
+        [
+          "jp-東日本旅客鉄道-上越線-2",
+          0,
+          0,
+          1900.3,
+          -0.5
+        ]
+      ]
+    }
+  },
+  "policy": {
+    "scope": "Display-only endpoint substitution for the single Gala-Yuzawa branch interval.",
+    "preserve": "All physical stations, segments, mileage, IDs, railway class and identities; first 24 display points; every other line sharing station code 001717.",
+    "exclude": "No physical connection, follow, family, lane, circle-owner or platform-survey claim. The registered Shinkansen anchor represents the west-side longitudinal station facility for display review only.",
+    "acceptance": "Candidate requires complete native interval comparison and Main ON/OFF review before apply."
+  }
+}

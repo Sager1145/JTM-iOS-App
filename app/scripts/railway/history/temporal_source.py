@@ -8,6 +8,7 @@ import copy
 import datetime
 import hashlib
 import json
+import math
 import re
 
 IDENTITY_KINDS = {'line_rename', 'operator_rename', 'operator_transfer', 'identity_split',
@@ -164,6 +165,178 @@ def bounds(features):
             max(c[0] for c in points) + 1e-8, max(c[1] for c in points) + 1e-8]
 
 
+def _distance_m(a, b):
+    mx = 111320.0 * math.cos(math.radians((a[1] + b[1]) / 2.0))
+    return math.hypot((a[0] - b[0]) * mx, (a[1] - b[1]) * 110540.0)
+
+
+def _segment_distance_m(point, a, b):
+    mx = 111320.0 * math.cos(math.radians(point[1]))
+    ax, ay = (a[0] - point[0]) * mx, (a[1] - point[1]) * 110540.0
+    bx, by = (b[0] - point[0]) * mx, (b[1] - point[1]) * 110540.0
+    vx, vy = bx - ax, by - ay
+    squared = vx * vx + vy * vy
+    t = 0.0 if squared == 0 else max(0.0, min(1.0, -(ax * vx + ay * vy) / squared))
+    return math.hypot(ax + t * vx, ay + t * vy)
+
+
+def _feature_length_m(feature):
+    return sum(_distance_m(a, b) for line in _geometry_lines(feature)
+               for a, b in zip(line, line[1:]))
+
+
+def _geometry_lines(feature):
+    value = feature['geometry']['coordinates']
+    if not value:
+        return []
+    if isinstance(value[0], (int, float)):
+        return [[value]]
+    if value[0] and isinstance(value[0][0], (int, float)):
+        return [value]
+    return value
+
+
+def geometry_matches_current(old_features, current_features, target):
+    """Whether surveyed predecessor geometry is the current alignment.
+
+    Sections require every predecessor vertex within 30 m of current track and
+    aggregate length within three percent. Station geometry is small enough
+    that every predecessor vertex simply has to be within 50 m of a current
+    platform/point.
+    """
+    if not old_features or not current_features:
+        return False
+    current_lines = [line for feature in current_features for line in _geometry_lines(feature) if line]
+    if not current_lines:
+        return False
+
+    def nearest(point):
+        distances = []
+        for line in current_lines:
+            if len(line) == 1:
+                distances.append(_distance_m(point, line[0]))
+            else:
+                distances.extend(_segment_distance_m(point, a, b) for a, b in zip(line, line[1:]))
+        return min(distances, default=math.inf)
+
+    limit = 30.0 if target == 'sections' else 50.0
+    if any(nearest(point) > limit for feature in old_features
+           for line in _geometry_lines(feature) for point in line):
+        return False
+    if target == 'sections':
+        old_length = sum(_feature_length_m(feature) for feature in old_features)
+        current_length = sum(_feature_length_m(feature) for feature in current_features)
+        if current_length == 0 or abs(old_length - current_length) / current_length > 0.03:
+            return False
+    return True
+
+
+def _identity_code_values(features, target, raw, spelled):
+    values = set()
+    for feature in features:
+        properties = feature['properties']
+        value = properties.get(raw, properties.get(spelled))
+        if value not in (None, ''):
+            values.add(str(value))
+    return values
+
+
+# inherit_exact_current_station_codes deep-copies stations and may add only these.
+_CURRENT_COPY_KEYS = ('n02_station_code', 'n02_group_code', 'station_code_basis')
+
+
+def _feature_code_signature(feature):
+    properties = {key: value for key, value in feature.get('properties', {}).items()
+                  if key not in _CURRENT_COPY_KEYS}
+    return (json.dumps(feature.get('geometry'), sort_keys=True, ensure_ascii=False),
+            json.dumps(properties, sort_keys=True, ensure_ascii=False))
+
+
+def _predecessor_code_features(old_features, chosen):
+    """Current features carry the successor operator's class codes.
+
+    Only a distinct historical geometry collection can supply predecessor codes.
+    The same-geometry path passes the current features through as `old_features`,
+    and station identity then deep-copies them to attach lookup codes. Those copies
+    are not predecessor geometry.
+    """
+    if not old_features:
+        return []
+    if {id(feature) for feature in old_features} == {id(feature) for feature in chosen}:
+        return []
+    if {_feature_code_signature(feature) for feature in old_features} == {
+            _feature_code_signature(feature) for feature in chosen}:
+        return []
+    return old_features
+
+
+def identity_period(event, chosen, universe, identity, historical_identity,
+                    pair, target, index, source=None, historical_features=None):
+    out = stamp(event, chosen, universe, identity, pair, target,
+                f'.identity.period{index}.{target}')
+    out['as'] = {'N02_003': historical_identity['line'],
+                 'N02_004': historical_identity['operator']}
+    old_features = historical_features or []
+    predecessor_features = _predecessor_code_features(old_features, chosen)
+    operator_changed = historical_identity.get('operator') != identity.get('operator')
+    for raw, spelled in (('N02_001', 'railway_class_code'),
+                         ('N02_002', 'institution_type_code')):
+        old_values = _identity_code_values(predecessor_features, target, raw, spelled)
+        explicit = historical_identity.get(raw, historical_identity.get(spelled))
+        if operator_changed and not old_values and explicit in (None, ''):
+            raise ValueError(
+                f"{event['id']}: operator change requires before.{raw} "
+                f"when no historical geometry supplies predecessor codes")
+        if explicit not in (None, ''):
+            old_values.add(str(explicit))
+        current_values = _identity_code_values(chosen, target, raw, spelled)
+        # No predecessor geometry and no explicit code means the class code is
+        # unchanged. Current features are the successor, so their codes are not
+        # a predecessor source.
+        if not old_values or old_values == current_values:
+            continue
+        if len(old_values) != 1:
+            raise ValueError(
+                f"{event['id']}: identity period cannot represent {target} {raw} values "
+                f"{sorted(old_values)}")
+        out['as'][raw] = next(iter(old_values))
+    if target == 'stations' and historical_identity.get('station'):
+        out['as']['N02_005'] = historical_identity['station']
+        out['match']['station_name'] = identity['station']
+    if source:
+        out['source'] = source
+    if event.get('official_event_id'):
+        out['official_event_id'] = event['official_event_id']
+    return out
+
+
+def isolated_opening_stamps(event, chosen, universe, identity, pair, target):
+    """Stamp new-since-release features without also dating preexisting ones.
+
+    One bbox is used when it selects exactly the new features. Otherwise each
+    feature gets its own bbox. A feature whose own bbox still contains a
+    preexisting feature cannot be stamped.
+    """
+    suffix = '.current.' + target
+    try:
+        return [stamp(event, chosen, universe, identity, pair, target, suffix)]
+    except ValueError as error:
+        if 'unrelated' not in str(error):
+            raise
+    stamps = []
+    for index, feature in enumerate(chosen):
+        try:
+            stamps.append(stamp(
+                event, [feature], universe, identity, pair, target, suffix + f'.part{index}'))
+        except ValueError as error:
+            if 'unrelated' not in str(error):
+                raise
+            raise ValueError(
+                f"{event['id']}: {target} feature {index} cannot be stamped "
+                'without a preexisting feature inside its bbox')
+    return stamps
+
+
 def stamp(event, chosen, universe, identity, pair, target, suffix):
     if not chosen:
         raise ValueError(f"{event['id']}: no {target} matched")
@@ -252,7 +425,28 @@ def inherit_exact_current_station_codes(old_features, current_features, current_
     return result
 
 
-def compile_event(event, current_sections, current_stations):
+def apply_new_since_release(event, chosen, snapshot_covered):
+    """Keep only current features the named N02 release does not already cover.
+
+    An opening selector may set ``new_since_release`` to an ``N02-YY`` label.
+    ``snapshot_covered(label, feature)`` is the builder's same-class test
+    (at least 90 percent of 25 m samples within 40 m). Other kinds cannot
+    use the option: a rename or transfer is not a new alignment.
+    """
+    release = (event.get('geometry') or {}).get('selector', {}).get('new_since_release')
+    if not release:
+        return chosen
+    label = event.get('id', '?')
+    if event.get('kind') != 'opening':
+        raise ValueError(label + ': new_since_release is only valid on an opening')
+    if not isinstance(release, str) or not re.fullmatch(r'N02-\d{2}', release):
+        raise ValueError(label + ': new_since_release must be N02-YY')
+    if snapshot_covered is None:
+        raise ValueError(label + ': new_since_release requires snapshot coverage')
+    return [feature for feature in chosen if not snapshot_covered(release, feature)]
+
+
+def compile_event(event, current_sections, current_stations, snapshot_covered=None):
     """Current geometry timelines and same-alignment identity changes.
 
     Moved stations require an explicit historical feature collection; this
@@ -264,7 +458,7 @@ def compile_event(event, current_sections, current_stations):
         memberships = event.get('memberships')
         if not isinstance(memberships, list) or not memberships:
             raise ValueError(event['id'] + ': split/merge requires explicit memberships')
-        out = {'sections': [], 'stations': [], 'retirements': []}
+        out = {'sections': [], 'stations': [], 'retirements': [], 'identity_periods': []}
         ids = set()
         for membership in memberships:
             if not membership.get('id') or membership['id'] in ids:
@@ -275,7 +469,7 @@ def compile_event(event, current_sections, current_stations):
             child.update(membership)
             child['id'] = event['id'] + '.' + membership['id']
             child['kind'] = 'line_rename'
-            part = compile_event(child, current_sections, current_stations)
+            part = compile_event(child, current_sections, current_stations, snapshot_covered)
             for target in out:
                 out[target].extend(part[target])
         return out
@@ -286,7 +480,7 @@ def compile_event(event, current_sections, current_stations):
         raise ValueError(event['id'] + ': a station interval needs an isolated selector; whole identity must be explicit')
     targets = ['stations'] if kind in ('station_rename', 'station_relocation',
                                       'station_opening', 'station_closure') else ['sections', 'stations']
-    out = {'sections': [], 'stations': [], 'retirements': []}
+    out = {'sections': [], 'stations': [], 'retirements': [], 'identity_periods': []}
     historical_period_pairs = None
     if kind in IDENTITY_KINDS:
         transition = day(event.get('date'))
@@ -305,6 +499,10 @@ def compile_event(event, current_sections, current_stations):
         if target == 'stations' and identity.get('station'):
             names = [identity['station']]
         chosen = select(universe, identity, bbox, names if target == 'stations' else None)
+        chosen = apply_new_since_release(event, chosen, snapshot_covered)
+        if not chosen and (event.get('geometry') or {}).get('selector', {}).get('new_since_release'):
+            # This target is entirely preexisting. Do not stamp it.
+            continue
         if not chosen:
             historical = event['geometry'].get('historical_' + target, [])
             if not historical or kind in IDENTITY_KINDS:
@@ -313,8 +511,7 @@ def compile_event(event, current_sections, current_stations):
                 for f in historical:
                     out[target].append(variant(event, f, pair, target, index))
             continue
-        out['retirements'].append(stamp(event, chosen, universe, identity, pairs[-1],
-                                        target, '.current.' + target))
+        predecessor_sets = []
         if historical_period_pairs is not None:
             for index, (historical_period, pair) in enumerate(zip(
                     event['geometry']['historical_periods'], historical_period_pairs)):
@@ -323,10 +520,25 @@ def compile_event(event, current_sections, current_stations):
                     raise ValueError(f"{event['id']}: historical period {index} {target} selector matched nothing")
                 if target == 'stations':
                     old_features = inherit_exact_current_station_codes(old_features, chosen, identity)
+                predecessor_sets.append((index, pair, old_features,
+                                         historical_period['historical_identity'],
+                                         historical_period['release'] + '; ' + '; '.join(
+                                             e['reference'] for e in historical_period['evidence'])))
+            if not event.get('_force_geometry_history') and kind != 'station_relocation' and all(
+                    geometry_matches_current(old_features, chosen, target)
+                    for _, _, old_features, _, _ in predecessor_sets):
+                for index, pair, old_features, old_identity, period_source in predecessor_sets:
+                    out['identity_periods'].append(identity_period(
+                        event, chosen, universe, identity, old_identity, pair,
+                        target, index, period_source, old_features))
+                continue
+            out['retirements'].append(stamp(event, chosen, universe, identity, pairs[-1],
+                                            target, '.current.' + target))
+            for index, pair, old_features, old_identity, _ in predecessor_sets:
                 for feature in old_features:
                     out[target].append(variant(
                         event, feature, pair, target, index,
-                        historical_period['historical_identity'], historical_period))
+                        old_identity, event['geometry']['historical_periods'][index]))
             continue
         old_features = chosen
         supplied = event['geometry'].get('historical_' + target)
@@ -340,11 +552,70 @@ def compile_event(event, current_sections, current_stations):
                 raise ValueError(f"{event['id']}: station relocation needs historical station geometry")
         if target == 'stations' and kind in IDENTITY_KINDS - {'station_relocation'}:
             old_features = inherit_exact_current_station_codes(old_features, chosen, identity)
+        # A deep copy of the current stations still carries the successor class
+        # codes. Only supplied historical geometry may contribute predecessor codes.
+        code_features = old_features if supplied is not None else None
+        force_historical = (event.get('_force_geometry_history')
+                            or target in event.get('geometry', {}).get(
+                                'force_historical_targets', []))
+        if not force_historical \
+                and kind in {'operator_transfer', 'operator_rename', 'line_rename', 'station_rename'} \
+                and geometry_matches_current(old_features, chosen, target):
+            out['identity_periods'].append(identity_period(
+                event, chosen, universe, identity, event['before'], pairs[0], target, 0,
+                historical_features=code_features))
+            continue
+        if (event.get('geometry') or {}).get('selector', {}).get('new_since_release'):
+            out['retirements'].extend(isolated_opening_stamps(
+                event, chosen, universe, identity, pairs[-1], target))
+        else:
+            out['retirements'].append(stamp(event, chosen, universe, identity, pairs[-1],
+                                            target, '.current.' + target))
         for index, pair in enumerate(pairs[:-1]):
             for f in old_features:
                 out[target].append(variant(event, f, pair, target, index,
                                            event.get('before') if kind in IDENTITY_KINDS else None))
+    if (event.get('geometry') or {}).get('selector', {}).get('new_since_release') \
+            and kind == 'opening' and not any(out[key] for key in out):
+        raise ValueError(event['id'] + ': new_since_release removed every current feature')
     return out
+
+
+def normalize_identity_periods(identity_periods, current_sections, current_stations):
+    """Validate selectors and reject periods that overlap on a current feature."""
+    seen_ids = set()
+    selected = {'sections': {}, 'stations': {}}
+    for period in identity_periods:
+        history_id = period.get('history_id')
+        if not history_id or history_id in seen_ids:
+            raise ValueError('duplicate identity period id: ' + str(history_id))
+        seen_ids.add(history_id)
+        pair = periods([[period.get('valid_from'), period.get('valid_to')]], history_id)[0]
+        if pair[1] is None:
+            raise ValueError(history_id + ': identity period requires valid_to')
+        match = period.get('match', {})
+        targets = match.get('targets', ['sections', 'stations'])
+        found = False
+        for target, universe in [('sections', current_sections), ('stations', current_stations)]:
+            if target not in targets:
+                continue
+            names = [match['station_name']] if target == 'stations' and match.get('station_name') else None
+            matches = select(universe, {'line': match.get('line_name'),
+                                        'operator': match.get('operator')},
+                             match.get('bbox'), names)
+            found = found or bool(matches)
+            for feature in matches:
+                prior = selected[target].setdefault(id(feature), [])
+                if any((a is None or pair[1] > a) and (pair[0] is None or b > pair[0])
+                       for a, b, _ in prior):
+                    other = next(item[2] for item in prior
+                                 if (item[0] is None or pair[1] > item[0])
+                                 and (pair[0] is None or item[1] > pair[0]))
+                    raise ValueError(f'{history_id}: overlaps identity period {other}')
+                prior.append((pair[0], pair[1], history_id))
+        if not found:
+            raise ValueError(history_id + ': unmatched identity period')
+    return identity_periods
 
 
 def normalize_stamps(retirements, current_sections, current_stations):
@@ -410,7 +681,9 @@ def normalize_stamps(retirements, current_sections, current_stations):
     return out
 
 
-def constrain_opening_predecessors(events, sections, stations, current_sections, current_stations):
+def constrain_opening_predecessors(events, sections, stations,
+                                   current_sections, current_stations,
+                                   identity_periods=None, snapshot_covered=None):
     """Intersect explicit, geometry-exact identity predecessors with opening days.
 
     Current stamps cannot constrain a differently named historical operator.
@@ -419,6 +692,8 @@ def constrain_opening_predecessors(events, sections, stations, current_sections,
     """
     by_id = {event['id']: event for event in events}
     result = {'sections': copy.deepcopy(sections), 'stations': copy.deepcopy(stations)}
+    return_identity_periods = identity_periods is not None
+    result_identity_periods = copy.deepcopy(identity_periods or [])
     for event in events:
         dependencies = event.get('predecessor_event_ids')
         if dependencies is None:
@@ -436,10 +711,34 @@ def constrain_opening_predecessors(events, sections, stations, current_sections,
             for target, universe in [('sections', current_sections), ('stations', current_stations)]:
                 chosen = select(universe, identity, selector.get('bbox', event.get('bbox')),
                                 selector.get('stations') if target == 'stations' else None)
+                chosen = apply_new_since_release(event, chosen, snapshot_covered)
                 if not chosen:
                     raise ValueError(event['id'] + ': no current ' + target + ' for predecessor constraint')
                 candidates = [feature for feature in result[target]
                               if feature['properties'].get('history_id', '').startswith(dependency + '.')]
+                period_candidates = [period for period in result_identity_periods
+                                     if period.get('history_id', '').startswith(dependency + '.')
+                                     and target in period.get('match', {}).get(
+                                         'targets', ['sections', 'stations'])]
+                if not candidates and period_candidates:
+                    if len(period_candidates) != 1:
+                        raise ValueError(event['id'] + ': predecessor identity period is ambiguous')
+                    period = period_candidates[0]
+                    period_matches = select(
+                        universe, {'line': period['match']['line_name'],
+                                   'operator': period['match']['operator']},
+                        period['match']['bbox'],
+                        ([period['match']['station_name']]
+                         if target == 'stations' and period['match'].get('station_name') else None))
+                    if not chosen or not {id(feature) for feature in chosen}.issubset(
+                            {id(feature) for feature in period_matches}):
+                        raise ValueError(event['id'] + ': predecessor identity selector differs')
+                    lower = max(filter(None, [period.get('valid_from'), start]))
+                    if lower >= period['valid_to']:
+                        result_identity_periods.remove(period)
+                    else:
+                        period['valid_from'] = lower
+                    continue
                 removed = set()
                 for current in chosen:
                     matches = [feature for feature in candidates if feature['geometry'] == current['geometry']]
@@ -462,6 +761,8 @@ def constrain_opening_predecessors(events, sections, stations, current_sections,
                             [properties.get('source', ''), event['id']]
                             + [proof['reference'] for proof in event['evidence']]))
                 result[target] = [feature for feature in result[target] if id(feature) not in removed]
+    if return_identity_periods:
+        return result['sections'], result['stations'], result_identity_periods
     return result['sections'], result['stations']
 
 

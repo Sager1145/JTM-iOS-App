@@ -1909,6 +1909,55 @@ class DisplayNetworkTests(unittest.TestCase):
         self.assertEqual(reversed_row[4], 450.0)
         self.assertEqual(reversed_row[5], 50.0)
 
+    def test_exact_shared_follow_uses_written_coordinate_ruler(self):
+        """Strict shared support keeps precision after the 7-decimal write."""
+        own_points = [
+            [139.0, 35.0], [139.00012345678, 35.00001234567],
+            [139.00024691356, 35.00002469134], [139.00035, 35.0002],
+        ]
+        canon_points = [
+            [139.0004, 35.0003], own_points[2], own_points[1], own_points[0],
+            [138.9999, 34.9999],
+        ]
+        own_measures = display_network._chain_vertex_measures({"polyline": own_points})[1]
+        canon_measures = display_network._chain_vertex_measures({"polyline": canon_points})[1]
+        own = {
+            "partIndex": 0, "startMetres": 0.0,
+            "endMetres": own_measures[-1], "polyline": own_points,
+        }
+        canon = {
+            "partIndex": 0, "startMetres": 0.0,
+            "endMetres": canon_measures[-1], "polyline": canon_points,
+        }
+        row = [
+            "B", 0, own_measures[0], own_measures[2],
+            "A", 0, canon_measures[3], canon_measures[1],
+        ]
+        chains = {"A": [canon], "B": [own]}
+        exact = display_network.exact_shared_boundary_overrides({"B": [row]}, chains)
+        written_own = display_network._chain_vertex_measures(own, True)[1]
+        written_canon = display_network._chain_vertex_measures(canon, True)[1]
+        follows = display_network.chain_follow_rows([row], own, chains, "us", "B", exact)
+        self.assertEqual(follows[0][:2], [written_own[0], written_own[2]])
+        self.assertEqual(follows[0][4:], [written_canon[3], written_canon[1]])
+        self.assertNotEqual(follows[0][1], round(follows[0][1], 1))
+
+        colors = {"shared": {"color": "#000000"}}
+        own_family = display_network.chain_family_windows(
+            [["B", 0, own_measures[0], own_measures[2], 1, "shared"]],
+            own, colors, "us", "B", exact)
+        canon_family = display_network.chain_family_windows(
+            [["A", 0, canon_measures[1], canon_measures[3], 0, "shared"]],
+            canon, colors, "us", "A", exact)
+        self.assertEqual(own_family[0][:2], [written_own[0], written_own[2]])
+        self.assertEqual(canon_family[0][:2], [written_canon[1], written_canon[3]])
+
+        changed = [list(point) for point in canon_points]
+        changed[2][0] += 1e-9  # rounds alike, but raw support is not identical
+        changed_canon = dict(canon, polyline=changed)
+        self.assertEqual(display_network.exact_shared_boundary_overrides(
+            {"B": [row]}, {"A": [changed_canon], "B": [own]}), {})
+
     def test_chain_follow_rows_fails_closed_on_a_missing_canonical_chain(self):
         """A follow naming a canonical partIndex with no matching chain used
         to be dropped silently — the same shape of bug `chains_from_parts_rows`
@@ -2034,6 +2083,141 @@ class DisplayNetworkTests(unittest.TestCase):
                 self.assertEqual(line_keys, {key})
                 cursor += chunk["length"]
             self.assertEqual(cursor, len(blob))
+
+    def test_overview_preserves_exact_branch_junction_vertex(self):
+        # Removing this interior vertex leaves the branch endpoint off the
+        # overview trunk even though both paths share the full-detail switch.
+        junction = [139.01, 35.0001]
+        trunk = [[139.0, 35.0], [139.002, 35.00002], junction,
+                 [139.018, 35.00002], [139.02, 35.0]]
+        branch = [junction, [139.01, 35.01]]
+        line = {
+            "id": "branched", "name": "Branched", "operator": "Test Rail",
+            "rank": 0, "color": "#123456",
+            "stations": [["a", "A", 139.0, 35.0],
+                         ["c", "C", 139.02, 35.0],
+                         ["b", "B", 139.01, 35.01]],
+            "segments": [[2.0, 0, trunk], [1.0, 0, branch]],
+        }
+        package = {"format": "compact-v1", "version": "test",
+                   "country": "JP", "lines": [line]}
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            # Explicit embedded display parts retain the reviewed fork;
+            # station ordering is not a license to join its branch to trunk.
+            "partsByRegion": {"jp": [
+                ["branched", 0, -1, -1, 2, 2000.0, "branch", trunk, []],
+                ["branched", 1, -1, -1, 1, 1000.0, "branch", branch, []],
+            ]},
+        }
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = Path(root) / "rail", Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "jp").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            display_network.build(rail, out, small_region_max_bytes=1)
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            entry = manifest["lines"]["jp|branched"]
+            blob = (out / "jp.display.bin").read_bytes()
+            def document(detail):
+                row = entry[detail]
+                return json.loads(blob[row["offset"]:row["offset"] + row["length"]])
+            full, overview = document("chunk"), document("overview")
+            self.assertIn(junction, full["lines"][0]["parts"][0])
+            self.assertEqual(overview["lines"][1]["parts"][0][0], junction)
+            self.assertIn(junction, overview["lines"][0]["parts"][0])
+            full_chains = {row["chain"]: display_network._fragment_polyline(row)
+                           for row in full["lines"]}
+            overview_chains = {row["chain"]: display_network._fragment_polyline(row)
+                               for row in overview["lines"]}
+            full_slots = {station["id"]: station["slot"] for station in full["stations"]}
+            for station in overview["stations"]:
+                chain, vertex = station["slot"]
+                full_chain, full_vertex = full_slots[station["id"]]
+                self.assertEqual(overview_chains[chain][vertex],
+                                 full_chains[full_chain][full_vertex])
+            self.assertLess(len(overview_chains[0]), len(full_chains[0]))
+
+    def test_family_tenant_depends_on_explicit_shared_ink_owner(self):
+        landlord = self.line("landlord", "jr", ["a", 139.0, 35.0],
+                             [[139.0, 35.0], [139.02, 35.0]])
+        tenant = self.line("tenant", "jr", ["b", 139.0, 35.0001],
+                          [[139.0, 35.0001], [139.02, 35.0001]])
+        nearby = self.line("nearby", "jr", ["c", 139.0, 35.0002],
+                          [[139.0, 35.0002], [139.02, 35.0002]])
+        package = {"format": "compact-v1", "version": "test", "country": "JP",
+                   "lines": [landlord, tenant, nearby]}
+        lanes = {
+            "format": display_network.DISPLAY_LANES_FORMAT,
+            "byRegion": {"jp": []},
+            "partsByRegion": self.whole_line_parts_by_region("jp", *package["lines"]),
+            "familyWindowsByRegion": {"jp": [
+                ["landlord", 0, 100.0, 500.0, 0, "shared"],
+                ["tenant", 0, 100.0, 500.0, 1, "shared"],
+            ]},
+        }
+        policy = {"format": display_network.JP_RENDER_GROUPS_FORMAT, "scope": ["jp"],
+                  "families": {"shared": {"color": "#123456"}}}
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = Path(root) / "rail", Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "jp").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (rail / "jp-render-groups.json").write_text(json.dumps(policy))
+            display_network.build(rail, out)
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            self.assertEqual(manifest["lines"]["jp|tenant"]["dependsOn"], ["landlord"])
+            self.assertEqual(manifest["lines"]["jp|nearby"]["dependsOn"], [])
+            self.assertEqual(manifest["lines"]["jp|landlord"]["dependsOn"], [])
+
+    def test_reviewed_through_terminal_pair_depends_on_display_join_host(self):
+        anchor = [139.01, 35.0]
+        incoming = self.line("incoming", "private", ["shared", *anchor],
+                             [anchor, [139.0, 35.0]])
+        host = self.line("host", "private", ["shared", *anchor],
+                         [anchor, [139.02, 35.0]])
+        host["operator"] = "Other Rail"
+        unrelated = self.line("unrelated", "private", ["shared", *anchor],
+                              [anchor, [139.01, 35.02]])
+        package = {"format": "compact-v1", "version": "test", "country": "JP",
+                   "lines": [incoming, host, unrelated]}
+        lanes = {"format": display_network.DISPLAY_LANES_FORMAT,
+                 "byRegion": {"jp": []},
+                 "partsByRegion": self.whole_line_parts_by_region("jp", *package["lines"])}
+        joins = {"format": "jtm-through-running-display-joins-v1",
+                 "reviewedAt": "2026-10-01", "windowMetres": 120, "straightMetres": 20,
+                 "joins": [{"id": "reviewed-through", "station": "Shared",
+                            "stationCode": "shared", "lineIds": ["incoming", "host"],
+                            "circleOwner": "host", "evidence": ["survey:reviewed-through"]}]}
+        with tempfile.TemporaryDirectory() as root:
+            rail, out = Path(root) / "rail", Path(root) / "network"
+            rail.mkdir()
+            for region, copy in self.region_packages(package, "jp").items():
+                (rail / f"{region}-2025.json").write_text(json.dumps(copy))
+            (rail / "display-lanes.json").write_text(json.dumps(lanes))
+            (rail / "through-running-display-joins.json").write_text(json.dumps(joins))
+            display_network.build(rail, out)
+            manifest = json.loads((out / "manifest.json").read_bytes())
+            self.assertEqual(manifest["lines"]["jp|incoming"]["dependsOn"], ["host"])
+            self.assertEqual(manifest["lines"]["jp|unrelated"]["dependsOn"], [])
+            self.assertEqual(manifest["lines"]["jp|host"]["dependsOn"], ["incoming"])
+            self.assertEqual(manifest["displayJoins"], [{
+                "id": "reviewed-through", "region": "jp", "kind": "throughDisplay",
+                "stationCode": "shared", "hostLineId": "host",
+                "evidence": ["survey:reviewed-through"], "reviewedAt": "2026-10-01",
+                "endpoints": [{
+                    "lineId": "incoming", "lineKey": "jp|incoming", "stationCode": "shared",
+                    "endpointID": "jp|incoming:shared", "chain": 0, "atEnd": False,
+                    "coordinate": [139.01, 35.0],
+                }, {
+                    "lineId": "host", "lineKey": "jp|host", "stationCode": "shared",
+                    "endpointID": "jp|host:shared", "chain": 0, "atEnd": False,
+                    "coordinate": [139.01, 35.0],
+                }],
+            }])
 
     @staticmethod
     def overview_fixture():
@@ -3474,6 +3658,50 @@ class DisplayNetworkHistoryTests(unittest.TestCase):
             self.assertIn("MATCH ", logged)
             self.assertIn("display geometry absent", logged)
             self.assertIn("留萌線", logged)
+
+    def test_retarget_follow_rebases_a_split_canonical_span(self):
+        """History splits the canonical chain; follow metres follow the piece.
+
+        Old chain 0..300 becomes piece 0 [0, 150] and piece 1 [150, 300].
+        A follow of old canonical 150..200 is piece 1's local 0..50.
+        """
+        row = [0, 50, "canonical", 0, 150, 200]
+        pieces = [
+            {"new_index": 0, "measure_start": 0.0, "measure_end": 150.0},
+            {"new_index": 1, "measure_start": 150.0, "measure_end": 300.0},
+        ]
+        self.assertEqual(
+            display_network._retarget_follow(row, pieces),
+            [[0.0, 50.0, "canonical", 1, 0.0, 50.0]],
+        )
+
+    def test_retarget_follow_rebases_reverse_digitization(self):
+        """The same span, digitized high to low, stays reversed in piece metres."""
+        row = [0, 50, "canonical", 0, 200, 150]
+        pieces = [
+            {"new_index": 0, "measure_start": 0.0, "measure_end": 150.0},
+            {"new_index": 1, "measure_start": 150.0, "measure_end": 300.0},
+        ]
+        self.assertEqual(
+            display_network._retarget_follow(row, pieces),
+            [
+                [0.0, 50.0, "canonical", 1, 50.0, 0.0],
+                [49.9, 50.0, "canonical", 0, 150.1, 150.0],
+            ],
+        )
+
+    def test_retarget_follow_unsplit_keeps_canonical_metres(self):
+        """One piece is a renumber, not a split: canonical metres stay put."""
+        row = [0, 50, "canonical", 0, 150, 200]
+        same = [{"new_index": 0, "measure_start": 0.0, "measure_end": 300.0}]
+        untouched = display_network._retarget_follow(row, same)
+        self.assertEqual(untouched, [row])
+        self.assertIs(untouched[0], row)
+        renumbered = [{"new_index": 2, "measure_start": 0.0, "measure_end": 300.0}]
+        self.assertEqual(
+            display_network._retarget_follow(row, renumbered),
+            [[0, 50, "canonical", 2, 150, 200]],
+        )
 
     @staticmethod
     def _line(line_id, name, first, second=None):

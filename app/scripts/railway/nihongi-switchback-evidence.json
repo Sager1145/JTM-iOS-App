@@ -1,0 +1,313 @@
+{
+  "format": "jtm-nihongi-switchback-v1",
+  "reviewedAt": "2026-10-10",
+  "crs": "WGS84",
+  "lineId": "jp-えちごトキめき鉄道-妙高はねうまライン",
+  "stationCode": "001691",
+  "station": [
+    138.232612,
+    36.989568
+  ],
+  "protectedExtent": [
+    138.23198,
+    36.98702
+  ],
+  "outgoingInterval": 2,
+  "incomingTail": [
+    [
+      138.23198,
+      36.98702
+    ],
+    [
+      138.23206,
+      36.98744
+    ],
+    [
+      138.23216,
+      36.98782
+    ],
+    [
+      138.23222,
+      36.98808
+    ],
+    [
+      138.23226,
+      36.98825
+    ],
+    [
+      138.23236,
+      36.98869
+    ],
+    [
+      138.232612,
+      36.989568
+    ]
+  ],
+  "outgoingPrefix": [
+    [
+      138.232612,
+      36.989568
+    ],
+    [
+      138.23236,
+      36.98869
+    ],
+    [
+      138.23226,
+      36.98825
+    ],
+    [
+      138.23222,
+      36.98808
+    ],
+    [
+      138.23216,
+      36.98782
+    ],
+    [
+      138.23206,
+      36.98744
+    ],
+    [
+      138.23198,
+      36.98702
+    ],
+    [
+      138.23206,
+      36.98717
+    ],
+    [
+      138.23233,
+      36.98755
+    ],
+    [
+      138.23276,
+      36.98807
+    ],
+    [
+      138.23288,
+      36.98817
+    ],
+    [
+      138.23314,
+      36.98841
+    ],
+    [
+      138.23365,
+      36.98875
+    ]
+  ],
+  "oldDiagonalEnd": [
+    138.23365,
+    36.98875
+  ],
+  "operatorEvidence": {
+    "url": "https://www.echigo-tokimeki.co.jp/guide/haneuma-line/",
+    "fact": "The operator describes Nihongi as a switchback station (スイッチバック)."
+  },
+  "osmEvidence": {
+    "source": "https://www.openstreetmap.org/way/24398684",
+    "cache": "outputs/osm-basemap-cache/E138N36.json",
+    "fetchedAt": "2026-08-18T10:36:10.600Z",
+    "license": "ODbL 1.0 — © OpenStreetMap contributors",
+    "ways": [
+      {
+        "id": 24398684,
+        "tags": {
+          "name": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道",
+          "railway": "rail",
+          "usage": "main"
+        },
+        "coordinates": [
+          [
+            138.2334541,
+            36.9906216
+          ],
+          [
+            138.2330409,
+            36.9901631
+          ],
+          [
+            138.2329221,
+            36.9900081
+          ],
+          [
+            138.232833,
+            36.9898863
+          ],
+          [
+            138.232745,
+            36.9897267
+          ],
+          [
+            138.2326413,
+            36.9895507
+          ],
+          [
+            138.2325849,
+            36.9894284
+          ],
+          [
+            138.2325338,
+            36.9892926
+          ],
+          [
+            138.232491,
+            36.9891718
+          ],
+          [
+            138.2324452,
+            36.9890075
+          ],
+          [
+            138.2323746,
+            36.9887875
+          ],
+          [
+            138.2322239,
+            36.9882053
+          ],
+          [
+            138.2321955,
+            36.9880162
+          ],
+          [
+            138.2320573,
+            36.9872671
+          ],
+          [
+            138.2320515,
+            36.987219
+          ]
+        ]
+      },
+      {
+        "id": 24398801,
+        "tags": {
+          "name": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道",
+          "railway": "rail",
+          "usage": "main"
+        },
+        "coordinates": [
+          [
+            138.2319561,
+            36.9867309
+          ],
+          [
+            138.2320667,
+            36.9870846
+          ],
+          [
+            138.2321343,
+            36.987239
+          ],
+          [
+            138.2322216,
+            36.9873992
+          ],
+          [
+            138.232319,
+            36.9875626
+          ],
+          [
+            138.2324283,
+            36.9877214
+          ],
+          [
+            138.232606,
+            36.9879482
+          ],
+          [
+            138.2328355,
+            36.9881965
+          ],
+          [
+            138.2330905,
+            36.988428
+          ],
+          [
+            138.2331497,
+            36.9884793
+          ],
+          [
+            138.233379,
+            36.9886418
+          ],
+          [
+            138.2336926,
+            36.9888426
+          ],
+          [
+            138.2365359,
+            36.9905754
+          ],
+          [
+            138.2368372,
+            36.9907829
+          ],
+          [
+            138.2370937,
+            36.9909968
+          ],
+          [
+            138.2373632,
+            36.9912653
+          ],
+          [
+            138.2375835,
+            36.99153
+          ],
+          [
+            138.2377734,
+            36.9918006
+          ],
+          [
+            138.2379389,
+            36.992092
+          ]
+        ]
+      },
+      {
+        "id": 1267214940,
+        "tags": {
+          "name": "妙高はねうまライン",
+          "operator": "えちごトキめき鉄道",
+          "railway": "rail",
+          "usage": "main"
+        },
+        "coordinates": [
+          [
+            138.2320515,
+            36.987219
+          ],
+          [
+            138.2319561,
+            36.9867309
+          ]
+        ]
+      }
+    ],
+    "centralCache": "railway-sources/local/osm/degree-cells/E138N36.json",
+    "coverage": "Retained August 2026 partial degree-cell cache; not current nationwide track coverage."
+  },
+  "displayPolicy": "Draw the exact seven-vertex Nihongi spur once from its surveyed south junction to the station. Keep the through main continuous at that physical junction and use the existing tangent junction rendering. The reversalTails entry identifies the reviewed junction extent for the protected exact short-retrace split; it is not a buffer or an additional station. Physical station intervals, coordinates and mileage stay unchanged.",
+  "revision": 2,
+  "measuredRemap": {
+    "previousProtectedParts": [
+      218,
+      267
+    ],
+    "parts": [
+      7,
+      472
+    ],
+    "terminalLane": [
+      35929.1,
+      36524.5,
+      -0.5
+    ],
+    "selfFollow": "Remove the existing 52.021865 m self-follow: both old sides now refer to the same final metres of the single spur. No new follow or family overlap is introduced."
+  }
+}

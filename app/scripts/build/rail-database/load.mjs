@@ -23,9 +23,10 @@ const COUNTRIES = [
   { code: "HK", slug: "hk", readingsFile: "station-readings-hk.json" },
   { code: "KR", slug: "kr", readingsFile: "station-readings-kr.json" },
   { code: "MO", slug: "mo", readingsFile: "station-readings-mo.json" },
+  { code: "CN", slug: "cn", readingsFile: "station-readings-cn.json" },
 ];
 
-// N02_002 事業者種別. The four non-Japanese builders assign the same code
+// N02_002 事業者種別. The non-Japanese builders assign the same code
 // space, which is why the mileage statistics stay country-generic.
 const INSTITUTION_TYPES = [
   ["1", "JR新幹線", "高速鐵路"],
@@ -61,6 +62,12 @@ const RAILWAY_CLASSES = [
     "KR",
     "모노레일·자기부상",
     "Assigned by the Korea builder to monorail and maglev lines.",
+  ],
+  [
+    "31",
+    "CN",
+    "单轨及特殊铁路",
+    "Assigned by the China builder to monorail and other special railways.",
   ],
 ];
 
@@ -214,7 +221,7 @@ export function readSources() {
   const english = readJson(path.join(dataDir, "station-english.json"));
   if (english.schema !== "station-english/1" ||
       Object.keys(english.byCountry).sort().join(",") !== COUNTRIES.map(c => c.slug).sort().join(",")) {
-    throw new Error("English catalog must cover all seven regions");
+    throw new Error(`English catalog must cover exactly the supported regions: ${COUNTRIES.map(c => c.slug).join(", ")}`);
   }
   for (const country of COUNTRIES) {
     const packageFile = `${country.slug}-2025.json`;
@@ -738,7 +745,8 @@ export function buildDatabase({ outFile, geometry = true, log = () => {} } = {})
           stationIds[index],
           row[1],
           row.length > 4 ? row[4] || null : null,
-          row.length > 5 ? row[5] ?? null : null,
+          // compact-v1 uses 0 for an absent romanization source; SQL uses NULL.
+          row.length > 5 && row[5] !== 0 ? row[5] ?? null : null,
           row[2],
           row[3],
           measureM,

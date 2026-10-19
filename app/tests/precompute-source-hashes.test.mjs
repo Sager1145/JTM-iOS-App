@@ -8,9 +8,9 @@ import {precomputedRouteCoversSections, precomputeScopeCountries, currentPrecomp
 test("changed solver inputs invalidate every country's precomputed attestation", () => {
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), "jtm-source-hashes-"));
   try {
-    for (const country of ["jp", "tw", "hk", "mo", "kr"]) {
+    for (const country of ["jp", "tw", "hk", "mo", "kr", "cn"]) {
       const suffix = country === "jp" ? "" : `-${country}`;
-      const names = ["matched-routes.json", "matched-stops.json", ...precomputeScopeCountries(country).flatMap((region) => {
+      const names = ["matched-routes.json", "matched-stops.json", "physical-rail-junctions.json", ...precomputeScopeCountries(country).flatMap((region) => {
         const suffix = region === "jp" ? "" : `-${region}`;
         return [`${region}-2025.json`, `rail-sections${suffix}.json`, `stations${suffix}.json`];
       })];
